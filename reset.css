@@ -1,0 +1,42 @@
+html, body, h1, h2, h3, h4, h5, h6, a, abbr, acronym, em, p, strong, address, blockquote, cite, q, dd, dfn, dl, dt, li, ol, ul, code, kbd, pre, samp, tt, var, del, ins, small, caption, table, tbody, td, tfoot, th, thead, tr, fieldset, iframe, img , form {
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 100%;
+	line-height: normal;
+	text-align: left;
+	text-decoration: none;
+}
+
+html, body { 
+	background-color: #fff; 
+	color: #000; 
+}
+html, body, input, option, optgroup, select { 
+	font-family: 'Muli', sans-serif;			/* Muli -  czcionka zewnętrzna z googla */
+	}
+ol, ul { 
+	list-style: none; 
+	}
+code, kbd, pre, samp, textarea, tt, var { 
+	font-family: monospace; 
+	}
+abbr[title], acronym[title] { 
+	cursor: help; 
+	}
+table { 
+	border-collapse: collapse; 
+	border-spacing: 0; 
+	}
+legend, hr { 
+	display: none; 
+	}
+q::before { 
+	content: open-quote; 
+	}
+q::after { 
+	content: close-quote; 
+	}
