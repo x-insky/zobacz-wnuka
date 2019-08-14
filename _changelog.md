@@ -1,3 +1,15 @@
+updated project state to v0.1.3
+
+* v0.1.3 -- [2017-10-08]
+
+[*] MODIFIED 
+-- index.php
+* restored auto loading a table of contents
+* renamed few project global variables in php by prefixing them with 'g_'
+* a good starting point for next changes
+
+---------------------------
+
 # v0.1.2 - updated project state
 
 # v0.1.2 -- [2017-10-07]

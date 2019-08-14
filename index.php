@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="styl.css">
 <link rel="stylesheet" href="lightbox/css/lightbox.css">
 
+
 <script src="jquery-3.2.1.js"></script>
 <script src="lightbox/js/lightbox.js"></script>	
 </head>
@@ -28,10 +29,20 @@
 				 <input type="text" id="http_adres" name="http_adres" placeholder="np. http://zlobek.chojnow.eu/u_tygryskow,a146.html" alt="Podaj adres podstrony konkretnej galerii" />
 				 <input type="button" id="testowy_adres_button" name="testowy_adres_button" value="Testowy adres" />
      <input type="submit" id="http_adres_submit" role="submit" value="Zobacz wnuki" />
-     <div id="form_error">Pole adresu jest wymagane, wpisz właściwą wartość razem z http:// na początku!</div>				
+     <div id="form_error">Wymagane uzupełnienie pola tekstowego, wpisz adres podstrony z serwisu zlobek.chojnow.eu</div>				
 		  </fieldset>
 			</form>
-			</div>		
+			</div>	
+			
+				<div id="spis_tresci">
+					<h2>Lista galerii ze żłobka</h2>
+					 <div id="galeria_spis">
+					 	
+					 </div>
+					 <div id="galeria_spis_podmiana">
+					 	
+					 </div>
+				</div>	
 		</div>		
 	</header>
 
@@ -54,7 +65,7 @@
 			<!-- a tu miniaturki z adresu zewnętrznego oraz klikane przejście do galerii -->
 		</div>
 		
-		<div id="php">
+		<!-- <div id="php">
 		
 			<?php
 			//echo "Dupa!";
@@ -63,13 +74,13 @@
 			//echo("Coś");
 		 //echo file_get_contents('http://zlobek.chojnow.eu/u_tygryskow,a147.html');	
 		 ?>
-		</div>
+		</div> -->
 	
 		
 		
 	</div>
 
-	<footer id="stopka">&copy;2017 v0.1.2 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2017 v0.1.3 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
 	 <div id="poco">
 	  <h3>Jaki jest cel?</h3>
@@ -111,21 +122,26 @@ $(document).ready(function(){
 * http://zlobek.chojnow.eu/1-u_misiow,z1028,p2.html		// przykładowa strona druga (2) z powiększonym zdjęciem nr 1 	
 *
 */
-var element_zewnetrzny = "table.galeria";		//wszystko jest w tablicy o klasie "galeria", w komórce wyższej tablicy	
-var wyszukiwany_serwer = "zlobek.chojnow.eu";			// nazwa serwisu
-var folder_serwera = "zdjecia_galeria";									// ścieżka ma serwerze, tj. folder udostepniony 
-var adres_strony = "";																										// na przechowywanie adresu serwera z protkołem
+var g_element_zewnetrzny = "table.galeria";		//wszystko jest w tablicy o klasie "galeria", w komórce wyższej tablicy	
+var g_wyszukiwany_serwer = "zlobek.chojnow.eu";			// nazwa serwisu
+var g_folder_serwera = "zdjecia_galeria";									// ścieżka ma serwerze, tj. folder udostepniony 
+var g_adres_strony = "";																										// na przechowywanie adresu serwera z protkołem
 //var odnosnik_do_elem_galerii = "a.link_tresc";										// do galerii prowadzą odnośniki z tą klasą, do paginacji niestety też ;)
-var protokol_www = "http://";
-var matryca_nazwy_pliku 										= "zlobek_zdj_";
-var matryca_nazwy_pliku_miniatury = "zlobek_zdjp_";	
-var rozszerzenie_obrazka = ".jpg"	
+var g_protokol_www = "http://";
+var g_matryca_nazwy_pliku 										= "zlobek_zdj_";
+var g_matryca_nazwy_pliku_miniatury = "zlobek_zdjp_";	
+var g_rozszerzenie_obrazka = ".jpg"	
 	
 // pomoc przy zaciąganiu
-var przechwytywacz_php = "./przechwytywacz.php";			//skrypt z fopen do zaczytania strony przez stronę php. Wymaga serwera z PHP!
-var przechwytywacz_php_zapytanie = "?url_zewn=";			// adres zmiennej GET, zawartość bez weryfikacji !!!
-var tag_do_podmiany = "div#zawartosc_do_podmiany"; //element DOM, do którego load() wstawi zawartość tagu table.galeria z witryny zewnętrznej
-var miejsce_na_zdjecia = "div#skladowisko";	
+var g_przechwytywacz_php = "./przechwytywacz.php";			//skrypt z fopen do zaczytania strony przez stronę php. Wymaga serwera z PHP!
+var g_przechwytywacz_php_zapytanie = "?url_zewn=";			// adres zmiennej GET, zawartość bez weryfikacji !!!
+
+var g_tag_do_podmiany_zdjecia = "div#zawartosc_do_podmiany"; //element DOM, do którego load() wstawi zawartość tagu table.galeria z witryny zewnętrznej
+var g_miejsce_na_zdjecia = "div#skladowisko";	
+
+var g_element_zewnetrzny_spis = "table.galeria";   //var g_element_zewnetrzny_spis = "td#tresc_glowna.tlo_artykulow";
+var g_tag_do_podmiany_spis = "div#galeria_spis";
+var miejsce_na_spis = "div#galeria_spis_podmiana";	
 	
 // ---------- ***  FUNKCJE PRAWIE GLOBALNE *** --------------		
 	
@@ -136,10 +152,10 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
 		if ( rekurencja )
 		{
-		$(tag_podmieniany).load( przechwytywacz_php + przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function() {
-		// alert( "LOAD się udała dla zapytania\n" + przechwytywacz_php + przechwytywacz_php_zapytanie + pelny_adres + element_zewnetrzny );
+		$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function() {
+		// alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
 			// logowanie sukcesu ;)
-		console.log( "wykonano load() dla elementu '" + tag_podmieniany + "' dla zapytania \'" + przechwytywacz_php + przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
+		console.log( "wykonano load() dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
 		// WYKONAJ DALSZE FUNKCJE, zależne od SUKCESU zaczytania lub nie	
 		// kasuj poprzednią zawartość elementu???	
 		GenerujPodstronyGalerii();
@@ -147,11 +163,14 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 		}
 		else
 		{
-		$(tag_podmieniany).load( przechwytywacz_php + przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function() {
-		// alert( "LOAD się udała dla zapytania\n" + przechwytywacz_php + przechwytywacz_php_zapytanie + pelny_adres + element_zewnetrzny );
+		$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function() {
+		// alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
 			// logowanie sukcesu ;)
-		console.log( "wykonano load() dla elementu '" + tag_podmieniany + "' dla zapytania \'" + przechwytywacz_php + przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
+		console.log( "wykonano load(FALSE) dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
+			//var podmieniona_zawartosc = $(tag_podmieniany).html();
+			//$(tag_podmieniany).html( unescape(encodeURIComponent(podmieniona_zawartosc)) );	
 		// !!! BEZ wykonania funkcji dla podstron witryny ...	 !!!
+
 			});
 		}																								
 	} // END-WczytajZewnetrznyHTMLdoTAGU() - DEFINICJA
@@ -163,7 +182,7 @@ $('#wczytywanie').hide(100);	// schowaj informację, skoro wczytano zawartość
 $('#glowna div:first').hide(100);	//showaj opis-informację
 $('#skladowisko').show(100);	// pokaż kontener na zaczytaną zawartość
 	
-var $lista_podstron = $('#zawartosc_do_podmiany ' + 'a.link_tresc');    // FIXED
+var $lista_podstron = $('#zawartosc_do_podmiany ' + 'a.link_tresc');    // FIXED! dodano na początku ciągu '#zawartosc_do_podmiany ' jako wyznacznik preszukiwanego elementu
 
 	if ( $lista_podstron.length >= 1 )	// czy są jakieś odnośniki do podstron galerii?
 	{					// startujemy od kolej strony po pierwszej, ale ostatni zawiera ciąg "starsze"
@@ -184,9 +203,9 @@ var $lista_podstron = $('#zawartosc_do_podmiany ' + 'a.link_tresc');    // FIXED
 			
 		 //wstaw go za zaczytanym DIV-zewnętrznym
 		//DISABLED !!!
-		//	$( tag_do_podmiany ).append( nowyDiv ); 
+		//	$( g_tag_do_podmiany_zdjecia ).append( nowyDiv ); 
 	
-			//$( tag_do_podmiany ).css({ "backgroundColor" : "yellow" }); 
+			//$( g_tag_do_podmiany_zdjecia ).css({ "backgroundColor" : "yellow" }); 
 		var nazwa_podstrony_galerii = $( $lista_podstron[i] ).text();  
 			if ( ( nazwa_podstrony_galerii.search("nowsze") >= 0 ) || ( nazwa_podstrony_galerii.search("starsze") >= 0 ) ) {
 			//alert('nazwa_podstrony_galerii: ' + $lista_podstron[i].text() );
@@ -198,6 +217,7 @@ var $lista_podstron = $('#zawartosc_do_podmiany ' + 'a.link_tresc');    // FIXED
 		console.log('Natrafiono na odnośnik nr ' + String(i+1) + ' o zawartości \'' + odnosnik_podstrony + '\'');
 		
 		var nr_galerii = odnosnik_podstrony.split(",")[2];
+			 //if ( !nr_galerii) { nr_galerii = 1; }
 			nr_galerii = nr_galerii.substr(1); // dodatkowe usuwanie pierwszego znaku, tj. "p", które jest przed numerem podstrony galerr (numer kończy się ".html" - pomijane przy konwersji )
 			
 		var nowyPrzycisk = $('<button></button>', {
@@ -205,10 +225,10 @@ var $lista_podstron = $('#zawartosc_do_podmiany ' + 'a.link_tresc');    // FIXED
 			 class : "przycisk_galeria",
 		  value : odnosnik_podstrony,
 			 text : "Galeria nr " + String(parseInt(nr_galerii)),
-			 "data-tag" : tag_do_podmiany,
-			 "data-adres_strony" : adres_strony,
+			 "data-tag" : g_tag_do_podmiany_zdjecia,
+			 "data-adres_strony" : g_adres_strony,
 			 "data-adres_galerii" : odnosnik_podstrony,
-			 "data-elem_zewn" : element_zewnetrzny
+			 "data-elem_zewn" : g_element_zewnetrzny
 			});	
 		
 		$('nav#nawigacja_galeria').append( nowyPrzycisk );
@@ -226,8 +246,8 @@ var $lista_podstron = $('#zawartosc_do_podmiany ' + 'a.link_tresc');    // FIXED
 
 	// !!!DZIAŁA, ale	tu leci nowyDiv jako jQ; z .get(0) jest [object HTMLDivElement], bez get() to [object Object] ... JAKKOLWIEK DZIAŁA!
 	// WYŁACZAM DLA KOLEJNYCH PODSTRON ASYNCHRONICZNOŚĆ		
-// WczytajZewnetrznyHTMLdoTAGU( nowyDiv.attr('id'), adres_strony, odnosnik_podstrony, element_zewnetrzny, true); // false dla braku kolejnych świdrowań galerii
-//	WczytajZewnetrznyHTMLdoTAGU( nowyDiv.get(0), adres_strony, odnosnik_podstrony, element_zewnetrzny, false); // false dla braku kolejnych świdrowań galerii
+// WczytajZewnetrznyHTMLdoTAGU( nowyDiv.attr('id'),g_adres_strony, odnosnik_podstrony, g_element_zewnetrzny, true); // false dla braku kolejnych świdrowań galerii
+//	WczytajZewnetrznyHTMLdoTAGU( nowyDiv.get(0), g_adres_strony, odnosnik_podstrony, g_element_zewnetrzny, false); // false dla braku kolejnych świdrowań galerii
 
 			//DISABLED powyższe !!!
 			
@@ -241,13 +261,13 @@ var $lista_podstron = $('#zawartosc_do_podmiany ' + 'a.link_tresc');    // FIXED
 	
   //przeszukiwanie odnośników (miniatur) dla galerii i galeria większych
  //	$( odnosnik_do_elem_galerii ).css({ "border" : "1px solid yellow" }); // testowanie
- //var $tagi_obrazki  = $( tag_do_podmiany + ' a' );
- var $tagi_obrazki  = $( tag_do_podmiany + ' a:not(.link_tresc)' );
+ //var $tagi_obrazki  = $( g_tag_do_podmiany_zdjecia + ' a' );
+ var $tagi_obrazki  = $( g_tag_do_podmiany_zdjecia + ' a:not(.link_tresc)' );
 	//$tagi_obrazki.css({ "border" : "1px solid yellow" }); // testowanie
 		
-		console.log('Znaleziono na stronie ' + $tagi_obrazki.length + ' miniatur - dla zmiennej \'' + tag_do_podmiany + '\'' );
+		console.log('Znaleziono na stronie ' + $tagi_obrazki.length + ' miniatur - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
 		
-	 $( miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyświetlenie nowej galerii 
+	 $( g_miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyświetlenie nowej galerii 
 	 
 		$tagi_obrazki.each(function(){
 		
@@ -262,21 +282,21 @@ var $lista_podstron = $('#zawartosc_do_podmiany ' + 'a.link_tresc');    // FIXED
 
 			
 			// sklejanie adresu docelowego obrazka  
-		var pelny_adres_odnosnika = protokol_www + wyszukiwany_serwer + "/" + folder_serwera + "/" + matryca_nazwy_pliku + odnosnik_nr_zdjecia + rozszerzenie_obrazka ;	
-			$biezacy.attr( { "href" : pelny_adres_odnosnika, "data-lightbox" : "Galeria", "data-title" : opis_obrazka + " (" + odnosnik_nr_zdjecia + rozszerzenie_obrazka + ")", 
+		var pelny_adres_odnosnika = g_protokol_www + g_wyszukiwany_serwer + "/" + g_folder_serwera + "/" + g_matryca_nazwy_pliku + odnosnik_nr_zdjecia + g_rozszerzenie_obrazka ;	
+			$biezacy.attr( { "href" : pelny_adres_odnosnika, "data-lightbox" : "Galeria", "data-title" : opis_obrazka + " (" + odnosnik_nr_zdjecia + g_rozszerzenie_obrazka + ")", 
 																			alt : opis_obrazka, title : opis_obrazka } ); // zmienia href na bezpośrednie odnośniki do serwera zewnętrznego
 						// PLUS Lightbox w atrybutach data!!!
-			// pelny_adres_odnosnika.replace( matryca_nazwy_pliku, matryca_nazwy_pliku_miniatury );
-			$biezacy.find('img').attr( "src", pelny_adres_odnosnika.replace( matryca_nazwy_pliku, matryca_nazwy_pliku_miniatury ) ); 
+			// pelny_adres_odnosnika.replace( g_matryca_nazwy_pliku, g_matryca_nazwy_pliku_miniatury );
+			$biezacy.find('img').attr( "src", pelny_adres_odnosnika.replace( g_matryca_nazwy_pliku, g_matryca_nazwy_pliku_miniatury ) ); 
 			//$biezacy.parent().find('br').remove();
 			//$biezacy.parent().find('font').remove();
 							// kosmetyka żródła
 			$biezacy.siblings().remove();
-		// matryca_nazwy_pliku_miniatury = "zlobek_zdjp_";
+		// g_matryca_nazwy_pliku_miniatury = "zlobek_zdjp_";
 			
 			// sklejanie adresu dla miniatury, owiniętej odnośnikiem   -  
 			// wstawienie odnośników do zdjęc w innym, właściwym obszarze
-			$( miejsce_na_zdjecia ).append( $biezacy ); 
+			$( g_miejsce_na_zdjecia ).append( $biezacy ); 
 			
 		}); //each-function-END
 		//zaznacza
@@ -286,6 +306,28 @@ var $lista_podstron = $('#zawartosc_do_podmiany ' + 'a.link_tresc');    // FIXED
 		
 //	} //if-END $lista_podstron.length >= 1
 } // GenerujPodstronyGalerii-END
+	
+	
+
+// ---------- *** AUTO URUCHAMIANE *** --------------	
+	
+function ZaczytajSpisGalerii() {
+//http://zlobek.chojnow.eu/galeria,k0,p1.html	- adres ostatniej galerii, wg. daty
+var adres_ostatniej_galerii = "/galeria,k0,p1.html";	
+var adres_zasobu_galerii = g_protokol_www +g_wyszukiwany_serwer ;
+
+	
+	
+WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres_ostatniej_galerii, g_element_zewnetrzny_spis, false ); 
+
+// kodowanie ?!
+// utfstring = unescape(encodeURIComponent(originalstring));	
+	
+}	
+	
+ZaczytajSpisGalerii();
+	
+	
 	
 	
 // ---------- *** FUNKCJE ZDARZENIOWE *** --------------	
@@ -308,7 +350,7 @@ $('#pomoc_button').click( function(){
 	
 	/*	
 $(function(){
-var contentURI= 'http://zlobek.chojnow.eu/u_tygryskow,a147.html table.galeria';    // URL TO GRAB + # of any desired element // if needed :)
+var contentURI= 'http://zlobek.chojnow.eu/u_tygryskow,a147.html table.galeria';    // URL-do-przechwycenia, " " i #id-elementu-docelowego
 $('#zawartosc_do_podmiany').load('przechwytywacz.php?url_zewn='+ contentURI);
 });
 */
@@ -331,7 +373,7 @@ $('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyśln
 		
 		// ?!?!
 	//alert( 'TAG: ' + $this.attr('data-tag') + ' ADRES: ' + $this.attr('data-adres_strony') + ' GALERIA: ' + $this.attr('data-adres_galerii') + ' ELEMENT: ' + $this.attr('data-elem_zewn') );
-  //WczytajZewnetrznyHTMLdoTAGU( nowyDiv.attr('id'), adres_strony, odnosnik_podstrony, element_zewnetrzny, true);
+  //WczytajZewnetrznyHTMLdoTAGU( nowyDiv.attr('id'), g_adres_strony, odnosnik_podstrony, g_element_zewnetrzny, true);
 		WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), true	);
 
 		//<button class="przycisk_galeria" id="galeria_paginacja_1" data-tag="div#zawartosc_do_podmiany" data-adres_strony="http://zlobek.chojnow.eu/" data-elem_zewn="table.galeria" value="u_misiow,a20,p2.html" data-adres_galerii="u_misiow,a20,p2.html">Galeria nr 1</button>
@@ -341,8 +383,6 @@ $('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyśln
 	
 $('#http_adres_submit').click(function() {	// submit ble?
 	
-
-
 	//wycięte do wyżej !!!
 	/*
 	$('button.przycisk_galeria').on("click", function(){
@@ -363,28 +403,29 @@ pelny_adres_wpisany = pelny_adres_wpisany.stripHTML(); // czyszczenie z formular
 
 	//alert( 'PEŁNY_ADRES_BEZ_TAGÓW: ' + pelny_adres_wpisany ) ; // takie tam test-info
 	
- if ( pelny_adres_wpisany.indexOf( wyszukiwany_serwer ) != -1 )  // albo że .indexOf() != -1 // pelny_adres_wpisany.includes('zlobek.chojnow.eu') TRUE
+ if ( pelny_adres_wpisany.indexOf( g_wyszukiwany_serwer ) != -1 )  // albo że .indexOf() != -1 // pelny_adres_wpisany.includes('zlobek.chojnow.eu') TRUE
 	{				// + jeszcze jakieś warunki na poprawność
-	adres_strony = protokol_www + wyszukiwany_serwer + "/"	// przypisanie samego adresu z protokołem
+	g_adres_strony = g_protokol_www + g_wyszukiwany_serwer + "/"	// przypisanie samego adresu z protokołem
 	var pelny_adres = pelny_adres_wpisany;				
  $('#form_error').slideUp(200); //zwinięcie
 	}
 	else
 	{
- $('#form_error').slideDown(500); //rozwinięcie
+	g_adres_strony = "";	// zerowamie potrzebne?!
+ $('#form_error').slideDown(500); // rozwinięcie
 	return false;	 // !!! i wyjście z przetwarzania !!!
 	}
 	
-	var adres_galerii = pelny_adres.substr( pelny_adres.lastIndexOf('/') + 1 ); // szukanie podciągu od "/ do adresu_zasobu.html" 
+	var adres_tej_galerii = pelny_adres.substr( pelny_adres.lastIndexOf('/') + 1 ); // szukanie podciągu od "/ do adresu_zasobu.html" 
 
-	$('#http_adres').val( adres_strony + adres_galerii );
+	$('#http_adres').val( g_adres_strony + adres_tej_galerii );
 	$('#http_adres').prop("disabled", true); 								// wyłaczenie, aby nie klikac wielokrotnie || attr() vs prop()
 	$('#http_adres_submit').prop("disabled", true);	 // wyłaczenie, aby nie klikac wielokrotnie || attr() vs prop()
 	$('#testowy_adres_button').prop("disabled", true);	 // wyłaczenie, aby nie klikac wielokrotnie || attr() vs prop()
 	
 	$('#wczytywanie').show(100);
 	
-	//console.log( 'ADRES_STRONY: ' + adres_strony + ', ADRES_GALERII: ' + adres_galerii + ', ZNACZNIK_ZEWN: ' + element_zewnetrzny + '\nRAZEM: ' + adres_strony + adres_galerii + ' | ' + element_zewnetrzny	) ;
+	console.log( 'ADRES_STRONY: ' + g_adres_strony + ', ADRES_GALERII: ' + adres_tej_galerii + ', ZNACZNIK_ZEWN: ' + g_element_zewnetrzny + '\nRAZEM: ' + g_adres_strony + adres_tej_galerii + ' | ' + g_element_zewnetrzny	) ;
 	
 	
 /* 
@@ -400,12 +441,12 @@ cała galeria siedzi w tabeli o klasie .galeria, w komórkach osadzoen miniatury
 	
 // to poniżej powinno działać tylo dla tej samej domeny/lokalizacji co skrypt, wiec porażka 
 
-WczytajZewnetrznyHTMLdoTAGU( tag_do_podmiany, adres_strony, adres_galerii, element_zewnetrzny, true ); // dla pierwzego zaczytania z rekurencją podstron 
+WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_adres_strony, adres_tej_galerii, g_element_zewnetrzny, true ); // dla pierwzego zaczytania z rekurencją podstron 
 
 	/* 
-$('div#zawartosc_do_podmiany').load( przechwytywacz_php + przechwytywacz_php_zapytanie + pelny_adres + element_zewnetrzny, function() {
- // alert( "LOAD się udała dla zapytania\n" + przechwytywacz_php + przechwytywacz_php_zapytanie + pelny_adres + element_zewnetrzny );
-	console.log( "wykonano load() dla zapytania \'" + przechwytywacz_php + przechwytywacz_php_zapytanie + pelny_adres + element_zewnetrzny +"\'");
+$('div#zawartosc_do_podmiany').load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny, function() {
+ // alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
+	console.log( "wykonano load() dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny +"\'");
 });
 */
 
@@ -417,10 +458,10 @@ $('div#zawartosc_do_podmiany').load( przechwytywacz_php + przechwytywacz_php_zap
 	});
 */
 	
-//var cala_strona = load( przechwytywacz_php + przechwytywacz_php_zapytanie + pelny_adres );
+//var cala_strona = load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres );
 //$('div#zawartosc').html( cala_strona );	
-//	alert( "Coś nie tak z load() dla zapytania\n" + przechwytywacz_php + przechwytywacz_php_zapytanie + pelny_adres + element_zewnetrzny );
-		//alert( przechwytywacz_php + przechwytywacz_php_zapytanie + pelny_adres );	
+//	alert( "Coś nie tak z load() dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
+		//alert( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres );	
 return false; // !!! konieczne przy click!
 }); // click-END-#http_adres_submit
 	
