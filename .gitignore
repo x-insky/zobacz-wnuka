@@ -1,6 +1,6 @@
 # library for early builds
-/jquery-3.2.1.min.js
-/jquery-3.2.1.js
+#/jquery-3.2.1.min.js
+#/jquery-3.2.1.js
 
 # temporary progress notification
 /_status-*.txt
