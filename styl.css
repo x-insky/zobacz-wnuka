@@ -1,0 +1,304 @@
+@charset "utf-8";
+
+div#witryna {
+margin-left: auto;
+margin-right: auto;
+width: 98%;
+	
+/* background: radial-gradient( ellipse, center, #222 15%, #333 100%);	*/
+}
+
+
+header#naglowek a {
+font-size : 120% ;
+font-weight : bold ;
+color : #e22	;
+text-decoration :	underline;	
+}
+
+header#naglowek div#naglowek_kontener {
+background-color: #c3d5e2;
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	
+/* min-height: 6em;	 */
+}
+
+header#naglowek div#naglowek_kontener div#formularz {
+margin-left: auto;
+margin-right: auto;
+padding-top: 1em;	
+/*background-color: #66c; */
+background-color: cornflowerblue;	
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+box-shadow: 0 2px 5px rgba(0,0,0, 0.7);
+}
+
+#form_error {
+display: none;
+color: white;
+font-weight: bolder;
+background: red;
+border: 1px solid white;
+padding: 0.2em;	
+}
+
+form#wyszukaj fieldset {
+text-align: center;	
+padding-bottom: 0.6em;	
+	
+}
+
+form#wyszukaj input {
+margin: 0.2em;
+padding: 0.2em;	
+font-size: 110%;
+}
+
+form#wyszukaj input[type="text"] {
+width: 35em;
+}
+
+input[type="button"] {
+/*background-color: darkblue; 
+color: yellow;	*/
+padding-left: 0.4em;		
+padding-right: 0.4em;		
+}
+	
+form#wyszukaj input[type="submit"] {
+/*background-color: darkblue; 
+color: yellow;	*/
+padding-left: 0.4em;		
+padding-right: 0.4em;		
+font-weight: bold;	
+}
+
+div#naglowek_kontener div#galeria_spis_podmiana {
+background-color: brown;	
+}
+
+
+
+
+div#glowna {
+margin-top: 0.7em;	
+overflow: hidden;
+background-color: white;
+box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	
+border-radius: 10px;	
+}
+
+div#glowna>div#komentarz {
+background-color: brown;
+}
+
+div#glowna div#zawartosc {
+background-color: bisque;
+}
+
+div#glowna article{
+padding: 0.8em 1.2em;
+}
+
+
+
+nav#nawigacja_galeria {
+background-color: cornflowerblue;
+padding: 0.5em 1.1em;
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+}
+
+nav#nawigacja_galeria button {
+margin: 0.5em;
+padding: 0.1em 0.6em; 
+font-size: 120%;
+border-radius: 4px;
+}
+
+
+div#wczytywanie {
+display: none;
+padding: 2em;
+/* margin: 2em; */
+background-color: cornflowerblue;	
+border: 3px dotted yellow;
+}
+
+div#wczytywanie h2 {
+color: yellow;	
+}
+
+
+div#zawartosc_do_podmiany{
+position: absolute ;
+top: 185px ;
+left: 50px ;
+background-color: yellow ;
+border: 2px solid red ;	
+  /* display: none ; */
+}
+
+
+div#skladowisko {
+/* background-color: coral; */
+background-color: #c3d5e2;
+padding: 0.5em 0.6em;
+overflow: hidden;
+display: none;	
+/* display: table;	*/
+}
+
+div#skladowisko a {
+padding: 0.1em 0.5em;
+vertical-align: 40%	;	
+/* position: relative; */	
+/* line-height: 10px; 
+	display: table-cell;	*/
+	
+}
+
+div#skladowisko a img {
+margin: 0.5em;
+border: 2px solid white;
+box-shadow: 1px 1px 4px black;	
+max-height: 116px;
+align-self:baseline;
+transition: box-shadow 0.3s ease-out;	
+/* position: absolute;
+top: 5px;
+left: 70px;	*/
+/* display: table-row-group;		
+	float: left;	
+transform: translateY(-10px); */
+}
+
+div#skladowisko a img:hover {
+box-shadow: 1px 1px 4px black, 2px 2px 7px rgba(0, 0, 0, 0.5);		
+	
+}
+	
+footer#stopka {
+clear: both;
+/* background-color: #aad; */
+background-color: cornflowerblue;		
+margin-top: 0.7em;
+margin-bottom: 2em;	
+padding: 1em 2em;	
+text-align: center;
+border-radius: 10px;
+box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);		
+}
+
+footer#stopka button {
+font-size: 120%;
+padding: 0.1em 1em;	
+}
+
+footer#stopka div#poco {
+display: none;	
+padding: .5em 1em;
+margin: 0.5em 0;
+background-color: deepskyblue;
+background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue); 	
+}
+
+footer#stopka div#poco p:first-of-type {
+font-style: italic ;	
+}
+
+footer#stopka div#pomoc {
+display: none;	
+padding: .5em 1em;
+margin: 0.5em 0;	
+/* background-color: dodgerblue;	*/
+background-color: #c3d5e2;	
+background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue ); 	
+}
+
+
+
+h1 {
+font-size: 220%;
+font-weight: bold;
+color: blueviolet;
+padding: 0.1em 0.1em;
+text-shadow: 1px 1px 1px #eee, 3px 3px 10px #666;	
+}
+
+h1.zmienny {
+transition: all 0.8s ease-out 0.1s;
+text-align: center;	
+}
+
+h1.zmienny:hover {
+margin-left: 30px;
+color: violet;
+text-shadow: 1px 1px 1px #eee, 3px 3px 8px #444, 1px 1px 4px #222;
+}
+
+
+h2 {
+font-size: 175%;
+font-weight: bold;
+color: darkred;
+padding: 0.2em 0.5em;	
+text-shadow: 2px 2px 6px #666;
+text-align: center;	
+}
+
+h3 {
+font-size: 125%;
+font-weight: bold;
+color: darkmagenta;
+text-shadow: 1px 1px 3px #bbb;
+padding: 0.2em 0.5em;	
+text-align: center;	
+}
+
+p {
+text-align: justify;	
+}
+
+
+
+.clearfix::after {
+content: "";
+clear: both;
+display: table;	
+}
+
+
+@media screen and (max-width: 320px) { 
+
+	body {
+	font-size: 70%;	
+	} 
+
+	form#wyszukaj input[type="text"] {
+ width: 17em;		
+ }
+	
+	footer#stopka {
+ padding: 1em 0;	
+	}
+}
+
+
+@media screen and (min-width: 321px) and (max-width: 480px) { 
+
+	body {
+	font-size: 80%;	
+	}
+	
+	form#wyszukaj input[type="text"] {
+ width: 15em;		
+ }
+	
+	footer#stopka {
+ padding: 1em 0.2em;	
+	}
+
+}
