@@ -1,3 +1,20 @@
+# v0.1.2 - updated project state
+
+# v0.1.2 -- [2017-10-07]
+
+## MODIFIED [*]
+### index.php
+* small changes in container ids
+  - modified contents of selected buttons and text sections
+* testing behavior for successful and unsuccessful communication with nursery server
+
+## REMOVED [-]
+### index.php
+
+* **temporary disabled** auto loading a table of contents
+
+---------------------------
+
 # v0.1.1a - updated project state
 
 # v0.1.1a -- [2017-10-05]
@@ -12,6 +29,7 @@
 * you can browse now between subgalleries
   - buttons now have working actions
   - only if there any subgalleries exists
+  - *button or buttons as a link to any other than actual displayed subgallery* (modified)
 
 ## MODIFIED
 ### index.php
