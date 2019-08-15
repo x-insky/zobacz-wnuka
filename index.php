@@ -91,7 +91,7 @@
 		
 	</div>
 
-	<footer id="stopka">&copy;2017 v0.2.2 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2017 v0.2.3 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
 	 <div id="poco">
 	  <h3>Jaki jest cel?</h3>
@@ -232,7 +232,7 @@ $('#nazwa_galerii').show(100);
                     // te w specjalnym kontenerze, bo w spisie treści też są!!! 
 var $lista_podstron = $('#zawartosc_do_podmiany a.link_tresc'); // FIXED! dodano na początku ciągu '#zawartosc_do_podmiany ' jako wyznacznik preszukiwanego elementu
 
-	if ( $lista_podstron.length >= 1 )	// czy są jakieś odnośniki do podstron galerii?
+    if ( $lista_podstron.length >= 1 )	// czy są jakieś odnośniki do podstron galerii?
 	{					// startujemy od kolej strony po pierwszej, ale ostatni zawiera ciąg "starsze"
 	
  // czyszczenie kontenera na nawigację galerii, jeżeli wcześniej zawierał zawartość
@@ -362,7 +362,8 @@ $( g_wczytywanie_spis ).hide(100);	// schowaj informację, skoro wczytano zawart
 //$('#glowna div:first').hide(100);	//showaj opis-informację
 $( g_miejsce_na_spis ).show(100);	
 
-    // tworzenie szablonu spisu
+
+// tworzenie szablonu spisu
 g_ilosc_zaczytanych_paginacji_galerii = $( g_miejsce_na_spis + " div.odnosnik" ).length; // zrób o 5 więcej niż jest ich na stronie
 
 g_biezaca_pozycja_galerii++;	// indeks wyświetlanej aktualnie (kolejno) galerii

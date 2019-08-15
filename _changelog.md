@@ -1,3 +1,16 @@
+updated project state to v0.2.3 - text overflow
+
+* v0.2.3 -- [2017-11-03]
+
+[*] MODIFIED
+
+-- styl.css
+* description text of any gallery always fits into the element of the given gallery list
+  - nothing goes outside the container
+  - any excess text outside the available space is cropped (or hidden)
+  
+---------------------------
+
 updated project state to v0.2.2
 
 * v0.2.2 -- [2017-10-15]

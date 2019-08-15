@@ -104,7 +104,8 @@ float: left;
 max-width: 250px;	
 transition: background-color 0.25s ease-out;	
 min-height: 575px;			
-max-height: 575px;				
+max-height: 575px;
+overflow: hidden;
 }
 
 div#galeria_spis div.kontener_odnosnik:hover {
@@ -164,7 +165,7 @@ div#galeria_spis div.kontener_tekstowy_odnosnik {
 /*margin: 0 1em;	*/
 /*background-color: #c3d5e2; */
 padding: 0.3em;
-overflow: hidden;	
+overflow: hidden;
 }
 
 
@@ -183,6 +184,7 @@ div#galeria_spis div.opis_odnosnik {
 overflow: hidden;	
 max-height: 299px;	/* wielokrotnosc 16px fontu */
 text-align: justify;	
+padding-bottom: 0.5em;
 }
 
 div#galeria_spis div.opis_odnosnik.max_y_260 {
