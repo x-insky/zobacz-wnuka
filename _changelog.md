@@ -1,3 +1,108 @@
+updated project state to v0.2.3 - text overflow
+
+* v0.2.3 -- [2017-11-03]
+
+[*] MODIFIED
+
+-- styl.css
+* description text of any gallery always fits into the element of the given gallery list
+  - nothing goes outside the container
+  - any excess text outside the available space is cropped (or hidden)
+  
+---------------------------
+
+updated project state to v0.2.2
+
+* v0.2.2 -- [2017-10-15]
+
+[+] ADDED
+
+-- new graphic file 'grafiki/slonce_ikona.png'
+* added as site icon for browser window
+
+-- style.css
+* styled each element of table of contents as the same height
+* styled button next-page-loader
+  - added noticeable hover state
+
+-- index.php
+* set site icon
+* introduced title styling depending of title number of characters (string length)
+  - font size reducing for longer title
+* each gallery chosen to show now is displayed with their title and description
+  - title and decription text above the photos
+* after click on element of table of contents, the view in page window is scrolled to the element which contains details of current gallery 
+* displaying dimmension of each of table of contents element inside that element
+  - for diagnostics only
+  - short abbreviated text preceding a proper description
+
+[*] MODIFIED
+
+-- index.php
+* temporary notification placed beneath next-pages button
+  
+[-] REMOVED 
+
+-- index.php
+* temporary alerts from clicking gallery elements 
+
+[!] BUG
+
+-- index.php
+* using the form field may not display any gallery details
+  - no scrolling effect also
+
+---------------------------
+
+updated project state to v0.2.1
+
+* v0.2.1 -- [2017-10-12]
+
+[+] ADDED
+
+-- new folder 'grafiki'
+
+-- new graphic file 'grafiki/slonce_40x40.png'
+
+-- style.css
+* added styles for auto loaded contens and every later loaded table of contents
+  - height of the element depends of its content (image height and amount of desctriptive text)
+  - may occur different layout look depending from the loaded content
+  - also added hover state for every contents item 
+* added CSS animation for every loading notifications
+  - based on rotating of an image
+
+-- index.php
+* added proper showing of table of contents 
+  - presents title, main photo, description and publish date for every gallery titles
+  - loaded items floats on the page side by side 
+* navigation based on loaded table of contents
+  - every click on gallery title or photo element triggers displaying related gallery
+  - added temporary notification (JS alert)
+* added visual notification while loading contens
+  - works for any galery subpage also (while loading starts)
+* added big button for loading next elements from table of content
+  - when triggered each time notification of loading contents is displayed before showing this contents
+* temporary added summary of quantity of subpages table of content under the big button
+* also temporary added diagnostics displayed next to element (right side)
+  - displays: quantity of all galleries, counted subpages and actual position in subpages
+
+[*] MODIFIED
+
+-- index.php
+* renamed global variables (shorted versions)
+* slight modified parameters of function 'WczytajZewnetrznyHTMLdoTAGU'
+  - function 'WczytajZewnetrznyHTMLdoTAGU' works like switch based on the last parameter as differentiator
+  - function builded as a big swich statement
+
+[F] FIXED
+
+-- index.php
+* displaying any gallery by form filled is also possible like it was before 
+  - but it's also uncomfortable
+
+---------------------------
+
 updated project state to v0.1.3
 
 * v0.1.3 -- [2017-10-08]

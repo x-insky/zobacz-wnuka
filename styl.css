@@ -9,7 +9,7 @@ width: 98%;
 }
 
 
-header#naglowek a {
+header#naglowek a.odnosnik_czerwony {
 font-size : 120% ;
 font-weight : bold ;
 color : #e22	;
@@ -75,9 +75,180 @@ padding-right: 0.4em;
 font-weight: bold;	
 }
 
-div#naglowek_kontener div#galeria_spis_podmiana {
-background-color: brown;	
+
+div#naglowek_kontener div#spis_tresci {
+overflow: hidden; 
+width: 100%;	
+	
 }
+
+div#spis_tresci div#galeria_spis {
+background-color: cornflowerblue;
+/* float: left;	*/
+padding: 1em;	
+margin-left: 1em;
+margin-right: 1em;	
+margin-bottom: 1em;	
+overflow: hidden;
+width: 100%;	
+}
+
+div#galeria_spis div.kontener_odnosnik {
+border: 1px solid blue;
+box-shadow: 1px 1px 3px darkblue;	
+margin : 0.75em 0.5em;
+padding: 0.5em;	
+border-radius: 5px;
+width : 100%	;
+float: left;
+max-width: 250px;	
+transition: background-color 0.25s ease-out;	
+min-height: 575px;			
+max-height: 575px;
+overflow: hidden;
+}
+
+div#galeria_spis div.kontener_odnosnik:hover {
+/* rodzic_background-color: cornflowerblue == #6495ed ; */
+/* background-color: cornflowerblue;	*/
+background-color: #5a8ae8;
+
+}
+
+div#galeria_spis div.tytul_odnosnik {
+height: 6em;
+vertical-align: bottom;	
+}
+
+div#galeria_spis div.tytul_odnosnik h2 {
+vertical-align: bottom;
+color: white;
+text-shadow: 2px 2px 6px black;
+word-wrap: break-word;	
+}
+
+div#galeria_spis div.tytul_odnosnik h2.nizszy {
+line-height: 2.5em;
+}
+
+
+div#galeria_spis div.tytul_odnosnik h2.mniejszy {
+font-size: 140%;  /* a nie 175% jak h2 */
+}
+
+
+div#galeria_spis div.zdjecie_odnosnik {
+
+	/* float: left; /*
+background-color: darkblue;
+width: 200px;	
+/*margin : 0.5em;*/
+}
+
+div#galeria_spis div.zdjecie_odnosnik a {
+display: block;
+text-align: center;
+margin-left: auto;
+margin-right: auto;
+	
+}
+
+div#galeria_spis div.zdjecie_odnosnik img {
+border: 4px solid white;	
+box-shadow: 3px 3px 6px darkblue;
+margin-left: auto;
+margin-right: auto;	
+}
+
+div#galeria_spis div.kontener_tekstowy_odnosnik {
+/*float: left; */
+/*margin: 0 1em;	*/
+/*background-color: #c3d5e2; */
+padding: 0.3em;
+overflow: hidden;
+}
+
+
+div#galeria_spis div.data_odnosnik {
+text-align: center;
+font-size: 80%;
+font-weight: bold;
+padding-top: 0.4em;
+padding-bottom: 0.4em;
+/*background-color: #c3d5e2; */
+	
+}
+
+
+div#galeria_spis div.opis_odnosnik {
+overflow: hidden;	
+max-height: 299px;	/* wielokrotnosc 16px fontu */
+text-align: justify;	
+padding-bottom: 0.5em;
+}
+
+div#galeria_spis div.opis_odnosnik.max_y_260 {
+max-height: 260px;	
+}
+
+div#galeria_spis div.opis_odnosnik.max_y_208 {
+max-height: 208px;	
+}
+
+div#galeria_spis div.opis_odnosnik.max_y_160 {
+max-height: 160px;	
+}
+
+div#galeria_spis div.opis_odnosnik.max_y_96 {
+max-height: 96px;	
+}
+
+
+
+div#spis_tresci div#spis_sterowanie {
+background-color: aqua;	
+
+}
+
+
+div#spis_sterowanie p#status_galerii_spis {
+padding: 0.6em 1em;
+border: 2px dashed blue;
+background-color: rgba(50, 60, 200, 0.7);	
+}
+
+
+div#spis_tresci div#spis_sterowanie h2#zaladuj_galerie_spis {
+display: none;	
+max-width: 16em;
+background-color: cornflowerblue;
+color: blue;
+margin: 1em;	
+margin-left: auto;
+margin-right: auto;
+cursor: pointer;	
+border-radius: 8px;
+border: 2px solid blue;
+box-shadow: 1px 1px 3px darkblue;		
+transition: all 0.5s ease 0.1s;
+}
+
+div#spis_tresci div#spis_sterowanie h2#zaladuj_galerie_spis:hover {
+box-shadow: 1px 1px 3px blue, 0px 0px 3px black;
+	/* box-shadow: 0 0 3px rgba(0,0,0, 0.6); */
+background-color: blue;
+color: yellow;
+}
+
+
+div#spis_tresci div#galeria_spis_podmiana {
+background-color : #ddd ;
+float : right ;	
+padding : 1em ;	
+margin : 1em ;
+border : 2px solid red ;	
+}
+
 
 
 
@@ -102,6 +273,12 @@ div#glowna article{
 padding: 0.8em 1.2em;
 }
 
+div#glowna div#nazwa_galerii {
+background-color: deepskyblue;
+display: none;
+padding: 0.5em;	
+margin-bottom: 0.5em;	
+}
 
 
 nav#nawigacja_galeria {
@@ -119,7 +296,7 @@ border-radius: 4px;
 }
 
 
-div#wczytywanie {
+div#wczytywanie, div#wczytywanie_spis {
 display: none;
 padding: 2em;
 /* margin: 2em; */
@@ -127,15 +304,20 @@ background-color: cornflowerblue;
 border: 3px dotted yellow;
 }
 
-div#wczytywanie h2 {
+div#wczytywanie h2, div#wczytywanie_spis h2 {
 color: yellow;	
+
+}
+
+div#wczytywanie h2 img, div#wczytywanie_spis h2 img {
+animation: obroty360 1.2s infinite ease-in;	
 }
 
 
 div#zawartosc_do_podmiany{
 position: absolute ;
 top: 185px ;
-left: 50px ;
+left: 1150px ;
 background-color: yellow ;
 border: 2px solid red ;	
   /* display: none ; */
@@ -235,7 +417,7 @@ text-align: center;
 
 h1.zmienny:hover {
 margin-left: 30px;
-color: violet;
+color: mediumblue;
 text-shadow: 1px 1px 1px #eee, 3px 3px 8px #444, 1px 1px 4px #222;
 }
 
@@ -243,11 +425,19 @@ text-shadow: 1px 1px 1px #eee, 3px 3px 8px #444, 1px 1px 4px #222;
 h2 {
 font-size: 175%;
 font-weight: bold;
-color: darkred;
+/* color: darkred; */
+color: #54f;
 padding: 0.2em 0.5em;	
 text-shadow: 2px 2px 6px #666;
 text-align: center;	
 }
+
+h2.przycisk {
+background-color: dodgerblue;
+
+}
+
+
 
 h3 {
 font-size: 125%;
@@ -263,12 +453,33 @@ text-align: justify;
 }
 
 
-
 .clearfix::after {
 content: "";
 clear: both;
 display: table;	
 }
+
+.clearfix2 {
+clear: both;
+}
+
+
+@keyframes obroty360 {
+	0% {
+	transform: rotate(0deg);
+	}
+	50% {
+	transform: rotate(90deg);
+	}
+	75% {
+	transform: rotate(135deg);
+	}
+	100% {
+	transform: rotate(-135deg);
+	}
+}
+
+
 
 
 @media screen and (max-width: 320px) { 
