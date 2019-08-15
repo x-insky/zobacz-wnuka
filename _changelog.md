@@ -1,3 +1,59 @@
+updated project state to v0.1.3
+
+* v0.1.3 -- [2017-10-08]
+
+[*] MODIFIED 
+-- index.php
+* restored auto loading a table of contents
+* renamed few project global variables in php by prefixing them with 'g_'
+* a good starting point for next changes
+
+---------------------------
+
+# v0.1.2 - updated project state
+
+# v0.1.2 -- [2017-10-07]
+
+## MODIFIED [*]
+### index.php
+* small changes in container ids
+  - modified contents of selected buttons and text sections
+* testing behavior for successful and unsuccessful communication with nursery server
+
+## REMOVED [-]
+### index.php
+
+* **temporary disabled** auto loading a table of contents
+
+---------------------------
+
+# v0.1.1a - updated project state
+
+# v0.1.1a -- [2017-10-05]
+
+## ADDED
+### index.php
+* trying to automatic display a table of contents (first page)
+  - auto start after each page opening or refreshing
+  - opens home page last gallery list from nursery server (first page of table of gallery contents)
+  - generated links for viewing only (misleading targets)
+  - no visual notifications while fetching content from server like in gallery subpage while loading current gallery
+* you can browse now between subgalleries
+  - buttons now have working actions
+  - only if there any subgalleries exists
+  - *button or buttons as a link to any other than actual displayed subgallery* (modified)
+
+## MODIFIED
+### index.php
+#### BUG! 
+* cannot view any galleries
+   - the target area for uploaded images does not appear
+   - thumbnail images are not displayed
+   - only descriptions of photos without proper photos visible in the yellow test field
+   - reference error in console: "TypeError: nr_galerii is undefined" 
+
+#### FIXED! the above bug (cannot view any galleries)
+  * specified right source container to search in
 
 ---------------------------
 
@@ -38,4 +94,5 @@ Available funcionalities:
   - added refresh button in page header
 * yellow box just for checking existency of gallery subpages (only for viewing!)
 * added simple hide / show animation triggered by buttons in footer
+* *added basic loging of actions in console* (modified)
   
