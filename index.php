@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <title>Galeria ze Żłobka w Chojnowie</title>
+<link rel="Shortcut icon" href="./grafiki/slonce_ikona.png" />
 <link rel="stylesheet" href="reset.css">
 <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">  <!-- czcionka Muli -->	
 <link rel="stylesheet" href="styl.css">
 <link rel="stylesheet" href="lightbox/css/lightbox.css">
 
-
 <script src="jquery-3.2.1.js"></script>
-<script src="lightbox/js/lightbox.js"></script>	
+<script src="lightbox/js/lightbox.js"></script>
 </head>
 
 <body>
@@ -40,6 +40,7 @@
 					 	
 					 </div>
 					 <div id="spis_sterowanie">
+							<p id="status_galerii_spis"></p>
 					 <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>	
 					 </div>
 					 <div id="wczytywanie_spis"><h2>Trwa wczytywanie... <img src="grafiki/slonce_40x40.png" /></h2>
@@ -58,6 +59,10 @@
 			</div>
 			
 		<div id="wczytywanie"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_40x40.png" /></h2>
+		</div>
+		<div id="nazwa_galerii">
+			 <h2></h2>
+			 <p></p>
 		</div>	
 		
 		<div id="skladowisko"></div>
@@ -86,7 +91,7 @@
 		
 	</div>
 
-	<footer id="stopka">&copy;2017 v0.2.1 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2017 v0.2.2 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
 	 <div id="poco">
 	  <h3>Jaki jest cel?</h3>
@@ -136,7 +141,9 @@ var g_wyszukiwany_serwer = "";																										// na przechowywanie adr
 var g_protokol_www = "http://";
 var g_matryca_nazwy_pliku 										= "zlobek_zdj_";
 var g_matryca_nazwy_pliku_miniatury = "zlobek_zdjp_";	
-var g_rozszerzenie_obrazka = ".jpg"	
+var g_rozszerzenie_obrazka = ".jpg";
+var g_nazwa_galerii = "";
+var g_opis_galerii = "";	
 	
 // pomoc przy zaciąganiu
 var g_przechwytywacz_php = "./przechwytywacz.php";			//skrypt z fopen do zaczytania strony przez stronę php. Wymaga serwera z PHP!
@@ -216,6 +223,11 @@ function GenerujPodstronyGalerii(){ 	// to ma przygotować kolejne
 $('#wczytywanie').hide(100);	// schowaj informację, skoro wczytano zawartość
 $('#glowna div:first').hide(100);	//showaj opis-informację
 $('#skladowisko').show(100);	// pokaż kontener na zaczytaną zawartość
+
+$('#nazwa_galerii').find('h2').text( g_nazwa_galerii );
+$('#nazwa_galerii').find('p').text( g_opis_galerii );	
+$('#nazwa_galerii').show(100);	
+
 	
                     // te w specjalnym kontenerze, bo w spisie treści też są!!! 
 var $lista_podstron = $('#zawartosc_do_podmiany a.link_tresc'); // FIXED! dodano na początku ciągu '#zawartosc_do_podmiany ' jako wyznacznik preszukiwanego elementu
@@ -349,8 +361,8 @@ function GenerujSpisGalerii() {
 $( g_wczytywanie_spis ).hide(100);	// schowaj informację, skoro wczytano zawartość
 //$('#glowna div:first').hide(100);	//showaj opis-informację
 $( g_miejsce_na_spis ).show(100);	
-	
-// tworzenie szablonu spisu
+
+    // tworzenie szablonu spisu
 g_ilosc_zaczytanych_paginacji_galerii = $( g_miejsce_na_spis + " div.odnosnik" ).length; // zrób o 5 więcej niż jest ich na stronie
 
 g_biezaca_pozycja_galerii++;	// indeks wyświetlanej aktualnie (kolejno) galerii
@@ -372,7 +384,7 @@ g_biezaca_pozycja_galerii++;	// indeks wyświetlanej aktualnie (kolejno) galerii
 	
 	var odnosnik_pojemnik = '<div id="kontener_odnosnik_' + String(i) + '" class="kontener_odnosnik"><div class="tytul_odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i) + '" class="zdjecie_odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener_tekstowy_odnosnik"><div class="data_odnosnik">Data galerii</div><div class="opis_odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div></div>'; 	
 		
-		$( g_miejsce_na_spis ).append( odnosnik_pojemnik );		
+	$( g_miejsce_na_spis ).append( odnosnik_pojemnik );		
 	}	
 		
 //akcja wypełniacz - zdjęcia
@@ -402,6 +414,10 @@ var $odnosniki_tytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link"
 			// ... 			// obrabianie odnośnika?!	
 			var dlugosc_tekstu = $( $odnosniki_tytuly[i] ).text();
 			$( $odnosniki_tytuly[i] ).removeClass('link').wrapInner('<h2></h2>'); // usuwanie obcej klasy link i dodanie h2/h3
+				if ( dlugosc_tekstu.length < 15 ) 
+				{ //if ( $(odnos )  )
+				$( $odnosniki_tytuly[i] ).find('h2').addClass('nizszy'); // klasa z mniejszą czcionką o 25% pkt.
+				}				
 				if ( dlugosc_tekstu.length > 25 ) 
 				{ //if ( $(odnos )  )
 				$( $odnosniki_tytuly[i] ).find('h2').addClass('mniejszy'); // klasa z mniejszą czcionką o 25% pkt.
@@ -438,8 +454,80 @@ var $odnosniki_opis = $( g_tag_do_podmiany_spis + " td blockquote div[align=just
 
 			//$( $odnosniki_data[i] ).text( tekst_docelowy ).removeAttr("style");
 				
-			$( miejsce_docelowe ).html( $odnosniki_opis[i] );
-		}
+		var tresc_opisu = $( $odnosniki_opis[i] ).text() ;	
+				$( miejsce_docelowe ).html( tresc_opisu );			
+				
+		var wysokosc_kontenera_div = $( miejsce_docelowe ).parents('.kontener_odnosnik').outerHeight();		
+		var wysokosc_tytulu = $( miejsce_docelowe ).parents('.kontener_odnosnik').find('.tytul_odnosnik').outerHeight(true);
+		var wysokosc_obrazka = $( miejsce_docelowe ).parents('.kontener_odnosnik').find('.zdjecie_odnosnik').outerHeight(true); // + 4;
+		var wysokosc_daty = $( miejsce_docelowe ).parents('.kontener_odnosnik').find('.data_odnosnik').outerHeight(true);
+		var wysokosc_tekstu = $( miejsce_docelowe ).outerHeight(true);		
+		
+		var roznica_zawartosc = wysokosc_kontenera_div - ( wysokosc_tytulu + wysokosc_obrazka + wysokosc_daty + wysokosc_tekstu ); 				
+			
+		//opis maksymalnie może mieć 304px (16px * 19) -- wielokrotność wierszy dla tekstu o 100% == 16px 		
+		
+			if ( roznica_zawartosc < -35 )  // kolejnośc ma zneczenie, ewentualne sumowanie klas, najmnijsza wysokośc na końcu (nadpisywanie wartości wysokości dla podelementu)
+			{
+			$( miejsce_docelowe ).addClass('max_y_260');
+			}
+			if ( roznica_zawartosc < -85 ) 
+			{
+			$( miejsce_docelowe ).addClass('max_y_208');						
+			}
+			if ( roznica_zawartosc < -115 ) 
+			{
+			$( miejsce_docelowe ).addClass('max_y_160');						
+			}
+			if ( roznica_zawartosc < -175 ) 
+			{
+			$( miejsce_docelowe ).addClass('max_y_96');						
+			}
+				
+				
+		/*		
+			if ( roznica_zawartosc < -175 ) 
+			{
+			$( miejsce_docelowe ).addClass('max_y_96');						
+			}
+			else
+			{
+				if ( roznica_zawartosc < -115 ) 
+			 {
+			 $( miejsce_docelowe ).addClass('max_y_160');						
+			 }
+				else
+					{
+					if ( roznica_zawartosc < -85 ) 
+			 	{
+					$( miejsce_docelowe ).addClass('max_y_208');						
+					}
+			  else
+					{
+						if ( roznica_zawartosc < -35 ) 
+						{
+						$( miejsce_docelowe ).addClass('max_y_260');						
+						}
+					}
+				}
+			}	*/
+			
+				
+			/*if ( wysokosc_kontenera_div - ( wysokosc_tytulu + wysokosc_obrazka + wysokosc_daty + wysokosc_tekstu ) > 250 ) // okreslanie wysokości względem pozostałych divów w elemencie...
+			{
+			$( miejsce_docelowe ).addClass('max_y_200');						
+			}
+			if ( wysokosc_kontenera_div - ( wysokosc_tytulu + wysokosc_obrazka + wysokosc_daty ) > 150 ) // okreslanie wysokości względem pozostałych divów w elemencie...
+			{
+			$( miejsce_docelowe ).addClass('max_y_100');										
+			}	*/			
+						
+
+		
+	 tresc_opisu = "K: " + String(wysokosc_kontenera_div) + "-" + String(wysokosc_tytulu + wysokosc_obrazka + wysokosc_daty + wysokosc_tekstu ) + " = " + String( roznica_zawartosc ) + " (" + String(wysokosc_tytulu) + ", " + String(wysokosc_obrazka) + ", " + String(wysokosc_daty) + ", " + String(wysokosc_tekstu) + ")<br />" + tresc_opisu ;			
+		$( miejsce_docelowe ).html( tresc_opisu );			
+			
+		} // for-END
 	}
 	
 	// czyszczenie kontenera źródłowego
@@ -495,9 +583,12 @@ var $lista_podstron = $('#galeria_spis_podmiana td[colspan=2] a.link_tresc'); //
 	ile_podstron_spisu_tresci++; // konieczne do zliczenia aktualnej galerii, która nie generuje odnosnika	
 		
 	g_ilosc_zaczytanych_paginacji_galerii = ile_podstron_spisu_tresci;	  // muerto importante!
+	
 		
- // czyszczenie kontenera na nawigację galerii, jeżeli wcześniej zawierał zawartość
-	$( g_miejsce_na_spis ).append('<p>Znaleziono '  + $wiersze_tabeli.length + ' wierszy tabeli źródłowej oraz ' + $lista_podstron.length + ' podstron(-y) spisu treści.<br>Jesteś na ' + g_biezaca_pozycja_galerii + '. stronie galerii.<br />A wcześniej zaczytano: "' + g_ilosc_zaczytanych_paginacji_galerii + '" paginacji, a załadowano łącznie ' + g_biezaca_pozycja_galerii + ' elementów galerii ze wszystkich ' + g_ilosc_wszystkich_galerii + ' galerii</p>');
+		
+
+	// czyszczenie kontenera na nawigację galerii, jeżeli wcześniej zawierał zawartość
+	$('p#status_galerii_spis').html('Znaleziono '  + $wiersze_tabeli.length + ' wierszy tabeli źródłowej oraz ' + $lista_podstron.length + ' podstron(-y) spisu treści.<br>Jesteś na ' + g_biezaca_pozycja_galerii + '. stronie galerii.<br />A wcześniej zaczytano: "' + g_ilosc_zaczytanych_paginacji_galerii + '" paginacji, a załadowano łącznie ' + g_biezaca_pozycja_galerii + ' (vs ' + g_ilosc_zaczytanych_galerii + ') elementów galerii ze wszystkich ' + g_ilosc_wszystkich_galerii + ' galerii');
 			
 		
 	 //for (var i=0; i < $lista_podstron.length; i++) {	
@@ -625,15 +716,20 @@ return; // wyjście, aby nie przechodzić do odnosnika
 
 $('#galeria_spis').on("click", "a", function(e){ 
 var $this = $(this);
-var nazwa_galerii = $this.text();	
 var galeria_docelowa = $this.attr('href');	
-	if ( nazwa_galerii.length == 0 )  // jeżeli naciśnięto odnośnik z obrazkiem
+
+e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku
+	
+g_nazwa_galerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek a nie obrazek)
+g_opis_galerii = $this.parents('.kontener_odnosnik').find('.opis_odnosnik').text();	
+	
+	if ( g_nazwa_galerii.length == 0 )  // jeżeli naciśnięto odnośnik z obrazkiem, ten drugi zawiera już treść odnośnika
 		{
-		nazwa_galerii = $this.parent().siblings('div.tytul_odnosnik').find('a h2').text();	
+		g_nazwa_galerii = $this.parent().siblings('div.tytul_odnosnik').find('a h2').text();	
 		}
 //alert('g_tag_do_podmiany, g_protokol_www + g_adres_strony + '/' + g_folder_serwera + '/', galeria_docelowa, g_element_zewnetrzny, "galeria_podstrona")
-alert('WczytajZewnetrznyHTMLdoTAGU( tag: ' + g_tag_do_podmiany_zdjecia + ', domena: ' + g_protokol_www + g_adres_strony + '/' + g_folder_serwera + '/' + ', zasób: ' + galeria_docelowa + ', elem: ' + g_element_zewnetrzny + ') ... MYSZA NAJECHAŁA');
-console.log('ZDARZENE: "Naciśnięto" i wywołano odnośnik do galerii "' + nazwa_galerii + '"' ); 	
+//alert('WczytajZewnetrznyHTMLdoTAGU( tag: ' + g_tag_do_podmiany_zdjecia + ', domena: ' + g_protokol_www + g_adres_strony + '/' + g_folder_serwera + '/' + ', zasób: ' + galeria_docelowa + ', elem: ' + g_element_zewnetrzny + ') ... MYSZA NAJECHAŁA');
+console.log('ZDARZENE: "Naciśnięto" i wywołano odnośnik do galerii "' + g_nazwa_galerii + '"' ); 	
 
 	
 	// przewinięcie ekranu do lokalizacji galerii
@@ -644,8 +740,17 @@ $( g_wczytywanie ).show();
 // załadowanie odnosnika ze s	
 WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres_strony + '/' , galeria_docelowa, g_element_zewnetrzny, "galeria_podstrona" ); 	
 //WczytajZewnetrznyHTMLdoTAGU( g_, $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona"	);	
-e.preventDefault();	
+//e.preventDefault();	
 //return; // wyjście, aby nie przechodzić do odnosnika	
+	
+var pozycja_div_galeria = $('div#glowna').offset();
+//wysokosc_div_galeria = wysokosc_div_galeria.top;
+
+//$(document).animate({ ... }) scrollTop( wysokosc_div_galeria.top );	
+
+	$('html, body').animate({ scrollTop : (pozycja_div_galeria.top - 8)	}, 700);	
+	
+	
 });	//  on("click")-$('#nawigacja_galeria')-END			
 	
 	
@@ -712,9 +817,8 @@ cała galeria siedzi w tabeli o klasie .galeria, w komórkach osadzoen miniatury
 	*/
 	
 // to poniżej powinno działać tylo dla tej samej domeny/lokalizacji co skrypt, wiec porażka 
-    
-      // FIXED: przywrócono możliwość wyboru galerii do wyświetlenia przez niewygodny formularz
-WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + '/' + g_adres_strony, adres_tej_galerii, g_element_zewnetrzny, "galeria_podstrona" );
+
+WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_adres_strony, adres_tej_galerii, g_element_zewnetrzny, "galeria_podstrona" ); 
 
 	/* 
 $('div#zawartosc_do_podmiany').load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny, function() {

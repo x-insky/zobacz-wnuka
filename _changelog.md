@@ -1,3 +1,48 @@
+updated project state to v0.2.2
+
+* v0.2.2 -- [2017-10-15]
+
+[+] ADDED
+
+-- new graphic file 'grafiki/slonce_ikona.png'
+* added as site icon for browser window
+
+-- style.css
+* styled each element of table of contents as the same height
+* styled button next-page-loader
+  - added noticeable hover state
+
+-- index.php
+* set site icon
+* introduced title styling depending of title number of characters (string length)
+  - font size reducing for longer title
+* each gallery chosen to show now is displayed with their title and description
+  - title and decription text above the photos
+* after click on element of table of contents, the view in page window is scrolled to the element which contains details of current gallery 
+* displaying dimmension of each of table of contents element inside that element
+  - for diagnostics only
+  - short abbreviated text preceding a proper description
+
+[*] MODIFIED
+
+-- index.php
+* temporary notification placed beneath next-pages button
+  
+[-] REMOVED 
+
+-- index.php
+* temporary alerts from clicking gallery elements 
+
+[!] BUG
+
+-- index.php
+* using the form field may not display any gallery details
+  - no scrolling effect also
+
+---------------------------
+
+updated project state to v0.2.1
+
 * v0.2.1 -- [2017-10-12]
 
 [+] ADDED

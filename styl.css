@@ -96,19 +96,22 @@ width: 100%;
 div#galeria_spis div.kontener_odnosnik {
 border: 1px solid blue;
 box-shadow: 1px 1px 3px darkblue;	
-margin : 1em 0.5em;
+margin : 0.75em 0.5em;
 padding: 0.5em;	
 border-radius: 5px;
-width ; 100%	;
+width : 100%	;
 float: left;
 max-width: 250px;	
-transition: background-color 0.25s ease-out;		
+transition: background-color 0.25s ease-out;	
+min-height: 575px;			
+max-height: 575px;				
 }
 
 div#galeria_spis div.kontener_odnosnik:hover {
 /* rodzic_background-color: cornflowerblue == #6495ed ; */
 /* background-color: cornflowerblue;	*/
 background-color: #5a8ae8;
+
 }
 
 div#galeria_spis div.tytul_odnosnik {
@@ -119,8 +122,14 @@ vertical-align: bottom;
 div#galeria_spis div.tytul_odnosnik h2 {
 vertical-align: bottom;
 color: white;
-text-shadow: 2px 2px 6px black;	
+text-shadow: 2px 2px 6px black;
+word-wrap: break-word;	
 }
+
+div#galeria_spis div.tytul_odnosnik h2.nizszy {
+line-height: 2.5em;
+}
+
 
 div#galeria_spis div.tytul_odnosnik h2.mniejszy {
 font-size: 140%;  /* a nie 175% jak h2 */
@@ -154,7 +163,8 @@ div#galeria_spis div.kontener_tekstowy_odnosnik {
 /*float: left; */
 /*margin: 0 1em;	*/
 /*background-color: #c3d5e2; */
-padding: 0.3em;	
+padding: 0.3em;
+overflow: hidden;	
 }
 
 
@@ -168,23 +178,65 @@ padding-bottom: 0.4em;
 	
 }
 
-div#spis_tresci div#spis_sterowanie {
-background-color: aqua;	
-	
+
+div#galeria_spis div.opis_odnosnik {
+overflow: hidden;	
+max-height: 299px;	/* wielokrotnosc 16px fontu */
+text-align: justify;	
+}
+
+div#galeria_spis div.opis_odnosnik.max_y_260 {
+max-height: 260px;	
+}
+
+div#galeria_spis div.opis_odnosnik.max_y_208 {
+max-height: 208px;	
+}
+
+div#galeria_spis div.opis_odnosnik.max_y_160 {
+max-height: 160px;	
+}
+
+div#galeria_spis div.opis_odnosnik.max_y_96 {
+max-height: 96px;	
 }
 
 
+
+div#spis_tresci div#spis_sterowanie {
+background-color: aqua;	
+
+}
+
+
+div#spis_sterowanie p#status_galerii_spis {
+padding: 0.6em 1em;
+border: 2px dashed blue;
+background-color: rgba(50, 60, 200, 0.7);	
+}
 
 
 div#spis_tresci div#spis_sterowanie h2#zaladuj_galerie_spis {
 display: none;	
-max-width: 16em;	
+max-width: 16em;
+background-color: cornflowerblue;
+color: blue;
+margin: 1em;	
 margin-left: auto;
 margin-right: auto;
-margin-bottom: 1em;	
 cursor: pointer;	
+border-radius: 8px;
+border: 2px solid blue;
+box-shadow: 1px 1px 3px darkblue;		
+transition: all 0.5s ease 0.1s;
 }
 
+div#spis_tresci div#spis_sterowanie h2#zaladuj_galerie_spis:hover {
+box-shadow: 1px 1px 3px blue, 0px 0px 3px black;
+	/* box-shadow: 0 0 3px rgba(0,0,0, 0.6); */
+background-color: blue;
+color: yellow;
+}
 
 
 div#spis_tresci div#galeria_spis_podmiana {
@@ -219,6 +271,12 @@ div#glowna article{
 padding: 0.8em 1.2em;
 }
 
+div#glowna div#nazwa_galerii {
+background-color: deepskyblue;
+display: none;
+padding: 0.5em;	
+margin-bottom: 0.5em;	
+}
 
 
 nav#nawigacja_galeria {
