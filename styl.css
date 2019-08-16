@@ -43,7 +43,9 @@ position: relative;
 header#naglowek div#logo {
 position: relative;	
 /*float: left;	*/
-background-color: rgba(85, 85, 185, 0.3);
+
+	background-color: cornflowerblue;	
+	/*background-color: rgba(85, 85, 185, 0.3); */
 height: 200px;
 width: 200px;	
 
@@ -64,7 +66,7 @@ position: absolute;
 left: -115px;
 top: -115px;	
 	
-outline: 2px solid red;
+/* outline: 2px solid red; */
 	
 transform-origin: 50% 50%;
 
@@ -90,7 +92,9 @@ header#naglowek div#napisy {
 position: absolute;
 left: 200px;
 top: 0;	
-background-color: rgba(95, 95, 225, 0.7);	
+		
+		background-color: cornflowerblue;	
+		/* background-color: rgba(95, 95, 225, 0.7); */	
 }
 
 header#naglowek div#napisy p {
@@ -105,7 +109,7 @@ clear: both;
 header#naglowek a.odnosnik_czerwony {
 font-size : 120% ;
 font-weight : bold ;
-color : #e22	;
+color : #d46	;
 text-decoration :	underline;	
 }
 
@@ -179,8 +183,8 @@ div#spis_tresci div#galeria_spis {
 background-color: cornflowerblue;
 /* float: left;	*/
 padding: 1em;	
-margin-left: 1em;
-margin-right: 1em;	
+/*margin-left: 1em;
+margin-right: 1em;	*/
 margin-bottom: 1em;	
 overflow: hidden;
 width: 100%;	
@@ -195,7 +199,7 @@ border-radius: 5px;
 width : 100%	;
 float: left;
 max-width: 250px;	
-transition: background-color 0.25s ease-out;	
+transition: all 0.25s ease-out;	
 min-height: 575px;			
 max-height: 575px;
 overflow: hidden;
@@ -300,7 +304,7 @@ max-height: 96px;
 
 
 div#spis_tresci div#spis_sterowanie {
-background-color: aqua;	
+		/* background-color: aqua;	*/
 
 }
 
@@ -308,7 +312,8 @@ background-color: aqua;
 div#spis_sterowanie p#status_galerii_spis {
 padding: 0.6em 1em;
 border: 2px dashed blue;
-background-color: rgba(50, 60, 200, 0.7);	
+background-color: rgba(50, 60, 200, 0.7);
+			display: none; 	
 }
 
 
@@ -341,6 +346,7 @@ float : right ;
 padding : 1em ;	
 margin : 1em ;
 border : 2px solid red ;	
+			display: none /*  --- */	
 }
 
 
@@ -419,7 +425,7 @@ top: 185px ;
 left: 1150px ;
 background-color: yellow ;
 border: 2px solid red ;	
-  /* display: none ; */
+   display: none ; /* --- */
 }
 
 
@@ -476,7 +482,8 @@ box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);
 
 footer#stopka button {
 font-size: 120%;
-padding: 0.1em 1em;	
+margin-left: 0.5em;	
+padding: 0.35em 2em;	
 }
 
 footer#stopka div#poco {
@@ -518,7 +525,7 @@ text-align: center;
 
 h1.zmienny:hover {
 margin-left: 30px;
-color: mediumblue;
+color: #ee6699;
 text-shadow: 1px 1px 1px #eee, 3px 3px 8px #444, 1px 1px 4px #222;
 }
 
@@ -529,7 +536,7 @@ h2 {
 font-size: 175%;
 font-weight: bold;
 /* color: darkred; */
-color: #54f;
+color: #54c;
 padding: 0.2em 0.5em;	
 text-shadow: 2px 2px 6px #666;
 text-align: center;	
@@ -546,7 +553,7 @@ h3 {
 font-size: 125%;
 font-weight: bold;
 color: darkmagenta;
-text-shadow: 1px 1px 3px #bbb;
+text-shadow: 1px 1px 3px #ccc;
 padding: 0.2em 0.5em;	
 text-align: center;	
 }

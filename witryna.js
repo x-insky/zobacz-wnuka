@@ -101,8 +101,8 @@ $('#wczytywanie').hide(100);	// schowaj informację, skoro wczytano zawartość
 $('#glowna div:first').hide(100);	//showaj opis-informację
 $('#skladowisko').show(100);	// pokaż kontener na zaczytaną zawartość
 
-$('#nazwa_galerii').find('h2').text( g_nazwa_galerii );
-$('#nazwa_galerii').find('p').text( g_opis_galerii );	
+$('#nazwa_galerii').find('h2').html( g_nazwa_galerii ); 	// było.text( ... )
+$('#nazwa_galerii').find('p').html( g_opis_galerii );		// było.text( ... )
 $('#nazwa_galerii').show(100);	
 
 	
@@ -321,13 +321,19 @@ var $odnosniki_data = $( g_tag_do_podmiany_spis + " td.galeria_kolor font" );
 	{
 			for( var i=0 ; i < $odnosniki_data.length ; i++ ){
 			miejsce_docelowe = $( g_miejsce_na_spis + " .data_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
-				
+
 			// ... 			// obrabianie odnośnika?!
 			var tekst_docelowy = $( $odnosniki_data[i] ).text();
-			tekst_docelowy = tekst_docelowy.replace( "data publikacji: ", "z dnia: ");	
-			$( $odnosniki_data[i] ).text( tekst_docelowy ).removeAttr("style");
 				
-			$( miejsce_docelowe ).html( $odnosniki_data[i] );
+			tekst_docelowy = tekst_docelowy.replace( "data publikacji: ", "z dnia: ");
+			//tekst_docelowy = tekst_docelowy.replace('<font>', '' );
+			//tekst_docelowy = tekst_docelowy.replace('</font>', '' );
+				
+			// poniższe niepotrzebne, tylko kilka liter -- nie ma potrzeby kopiować znacznika	
+			//$( $odnosniki_data[i] ).text( tekst_docelowy ).removeAttr("style");
+			//$( miejsce_docelowe ).html( $odnosniki_data[i] );
+				
+			$( miejsce_docelowe ).text( 	tekst_docelowy );	
 		}
 	}
 	
@@ -709,12 +715,12 @@ var galeria_docelowa = $this.attr('href');
 
 e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku
 	
-g_nazwa_galerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek a nie obrazek)
-g_opis_galerii = $this.parents('.kontener_odnosnik').find('.opis_odnosnik').text();	
+g_nazwa_galerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek a nie obrazek)   
+g_opis_galerii = $this.parents('.kontener_odnosnik').find('.opis_odnosnik').html();	 // było .text( ... )
 	
 	if ( g_nazwa_galerii.length == 0 )  // jeżeli naciśnięto odnośnik z obrazkiem, ten drugi zawiera już treść odnośnika
 		{
-		g_nazwa_galerii = $this.parent().siblings('div.tytul_odnosnik').find('a h2').text();	
+		g_nazwa_galerii = $this.parent().siblings('div.tytul_odnosnik').find('a h2').html();	 // było .text( ... )
 		}
 //alert('g_tag_do_podmiany, g_protokol_www + g_adres_strony + '/' + g_folder_serwera + '/', galeria_docelowa, g_element_zewnetrzny, "galeria_podstrona")
 //alert('WczytajZewnetrznyHTMLdoTAGU( tag: ' + g_tag_do_podmiany_zdjecia + ', domena: ' + g_protokol_www + g_adres_strony + '/' + g_folder_serwera + '/' + ', zasób: ' + galeria_docelowa + ', elem: ' + g_element_zewnetrzny + ') ... MYSZA NAJECHAŁA');
@@ -782,7 +788,7 @@ pelny_adres_wpisany = pelny_adres_wpisany.stripHTML(); // czyszczenie z formular
 	
 	var adres_tej_galerii = pelny_adres_wpisany.substr( pelny_adres.lastIndexOf('/') + 1 ); // szukanie podciągu od "/ do adresu_zasobu.html" 
 
-	 alert('pełny_adres: "' + pelny_adres + '", adres_tej_galerii: "' + adres_tej_galerii + '"');
+	//alert('pełny_adres: "' + pelny_adres + '", adres_tej_galerii: "' + adres_tej_galerii + '"');
 	//$('#http_adres').val( g_adres_strony + adres_tej_galerii );
  $('#http_adres').val( pelny_adres + adres_tej_galerii );	
 	$('#http_adres').prop("disabled", true); 								// wyłączenie, aby nie klikac wielokrotnie || attr() vs prop()
@@ -807,7 +813,7 @@ cała galeria siedzi w tabeli o klasie .galeria, w komórkach osadzone miniatury
 	
 // to poniżej powinno działać tylo dla tej samej domeny/lokalizacji co skrypt, wiec porażka 
 
-WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_adres_strony, adres_tej_galerii, g_element_zewnetrzny, "galeria_podstrona" ); 
+WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres_strony + '/', adres_tej_galerii, g_element_zewnetrzny, "galeria_podstrona" ); 
 
 	/* 
 $('div#zawartosc_do_podmiany').load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny, function() {
