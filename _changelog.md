@@ -1,3 +1,73 @@
+updated to v0.2.5 - external JavaScript, page header, new pics, animating logo
+
+* v0.2.5 -- [2017-11-20]
+
+[+] ADDED
+
+-- witryna.js
+* finally moved JavaScript logic to this file!!!
+* added logic for animating logo picture when hover
+
+-- slonce.png
+* new file for page header as main graphic theme and logo
+  - treated as a background image
+
+-- slonce_60x60.png
+* new file as a notification graphic
+
+-- styl.css
+* added inside margin for entire page
+* added styles for the new header section and its inside elements
+* intended rotating of logo when hover state on its parent
+  - works with conjunction of JS
+  - dynamically added or removed classes
+  - also with transitions (translations and rotations)
+* each element inside of gallery table of contents now has max height as delimiter for its internal content
+  - setled height for title, main picture or visible text for any gallery item
+  - these dimensions are changed in media queries (dimmensions increase in proportion to the width of the screen)
+  - only works for really narrow screens
+
+[*] MODIFIED
+
+-- index.php
+* removed Javascript to external file 'witryna.js'
+  - placed into header of file from body element
+* created real page header section with page title, descriptive text and site logo
+* cleaned up HTML structure 
+  - proper use of indentations
+   
+-- styl.css
+* added 50% greater picture of sun for all loading notifications
+  - file 'slonce_60x60.png'
+  - better visual reception in rotating animation inside notifications
+* changed rotating animation to more long and more smooth version 
+* added greater shadow after hover on any gallery item thumbnail 
+
+[-] REMOVED 
+
+-- slonce_40x40.png
+* unnecessary if there is a more detailed version
+
+-- index.php
+* removed unnecessary comments and empty spaces
+
+---------------------------
+
+updated to v0.2.4 - modified counting of loaded galleries
+
+* v0.2.4 -- [2017-11-05]
+
+[*] MODIFIED
+
+-- index.php
+* changed counting method of already displayed galleries
+  - based on loaded gallery subpages (portions of tables of contents) 
+* changed condition of calculate gallery title size
+* exchanged with each other places of notifications for loading a given gallery with their place of title and description
+  - notification is placed after gallery title but before thumbnail list
+
+---------------------------
+
 updated project state to v0.2.3 - text overflow
 
 * v0.2.3 -- [2017-11-03]
