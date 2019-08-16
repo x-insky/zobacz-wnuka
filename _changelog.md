@@ -1,3 +1,39 @@
+updated to v0.2.7 - rebuild of header, site title distinguishion, fittext 
+
+* v0.2.7 -- [2018-03-03]
+
+[+] ADDED
+
+-- new folder 'fittext'
+
+-- new file 'fittext/jquery.fittext.js'
+* enables text scaling depending on parent element size
+  - screen size as a delimiter
+  - to reducing the size of a text trather than an enlarge 
+* added styles for new structure of header with logo
+
+[*] MODIFIED
+
+-- index.php
+* rebuild structure of page header
+
+-- styl.css
+* increased site name's distinctiveness (logo text)
+  - significantly font text increased
+
+-- witryna.js
+* added ability reduce of text of logo and under the logo
+  - configured size of the logo texts for 'fittext' addon
+* added logic in ajax handler depending of success or failure (WczytajZewnetrznyHTMLdoTAGU)
+- differentiator inside each switch statement
+- errors logged into console if encounters any are described with detailed status
+
+[!] BUG
+-- index.php
+* logo texts size is decreasing when page shrinks but remains the same and not grows when page width increases
+
+---------------------------
+
 updated to v0.2.6 - color unifies, removed displayed diagnostics & fixes for form use 
 
 * v0.2.6 -- [2017-12-07]
