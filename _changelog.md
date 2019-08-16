@@ -1,3 +1,18 @@
+updated to v0.2.4 - modified counting of loaded galleries
+
+* v0.2.4 -- [2017-11-05]
+
+[*] MODIFIED
+
+-- index.php
+* changed counting method of already displayed galleries
+  - based on loaded gallery subpages (portions of tables of contents) 
+* changed condition of calculate gallery title size
+* exchanged with each other places of notifications for loading a given gallery with their place of title and description
+  - notification is placed after gallery title but before thumbnail list
+
+---------------------------
+
 updated project state to v0.2.3 - text overflow
 
 * v0.2.3 -- [2017-11-03]

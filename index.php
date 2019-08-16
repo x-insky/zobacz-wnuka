@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="styl.css">
 <link rel="stylesheet" href="lightbox/css/lightbox.css">
 
+
 <script src="jquery-3.2.1.js"></script>
 <script src="lightbox/js/lightbox.js"></script>
 </head>
@@ -58,13 +59,14 @@
 			<h2>A poniżej może pojawią się zdjęcia wnuków, o ile podamy dobry adres i reszta zadziała prawidłowo...</h2>
 			</div>
 			
-		<div id="wczytywanie"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_40x40.png" /></h2>
-		</div>
 		<div id="nazwa_galerii">
 			 <h2></h2>
 			 <p></p>
 		</div>	
 		
+		<div id="wczytywanie"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_40x40.png" /></h2>
+		</div>
+				
 		<div id="skladowisko"></div>
 						
 	<nav id="nawigacja_galeria">
@@ -91,7 +93,7 @@
 		
 	</div>
 
-	<footer id="stopka">&copy;2017 v0.2.3 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2017 v0.2.4 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
 	 <div id="poco">
 	  <h3>Jaki jest cel?</h3>
@@ -197,6 +199,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 					
 				// ... // przetwarzanie spisu treści
 				GenerujSpisGalerii();
+				
 					
 				}); // load-END
 
@@ -232,7 +235,7 @@ $('#nazwa_galerii').show(100);
                     // te w specjalnym kontenerze, bo w spisie treści też są!!! 
 var $lista_podstron = $('#zawartosc_do_podmiany a.link_tresc'); // FIXED! dodano na początku ciągu '#zawartosc_do_podmiany ' jako wyznacznik preszukiwanego elementu
 
-    if ( $lista_podstron.length >= 1 )	// czy są jakieś odnośniki do podstron galerii?
+	if ( $lista_podstron.length >= 1 )	// czy są jakieś odnośniki do podstron galerii?
 	{					// startujemy od kolej strony po pierwszej, ale ostatni zawiera ciąg "starsze"
 	
  // czyszczenie kontenera na nawigację galerii, jeżeli wcześniej zawierał zawartość
@@ -366,10 +369,11 @@ $( g_miejsce_na_spis ).show(100);
 // tworzenie szablonu spisu
 g_ilosc_zaczytanych_paginacji_galerii = $( g_miejsce_na_spis + " div.odnosnik" ).length; // zrób o 5 więcej niż jest ich na stronie
 
-g_biezaca_pozycja_galerii++;	// indeks wyświetlanej aktualnie (kolejno) galerii
+
 	
-	if ( g_biezaca_pozycja_galerii == 1 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
+	if ( g_biezaca_pozycja_galerii == 0 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
 	{
+	g_ilosc_zaczytanych_galerii	= -5 ;
 	var $temp_odnosnik_tytul = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link:first" );	 // dobre do czasu, o ile nie powstanie nowa galeria w trakcie przeglądania starej listy! 
  var temp_atrybut = $( $temp_odnosnik_tytul ).attr('href'); // np. "http://zlobek.chojnow.eu/u_tygryskow,a153.html"
 	temp_atrybut = temp_atrybut.split(",")[1];	
@@ -377,13 +381,17 @@ g_biezaca_pozycja_galerii++;	// indeks wyświetlanej aktualnie (kolejno) galerii
 	
 	g_ilosc_wszystkich_galerii = parseInt( temp_atrybut );
 		
+	g_biezaca_pozycja_galerii++;	// indeks wyświetlanej aktualnie (kolejno) galerii	
+		
 	}
 
+	g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; //inkrementacja o każde 5 zdjęc z poszczególnych zaczytanych galerii 	
+	
 	for( var i=1 + g_ilosc_zaczytanych_paginacji_galerii ; i <= 5 + g_ilosc_zaczytanych_paginacji_galerii ; i++ ) {
 	 // układ poziomy w elemencie jest do bani, za mało tekstu 
 	/* var odnosnik_pojemnik = '<div id="kontener_odnosnik_' + String(i) + '" class="kontener_odnosnik"><div id="zdjecie_odnosnik_' + String(i) + '" class="zdjecie_odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener_tekstowy_odnosnik"><div class="tytul_odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div class="data_odnosnik">Data galerii</div><div class="opis_odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div></div>'; 	*/
 	
-	var odnosnik_pojemnik = '<div id="kontener_odnosnik_' + String(i) + '" class="kontener_odnosnik"><div class="tytul_odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i) + '" class="zdjecie_odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener_tekstowy_odnosnik"><div class="data_odnosnik">Data galerii</div><div class="opis_odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div></div>'; 	
+	var odnosnik_pojemnik = '<div id="kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener_odnosnik"><div class="tytul_odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie_odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener_tekstowy_odnosnik"><div class="data_odnosnik">Data galerii</div><div class="opis_odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div></div>'; 	
 		
 	$( g_miejsce_na_spis ).append( odnosnik_pojemnik );		
 	}	
@@ -450,14 +458,18 @@ var $odnosniki_opis = $( g_tag_do_podmiany_spis + " td blockquote div[align=just
 	//alert('Znaleziono aż ' + $odnosniki_opis.length + ' obiektów z " td blockquote div[align=justify]"');
  if ( $odnosniki_opis.length > 0 )
 	{
-			for( var i=0 ; i < $odnosniki_opis.length ; i++ ){
+			for( var i=0 ; i < $odnosniki_opis.length ; i++ ) {
 			miejsce_docelowe = $( g_miejsce_na_spis + " .opis_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
 
 			//$( $odnosniki_data[i] ).text( tekst_docelowy ).removeAttr("style");
 				
-		var tresc_opisu = $( $odnosniki_opis[i] ).text() ;	
-				$( miejsce_docelowe ).html( tresc_opisu );			
+			var tresc_opisu = $( $odnosniki_opis[i] ).text() ;	
+			$( miejsce_docelowe ).html( tresc_opisu );			
 				
+				/*
+				// z jakiejś racji wysokości nie zawsze się aktualizują, czasem wartości wzorcowe szablonu się przenoszą na stałe
+				// czyżby operacje w DOMie się nie odświeżały?
+				// przeniesiono do kolejnej pętli for
 		var wysokosc_kontenera_div = $( miejsce_docelowe ).parents('.kontener_odnosnik').outerHeight();		
 		var wysokosc_tytulu = $( miejsce_docelowe ).parents('.kontener_odnosnik').find('.tytul_odnosnik').outerHeight(true);
 		var wysokosc_obrazka = $( miejsce_docelowe ).parents('.kontener_odnosnik').find('.zdjecie_odnosnik').outerHeight(true); // + 4;
@@ -468,23 +480,25 @@ var $odnosniki_opis = $( g_tag_do_podmiany_spis + " td blockquote div[align=just
 			
 		//opis maksymalnie może mieć 304px (16px * 19) -- wielokrotność wierszy dla tekstu o 100% == 16px 		
 		
-			if ( roznica_zawartosc < -35 )  // kolejnośc ma zneczenie, ewentualne sumowanie klas, najmnijsza wysokośc na końcu (nadpisywanie wartości wysokości dla podelementu)
+		 if	( roznica_zawartosc < 0 )
 			{
-			$( miejsce_docelowe ).addClass('max_y_260');
-			}
-			if ( roznica_zawartosc < -85 ) 
-			{
-			$( miejsce_docelowe ).addClass('max_y_208');						
-			}
-			if ( roznica_zawartosc < -115 ) 
-			{
-			$( miejsce_docelowe ).addClass('max_y_160');						
-			}
-			if ( roznica_zawartosc < -175 ) 
-			{
-			$( miejsce_docelowe ).addClass('max_y_96');						
-			}
-				
+				if ( roznica_zawartosc < -35 )  // kolejnośc ma zneczenie, ewentualne sumowanie klas, najmnijsza wysokośc na końcu (nadpisywanie wartości wysokości dla podelementu)
+				{
+				$( miejsce_docelowe ).addClass('max_y_260');
+				}
+				if ( roznica_zawartosc < -85 ) 
+				{
+				$( miejsce_docelowe ).addClass('max_y_208');						
+				}
+				if ( roznica_zawartosc < -115 ) 
+				{
+				$( miejsce_docelowe ).addClass('max_y_160');						
+				}
+				if ( roznica_zawartosc < -175 ) 
+				{
+				$( miejsce_docelowe ).addClass('max_y_96');						
+				}
+			}	*/
 				
 		/*		
 			if ( roznica_zawartosc < -175 ) 
@@ -524,20 +538,70 @@ var $odnosniki_opis = $( g_tag_do_podmiany_spis + " td blockquote div[align=just
 			}	*/			
 						
 
-		
-	 tresc_opisu = "K: " + String(wysokosc_kontenera_div) + "-" + String(wysokosc_tytulu + wysokosc_obrazka + wysokosc_daty + wysokosc_tekstu ) + " = " + String( roznica_zawartosc ) + " (" + String(wysokosc_tytulu) + ", " + String(wysokosc_obrazka) + ", " + String(wysokosc_daty) + ", " + String(wysokosc_tekstu) + ")<br />" + tresc_opisu ;			
-		$( miejsce_docelowe ).html( tresc_opisu );			
+			/*
+			tresc_opisu = "K: " + String(wysokosc_kontenera_div) + "-" + String(wysokosc_tytulu + wysokosc_obrazka + wysokosc_daty + wysokosc_tekstu ) + " = " + String( roznica_zawartosc ) + " (" + String(wysokosc_tytulu) + ", " + String(wysokosc_obrazka) + ", " + String(wysokosc_daty) + ", " + String(wysokosc_tekstu) + ")<br />" + tresc_opisu ;			
+		$( miejsce_docelowe ).html( tresc_opisu );			*/
 			
 		} // for-END
-	}
+		
+				// pętla specjal TU była
+		
+	} // if-end opis
+	
+	
+			// osobna pętla specjalnego przeznaczenia
+		for( var i=0 ; i < $odnosniki_opis.length ; i++ ) {
+		miejsce_docelowe = $( g_miejsce_na_spis + " #kontener_odnosnik_" + String( g_ilosc_zaczytanych_galerii + 1 + i ) );
+  
+  var wysokosc_kontenera_div = $( miejsce_docelowe ).outerHeight();		
+		var wysokosc_tytulu = $( miejsce_docelowe ).find('.tytul_odnosnik').outerHeight(true);
+		// czemu IMG lub DIV z nim się mierzy jak chce i kiedy chce?!	
+		//var wysokosc_obrazka = $( miejsce_docelowe ).find('.zdjecie_odnosnik').outerHeight(true); // + 4;
+		var wysokosc_obrazka = $( miejsce_docelowe ).find('img').outerHeight(true) + 4; // + 4 do obrazka z obramowaniem 2 * 4px;	
+		var wysokosc_daty = $( miejsce_docelowe ).find('.data_odnosnik').outerHeight(true);
+		var wysokosc_tekstu = $( miejsce_docelowe ).find('.opis_odnosnik').outerHeight(true);		
+
+		var roznica_zawartosc = wysokosc_kontenera_div - ( wysokosc_tytulu + wysokosc_obrazka + wysokosc_daty + wysokosc_tekstu ); 				
+			
+		//opis maksymalnie może mieć 304px (16px * 19) -- wielokrotność wierszy dla tekstu o 100% == 16px 		
+		
+		 if	( roznica_zawartosc < 0 )
+			{
+				if ( roznica_zawartosc < -35 )  // kolejnośc ma znaczenie, ewentualne sumowanie klas, najmnijsza wysokośc na końcu (nadpisywanie wartości wysokości dla podelementu)
+				{
+				$( miejsce_docelowe ).addClass('max_y_260');
+				}
+				if ( roznica_zawartosc < -85 ) 
+				{
+				$( miejsce_docelowe ).addClass('max_y_208');						
+				}
+				if ( roznica_zawartosc < -115 ) 
+				{
+				$( miejsce_docelowe ).addClass('max_y_160');						
+				}
+				if ( roznica_zawartosc < -175 ) 
+				{
+				$( miejsce_docelowe ).addClass('max_y_96');						
+				}
+			}	
+			
+		var tresc_opisu = $( $odnosniki_opis[i] ).text() ;		//wzorcowa, ale już właściwa treśc każdego z odnośników
+			
+		tresc_opisu = "K: " + String(wysokosc_kontenera_div) + "-" + String(wysokosc_tytulu + wysokosc_obrazka + wysokosc_daty + wysokosc_tekstu ) + " = " + String( roznica_zawartosc ) + " (" + String(wysokosc_tytulu) + ", " + String(wysokosc_obrazka) + ", " + String(wysokosc_daty) + ", " + String(wysokosc_tekstu) + ") g_galerii: " + String(g_ilosc_zaczytanych_galerii) + ", o_t.l: " + String($odnosniki_tytuly.length) +  "<br />" + tresc_opisu ;			
+		$( miejsce_docelowe ).find('.opis_odnosnik').html( tresc_opisu );		
+		} // for-END-specjał
+	
 	
 	// czyszczenie kontenera źródłowego
 	$( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();
 	
-	g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; //inkrementacja o każde 5 zdjęc z poszczególnych zaczytanych galerii 
+		
+	//if ( g_biezaca_pozycja_galerii == 1 )		// pierwsze przejście -- ten sam warunek co powyżej w funkcji !!!
+	//{
+	//g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; //inkrementacja o każde 5 zdjęc z poszczególnych zaczytanych galerii 
+	//}
 	
-	
-	if ( g_ilosc_zaczytanych_galerii > g_ilosc_wszystkich_galerii ) // inne zmienne wstawić
+	if ( g_ilosc_zaczytanych_galerii >= g_ilosc_wszystkich_galerii ) // inne zmienne wstawić
 	{
 	$( g_miejsce_na_spis + " div.kontener_odnosnik:gt(" + g_ilosc_wszystkich_galerii + ")" ).css({ "backgroundColor" : "red" });	
 	}
@@ -629,6 +693,10 @@ WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres
 	
 ZaczytajSpisGalerii();
 	
+
+	
+
+	// ...	
 	
 	
 	
@@ -689,11 +757,18 @@ $('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyśln
 $('#spis_sterowanie').on("click", "#zaladuj_galerie_spis", function(){ 
 	//var $this = $(this);
 	//alert('Zdarzenie ładowania treści?!\n g_biezaca_pozycja_galerii: ' + g_biezaca_pozycja_galerii + ', g_ilosc_zaczytanych_paginacji_galerii: ' + g_ilosc_zaczytanych_paginacji_galerii );
+
+	g_biezaca_pozycja_galerii++;  // zwiększenie licznika, przejście do wywołania kolejnej podstrony
+	// licznik zwiększa się już PO nacisnięciu odnosnika i PRZED zakończeniem przetwarznia uprzednio zaczytanych treści !!! 
+	// co najwyżej kolejność jest inna na liście wyników
+	
 		if ( g_biezaca_pozycja_galerii <= g_ilosc_zaczytanych_paginacji_galerii )
 		{
 		$( g_wczytywanie_spis ).show(100); // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
 		console.log('Na żądanie zaczytano kolejną podstronę w galerii ' + g_biezaca_pozycja_galerii + ' z ' + g_ilosc_zaczytanych_paginacji_galerii + ' podstron');
 			
+		//g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; //inkrementacja o każde 5 zdjęc z poszczególnych zaczytanych galerii 	
+		
 		ZaczytajSpisGalerii();
 		//wyświetlenie-dodanie kolejnego spisu do już wyświetlonej listy odnosników	
 		//WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona"	);
