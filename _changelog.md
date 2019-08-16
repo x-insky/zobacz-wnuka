@@ -1,3 +1,49 @@
+updated to v0.2.6 - color unifies, removed displayed diagnostics & fixes for form use 
+
+* v0.2.6 -- [2017-12-07]
+
+[*] MODIFIED
+
+-- index.php
+* changed few texts inside header and footer
+
+-- styl.css
+* unified background colors of a header's elements
+* background colors for main areas also unified
+  - changes near button next-page-loader
+* changed colors of a few headers
+  - slighty modified hover state or depending from theirs placing
+* expanded the size of buttons in header and footer
+
+-- witryna.js
+* loaded contents treated as html fragments not like regular text
+  - better works with further styling
+  - for some elements it's safer when their content is a text 
+
+[F] FIXED
+
+-- styl.css
+* proper displaying of loaded contents in gallery table of contents
+  - no more unintentional shift of content from the left (padding or margin)
+
+-- witryna.js
+* fixed loading contents for a gallery by form field
+  - derived from v0.1.1a
+  - moved logic inside a callback function
+  - proper handling of form data like a regular click from gallery lists
+  - handled equally within the same callback function for the form button click or gallery item click 
+
+[-] REMOVED 
+
+-- index.php
+* removed text header just before place where gallery details will be displayed as a first time
+
+-- styl.css
+* visually removed containers for displaying diagnostics for encountered elements of gallery table of contents and actual subpage
+* also removed yellow belt containing counter of encountered subpages of currently displayed gallery
+
+---------------------------
+
 updated to v0.2.5 - external JavaScript, page header, new pics, animating logo
 
 * v0.2.5 -- [2017-11-20]

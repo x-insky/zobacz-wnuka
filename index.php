@@ -35,7 +35,7 @@
   <div id="naglowek_kontener">
 			
    <h1 class="zmienny">Do uruchomienia galerii wymagane podanie adresu witryny ze zdjęciami <button id="odswiez" style="margin: 0.05em; padding: 0.1em 0.6em; font-size: 60%;">Odśwież</button></h1>
-			<h3>Umożliwia łatwiejszy podgląd rozrabiajacych wnuków przez dziadków. Wpisz/wklej pełny adres do przeglądania galerii z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a> lub skorzystaj z poniższej listy galerii</h3>
+			<h3>Wpisz/wklej pełny adres do przeglądania galerii z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a> lub po prostu skorzystaj z poniższej listy galerii</h3>
    <div id="formularz">
     <form action="#" method="post" id="wyszukaj">
 				 <fieldset>
@@ -69,7 +69,7 @@
 
  <div id="glowna">
 			<div id="komentarz">
-			<h2>A poniżej może pojawią się zdjęcia wnuków, o ile podamy dobry adres i reszta zadziała prawidłowo...</h2>
+			<!--<h2>A poniżej może pojawią się zdjęcia wnuków, o ile podamy dobry adres i reszta zadziała prawidłowo...</h2>-->
 			</div>
 			
 		<div id="nazwa_galerii">
@@ -92,13 +92,13 @@
 		
 	</div>
 
-	<footer id="stopka">&copy;2017 v0.2.5 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2017 v0.2.6 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
 	 <div id="poco">
 	  <h3>Jaki jest cel?</h3>
 	   <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
 	  <h3>Po polskiemu</h3>
-	   <p>Galerię żłobka przeglądało się karygodnie, więc należało coś z tym zrobić. Obsługa tego serwisu również jest toporna, ale miejmy nadzieję, że z czasem zapewni ona łatwe funkcjonowanie. Kiedy powstanie optymalny interefejs obecnie wymagane kopiowanie odnośników nie będzie koniecznością, a jedynie prostym działaniem (no może jeszcze nie przyjemnością). </p>
+	   <p>Galerię żłobka przeglądało się karygodnie, więc należało coś z tym zrobić. Wcześniejsza obsługa tego serwisu również była mało intuicyjna, ale z czasem zapewniono (w miarę) łatwe nawigowanie pomiędzy kolejnymi zdjęciami w ramach wielu galerii. Bieżący wygląd interefejsu stanowi niemal końcową funkcjonalność witryny. Dla testów i zauważalności postępów nad intuicyjnością interejsu zachowano relikt z formularzem i koniecznością kopiowania odnośników.</p>
 	  <h3>Jeszcze raz</h3>
 	  <p>Poniższa witryna ma za zadanie tylko ułatwić korzytanie z materiałów zawartych w serwisie żłobka. Twórcy zależy na przedłużeniu życia myszy oraz powierzchni dotykowych komputerów, dlatego jego celem jest przeniesienie obciążenia na klawisze strzałek oraz w przyszłości na ewentulane kółko myszy (funkcjonalność zależna od dostawcy usług, a w zasadzie wyboru innego dostawcy).     
 	  <h3>Informacje i zastrzeżenia</h3>
@@ -108,7 +108,7 @@
   <h3>Witryna wymaga dostępu do lokalizacji, skąd pochodzą oryginalne materiały.</h3>
  	 <p>Niniejszy serwis służy tylko do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagany dostęp do oryginalnego serwisu.</p>
  	<h3>Kopiuj-wklej</h3>
- 	 <p>Bieżący serwis wymaga podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Odnośnik z paska adresu należy wpisać (wkleić) w pole formularza. Prawdopodobnie ten mechanizm jest nieco utrudniony przy posługiowaniu się przeglądarką mobilną, korzytając z telefonu (smartfonu). Dowolna przeglądarka www z komputera zapewnia machanizm kopiowania.  
+ 	 <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu, po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz wklajanie w pole formularza nie jest wymagane i prawodpodobnie ta uprzykrzająca funkcjonalnośc zostanie wkrótce usunięta.
  	<h3>Podstrony</h3>
   	<p>Przeglądanie w galeriach ograniczających klikanie działa prawiłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis ma umożliwić łatwą nawigację pomiędzy kolejnymi obrazkami.</p>
   <h3>Uwaga</h3> 
