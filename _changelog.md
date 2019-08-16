@@ -1,3 +1,23 @@
+updated to v0.3.1 - interceptor file rebuilded
+
+* v0.3.1 -- [2018-03-07]
+
+[*] MODIFIED
+
+-- przechwytywacz.php
+* changed returned string from interceptor file
+  - now returns directly only an element contains table of contents (single subpage from all subpages) or expected gallery details (any gallery subpage)
+  - string '<table width="700" class="galeria">...</table>' is returned as a success of ajax call
+* +++ about 40% to 60% bytes less in returned contents in any success call, depending of contents +++
+  - average between 6kB to 10kB instead of 14k to 20k bytes returned by previous version of interceptor
+  - so about ~50% overhead removed
+* added logic to any remote readed contents
+  - if problem occurs then site returns string contains fully readed HTML page (any subpage)
+  - not guarantined receving a page data in successful ajax call, that contains expected data
+  - if returned page not contained expected data in any form the returned is a specified string as a notifier
+
+---------------------------
+
 updated to v0.2.7 - rebuild of header, site title distinguishion, fittext 
 
 * v0.2.7 -- [2018-03-03]
@@ -15,7 +35,7 @@ updated to v0.2.7 - rebuild of header, site title distinguishion, fittext
 [*] MODIFIED
 
 -- index.php
-* rebuild structure of page header
+* rebuilded structure of page header
 
 -- styl.css
 * increased site name's distinctiveness (logo text)
