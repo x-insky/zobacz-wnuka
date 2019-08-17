@@ -49,14 +49,19 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 	 switch ( rodzaj_dzialania ) {
 				
 			case "galeria_podstrona":
-				$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function() {
-					// alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
+				$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function(odpowiedz, status, xhr) {
+					if ( status === "success" )// alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
+					{	
 					// logowanie sukcesu ;)
 					console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
 					// WYKONAJ DALSZE FUNKCJE, zależne od SUKCESU zaczytania lub nie	
 					// kasuj poprzednią zawartość elementu???	
 
 					GenerujPodstronyGalerii();
+					}
+					else{
+					alert("Coś się zwaliło przy PODSTRONIE galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" );	
+					}
 					}); //load-END
 				
 				break;
@@ -64,7 +69,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 					
 			case "spis_galerii" :
 				
-				$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function() {
+				$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function(odpowiedz, status, xhr) {
+					if ( status === "success" )
+					{	
 					// alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
 					// logowanie sukcesu ;)
 					console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
@@ -72,8 +79,12 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 					//$(tag_podmieniany).html( unescape(encodeURIComponent(podmieniona_zawartosc)) );	// jednao z wielu mozliwych zamian kodowania
 					
 				// ... // przetwarzanie spisu treści
-				GenerujSpisGalerii();
-				
+				 GenerujSpisGalerii();
+					}
+					else
+					{	
+					alert("Coś się zwaliło przy SPISIE galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")");					
+					}
 					
 				}); // load-END
 
@@ -614,8 +625,12 @@ ZaczytajSpisGalerii();
 
 	
 
-	// ...	
+	// sterowanie wielkością czcionki nagłówka
 	
+	//$("#banner h1.logo").fitText();
+	 $("#napisy h1").fitText(1.0, { minFontSize: '15px', maxFontSize: '65px' });
+	 $("#napisy h2").fitText(2.7, { minFontSize: '10px', maxFontSize: '28px' });
+	 $("#napis_spod h3").fitText(3.0, { minFontSize: '6px', maxFontSize: '20px' });
 	
 	
 // ---------- *** FUNKCJE ZDARZENIOWE *** --------------	

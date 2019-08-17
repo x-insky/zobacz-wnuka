@@ -11,6 +11,7 @@
 
         <script src="jquery-3.2.1.js"></script>
         <script src="lightbox/js/lightbox.js"></script>
+		<script src="fittext/jquery.fittext.js"></script>	
 		<script src="witryna.js"></script>
 
 	</head>
@@ -26,10 +27,15 @@
 			<div id="slonce_logo"><!-- <img src="grafiki/slonce.png"> --></div>
 		</div>
 		<div id="napisy">
-			<h1><span>Zobacz Wnuka!</span> Galeria ze <span>Żłobka Słoneczko</span> w Chojnowie</h1>
- 		<h3>Serwis umożliwia łatwiejszy podgląd rozrabiajacych wnuków przez dziadków ... i nie tylko. Treści pochodzą z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
+			<h1 class="logo">Zobacz Wnuka!</h1>
+			<h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w Chojnowie</h2>
  		<p class="clearfix2" />
+ 	
 		</div>
+		<div id="napis_spod">
+			<h3>Serwis umożliwia łatwiejszy podgląd rozrabiajacych wnuków przez dziadków ... i nie tylko. Treści pochodzą z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
+		</div>
+
 	</div>
 	
   <div id="naglowek_kontener">
@@ -92,7 +98,7 @@
 		
 	</div>
 
-	<footer id="stopka">&copy;2017 v0.2.6 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2017 v0.2.7 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
 	 <div id="poco">
 	  <h3>Jaki jest cel?</h3>
