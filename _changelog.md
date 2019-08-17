@@ -1,3 +1,36 @@
+updated to v0.3.2 - viewport, box-sizing, container, choiced form
+
+* v0.3.2 -- [2018-03-09]
+
+[+] ADDED
+
+-- new file 'zlobek-styl.css'
+* renamed from 'styl.css'
+* added 'box-sizing: border-box' for all page elements
+* added 'kontener' class for limit elements max-width
+* inserted styles for new html structures (choice form)
+
+-- index.php
+* added 'viewport' meta tag
+  - enables proper tests on mobile devices (after publishing the site on external server)
+
+* added structure for selecting any gallery by any given number from a range
+  - added numeric form field and a slider for that purpose
+  - added randomize button
+  - added button for confirm selected number
+
+[*] MODIFIED
+
+-- index.php
+* moved external scripts from head section to the closing body tag, including 'jquery.fittext.js', 'witryna.js' and 'lightbox.js' but without 'jquery' file
+* renamed few containers from div tags to html semantic elements (header, nav, i.e.)
+* renamed few headers text
+
+-- zlobek-styl.css
+* temporary showed again diagnostics for encountered elements of gallery table of contents and actual subpage
+ 
+---------------------------
+
 updated to v0.3.1 - interceptor file rebuilded
 
 * v0.3.1 -- [2018-03-07]

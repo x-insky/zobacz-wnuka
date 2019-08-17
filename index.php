@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="pl">
 	<head>
-		<meta charset="utf-8">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Galeria ze Żłobka w Chojnowie</title>
 		<link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
 		<link rel="stylesheet" href="reset.css">
 		<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">  <!-- czcionka Muli -->	
-        <link rel="stylesheet" href="styl.css">
+		<link rel="stylesheet" href="zlobek-styl.css">
         <link rel="stylesheet" href="lightbox/css/lightbox.css">
 
-        <script src="jquery-3.2.1.js"></script>
-        <script src="lightbox/js/lightbox.js"></script>
-		<script src="fittext/jquery.fittext.js"></script>	
-		<script src="witryna.js"></script>
+		<script src="jquery-3.2.1.js"></script>
 
 	</head>
 
@@ -29,7 +27,7 @@
 		<div id="napisy">
 			<h1 class="logo">Zobacz Wnuka!</h1>
 			<h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w Chojnowie</h2>
- 		<p class="clearfix2" />
+			<p class="clearfix2" ></p>
  	
 		</div>
 		<div id="napis_spod">
@@ -55,21 +53,71 @@
 			</div>	
 			
 				<div id="spis_tresci">
-					<h2>Lista galerii ze żłobka</h2>
+					<h2>Lista galerii ze Żłobka</h2>
 					 <div id="galeria_spis">
 					 	
 					 </div>
-					 <div id="spis_sterowanie">
+					 
+					 <nav id="spis_sterowanie">
 							<p id="status_galerii_spis"></p>
-					 <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>	
+					 <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
+					 	
+					 	<div id="selektor">
+					 	 <div class="kontener">
+					 	  <h2 id="">lub wybierz dowolną galerię poniżej <span>(V)</span></h2>
+					 	 	<div id="wybor_galerii">
+					 	 	 <form action="#" method="post" id="wybierz_galerie">
+											<fieldset>
+											 <div class="kontener">
+												<label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
+												<input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
+													<div>
+														<input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
+														<input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
+													</div>
+												</div>
+												<div class="kontener">
+												<input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" list="suwak_znaczniki" alt="Wybierz numer galerii z zakresu" />
+													<datalist id="suwak_znaczniki">
+														<option value="0" label="0">
+														<option value="1" label="1">
+														<option value="25">
+														<option value="50" label="50%">
+														<option value="75">
+														<option value="100" label="max">
+												 </datalist>
+												</div>
+												<div>
+												<input type="button" id="losuj_zakres" name="losuj_zakres" value="Losuj galerię" />
+												<input type="submit" id="suwak_galerii_submit" role="submit" value="Zobacz wybrany" />
+												<div id="form_error">Wymagany wybór spośród dostępnych numerów galerii</div>			
+											</div>		
+										</fieldset>
+									</form>
+
+					 	 </div>
+					 	 
+					 	 <div id="skladowisko_status_wybranej_galerii">
+					 	 	
+					 	 </div>
+					 	 
+					 	 <div id="status_wybranej_galerii">
+					 	 	
+					 	 </div>
+					 	 
+					 	 <div id="s"></div>
+					  </div>
 					 </div>
-					 <div id="wczytywanie_spis"><h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
+					 
+					 <div id="wczytywanie_spis">
+					 	<h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
 		    </div>
 		    	
 					 <div id="galeria_spis_podmiana" class="clearfix">
 					 	
 					 </div>
-				</div>	
+				</nav>	
+		</div>
 		</div>		
 	</header>
 
@@ -89,6 +137,7 @@
 		<div id="skladowisko"></div>
 						
 	<nav id="nawigacja_galeria">
+
 	</nav>
 								
 	 <div id="zawartosc_do_podmiany">
@@ -96,9 +145,9 @@
 		</div>
 		
 		
-	</div>
+	</div> <!-- glowna -->
 
-	<footer id="stopka">&copy;2017 v0.2.7 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2017 v0.3.2 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
 	 <div id="poco">
 	  <h3>Jaki jest cel?</h3>
@@ -125,5 +174,11 @@
 	
 </div>	<!-- DIV#witryna -->
 	
+
+		<script src="fittext/jquery.fittext.js"></script>	
+		<script src="witryna.js"></script> 		
+		<script src="lightbox/js/lightbox.js"></script>
+		
+		
 </body>
 </html>
