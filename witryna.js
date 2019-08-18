@@ -39,17 +39,28 @@ var g_biezaca_pozycja_galerii = 0;
 var g_ilosc_zaczytanych_galerii = 0;					// ile elementów wstawiono już na stronę
 var g_ilosc_wszystkich_galerii = 0;	
 	
+var g_wybrany_nr_galerii = 0;
+var g_wybrany_nr_galerii_nazwa = '';
+var g_wybrany_nr_galerii_opis = '';	
+	
+var $g_input_nr_galerii	= $('input#galeria_wybrany_nr'); 
+var $g_suwak_nr_galerii	= $('input#suwak_galerii'); 
+
+	
 // ---------- ***  FUNKCJE PRAWIE GLOBALNE *** --------------		
 	
-function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zasobu, element_witryny, rodzaj_dzialania )	{ 
+function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zasobu, element_witryny, rodzaj_dzialania, dane )	{ 
 		if ( element_witryny.length > 0 )  {	// dodanie spacji na początku, separator dla TAGU po nazwiem pliku 
 		element_witryny = " " + element_witryny;				
 		}
-  
+  //debugger; 
+	
 	 switch ( rodzaj_dzialania ) {
 				
 			case "galeria_podstrona":
-				$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function(odpowiedz, status, xhr) {
+				try 
+				{	
+				$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
 					if ( status === "success" )// alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
 					{	
 					// logowanie sukcesu ;)
@@ -57,19 +68,29 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 					// WYKONAJ DALSZE FUNKCJE, zależne od SUKCESU zaczytania lub nie	
 					// kasuj poprzednią zawartość elementu???	
 
+					CzyscNiepotrzebneElementy();	
 					GenerujPodstronyGalerii();
 					}
-					else{
+					else
+					{
 					alert("Coś się zwaliło przy PODSTRONIE galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" );	
 					}
 					}); //load-END
+				}
+				
+				catch (err2) {
+				alert("BŁAD! " + err2 + "/nCoś się zwaliło przy PODSTRONIE galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" );		
+    }
+					
 				
 				break;
 				
 					
 			case "spis_galerii" :
 				
-				$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function(odpowiedz, status, xhr) {
+				try 
+				{	
+				$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
 					if ( status === "success" )
 					{	
 					// alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
@@ -79,6 +100,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 					//$(tag_podmieniany).html( unescape(encodeURIComponent(podmieniona_zawartosc)) );	// jednao z wielu mozliwych zamian kodowania
 					
 				// ... // przetwarzanie spisu treści
+					CzyscNiepotrzebneElementy();		
 				 GenerujSpisGalerii();
 					}
 					else
@@ -87,14 +109,72 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 					}
 					
 				}); // load-END
-
+   }
+			
+			catch (err2) {
+			alert("BŁAD! " + err2 + "/nCoś się zwaliło przy PODSTRONIE galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" );		
+   }
 				
 				break;
 
+		case "spis_galerii_rekurencja" :
+			 
+				try 
+				{	
+				$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
+					if ( status === "success" )
+					{
+					var tresc_odnosnika_wybranej_galerii = OdczytajTrescOdnosnikaWybranejGalerii( dane.nr_galerii_w_spisie );
+						
+						
+						// zmienić parametry wywołania dla rekurencji !!! 
+						// WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zasobu, element_witryny, rodzaj_dzialania, dane );
+						
+						// potrzebne to nwoe??
+						//OdczytajWybranaGalerie( , ); // ( numer podstrony galerii, numer galerii )
+					}
+					else
+					{	
+					alert("Coś się zwaliło przy GENEROWAIU SPISU WYBRANEJ GALERII! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")");					
+					}
+					
+				}); // load-END
+   }
+			
+			catch (err2) {
+			alert("BŁAD! " + err2 + "/nCoś się zwaliło przy PODSTRONIE galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" );		
+   }
+				
+				// ...		
+			break;
+				
+				
 		case "spis_galerii_wybor" :
 			 
+				try 
+				{	
+				$(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
+					if ( status === "success" )
+					{	
+					//JakaśFunkcja();	// tu wywołaj jakąś fukcję
+						
+						// a w niej wywołaj asmąsiebiee
+					}
+					else
+					{	
+					alert("Coś się zwaliło przy GENEROWANIU WYBRANEJ GALERII! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")");					
+					}
+					
+				}); // load-END
+   }
+			
+			catch (err2) {
+			alert("BŁAD! " + err2 + "/nCoś się zwaliło przy PODSTRONIE galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" );		
+   }
+				
+				
 				// ...		
-				break;
+			break;				
 		
 				
 			default:	
@@ -102,6 +182,28 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 					console.log('WczytajZewnetrznyHTMLdoTAGU( tag: ' + tag_podmieniany + ', domena: ' + adres_domeny + ', zasób: ' + adres_zasobu + ', elem: ' + element_witryny + ', działanie: ' +  rodzaj_dzialania + ') ... COŚ POSZŁO NIE TAK');
 				//break;
  } //switch-rodzaj_dzialania-END
+	
+	
+	
+	function CzyscNiepotrzebneElementy() {
+/* błedy zgłaszana w konsoli dla pobierania niepotrzebnych plików - grafiki:
+				<img src="zdjecia/zlobek.gif" border="0" align="center">
+				<img src="zdjecia/zlobek.jpg" border="0">
+				<img src="zdjecia/zlobek_90_2.jpg" alt="(szerokość: 150 / wysokość: 92)">
+				<img src="zdjecia/zlobek_90_132.jpg" alt="(szerokość: 190 / wysokość: 190)">
++ odwołania do plików zewnętrznych witryny macierzystej;
+				<SCRIPT src='js/cookie.js' type='text/javascript'></SCRIPT>
+				<LINK href='style/stylglowny.css' rel='stylesheet' type='text/css' />
+*/	
+var $pierwszy_obrazek = $('img[src*="zdjecia/zlobek.gif"]');
+	if ( $pierwszy_obrazek.length === 1 ) 
+	{
+	console.info('usuwanie pliku grafiki dla "zdjecia/zlobek.gif"');	
+	$pierwszy_obrazek.remove();
+	}
+	//$('img[src*="zdjecia/zlobek.jpg"]').remove();
+
+};
 																
 } // END-WczytajZewnetrznyHTMLdoTAGU() - DEFINICJA
 
@@ -151,15 +253,18 @@ var $lista_podstron = $('#zawartosc_do_podmiany a.link_tresc'); // te w specjaln
 		var odnosnik_podstrony = $( $lista_podstron[i] ).attr('href'); 	// wyciąga href z nawigacji podstrony/paginacji
 		console.log('Natrafiono na odnośnik nr ' + String(i+1) + ' o zawartości \'' + odnosnik_podstrony + '\'');
 		
-		var nr_galerii = odnosnik_podstrony.split(",")[2];
+		//var nr_galerii = odnosnik_podstrony.split(",")[2];
+		var nr_galerii = parseInt ( odnosnik_podstrony.substr( odnosnik_podstrony.lastIndexOf(",") + 2, odnosnik_podstrony.length - 5 )	);
+		// atrybut_href.lastIndexOf(",") 	
 			 //if ( !nr_galerii) { nr_galerii = 1; }
-			nr_galerii = nr_galerii.substr(1); // dodatkowe usuwanie pierwszego znaku, tj. "p", które jest przed numerem podstrony galerr (numer kończy się ".html" - pomijane przy konwersji )
+		//	nr_galerii = nr_galerii.substr(1); // dodatkowe usuwanie pierwszego znaku, tj. "p", które jest przed numerem podstrony galerr (numer kończy się ".html" - pomijane przy konwersji STRINGU)
 			
 		var nowyPrzycisk = $('<button></button>', {
     id: "galeria_paginacja_" + String( i+1 ),
 			 class : "przycisk_galeria",
 		  value : odnosnik_podstrony,
-			 text : "Galeria nr " + String(parseInt(nr_galerii)),
+			 //text : "Galeria nr " + String(parseInt(nr_galerii)),
+		 	text : "Galeria nr " + nr_galerii,
 			 "data-tag" : g_tag_do_podmiany_zdjecia,
 			 "data-adres_strony" : g_adres_strony,
 			 "data-adres_galerii" : odnosnik_podstrony,
@@ -209,11 +314,18 @@ var $lista_podstron = $('#zawartosc_do_podmiany a.link_tresc'); // te w specjaln
 		var $biezacy = $(this);	
   var odnosnik = $biezacy.attr('href'); 
 			
-		var odnosnik_nr_zdjecia = ( odnosnik.split(",")[1] );
+			/*
+			 var atrybut_href_pozycja = atrybut_href.lastIndexOf(",");		
+				atrybut_href = atrybut_href.substr( atrybut_href_pozycja + 2 ); // +2 znaki za pozycją ',' i 'a'
+				g_ilosc_wszystkich_galerii = parseInt( atrybut_href );
+  	*/
+					
+		var odnosnik_nr_zdjecia = parseInt( odnosnik.substr( odnosnik.lastIndexOf( ",z") + 2, odnosnik.length - 8 ) );
+			
 		var opis_obrazka = $biezacy.find('img').removeAttr('border').attr('alt'); // jak wywalić bordera?!
 			
-		console.log("Dla elementu <a> o HREF '" + odnosnik + "' split(\",\")[1] to '" + odnosnik_nr_zdjecia + " a ALT miniatury IMG to '" + opis_obrazka + "'" );	
-			odnosnik_nr_zdjecia = odnosnik_nr_zdjecia.substr(1); // dodatkowe usuwanie pierwszego znaku, tj. "z", które jest przed numerem zdjęcia 
+		console.log("Dla elementu <a> o HREF '" + odnosnik + "' NR_ZDJĘCIA to '" + odnosnik_nr_zdjecia + "', a ALT miniatury IMG to '" + opis_obrazka + "'" );	
+			//odnosnik_nr_zdjecia = odnosnik_nr_zdjecia.substr(1); // dodatkowe usuwanie pierwszego znaku, tj. "z", które jest przed numerem zdjęcia 
 
 			
 			// sklejanie adresu docelowego obrazka  
@@ -241,10 +353,12 @@ var $lista_podstron = $('#zawartosc_do_podmiany a.link_tresc'); // te w specjaln
 		
 //	} //if-END $lista_podstron.length >= 1
 } // GenerujPodstronyGalerii-END
+
+
+	
 	
 
 function GenerujSpisGalerii() {
-	
 
 	
 $( g_wczytywanie_spis ).hide(100);	// schowaj informację, skoro wczytano zawartość
@@ -262,12 +376,23 @@ g_ilosc_zaczytanych_paginacji_galerii = 0; // i tak późniejsza pętla działa 
 	{
 	g_ilosc_zaczytanych_galerii	= -5 ;
 	var $temp_odnosnik_tytul = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link:first" );	 // dobre do czasu, o ile nie powstanie nowa galeria w trakcie przeglądania starej listy! 
- var temp_atrybut = $( $temp_odnosnik_tytul ).attr('href'); // np. "http://zlobek.chojnow.eu/u_tygryskow,a153.html"
-	temp_atrybut = temp_atrybut.split(",")[1];	
- temp_atrybut = temp_atrybut.substr(1);		
+ var atrybut_href = $( $temp_odnosnik_tytul ).attr('href'); // np. "http://zlobek.chojnow.eu/u_tygryskow,a153.html"
+	//temp_atrybut = temp_atrybut.split(",")[1]; // jest dobre, ale leży przy dodanym ',' w adresie odnosnika (jako treść)
+ var atrybut_href_pozycja = atrybut_href.lastIndexOf(",");		
+	atrybut_href = atrybut_href.substr( atrybut_href_pozycja + 2 ); // +2 znaki za pozycją ',' i 'a'
+	g_ilosc_wszystkich_galerii = parseInt( atrybut_href );
 	
-	g_ilosc_wszystkich_galerii = parseInt( temp_atrybut );
-	
+		//odniesie tej wartości do maksymalnej wartośc przesuwu suwaka wyboru galerii + inicjowanie suwaka i inputa na tę wartość
+		console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii...');		
+		
+		g_wybrany_nr_galerii = g_ilosc_wszystkich_galerii;
+		$g_suwak_nr_galerii.attr( 'max' , g_ilosc_wszystkich_galerii );
+		$g_suwak_nr_galerii.val( g_ilosc_wszystkich_galerii );	
+		$g_input_nr_galerii.val( g_ilosc_wszystkich_galerii );	
+
+		console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii... PO -- g_wybrany_nr_galerii: ' + g_wybrany_nr_galerii + ', a POZYCJA: ' + atrybut_href_pozycja 
+														+ ' dla odnośnika: ' + atrybut_href );		
+		
 	//g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5;
 		
 	// g_biezaca_pozycja_galerii++;	// indeks wyświetlanej aktualnie (kolejno) galerii	-- inkrementację dodano w zdarzeniu naciskania obiektu "ZAŁDADUJ GALERIE" 
@@ -569,7 +694,8 @@ var $lista_podstron = $('#galeria_spis_podmiana td[colspan=2] a.link_tresc'); //
 	var ile_podstron_spisu_tresci = 0;
 		for (var i=0 ; i < $lista_podstron.length ; i++ ) {
 			var nazwa_podstrony_galerii = $( $lista_podstron[i] ).text();  
-			 if ( ( nazwa_podstrony_galerii.search("nowsze") >= 0 ) || ( nazwa_podstrony_galerii.search("starsze") >= 0 ) ) {
+			 if ( ( nazwa_podstrony_galerii.search("nowsze") >= 0 ) || ( nazwa_podstrony_galerii.search("starsze") >= 0 ) ) 
+				{
 				continue;  //przeskok do kolejnego wywołania	
 				}
 		ile_podstron_spisu_tresci++;	
@@ -597,6 +723,46 @@ var $lista_podstron = $('#galeria_spis_podmiana td[colspan=2] a.link_tresc'); //
 	
 	
 	
+function OdczytajTrescOdnosnikaWybranejGalerii	( numer_kolejnego_w_spisie ) 
+{
+var tag_kontener_przeszukiwany = 'div#skladowisko_status_wybranej_galerii';
+var tag_miejsce_docelowe = 'div#nazwa_galerii';	
+var tresc_odnosnika = '';
+	// wstawiac na próżno SRC do WSZYSTKICH miniatur aby nie było błędu HTTP_404 ?!  
+var ile_pozycji_spisu_tresci = $( tag_kontener_przeszukiwany + " td.galeria_kolor a.link_tresc img").length;	// ile odnośników/obrazków w spisie treści
+console.log('ILE: ' + ile_pozycji_spisu_tresci);		
+
+	if ( numer_kolejnego_w_spisie >= 0 )
+	{	
+		if  ( ile_pozycji_spisu_tresci >= 0 )
+		{
+			//var miejsce_docelowe = $( g_miejsce_na_spis + " .zdjecie_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
+  var $odnosnik_zdjecia = $( tag_kontener_przeszukiwany + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( numer_kolejnego_w_spisie ) + ")")
+
+		var src_docelowe = g_protokol_www + g_adres_strony + "/" + $odnosnik_zdjecia.attr( "src");	
+		$odnosnik_zdjecia.attr( "src", src_docelowe );
+		$( tag_miejsce_docelowe ).html( $odnosnik_zdjecia ); // podmiana oryginalnej zawartości - wstawienie skojarzonego zdjęcia i dopisanie tytułu z opisem
+		console.log('SRC: ' + src_docelowe);	
+	
+		var odnosnik_tytul = $( tag_kontener_przeszukiwany + " td.galeria_kolor b a.link:eq(" + parseInt( numer_kolejnego_w_spisie ) + ")" ).text();	
+		$( tag_miejsce_docelowe ).append( '<h2>' + odnosnik_tytul + '</h2>' );
+		}
+
+		var odnosnik_opis = $( tag_kontener_przeszukiwany + " td blockquote div[align=justify]:eq(" + parseInt( numer_kolejnego_w_spisie ) + ")" ).text();	
+	 $( tag_miejsce_docelowe ).append( '<p>' + odnosnik_opis + '</p>' );
+		
+	
+// $( tag_kontener_przeszukiwany ).empty();		// zerowanie po przeszukaniu
+		
+$('#nazwa_galerii').show(100);	
+//$('#skladowisko').show(100);
+		
+		
+ } // IF numer_kolejnego_w_spisie >= 0 END
+return 1;
+} //OdczytajTrescOdnosnikaWybranejGalerii-END
+	
+	
 // ---------- *** AUTO URUCHAMIANE *** --------------	
 	
 function ZaczytajSpisGalerii() {
@@ -620,11 +786,30 @@ WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres
 	
 }	// ZaczytajSpisGalerii-END
 	
+function InicjujPrzyciskiWyboruGalerii()	
+{
+//$('#losuj_zakres').click();	
+g_wybrany_nr_galerii = Math.floor(Math.random() * 100) + 1 ;	
+console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_galerii + ') wartości pól formularza przeglądania galerii...');
+$g_input_nr_galerii.val( g_wybrany_nr_galerii );	
+$g_suwak_nr_galerii.val( g_wybrany_nr_galerii );	
+$g_suwak_nr_galerii.attr( 'max' , 105 ); // nie trzeba teraz?	
+	
+}
+	
+// ***************************************************************************	
+// ---------- *** AUTOURUCHAMIANIE *** --------------	 
+	
+InicjujPrzyciskiWyboruGalerii();
+	
 ZaczytajSpisGalerii();
 	
 
 	
+// ***************************************************************************		
 
+	
+	
 	// sterowanie wielkością czcionki nagłówka
 	
 	//$("#banner h1.logo").fitText();
@@ -640,16 +825,107 @@ $('#odswiez').click(function() {
     location.reload();
 });	
 	
-$('#poco_button').click( function(){
+$('#poco_button').click( function() {
  $('div#poco').toggle(200);	
 });
 	
-$('#pomoc_button').click( function(){
+$('#pomoc_button').click( function() {
  $('div#pomoc').toggle(200);	
 });
 
 	
+	$('#losuj_zakres').click( function() {
 
+		if ( g_ilosc_wszystkich_galerii > 0 )
+		{
+
+			g_wybrany_nr_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_galerii ) + 1 ; 
+
+			//ustawienie pola formularza
+			$g_input_nr_galerii.val( g_wybrany_nr_galerii );
+			// 
+			$g_suwak_nr_galerii.val( g_wybrany_nr_galerii );
+		}
+
+
+	}); // #losuj_zakres clikd-END	
+
+
+	$g_suwak_nr_galerii.change( function() {
+	var wartosc_biezaca = $(this).val();
+
+	g_wybrany_nr_galerii	= wartosc_biezaca;
+	$g_input_nr_galerii.val( wartosc_biezaca );
+
+	});	
+
+
+	/* $g_suwak_nr_galerii.change( function() {
+	var wartosc_biezaca = $(this).val();
+
+	g_wybrany_nr_galerii	= wartosc_biezaca;	
+	$g_input_nr_galerii.val( wartosc_biezaca );
+
+	});		*/
+
+	
+	$('#wybrany_nr_zwieksz').click( function() {
+		if ( ( g_ilosc_wszystkich_galerii > 0 ) && ( g_wybrany_nr_galerii > 0 ) )  // dodatkowe sprawdzenie, w razie przeoczenia lub usunięcia wcześniejszego: g_wybrany_nr_galerii = g_ilosc_wszystkich_galerii (ewentualnie, gdyby wybrać to jako pierwsze)  
+		{  
+		 if ( g_wybrany_nr_galerii	< g_ilosc_wszystkich_galerii ) 
+			{
+			g_wybrany_nr_galerii++;
+  	$g_input_nr_galerii.val( g_wybrany_nr_galerii );
+			$g_suwak_nr_galerii.val(	g_wybrany_nr_galerii );
+		 }
+		}
+	}); //  #wybrany_nr_zwieksz click-END
+	
+	$('#wybrany_nr_zmniejsz').click( function() {
+		if ( g_ilosc_wszystkich_galerii > 0 )
+		{
+		 if ( g_wybrany_nr_galerii	> 1 ) 
+			{
+			g_wybrany_nr_galerii--;
+  	$g_input_nr_galerii.val( g_wybrany_nr_galerii );
+			$g_suwak_nr_galerii.val(	g_wybrany_nr_galerii );
+		 }
+		}
+	}); //  #wybrany_nr_zmniejsz click-END
+	
+	
+	
+	$('#suwak_galerii_submit').click( function() {
+	 if ( g_ilosc_wszystkich_galerii > 0 )
+		{
+		var tag_na_podstrone_spisu_tresci_galerii = 'div#skladowisko_status_wybranej_galerii';	
+ 	var nr_galerii = parseInt( $g_input_nr_galerii.val() ); // odczytanie z formularza jako Number
+		var nr_podstrony_galerii_max = Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszystkich_galerii % 5 ) / 5 );	
+		var ile_razy = Math.floor( nr_galerii / 5 ); 
+		var ile_reszty = nr_galerii % 5 ;
+		var pozycja_w_galerii = ( g_ilosc_wszystkich_galerii - nr_galerii ) % 5;	
+		var nr_podstrony_galerii = nr_podstrony_galerii_max - Math.floor( ( nr_galerii + pozycja_w_galerii ) / 5 ) ;
+			//http://zlobek.chojnow.eu/galeria,k0,p38.html	
+		var adres_podstrony_galerii_fragment = '/' + 'galeria,k0,p';
+		var adres_podstrony_galerii_obliczony = adres_podstrony_galerii_fragment + nr_podstrony_galerii + '.html';	
+  var adres_galerii_wygenerowany = g_protokol_www + g_adres_strony + adres_podstrony_galerii_obliczony;	
+		//var nr_podstrony_galerii_max = (ile_razy + 1) + 			
+			
+ 	var tresc_wygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nr_podstrony_galerii_max + "<br />"; 
+			tresc_wygenerowana += "WYBRANA: " + nr_galerii + ", PODSTRONA: " + nr_podstrony_galerii + ", POZYCJA_W_GALERII: +" + pozycja_w_galerii + "<br />"; 
+			tresc_wygenerowana += "<br /> Dla wybranej " + nr_galerii + " odnośnik ma nr " + ile_razy + " w " + ile_reszty + " podstronie, a łączny adres to: \"" + adres_galerii_wygenerowany + "\"</p>";
+		
+ 	$('#status_wybranej_galerii').html( tresc_wygenerowana );	
+
+	 // return false; // póki co też nie przechodź		
+	 // skladowisko_status_wybranej_galerii	
+	 WczytajZewnetrznyHTMLdoTAGU( tag_na_podstrone_spisu_tresci_galerii, g_protokol_www + g_adres_strony, adres_podstrony_galerii_obliczony, g_element_zewnetrzny_spis, "spis_galerii_rekurencja", { 'nr_galerii_w_spisie' : pozycja_w_galerii } ); 	
+			
+		}
+			
+	return false;		// !!! nie robię nic, nie przesyłam wybranej galerii do przejrzenia 
+	});
+	
 	
 	/*	
 $(function(){
@@ -657,7 +933,7 @@ var contentURI= 'http://zlobek.chojnow.eu/u_tygryskow,a147.html table.galeria'; 
 $('#zawartosc_do_podmiany').load('przechwytywacz.php?url_zewn='+ contentURI);
 });
 */
-$('#testowy_adres_button').click(function(){
+$('#testowy_adres_button').click(function() {
 var testowy_adres_galerii = "http://zlobek.chojnow.eu/30-u_misiow,z1058,p1.html";
 	
 $('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyślnej do pola wpisywania 
@@ -666,7 +942,7 @@ $('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyśln
 	
 
 //$('.przycisk_galeria').on("click", function(){ 
-	$('#nawigacja_galeria').on("click", ".przycisk_galeria", function(){ // ?! co obiektem zdarzenia?
+	$('#nawigacja_galeria').on("click", ".przycisk_galeria", function() { // ?! co obiektem zdarzenia?
 	var $this = $(this);	
 	var serwer = g_protokol_www + $this.attr('data-adres_strony') + '/';
 		
@@ -687,7 +963,7 @@ $('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyśln
 });	//  on("click")-$('#nawigacja_galeria')-END	
 	
 	
-$('#spis_sterowanie').on("click", "#zaladuj_galerie_spis", function(){ 
+$('#spis_sterowanie').on("click", "#zaladuj_galerie_spis", function() { 
 	//var $this = $(this);
 	//alert('Zdarzenie ładowania treści?!\n g_biezaca_pozycja_galerii: ' + g_biezaca_pozycja_galerii + ', g_ilosc_zaczytanych_paginacji_galerii: ' + g_ilosc_zaczytanych_paginacji_galerii );
  //debugger;
@@ -853,14 +1129,16 @@ return false; // !!! konieczne przy click!
 }); // click-END-#http_adres_submit
 	
 	
-$('#banner').hover( function() {
-			$(this).find('#slonce_logo').addClass('animacja_1');
-  },
-		function() {
- 		$(this).find('#slonce_logo').removeClass('animacja_1');	
-	}
-); // hover-END
+	$('#banner').hover( function() {
+				$(this).find('#slonce_logo').addClass('animacja_1');
+			},
+			function() {
+				$(this).find('#slonce_logo').removeClass('animacja_1');	
+		}
+	); // #banner hover-END
+
 	
-	
+
+
 	
 }); //document-ready-END

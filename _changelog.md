@@ -1,3 +1,53 @@
+updated to v0.3.3 - gallery selection by number with JS logic
+
+* v0.3.3 -- [2018-03-28]
+
+[ ] ADDED
+
+-- witryna.js
+* added function 'CzyscNiepotrzebneElementy()' to remove unnecesary elemenents from received data from interceptor file
+  - used in each of string data returned by ajax query
+  - for cleaning of unsued images (e.g. image path removed inside 'src' attribute)
+  - gained no notifications about non-downloaded files (also unavailable ones) and reduced data transfer
+  - list of unused images internally provided
+* added few semi-global variables to memorize values provided by choice form of any gallery number, and a title with a description for a current gallery
+
+[*] MODIFIED
+
+-- witryna.js
+* added secured versions for readed contents from page contents to convert into numerical values if that values should be numerical
+  - values are enforced to be numerical in many encountered instances, before they are saved in a variables 
+  - changed conversion methods depending from the context
+* changed method of counting encountered subpages of galleries list with skipping first and last elements
+* added handling code for the slider, three buttons and a numeric field of a form
+  - default and max values provided by readed contents 
+  - any slider moves or clicks on buttons will modyfy value inside numeric field
+  - a good control logic when using only buttons or slider
+  - submit button uses logic of 'advanced mathematics' to determine gallery URL by provided gallry number ;)
+* modified parameters of function 'WczytajZewnetrznyHTMLdoTAGU'
+  - added extra differentaitor for provide additional data (object)
+  - added try..catch block for each variant of switched work with load() function inside try block
+  - also added extra info about success/failure of Ajax call inside catch block 
+* added extra switch variant of 'WczytajZewnetrznyHTMLdoTAGU' to load selected gallery by chosen number ('spis_galerii_rekurencja')
+  - necessary to another recursive call 'WczytajZewnetrznyHTMLdoTAGU' inside that function
+  - uses data from mentioned earlier object
+  - added also another extra switch variant ('spis_galerii_wybor')
+  - no control logic added, it's just a scaffolding for any future code addisions
+  - added default switch action just for error notification
+
+* IMPORTANTS for 'WczytajZewnetrznyHTMLdoTAGU':
+  - needed to determine a fully specified address of a gallery from server, there is no way to display any gallery only by it's number!
+  - every gallery address is written as a connection of gallery number and a gallery title, writen as a proper URL form
+  - the only way to obtain gallery address is to determine the subpage number where that gallery belong
+  - also a position inside of any subpage is needed (asequence: first or second (if available) ... or fifth (if available))
+  - the last subpage with gallery list may contains form one to five elements!
+
+* added helper function 'OdczytajTrescOdnosnikaWybranejGalerii' for reading URL of provided element by it's number (sequence from 1 to 5 on that subpage)
+  - it's also modifies of current gallery title and description
+  - a photo connected with a selected gallery number (determined by subpage and sequence) is added for current gallery section
+
+---------------------------
+
 updated to v0.3.2 - viewport, box-sizing, container, choiced form
 
 * v0.3.2 -- [2018-03-09]

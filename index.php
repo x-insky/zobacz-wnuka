@@ -2,7 +2,7 @@
 <html lang="pl">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta neme="viewport" content="width=device-width, initial-scale=1" />
 		<title>Galeria ze Żłobka w Chojnowie</title>
 		<link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
 		<link rel="stylesheet" href="reset.css">
@@ -147,7 +147,7 @@
 		
 	</div> <!-- glowna -->
 
-	<footer id="stopka">&copy;2017 v0.3.2 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2017 v0.3.3 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
 	 <div id="poco">
 	  <h3>Jaki jest cel?</h3>
