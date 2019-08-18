@@ -1,3 +1,34 @@
+updated to v0.3.5 - first ajax call, counting logic, error ajax notif., scroll animation f.
+
+* v0.3.5 -- [2018-06-21]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added simple look to error notification 
+
+-- witryna.js
+* added helper function 'PrzewinDoElementu' for page scrolling animation to any given element
+  - works only for visible elements
+  - with parameter for duratrion of animation
+* added logic do display any errors of Ajax call if any encountered
+  - code inside function 'WczytajZewnetrznyHTMLdoTAGU' in each switch statement variant
+  - provided with and error code and detailed status
+  - uses page scrolling animation function
+
+[*] MODIFIED
+
+-- witryna.js
+* changed the behavior of first ajax call for newest galleries list (first page of a nursery server page)
+  - sets semi-global variables
+  - it initialized the form for chosing any gallery number
+* changed counting of the already loaded gallery list subpages and actual position in that list
+  - differentelly counted while gets success or failure of ajax response
+* cleanup: unified indentaions in many code blocks inside nested conditions
+* added few console messages for diagnostics
+
+---------------------------
+
 updated to v0.3.4 - a simple typo inside meta tag
 
 * v0.3.4 -- [2018-03-28]

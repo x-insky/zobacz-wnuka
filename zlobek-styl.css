@@ -655,6 +655,17 @@ padding: 0.2em;
 font-size: 110%;		
 }
 
+p.blad {
+padding: 2em;
+margin: 3px auto;
+width: 90%;
+color: yellow;
+text-align: center;
+font-size: 2em;
+font-weight: bold;
+background-color: darkred;
+border: 2px solid #eee;
+}
 
 .clearfix::after {
 content: "";

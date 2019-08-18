@@ -147,7 +147,7 @@
 		
 	</div> <!-- glowna -->
 
-	<footer id="stopka">&copy;2017 v0.3.4 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2018 v0.3.5 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
 	 <div id="poco">
 	  <h3>Jaki jest cel?</h3>
