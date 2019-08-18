@@ -1,8 +1,21 @@
+updated to v0.3.4 - a simple typo inside meta tag
+
+* v0.3.4 -- [2018-03-28]
+
+[F] FIXED
+
+-- witryna.js
+* a simple typo inside meta tag in head section
+  - 'name' not 'neme'!
+  - fixes: #7 - issue: 'responsive layout don't works on smarthones'
+
+---------------------------
+
 updated to v0.3.3 - gallery selection by number with JS logic
 
 * v0.3.3 -- [2018-03-28]
 
-[ ] ADDED
+[+] ADDED
 
 -- witryna.js
 * added function 'CzyscNiepotrzebneElementy()' to remove unnecesary elemenents from received data from interceptor file
