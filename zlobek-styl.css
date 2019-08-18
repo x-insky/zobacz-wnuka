@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+* {
+box-sizing: border-box;	
+}
+
 div#witryna {
 margin: 1em auto;
 width: 98%;
@@ -322,21 +326,21 @@ max-height: 96px;
 
 
 
-div#spis_tresci div#spis_sterowanie {
+div#spis_tresci nav#spis_sterowanie {
 		/* background-color: aqua;	*/
 
 }
 
 
-div#spis_sterowanie p#status_galerii_spis {
+nav#spis_sterowanie p#status_galerii_spis {
 padding: 0.6em 1em;
 border: 2px dashed blue;
 background-color: rgba(50, 60, 200, 0.7);
-			display: none; 	
+			/* display: none; */	
 }
 
 
-div#spis_tresci div#spis_sterowanie h2#zaladuj_galerie_spis {
+div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
 display: none;	
 max-width: 16em;
 background-color: cornflowerblue;
@@ -351,7 +355,7 @@ box-shadow: 1px 1px 3px darkblue;
 transition: all 0.5s ease 0.1s;
 }
 
-div#spis_tresci div#spis_sterowanie h2#zaladuj_galerie_spis:hover {
+div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:hover {
 box-shadow: 1px 1px 3px blue, 0px 0px 3px black;
 	/* box-shadow: 0 0 3px rgba(0,0,0, 0.6); */
 background-color: blue;
@@ -365,9 +369,15 @@ float : right ;
 padding : 1em ;	
 margin : 1em ;
 border : 2px solid red ;	
-			display: none /*  --- */	
+			/* display: none */
 }
 
+
+
+.kontener {
+ width : 100% ;
+ align-items: center;	
+}
 
 
 
@@ -395,8 +405,19 @@ padding: 0.8em 1.2em;
 div#glowna div#nazwa_galerii {
 background-color: deepskyblue;
 display: none;
-padding: 0.5em;	
+padding: 0.5em;
+padding-right: 1em;	
 margin-bottom: 0.5em;	
+overflow: hidden;	
+}
+
+
+div#glowna div#nazwa_galerii img {
+float : left;
+margin : 0.5em;
+margin-right: 1.5em;	
+max-height: 320px;
+border: 4px solid white;	
 }
 
 div#glowna div#nazwa_galerii p {
@@ -417,6 +438,38 @@ padding: 0.1em 0.6em;
 font-size: 120%;
 border-radius: 4px;
 }
+
+
+form#wybierz_galerie {
+	
+}
+form#wybierz_galerie input {
+padding-left: 1em;
+padding-right: 1em;
+}
+
+form#wybierz_galerie input#galeria_wybrany_nr {
+max-width: 3.8em;
+padding-left: 0.5em;
+padding-right: 0.5em;
+text-align: center;
+}
+
+
+form#wybierz_galerie input#suwak_galerii {
+margin: 0.5em 4em;
+width: 70%;	
+}
+
+/*
+form#wybierz_galerie input.maly_guzik {
+padding-left: 1em;
+padding-right: 1em;
+
+}
+
+*/
+
 
 
 div#wczytywanie, div#wczytywanie_spis {
@@ -444,7 +497,7 @@ top: 185px ;
 left: 1150px ;
 background-color: yellow ;
 border: 2px solid red ;	
-   display: none ; /* --- */
+/*   display: none ; */ /* --- */
 }
 
 
@@ -453,7 +506,7 @@ div#skladowisko {
 background-color: #c3d5e2;
 padding: 0.5em 0.6em;
 overflow: hidden;
-display: none;	
+/* display: none;	*/
 /* display: table;	*/
 }
 
@@ -590,6 +643,16 @@ text-align: center;
 
 p {
 text-align: justify;	
+}
+
+form {
+font-size: 110%;	
+}
+
+form input {
+margin: 0.2em;
+padding: 0.2em;
+font-size: 110%;		
 }
 
 

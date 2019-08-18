@@ -1,3 +1,119 @@
+updated to v0.3.4 - a simple typo inside meta tag
+
+* v0.3.4 -- [2018-03-28]
+
+[F] FIXED
+
+-- witryna.js
+* a simple typo inside meta tag in head section
+  - 'name' not 'neme'!
+  - fixes: #7 - issue: 'responsive layout don't works on smarthones'
+
+---------------------------
+
+updated to v0.3.3 - gallery selection by number with JS logic
+
+* v0.3.3 -- [2018-03-28]
+
+[+] ADDED
+
+-- witryna.js
+* added function 'CzyscNiepotrzebneElementy()' to remove unnecesary elemenents from received data from interceptor file
+  - used in each of string data returned by ajax query
+  - for cleaning of unsued images (e.g. image path removed inside 'src' attribute)
+  - gained no notifications about non-downloaded files (also unavailable ones) and reduced data transfer
+  - list of unused images internally provided
+* added few semi-global variables to memorize values provided by choice form of any gallery number, and a title with a description for a current gallery
+
+[*] MODIFIED
+
+-- witryna.js
+* added secured versions for readed contents from page contents to convert into numerical values if that values should be numerical
+  - values are enforced to be numerical in many encountered instances, before they are saved in a variables 
+  - changed conversion methods depending from the context
+* changed method of counting encountered subpages of galleries list with skipping first and last elements
+* added handling code for the slider, three buttons and a numeric field of a form
+  - default and max values provided by readed contents 
+  - any slider moves or clicks on buttons will modyfy value inside numeric field
+  - a good control logic when using only buttons or slider
+  - submit button uses logic of 'advanced mathematics' to determine gallery URL by provided gallry number ;)
+* modified parameters of function 'WczytajZewnetrznyHTMLdoTAGU'
+  - added extra differentaitor for provide additional data (object)
+  - added try..catch block for each variant of switched work with load() function inside try block
+  - also added extra info about success/failure of Ajax call inside catch block 
+* added extra switch variant of 'WczytajZewnetrznyHTMLdoTAGU' to load selected gallery by chosen number ('spis_galerii_rekurencja')
+  - necessary to another recursive call 'WczytajZewnetrznyHTMLdoTAGU' inside that function
+  - uses data from mentioned earlier object
+  - added also another extra switch variant ('spis_galerii_wybor')
+  - no control logic added, it's just a scaffolding for any future code addisions
+  - added default switch action just for error notification
+
+* IMPORTANTS for 'WczytajZewnetrznyHTMLdoTAGU':
+  - needed to determine a fully specified address of a gallery from server, there is no way to display any gallery only by it's number!
+  - every gallery address is written as a connection of gallery number and a gallery title, writen as a proper URL form
+  - the only way to obtain gallery address is to determine the subpage number where that gallery belong
+  - also a position inside of any subpage is needed (asequence: first or second (if available) ... or fifth (if available))
+  - the last subpage with gallery list may contains form one to five elements!
+
+* added helper function 'OdczytajTrescOdnosnikaWybranejGalerii' for reading URL of provided element by it's number (sequence from 1 to 5 on that subpage)
+  - it's also modifies of current gallery title and description
+  - a photo connected with a selected gallery number (determined by subpage and sequence) is added for current gallery section
+
+---------------------------
+
+updated to v0.3.2 - viewport, box-sizing, container, choiced form
+
+* v0.3.2 -- [2018-03-09]
+
+[+] ADDED
+
+-- new file 'zlobek-styl.css'
+* renamed from 'styl.css'
+* added 'box-sizing: border-box' for all page elements
+* added 'kontener' class for limit elements max-width
+* inserted styles for new html structures (choice form)
+
+-- index.php
+* added 'viewport' meta tag
+  - enables proper tests on mobile devices (after publishing the site on external server)
+
+* added structure for selecting any gallery by any given number from a range
+  - added numeric form field and a slider for that purpose
+  - added randomize button
+  - added button for confirm selected number
+
+[*] MODIFIED
+
+-- index.php
+* moved external scripts from head section to the closing body tag, including 'jquery.fittext.js', 'witryna.js' and 'lightbox.js' but without 'jquery' file
+* renamed few containers from div tags to html semantic elements (header, nav, i.e.)
+* renamed few headers text
+
+-- zlobek-styl.css
+* temporary showed again diagnostics for encountered elements of gallery table of contents and actual subpage
+ 
+---------------------------
+
+updated to v0.3.1 - interceptor file rebuilded
+
+* v0.3.1 -- [2018-03-07]
+
+[*] MODIFIED
+
+-- przechwytywacz.php
+* changed returned string from interceptor file
+  - now returns directly only an element contains table of contents (single subpage from all subpages) or expected gallery details (any gallery subpage)
+  - string '<table width="700" class="galeria">...</table>' is returned as a success of ajax call
+* +++ about 40% to 60% bytes less in returned contents in any success call, depending of contents +++
+  - average between 6kB to 10kB instead of 14k to 20k bytes returned by previous version of interceptor
+  - so about ~50% overhead removed
+* added logic to any remote readed contents
+  - if problem occurs then site returns string contains fully readed HTML page (any subpage)
+  - not guarantined receving a page data in successful ajax call, that contains expected data
+  - if returned page not contained expected data in any form the returned is a specified string as a notifier
+
+---------------------------
+
 updated to v0.2.7 - rebuild of header, site title distinguishion, fittext 
 
 * v0.2.7 -- [2018-03-03]
@@ -15,7 +131,7 @@ updated to v0.2.7 - rebuild of header, site title distinguishion, fittext
 [*] MODIFIED
 
 -- index.php
-* rebuild structure of page header
+* rebuilded structure of page header
 
 -- styl.css
 * increased site name's distinctiveness (logo text)
