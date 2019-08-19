@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="reset.css">
 		<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">  <!-- czcionka Muli -->	
 		<link rel="stylesheet" href="zlobek-styl.css">
-        <link rel="stylesheet" href="lightbox/css/lightbox.css">
+		<link rel="stylesheet" href="lightbox/css/lightbox.css">
 
 		<script src="jquery-3.2.1.js"></script>
 
@@ -68,18 +68,12 @@
                                 <h2 id="selektor_naglowek">...lub wybierz dowolną galerię poniżej <span>(V)</span></h2>
                                 <form action="#" method="post" id="wybierz_galerie" autocomplete="off">
                                     <div id="wybor_galerii">
-                                        <div id="suwak_info">
+                                     <div id="suwak">
                                             <div>
                                                 <label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
                                                 <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
-                                            </div>    
-                                            <div>
-                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
-                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
                                             </div>
-                                        </div>
-                                        <div id="suwak">
-                                            <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" list="suwak_znaczniki" alt="Wybierz numer galerii z zakresu" />
+                                            <div>                                            <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" list="suwak_znaczniki" alt="Wybierz numer galerii z zakresu" />
                                                 <datalist id="suwak_znaczniki">
                                                     <option value="0" label="0">
                                                     <option value="1" label="1">
@@ -87,7 +81,14 @@
                                                     <option value="50" label="50%">
                                                     <option value="75">
                                                     <option value="100" label="max">
-                                             </datalist>
+                                                </datalist>
+                                            </div>
+                                        </div>
+                                        <div id="suwak_info">
+                                            <div>
+                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
+                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
+                                            </div>
                                         </div>
                                         <div>
                                             <input type="button" id="losuj_zakres" name="losuj_zakres" value="Losuj galerię" />
@@ -123,8 +124,11 @@
             </div>
 
             <div id="nazwa_galerii">
-                 <h2></h2>
-                 <p></p>
+                <div class="kontener">
+                    <img />
+                    <h2></h2>
+                    <p></p>
+                </div>    
             </div>	
 
             <div id="wczytywanie"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" /></h2>
@@ -142,7 +146,7 @@
 		
 	   </main> <!-- glowna -->
 
-	<footer id="stopka">&copy;2018 v0.3.7 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2018 v0.3.8 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
         <div id="poco">
             <h3>Jaki jest cel?</h3>

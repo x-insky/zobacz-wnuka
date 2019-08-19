@@ -183,8 +183,8 @@ width: 35em;
 input[type="button"] {
 /*background-color: darkblue; 
 color: yellow;	*/
-padding-left: 0.4em;		
-padding-right: 0.4em;		
+padding: 0.25em 1em;
+font-size: 120%;
 }
 	
 form#wyszukaj input[type="submit"] {
@@ -398,18 +398,18 @@ padding-bottom: 0.8em;
 }
 
 div#wybor_galerii div {
-flex-grow: 1;  
+/*flex-grow: 1;  */
 }
 
 div#wybor_galerii div#suwak_info {
 display: flex;
 justify-content: space-between;
 align-items: center; 
-flex-basis: 200px;    
+/*flex-basis: 200px;*/    
 }
 
 div#wybor_galerii div#suwak_info div {
-flex-basis: 200px;
+flex-basis: 130px;
 padding: 0.5em 0.5em; 
 text-align: right;
 }
@@ -426,13 +426,18 @@ text-align: center;
 }
 
 div#wybor_galerii div#suwak {
+    
 flex-basis: 305px;  
 text-align: center;
-flex-grow: 5;
-padding-top: 1.5em;
-padding-bottom: 1em;    
+flex-grow: 6;
 background-color: lightseagreen;
 }
+
+div#wybor_galerii div#suwak div {
+/*padding-top: 1.5em;
+padding-bottom: 1em; */   
+}
+
 
 form#wybierz_galerie {
 	
@@ -462,6 +467,7 @@ form#wybierz_galerie input.maly_guzik {
 padding: 0.5em 2em;    
 display: block;
 min-width: 120px;
+margin: 0 auto;    
 }
 
 
@@ -754,10 +760,17 @@ clear: both;
 
 .kontener {
 width : 100% ;
+max-width: 1400px;    
 align-items: center;
+margin: 0 auto;
 }
 
-
+.szara_zawartosc {
+filter: grayscale(80%);
+/*
+filter: brightness(120%);
+*/
+}
 
 
 /* tempklasse */

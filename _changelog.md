@@ -1,3 +1,46 @@
+v0.3.8 - functional container class, automated gallery display, greater buttons, (no more address form) and more
+
+* v0.3.8 -- [2018-06-26]
+
+[+] ADDED
+
+-- index.php
+* added all purpose 'container' class (exactly "kontener") at top level  containers of page
+
+-- zlobek-styl.css
+* this container class from now has a max-width in pixels
+  - useful for grouping purposes and aligning items horizontally (and also somehow vertically)
+*  prepared 'szara_zawartosc' class intented for notifyining temporary disabled blocks and it's contents
+  - semi transparent gray filter
+
+-- witryna.js
+* added function 'UzupełnijBiezacaGalerie' for automated insertions of contents for actual gallery based on provided parameters
+  - used in any click event service and repetitive showing operations 
+  - any needed parameters readed from click event object
+  - also takes care of rebuilding image for current gallery
+  - a detailed html structure is an output
+* few semi-global variables added for each needed attribute/element
+
+[*] MODIFIED
+
+-- index.php
+* changed container structure inside flexbox controlled layout (selecting any gallery number)
+  - to achieve layout where label and gallery number input field are rather on the top of the slider (mostly on any screen width)
+  - and also display wide slider as possible on any screen width
+
+-- zlobek-styl.css
+* changed basis and grow of flex-elements (containers for form elements)
+* slight widening of buttons inside area of selecting any gallery
+* previous style also included in subpage navigation buttons inside current gallery
+
+-- witryna.js
+* inserts input-buttons (type=button) instead real buttons elements (just for existing styling purposes)
+* changed operations on gallery readings to collect needed attributes to build a current gallery header (fires 'UzupełnijBiezacaGalerie' function)
+* displaying gallery details provided by form marked for deprecation in project
+  - by comment for now only
+
+---------------------------
+
 v0.3.7 - click-counter of next-page-load, flexbox container & easy pick, two times scrolling, scaled-thumbnail-hover, gallery main photo
 
 * v0.3.7 -- [2018-06-25]
