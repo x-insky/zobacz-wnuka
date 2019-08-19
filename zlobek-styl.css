@@ -376,7 +376,8 @@ border : 2px solid red ;
 
 .kontener {
  width : 100% ;
- align-items: center;	
+ align-items: center;
+    
 }
 
 
@@ -819,8 +820,8 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 	
 	
 	form#wyszukaj input[type="text"] {
- width: 17em;		
- }
+    width: 17em;		
+    }
 	
 	div#galeria_spis div.kontener_odnosnik {
 	min-height: 375px;			

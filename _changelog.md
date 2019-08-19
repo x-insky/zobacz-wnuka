@@ -1,3 +1,32 @@
+v0.3.6 - moving screen and veryfying enetred numeric value
+
+* v0.3.6 -- [2018-06-22]
+
+[+] ADDED
+
+-- witryna.js
+* uses function 'PrzewinEkranDoElementu' in new places as a notify of placing new contents (new subpages list or new gallery or it's subpage) after each success ajax call
+  - not only to notify any error as previously using
+  - it moves view to page element with new content
+* added function 'NormalizujZakresPolaInput' as a getter and veryfication value of numeric field of selected gallery
+  - sets min or max value if entered value isn't in range (depend it's lower or higher than the range)
+  - field also sets slider value (previously value came from the slider or buttons +1/-1)
+  - two ways of setting selected gallery number from now: by numeric field or slider
+  - used in blur event and form submiting
+
+[*] MODIFIED
+
+-- index.php
+* changed indentations of all page elements, the most in footer area
+
+-- witryna.js
+* changed function name 'PrzewinDoElementu' to 'PrzewinEkranDoElementu'
+  - renamed also all used executions
+  - used also in new places as a notify of placing new contents (new subpages list or new gallery or it's subpage)
+* little amendments of code style
+
+---------------------------
+
 updated to v0.3.5 - first ajax call, counting logic, error ajax notif., scroll animation f.
 
 * v0.3.5 -- [2018-06-21]
