@@ -1,4 +1,50 @@
-v0.3.6 - moving screen and veryfying enetred numeric value
+v0.3.7 - click-counter of next-page-load, flexbox container & easy pick, two times scrolling, scaled-thumbnail-hover, gallery main photo
+
+* v0.3.7 -- [2018-06-25]
+
+[+] ADDED
+
+-- index.php
+* temporary added few slider's markers to indicate a used range (only a few beginning static values!)
+  - a HTML standard doesn't work properly in all tested browsers
+
+-- witryna.js
+* added a semi-global variable as click counter on next-subpage-loader button
+  - as a delimiter of max request number (ajax call) for existing galleries list subpages
+  - used mainly inside click event service 
+  - won't allow any next Ajax request if the limit is exceed
+* a page is scrolled to gallery details first time directly when gallery item list is clicked and the second time immediately when new content is loaded
+  - scrolling to element is a callback function for first time showing container
+* page tries to scroll only for far view from newly added content, not to change of vertical view when unnecessary
+
+[*] MODIFIED
+
+-- index.php
+* changed proper indentations of all page nested elements
+* used <main> tag instead standard div element for grouping main content (gallery details) 
+
+-- zlobek-styl.css
+* introduced flexbox to control layout inside container of selecting any gallery number
+  - added noticeable background colors for flex-elements (inside flex-container) for test purpose
+* increased size of the selection elements of that form
+  - easier to use by mobile users
+  - also increased font size and padding for form elements
+  - distinguished submit button by bold font 
+* softly modified appearance of gallery list items 
+  - slighty decreased font size for longer titles 
+  - added darker border on hover state
+* added an extra scale transformation (+10% element size) to any thumbnail of displayed gallery when hover
+  - effect with conjunction of transition animation
+  - previously only shadow as a distinguisher
+* sets main photo of selected gallery from the left of gallery details (with floats)
+
+-- witryna.js
+* a gallery main photo is inserted into actual gallery details
+* modified scrolling as mentioned in ADDED section
+
+---------------------------
+
+v0.3.6 - moving screen and verifying entered numeric value
 
 * v0.3.6 -- [2018-06-22]
 

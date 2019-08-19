@@ -54,74 +54,70 @@
 
                 <div id="spis_tresci">
                     <h2>Lista galerii ze Żłobka</h2>
-                     <div id="galeria_spis">
+                    <div id="galeria_spis">
 
-                     </div>
+                    </div>
 
-                     <nav id="spis_sterowanie">
-                            <p id="status_galerii_spis"></p>
-                     <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
+                    <nav id="spis_sterowanie">
+                        <p id="status_galerii_spis"></p>
+                        <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
 
-                        <div id="selektor">
-                         <div class="kontener">
-                          <h2 id="">lub wybierz dowolną galerię poniżej <span>(V)</span></h2>
-                            <div id="wybor_galerii">
-                             <form action="#" method="post" id="wybierz_galerie">
-                                            <fieldset>
-                                             <div class="kontener">
+
+                        <div class="kontener">
+                            <div id="selektor">     
+                                <h2 id="selektor_naglowek">...lub wybierz dowolną galerię poniżej <span>(V)</span></h2>
+                                <form action="#" method="post" id="wybierz_galerie" autocomplete="off">
+                                    <div id="wybor_galerii">
+                                        <div id="suwak_info">
+                                            <div>
                                                 <label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
                                                 <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
-                                                    <div>
-                                                        <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
-                                                        <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
-                                                    </div>
-                                                </div>
-                                                <div class="kontener">
-                                                <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" list="suwak_znaczniki" alt="Wybierz numer galerii z zakresu" />
-                                                    <datalist id="suwak_znaczniki">
-                                                        <option value="0" label="0">
-                                                        <option value="1" label="1">
-                                                        <option value="25">
-                                                        <option value="50" label="50%">
-                                                        <option value="75">
-                                                        <option value="100" label="max">
-                                                 </datalist>
-                                                </div>
-                                                <div>
-                                                <input type="button" id="losuj_zakres" name="losuj_zakres" value="Losuj galerię" />
-                                                <input type="submit" id="suwak_galerii_submit" role="submit" value="Zobacz wybrany" />
-                                                <div id="form_error">Wymagany wybór spośród dostępnych numerów galerii</div>			
-                                            </div>		
-                                        </fieldset>
-                                    </form>
+                                            </div>    
+                                            <div>
+                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
+                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
+                                            </div>
+                                        </div>
+                                        <div id="suwak">
+                                            <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" list="suwak_znaczniki" alt="Wybierz numer galerii z zakresu" />
+                                                <datalist id="suwak_znaczniki">
+                                                    <option value="0" label="0">
+                                                    <option value="1" label="1">
+                                                    <option value="25">
+                                                    <option value="50" label="50%">
+                                                    <option value="75">
+                                                    <option value="100" label="max">
+                                             </datalist>
+                                        </div>
+                                        <div>
+                                            <input type="button" id="losuj_zakres" name="losuj_zakres" value="Losuj galerię" />
+                                            <input type="submit" id="suwak_galerii_submit" role="submit" value="Zobacz wybrany" />
+                                            <div id="form_error">Wymagany wybór spośród dostępnych numerów galerii</div>			
 
-                                 </div>
+                                        </div>	
+                                    </div>  <!-- div#wybor_galerii -->                                      
+                                </form>    
+                            </div> <!-- div#selektor -->
+                        </div>
+                        <div id="skladowisko_status_wybranej_galerii">
+                        </div>
 
-                                 <div id="skladowisko_status_wybranej_galerii">
+                        <div id="status_wybranej_galerii">
+                        </div>
 
-                                 </div>
 
-                                 <div id="status_wybranej_galerii">
+                        <div id="wczytywanie_spis">
+                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
+                        </div>
 
-                                 </div>
-
-                                 <div id="s"></div>
-                              </div>
-                             </div>
-
-                             <div id="wczytywanie_spis">
-                                <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
-                            </div>
-
-                             <div id="galeria_spis_podmiana" class="clearfix">
-
-                             </div>
-                        </nav>	
-                </div>
-            </div>		
+                        <div id="galeria_spis_podmiana" class="clearfix">
+                        </div>
+                    </nav>	
+                </div>  <!-- div#spis_tresci -->
+            </div>	<!-- div#naglowek_kontener -->
         </header>
 
-        <div id="glowna">
+        <main id="glowna">
             <div id="komentarz">
             <!--<h2>A poniżej może pojawią się zdjęcia wnuków, o ile podamy dobry adres i reszta zadziała prawidłowo...</h2>-->
             </div>
@@ -144,9 +140,9 @@
                 <!-- a tu miniaturki z adresu zewnętrznego oraz klikane przejście do galerii -->
             </div>
 		
-	   </div> <!-- glowna -->
+	   </main> <!-- glowna -->
 
-	<footer id="stopka">&copy;2018 v0.3.6 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2018 v0.3.7 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
         <div id="poco">
             <h3>Jaki jest cel?</h3>

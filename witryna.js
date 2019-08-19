@@ -38,6 +38,7 @@ var g_ilosc_zaczytanych_paginacji_galerii = 0;
 var g_biezaca_pozycja_galerii = 0;
 var g_ilosc_zaczytanych_galerii = 0;					// ile elementów wstawiono już na stronę
 var g_ilosc_wszystkich_galerii = 0;	
+var g_suma_klikniec_zaladuj = 0;    
 	
 var g_wybrany_nr_galerii = 0;
 var g_wybrany_nr_galerii_nazwa = '';
@@ -243,17 +244,21 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
 	
 function GenerujPodstronyGalerii(){ 	// to ma przygotować kolejne 
-
+var wysokoscDokumentu = $(document).height();
+var wysokoscDivWczytywanie = $('#wczytywanie').height();    
+var wysokoscDivKomentarz = $('div#komentarz').height();    
+var odlegloscPionowaSkladowiskoID = $('#skladowisko').offset().top;
+var wysokoscOknaPrzegladarki = $(window).height();
+console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOknaPrzegladarki + "px, PozycjaY #skladowiska: " + odlegloscPionowaSkladowiskoID 
+            + "px, wysokość DIV#wczytywanie: " + wysokoscDivWczytywanie + "px, wysokość DIV#komentarz: " + wysokoscDivKomentarz );
+//PrzewinEkranDoElementu('div#skladowisko', 200, -8);  // złe miejsce, przed trteścią
+    
 $('#wczytywanie').hide(100);	// schowaj informację, skoro wczytano zawartość
-$('#glowna div:first').hide(100);	//showaj opis-informację
-$('#skladowisko').show(100);	// pokaż kontener na zaczytaną zawartość
+$('#glowna div#komentarz').hide(100);	//showaj opis-informację
+$('#skladowisko').show( 100, PrzewinEkranDoElementu( 'div#skladowisko', 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
     
     //weryfikacja położenia w pionie przed dodaniem zawartości - miniatur zdjęć z danej galerii
-var wysokoscDokumentu = $(document).height();
-var odlegloscPionowaSkladowikoID = $('#skladowisko').offset().top;
-var wysokoscOknaPrzegladarki = $(window).height();
-console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOknaPrzegladarki + "px, PozycjaY #skladowiska: " + odlegloscPionowaSkladowikoID + "px");
-PrzewinEkranDoElementu('div#skladowisko', 200, -8);  // złe miejsce, przed treścią
+
     
     
 $('#nazwa_galerii').find('h2').html( g_nazwa_galerii ); 	// było.text( ... )
@@ -392,12 +397,12 @@ $( g_miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyś
 
     //weryfikacja położenia w pionie po dodaniu zawartości - miniatur zdjęć z danej galerii    
 wysokoscDokumentu = $(document).height();
-odlegloscPionowaSkladowikoID = $('#skladowisko').offset().top;
+odlegloscPionowaSkladowiskoID = $('#skladowisko').offset().top;
 wysokoscOknaPrzegladarki = $(window).height();
-console.log("Wymiary PO - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOknaPrzegladarki + "px, PozycjaY #skladowiska: " + odlegloscPionowaSkladowikoID + "px");
+console.log("Wymiary PO - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOknaPrzegladarki + "px, PozycjaY #skladowiska: " + odlegloscPionowaSkladowiskoID + "px");
 // powinno być warunkowe przesuwanie, gdy dodana zawartość przewinęła nieznacznie pozycję przesuniętego okna, a zniknięcie proastokąta ładowania też nie podwyższyło tego okna
  // if () {}  //gdy większa wysokośc elementu niż wys-DOKUMENTU - wys-OKNA  
-PrzewinEkranDoElementu('div#skladowisko', 200, -8);    
+// PrzewinEkranDoElementu('div#skladowisko', 200, -8 );    // druga kopia "wyrównawcza"
 
 //	} //if-END $lista_podstron.length >= 1
 } // GenerujPodstronyGalerii-END
@@ -488,12 +493,16 @@ var $odnosniki_tytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link"
         var dlugosc_tekstu = $( $odnosniki_tytuly[i] ).text();
         $( $odnosniki_tytuly[i] ).removeClass('link').wrapInner('<h2></h2>'); // usuwanie obcej klasy link i dodanie h2/h3
             if ( dlugosc_tekstu.length < 15 ) 
-            { //if ( $(odnos )  )
-            $( $odnosniki_tytuly[i] ).find('h2').addClass('nizszy'); // klasa z mniejszą czcionką o 25% pkt.
+            { 
+            $( $odnosniki_tytuly[i] ).find('h2').addClass('nizszy'); // klasa ze zwiększonym odstępem pionowym - wyśrodkowanie w pionie
             }				
-            if ( dlugosc_tekstu.length > 25 ) 
-            { //if ( $(odnos )  )
+            if ( ( dlugosc_tekstu.length >= 25 ) && ( dlugosc_tekstu.length < 35 )  ) 
+            { 
             $( $odnosniki_tytuly[i] ).find('h2').addClass('mniejszy'); // klasa z mniejszą czcionką o 25% pkt.
+            }
+            if ( dlugosc_tekstu.length >= 35 ) 
+            { 
+            $( $odnosniki_tytuly[i] ).find('h2').addClass('najmniejszy'); // kolejne zmniejszenie czcionki tytułu  dla <h2>    
             }
         $( miejsce_docelowe ).html( $odnosniki_tytuly[i] );  // podmiana oryginalnej zawartości + 
         }
@@ -700,7 +709,7 @@ var $nadmiar = $( g_miejsce_na_spis + " div.kontener_odnosnik:has(h3)");
     }
 	
 	
-	if ( g_ilosc_zaczytanych_galerii >= g_ilosc_wszystkich_galerii ) // warunkowo drugie czyszczenie, póki co tylko jako ostzreżenie
+	if ( g_ilosc_zaczytanych_galerii >= g_ilosc_wszystkich_galerii ) // warunkowo drugie czyszczenie, póki co tylko w formie wizualnego ostrzeżenia
 	{
 	//$( g_miejsce_na_spis + " div.kontener_odnosnik:gt(" + ( g_ilosc_wszystkich_galerii - 1 )+ ")" ).css({ "backgroundColor" : "#666" });	
     $( g_miejsce_na_spis + " div.kontener_odnosnik:has(h3)").css({ "backgroundColor" : "#666" });	
@@ -775,7 +784,7 @@ console.log('ILE: ' + ile_pozycji_spisu_tresci);
 			//var miejsce_docelowe = $( g_miejsce_na_spis + " .zdjecie_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
         var $odnosnik_zdjecia = $( tag_kontener_przeszukiwany + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( numer_kolejnego_w_spisie ) + ")")
 
-		var src_docelowe = g_protokol_www + g_adres_strony + "/" + $odnosnik_zdjecia.attr( "src");	// "naprawa" źródeł obrazków na zewnętrzną www
+		var src_docelowe = g_protokol_www + g_adres_strony + "/" + $odnosnik_zdjecia.attr( "src" );	// "naprawa" źródeł obrazków na zewnętrzną www
 		$odnosnik_zdjecia.attr( "src", src_docelowe );
 		$( tag_miejsce_docelowe ).html( $odnosnik_zdjecia ); // podmiana oryginalnej zawartości - wstawienie skojarzonego zdjęcia i dopisanie tytułu z opisem
 		console.log('SRC: ' + src_docelowe);	
@@ -929,9 +938,7 @@ var wartoscBiezaca = $(this).val();
 
 g_wybrany_nr_galerii = wartoscBiezaca;
 $g_input_nr_galerii.val( wartoscBiezaca );
-
 });	
-
 
 
 $('#wybrany_nr_zwieksz').click( function() {
@@ -964,6 +971,7 @@ var wartoscBiezaca = parseInt( $(this).val() );
 wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca );    
 $(this).val( wartoscBiezaca );    // pobierz bieżącą wartośc i dokonaj ewentualnej korekty dla zakresu
 g_wybrany_nr_galerii = wartoscBiezaca;
+$g_suwak_nr_galerii.val( wartoscBiezaca );
 });
     
 
@@ -1039,10 +1047,10 @@ $('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyśln
 	
 	
 $('#spis_sterowanie').on("click", "#zaladuj_galerie_spis", function() { 
-	//var $this = $(this);
-	//alert('Zdarzenie ładowania treści?!\n g_biezaca_pozycja_galerii: ' + g_biezaca_pozycja_galerii + ', g_ilosc_zaczytanych_paginacji_galerii: ' + g_ilosc_zaczytanych_paginacji_galerii );
- //debugger;
-	
+g_suma_klikniec_zaladuj++;	// zliczaj naciśnięcia na ten przycisk
+
+    if ( g_suma_klikniec_zaladuj < g_ilosc_zaczytanych_paginacji_galerii   ) 
+    {
 	g_biezaca_pozycja_galerii++;  // zwiększenie licznika, przejście do wywołania kolejnej podstrony
 	// licznik zwiększa się już PO nacisnięciu odnosnika i PRZED zakończeniem przetwarznia uprzednio zaczytanych treści !!! 
 	// co najwyżej kolejność może być inna na liście wyników
@@ -1050,14 +1058,15 @@ $('#spis_sterowanie').on("click", "#zaladuj_galerie_spis", function() {
 		if ( g_biezaca_pozycja_galerii <= g_ilosc_zaczytanych_paginacji_galerii )
 		{
 		$( g_wczytywanie_spis ).show(100); // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
-		console.log('Na żądanie zaczytano kolejną podstronę w galerii ' + g_biezaca_pozycja_galerii + ' z ' + g_ilosc_zaczytanych_paginacji_galerii + ' podstron');
+		console.log('Na ' + g_suma_klikniec_zaladuj + ' żądanie zaczytano kolejną podstronę w galerii ' + g_biezaca_pozycja_galerii + ' z ' + g_ilosc_zaczytanych_paginacji_galerii + ' podstron.');
 			
 		//g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; //inkrementacja o każde 5 zdjęc z poszczególnych zaczytanych galerii 	
 		
 		ZaczytajSpisGalerii();
 		//wyświetlenie-dodanie kolejnego spisu do już wyświetlonej listy odnosników	
 		//WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona"	);
-		}
+		} 
+    }
 	
 });	// on("click")-$('#spis_sterowanie')-END		
 
@@ -1096,7 +1105,7 @@ console.log('ZDARZENE: "Naciśnięto" i wywołano odnośnik do galerii "' + g_na
 	// przewinięcie ekranu do lokalizacji galerii
 	
 // wstawienie animacji na ładowanie
-$( g_wczytywanie ).show();	
+$( g_wczytywanie ).show(100);	
 //var g_folder_serwera 		
 // załadowanie odnosnika ze s	
 WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres_strony + '/' , galeria_docelowa, g_element_zewnetrzny, "galeria_podstrona" ); 	
@@ -1104,7 +1113,7 @@ WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres
 //e.preventDefault();	
 //return; // wyjście, aby nie przechodzić do odnosnika	
 	
-PrzewinEkranDoElementu('div#glowna', 700, -8);   
+PrzewinEkranDoElementu('main#glowna', 700, -6);   
 	
 });	//  on("click")-$('#galeria_spis')-END			
 	
