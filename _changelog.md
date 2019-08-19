@@ -1,3 +1,152 @@
+v0.3.8 - functional container class, automated gallery display, greater buttons, (no more address form) and more
+
+* v0.3.8 -- [2018-06-26]
+
+[+] ADDED
+
+-- index.php
+* added all purpose 'container' class (exactly "kontener") at top level  containers of page
+
+-- zlobek-styl.css
+* this container class from now has a max-width in pixels
+  - useful for grouping purposes and aligning items horizontally (and also somehow vertically)
+*  prepared 'szara_zawartosc' class intented for notifyining temporary disabled blocks and it's contents
+  - semi transparent gray filter
+
+-- witryna.js
+* added function 'UzupełnijBiezacaGalerie' for automated insertions of contents for actual gallery based on provided parameters
+  - used in any click event service and repetitive showing operations 
+  - any needed parameters readed from click event object
+  - also takes care of rebuilding image for current gallery
+  - a detailed html structure is an output
+* few semi-global variables added for each needed attribute/element
+
+[*] MODIFIED
+
+-- index.php
+* changed container structure inside flexbox controlled layout (selecting any gallery number)
+  - to achieve layout where label and gallery number input field are rather on the top of the slider (mostly on any screen width)
+  - and also display wide slider as possible on any screen width
+
+-- zlobek-styl.css
+* changed basis and grow of flex-elements (containers for form elements)
+* slight widening of buttons inside area of selecting any gallery
+* previous style also included in subpage navigation buttons inside current gallery
+
+-- witryna.js
+* inserts input-buttons (type=button) instead real buttons elements (just for existing styling purposes)
+* changed operations on gallery readings to collect needed attributes to build a current gallery header (fires 'UzupełnijBiezacaGalerie' function)
+* displaying gallery details provided by form marked for deprecation in project
+  - by comment for now only
+
+---------------------------
+
+v0.3.7 - click-counter of next-page-load, flexbox container & easy pick, two times scrolling, scaled-thumbnail-hover, gallery main photo
+
+* v0.3.7 -- [2018-06-25]
+
+[+] ADDED
+
+-- index.php
+* temporary added few slider's markers to indicate a used range (only a few beginning static values!)
+  - a HTML standard doesn't work properly in all tested browsers
+
+-- witryna.js
+* added a semi-global variable as click counter on next-subpage-loader button
+  - as a delimiter of max request number (ajax call) for existing galleries list subpages
+  - used mainly inside click event service 
+  - won't allow any next Ajax request if the limit is exceed
+* a page is scrolled to gallery details first time directly when gallery item list is clicked and the second time immediately when new content is loaded
+  - scrolling to element is a callback function for first time showing container
+* page tries to scroll only for far view from newly added content, not to change of vertical view when unnecessary
+
+[*] MODIFIED
+
+-- index.php
+* changed proper indentations of all page nested elements
+* used <main> tag instead standard div element for grouping main content (gallery details) 
+
+-- zlobek-styl.css
+* introduced flexbox to control layout inside container of selecting any gallery number
+  - added noticeable background colors for flex-elements (inside flex-container) for test purpose
+* increased size of the selection elements of that form
+  - easier to use by mobile users
+  - also increased font size and padding for form elements
+  - distinguished submit button by bold font 
+* softly modified appearance of gallery list items 
+  - slighty decreased font size for longer titles 
+  - added darker border on hover state
+* added an extra scale transformation (+10% element size) to any thumbnail of displayed gallery when hover
+  - effect with conjunction of transition animation
+  - previously only shadow as a distinguisher
+* sets main photo of selected gallery from the left of gallery details (with floats)
+
+-- witryna.js
+* a gallery main photo is inserted into actual gallery details
+* modified scrolling as mentioned in ADDED section
+
+---------------------------
+
+v0.3.6 - moving screen and verifying entered numeric value
+
+* v0.3.6 -- [2018-06-22]
+
+[+] ADDED
+
+-- witryna.js
+* uses function 'PrzewinEkranDoElementu' in new places as a notify of placing new contents (new subpages list or new gallery or it's subpage) after each success ajax call
+  - not only to notify any error as previously using
+  - it moves view to page element with new content
+* added function 'NormalizujZakresPolaInput' as a getter and veryfication value of numeric field of selected gallery
+  - sets min or max value if entered value isn't in range (depend it's lower or higher than the range)
+  - field also sets slider value (previously value came from the slider or buttons +1/-1)
+  - two ways of setting selected gallery number from now: by numeric field or slider
+  - used in blur event and form submiting
+
+[*] MODIFIED
+
+-- index.php
+* changed indentations of all page elements, the most in footer area
+
+-- witryna.js
+* changed function name 'PrzewinDoElementu' to 'PrzewinEkranDoElementu'
+  - renamed also all used executions
+  - used also in new places as a notify of placing new contents (new subpages list or new gallery or it's subpage)
+* little amendments of code style
+
+---------------------------
+
+updated to v0.3.5 - first ajax call, counting logic, error ajax notif., scroll animation f.
+
+* v0.3.5 -- [2018-06-21]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added simple look to error notification 
+
+-- witryna.js
+* added helper function 'PrzewinDoElementu' for page scrolling animation to any given element
+  - works only for visible elements
+  - with parameter for duratrion of animation
+* added logic do display any errors of Ajax call if any encountered
+  - code inside function 'WczytajZewnetrznyHTMLdoTAGU' in each switch statement variant
+  - provided with and error code and detailed status
+  - uses page scrolling animation function
+
+[*] MODIFIED
+
+-- witryna.js
+* changed the behavior of first ajax call for newest galleries list (first page of a nursery server page)
+  - sets semi-global variables
+  - it initialized the form for chosing any gallery number
+* changed counting of the already loaded gallery list subpages and actual position in that list
+  - differentelly counted while gets success or failure of ajax response
+* cleanup: unified indentaions in many code blocks inside nested conditions
+* added few console messages for diagnostics
+
+---------------------------
+
 updated to v0.3.4 - a simple typo inside meta tag
 
 * v0.3.4 -- [2018-03-28]
