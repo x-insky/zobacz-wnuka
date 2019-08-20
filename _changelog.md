@@ -1,3 +1,31 @@
+v0.3.9 - two files, for new ideas and for deprecated working
+
+* v0.3.9 -- [2018-06-27]
+
+[+] ADDED
+
+-- new file '_do_wprowadzenia.js'
+* for purpose gathering all future JavaScript code to insert on project
+  - code is not yet used in project or maybe it's not completed
+  - a collection useful functions on future use, but not needed now when is a lack of structure/logic/ ... in the project 
+  - generally helper functions should be designed here separately
+  - new ideas or just the seeds of ideas
+* list might contains not fully working code
+* the inside code is not linked yet with the project or any it's file
+
+ -- new file '_juz_wyrzucone.js'
+* just a vessel for not used code
+  - empty for now
+* should contains alredy removed JavaScript code from the project
+  - a delayed complete removal of functions
+  - a waiting room before dissapear or changed return to project
+  - little chance to again use of any code fragment
+  - using a SVN is better but just a relic
+* not directly linked from any project file
+  - just a separated container (trash bin to fill or sth similar)
+
+---------------------------
+
 v0.3.8 - functional container class, automated gallery display, greater buttons, (no more address form) and more
 
 * v0.3.8 -- [2018-06-26]
