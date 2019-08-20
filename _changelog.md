@@ -1,3 +1,68 @@
+v0.3.10 - first refactoring, lots changes in logic but only a few differences visible
+
+* v0.3.10 -- [2018-07-01]
+
+[+] ADDED
+
+-- index.php
+* added extra parent container on element where are inserted table of contents 
+
+-- zlobek-styl.css
+* extra styles for hiding too much content for newly added page element
+
+-- witryna.js
+* finally when selected gallery number is submitted by form then displays it's details 
+  - it temporary displays subpage from original server where that galery belongs (diagnostics purpose only) but when finish Ajax call that visible subpage is removed
+  - if there was previously visible gallery details then they are gray filtered until selected gallery finish it's loading (with second attempt)
+  - when first Ajax call is done and successful then displays selected gallery details (title, photo and description which could be previously marked as gray) 
+  - removes Ajax loading notification and a gray filter only when second Ajax call is complete (yes, possible error)  
+* added on page displaying info about selected gallery when using selections by form
+  - added details about selected gallery: selected number, subpage number, offset on subpage, computed max subpage
+* added function 'KtoraPozycjaWGalerii' which converts passed gallery number into position on it's subpage
+  - returning number is from 0 to 4 as an element offset
+* added function 'MaksymalnaIloscPodstronGalerii' which computes total number of subpages based on higher (or last) gallery number
+* added function 'KtoraPodstronaWGalerii' to compute gallery list subpage which given gallery belongs 
+  - it's always dynamic, may change on every or maximum to every fifth newly added gallery
+  - the used formula may be bad, sometimes is misleading depending on subgallery or the offset
+  - it uses internally other newly added functions
+* added function 'UsunBrakujaceSRCwIMGPozaPrzekazanym' which removes 'src' attribs from specified container for all contains image elements but leaves specified one by parameter 
+  - uses two params, first for container second is the offset
+* added comments for function endings for functions declarations which are longer than few lines or few screens
+
+[*] MODIFIED
+
+-- index.php
+* inserted necessary indetations between subelements in HTML code
+
+-- zlobek-styl.css
+* increased spaces between subpage navigation buttons (inside current gallery)
+* changed border color to more bluish when hover on any item on gallery list
+
+-- witryna.js
+* modified function 'OdczytajTresciOdnosnikaWybranejGalerii'
+  - now reads from parameter for exactly provided element and search specific subelement number
+  - returns readed values as an object which contains needed attributes and theirs values
+* modified function 'NaprawBrakujaceSRCwKontenerze' which restores 'src' attrib to absolute path to nursery server 
+  - first param as HTML container indicator to search in
+  - second param specifies the img set (always are two possibilites but the first is a default action)
+  - if second param is set then function do not-default-action
+* modified function 'UsunBrakujaceSRCwKontenerze' which removes src attribs for all element in specified container
+  - the same idea as in previously mentioned and changed functions  
+  - first param as HTML container indicator to search in
+  - second param is indicator of container type, better describes target img
+* changed behaviour of function 'GenerujPodstronyGalerii'
+  - added default action if provided no parameters
+  - default is to show first page of gallery list (recently added elemenents)
+* renamed function 'UzupełnijBiezacaGalerie' to 'UzupełnijNaglowekBiezacejGalerii'
+* changed logic of event controlled by form: stopped default actions on form submit and logic uses recently added functions
+  - finally it works with recursion in function 'WczytajZewnetrznyHTMLdoTAGU'
+  - extra data passed into first call that function 
+* improved indentations and better comments
+* changed method of countings clicks on button next-subpage-loader
+  - auto load of first page should also be counted!
+
+---------------------------
+
 v0.3.9 - two files, for new ideas and for deprecated working
 
 * v0.3.9 -- [2018-06-27]
