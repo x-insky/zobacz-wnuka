@@ -53,11 +53,13 @@
                 </div>	
 
                 <div id="spis_tresci">
-                    <h2>Lista galerii ze Żłobka</h2>
-                    <div id="galeria_spis">
+                    <div id="zaczytany_spis">
+                        <h2>Lista galerii ze Żłobka</h2>
+                        <div id="galeria_spis">
+                        </div>
 
                     </div>
-
+                
                     <nav id="spis_sterowanie">
                         <p id="status_galerii_spis"></p>
                         <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
@@ -73,7 +75,8 @@
                                                 <label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
                                                 <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
                                             </div>
-                                            <div>                                            <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" list="suwak_znaczniki" alt="Wybierz numer galerii z zakresu" />
+                                            <div>
+                                                <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" list="suwak_znaczniki" alt="Wybierz numer galerii z zakresu" />
                                                 <datalist id="suwak_znaczniki">
                                                     <option value="0" label="0">
                                                     <option value="1" label="1">
@@ -146,7 +149,7 @@
 		
 	   </main> <!-- glowna -->
 
-	<footer id="stopka">&copy;2018 v0.3.8 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2018 v0.3.10 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
         <div id="poco">
             <h3>Jaki jest cel?</h3>
