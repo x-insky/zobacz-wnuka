@@ -237,6 +237,11 @@ console.log("Wymiary PO - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysok
 
 
 
+
+
+
+
+
 $('#suwak_galerii_submit').click( function(evt) {
 evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     if ( g_ilosc_wszystkich_galerii > 0 )
@@ -267,3 +272,9 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     }
 return false; // to jest lepszy i konieczny warunek na "niewysyłanie formularza"     
 }); // warunkowe zaczytywanie albo "nierobienie nic" po kliknięciu
+
+
+
+
+
+
