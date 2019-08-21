@@ -2,7 +2,10 @@
 //          podmienione za nowsze wersje
 
 
-    // wersja bez obiektu zdarzenia... zdarzenie ciągkle do obsługi w serwisie!
+
+
+
+
 
 $('#suwak_galerii_submit').click( function() {
     if ( g_ilosc_wszystkich_galerii > 0 )
@@ -252,3 +255,4 @@ console.log("Wymiary PO - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysok
 
 //	} //if-END $lista_podstron.length >= 1
 } // GenerujPodstronyGalerii-END
+

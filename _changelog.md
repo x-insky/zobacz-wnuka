@@ -1,3 +1,52 @@
+v0.3.11 - subpage selection structure, slideshow transaltion, gallery subpage notifier, redefined function logic & parameters, displayed gallery list text
+
+* v0.3.11 -- [2018-07-02]
+
+[+] ADDED
+
+-- index.php
+* created second structure to select, a subpage of any gallery list
+  - placed beneath gallery number selection
+* added global configuration for slideshow of any gallery inside jQuery addon
+  - inside script tag passed translated text for displaying sequence of photos (like 'photo X from total Y photos') 
+
+-- zlobek-styl.css
+* flexbox used for group of newly added selection of any subpage from gallery list
+  - as in previous container (any gallery number)  
+  - also with noticeable background colors 
+
+-- witryna.js
+* selected subpage of current gallery is *properly* mentioned in header (before the thumbnails)
+  - works fine even on change any subpage from that gallery
+
+[*] MODIFIED
+
+-- index.php
+* renamed elements ids 
+
+-- zlobek-styl.css
+* changed background color of gallery item list on hover state to noticeable violet instead slighty blue
+* the same solor used in hover state of the top bar of selector container any gallery number
+
+-- witryna.js
+* modified default value of parameter if not exists inside function 'WczytajZewnetrznyHTMLdoTAGU'
+  - a beginning space character provided as separator or builded object with default values of attributes
+* removed conflict in names of varaibles from parameters passed to previous function
+* modified parameters used by function 'UzupełnijNaglowekBiezacejGalerii'
+  - instead of list with each attribut name this function expects an one object data with all needed attributes
+  - an object with all attribs and their values might by passed in function call
+* removed page scrolling when first Ajax request for provided gallery number
+  - page is scrolled to element with data returned from second Ajax request
+* added parameters validator inside function 'GenerujPodstronyGalerii'
+  - just a simple test for range or value type
+  - defaults provided
+* just after click on any new gallery title or photo, any previous thumbnails from gallery details are removed immediately
+  - shows loading notification inside that area until new thumbnails show up
+* better formatting text descriptions of any gallery
+  - may contain html characters inside, not just the whole decription as a one 'p' tag without any formatting fractions (e.g. 'br' tags, 'strong', 'em', 'span', ...)
+
+---------------------------
+
 v0.3.10 - first refactoring, lots changes in logic but only a few differences visible
 
 * v0.3.10 -- [2018-07-01]
@@ -27,6 +76,7 @@ v0.3.10 - first refactoring, lots changes in logic but only a few differences vi
   - it uses internally other newly added functions
 * added function 'UsunBrakujaceSRCwIMGPozaPrzekazanym' which removes 'src' attribs from specified container for all contains image elements but leaves specified one by parameter 
   - uses two params, first for container second is the offset
+* selected subpage of current gallery is mentioned in header   
 * added comments for function endings for functions declarations which are longer than few lines or few screens
 
 [*] MODIFIED
