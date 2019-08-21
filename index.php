@@ -60,6 +60,17 @@
 
                     </div>
                 
+                    <div id="wybrany_zaczytany_spis">
+                        <h2>Lista wybranych galerii na danej <span></span> podstronie </h2>
+                        <div id="wybrane_galerie_spis">
+                        </div>
+                        <div id="skladowisko_wybrane_galerie_spis">
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
                     <nav id="spis_sterowanie">
                         <p id="status_galerii_spis"></p>
                         <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
@@ -71,7 +82,7 @@
 
                         <div class="kontener">
                             <div id="selektor">     
-                                <h2 id="selektor_naglowek">...lub wybierz dowolną galerię poniżej <span>(V)</span></h2>
+                                <h2 id="selektor_naglowek">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
                                 <div>
                                     <form action="#" method="post" id="wybierz_galerie" autocomplete="off">
                                         <div id="wybor_galerii">
@@ -93,8 +104,8 @@
                                             </div>
                                             <div id="suwak_info">
                                                 <div>
-                                                    <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
                                                     <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
+                                                    <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
                                                 </div>
                                             </div>
                                             <div>
@@ -124,8 +135,8 @@
                                             </div>
                                             <div id="suwak_podstrona_info">
                                                 <div>
-                                                    <input type="button" id="wybrany_nr_podstrony_zwieksz" class="maly_guzik" value="+1" />
-                                                    <input type="button" id="wybrany_nr_podstrony_zmniejsz" class="maly_guzik" value="-1" />
+                                                    <input type="button" id="wybrany_nr_podstrony_zmniejsz" class="maly_guzik" value="◄" />
+                                                    <input type="button" id="wybrany_nr_podstrony_zwieksz" class="maly_guzik" value="►" />
                                                 </div>
                                             </div>
                                             <div>
@@ -140,7 +151,7 @@
                                     </form>
                                 </div>    
                             </div> <!-- div#selektor -->
-                        </div>
+                        </div>  <!-- div.kontener -->
                         <div id="skladowisko_status_wybranej_galerii">
                         </div>
 
@@ -184,7 +195,7 @@
 		
 	   </main> <!-- glowna -->
 
-	<footer id="stopka">&copy;2018 v0.3.11 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2018 v0.3.12 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
         <div id="poco">
             <h3>Jaki jest cel?</h3>

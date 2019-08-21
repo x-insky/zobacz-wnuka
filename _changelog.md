@@ -1,4 +1,71 @@
-v0.3.11 - subpage selection structure, slideshow transaltion, gallery subpage notifier, redefined function logic & parameters, displayed gallery list text
+v0.3.12 - contents appears firstly later navigation shows up; elements hided by default; logic & view of subpage list selection, rolled forms; improvements security and code reuse;
+
+* v0.3.12 -- [2018-07-03]
+
+[+] ADDED
+
+-- index.php
+* prepared place for content selected by form of any gallery subpage choose
+  - below full list of table of contents
+  - HTML structure ready for future use
+
+-- zlobek-styl.css
+* added style for moving and rotation the element with yellow text fragment
+  - on/off element state depending of the parent's class memebership
+  - also hover state with transition and horizontal shift
+* taking care of details: bottom rounded corners of the top belt dissapears when the whole structure is opened
+  - rounding showes at the bottom of top level container when it's open
+  - but when it's closed then top belt is rounded in every corner
+
+-- witryna.js
+* at previously update added displaying the date of publishing given gallery inside it's detailed header, belowe the selected title 
+* added logic to use the form of selecting any subpage from gallery list
+  - similar behavior as used before in selecting any gallery number
+  - the same increments, decrements and picking random number but inside another range
+  - logic disallow for transgression of given range, buttons just can't change value above or below range
+  - entered value is always converted to a number from given range!
+  - changes at slider coresponds with changes to a numeric field and vice versa
+* builded logic to serves to showing and hiding of form fields with selections
+  - rolled (hiding state) or fully showed with use of animations
+  - simply adds or removes a class
+  - a CSS reference to animations and transitions on neighboring containers 
+* shows that form in closed variant when first Ajax request is succeed
+  - parent container is exposed
+* extra semi-global variable needed for selected gallery list subpage number 
+* added connected function 'InicjujPrzyciskiWyboruPodstronyGalerii' for initial setting of value inside slider and related numeric form field
+  - value between 1 to 5 is returned (as selected into slider/field)
+* added logic to rounded corners of top belt or the whole container of the selecting gallery number or any subpages list
+
+[*] MODIFIED
+
+-- index.php
+* changed yellow text fragment from top belt of selecting any gallery or gallery subpage by given number
+* also changed symbols of buttons inside that form
+  - only one button group changed
+  - arrows instead incrementation/decrementation
+  - test purpose for better user experience (which version is better?)
+
+-- zlobek-styl.css
+* added styles to default hiding of the whole structure of selecting any gallery before any contents is loaded from nursery server
+* hides also the button of next-galleries-subpage
+* the selecting structure is closed by default
+  - to open it just click on the top belt
+  - this belt shows or hides (on/off state) of the form contents
+* changed a one transition on hover state on any thumbnail
+  - gradual appearance and 'darkening' of the shadow while it grows with image
+  - opposite to instantly dark shadow under the picture as was before
+
+-- witryna.js
+* changed more intuitive names for switch based operations inside function 'WczytajZewnetrznyHTMLdoTAGU'
+ - use new values as a function parameters when calling that function
+* more secured code when comparings with 0 value
+* added second parameter to function 'NormalizujZakresPolaInput' to achieve controlling another section with slider and max value
+  - second param is just a differentiator, which determines first or second slider area
+  - general purpose function should target form element by it's id/class name as a passed extra parameter
+
+---------------------------
+
+v0.3.11 - subpage selection structure, slideshow translation, gallery subpage notifier, redefined function logic & parameters, displayed gallery list text
 
 * v0.3.11 -- [2018-07-02]
 

@@ -37,16 +37,17 @@ var g_ilosc_zaczytanych_paginacji_galerii = 0;
 var g_biezaca_pozycja_galerii = 0;
 var g_ilosc_zaczytanych_galerii = 0;		// ile elementów wstawiono do tej pory na stronę
 var g_ilosc_wszystkich_galerii = 0;	        // ilość galerii zawartych na www
-    
-var g_suma_klikniec_zaladuj = 0;    
+var g_suma_klikniec_zaladuj = 0;            // zliczanie kliknięc jako żądanie ładowania + auto_ładowanie
 
-var g_wybrany_nr_galerii = 0;
-var g_wybrany_nr_galerii_nazwa = '';
-var g_wybrany_nr_galerii_opis = '';	
+var g_wybrany_nr_galerii = 0;               // zapamiętanie co siedzi w polu od numeru galerii (pozycja suwaka)
+var g_wybrany_nr_podstrony_galerii = 0;     // zapamiętanie co siedzi w polu od numeru podstrony galerii (też suwak)
 
 var $g_input_nr_galerii	= $('input#galeria_wybrany_nr'); 
 var $g_suwak_nr_galerii	= $('input#suwak_galerii'); 
-
+var $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'); 
+var $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'); 
+    
+    
 	
 // ---------- ***  FUNKCJE PRAWIE GLOBALNE *** --------------		
 	
@@ -140,7 +141,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
          break;
 
-        case "spis_galerii_rekurencja" :
+        case "wybrana_galeria_rekurencja" :
 
             try 
             {	
@@ -159,7 +160,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     // to samo miejsce docelowe, tam samo dołączane elementy zaczytane -- nadpisywanie już niepotrzebnej zawartości
                 // dane.$.extend( dane, namiaryWybranejGalerii ); 
                     
-                WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, namiaryWybranejGalerii.adres, element_witryny, "spis_galerii_wybor", dane );    
+                WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, namiaryWybranejGalerii.adres, element_witryny, "wybrana_galeria", dane );    
                     
                     // zmienić parametry wywołania dla rekurencji !!! 
                     // WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zasobu, element_witryny, rodzaj_dzialania, dane );
@@ -191,7 +192,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             break;
 
 
-        case "spis_galerii_wybor" :
+        case "wybrana_galeria" :
 
             try 
             {	  // tu "adres_zasobu" już jako ścieżka bezwzględna
@@ -243,6 +244,44 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 // ...		
             break;				
 
+ 
+        case "wybrany_spis_galerii" :
+
+            try 
+            {	  // tu "adres_zasobu" już jako ścieżka bezwzględna
+            $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
+                if ( status === "success" )
+                {	
+                console.log( "Ładowanie (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
+
+                $('#galeria_spis').removeClass('szara_zawartosc');    
+                // Generuj spis wybranej galerii (podstrony spisu treści)
+                    
+                    
+                    // zaczytanie wybranego spisu poniżej już istniejącego spisu
+                }
+                else
+                {	
+                var komunikatOBledzie = "Coś się zwaliło przy GENEROWANIU SPISU dla WYBRANEJ GALERII! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+                //alert(komunikatOBledzie);
+                $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
+                PrzewinEkranDoElementu('p.blad', 500);     
+                    
+                }
+
+            }); // load-END
+            } // try-END
+
+            catch (err2) 
+            {
+            var komunikatOBledzie = "BŁAD! " + err2 + "/nCoś się zwaliło przy GENEROWANIU SPISU dla WYBRANEJ GALERII! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+            $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
+            PrzewinEkranDoElementu('p.blad', 500);     
+            alert(komunikatOBledzie);   // tu wyjatkowo zostaje komunikat w formie okna
+            }
+ 		
+            break;	               
+            
 
         default:
             var komunikatOBledzie = 'WczytajZewnetrznyHTMLdoTAGU( tag: ' + tag_podmieniany + ', domena: ' + adres_domeny + ', zasób: ' + adres_zasobu + ', elem: ' + element_witryny + ', działanie: ' +  rodzaj_dzialania + ') ... COŚ POSZŁO NIE TAK' ;
@@ -296,12 +335,12 @@ console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOk
             + "px, wysokość DIV#wczytywanie: " + wysokoscDivWczytywanie + "px, wysokość DIV#komentarz: " + wysokoscDivKomentarz );
 //PrzewinEkranDoElementu('div#skladowisko', 200, -8);  // złe miejsce, przed trteścią
 
-    // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość
-$('nav#nawigacja_galeria').empty();    
+
+$('nav#nawigacja_galeria').empty();     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość
 $('#wczytywanie').hide(100);	// schowaj informację, skoro wczytano zawartość
 $('#glowna div#komentarz').hide(100);	//showaj opis-informację o ile była pokazana
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
-$kontenerDocelowy.show( 100 );	// pokaż kontener na zaczytaną zawartość ... + przewiń po wyświetleniu całości?
+$kontenerDocelowy.show( 100);	// pokaż kontener na zaczytaną zawartość ... + przewiń po wyświetleniu całości?
     
     //weryfikacja położenia w pionie przed dodaniem zawartości - miniatur zdjęć z danej galerii
 
@@ -443,7 +482,7 @@ $( g_miejsce_na_spis ).show(100);
 g_ilosc_zaczytanych_paginacji_galerii = 0; // i tak późniejsza pętla działa zawsze na +5 elementów na stronie, nie oblicza warunku na podstawie 
 
 	
-    if ( g_biezaca_pozycja_galerii == 0 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
+    if ( g_biezaca_pozycja_galerii === 0 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
     {
     g_ilosc_zaczytanych_galerii	= -5 ;
     var $temp_odnosnik_tytul = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link:first" );	 // dobre do czasu, o ile nie powstanie nowa galeria w trakcie przeglądania starej listy! 
@@ -471,13 +510,20 @@ g_ilosc_zaczytanych_paginacji_galerii = 0; // i tak późniejsza pętla działa 
         if ( ilePaginacji > 0 ) g_ilosc_wszystkich_paginacji_galerii = ilePaginacji;  // warunkowe przypisanie zaczytanego maksimum podstron (ewentualnego)    
         
     //odniesie tej wartości do maksymalnej wartośc przesuwu suwaka wyboru galerii + inicjowanie suwaka i inputa na tę wartość
-    console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii...');		
+    console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii i wyboru podstron ...');		
 
     g_wybrany_nr_galerii = g_ilosc_wszystkich_galerii;
     $g_suwak_nr_galerii.attr( 'max' , g_ilosc_wszystkich_galerii );
     $g_suwak_nr_galerii.val( g_ilosc_wszystkich_galerii );	
     $g_input_nr_galerii.val( g_ilosc_wszystkich_galerii );	
 
+    g_wybrany_nr_podstrony_galerii = g_ilosc_wszystkich_paginacji_galerii;
+    $g_suwak_nr_podstrony_galerii.attr( 'max' , g_ilosc_wszystkich_paginacji_galerii );
+      // jednak bez ustawiania na maksimum, bo to okresla PIERWSZĄ podstronę spiosu treści galerii, a nie ostatnią... więc zostaje automat albo 'MIN' 
+    /* $g_suwak_nr_podstrony_galerii.val( g_ilosc_wszystkich_paginacji_galerii );	
+    $g_input_nr_podstrony_galerii.val( g_ilosc_wszystkich_paginacji_galerii );    */
+        
+        
     console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii... PO -- g_wybrany_nr_galerii: ' + g_wybrany_nr_galerii + ', a POZYCJA: ' + atrybut_href_pozycja 
                                                     + ' dla odnośnika: ' + atrybut_href );		
 
@@ -802,7 +848,9 @@ var $lista_podstron = $('#galeria_spis_podmiana td[colspan=2] a.link_tresc'); //
 	
 	}
 	
-$('h2#zaladuj_galerie_spis').show();  // pokaż przycisk/element do ładowania kolejnych galerii  
+$('h2#zaladuj_galerie_spis').show();  // pokaż przycisk/element do ładowania kolejnych galerii 
+$('div#selektor').show();   // też natychmiast pokaż przycisk-kontener do wybiórczego ładowania wybranych treści    
+    
 } // GenerujSpisGalerii-END
 	
 	
@@ -882,34 +930,61 @@ var $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.li
 } // UsunBrakujaceSRCwIMGPozaPrzekazanym-END    
     
 
-function NormalizujZakresPolaInput ( wartoscBiezaca )
+function NormalizujZakresPolaInput ( wartoscBiezaca, normalizacjaPolaPodstrony )
 {
 wartoscBiezaca = parseInt( wartoscBiezaca );   // konwersja do typu Number, całkowite liczby 
     
-    if ( ( wartoscBiezaca === undefined ) || ( isNaN( wartoscBiezaca ) ) ) 
+    if ( !normalizacjaPolaPodstrony )   // zwykły tryb, dotyczy pola wyboru numeru galerii spośród zakresu
     {
-    wartoscBiezaca = 1;   
-    $g_input_nr_galerii.val( wartoscBiezaca );
-    $g_suwak_nr_galerii.val( wartoscBiezaca ); 
-    }
-    
-    if ( wartoscBiezaca < 0 )  
-    {
-    wartoscBiezaca = 1;   
-    $g_input_nr_galerii.val( wartoscBiezaca );
-    $g_suwak_nr_galerii.val( wartoscBiezaca ); 
-    }
-    
-    if ( wartoscBiezaca > g_ilosc_wszystkich_galerii ) 
-    { 
-    wartoscBiezaca = g_ilosc_wszystkich_galerii;    
-    $g_input_nr_galerii.val( g_ilosc_wszystkich_galerii );
-    $g_suwak_nr_galerii.val( g_ilosc_wszystkich_galerii ); 
+        if ( ( wartoscBiezaca === undefined ) || ( isNaN( wartoscBiezaca ) ) ) 
+        {
+        wartoscBiezaca = 1;   
+        $g_input_nr_galerii.val( wartoscBiezaca );
+        $g_suwak_nr_galerii.val( wartoscBiezaca ); 
+        }
+
+        if ( wartoscBiezaca < 0 )  
+        {
+        wartoscBiezaca = 1;   
+        $g_input_nr_galerii.val( wartoscBiezaca );
+        $g_suwak_nr_galerii.val( wartoscBiezaca ); 
+        }
+
+        if ( wartoscBiezaca > g_ilosc_wszystkich_galerii ) 
+        { 
+        wartoscBiezaca = g_ilosc_wszystkich_galerii;    
+        $g_input_nr_galerii.val( g_ilosc_wszystkich_galerii );
+        $g_suwak_nr_galerii.val( g_ilosc_wszystkich_galerii ); 
+        } 
     } 
+    else    // tryb dla pola wyboru podstrony galerii, gdy mzienna == ('cokolwiek' / 2 && TRUE)
+    {           // te same warunki, tylko zakresy i elementy formularza inne
+        if ( ( wartoscBiezaca === undefined ) || ( isNaN( wartoscBiezaca ) ) ) 
+        {
+        wartoscBiezaca = 1;   
+        $g_input_nr_podstrony_galerii.val( wartoscBiezaca );
+        $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca ); 
+        }
+
+        if ( wartoscBiezaca < 0 )  
+        {
+        wartoscBiezaca = 1;   
+        $g_input_nr_podstrony_galerii.val( wartoscBiezaca );
+        $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca ); 
+        }
+
+        if ( wartoscBiezaca > g_ilosc_wszystkich_paginacji_galerii ) 
+        { 
+        wartoscBiezaca = g_ilosc_wszystkich_paginacji_galerii;    
+        $g_input_nr_podstrony_galerii.val( g_ilosc_wszystkich_paginacji_galerii );
+        $g_suwak_nr_podstrony_galerii.val( g_ilosc_wszystkich_paginacji_galerii ); 
+        }     
+    }     
     
 return wartoscBiezaca;   
 } // NormalizujZakresPolaInput-END
 
+    
     
 function UzupełnijNaglowekBiezacejGalerii ( galeria, diagnostyka ) 
 { // atrybuty { tytul, opis, srcObrazka, data }
@@ -944,7 +1019,7 @@ return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszys
 
 function KtoraPodstronaWGalerii ( nrGalerii )
 {
-var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();	
+var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();	// albo ze zmiennej globalnej da się też już odczytać
 var ileRazy = Math.floor( nrGalerii / 5 ) ;  // teraz niepotrzebne, choć zachowane
 var ileReszty = nrGalerii % 5 ;         // teraz niepotrzebne
 var pozycjaWGalerii = KtoraPozycjaWGalerii( nrGalerii ) ;
@@ -979,7 +1054,6 @@ WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres
 	
 function InicjujPrzyciskiWyboruGalerii ()	
 {
-//$('#losuj_zakres').click();	
 g_wybrany_nr_galerii = Math.floor(Math.random() * 100) + 1 ;	
 console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_galerii + ') wartości pól formularza przeglądania galerii...');
 $g_input_nr_galerii.val( g_wybrany_nr_galerii );	
@@ -987,7 +1061,14 @@ $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );
 $g_suwak_nr_galerii.attr( 'max' , 105 ); // nie trzeba teraz?	
 }   // InicjujPrzyciskiWyboruGalerii-END
  
-    
+function InicjujPrzyciskiWyboruPodstronyGalerii ()	
+{
+g_wybrany_nr_podstrony_galerii = Math.floor(Math.random() * 5) + 1 ;	
+console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_podstrony_galerii + ') wartości pól formularza przeglądania podstronami galerii...');
+$g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );	
+$g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );	
+$g_suwak_nr_podstrony_galerii.attr( 'max' , 6 ); // "trzeba, czy nie trzeba?" oto jest pytanie	
+}   // InicjujPrzyciskiWyboruPodstronyGalerii-END    
     
     
 
@@ -1027,21 +1108,27 @@ $('#pomoc_button').click( function() {
 
 	
 $('#losuj_zakres').click( function() {
-
     if ( g_ilosc_wszystkich_galerii > 0 )
     {
-
         g_wybrany_nr_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_galerii ) + 1 ; 
 
-        //ustawienie pola formularza
+        //ustawienie wartości w polu tekstowym i suwaku
         $g_input_nr_galerii.val( g_wybrany_nr_galerii );
-        // 
         $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );
     }
-
-
 }); // #losuj_zakres click-END	
 
+    
+$('#losuj_zakres_podstrony').click( function() {
+    if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
+    {
+        g_wybrany_nr_podstrony_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_paginacji_galerii ) + 1 ; 
+        //ustawienie pola tekstowego i suwaka wygenerowaną wartością
+        $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+        $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+    }
+}); // #losuj_zakres_podstrony click-END	
+        
 
 $g_suwak_nr_galerii.change( function() {
 var wartoscBiezaca = $(this).val();
@@ -1051,6 +1138,14 @@ $g_input_nr_galerii.val( wartoscBiezaca );
 });	
 
 
+$g_suwak_nr_podstrony_galerii.change( function() {
+var wartoscBiezaca = $(this).val();
+
+g_wybrany_nr_podstrony_galerii = wartoscBiezaca;
+$g_input_nr_podstrony_galerii.val( wartoscBiezaca );
+});	
+    
+    
 $('#wybrany_nr_zwieksz').click( function() {
     if ( ( g_ilosc_wszystkich_galerii > 0 ) && ( g_wybrany_nr_galerii > 0 ) )  // dodatkowe sprawdzenie, w razie przeoczenia lub usunięcia wcześniejszego: g_wybrany_nr_galerii = g_ilosc_wszystkich_galerii (ewentualnie, gdyby wybrać to jako pierwsze)  
     {  
@@ -1075,6 +1170,33 @@ $('#wybrany_nr_zmniejsz').click( function() {
     }
 }); //  #wybrany_nr_zmniejsz click-END
 
+    
+$('#wybrany_nr_podstrony_zwieksz').click( function() {
+    if ( ( g_ilosc_wszystkich_paginacji_galerii > 0 ) && ( g_wybrany_nr_podstrony_galerii > 0 ) )  // dodatkowe sprawdzenie  
+    {  
+        if ( g_wybrany_nr_podstrony_galerii < g_ilosc_wszystkich_paginacji_galerii ) 
+        {
+        g_wybrany_nr_podstrony_galerii++;
+        $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+        $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+        }
+    }
+}); //  #wybrany_nr_podstrony_zwieksz click-END
+
+$('#wybrany_nr_podstrony_zmniejsz').click( function() {
+    if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
+    {
+        if ( g_wybrany_nr_podstrony_galerii > 1 ) 
+        {
+        g_wybrany_nr_podstrony_galerii--;
+        $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+        $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+        }
+    }
+}); //  #wybrany_nr_zmniejsz click-END    
+    
+    
+    
 $('#galeria_wybrany_nr').blur( function() {
     
 var wartoscBiezaca = parseInt( $(this).val() );
@@ -1085,6 +1207,16 @@ $g_suwak_nr_galerii.val( wartoscBiezaca );
 });
     
 
+$('#podstrona_wybrany_nr').blur( function() {
+    
+var wartoscBiezaca = parseInt( $(this).val() );
+wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca, 'wybórPodstrony' );    
+$(this).val( wartoscBiezaca );    // pobierz bieżącą wartośc i dokonaj ewentualnej korekty dla zakresu podstron
+g_wybrany_nr_podstrony_galerii = wartoscBiezaca;
+$g_suwak_nr_podstrony_galerii.val( wartoscBiezaca );
+});
+    
+    
 $('#suwak_galerii_submit').click( function(evt) {
 evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     if ( g_ilosc_wszystkich_galerii > 0 )
@@ -1097,7 +1229,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();    
         
         // http://zlobek.chojnow.eu/galeria,k0,p38.html	<-- 'k0' == 'kategoria WSZYSTKO', 'pXYZ' to XYZ-ta 'p'-odstrona w danej galerii (zawiera max 5 elem.)
-        // porządek odwrotnie chronologiczny - 'p1' lub jego brak wskazuje na pierwszą od końca podstronę z pięcioma elemenatmi, 'p2' na przedostatnią, ... 
+        // porządek odwrotnie chronologiczny - 'p1' lub 'p0' lub jego brak wskazuje na pierwszą od końca podstronę z pięcioma elemenatmi, 'p2' na przedostatnią, ... 
         // konieczne obliczenie pozycji 'spisu treści' - da się ustalić numerycznie jako m-ta podstrona z wszystkich galerii
         // celem jest pozyskanie stamtąd adresu dla wybranej N-tej galerii 
     var adresPodstrony =  '/' + 'galeria,k0,p' + podstronaWGalerii + '.html' ;    // sumowanie ciagu tekstowego
@@ -1114,12 +1246,45 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     $('nav#nawigacja_galeria').empty();   
         
     WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
-                                "spis_galerii_rekurencja", { 'pozycjaWGalerii' : pozycjaWGalerii } ); 	// ES6 unfriendly
+                                "wybrana_galeria_rekurencja", { 'pozycjaWGalerii' : pozycjaWGalerii } ); 	// ES6 unfriendly
     }
 return false;  // to jest lepszy i konieczny warunek na "niewysyłanie formularza" 
 }); // warunkowe zaczytywanie albo "nierobienie nic" po kliknięciu
 
+    
+$('#suwak_podstrony_submit').click( function(evt) {
+evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
+    if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
+    {
+    var tagDocelowyDoZaczytania = 'div#skladowisko_wybrane_galerie_spis';	// tu ma byc nowe miejsce w spisie
+    var wybranyNrPodstrony = NormalizujZakresPolaInput( $g_input_nr_podstrony_galerii.val(), 'naRzeczPodstrony' ); // odczytanie z formularza jak jest + weryfikacja zakresu
+          // http://zlobek.chojnow.eu/galeria,k0,p38.html	<-- 'k0' == 'kategoria WSZYSTKO', 'pXYZ' to XYZ-ta 'p'-odstrona w danej galerii (zawiera max 5 elem.)
+     var adresPodstrony =  '/' + 'galeria,k0,p' + wybranyNrPodstrony + '.html' ;    // po prostu podstawienie do ciagu tekstowego
+ 
+    // DEBUG_MODE    
+/*    var trescWygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nrPodstronyGaleriiMAX + "<br />"; 
+    trescWygenerowana += "WYBRANA: " + wybranyNrGalerii + ", PODSTRONA: " + podstronaWGalerii + ", POZYCJA_W_GALERII: +" + pozycjaWGalerii + "<br />"; 
+    trescWygenerowana += "<br /> Dopasowano na " + podstronaWGalerii + ". podstronie, z przesunięciem " + pozycjaWGalerii ;
+    trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
+
+    $('#status_wybranej_galerii').html( trescWygenerowana );	*/        
+    $('#galeria_spis').addClass('szara_zawartosc');
+  
+        
+    WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
+                                "wybrany_spis_galerii" ); 	// ES6 unfriendly
+    }
+return false;  // to jest lepszy i konieczny warunek na "niewysyłanie formularza" 
+}); // warunkowe zaczytywanie albo "nierobienie nic" po kliknięciu    
+    
 	
+    
+$('h2#selektor_naglowek').click(function () {
+    if ( $(this).hasClass('rozwiniety') ) $(this).removeClass('rozwiniety').next('div').hide(100);
+    else $(this).addClass('rozwiniety').next('div').show(100);
+   
+    
+});    
 	
 	/*	
 $(function(){
@@ -1323,6 +1488,7 @@ $('#banner').hover( function() {
 // ---------- *** AUTOURUCHAMIANIE *** --------------	 
 	
 InicjujPrzyciskiWyboruGalerii();
+InicjujPrzyciskiWyboruPodstronyGalerii();    
 	
 ZaczytajSpisGalerii();
 	

@@ -374,9 +374,15 @@ color: yellow;
 }
 
 div#spis_tresci div#selektor {
+display: none;    
 width: 100%;
 background-color: crimson;
 margin-top: 1.5em;    
+}
+
+
+div#spis_tresci div#selektor > div {
+display: none;
 }
 
 div#selektor h2#selektor_naglowek {
@@ -384,16 +390,39 @@ background-color: cornflowerblue;
 color: #eee;
 padding-top: 0.3em;
 padding-bottom: 0.3em;    
-border-top-left-radius: 14px;
-border-top-right-radius: 14px;    
+border-radius: 14px;
+/*border-top-left-radius: 14px;    
+border-top-right-radius: 14px;
+border-bottom-left-radius: 14px;
+border-bottom-right-radius: 14px;*/
 border: 2px solid #eee;
 transition: background-color 0.5s;    
 }
 
+div#selektor h2#selektor_naglowek.rozwiniety {
+border-bottom-left-radius: 0;
+border-bottom-right-radius: 0;
+}
 
 div#selektor h2#selektor_naglowek:hover {
 background-color: #5d6ad0;
 }
+
+h2#selektor_naglowek span {
+padding-left: 0.5em;
+padding-right: 0.5em;    
+display : inline-block; /* na potrzeby odwracania - rotacji  */
+transition: transform 0.4s, padding-left 0.3s;
+}
+
+h2#selektor_naglowek:hover span:hover {
+padding-left : 1em ;
+}
+
+h2#selektor_naglowek.rozwiniety span {
+transform: rotate(180deg) ;    
+}
+
 
 div#selektor div#wybor_galerii,
 div#selektor div#wybor_podstrony_galerii
@@ -685,7 +714,7 @@ box-shadow: 2px 2px 4px black;
 max-height: 116px;
 /* align-self: baseline; */
 align-self: center;
-transition: box-shadow, transform 0.3s ease-out;	
+transition: box-shadow 0.3s ease-out, transform 0.3s ease-out;	
 /* position: absolute;
 top: 5px;
 left: 70px;	*/
