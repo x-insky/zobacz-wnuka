@@ -334,6 +334,26 @@ max-height: 96px;
 }
 
 
+div#spis_tresci div#wybrany_zaczytany_spis {
+display: none;
+}
+
+
+
+div#spis_tresci div#wybrane_galerie_spis {
+background-color: cornflowerblue;
+/* float: left;	*/
+padding: 1em;	
+/*margin-left: 1em;
+margin-right: 1em;	*/
+margin-bottom: 1em;	
+overflow: hidden;
+width: 100%;	
+}
+
+
+
+
 
 div#spis_tresci nav#spis_sterowanie {
 		/* background-color: aqua;	*/
@@ -660,7 +680,7 @@ font-size: 120%;
 
 
 
-div#wczytywanie, div#wczytywanie_spis {
+div#wczytywanie, div#wczytywanie_spis, div#wczytywanie_wybrane_galerie_spis {
 display: none;
 padding: 1.5em 2em;
 /* margin: 2em; */
@@ -669,12 +689,11 @@ border: 3px dotted yellow;
 
 }
 
-div#wczytywanie h2, div#wczytywanie_spis h2 {
+div#wczytywanie h2, div#wczytywanie_spis h2, div#wczytywanie_wybrane_galerie_spis h2 {
 color: yellow;	
-
 }
 
-div#wczytywanie h2 img, div#wczytywanie_spis h2 img {
+div#wczytywanie h2 img, div#wczytywanie_spis h2 img, div#wczytywanie_wybrane_galerie_spis h2 img {
 animation: obroty360 1.2s infinite ease-in;	
 }
 

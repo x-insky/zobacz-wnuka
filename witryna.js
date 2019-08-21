@@ -32,9 +32,9 @@ var g_element_zewnetrzny_spis = "table.galeria";   //var g_element_zewnetrzny_sp
 var g_tag_do_podmiany_spis = "div#galeria_spis_podmiana";
 var g_miejsce_na_spis = "div#galeria_spis";	
 
-var g_ilosc_wszystkich_paginacji_galerii = 0;    
-var g_ilosc_zaczytanych_paginacji_galerii = 0;
-var g_biezaca_pozycja_galerii = 0;
+var g_ilosc_wszystkich_paginacji_galerii = 0;   // ile ogółem jest podstron ze spisem galerii, w grupach po pięć, poza ostatnią grupą 1..5 elementów 
+var g_ilosc_zaczytanych_paginacji_galerii = 0;  // ile pozostało podstron poza zaczytaną i wyświetloną podstroną
+var g_biezaca_pozycja_galerii = 0;          // które eementy już wyświetlono/zaczytano od ostatniego (jako pierwszego) w grupach po pięć
 var g_ilosc_zaczytanych_galerii = 0;		// ile elementów wstawiono do tej pory na stronę
 var g_ilosc_wszystkich_galerii = 0;	        // ilość galerii zawartych na www
 var g_suma_klikniec_zaladuj = 0;            // zliczanie kliknięc jako żądanie ładowania + auto_ładowanie
@@ -57,7 +57,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
     if ( element_witryny.length > 0 ) element_witryny = " " + element_witryny; // dodanie spacji na początku, separator dla TAGU po nazwie pliku     				
    
     if ( !dane ) dane = { ktoraPodstrona : 1 }; // aby nie było "TypeError" przy braku tego parametru w auto-wywołaniu bez kliknięcia podstrony (pierwsza podstrona)
-
+        
+    // utfstring = unescape(encodeURIComponent(originalstring)); // kodowanie zaczytanych znaków?! // ... już załatwione w php
+    
     switch ( rodzaj_dzialania ) {
 				
         case "galeria_podstrona":
@@ -215,7 +217,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                                        '</h1><p>Adres docelowej galerii: ' + adres_zasobu + '</p>' );    
                 //JakaśFunkcja();	// tu wywołaj jakąś fukcję
                     
-                NaprawBrakujaceSRCwKontenerze ( '#skladowisko_status_wybranej_galerii', true ); // taki teścik
+                NaprawBrakujaceSRCwKontenerze ( '#skladowisko_status_wybranej_galerii', 'przetwarzaj galerię, nie spis treści' ); // taki teścik
                 GenerujPodstronyGalerii ( '#skladowisko_status_wybranej_galerii' );    
                     
                     
@@ -253,9 +255,16 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 if ( status === "success" )
                 {	
                 console.log( "Ładowanie (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
-
-                $('#galeria_spis').removeClass('szara_zawartosc');    
+                //PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -200);
+                $('div#wybrane_galerie_spis').removeClass('szara_zawartosc');    
                 // Generuj spis wybranej galerii (podstrony spisu treści)
+                //$('div#wybrany_zaczytany_spis').show();    
+                $('div#wczytywanie_wybrane_galerie_spis').hide(100);
+                    
+                NaprawBrakujaceSRCwKontenerze( 'div#skladowisko_wybrane_galerie_spis');
+                    
+                GenerujSpisWybranejGalerii( 'div#skladowisko_wybrane_galerie_spis', 'div#wybrane_galerie_spis', dane.ktoraPodstrona );
+                    
                     
                     
                     // zaczytanie wybranego spisu poniżej już istniejącego spisu
@@ -513,15 +522,19 @@ g_ilosc_zaczytanych_paginacji_galerii = 0; // i tak późniejsza pętla działa 
     console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii i wyboru podstron ...');		
 
     g_wybrany_nr_galerii = g_ilosc_wszystkich_galerii;
-    $g_suwak_nr_galerii.attr( 'max' , g_ilosc_wszystkich_galerii );
-    $g_suwak_nr_galerii.val( g_ilosc_wszystkich_galerii );	
-    $g_input_nr_galerii.val( g_ilosc_wszystkich_galerii );	
+        if ( g_wybrany_nr_galerii > 1 ) g_wybrany_nr_galerii = parseInt( g_wybrany_nr_galerii / 2 );    // ustawienie na połowie wartości przedziału
+        
+    $g_suwak_nr_galerii.attr( 'max' , g_ilosc_wszystkich_galerii );     // ustalenie zakresu maksymalnego dla suwaka
+    $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );	
+    $g_input_nr_galerii.val( g_wybrany_nr_galerii );	
 
     g_wybrany_nr_podstrony_galerii = g_ilosc_wszystkich_paginacji_galerii;
+        if ( g_wybrany_nr_podstrony_galerii > 1 ) g_wybrany_nr_podstrony_galerii = parseInt( g_wybrany_nr_podstrony_galerii / 2 );   // ustawienie na połowie wartości przedziału        
+        
     $g_suwak_nr_podstrony_galerii.attr( 'max' , g_ilosc_wszystkich_paginacji_galerii );
-      // jednak bez ustawiania na maksimum, bo to okresla PIERWSZĄ podstronę spiosu treści galerii, a nie ostatnią... więc zostaje automat albo 'MIN' 
-    /* $g_suwak_nr_podstrony_galerii.val( g_ilosc_wszystkich_paginacji_galerii );	
-    $g_input_nr_podstrony_galerii.val( g_ilosc_wszystkich_paginacji_galerii );    */
+      // jednak bez ustawiania na maksimum, bo to okresla PIERWSZĄ podstronę spisu treści galerii, a nie ostatnią... więc zostaje automat albo 'MIN' 
+    $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );	
+    $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
         
         
     console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii... PO -- g_wybrany_nr_galerii: ' + g_wybrany_nr_galerii + ', a POZYCJA: ' + atrybut_href_pozycja 
@@ -558,7 +571,7 @@ var $odnosniki_zdjecia = $( g_tag_do_podmiany_spis + " td.galeria_kolor a.link_t
         // ... 			// obrabianie odnośnika?!	
             // tu zaedytowac po wprowadzniu funkcji naprawiającej globalnie SRC
         // var src_docelowe = g_protokol_www + g_adres_strony + "/" + $( $odnosniki_zdjecia[i] ).find('img').attr( "src");	
-        var src_docelowe = $( $odnosniki_zdjecia[i] ).find('img').attr( "src");	
+        //var src_docelowe = $( $odnosniki_zdjecia[i] ).find('img').attr( "src");	// to niepotrzebne, bo już SRC naprawione
         // $( $odnosniki_zdjecia[i] ).find('img').attr( "src", src_docelowe );
         $( miejsce_docelowe ).html( $odnosniki_zdjecia[i] ); // podmiana oryginalnej zawartości
         }
@@ -852,7 +865,208 @@ $('h2#zaladuj_galerie_spis').show();  // pokaż przycisk/element do ładowania k
 $('div#selektor').show();   // też natychmiast pokaż przycisk-kontener do wybiórczego ładowania wybranych treści    
     
 } // GenerujSpisGalerii-END
+
+    
+    
+    
+    
+    
+    
+    
+                // * ** *** TO  PONIŻEJ  EDYTUJESZ *** ** * 
+    
+function GenerujSpisWybranejGalerii ( kontenerZrodlowy, kontenerDocelowy, nrPodstrony) 
+{
+    // policzenie czegoś, co określi bezposrednio tę ilość, gdy brak wprost takowego kontenera w źródle... <img> się nada 
+var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tresc img' ).length;    
+    
+    if ( ileGaleriiNaPodstronie > 0)    // jeżeli są jakieś elementy to robimy całość kopiowania/przenoszenia
+    {
+    var nowyPojemnik = '';    
+            // tworzenie pustej struktury, do zapełenia zaczytaną zawartością
+        for( var i=1 ; i <= 5  ; i++ ) {	// maksymalnie pięc elementów się zaczyta, ewentalny nadmiar zostanie usunięty
+            // budowanie długiego zestawu pojemników
+        nowyPojemnik += '<div id="wybrany_kontener_odnosnik_' + String(i) + '" class="kontener_odnosnik"><div class="tytul_odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i) + '" class="zdjecie_odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener_tekstowy_odnosnik"><div class="data_odnosnik">Data galerii</div><div class="opis_odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum... nie będzie</div></div></div>'; 	
+        }  
+    $( kontenerDocelowy ).empty();  // zerowanie wcześniejszej zawartości    
+    $( kontenerDocelowy ).append( nowyPojemnik );  // wstawienie tych pięciu wygenerownych kontenerów-szablonów za jednym podejściem
+    
+            //przeklejanie zdjęć pomiędzy kontenerami ( w zasadzie to <a> ze <img>)
+    var $szukaneElementy = $( kontenerZrodlowy + " td.galeria_kolor a.link_tresc" );	// tak naprawdę to  przeklejany jest cały <a>m razem z <img> wewnątrz
+    var miejsceDocelowe = '';
+
+        if ( $szukaneElementy.length > 0 )
+        {
+            for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ){
+            miejsceDocelowe = $( kontenerDocelowy + " .zdjecie_odnosnik:eq(" + i + ")" );
+
+            // ... 			// obrabianie odnośnika?!	
+                // tu zaedytowac po wprowadzniu funkcji naprawiającej globalnie SRC
+            // var src_docelowe = g_protokol_www + g_adres_strony + "/" + $( $odnosniki_zdjecia[i] ).find('img').attr( "src");	
+            // var src_docelowe = $( $odnosniki_zdjecia[i] ).find('img').attr( "src");	
+            // $( $odnosniki_zdjecia[i] ).find('img').attr( "src", src_docelowe );
+            $( miejsceDocelowe ).html( $szukaneElementy[i] ); // podmiana oryginalnej zawartości
+            }
+        }
+
+    //akcja wypełniacz - tytuły
+    $szukaneElementy = $( kontenerZrodlowy + " td.galeria_kolor b a.link" );	
+
+        if ( $szukaneElementy.length > 0 )
+        {
+            for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ){
+            miejsceDocelowe = $( kontenerDocelowy + " .tytul_odnosnik:eq(" + i + ")" );
+
+            // ... 			// obrabianie odnośnika?!	
+            var tekstDocelowy = $( $szukaneElementy[i] ).text();
+            $( $szukaneElementy[i] ).removeClass('link').wrapInner('<h2></h2>'); // usuwanie obcej klasy link i dodanie h2/h3
+                if ( tekstDocelowy.length < 15 ) 
+                { 
+                $( $szukaneElementy[i] ).find('h2').addClass('nizszy'); // klasa ze zwiększonym odstępem pionowym - wyśrodkowanie w pionie
+                }				
+                if ( ( tekstDocelowy.length >= 25 ) && ( tekstDocelowy.length < 35 )  ) 
+                { 
+                $( $szukaneElementy[i] ).find('h2').addClass('mniejszy'); // klasa z mniejszą czcionką o 25% pkt.
+                }
+                if ( tekstDocelowy.length >= 35 ) 
+                { 
+                $( $szukaneElementy[i] ).find('h2').addClass('najmniejszy'); // kolejne zmniejszenie czcionki tytułu  dla <h2>    
+                }
+            $( miejsceDocelowe ).html( $szukaneElementy[i] );  // podmiana oryginalnej zawartości + 
+            }
+        }
+
+    //akcja wypełniacz - data
+    $szukaneElementy = $( kontenerZrodlowy + " td.galeria_kolor font" );	
+
+        if ( $szukaneElementy.length > 0 )
+        {
+            for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ){
+            miejsceDocelowe = $( kontenerDocelowy + " .data_odnosnik:eq(" + i + ")" );
+
+            tekstDocelowy = $( $szukaneElementy[i] ).text();
+            tekstDocelowy = tekstDocelowy.replace( "data publikacji: ", "z dnia: ");  // proste zastąpienie tekstu innym ciągiem, aby nie kopiować znaczników 
+            $( miejsceDocelowe ).text( tekstDocelowy );	
+            }
+        }
+
+    //akcja wypełniacz - opis
+    $szukaneElementy = $( kontenerZrodlowy + " td blockquote div[align=justify]" );	
+
+        if ( $szukaneElementy.length > 0 )
+        {
+            for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ) {
+            miejsceDocelowe = $( kontenerDocelowy + " .opis_odnosnik:eq(" + i + ")" );
+
+            tekstDocelowy = $( $szukaneElementy[i] ).text() ;	
+            $( miejsceDocelowe ).html( tekstDocelowy );			
+            } // for-END
+
+
+    /*        
+                    // osobna pętla specjalnego przeznaczenia, powrót do warunku
+            for( var i=0 ; i < $szukaneElementy.length ; i++ ) {
+            miejsce_docelowe = $( g_miejsce_na_spis + " #kontener_odnosnik_" + String( g_ilosc_zaczytanych_galerii + 1 + i ) );
+
+            var wysokosc_kontenera_div = $( miejsce_docelowe ).outerHeight();		
+            var wysokosc_tytulu = $( miejsce_docelowe ).find('.tytul_odnosnik').outerHeight(true);
+            // czemu IMG lub DIV z nim się mierzy jak chce i kiedy chce?!	
+            //var wysokosc_obrazka = $( miejsce_docelowe ).find('.zdjecie_odnosnik').outerHeight(true); // + 4;
+            var wysokosc_obrazka = $( miejsce_docelowe ).find('img').outerHeight(true) + 4; // + 4 do obrazka z obramowaniem 2 * 4px;	
+            var wysokosc_daty = $( miejsce_docelowe ).find('.data_odnosnik').outerHeight(true);
+            var wysokosc_tekstu = $( miejsce_docelowe ).find('.opis_odnosnik').outerHeight(true);		
+
+            var roznica_zawartosc = wysokosc_kontenera_div - ( wysokosc_tytulu + wysokosc_obrazka + wysokosc_daty + wysokosc_tekstu ); 				
+
+            //opis maksymalnie może mieć 304px (16px * 19) -- wielokrotność wierszy dla tekstu o 100% == 16px 		
+
+                if	( roznica_zawartosc < 0 )
+                {
+                    if ( roznica_zawartosc < -35 )  // kolejnośc ma znaczenie, ewentualne sumowanie klas, najmnijsza wysokośc na końcu (nadpisywanie wartości wysokości dla podelementu)
+                    {
+                    $( miejsce_docelowe ).addClass('max_y_260');
+                    }
+                    if ( roznica_zawartosc < -85 ) 
+                    {
+                    $( miejsce_docelowe ).addClass('max_y_208');						
+                    }
+                    if ( roznica_zawartosc < -115 ) 
+                    {
+                    $( miejsce_docelowe ).addClass('max_y_160');						
+                    }
+                    if ( roznica_zawartosc < -175 ) 
+                    {
+                    $( miejsce_docelowe ).addClass('max_y_96');						
+                    }
+                }	
+
+            var tresc_opisu = $( $szukaneElementy[i] ).text() ;		//wzorcowa, ale już właściwa treśc każdego z odnośników
+
+            tresc_opisu = "K: " + String(wysokosc_kontenera_div) + "-" + String(wysokosc_tytulu + wysokosc_obrazka + wysokosc_daty + wysokosc_tekstu ) + " = " + String( roznica_zawartosc ) + " (" + String(wysokosc_tytulu) + ", " + String(wysokosc_obrazka) + ", " + String(wysokosc_daty) + ", " + String(wysokosc_tekstu) + ") g_galerii: " + String(g_ilosc_zaczytanych_galerii) + ", o_t.l: " + String($szukaneElementy.length) +  "<br />" + tresc_opisu ;			
+            $( miejsce_docelowe ).find('.opis_odnosnik').html( tresc_opisu );		
+            } // for-END-specjał	
+
+                // pętla specjal TU była
+            */
+
+        } // if-end opis
+
+
+
+        // czyszczenie kontenera źródłowego
+    $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();
+
+    } // if-END  ileGaleriiNaPodstronie > 0
+
+    // obowiązakowe czyszczenie nadmiaru, warunek na szablon vs na ilość załadowanych
+var $nadmiarPojemnikow = $( kontenerDocelowy + " div.kontener_odnosnik:has(h3)");
+    if ( $nadmiarPojemnikow.length > 0 ) 
+    { 
+        // na for(), już śmiga
+        for (var i=0; i < $nadmiarPojemnikow.length ; i++) {
+        console.log('Znaleziono nadmiar w ilości ' + (i+1) + ' wpisu/wpisów z ' + $nadmiarPojemnikow.length + ' dla obiektu o id="' + $($nadmiarPojemnikow[i]).attr('id') + '", który usunięto.');
+            //$(this).css({ "backgroundColor" : "#933" }); 
+        $($nadmiarPojemnikow[i]).remove();
+        }
+    }
 	
+/*var $wiersze_tabeli = $( kontenerZrodlowy + " tr:nth-child(4n-3)" );
+	
+    $wiersze_tabeli.each( function() {
+
+	var $biezacy = $(this);
+	$biezacy.css({ "border" : "1px dotted blue" });	
+
+	}); // each-END
+		*/
+	
+/*	
+	// czyszczenie kontenera na nawigację galerii, jeżeli wcześniej zawierał zawartość
+	$('p#status_galerii_spis').html('Znaleziono '  + $wiersze_tabeli.length + ' wierszy tabeli źródłowej oraz ' + $lista_podstron.length 
+                                    + ' podstron(-y) spisu treści.<br>Jesteś na ' + g_biezaca_pozycja_galerii + '. stronie galerii.<br />'
+                                    + 'A wcześniej zaczytano: "' + g_ilosc_zaczytanych_paginacji_galerii + '" paginacji, a załadowano łącznie ' 
+                                    + g_biezaca_pozycja_galerii + ' (vs ' + g_ilosc_zaczytanych_galerii + ') elementów galerii ze wszystkich ' 
+                                    + g_ilosc_wszystkich_galerii + ' galerii');
+			
+	 //for (var i=0; i < $lista_podstron.length; i++) {	*/
+	
+/*	
+$('h2#zaladuj_galerie_spis').show();  // pokaż przycisk/element do ładowania kolejnych galerii 
+$('div#selektor').show();   // też natychmiast pokaż przycisk-kontener do wybiórczego ładowania wybranych treści    */
+    
+} // GenerujSpisWybranejGalerii-END
+	    
+    
+    
+    
+    
+                // * ** *** TO  POWYŻEJ  EDYTUJESZ *** ** * 
+    
+    
+    
+    
+    
+    
 	
 function OdczytajTresciOdnosnikaWybranejGalerii ( przeszukiwanyKontener, pozycjaElementuWGalerii ) 
 {
@@ -873,7 +1087,7 @@ console.log('Natrafiono na obrazek "' + roboczaWartosc + '" dla tytułu o indeks
 $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWGalerii ) + ")" ).removeAttr('src');
 return odczytaneNamiary;    // zwróć obiekt 
 
-} //OdczytajTresciOdnosnikaWybranejGalerii-END
+} // OdczytajTresciOdnosnikaWybranejGalerii-END
     
 
 	
@@ -883,10 +1097,10 @@ return odczytaneNamiary;    // zwróć obiekt
     
     
 function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
-{
+{   // dodawanie działającej ścieżki dla obrazka, w spisie treści galerii oraz w każdej z podstron galerii 
 var srcObrazka = '';    
 var $obrazkiTytuloweGalerii = ''; 
-    if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img");
+    if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img"); // ~(spis treści) to obrazki w galerii
     else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " a:not(.link_tresc) img");
     
 	for (var i=0; i < $obrazkiTytuloweGalerii.length ; i++ )
@@ -1047,14 +1261,12 @@ var adres_zasobu_galerii = g_protokol_www + g_adres_strony;
 $( g_wczytywanie_spis ).show(100); 
 console.log('Załadowano spis treści dla ' + g_biezaca_pozycja_galerii + '. pozycji galerii, adres z http: "' + adres_zasobu_galerii + '" odnośnik: "' + adres_ostatniej_galerii + '".');	
 WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres_ostatniej_galerii, g_element_zewnetrzny_spis, "spis_galerii" ); 
-
-// kodowanie ?!
-// utfstring = unescape(encodeURIComponent(originalstring));	
 }	// ZaczytajSpisGalerii-END
 	
 function InicjujPrzyciskiWyboruGalerii ()	
 {
-g_wybrany_nr_galerii = Math.floor(Math.random() * 100) + 1 ;	
+
+g_wybrany_nr_galerii = Math.floor(Math.random() * 100) + 1;	
 console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_galerii + ') wartości pól formularza przeglądania galerii...');
 $g_input_nr_galerii.val( g_wybrany_nr_galerii );	
 $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );	
@@ -1083,7 +1295,7 @@ function PrzewinEkranDoElementu ( element, czasAnimacji, korektaY )
 var pozycjaElementuWPionie = $(element).offset().top;
 console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ', pozycjaElementuWPionie, ' [px] (korektaY: ' + korektaY 
             + ', czasA: ' + czasAnimacji + ')');    
-$('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY) }, czasAnimacji);    
+$('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY)+'px' }, czasAnimacji);    
 }   
 
     
@@ -1268,11 +1480,18 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
 
     $('#status_wybranej_galerii').html( trescWygenerowana );	*/        
-    $('#galeria_spis').addClass('szara_zawartosc');
+    $('div#wybrane_galerie_spis').addClass('szara_zawartosc');
   
         
     WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
-                                "wybrany_spis_galerii" ); 	// ES6 unfriendly
+                                "wybrany_spis_galerii", { 'wybranaPodstrona' : wybranyNrPodstrony } ); 	// ES6 unfriendly
+    
+    $('div#wybrany_zaczytany_spis h2 span').text( wybranyNrPodstrony.toString() + '.' );    
+    $('div#wybrany_zaczytany_spis').show(100);
+    $('div#wczytywanie_wybrane_galerie_spis').show(100);
+        
+    PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -50);    // naddatek korekty, aby widzieć efekt szarosci... który jest niepotrzebny dle  
+    //PrzewinEkranDoElementu('nav#spis_sterowanie', 500, -100);    // nie można przewinąc do 'div#wybrany_zaczytany_spis' jeśli jest jeszcze niewidoczny
     }
 return false;  // to jest lepszy i konieczny warunek na "niewysyłanie formularza" 
 }); // warunkowe zaczytywanie albo "nierobienie nic" po kliknięciu    

@@ -1,3 +1,40 @@
+v0.4 - selected subpage & her content, used logic of refactored function
+
+* v0.4 -- [2018-07-04]
+
+[+] ADDED
+
+-- index.php
+* a notifier element of loading content for selected subpage from gallery list
+
+-- zlobek-styl.css
+* styles for a place with selected gallery subpages are copied from 'standard' table of contents
+* a notyfication elements are styled the same
+  - css selectors mentioned three times for three elements of notifycations
+  - each element must be targeted individually by id so it can't be used class selector 
+ 
+-- witryna.js
+* added new function 'GenerujSpisWybranejGalerii' with purpose outputing content based given parameter
+  - function require three parameters, first is a source container to reads from, the second one is target container, and the extra third parameter is a offset differentiator from source container
+  - function reads all the needed text contents, build new elements structure and inserts it into a target element
+  - for now just simple form of display of target container but all the titles and images are in place
+  - for test purpose a source container is temporary visible by CSS and it's placed into usable area near the real output
+  - needs a previous call of function 'NaprawBrakujaceSRCwKontenerze' which sets all the src attribs to absolute from the nursery server
+  - logic taken from previously defined function 'GenerujSpisGalerii' with a lot of changes and improvements
+* all te sliders ale placed in the half ot their range
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* used new elements as a selectors for already defined styles
+
+-- witryna.js
+* added extra info about semi-global variables into theirs comments
+* corrected few defined animations with 'animate' functions
+  - proper scrolling by adding 'px' unit
+
+---------------------------
+
 v0.3.12 - contents appears firstly later navigation shows up; elements hided by default; logic & view of subpage list selection, rolled forms; improvements security and code reuse;
 
 * v0.3.12 -- [2018-07-03]
