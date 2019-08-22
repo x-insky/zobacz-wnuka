@@ -216,7 +216,7 @@ overflow: hidden;
 width: 100%;	
 }
 
-div#galeria_spis div.kontener_odnosnik {
+div#spis_tresci div.kontener_odnosnik {
 border: 1px solid blue;
 box-shadow: 1px 1px 3px darkblue;	
 margin : 0.75em 0.5em;
@@ -231,7 +231,7 @@ max-height: 575px;
 overflow: hidden;
 }
 
-div#galeria_spis div.kontener_odnosnik:hover {
+div#spis_tresci div.kontener_odnosnik:hover {
 /* rodzic_background-color: cornflowerblue == #6495ed ; */
 /* background-color: cornflowerblue;	*/
 /* background-color: #5a8ae8; */ /* <--- może lepiej zostawić ten, subtelny kolor tła, bliski oryginałowi */
@@ -240,33 +240,33 @@ border-color: #00b;
 
 }
 
-div#galeria_spis div.tytul_odnosnik {
+div#spis_tresci div.tytul_odnosnik {
 height: 6em;
 vertical-align: bottom;	
 }
 
-div#galeria_spis div.tytul_odnosnik h2 {
+div#spis_tresci div.tytul_odnosnik h2 {
 vertical-align: bottom;
 color: white;
 text-shadow: 2px 2px 6px black;
 word-wrap: break-word;	
 }
 
-div#galeria_spis div.tytul_odnosnik h2.nizszy {
+div#spis_tresci div.tytul_odnosnik h2.nizszy {
 line-height: 2.5em;
 }
 
 
-div#galeria_spis div.tytul_odnosnik h2.mniejszy {
+div#spis_tresci div.tytul_odnosnik h2.mniejszy {
 font-size: 135%;  /* a nie 175% jak h2 standardowo */
 }
 
-div#galeria_spis div.tytul_odnosnik h2.najmniejszy {
+div#spis_tresci div.tytul_odnosnik h2.najmniejszy {
 font-size: 116%;  /* a nie 175% jak h2 std. */
 }
 
 
-div#galeria_spis div.zdjecie_odnosnik {
+div#spis_tresci div.zdjecie_odnosnik {
 
 	/* float: left; /*
 background-color: darkblue;
@@ -274,7 +274,7 @@ width: 200px;
 /*margin : 0.5em;*/
 }
 
-div#galeria_spis div.zdjecie_odnosnik a {
+div#spis_tresci div.zdjecie_odnosnik a {
 display: block;
 text-align: center;
 margin-left: auto;
@@ -282,7 +282,7 @@ margin-right: auto;
 	
 }
 
-div#galeria_spis div.zdjecie_odnosnik img {
+div#spis_tresci div.zdjecie_odnosnik img {
 max-height: 320px;	
 border: 4px solid white;	
 box-shadow: 2px 2px 6px darkblue;
@@ -290,7 +290,7 @@ margin-left: auto;
 margin-right: auto;	
 }
 
-div#galeria_spis div.kontener_tekstowy_odnosnik {
+div#spis_tresci div.kontener_tekstowy_odnosnik {
 /*float: left; */
 /*margin: 0 1em;	*/
 /*background-color: #c3d5e2; */
@@ -299,7 +299,7 @@ overflow: hidden;
 }
 
 
-div#galeria_spis div.data_odnosnik {
+div#spis_tresci div.data_odnosnik {
 text-align: center;
 font-size: 80%;
 font-weight: bold;
@@ -310,26 +310,26 @@ padding-bottom: 0.4em;
 }
 
 
-div#galeria_spis div.opis_odnosnik {
+div#spis_tresci div.opis_odnosnik {
 overflow: hidden;	
 max-height: 299px;	/* wielokrotnosc 16px fontu */
 text-align: justify;	
 padding-bottom: 0.5em;
 }
 
-div#galeria_spis div.opis_odnosnik.max_y_260 {
+div#spis_tresci div.opis_odnosnik.max_y_260 {
 max-height: 260px;	
 }
 
-div#galeria_spis div.opis_odnosnik.max_y_208 {
+div#spis_tresci div.opis_odnosnik.max_y_208 {
 max-height: 208px;	
 }
 
-div#galeria_spis div.opis_odnosnik.max_y_160 {
+div#spis_tresci div.opis_odnosnik.max_y_160 {
 max-height: 160px;	
 }
 
-div#galeria_spis div.opis_odnosnik.max_y_96 {
+div#spis_tresci div.opis_odnosnik.max_y_96 {
 max-height: 96px;	
 }
 
@@ -610,6 +610,12 @@ background-color: white;
 box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	
 border-radius: 10px;	
 }
+
+main#glowna h2 span {
+color: yellow;
+font-weight: bolder;
+}
+
 
 main#glowna>div#komentarz {
 background-color: brown;

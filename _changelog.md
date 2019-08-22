@@ -1,3 +1,71 @@
+v0.4.1 - selected subpage of gallery list with CSS & full working logic; proper counting clicks/subpages and displaying full list of galleries; current gallery texts; extended event delegation
+
+* v0.4.1 -- [2018-07-05]
+
+[+] ADDED
+
+-- index.php
+* created empty elements set without any content and attributes
+  - just a skeleton for later insertions anything inside them by JavaScript
+
+-- zlobek-styl.css
+* no added style but all in the selected subpage of gallery items element are styled the same as page of content items
+  - a JS adds an already defined common classes
+* added a style for active displayed gallery subpage number in yellow color
+  - displayed the same as the marked selected subpage number from the all gallery list inside the text of its header
+
+-- witryna.js
+* Javascript builds any selected subpage of gallery list
+  - uses an already defined class to create the same looking elements
+* added new elements of selected subpage to event listeners for click event
+  - no logic distinguishion between 'standard' gallery elements readed in groups of five
+  - extended the jQuery selector to sum of this two groups  
+
+[*] MODIFIED
+
+-- index.php
+* renamed few main project containers ids
+
+-- zlobek-styl.css
+* the same rules for renamed ids of main containers == selectors
+
+-- witryna.js
+* removed counting of clicks on next-gallery-load button from  function 'GenerujSpisGalerii' which role is to display
+  - moved counter into event serving function of a click
+  - only at first function call is used auto increment of this counter
+  - see related element of 'fixed' section this update
+* rethought of counting of already loaded subpages
+  - display function builds new content so it's right place
+  - incrementation only after susscessful reads
+* conditionally hiding of notyfication element for loading next subpage of gallery list inside function 'GenerujSpisGalerii'
+  - can't be visible when reached last subpage
+* slighty change in name of ids for selected subpage of gallery list
+  - just to distinction by JS not CSS
+* use of passed value of parameter inside function 'GenerujSpisWybranejGalerii' to remove source content which is unnecessary now  
+* modified order of generated contents inside function 'UzupełnijNaglowekBiezacejGalerii'
+  - text of header is placed first to prevent from disruptions of floated 'img' element on narrow screen
+* increased by one a range for counting of clicks of button inside conditional logic of click callback function
+  - proper displaying of the last page of gallery lists by sequential demands
+* extended set of elements on which clicks event listen
+  - mentiones also at 'added' section
+  - working set containing sequentaially loaded items and items loaded from specified subpage, provided by form
+  - just added second container to jQuery selector
+  - delegated event handlers still in use and works unchanged
+* 'span' tag surrounds the current gallery subpage number which is inside generated subtitle, just before thumbnails list
+  - better visual wyróżnienie of current subpage
+  - uses defined CSS style
+
+[F] FIXED
+
+-- witryna.js
+* fixed displaying of the second subpage of gallery list
+  - removed extra incrementation from code logic 
+  - autoload works for first subpage then button loads next subpages on demand, starting from second subpage not third
+  - everything is displayed now in sequentially loaded subpages
+  - closes: #13 - 'Problem displaying the second subpage of the gallery list' - from v0.4
+
+---------------------------
+
 v0.4 - selected subpage & her content, used logic of refactored function
 
 * v0.4 -- [2018-07-04]

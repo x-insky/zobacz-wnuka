@@ -177,8 +177,8 @@
 
             <div id="nazwa_galerii">
                 <div class="kontener">
-                    <img />
                     <h2></h2>
+                    <img />
                     <p></p>
                 </div>    
             </div>	
@@ -198,7 +198,7 @@
 		
 	   </main> <!-- glowna -->
 
-	<footer id="stopka">&copy;2018 v0.4 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2018 v0.4.1 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
         <div id="poco">
             <h3>Jaki jest cel?</h3>
