@@ -7,6 +7,8 @@ box-sizing: border-box;
 div#witryna {
 margin: 1em auto;
 width: 98%;
+position: relative;
+overflow: hidden;
 	
 /* background: radial-gradient( ellipse, center, #222 15%, #333 100%);	*/
 }
@@ -217,19 +219,19 @@ width: 100%;
 }
 
 div#spis_tresci div.kontener_odnosnik {
-border: 1px solid blue;
-box-shadow: 1px 1px 3px darkblue;	
-margin : 0.75em 0.5em;
-padding: 0.5em;	
-border-radius: 5px;
-width : 100%	;
-float: left;
-max-width: 250px;	
-transition: all 0.25s ease-out;	
 min-height: 500px;	     /* było po 575px w obu wysokościach, zabrano 75px */ 		
 max-height: 500px;
+max-width: 250px;	
+width : 100%;
 overflow: hidden;
 position: relative;
+float: left;
+margin : 0.75em 0.5em;
+padding: 0.5em;	    
+border: 1px solid blue;
+box-shadow: 1px 1px 3px darkblue;	
+border-radius: 5px;
+transition: all 0.25s ease-out;	
 }
 
 div#spis_tresci div.kontener_odnosnik:hover {
@@ -248,24 +250,25 @@ width: 100%;
 }
 
 div#spis_tresci div.kontener_odnosnik:hover div.dolna_zaslonka {
-background-color: #5d6ad0; 
+background-color: #5d6ad0;  /* #5d6ad0 == rgb(93,106,208) */
 background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(93,106,208,1) 50%, rgba(93,106,208,1) 100%);; 
 }
 
 div#spis_tresci div.tytul_odnosnik {
 height: 6em;
-vertical-align: bottom;	
+    /*    vertical-align: bottom;	*/
 }
 
 div#spis_tresci div.tytul_odnosnik h2 {
-vertical-align: bottom;
+    /*    vertical-align: bottom;   */
 color: white;
 text-shadow: 2px 2px 6px black;
 word-wrap: break-word;	
 }
 
-div#spis_tresci div.tytul_odnosnik h2.nizszy {
-line-height: 2.5em;
+div#spis_tresci div.tytul_odnosnik h2.wyzszy {
+    /* line-height: 2.5em; */
+padding-top: 0.8em;    
 }
 
 
@@ -329,23 +332,6 @@ text-align: justify;
 padding-bottom: 0.5em;
 }
 
-div#spis_tresci div.opis_odnosnik.max_y_260 {
-max-height: 260px;	
-}
-
-div#spis_tresci div.opis_odnosnik.max_y_208 {
-max-height: 208px;	
-}
-
-div#spis_tresci div.opis_odnosnik.max_y_160 {
-max-height: 160px;	
-}
-
-div#spis_tresci div.opis_odnosnik.max_y_96 {
-max-height: 96px;	
-}
-
-
 div#spis_tresci div.kontener_odnosnik div.szczegoly {
 position: absolute;
 z-index: 20;    
@@ -391,7 +377,7 @@ line-height: 22px;
 
 div#spis_tresci div.szczegoly > p > span
 {
-color: #54c;
+color: #54c;    
 }
 
 div#spis_tresci div.szczegoly > p:first-of-type,
@@ -413,7 +399,7 @@ color: #5a8ae8;
 }
 
 div#spis_tresci div.kontener_odnosnik div.dolna_zaslonka {
-    /* CSS-clip gdy bedzie działał we wszytskich przeglądarkach to bedzie raj */
+    /* użyć CSS-clip, gdy bedzie działał we wszystkich przeglądarkach to bedzie raj; póki co gradient, albo ostatecznie jednolite tło */
 position: absolute;
 z-index: 1;    
 width: 100%; 

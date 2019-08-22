@@ -61,7 +61,7 @@
                     </div>
                 
                     <div id="wybrany_zaczytany_spis">
-                        <h2>Lista wybranych galerii na danej <span></span> podstronie </h2>
+                        <h2>Lista galerii z wybranej <span></span> podstrony</h2>
                         <div id="wczytywanie_wybrane_galerie_spis">
                             <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
                         </div>
@@ -198,7 +198,7 @@
 		
 	   </main> <!-- glowna -->
 
-	<footer id="stopka">&copy;2018 v0.4.2 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2018 v0.4.3 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
         <div id="poco">
             <h3>Jaki jest cel?</h3>

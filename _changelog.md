@@ -1,3 +1,39 @@
+v0.4.3 - selected gallery subpages enchanced; cleaning inside a project files, obtained smaller project size 
+
+* v0.4.3 -- [2018-07-10]
+
+[+] ADDED
+
+-- witryna.js
+* added logic to output a fully functionally elements of any selected subpage of gallery list 
+  - added needed code inside a function 'GenerujSpisWybranejGalerii'
+  - the same look and behavior like elements of 'standard' galleries from sequential list
+* added for test purposes a JS alert boxes when any gallery link is clicked by right or medium mouse button
+ 
+[*] MODIFIED
+
+-- index.php
+* shortened header text for selected gallery list subpage
+
+-- zlobek-styl.css
+* a CSS cleaning
+  - changed arrangement of the rules just for easy comprehension purposes
+  - only a little alterations inside of rules values
+
+-- witryna.js
+* removed unecessary attribs from readed contents for headers
+  - i.g. external site classes are unwanted
+* changed class membership for short gallery titles inside all galleries elements (now class 'higher', before was class 'lower') 
+* slighty changes in variables or attributes names
+
+[-] REMOVED
+
+--witryna.js
+* JavaScript code cleaning
+* removed a lot of unnecessary comments
+
+---------------------------
+
 v0.4.2 - improved gallery elements with animations at smaller size; unified colors & anim for load-next-subpage button; beautify code, texts & comments
 
 * v0.4.2 -- [2018-07-07]
