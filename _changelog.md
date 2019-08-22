@@ -1,4 +1,50 @@
-v0.4.1 - selected subpage of gallery list with CSS & full working logic; proper counting clicks/subpages and displaying full list of galleries; current gallery texts; extended event delegation
+v0.4.2 - improved gallery elements with animations at smaller size; unified colors & anim for load-next-subpage button; beautify code, texts & comments
+
+* v0.4.2 -- [2018-07-07]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added na semi transparent belt at the bottom of any gallery list element
+  - to cover any longer text description
+  - vertical semi-transparent gradient is used for graduadly hiding the edge of rectangle
+  - a full color rectangle is used as a CSS polyfil for older browsers
+* added styles for extra info structure of any gallery
+  - different text colors used for different meaning
+* expanded styles every gallery item on hover state
+  - reveals extra info about each gallery
+  - a motion animation based on transition
+  - the scrolled element is placed off visible part of its parent element by default
+  - nice final effect of bright title, photo and info on darker background on hover state
+* unified colors and styles for load-next-gallery button
+  - added transition for hover state with little latency time
+  - added the extra text-shadow for text
+
+-- witryna.js
+* generates structure for all gallery items
+  - a easy to recognise last loaded galleries and theirs gallery numbers and subpage belonging to that gallery list
+  - works for now only for the sequentially browsed gallery list - by function 'GenerujSpisGalerii' 
+  - function 'GenerujSpisWybranejGalerii' displays 'test contents' for any subpage of gallery list requested by a form
+ 
+[*] MODIFIED
+
+-- zlobek-styl.css
+* decreased each gallery item list to exactly 500px (from 575px before)
+  - also marked as relative element to its contents
+
+-- witryna.js
+* stopped displaying of a technical info at the beginning of gallery description of any gallery
+* more complex structure returned by function 'GenerujSpisGalerii' for  each element of gallery
+* code cleanings for better syntax or overall quality: 
+* changed semi-global-variables declarations inside an one group to use just only one 'var' keyword 
+* improved the quality of the texts in the messages inside variables
+* eventual variable names with an underscore replaced by a version in camelCase notation
+* replaced eventual typos or no spaces to a their properly edited versions
+* **alloweed names for notCamelCase variables only for semi global variables and for variables with identical names as element's ids** 
+
+---------------------------
+
+* v0.4.1 - selected subpage of gallery list with CSS & full working logic; proper counting clicks/subpages and displaying full list of galleries; current gallery texts; extended event delegation
 
 * v0.4.1 -- [2018-07-05]
 
@@ -30,6 +76,8 @@ v0.4.1 - selected subpage of gallery list with CSS & full working logic; proper 
 * the same rules for renamed ids of main containers == selectors
 
 -- witryna.js
+* stopped displaying of technical info at the beginning of gallery description of any gallery
+  - works only for any subpage of gallery list requested by a form
 * removed counting of clicks on next-gallery-load button from  function 'GenerujSpisGalerii' which role is to display
   - moved counter into event serving function of a click
   - only at first function call is used auto increment of this counter
