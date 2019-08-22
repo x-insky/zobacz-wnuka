@@ -1,3 +1,156 @@
+v0.4.2 - improved gallery elements with animations at smaller size; unified colors & anim for load-next-subpage button; beautify code, texts & comments
+
+* v0.4.2 -- [2018-07-07]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added na semi transparent belt at the bottom of any gallery list element
+  - to cover any longer text description
+  - vertical semi-transparent gradient is used for graduadly hiding the edge of rectangle
+  - a full color rectangle is used as a CSS polyfil for older browsers
+* added styles for extra info structure of any gallery
+  - different text colors used for different meaning
+* expanded styles every gallery item on hover state
+  - reveals extra info about each gallery
+  - a motion animation based on transition
+  - the scrolled element is placed off visible part of its parent element by default
+  - nice final effect of bright title, photo and info on darker background on hover state
+* unified colors and styles for load-next-gallery button
+  - added transition for hover state with little latency time
+  - added the extra text-shadow for text
+
+-- witryna.js
+* generates structure for all gallery items
+  - a easy to recognise last loaded galleries and theirs gallery numbers and subpage belonging to that gallery list
+  - works for now only for the sequentially browsed gallery list - by function 'GenerujSpisGalerii' 
+  - function 'GenerujSpisWybranejGalerii' displays 'test contents' for any subpage of gallery list requested by a form
+ 
+[*] MODIFIED
+
+-- zlobek-styl.css
+* decreased each gallery item list to exactly 500px (from 575px before)
+  - also marked as relative element to its contents
+
+-- witryna.js
+* stopped displaying of a technical info at the beginning of gallery description of any gallery
+* more complex structure returned by function 'GenerujSpisGalerii' for  each element of gallery
+* code cleanings for better syntax or overall quality: 
+* changed semi-global-variables declarations inside an one group to use just only one 'var' keyword 
+* improved the quality of the texts in the messages inside variables
+* eventual variable names with an underscore replaced by a version in camelCase notation
+* replaced eventual typos or no spaces to a their properly edited versions
+* **alloweed names for notCamelCase variables only for semi global variables and for variables with identical names as element's ids** 
+
+---------------------------
+
+* v0.4.1 - selected subpage of gallery list with CSS & full working logic; proper counting clicks/subpages and displaying full list of galleries; current gallery texts; extended event delegation
+
+* v0.4.1 -- [2018-07-05]
+
+[+] ADDED
+
+-- index.php
+* created empty elements set without any content and attributes
+  - just a skeleton for later insertions anything inside them by JavaScript
+
+-- zlobek-styl.css
+* no added style but all in the selected subpage of gallery items element are styled the same as page of content items
+  - a JS adds an already defined common classes
+* added a style for active displayed gallery subpage number in yellow color
+  - displayed the same as the marked selected subpage number from the all gallery list inside the text of its header
+
+-- witryna.js
+* Javascript builds any selected subpage of gallery list
+  - uses an already defined class to create the same looking elements
+* added new elements of selected subpage to event listeners for click event
+  - no logic distinguishion between 'standard' gallery elements readed in groups of five
+  - extended the jQuery selector to sum of this two groups  
+
+[*] MODIFIED
+
+-- index.php
+* renamed few main project containers ids
+
+-- zlobek-styl.css
+* the same rules for renamed ids of main containers == selectors
+
+-- witryna.js
+* stopped displaying of technical info at the beginning of gallery description of any gallery
+  - works only for any subpage of gallery list requested by a form
+* removed counting of clicks on next-gallery-load button from  function 'GenerujSpisGalerii' which role is to display
+  - moved counter into event serving function of a click
+  - only at first function call is used auto increment of this counter
+  - see related element of 'fixed' section this update
+* rethought of counting of already loaded subpages
+  - display function builds new content so it's right place
+  - incrementation only after susscessful reads
+* conditionally hiding of notyfication element for loading next subpage of gallery list inside function 'GenerujSpisGalerii'
+  - can't be visible when reached last subpage
+* slighty change in name of ids for selected subpage of gallery list
+  - just to distinction by JS not CSS
+* use of passed value of parameter inside function 'GenerujSpisWybranejGalerii' to remove source content which is unnecessary now  
+* modified order of generated contents inside function 'UzupełnijNaglowekBiezacejGalerii'
+  - text of header is placed first to prevent from disruptions of floated 'img' element on narrow screen
+* increased by one a range for counting of clicks of button inside conditional logic of click callback function
+  - proper displaying of the last page of gallery lists by sequential demands
+* extended set of elements on which clicks event listen
+  - mentiones also at 'added' section
+  - working set containing sequentaially loaded items and items loaded from specified subpage, provided by form
+  - just added second container to jQuery selector
+  - delegated event handlers still in use and works unchanged
+* 'span' tag surrounds the current gallery subpage number which is inside generated subtitle, just before thumbnails list
+  - better visual wyróżnienie of current subpage
+  - uses defined CSS style
+
+[F] FIXED
+
+-- witryna.js
+* fixed displaying of the second subpage of gallery list
+  - removed extra incrementation from code logic 
+  - autoload works for first subpage then button loads next subpages on demand, starting from second subpage not third
+  - everything is displayed now in sequentially loaded subpages
+  - closes: #13 - 'Problem displaying the second subpage of the gallery list' - from v0.4
+
+---------------------------
+
+v0.4 - selected subpage & her content, used logic of refactored function
+
+* v0.4 -- [2018-07-04]
+
+[+] ADDED
+
+-- index.php
+* a notifier element of loading content for selected subpage from gallery list
+
+-- zlobek-styl.css
+* styles for a place with selected gallery subpages are copied from 'standard' table of contents
+* a notyfication elements are styled the same
+  - css selectors mentioned three times for three elements of notifycations
+  - each element must be targeted individually by id so it can't be used class selector 
+ 
+-- witryna.js
+* added new function 'GenerujSpisWybranejGalerii' with purpose outputing content based given parameter
+  - function require three parameters, first is a source container to reads from, the second one is target container, and the extra third parameter is a offset differentiator from source container
+  - function reads all the needed text contents, build new elements structure and inserts it into a target element
+  - for now just simple form of display of target container but all the titles and images are in place
+  - for test purpose a source container is temporary visible by CSS and it's placed into usable area near the real output
+  - needs a previous call of function 'NaprawBrakujaceSRCwKontenerze' which sets all the src attribs to absolute from the nursery server
+  - logic taken from previously defined function 'GenerujSpisGalerii' with a lot of changes and improvements
+* all te sliders ale placed in the half ot their range
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* used new elements as a selectors for already defined styles
+
+-- witryna.js
+* added extra info about semi-global variables into theirs comments
+* corrected few defined animations with 'animate' functions
+  - proper scrolling by adding 'px' unit
+
+---------------------------
+
 v0.3.12 - contents appears firstly later navigation shows up; elements hided by default; logic & view of subpage list selection, rolled forms; improvements security and code reuse;
 
 * v0.3.12 -- [2018-07-03]
