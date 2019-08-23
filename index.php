@@ -54,11 +54,13 @@
 
                 <div id="spis_tresci">
                     <div id="zaczytany_spis">
-                        <div class="kontener">
-                            <h2>Lista galerii ze Żłobka</h2>
-                            <div id="galeria_spis">
-                            </div>
-                        </div>                    
+                        <h2>Lista galerii ze Żłobka</h2>
+                        <div class="ciemne_tlo_spis">
+                            <div class="kontener">
+                                <div id="galeria_spis">
+                                </div>
+                            </div>    
+                        </div>
                     </div>
                 
                     <div id="wybrany_zaczytany_spis">
@@ -66,7 +68,11 @@
                         <div id="wczytywanie_wybrane_galerie_spis">
                             <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
                         </div>
-                        <div id="wybrane_galerie_spis">
+                        <div class="ciemne_tlo_spis">                        
+                            <div class="kontener">
+                                <div id="wybrane_galerie_spis">
+                                </div>
+                            </div>
                         </div>
                         <div id="skladowisko_wybrane_galerie_spis">
                         </div>
@@ -76,7 +82,9 @@
                     
                     
                     <nav id="spis_sterowanie">
-                        <p id="status_galerii_spis"></p>
+                        <div class="kontener">
+                            <p id="status_galerii_spis"></p>
+                        </div>
                         <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
 
                         
@@ -171,7 +179,7 @@
             </div>	<!-- div#naglowek_kontener -->
         </header>
 
-        <main id="glowna">
+        <div id="glowna">
             <div id="komentarz">
             <!--<h2>A poniżej może pojawią się zdjęcia wnuków, o ile podamy dobry adres i reszta zadziała prawidłowo...</h2>-->
             </div>
@@ -186,9 +194,13 @@
 
             <div id="wczytywanie"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" /></h2>
             </div>
-
-            <div id="skladowisko"></div>
-
+            
+            <div class="jasne_tlo_galeria">
+                <div class="kontener">
+                    <div id="skladowisko"></div>
+                </div>
+            </div>
+            
             <nav id="nawigacja_galeria">
 
             </nav>
@@ -197,32 +209,64 @@
                 <!-- a tu miniaturki z adresu zewnętrznego oraz klikane przejście do galerii -->
             </div>
 		
-	   </main> <!-- glowna -->
+	   </div> <!-- glowna -->
 
-	<footer id="stopka">&copy;2018 v0.4.5 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
-	
+	<footer id="stopka">&copy;2018 v0.4.6 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
         <div id="poco">
-            <h3>Jaki jest cel?</h3>
-            <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
-            <h3>Po polskiemu</h3>
-            <p>Galerię żłobka przeglądało się karygodnie, więc należało coś z tym zrobić. Wcześniejsza obsługa tego serwisu również była mało intuicyjna, ale z czasem zapewniono (w miarę) łatwe nawigowanie pomiędzy kolejnymi zdjęciami w ramach wielu galerii. Bieżący wygląd interefejsu stanowi niemal końcową funkcjonalność witryny. Dla testów i zauważalności postępów nad intuicyjnością interejsu zachowano relikt z formularzem i koniecznością kopiowania odnośników.</p>
-            <h3>Jeszcze raz</h3>
-            <p>Poniższa witryna ma za zadanie tylko ułatwić korzytanie z materiałów zawartych w serwisie żłobka. Twórcy zależy na przedłużeniu życia myszy oraz powierzchni dotykowych komputerów, dlatego jego celem jest przeniesienie obciążenia na klawisze strzałek oraz w przyszłości na ewentulane kółko myszy (funkcjonalność zależna od dostawcy usług, a w zasadzie wyboru innego dostawcy).     
-            <h3>Informacje i zastrzeżenia</h3>
-            <p>Wszelkie prawa do materiałów i zdjęć należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
+            <div class="kontener">
+                <h3>Jaki jest cel?</h3>
+                <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
+                <h3>Po polskiemu</h3>
+                <p>Galerię żłobka przeglądało się karygodnie, więc należało coś z tym zrobić. Wcześniejsza obsługa tego serwisu również była mało intuicyjna, ale z czasem zapewniono (w miarę) łatwe nawigowanie pomiędzy kolejnymi zdjęciami w ramach wielu galerii. Bieżący wygląd interefejsu stanowi niemal końcową funkcjonalność witryny. Dla testów i zauważalności postępów nad intuicyjnością interejsu zachowano relikt z formularzem i koniecznością kopiowania odnośników.</p>
+                <h3>Jeszcze raz</h3>
+                <p>Poniższa witryna ma za zadanie tylko ułatwić korzytanie z materiałów zawartych w serwisie żłobka. Twórcy zależy na przedłużeniu życia myszy oraz powierzchni dotykowych komputerów, dlatego jego celem jest przeniesienie obciążenia na klawisze strzałek oraz w przyszłości na ewentulane kółko myszy (funkcjonalność zależna od dostawcy usług, a w zasadzie wyboru innego dostawcy).     
+                <h3>Informacje i zastrzeżenia</h3>
+                <p>Wszelkie prawa do materiałów i zdjęć należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
+            </div>
         </div>
         <div id="pomoc">
-            <h3>Witryna wymaga dostępu do lokalizacji, skąd pochodzą oryginalne materiały.</h3>
-            <p>Niniejszy serwis służy tylko do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagany dostęp do oryginalnego serwisu.</p>
-            <h3>Kopiuj-wklej</h3>
-            <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu, po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz wklajanie w pole formularza nie jest wymagane i prawodpodobnie ta uprzykrzająca funkcjonalnośc zostanie wkrótce usunięta.
-            <h3>Podstrony</h3>
-            <p>Przeglądanie w galeriach ograniczających klikanie działa prawiłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis ma umożliwić łatwą nawigację pomiędzy kolejnymi obrazkami.</p>
-            <h3>Uwaga</h3> 
-            <p>Witryna umożliwia oglądanie pokazu zdjęć poprzez mechanizm galerii tylko dla wskazanego żłobka, serwis nie wyświetli pokazu zdjęć dla innych adresów.</p>
+            <div class="kontener">            
+                <h3>Witryna wymaga dostępu do lokalizacji, skąd pochodzą oryginalne materiały.</h3>
+                <p>Niniejszy serwis służy tylko do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagany dostęp do oryginalnego serwisu.</p>
+                <h3>Kopiuj-wklej</h3>
+                <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu, po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz wklajanie w pole formularza nie jest wymagane i prawodpodobnie ta uprzykrzająca funkcjonalnośc zostanie wkrótce usunięta.
+                <h3>Podstrony</h3>
+                <p>Przeglądanie w galeriach ograniczających klikanie działa prawiłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis ma umożliwić łatwą nawigację pomiędzy kolejnymi obrazkami.</p>
+                <h3>Uwaga</h3> 
+                <p>Witryna umożliwia oglądanie pokazu zdjęć poprzez mechanizm galerii tylko dla wskazanego żłobka, serwis nie wyświetli pokazu zdjęć dla innych adresów.</p>
+                <h3>Użyte technologie - oczywistości</h3> 
+                <ul>
+                    <li class="tech_tak">HTML5</li>
+                    <li class="tech_tak">CSS3</li>
+                    <li class="tech_tak">RWD&nbsp;+&nbsp;<em>mobile&nbsp;first</em></li>
+                    <li class="tech_tak">Flexbox</li>                        
+                    <li class="tech_tak">JavaScript</li>
+                    <li class="tech_tak">jQuery</li>
+                    <li class="tech_tak">AJAX</li>
+                    <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
+                    <li class="tech_tak">kompatybilność</li>
+                    <li class="tech_tak">PHP</li>
+                </ul>
+                <h3>Zgodność źródeł z konwencjami JS na poziomie 99,7% ;P</h3> 
+                <ul>
+                    <li>WielBłąd(&nbsp;),&nbsp;a&nbsp;caMel()</li>
+                    <li>no(n)Tacja&nbsp;{...}</li>
+                </ul>
+                <h3>Czego tutaj nie ma</h3> 
+                <ul>
+                    <li class="tech_nie">Angular.js</li>
+                    <li class="tech_nie">React</li>
+                    <li class="tech_nie">Bootstrap</li>
+                    <li class="tech_nie">ES6&nbsp;===&nbsp;ES2015</li>
+                    <li class="tech_nie">promesy</li>                    
+                    <li class="tech_nie">Node.js</li>
+                    <li class="tech_nie">SASS/LESS/PostCSS</li>
+                    <li class="tech_nie">CSS&nbsp;Grid</li>
+                    <li class="tech_nie">SVG?</li>
+                </ul>
+            </div>
         </div>
-
-	</footer>	
+    </footer>	
 	
 </div>	<!-- DIV#witryna -->
 	
