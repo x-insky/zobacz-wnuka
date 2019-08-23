@@ -1,15 +1,77 @@
+v0.4.5 - mobile-first CSS; flexible elements of list gallery; parent container of that list with limited width on wider screens; computed subpage as fix
+
+* v0.4.5 -- [2018-07-18]
+
+[+] ADDED
+
+-- index.php
+* added a container class that surrounds the entire area of gallery list elements
+  - a selected subpage of gallery list is unaltered for now to achieve a difference in view 
+
+-- zlobek-styl.css
+* a truly 'mobile-first' styles!
+* rewritten all basic and default styles for all elements for mobile look
+  - font size basis and box style layout for main elements (each on the top of other)
+  - smaller size of element of gallery item list, with decreased margin or paddings with regarding the smaller font size (relative units)
+  - the content of gallery element also decreased to view, i.g. reduced photo max size (dimmensions of the photos may vary between any galleries)
+  - photo thumbnails might be scaled down in CSS to match them to its given max size
+  - set initially width of button load-next-subpage
+* rewritten media query logic for 'min-width' logic instead of 'max-width'
+* added five media queries tresholds for distinguis elements look depending of the screen size
+  - five steps like five gallery elements in a line of readed contents
+  - experiments with the size of gallery list elements
+  - also inner elements of gallery list are size altered while screen or browser window width changes
+  - e.g. proportional shrinks or expands of image sizes or font sizes
+  - a font size of page grows on each treshold (like proportional growth)
+  - added distinct styles for elements if the specified screen width has been reached, into any given treshold
+  - obtained responsive gallery items list mainly for redefined styles
+* default hidings for all container with future contents (i.g. subpage navigations, status bars, current gallery thumbnails, ... ) 
+* slighty alterations
+  - increased vertical margins for main headers
+  - decreased padding in footer area
+
+[*] MODIFIED
+
+-- witryna.js
+* function 'GenerujPodstronyGalerii' always shows navigation container, regardless of whether it has any content (buttons)
+* cosmetic code alterations
+  - few variables renamed as camelCase style
+  - added few explanatory comments
+  - or just removed outdated comments
+
+-- zlobek-styl.css
+* replaced old media queries of 'max-width' style by newly defined ones (see added section of this update)
+
+[-] REMOVED
+
+-- zlobek-style.css
+* moved old media queries into comments
+* removed outside visible area the loaded source of the selected gallery
+
+-- index.php
+* removed a temporary pseudo link in footer without 'href' attrib
+
+[F] FIXED
+
+* corrected sequent subpage numerations
+  - modified code of function 'GenerujPodstronyGalerii' not to use simple incremented counter
+  - internaly that function uses function 'KtoraPodstronaWGalerii' to compute subpage number using given gallery number
+  - fixes: #15 - 'Error displaying the next page number in sequential loading.'
+
+---------------------------
+
 v0.4.4 - href attrib gone, testing look & behavoir with data-href
 
 * v0.4.4 -- [2018-07-13]
 
-[-] ADDED
+[+] ADDED
 
 -- zlobek-styl.css
 * added 'artificial' notyfication of working links on 'a' tag areas
   - simply a pointer icon (hand icon) on any encountered 'a' tag inside given container
   - 'a' tags without href attribute don't acts like active links by default
 
--- witryna.js
+-- index.php
 * placed a temporary pseudo link in footer with removed 'href' attrib just for a test purpose 
 
 [*] MODIFIED

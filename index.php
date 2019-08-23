@@ -54,10 +54,11 @@
 
                 <div id="spis_tresci">
                     <div id="zaczytany_spis">
-                        <h2>Lista galerii ze Żłobka</h2>
-                        <div id="galeria_spis">
-                        </div>
-
+                        <div class="kontener">
+                            <h2>Lista galerii ze Żłobka</h2>
+                            <div id="galeria_spis">
+                            </div>
+                        </div>                    
                     </div>
                 
                     <div id="wybrany_zaczytany_spis">
@@ -198,7 +199,7 @@
 		
 	   </main> <!-- glowna -->
 
-	<footer id="stopka">&copy;2018 v0.4.4 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button> <a data-href="#">Pusty odnośnik</a>
+	<footer id="stopka">&copy;2018 v0.4.5 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
 	
         <div id="poco">
             <h3>Jaki jest cel?</h3>
