@@ -198,7 +198,7 @@
 		
 	   </main> <!-- glowna -->
 
-	<footer id="stopka">&copy;2018 v0.4.3 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+	<footer id="stopka">&copy;2018 v0.4.4 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button> <a data-href="#">Pusty odnośnik</a>
 	
         <div id="poco">
             <h3>Jaki jest cel?</h3>

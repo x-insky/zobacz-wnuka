@@ -572,7 +572,9 @@ var $odnosnikiZdjecia = $( g_tag_do_podmiany_spis + " td.galeria_kolor a.link_tr
     {
         for( var i=0 ; i < $odnosnikiZdjecia.length ; i++ ){
             // usuwanie niepotrzebnej klasy, najprostsze/najszybsze bezpośrednio poprzez JS
-        $( $odnosnikiZdjecia[i] ).removeAttr('class');   // lepiej wywalić cały atrybut 'class', bo i tak zostaje pusty gdy się tylko usunie z niego klasę "link_tresc"
+        $( $odnosnikiZdjecia[i] ).removeAttr('class').attr('data-href', $( $odnosnikiZdjecia[i] ).attr('href') ).removeAttr('href') ;   
+            // lepiej wywalić cały atrybut 'class', bo i tak zostaje pusty gdy się tylko usunie z niego klasę "link_tresc" ;
+            // podobnie wylatuje 'href', aby nie komplikować z przyciskami myszy ;) -- wm jego miejsce tworzony zastępca 'data-href'
             
         var miejsceDocelowe = $( g_miejsce_na_spis + " .zdjecie_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
             // ta zmienna będzie używana w dalszych iteracjach, na rzecz każdego z fragmentów/atrybutów składowych docelowego odnośnika spisu treści galerii     
@@ -597,8 +599,11 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" 
             
         ktoraToGaleria = $( $odnosnikiTytuly[i] ).removeAttr('class').attr('href'); // pobranie 'href" + wcześniejsze wywalenie pustego 'class' z tego odnośnika
         ktoraToGaleria = parseInt( ktoraToGaleria.substr( ktoraToGaleria.lastIndexOf(",") + 2 ) ); // całość przekształcenia w jednym przypisaniu
+        
+            // skoro pierwotny 'href' już użyto (odczytano), to podmiana na 'data-href' i rezygnacja z wzorcowego atrybutu
+        $( $odnosnikiTytuly[i] ).attr('data-href', $( $odnosnikiTytuly[i] ).attr('href') ).removeAttr('href') ;   
             
-            // uaktualnienie numerem galerii i podstrony w tejże galerii od razu, bez dwóch odwołań poprzez .text()    
+            // uaktualnienie numerem galerii i podstrony w tejże galerii od razu w rodzicu, bez dwóch odwołań potomnych poprzez .text()    
         miejsceDocelowe = $( g_miejsce_na_spis + " .szczegoly:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" ); 
             // POCZĄTEK UŻYCIA jako ZMIENNEK TYMCZASOWEJ zmiennej, która przyjmuje treść zaczytanego tytułu danego elementu!
             // <p>XXXX</p><p>galeria<br />podstrona</p><p>YYY</p>
@@ -773,6 +778,10 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
         if ( $szukaneElementy.length > 0 )
         {
             for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ){
+                // najpierw wylatuje atrybut klasy, bo nie ma przewidzianego osobnego stylu w css, a 'link_tresc' też nie wnosi żadnej logiki
+                // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' + usuwanie pierwotnego atrybutu
+            $( $szukaneElementy[i] ).removeAttr('class').attr('data-href', $( $szukaneElementy[i] ).attr('href') ).removeAttr('href') ;      
+                
             miejsceDocelowe = $( kontenerDocelowy + " .zdjecie_odnosnik:eq(" + i + ")" );
 
                 // użycie funkcji naprawiającej ścieżkę do SRC pozwala przekleić obrazek (w trakcie ładowania) do innego obszaru dokumentu 
@@ -792,6 +801,10 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
             // dodatkowo odczytanie numeru galerii, aby od razu to wyświetlić wraz z numerem podstrony    
             ktoraToGaleria = $( $szukaneElementy[i] ).removeAttr('class').attr('href'); // pobranie 'href" + wcześniejsze wywalenie pustego 'class' z tego odnośnika    
             ktoraToGaleria = parseInt( ktoraToGaleria.substr( ktoraToGaleria.lastIndexOf(",") + 2 ) ); // w jednym przypisaniu wiele instrukcji, bez rozbijania na pojedyncze
+  
+                // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' i usuwanie tego pierwotnego atrybutu
+            $( $szukaneElementy[i] ).attr('data-href', $( $szukaneElementy[i] ).attr('href') ).removeAttr('href') ;              
+                
             trescSzczegolow = '<p>' + ktoraToGaleria + '</p><p><span>galeria</span><br />podstrona</p><p>' + String( parseInt( nrPodstrony ) ) + '</p>'; // w razie gdyby jakieś niewłaściwe wywołanie dla tego parametru 
             miejsceDocelowe = $( kontenerDocelowy + " .szczegoly:eq(" + i + ")" ); 
             miejsceDocelowe.html( trescSzczegolow );
@@ -847,7 +860,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
         // wysokość obrazka od (częste minimum) [120...320]px (jak narzucono w css), treść opisu losowo długa;
         // wyskakują wysokości dla szablonu pojemnika - obrazki w trakcie (pierwszego) ładowania, dobra wysokośc gdy już są w cache (pobrane wcześniej)    
         // proście jest ukrywać nadmiar w <div.opis>, niż mierzyć wysokośc zaczytywanego obrazka (przechwytywanie zdarzenia ładowania) i skracać wysokośc
-        // tego <div> o pozostałą wysokość.... + zasłanianie tekstu przy końcu całego pojemnika prostokątem z gradientem/pełnym
+        // <div> tekstowego o pozostałą wysokość całego pojemnika.... + zasłanianie tekstu przy końcu całego pojemnika prostokątem z gradientem/pełnym;
         // niepotrzebna treść wyleciała    
         } // if-end opis
 
@@ -1412,25 +1425,37 @@ return; // wyjście, aby nie przechodzić do odnosnika
 });	//  on("click")-$('#nawigacja_galeria')-END		
 */	
     // DLA KOLEJNYCH GALERII: '$('#galeria_spis').on("click", "a", function(e){'
-$('#galeria_spis, #wybrane_galerie_spis').on("click", "a", function(e){ 
-    if ( e.which == 2 ) // jeśli naciśnięto to ŚPM - środkowym przyciskiem myszy
+$('#galeria_spis, #wybrane_galerie_spis').on("click auxclick contextmenu", "a", function(e){ 
+    
+console.log (e);
+    /*
+    if ( e.type == "contextmenu" )
+    {
+    console.log("Menu kontekstowe");
+    // return false;
+    }*/
+    
+    //if ( e.which == 2 ) // jeśli naciśnięto to ŚPM - ŚRODKOWYM przyciskiem myszy
+    if ( e && (e.which == 2 || e.button == 4 ) )
     {
     e.preventDefault();
     alert("ŚPM!");
-    $(this).attr('href', '#');  // ;)
+    return false;    
+    //$(this).attr('href', '#');  // ;)
     }    
     
-    if ( e.which == 3 ) // jeśli naciśnięto to ŚPM?! - środkowym przyciskiem myszy
+    if ( e.which == 3 ) // jeśli naciśnięto to PPM?! - PRAWYM przyciskiem myszy
     {
     e.preventDefault();
-    alert("INNY-PM!");
-    $(this).attr('href', '#');  // ;)
+    //alert("INNY-PM!");
+    //return false;    
+    //$(this).attr('href', '#');  // ;)
     }  
 
 e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku    
 var $this = $(this);
-var galeria_docelowa = $this.attr('href');	
-	
+var galeria_docelowa = $this.attr('data-href');	// pierwotnie był odczyt bezpośrednio z istniejącego 'href', teraz w jego miejscu 'data-href'
+    
 var tytulGalerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek, a nie na obrazek -- bo nie posiadałby tekstu)   
 var opisGalerii = $this.parents('.kontener_odnosnik').find('.opis_odnosnik').html();	 // było .text(), ale teraz zyskujemy formatowanie tekstu
 var dataGalerii = $this.parents('.kontener_odnosnik').find('.data_odnosnik').text();       // tu bezwzględnie tylko tekst
@@ -1439,6 +1464,7 @@ var srcObrazkaGalerii = $this.parent().siblings('div.zdjecie_odnosnik').find('a 
 	if ( tytulGalerii.length == 0 )  // jeżeli naciśnięto odnośnik z obrazkiem, ten drugi zawiera już treść odnośnika
     {
     tytulGalerii = $this.parent().siblings('div.tytul_odnosnik').find('a h2').html();	 // było .text( ... )
+    galeria_docelowa =  $this.attr('data-href');    
     srcObrazkaGalerii = $this.find('img').attr('src');    
     }
 //alert('g_tag_do_podmiany, g_protokol_www + g_adres_strony + '/' + g_folder_serwera + '/', galeria_docelowa, g_element_zewnetrzny, "galeria_podstrona")

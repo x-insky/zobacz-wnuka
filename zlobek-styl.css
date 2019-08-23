@@ -259,6 +259,11 @@ height: 6em;
     /*    vertical-align: bottom;	*/
 }
 
+div#spis_tresci div.kontener_odnosnik a {
+cursor: pointer;    /* sztucznie, na usunięty 'href' */
+}
+
+
 div#spis_tresci div.tytul_odnosnik h2 {
     /*    vertical-align: bottom;   */
 color: white;
@@ -496,7 +501,8 @@ div#spis_tresci div#selektor {
 display: none;    
 width: 100%;
 background-color: crimson;
-margin-top: 1.5em;    
+margin-top: 1.5em;
+margin-bottom: 1.5em;    
 }
 
 
@@ -695,7 +701,11 @@ float : right ;
 padding : 1em ;	
 margin : 1em ;
 border : 2px solid red ;	
-			/* display: none */
+    display: none;
+}
+
+div#spis_tresci div#skladowisko_wybrane_galerie_spis {
+    display: none;
 }
 
 /* *** główny blok - zaczytywany ***  */ 

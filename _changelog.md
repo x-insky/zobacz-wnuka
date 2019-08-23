@@ -1,3 +1,42 @@
+v0.4.4 - href attrib gone, testing look & behavoir with data-href
+
+* v0.4.4 -- [2018-07-13]
+
+[-] ADDED
+
+-- zlobek-styl.css
+* added 'artificial' notyfication of working links on 'a' tag areas
+  - simply a pointer icon (hand icon) on any encountered 'a' tag inside given container
+  - 'a' tags without href attribute don't acts like active links by default
+
+-- witryna.js
+* placed a temporary pseudo link in footer with removed 'href' attrib just for a test purpose 
+
+[*] MODIFIED
+
+-- witryna.js
+* removed href attribute for all gallery links
+  - intended to block unatended clicks by second or middle mouse buttons
+  - it could generate '404 page' for bad address on this server
+  - it's almost impossible to block default bahavior of mouse in any web browser
+  - sometimes it works in given web browser but depends also from it's version (sometimes older means better but there is no common point)
+* instead a 'href' attribute for all 'a' involved tags added 'data-href' equivalent
+  - elements from source container are read and few times altered, at the end they go into target container without 'href' attribute
+  - used as 'href' in any 'internal' clicks 
+* it's easier to remove a common attribute from 'anchor' tags than plays with advanced event systems
+  - in many situations a click reponse is a inner browser thing, that user or frontend programmer can't control!
+  - a paradox: it's simplier managing semi-anchor-tags by own events than operate on a already built ones!
+* altered code to use 'data-href' instead default attrib
+* for test purpose added extra click variants of any mouse button to select any element of gallery list
+  - shows an alert message if pressing gallery item by right or middle mouse button
+
+-- zlobek-styl.css
+* hided source container of readed contents for gallery list subpages (element just before dark violet rectangle of status)
+* hidden also source container of readed contents for selected gallery subpages (previously a gray rectangle with red border under the selecting form area)
+* thats why added extra bottom margin for selecting form area for better view of  parent element with gray background
+
+---------------------------
+
 v0.4.3 - selected gallery subpages enchanced; cleaning inside a project files, obtained smaller project size 
 
 * v0.4.3 -- [2018-07-10]
