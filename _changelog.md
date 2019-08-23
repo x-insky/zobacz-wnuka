@@ -1,3 +1,140 @@
+v0.4.5 - mobile-first CSS; flexible elements of list gallery; parent container of that list with limited width on wider screens; computed subpage as fix
+
+* v0.4.5 -- [2018-07-18]
+
+[+] ADDED
+
+-- index.php
+* added a container class that surrounds the entire area of gallery list elements
+  - a selected subpage of gallery list is unaltered for now to achieve a difference in view 
+
+-- zlobek-styl.css
+* a truly 'mobile-first' styles!
+* rewritten all basic and default styles for all elements for mobile look
+  - font size basis and box style layout for main elements (each on the top of other)
+  - smaller size of element of gallery item list, with decreased margin or paddings with regarding the smaller font size (relative units)
+  - the content of gallery element also decreased to view, i.g. reduced photo max size (dimmensions of the photos may vary between any galleries)
+  - photo thumbnails might be scaled down in CSS to match them to its given max size
+  - set initially width of button load-next-subpage
+* rewritten media query logic for 'min-width' logic instead of 'max-width'
+* added five media queries tresholds for distinguis elements look depending of the screen size
+  - five steps like five gallery elements in a line of readed contents
+  - experiments with the size of gallery list elements
+  - also inner elements of gallery list are size altered while screen or browser window width changes
+  - e.g. proportional shrinks or expands of image sizes or font sizes
+  - a font size of page grows on each treshold (like proportional growth)
+  - added distinct styles for elements if the specified screen width has been reached, into any given treshold
+  - obtained responsive gallery items list mainly for redefined styles
+* default hidings for all container with future contents (i.g. subpage navigations, status bars, current gallery thumbnails, ... ) 
+* slighty alterations
+  - increased vertical margins for main headers
+  - decreased padding in footer area
+
+[*] MODIFIED
+
+-- witryna.js
+* function 'GenerujPodstronyGalerii' always shows navigation container, regardless of whether it has any content (buttons)
+* cosmetic code alterations
+  - few variables renamed as camelCase style
+  - added few explanatory comments
+  - or just removed outdated comments
+
+-- zlobek-styl.css
+* replaced old media queries of 'max-width' style by newly defined ones (see added section of this update)
+
+[-] REMOVED
+
+-- zlobek-style.css
+* moved old media queries into comments
+* removed outside visible area the loaded source of the selected gallery
+
+-- index.php
+* removed a temporary pseudo link in footer without 'href' attrib
+
+[F] FIXED
+
+* corrected sequent subpage numerations
+  - modified code of function 'GenerujPodstronyGalerii' not to use simple incremented counter
+  - internaly that function uses function 'KtoraPodstronaWGalerii' to compute subpage number using given gallery number
+  - fixes: #15 - 'Error displaying the next page number in sequential loading.'
+
+---------------------------
+
+v0.4.4 - href attrib gone, testing look & behavoir with data-href
+
+* v0.4.4 -- [2018-07-13]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added 'artificial' notyfication of working links on 'a' tag areas
+  - simply a pointer icon (hand icon) on any encountered 'a' tag inside given container
+  - 'a' tags without href attribute don't acts like active links by default
+
+-- index.php
+* placed a temporary pseudo link in footer with removed 'href' attrib just for a test purpose 
+
+[*] MODIFIED
+
+-- witryna.js
+* removed href attribute for all gallery links
+  - intended to block unatended clicks by second or middle mouse buttons
+  - it could generate '404 page' for bad address on this server
+  - it's almost impossible to block default bahavior of mouse in any web browser
+  - sometimes it works in given web browser but depends also from it's version (sometimes older means better but there is no common point)
+* instead a 'href' attribute for all 'a' involved tags added 'data-href' equivalent
+  - elements from source container are read and few times altered, at the end they go into target container without 'href' attribute
+  - used as 'href' in any 'internal' clicks 
+* it's easier to remove a common attribute from 'anchor' tags than plays with advanced event systems
+  - in many situations a click reponse is a inner browser thing, that user or frontend programmer can't control!
+  - a paradox: it's simplier managing semi-anchor-tags by own events than operate on a already built ones!
+* altered code to use 'data-href' instead default attrib
+* for test purpose added extra click variants of any mouse button to select any element of gallery list
+  - shows an alert message if pressing gallery item by right or middle mouse button
+
+-- zlobek-styl.css
+* hided source container of readed contents for gallery list subpages (element just before dark violet rectangle of status)
+* hidden also source container of readed contents for selected gallery subpages (previously a gray rectangle with red border under the selecting form area)
+* thats why added extra bottom margin for selecting form area for better view of  parent element with gray background
+
+---------------------------
+
+v0.4.3 - selected gallery subpages enchanced; cleaning inside a project files, obtained smaller project size 
+
+* v0.4.3 -- [2018-07-10]
+
+[+] ADDED
+
+-- witryna.js
+* added logic to output a fully functionally elements of any selected subpage of gallery list 
+  - added needed code inside a function 'GenerujSpisWybranejGalerii'
+  - the same look and behavior like elements of 'standard' galleries from sequential list
+* added for test purposes a JS alert boxes when any gallery link is clicked by right or medium mouse button
+ 
+[*] MODIFIED
+
+-- index.php
+* shortened header text for selected gallery list subpage
+
+-- zlobek-styl.css
+* a CSS cleaning
+  - changed arrangement of the rules just for easy comprehension purposes
+  - only a little alterations inside of rules values
+
+-- witryna.js
+* removed unecessary attribs from readed contents for headers
+  - i.g. external site classes are unwanted
+* changed class membership for short gallery titles inside all galleries elements (now class 'higher', before was class 'lower') 
+* slighty changes in variables or attributes names
+
+[-] REMOVED
+
+--witryna.js
+* JavaScript code cleaning
+* removed a lot of unnecessary comments
+
+---------------------------
+
 v0.4.2 - improved gallery elements with animations at smaller size; unified colors & anim for load-next-subpage button; beautify code, texts & comments
 
 * v0.4.2 -- [2018-07-07]

@@ -4,9 +4,16 @@
 box-sizing: border-box;	
 }
 
+body {
+font-size: 65%;	
+}
+
+
 div#witryna {
 margin: 1em auto;
 width: 98%;
+position: relative;
+overflow: hidden;
 	
 /* background: radial-gradient( ellipse, center, #222 15%, #333 100%);	*/
 }
@@ -208,7 +215,8 @@ width: 100%;
 div#spis_tresci div#galeria_spis {
 background-color: cornflowerblue;
 /* float: left;	*/
-padding: 1em;	
+padding-top: 1em;
+padding-bottom: 1em;    
 /*margin-left: 1em;
 margin-right: 1em;	*/
 margin-bottom: 1em;	
@@ -217,19 +225,19 @@ width: 100%;
 }
 
 div#spis_tresci div.kontener_odnosnik {
-border: 1px solid blue;
-box-shadow: 1px 1px 3px darkblue;	
-margin : 0.75em 0.5em;
-padding: 0.5em;	
-border-radius: 5px;
-width : 100%	;
-float: left;
-max-width: 250px;	
-transition: all 0.25s ease-out;	
-min-height: 500px;	     /* było po 575px w obu wysokościach, zabrano 75px */ 		
-max-height: 500px;
+min-height: 330px;	     /* było po 575px w obu wysokościach, zabrano 75px */ 		
+max-height: 330px;
+max-width: 97.6%;	
+width : 100%;
 overflow: hidden;
 position: relative;
+float: left;
+margin: 0.4em 0.3em;
+padding: 0.5em;	    
+border: 1px solid blue;
+box-shadow: 1px 1px 3px darkblue;	
+border-radius: 5px;
+transition: all 0.25s ease-out;	
 }
 
 div#spis_tresci div.kontener_odnosnik:hover {
@@ -248,24 +256,30 @@ width: 100%;
 }
 
 div#spis_tresci div.kontener_odnosnik:hover div.dolna_zaslonka {
-background-color: #5d6ad0; 
+background-color: #5d6ad0;  /* #5d6ad0 == rgb(93,106,208) */
 background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(93,106,208,1) 50%, rgba(93,106,208,1) 100%);; 
 }
 
 div#spis_tresci div.tytul_odnosnik {
 height: 6em;
-vertical-align: bottom;	
+    /*    vertical-align: bottom;	*/
 }
 
+div#spis_tresci div.kontener_odnosnik a {
+cursor: pointer;    /* sztucznie, na usunięty 'href' */
+}
+
+
 div#spis_tresci div.tytul_odnosnik h2 {
-vertical-align: bottom;
+    /*    vertical-align: bottom;   */
 color: white;
 text-shadow: 2px 2px 6px black;
 word-wrap: break-word;	
 }
 
-div#spis_tresci div.tytul_odnosnik h2.nizszy {
-line-height: 2.5em;
+div#spis_tresci div.tytul_odnosnik h2.wyzszy {
+    /* line-height: 2.5em; */
+padding-top: 0.8em;    
 }
 
 
@@ -295,7 +309,8 @@ margin-right: auto;
 }
 
 div#spis_tresci div.zdjecie_odnosnik img {
-max-height: 320px;	
+max-height: 200px;
+max-width: 96%;    
 border: 4px solid white;	
 box-shadow: 2px 2px 6px darkblue;
 margin-left: auto;
@@ -328,23 +343,6 @@ max-height: 304px;	/* jak wielokrotność 16px fontu */
 text-align: justify;	
 padding-bottom: 0.5em;
 }
-
-div#spis_tresci div.opis_odnosnik.max_y_260 {
-max-height: 260px;	
-}
-
-div#spis_tresci div.opis_odnosnik.max_y_208 {
-max-height: 208px;	
-}
-
-div#spis_tresci div.opis_odnosnik.max_y_160 {
-max-height: 160px;	
-}
-
-div#spis_tresci div.opis_odnosnik.max_y_96 {
-max-height: 96px;	
-}
-
 
 div#spis_tresci div.kontener_odnosnik div.szczegoly {
 position: absolute;
@@ -391,7 +389,7 @@ line-height: 22px;
 
 div#spis_tresci div.szczegoly > p > span
 {
-color: #54c;
+color: #54c;    
 }
 
 div#spis_tresci div.szczegoly > p:first-of-type,
@@ -413,7 +411,7 @@ color: #5a8ae8;
 }
 
 div#spis_tresci div.kontener_odnosnik div.dolna_zaslonka {
-    /* CSS-clip gdy bedzie działał we wszytskich przeglądarkach to bedzie raj */
+    /* użyć CSS-clip, gdy bedzie działał we wszystkich przeglądarkach to bedzie raj; póki co gradient, albo ostatecznie jednolite tło */
 position: absolute;
 z-index: 1;    
 width: 100%; 
@@ -475,7 +473,7 @@ div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
     transition: all 0.5s ease 0.1s;*/
     
 display: none;
-max-width: 16em;
+width: 90%;
 background-color: cornflowerblue;
 color: white;
 margin: 1em;
@@ -508,9 +506,11 @@ text-shadow: 0px 0px 10px black;
 
 div#spis_tresci div#selektor {
 display: none;    
-width: 100%;
-background-color: crimson;
-margin-top: 1.5em;    
+width: 99%;
+    /*background-color: crimson;*/
+
+margin: 1.5em auto;    
+    
 }
 
 
@@ -709,8 +709,26 @@ float : right ;
 padding : 1em ;	
 margin : 1em ;
 border : 2px solid red ;	
-			/* display: none */
+    display: none;
 }
+
+div#spis_tresci div#skladowisko_wybrane_galerie_spis {
+    position: absolute;
+    background-color: dimgray;
+    left: -1110px;
+    top: 560px;
+/*    display: none;*/
+}
+
+
+div#spis_tresci div#skladowisko_status_wybranej_galerii {
+    position: absolute;
+    background-color: cadetblue;
+    left: -1090px;
+    top: -2180px;
+    display: none;  
+}
+
 
 /* *** główny blok - zaczytywany ***  */ 
 
@@ -781,6 +799,7 @@ background-color: cornflowerblue;
 padding: 0.5em 1.1em;
 border-bottom-left-radius: 10px;
 border-bottom-right-radius: 10px;
+display: none;
 }
 
 nav#nawigacja_galeria input[type=button] {
@@ -834,7 +853,7 @@ div#skladowisko {
 background-color: #c3d5e2;
 padding: 0.5em 0.6em;
 overflow: hidden;
-/* display: none;	*/
+display: none;
 /* display: table;	*/
 }
 
@@ -874,7 +893,7 @@ clear: both;
 background-color: cornflowerblue;		
 margin-top: 0.7em;
 margin-bottom: 2em;	
-padding: 1em 2em;	
+padding: 1em 0.2em;	
 text-align: center;
 border-radius: 10px;
 box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);		
@@ -1166,8 +1185,127 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 
 /*      --- K W E R E N D Y ---     */
 
+@media screen and (min-width: 320px) {
+	body {
+	font-size: 70%;	
+	}     
+    
+    div#witryna {
+	margin: 0.4em auto; 	
+	}
+    
+    div#spis_tresci div.kontener_odnosnik {
+	min-height: 375px;			
+	max-height: 375px;
+	}
+	
+	div#spis_tresci div.kontener_odnosnik img {
+	max-height: 210px;
+	}
+    
+    nav#spis_sterowanie h2#zaladuj_galerie_spis {
+    max-width: 16em;
+    }
+        
+/*    footer#stopka {
+    padding: 1em 0;	
+	}*/
+    
+} 
 
 
+@media screen and (min-width: 470px) { 
+
+	body {
+	font-size: 80%;	
+	}
+	
+	div#witryna {
+	margin: 0.6em auto; 	
+	}
+
+	div#spis_tresci div.kontener_odnosnik {
+	min-height: 415px;			
+	max-height: 415px;
+    width: 48.2%;    
+	}
+
+	div#spis_tresci div.kontener_odnosnik img {
+	max-height: 220px;
+	}
+	
+	footer#stopka {
+    padding: 1em 0.2em;	
+    }
+
+}
+
+
+@media screen and (min-width: 700px) { 
+
+	body {
+	font-size: 85%;	
+	}
+	
+	div#witryna {
+	margin: 0.6em auto; 	
+	}
+
+	div#spis_tresci div.kontener_odnosnik {
+	min-height: 425px;			
+	max-height: 425px;
+    width: 32%;    
+	}
+
+	div#spis_tresci div.kontener_odnosnik img {
+	max-height: 230px;
+	}
+	
+}
+
+
+@media screen and (min-width: 940px) { 
+
+	body {
+	font-size: 90%;	
+	}
+	
+	div#spis_tresci div.kontener_odnosnik {
+	min-height: 465px;			
+	max-height: 465px;
+    width: 24%;     
+	}
+
+	div#spis_tresci div.kontener_odnosnik img {
+	max-height: 240px;
+	}
+}
+
+
+@media screen and (min-width: 1180px) { 
+
+	body {
+	font-size: 100%;	
+	}
+
+	div#spis_tresci div.kontener_odnosnik {
+	min-height: 490px;			
+	max-height: 490px;
+    width: 19.1%;       
+	}
+
+	div#spis_tresci div.kontener_odnosnik img {
+	max-height: 250px;
+	}
+}
+
+
+
+
+
+
+/*        KWERENDY MOBILE-LAST      */
+/* 
 @media screen and (max-width: 320px) { 
 
 	body {
@@ -1219,11 +1357,13 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 	
 	
 	form#wyszukaj input[type="text"] {
- width: 15em;		
- }
+    width: 15em;		
+    }
 	
 	footer#stopka {
- padding: 1em 0.2em;	
-	}
+    padding: 1em 0.2em;	
+    }
 
 }
+
+*/
