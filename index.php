@@ -19,11 +19,18 @@
 	<div id="witryna">
 
         <header id="naglowek">
+        <!-- <div class="kontener">  -->
 
-            <div id="banner">
-                <div id="logo">
-                    <div id="slonce_logo"><!-- <img src="grafiki/slonce.png"> --></div>
-                </div>
+            <!-- tu </div> -- kontener -- tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamnknąc w tych okowach... choć ideaklnie pasuje to ułatwienie  --> 
+
+            <div id="naglowek_kontener">
+
+                <div id="banner">
+
+                    <div id="logo">
+                        <div id="slonce_logo"><!-- <img src="grafiki/slonce.png"> --></div>
+                    </div>
+    
                 <div id="napisy">
                     <h1 class="logo">Zobacz Wnuka!</h1>
                     <h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w Chojnowie</h2>
@@ -35,30 +42,30 @@
                 </div>
 
             </div>
-
-            <div id="naglowek_kontener">
-
+                <!-- formularz-antyk
                 <h1 class="zmienny">Do uruchomienia galerii wymagane podanie adresu witryny ze zdjęciami <button id="odswiez" style="margin: 0.05em; padding: 0.1em 0.6em; font-size: 60%;">Odśwież</button></h1>
                 <h3>Wpisz/wklej pełny adres do przeglądania galerii z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a> lub po prostu skorzystaj z poniższej listy galerii</h3>
                 <div id="formularz">
                     <form action="#" method="post" id="wyszukaj">
-                        <fieldset>
-                            <label for="http_adres">Adres galerii</label>
-                            <input type="text" id="http_adres" name="http_adres" placeholder="np. http://zlobek.chojnow.eu/u_tygryskow,a146.html" alt="Podaj adres podstrony konkretnej galerii" />
-                            <input type="button" id="testowy_adres_button" name="testowy_adres_button" value="Testowy adres" />
-                            <input type="submit" id="http_adres_submit" role="submit" value="Zobacz wnuki" />
-                            <div id="form_error">Wymagane uzupełnienie pola tekstowego, wpisz adres podstrony z serwisu zlobek.chojnow.eu</div>				
-                        </fieldset>
+                        <label for="http_adres">Adres galerii</label>
+                        <input type="text" id="http_adres" name="http_adres" placeholder="np. http://zlobek.chojnow.eu/u_tygryskow,a146.html" alt="Podaj adres podstrony konkretnej galerii" />
+                        <input type="button" id="testowy_adres_button" name="testowy_adres_button" value="Testowy adres" />
+                        <input type="submit" id="http_adres_submit" role="submit" value="Zobacz wnuki" />
+                        <div id="form_error">Wymagane uzupełnienie pola tekstowego, wpisz adres podstrony z serwisu zlobek.chojnow.eu</div>				
                     </form>
-                </div>	
+                </div>	 
+                        -->
+
 
                 <div id="spis_tresci">
                     <div id="zaczytany_spis">
-                        <div class="kontener">
-                            <h2>Lista galerii ze Żłobka</h2>
-                            <div id="galeria_spis">
-                            </div>
-                        </div>                    
+                        <h2>Lista galerii ze Żłobka</h2>
+                        <div class="ciemne_tlo_spis">
+                            <div class="kontener">
+                                <div id="galeria_spis">
+                                </div>
+                            </div>    
+                        </div>
                     </div>
                 
                     <div id="wybrany_zaczytany_spis">
@@ -66,7 +73,11 @@
                         <div id="wczytywanie_wybrane_galerie_spis">
                             <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
                         </div>
-                        <div id="wybrane_galerie_spis">
+                        <div class="ciemne_tlo_spis">                        
+                            <div class="kontener">
+                                <div id="wybrane_galerie_spis">
+                                </div>
+                            </div>
                         </div>
                         <div id="skladowisko_wybrane_galerie_spis">
                         </div>
@@ -76,7 +87,9 @@
                     
                     
                     <nav id="spis_sterowanie">
-                        <p id="status_galerii_spis"></p>
+                        <div class="kontener">
+                            <p id="status_galerii_spis"></p>
+                        </div>
                         <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
 
                         
@@ -96,20 +109,13 @@
                                                     <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
                                                 </div>
                                                 <div>
-                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" list="suwak_znaczniki" alt="Wybierz numer galerii z zakresu" />
-                                                    <datalist id="suwak_znaczniki">
-                                                        <option value="1" label="1">
-                                                        <option value="25">
-                                                        <option value="50" label="50%">
-                                                        <option value="75">
-                                                        <option value="100" label="max">
-                                                    </datalist>
+                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
                                             </div>
                                             <div id="suwak_info">
                                                 <div>
-                                                    <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
-                                                    <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
+                                                    <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1 &lt;" />
+                                                    <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1 &gt;" />
                                                 </div>
                                             </div>
                                             <div>
@@ -127,14 +133,7 @@
                                                     <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
                                                 </div>
                                                 <div>
-                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_podstrony" name="suwak_podstrony" list="suwak_znaczniki2" alt="Wybierz numer galerii z zakresu" />
-                                                    <datalist id="suwak_znaczniki2">
-                                                        <option value="1" label="1">
-                                                        <option value="5">
-                                                        <option value="10" label="50%">
-                                                        <option value="25">
-                                                        <option value="50" label="max">
-                                                    </datalist>
+                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
                                             </div>
                                             <div id="suwak_podstrona_info">
@@ -169,9 +168,10 @@
                     </nav>	
                 </div>  <!-- div#spis_tresci -->
             </div>	<!-- div#naglowek_kontener -->
+            <!-- </div> -->  <!-- div-kontener  (na próbę) -->
         </header>
 
-        <main id="glowna">
+        <div id="glowna">
             <div id="komentarz">
             <!--<h2>A poniżej może pojawią się zdjęcia wnuków, o ile podamy dobry adres i reszta zadziała prawidłowo...</h2>-->
             </div>
@@ -186,9 +186,13 @@
 
             <div id="wczytywanie"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" /></h2>
             </div>
-
-            <div id="skladowisko"></div>
-
+            
+            <div class="jasne_tlo_galeria">
+                <div class="kontener">
+                    <div id="skladowisko"></div>
+                </div>
+            </div>
+            
             <nav id="nawigacja_galeria">
 
             </nav>
@@ -197,34 +201,89 @@
                 <!-- a tu miniaturki z adresu zewnętrznego oraz klikane przejście do galerii -->
             </div>
 		
-	   </main> <!-- glowna -->
+        </div> <!-- glowna -->
 
-	<footer id="stopka">&copy;2018 v0.4.5 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
-	
-        <div id="poco">
-            <h3>Jaki jest cel?</h3>
-            <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
-            <h3>Po polskiemu</h3>
-            <p>Galerię żłobka przeglądało się karygodnie, więc należało coś z tym zrobić. Wcześniejsza obsługa tego serwisu również była mało intuicyjna, ale z czasem zapewniono (w miarę) łatwe nawigowanie pomiędzy kolejnymi zdjęciami w ramach wielu galerii. Bieżący wygląd interefejsu stanowi niemal końcową funkcjonalność witryny. Dla testów i zauważalności postępów nad intuicyjnością interejsu zachowano relikt z formularzem i koniecznością kopiowania odnośników.</p>
-            <h3>Jeszcze raz</h3>
-            <p>Poniższa witryna ma za zadanie tylko ułatwić korzytanie z materiałów zawartych w serwisie żłobka. Twórcy zależy na przedłużeniu życia myszy oraz powierzchni dotykowych komputerów, dlatego jego celem jest przeniesienie obciążenia na klawisze strzałek oraz w przyszłości na ewentulane kółko myszy (funkcjonalność zależna od dostawcy usług, a w zasadzie wyboru innego dostawcy).     
-            <h3>Informacje i zastrzeżenia</h3>
-            <p>Wszelkie prawa do materiałów i zdjęć należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
+        
+        <div id="gra">
+            <div id="reguły">
+                <h1>Pokoloruj duży obrazek poprzez ułożenie małych obrazków we właściwych miejscach.</h1>
+                <p>Rozgrywaka na czas, spróbuj osiągnąć najlepszy wynik.</p>
+            </div>
+            <div id="sterowanie">
+                <button>Start/Od nowa</button> <button>Losuj planszę</button> <button>Moje wyniki</button>
+            </div>
+            <div class="kontener">
+                <div id="plansza">
+                    <div id="rysunek">
+                    </div>
+                    <div id="prawy_zasobnik">
+                    </div>
+                    <div id="dolny_zasobnik">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="pomoc">
-            <h3>Witryna wymaga dostępu do lokalizacji, skąd pochodzą oryginalne materiały.</h3>
-            <p>Niniejszy serwis służy tylko do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagany dostęp do oryginalnego serwisu.</p>
-            <h3>Kopiuj-wklej</h3>
-            <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu, po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz wklajanie w pole formularza nie jest wymagane i prawodpodobnie ta uprzykrzająca funkcjonalnośc zostanie wkrótce usunięta.
-            <h3>Podstrony</h3>
-            <p>Przeglądanie w galeriach ograniczających klikanie działa prawiłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis ma umożliwić łatwą nawigację pomiędzy kolejnymi obrazkami.</p>
-            <h3>Uwaga</h3> 
-            <p>Witryna umożliwia oglądanie pokazu zdjęć poprzez mechanizm galerii tylko dla wskazanego żłobka, serwis nie wyświetli pokazu zdjęć dla innych adresów.</p>
-        </div>
-
-	</footer>	
+        
+        
+        <footer id="stopka">&copy;2018 v0.4.9 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+            <div id="poco">
+                <div class="kontener">
+                    <h3>Jaki jest cel?</h3>
+                    <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
+                    <h3>Po polskiemu</h3>
+                    <p>Galerię żłobka przeglądało się karygodnie, więc należało coś z tym zrobić. Wcześniejsza obsługa tego serwisu również była mało intuicyjna, ale z czasem zapewniono (w miarę) łatwe nawigowanie pomiędzy kolejnymi zdjęciami w ramach wielu galerii. Bieżący wygląd interefejsu stanowi niemal końcową funkcjonalność witryny. Dla testów i zauważalności postępów nad intuicyjnością interejsu zachowano relikt z formularzem i koniecznością kopiowania odnośników.</p>
+                    <h3>Jeszcze raz</h3>
+                    <p>Poniższa witryna ma za zadanie tylko ułatwić korzytanie z materiałów zawartych w serwisie żłobka. Twórcy zależy na przedłużeniu życia myszy oraz powierzchni dotykowych komputerów, dlatego jego celem jest przeniesienie obciążenia na klawisze strzałek oraz w przyszłości na ewentulane kółko myszy (funkcjonalność zależna od dostawcy usług, a w zasadzie wyboru innego dostawcy).     
+                    <h3>Informacje i zastrzeżenia</h3>
+                    <p>Wszelkie prawa do materiałów i zdjęć należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
+                </div>
+            </div>
+            <div id="pomoc">
+                <div class="kontener">            
+                    <h3>Witryna wymaga dostępu do lokalizacji, skąd pochodzą oryginalne materiały.</h3>
+                    <p>Niniejszy serwis służy tylko do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagany dostęp do oryginalnego serwisu.</p>
+                    <h3>Kopiuj-wklej</h3>
+                    <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu, po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz wklajanie w pole formularza nie jest wymagane i prawodpodobnie ta uprzykrzająca funkcjonalnośc zostanie wkrótce usunięta.
+                    <h3>Podstrony</h3>
+                    <p>Przeglądanie w galeriach ograniczających klikanie działa prawiłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis ma umożliwić łatwą nawigację pomiędzy kolejnymi obrazkami.</p>
+                    <h3>Uwaga</h3> 
+                    <p>Witryna umożliwia oglądanie pokazu zdjęć poprzez mechanizm galerii tylko dla wskazanego żłobka, serwis nie wyświetli pokazu zdjęć dla innych adresów.</p>
+                    <h3>Użyte technologie - co tutaj zawarto (oczywistości i nie~)</h3> 
+                    <ul>
+                        <li class="tech_tak">HTML5</li>
+                        <li class="tech_tak">CSS3</li>
+                        <li class="tech_tak">RWD&nbsp;+&nbsp;<em>mobile&nbsp;first</em></li>
+                        <li class="tech_tak">Flexbox</li>                        
+                        <li class="tech_tak">JavaScript</li>
+                        <li class="tech_tak">jQuery</li>
+                        <li class="tech_tak">AJAX</li>
+                        <li class="tech_tak">PHP</li>
+                        <li class="tech_tak">SPA</li>                        
+                        <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
+                        <li class="tech_tak">kompatybilność</li>
+                    </ul>
+                    <h3>Zgodność źródeł z konwencjami JS na poziomie 99,7% ;P</h3> 
+                    <ul>
+                        <li>WielBłąd(&nbsp;),&nbsp;a&nbsp;camelCamel()</li>
+                        <li>no(n)Tacja&nbsp;{...}</li>
+                    </ul>
+                    <h3>Czego tutaj nie ma</h3> 
+                    <ul>
+                        <li class="tech_nie">Angular.js</li>
+                        <li class="tech_nie">React</li>
+                        <li class="tech_nie">Bootstrap</li>
+                        <li class="tech_nie">ES6&nbsp;===&nbsp;ES2015</li>
+                        <li class="tech_nie">promesy</li>                    
+                        <li class="tech_nie">Node.js</li>
+                        <li class="tech_nie">SASS/LESS/PostCSS</li>
+                        <li class="tech_nie">CSS&nbsp;Grid</li>
+                        <li class="tech_nie">SVG?</li>
+                    </ul>
+                </div>
+            </div>
+        </footer>	
 	
-</div>	<!-- DIV#witryna -->
+    </div>	<!-- DIV#witryna -->
 	
 
 		<script src="fittext/jquery.fittext.js"></script>	

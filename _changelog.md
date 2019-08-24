@@ -1,3 +1,184 @@
+v0.4.9 - form in header gone, rebuilded header and changed when great screen; sliders of form polished;  
+
+* v0.4.9 -- [2018-07-23]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added first styles directly for main header element
+  - previously used only as main level container
+* added hover state styles with shadows to sliders of forms
+  -  achieved effect like backlight bright
+* added extra media query for the widest screens which are more than 1400px
+  - redefines some rules for elements
+  - for now used only to control 'div' element with 'banner' id (centers that element and adds border and rounds only bottom corners to it)
+
+[*] MODIFIED
+
+-- index.php
+* removed container class element from header
+
+-- zlobek-styl.css
+*  added all rounded corners for main header's child elements (previously only selected top or bottom was round)
+* 'div' element with id of 'naglowek_kontener' treaded as main logo box
+  - added max-width for visible header
+  - if screen size exceeds max-width of container then element gets white border and it's horizontal centered (modified by styles of media query)  
+* added transition to all sliders attributes
+  - with box-shadow in white color on hover state it's nice effect in almost every browser
+  - added box-shadow attribute inside vendor specific selectors (if supports it; feature mentioned in added section)
+
+[-] REMOVED
+
+-- index.php
+* finally the form has been removed from the page header
+  - it is no longer necessary to enter the address of a particular gallery that had to be obtained when using the original nursery site
+  - temporary inserted the whole form elements into one big comment
+
+---------------------------
+
+v0.4.8 - CSS fixes of sliders
+
+* v0.4.8 -- [2018-07-22]
+
+[*] MODIFIED
+
+-- index.php
+* temporary changed label texts of incrementation/decrementation buttons of form
+  - always in purpose of selecting the better final variant (meaning and display)
+* tiny changes at text of 'h3' header inside footer
+
+-- zlobek-styl.css
+* styles of slider for IE
+  - changed color of slider track from orange to dark blue
+  - a tiny grow of slider handles when active (focus state)  
+
+[F] FIXED
+
+-- zlobek-styl.css
+* a better displaying of sliders inside a form in Firefox browser
+  - no more white rectangles under the sliders
+  - only in focus state a white border is present (only if previously was used keyboard)
+  - added an indicator of possible mouse clicking (pointer icon)
+* Chrome: fixed displaying own styles instead of that's builded into browser
+  - as it's possible in older versions
+  - slider flickering on hover state is impossibly to removed by growing overall size height or use negative margins for whole slider
+  - focus/hover as simple notification with increased height of handle (possible removing it if it do too much to unstyle other elements in focus state)  
+  - not relevant state of focus for very old browser version 
+
+[-] REMOVED
+
+-- index.php
+* removed datalist element as a selected units of markers for both form sliders
+
+---------------------------
+
+v0.4.7 - prefixed sliders, gradient backgrounds of forms; game area scaffolding
+
+* v0.4.7 -- [2018-07-21]
+
+[+] ADDED
+
+-- index.php
+* from now all page header content is inside container class 
+* added HTML structure for purpose of future game
+  - just before footer
+
+-- zlobek-styl.css
+* new style for the sliders
+  - removed horizontal paddings
+  - added noticeable yellow circle style for handles
+  - added styles with vendor prefixes, the order of declarations is important
+  - Chrome reads prefixes for Firefox only  :( 
+  - incorrect displaying in new Firefox browser - white rectangle under the narrow slider area
+  - extra vendor style for IE browser for color of left and right side of the slider
+* styled layout for group of elements of 'game' section
+  - fixed arrangement of elements, regardless of the screen width
+  - using float, fixed sizes and absolute positioning
+  - using delimiter of width 1300px
+* trying to show a whole container of 'game' section only on the widest screen
+  - added default hiding of parent container
+  - inserted on selected media query displaying of it
+* changed background color of the list element in footer to lighter color
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* a gradient background inside form selections
+  - replaced semi-random colors to reflected radial gradients
+  - mirror arrangement of colors between two form areas
+
+---------------------------
+
+v0.4.6 - no-main-div; container class everywhere; initial hidings & absolute relocations; new lists in footer; parent container for galleries lists; greater thumbnails; flex-buttons-group; 
+
+* v0.4.6 -- [2018-07-19]
+
+[+] ADDED
+
+-- new file 'nie_ikona.png'
+* a background file for list element in footer
+  - with 'NO' meaning
+
+-- new file 'tak2_ikona.png'
+* a background file for list element in footer
+  - with 'YES' meaning
+
+-- new file 'tak_nie_ikona.png'
+* a background file for list element in footer
+  - with 'IDK' meaning
+
+-- index.php
+* added extra container for the gallery list elements and for a selected subpage of gallery list
+  - a full width block container with the same background color as gallery list container
+  - just a insertion of a stylized element between the existing layout
+  - a block with a container class with maximum width is placed inside along with the entire structure of the gallery list as before
+  - the same look is repeating for selected subpage for gallery list
+* insertions of container class element inside where it's possible
+  - inside all full width main items or deeper inside theirs structure 
+  - also in footer area
+* inserted structure which containing a list of the used technologies, as well as a summary of what IS NOT inside this project or what is done differently
+  - small graphics are used as a bullet inside background
+
+-- zlobek-styl.css
+* created a common class with full width and dark background for any gallery list container 
+* builded styles for new lists in footer structure
+  - a horizontal list of used features
+  - uses new pictures as background in three variants
+
+[*] MODIFIED
+
+-- index.php
+* returned to the standard block element 'div' instead of 'main'
+  - the element for displaying current gallery details sometimes "don't want to be" properly styled ;)
+  - a compatibility problem with olders browsers and their builded treatment of 'main' tag
+
+-- zlobek-styl.css
+* significantly reduced a margin for a top level page container
+  - not wastes area of small screens
+* updated initial hidden status for any functional page element (e.g. status bar, navigation, buttons)
+* changes inside media queries tresholds
+  - a very slight alteration of margin sizes for top level container
+  - always a fluid changes in percentages of width size
+  - changed behaviour of flex-elements from displaying inline to be a box element in selected range of screen width (tested on button groups)
+  - tested in many widths range to obtain an optimal layout (as many content on so little surface)
+* altered all the styles for 'div' element instead of 'main' for identity 'glowna'
+  - also rewrited the subelement selectors
+* moved source container for read pictures away from viewable area of page
+  - also with hidden state
+* increased max height of an image into current gallery details to 130px from 116px
+  - of course this not included scaled transformation by +10%
+
+-- witryna.js
+* slighty changes inside a function 'WczytajZewnetrznyHTMLdoTAGU'
+  - removed initial showing of contents for gallery items container
+  - no more reveal its content just before any action (success or fail) 
+  - changed emptines of element with id 'nawigacja_galeria', now empty means also with one element with container class inside ;)
+  - any buttons is placed inside this element with 'kontener' class not directly in parent element
+  - added reveal animations when showing violet summary bar (just before big button load-next-subpage)
+* changed target elements if using previously defined element as 'main' tag (when calling function 'PrzewinEkranDoElementu') 
+
+---------------------------
+
 v0.4.5 - mobile-first CSS; flexible elements of list gallery; parent container of that list with limited width on wider screens; computed subpage as fix
 
 * v0.4.5 -- [2018-07-18]
@@ -53,6 +234,7 @@ v0.4.5 - mobile-first CSS; flexible elements of list gallery; parent container o
 
 [F] FIXED
 
+-- witryna.js
 * corrected sequent subpage numerations
   - modified code of function 'GenerujPodstronyGalerii' not to use simple incremented counter
   - internaly that function uses function 'KtoraPodstronaWGalerii' to compute subpage number using given gallery number

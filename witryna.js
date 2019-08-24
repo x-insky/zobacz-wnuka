@@ -55,6 +55,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
    
     if ( !dane ) dane = { ktoraPodstrona : 1 }; // aby nie było "TypeError" przy braku tego parametru w auto-wywołaniu bez kliknięcia podstrony (pierwsza podstrona)
         
+    //$( g_miejsce_na_spis ).show( 100 ); // zawsze pokaż przestrzeń do załadowania dynamicznego gdyby ukryta (treść zewnętrzna lub błędy...)
+    
     // var zawartoscUTF = unescape(encodeURIComponent( zawartoscOryginalna )); // kodowanie zaczytanych znaków?! // ... już załatwione w php
     
     switch ( rodzaj_dzialania ) {
@@ -341,7 +343,7 @@ console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOk
 //PrzewinEkranDoElementu('div#skladowisko', 200, -8);  // złe miejsce, przed trteścią
 
 
-$('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
+$('nav#nawigacja_galeria').html('<div class="kontener"></div>').show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
 $('#wczytywanie').hide(100);	// schowaj informację, skoro wczytano zawartość
 $('#glowna div#komentarz').hide(100);	//showaj opis-informację o ile była pokazana
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
@@ -409,7 +411,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
             "data-elem_zewn" : g_element_zewnetrzny
         });	     
 
-        $('nav#nawigacja_galeria').append( nowyPrzycisk ); // wstawianie przycisku innego niż "poprzednia/następna" podstrona danej galerii
+        $('nav#nawigacja_galeria > div:first').append( nowyPrzycisk ); // wstawianie przycisku innego niż "poprzednia/następna" podstrona danej galerii
                 // też brak przycisku dla bieżacej galerii, np. w formie wyłączonego (nieaktywnego), bo brak takiego odnośnika teraz na www
         } // for-END
     } // //if-END $listaPodstron.length 
@@ -541,7 +543,7 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa za
     console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii... PO -- g_wybrany_nr_galerii: ' + g_wybrany_nr_galerii + ', a POZYCJA: ' + atrybut_href_pozycja 
                                                     + ' dla odnośnika: ' + atrybut_href );		
 
-    PrzewinEkranDoElementu( 'div#zaczytany_spis > div > h2', 500, 2 );    // Przewinięcie do znalezionych galerii - tylko przy pierwszym-auto-załadowaniu treści
+    PrzewinEkranDoElementu( 'div#zaczytany_spis > h2', 500, 2 );    // Przewinięcie do znalezionych galerii - tylko przy pierwszym-auto-załadowaniu treści
     //g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5;
 
     //g_biezaca_pozycja_galerii++; // powinno to pozostać, bo przecież to jest jak symulowanie naciśnięcia pierwszego pobrania galerii   
@@ -731,11 +733,12 @@ var $listaPodstron = $( g_tag_do_podmiany_spis + ' td[colspan=2] a.link_tresc' )
 	g_zaczytana_ilosc_paginacji_galerii = ilePodstronSpisuTresci;	  // !!! muerto importante !!!
 
     // debugowanie -- wprowadzenie nowych treści w statusie dla zaczytanych właśnie treści 
-	$('p#status_galerii_spis').html('Znaleziono '  + $wierszeTabeli.length + ' wierszy tabeli źródłowej oraz ' + $listaPodstron.length 
-                                    + ' wszystkich podstron(-y) spisu treści (razem ze starsze i nowsze bez bieżącej).<br />Jesteś na ' + g_biezaca_pozycja_galerii + '. stronie galerii.<br />'
-                                    + 'A wcześniej zaczytano: "' + g_zaczytana_ilosc_paginacji_galerii + '" paginacji, a załadowano łącznie ' 
-                                    + g_biezaca_pozycja_galerii + ' (vs ' + g_ilosc_zaczytanych_galerii + ') elementów galerii ze wszystkich ' 
-                                    + g_ilosc_wszystkich_galerii + ' galerii');
+	$('p#status_galerii_spis').show( 100 ).html('Znaleziono '  + $wierszeTabeli.length + ' wierszy tabeli źródłowej oraz ' + $listaPodstron.length 
+                                        + ' wszystkich podstron(-y) spisu treści (razem ze starsze i nowsze bez bieżącej).<br />Jesteś na ' 
+                                        + g_biezaca_pozycja_galerii + '. stronie galerii.<br />'
+                                        + 'A wcześniej zaczytano: "' + g_zaczytana_ilosc_paginacji_galerii + '" paginacji, a załadowano łącznie ' 
+                                        + g_biezaca_pozycja_galerii + ' (vs ' + g_ilosc_zaczytanych_galerii + ') elementów galerii ze wszystkich ' 
+                                        + g_ilosc_wszystkich_galerii + ' galerii');
 	} // if-END ( $listaPodstron.length >= 1 )
 	
 $('h2#zaladuj_galerie_spis').show();  // pokaż przycisk/element do ładowania kolejnych galerii 
@@ -751,7 +754,7 @@ $('div#selektor').show();   // też natychmiast pokaż przycisk-kontener do wybi
     
                 // * ** *** TO  PONIŻEJ  EDYTUJESZ *** ** * 
     
-function GenerujSpisWybranejGalerii ( kontenerZrodlowy, kontenerDocelowy, nrPodstrony) 
+function GenerujSpisWybranejGalerii ( kontenerZrodlowy, kontenerDocelowy, nrPodstrony ) 
 {
 // warto byłoby połaczyć te funkcje i utworzyć jedną, by tworzyć nowe elementy dla wybranej jak róznież każdej kolejnej zaczytywanej galerii, ale...
 // ...zbyt dużo warunków na wyszukiwanie i wstawianie (bądź nie) pewnych atrybutów dla elementów DOM, do tego liczenie globalne lub nie;
@@ -1303,7 +1306,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     $('nav#nawigacja_galeria').empty(); 
     $('#wczytywanie').show(100);    
 
-    PrzewinEkranDoElementu('main#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania           
+    PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania           
         
     WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
                                 "wybrana_galeria_rekurencja", { 'pozycjaWGalerii' : pozycjaWGalerii } ); 	// ES6 unfriendly
@@ -1486,7 +1489,7 @@ $('div#skladowisko').empty();
 	
 WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres_strony + '/' , galeriaDocelowa, g_element_zewnetrzny, "galeria_podstrona" ); 	
 //return; // wyjście, aby nie przechodzić do odnosnika... gdyby .preventDefault() zawiodło	
-PrzewinEkranDoElementu('main#glowna', 700, -6);   		// przewinięcie ekranu do lokalizacji galerii
+PrzewinEkranDoElementu('div#glowna', 700, -6);   		// przewinięcie ekranu do lokalizacji galerii
 });	//  on("click")-$('#galeria_spis')-END			
 		
 	
