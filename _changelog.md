@@ -1,3 +1,53 @@
+v0.4.11 - origin of starting of game logic; picture loading in backgrounds; first puzzle quest elems
+
+* v0.4.11 -- [2018-07-25]
+
+[+] ADDED
+
+-- 10 new files (in words: 'ten'), first starting with the name 'grafiki/gra/autobus/cz_01.png'
+* one of an images for a game puzzle
+  - one of the draggable element
+* next one is 'cz_02.png' and the last one in series is 'cz_10.png'
+  - every file is set with transparency
+
+-- index.php
+* added a one button with show prompt text
+
+-- zlobek-styl.css
+* added style for any draggable element ([[draggable])
+  - used high 'z-index' value
+* defined a fixed style for any selected draggable element
+  - uses an own class 'przenosny' mostly for img elements
+
+-- witryna.js
+* added a semi global list of variables for using a future funcionality of builded game
+* changed logic of a start game
+  - first is auto fired of function 'InicjujGre', which fires internally function 'LosujPlansze' to gain a level number/name
+  - later is fired a function 'WybierzPlansze' which pick a level by given number or name and a level is built 
+  - the assigned images are loaded into main game area and it's centered inside of that container in axis Y and X
+ - image inserted as a background image 
+* a defined function 'RozmiescCzesci' arranges the set of 'parts' insidea workable area
+  - function 'InicjujGre' starts 'RozmiescCzesci' as a last with passed number/name of the level or needed parts list lenght
+  - any element in a list is placed absolute on the next element in vertical axis with little horizontal shift
+  - every two is shifted by several dozen px in right
+* defined a set of functions to run as a event service in any event encounter
+* later defined an event listener with assign of already defined functions as a respones on a given event
+  - defined also event delagation, uses an event on a specified element (with class 'przeciagany') which is inside given container with id 'gra'
+  - function 'PoczatekRuchuPrzeciagania' on a 'dragstart' event response
+  - function 'RuchPrzeciagania' on a 'dragover' event response   
+  - function 'RuchUpuszczania' on a 'drop' event response
+
+ [*] MODIFIED
+
+-- zlobek-styl.css
+* resized containers inside game area 
+  - mostly added 100px in any direction to most important containers
+  - using fixed size of given containers & absolute positioning
+  - if it's possible the elements uses a full width of container which is 1400px
+  - mostly low values of 'z-index' is used, only for element 'div#rysunek' is needed a value higher than 1
+
+---------------------------
+
 v0.4.10 - indroduced game background; wide gradient under logo; CSS cleanings
 
 * v0.4.10 -- [2018-07-24]

@@ -213,7 +213,7 @@
                 <p>Rozgrywaka na czas, spróbuj osiągnąć najlepszy wynik.</p>
             </div>
             <div id="sterowanie">
-                <button>Start/Od nowa</button> <button>Losuj planszę</button> <button>Moje wyniki</button>
+                <button>Start/Od nowa</button> <button>Losuj planszę</button> <button>Pokaż podpowiedź</button> <button>Moje wyniki</button>
             </div>
             <div class="kontener">
                 <div id="plansza">
@@ -228,7 +228,7 @@
         </div>
         
         
-        <footer id="stopka">&copy;2018 v0.4.10 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.4.11 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <div class="kontener">
                     <h3>Jaki jest cel?</h3>

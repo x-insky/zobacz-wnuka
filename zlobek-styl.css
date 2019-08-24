@@ -8,6 +8,9 @@ body {
 font-size: 65%;	
 }
 
+[draggable] {   /* jak zachowuje się dopwolny przeciągany element   */
+    cursor: move;
+}
 
 div#witryna {
 margin: 0.3em auto;
@@ -919,27 +922,42 @@ box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);
 } 
 
 div#gra div#plansza {
-height: 830px;
-width: 1300px;    
-position: relative;    
-background-color: #ddd;    
+height: 930px;
+width: 1400px;    
+position: relative; 
+overflow: hidden;
+background-color: #ddd;
+margin-top: 2em;
+margin-bottom: 1em;
  
 }
 
+div#gra div#plansza img.przenosny {
+    position: absolute;
+    width: 200px; /* jakieś wymiary początkowe muszą być określone przy ustawianiu absolutnym */
+    height: 200px;
+    outline: 1px solid white;
+    z-index: 100;
+}
 
 div#plansza div#rysunek { 
 position: absolute;       
 background-color: white;
+left: 0;    /* "trza" na sztywno określić, albowiem po kontenerze lata p wprowadznieu innych elementów */ 
+top: 0;    
+width: 1090px;       
+height: 700px;   
+z-index: 2;
 border: 1px solid #888;
-width: 980px;       
-height: 600px;    
+box-shadow: 2px 2px 3px rgba(100, 149, 237, 0.8);    
 }
 
 div#plansza div#prawy_zasobnik {
 position: absolute;    
-left: 1000px;
+left: 1100px;
 width: 300px;    
-height: 600px;       
+height: 700px;
+z-index: 1;    
 background-color: #eee;
 border-left: 2px dotted #666;
  
@@ -947,9 +965,10 @@ border-left: 2px dotted #666;
 
 div#plansza div#dolny_zasobnik {
 position: absolute;
-top: 620px;
-width: 1300px;    
-height: 200px;       
+top: 710px;
+width: 1400px;    
+height: 200px; 
+z-index: 1;       
 background-color: #f6f6f6;
 border-top: 2px dotted #666;    
 
