@@ -1,3 +1,39 @@
+v0.4.8 - CSS fixes of sliders
+
+* v0.4.8 -- [2018-07-22]
+
+[*] MODIFIED
+
+-- index.php
+* temporary changed label texts of incrementation/decrementation buttons of form
+  - always in purpose of selecting the better final variant (meaning and display)
+* tiny changes at text of 'h3' header inside footer
+
+-- zlobek-styl.css
+* styles of slider for IE
+  - changed color of slider track from orange to dark blue
+  - a tiny grow of slider handles when active (focus state)  
+
+[F] FIXED
+
+-- zlobek-styl.css
+* a better displaying of sliders inside a form in Firefox browser
+  - no more white rectangles under the sliders
+  - only in focus state a white border is present (only if previously was used keyboard)
+  - added an indicator of possible mouse clicking (pointer icon)
+* Chrome: fixed displaying own styles instead of that's builded into browser
+  - as it's possible in older versions
+  - slider flickering on hover state is impossibly to removed by growing overall size height or use negative margins for whole slider
+  - focus/hover as simple notification with increased height of handle (possible removing it if it do too much to unstyle other elements in focus state)  
+  - not relevant state of focus for very old browser version 
+
+[-] REMOVED
+
+-- index.php
+* removed datalist element as a selected units of markers for both form sliders
+
+---------------------------
+
 v0.4.7 - prefixed sliders, gradient backgrounds of forms; game area scaffolding
 
 * v0.4.7 -- [2018-07-21]

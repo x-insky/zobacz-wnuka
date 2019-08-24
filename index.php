@@ -107,20 +107,13 @@
                                                     <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
                                                 </div>
                                                 <div>
-                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" list="suwak_znaczniki" alt="Wybierz numer galerii z zakresu" />
-                                                    <datalist id="suwak_znaczniki">
-                                                        <option value="1" label="1">
-                                                        <option value="25">
-                                                        <option value="50" label="50%">
-                                                        <option value="75">
-                                                        <option value="100" label="max">
-                                                    </datalist>
+                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
                                             </div>
                                             <div id="suwak_info">
                                                 <div>
-                                                    <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
-                                                    <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
+                                                    <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1 &lt;" />
+                                                    <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1 &gt;" />
                                                 </div>
                                             </div>
                                             <div>
@@ -138,14 +131,7 @@
                                                     <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
                                                 </div>
                                                 <div>
-                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_podstrony" name="suwak_podstrony" list="suwak_znaczniki2" alt="Wybierz numer galerii z zakresu" />
-                                                    <datalist id="suwak_znaczniki2">
-                                                        <option value="1" label="1">
-                                                        <option value="5">
-                                                        <option value="10" label="50%">
-                                                        <option value="25">
-                                                        <option value="50" label="max">
-                                                    </datalist>
+                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
                                             </div>
                                             <div id="suwak_podstrona_info">
@@ -237,7 +223,7 @@
         </div>
         
         
-        <footer id="stopka">&copy;2018 v0.4.7 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.4.8 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <div class="kontener">
                     <h3>Jaki jest cel?</h3>
@@ -260,7 +246,7 @@
                     <p>Przeglądanie w galeriach ograniczających klikanie działa prawiłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis ma umożliwić łatwą nawigację pomiędzy kolejnymi obrazkami.</p>
                     <h3>Uwaga</h3> 
                     <p>Witryna umożliwia oglądanie pokazu zdjęć poprzez mechanizm galerii tylko dla wskazanego żłobka, serwis nie wyświetli pokazu zdjęć dla innych adresów.</p>
-                    <h3>Użyte technologie - oczywistości</h3> 
+                    <h3>Użyte technologie - co tutaj zawarto (oczywistości i nie~)</h3> 
                     <ul>
                         <li class="tech_tak">HTML5</li>
                         <li class="tech_tak">CSS3</li>
@@ -269,9 +255,10 @@
                         <li class="tech_tak">JavaScript</li>
                         <li class="tech_tak">jQuery</li>
                         <li class="tech_tak">AJAX</li>
+                        <li class="tech_tak">PHP</li>
+                        <li class="tech_tak">SPA</li>                        
                         <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
                         <li class="tech_tak">kompatybilność</li>
-                        <li class="tech_tak">PHP</li>
                     </ul>
                     <h3>Zgodność źródeł z konwencjami JS na poziomie 99,7% ;P</h3> 
                     <ul>

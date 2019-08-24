@@ -1133,38 +1133,70 @@ filter: brightness(120%);
 
 input[type=range] {
     /*removes default webkit styles*/
-    -webkit-appearance: none;    
-    appearance: none;
+    -webkit-appearance: none !important ;   /* !KONIECZNE dla WEB-kitów, bo stosują NADRZĘDNE style przeglądarki - "slider-horizontal" */
+            /*    appearance: none;  */
     padding-left: 0;
     padding-right: 0;
+    background-color: transparent;      /* WEBKIT: puste wypełenie, bo mimo wszystko kolor domyślny ze stylu przeglądarki!  */
     /*fix for FF unable to apply focus style bug */
 /*    border: 1px solid white;*/
     
     /*required for proper track sizing in FF*/
 /*    width: 300px;*/
 }
+
+input[type=range]:focus {
+    outline: none;
+}
+
+    /* style przeglądarkowe dla elementów formularzy nie są ujednolicone, dlatego trzeba operować na prefiksowanych pseudoklasach :(  */
+
 input[type=range]::-webkit-slider-runnable-track {
-/*    width: 300px;*/
-    height: 5px;
-    background-color: #ddd;
+    height: 8px;
+   /* width: 100%;*/
+    background-color: #c3d5e2;
     border: none;
     border-radius: 3px;
+    cursor: pointer;
 }
+
+input[type=range]:focus::-webkit-slider-runnable-track,
+input[type=range]:hover::-webkit-slider-runnable-track {
+        /* stare Chromy nie obsługują ":focus" */
+    background-color: #eee;
+    height: 11px;
+}
+
+/*
+input[type=range]:hover::-webkit-slider-runnable-track {
+    background-color: violet;
+}
+*/
+
 input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
+    -webkit-appearance: none;   /*  konieczne dla zmiany wyglądu uchwytu suwaka */
     border: none;
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: yellow;
-    margin-top: -4px;
+    background-color: yellow;
+    cursor: pointer;
 }
-input[type=range]:focus {
-    outline: none;
+
+input[type=range]:focus::-webkit-slider-thumb,
+input[type=range]:hover::-webkit-slider-thumb {
+/* stare Chromy nie pozwalają powiększyć samego suwaka, jest on umieszczony WEWNĄTRZ paska przewijania, wielkość jak wysokość paska; też nie działa ":focus"    
+/*    -webkit-appearance: none !important; */
+/*    border: 6px solid rgb(255, 255, 0);*/
+    border: 1px solid #888;
+    height: 20px;
+    width: 20px;
+   /* background-color: orange;*/
 }
-input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #ccc;
-}
+
+
+
+
 
 input[type=range]::-moz-range-track {
 /*    width: 300px;*/
@@ -1173,6 +1205,7 @@ input[type=range]::-moz-range-track {
     background-color: #c3d5e2;
     border: none;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 input[type=range]:hover::-moz-range-track,
@@ -1185,49 +1218,68 @@ input[type=range]::-moz-range-thumb {
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    background: yellow;
+    background-color: yellow;
+    cursor: pointer;
+}
+
+input[type=range]:focus::-moz-range-thumb {
+    border: 2px solid yellow;
+    
 }
 
 /*hide the outline behind the border*/
 input[type=range]:-moz-focusring {
-    outline: 1px solid white;
-    outline-offset: 1px;
+  outline: 3px solid white;
+  outline-offset: 1px;
 }
 
 input[type=range]::-ms-track {
 /*    width: 300px;*/
-    height: 5px;
+    height: 6px;
     
     /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
-    background: transparent;
+    background-color: transparent;
     
     /*leave room for the larger thumb to overflow with a transparent border */
     border-color: transparent;
-    border-width: 6px 0;
+    border-width: 8px 0;
 
     /*remove default tick marks*/
     color: transparent;
+    cursor: pointer;
 }
+
 input[type=range]::-ms-fill-lower {
-    background-color: darkorange;
+/*    background-color: darkorange;*/
+    background-color: #54c;
     border-radius: 10px;
 }
+
 input[type=range]::-ms-fill-upper {
 /*    background: #ddd;*/
     background-color: #c3d5e2;
     border-radius: 10px;
 }
+
 input[type=range]::-ms-thumb {
     border: none;
     height: 16px;
     width: 16px;
     border-radius: 50%;
     background: yellow;
+    cursor: pointer;
 }
+
+input[type=range]:focus::-ms-thumb {
+    border: 2px solid yellow;
+}
+
 input[type=range]:focus::-ms-fill-lower,
 input[type=range]:hover::-ms-fill-lower {
-    background-color: orange;
+/*    background-color: orange;*/
+    background-color: royalblue; 
 }
+
 input[type=range]:focus::-ms-fill-upper,
 input[type=range]:hover::-ms-fill-upper {
     background-color: #eee;
@@ -1242,7 +1294,6 @@ input[type=range]:hover::-ms-fill-upper {
 .animacja_1 {
 /* transform-origin: center center;	*/	
 animation: obroty_delikatne_3 6.5s infinite ease-out;	
-	
 }
 
 
