@@ -1,3 +1,40 @@
+v0.4.7 - prefixed sliders, gradient backgrounds of forms; game area scaffolding
+
+* v0.4.7 -- [2018-07-21]
+
+[+] ADDED
+
+-- index.php
+* from now all page header content is inside container class 
+* added HTML structure for purpose of future game
+  - just before footer
+
+-- zlobek-styl.css
+* new style for the sliders
+  - removed horizontal paddings
+  - added noticeable yellow circle style for handles
+  - added styles with vendor prefixes, the order of declarations is important
+  - Chrome reads prefixes for Firefox only  :( 
+  - incorrect displaying in new Firefox browser - white rectangle under the narrow slider area
+  - extra vendor style for IE browser for color of left and right side of the slider
+* styled layout for group of elements of 'game' section
+  - fixed arrangement of elements, regardless of the screen width
+  - using float, fixed sizes and absolute positioning
+  - using delimiter of width 1300px
+* trying to show a whole container of 'game' section only on the widest screen
+  - added default hiding of parent container
+  - inserted on selected media query displaying of it
+* changed background color of the list element in footer to lighter color
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* a gradient background inside form selections
+  - replaced semi-random colors to reflected radial gradients
+  - mirror arrangement of colors between two form areas
+
+---------------------------
+
 v0.4.6 - no-main-div; container class everywhere; initial hidings & absolute relocations; new lists in footer; parent container for galleries lists; greater thumbnails; flex-buttons-group; 
 
 * v0.4.6 -- [2018-07-19]

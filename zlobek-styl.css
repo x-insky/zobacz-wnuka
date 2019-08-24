@@ -574,13 +574,18 @@ padding-bottom: 0.8em;
 }
 
 div#selektor div#wybor_galerii {
-background-color: lightgreen;
+background-color: deepskyblue;
+/*background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue);*/
+background: radial-gradient(circle at bottom, cornflowerblue 10%, deepskyblue);    
 }
 
 div#selektor div#wybor_podstrony_galerii {
+background-color: cornflowerblue;
+/*background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue);*/
+background: radial-gradient(circle at top, cornflowerblue 10%, deepskyblue);    
+
 border-bottom-left-radius: 14px;
 border-bottom-right-radius: 14px;        
-background-color: lightcoral;
 }
 
 
@@ -588,7 +593,8 @@ background-color: lightcoral;
 div#wybor_galerii div,
 div#wybor_podstrony_galerii div
 {
-    flex-grow: 1;  
+flex-grow: 1;
+    /*border: 1px solid rgba(200, 200, 200, 0.5);*/
 }
 
 div#wybor_podstrony_galerii input#podstrona_wybrany_nr {
@@ -620,21 +626,21 @@ text-align: center;
 
 
 div#wybor_galerii > div:first-of-type {
-background-color: dodgerblue;    
+/*background-color: dodgerblue;    */
 }
 
 div#wybor_galerii > div:last-of-type {
-background-color: cadetblue;  
+/*background-color: cadetblue;*/  
 flex-basis: 250px;
 text-align: center;
 }
 
 div#wybor_podstrony_galerii > div:first-of-type {
-background-color: dodgerblue;    
+/*background-color: dodgerblue;*/    
 }
 
 div#wybor_podstrony_galerii > div:last-of-type {
-background-color: cadetblue;  
+/*background-color: cadetblue;  */
 flex-basis: 250px;
 text-align: center;
 }
@@ -646,11 +652,11 @@ div#wybor_podstrony_galerii div#suwak_podstrony
 flex-basis: 305px;  
 text-align: center;
 flex-grow: 6;
-background-color: lightseagreen;
+/*background-color: lightseagreen;*/
 }
 
 div#wybor_podstrony_galerii div#suwak_podstrony {
-background-color: lightslategray;
+/*background-color: lightslategray;*/
 }
 
 
@@ -670,6 +676,11 @@ form#wybierz_galerie input {
 padding-left: 1em;
 padding-right: 1em;
 font-size: 120%;    
+}
+
+form#wybierz_galerie input[type=range] {
+padding-left: 0;
+padding-right: 0;
 }
 
 form#wybierz_galerie input#galeria_wybrany_nr,
@@ -705,7 +716,6 @@ font-size: 140%;
 form#wybierz_galerie input[type=submit] {
 font-weight: bold;
 }
-
 
 
 div#spis_tresci div#galeria_spis_podmiana {
@@ -892,7 +902,57 @@ div#skladowisko a img:hover {
 box-shadow: 2px 2px 4px black, 4px 4px 8px 2px rgba(0, 0, 0, 0.6);	
 transform: scale(1.1);
 }
-	
+
+div#gra {
+display: none;
+background-color: cornflowerblue;
+margin: 1em auto;
+padding: 0.5em;    
+    
+border-radius: 10px;
+box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	    
+} 
+
+div#gra div#plansza {
+height: 830px;
+width: 1300px;    
+position: relative;    
+background-color: #ddd;    
+ 
+}
+
+
+div#plansza div#rysunek { 
+position: absolute;       
+background-color: white;
+border: 1px solid #888;
+width: 980px;       
+height: 600px;    
+}
+
+div#plansza div#prawy_zasobnik {
+position: absolute;    
+left: 1000px;
+width: 300px;    
+height: 600px;       
+background-color: #eee;
+border-left: 2px dotted #666;
+ 
+}
+
+div#plansza div#dolny_zasobnik {
+position: absolute;
+top: 620px;
+width: 1300px;    
+height: 200px;       
+background-color: #f6f6f6;
+border-top: 2px dotted #666;    
+
+}
+
+
+
+
 footer#stopka {
 clear: both;
 /* background-color: #aad; */
@@ -938,24 +998,24 @@ text-align: center;
 
 footer#stopka ul li {
 display: inline;
-background-color: #c3d5e2;
+background-color: whitesmoke;       /*  #c3d5e2 */
 padding: 0.1em 0.5em;
 padding-left: 2em;
 font-size: 13px;
 line-height: 28px;    
 text-align: center; 
 border: 1px solid #333;
-background: url(grafiki/tak_nie_ikona.png) 4px 1px no-repeat, #c3d5e2;
+background: url(grafiki/tak_nie_ikona.png) 4px 1px no-repeat, whitesmoke;
 }
 
 footer#stopka ul li.tech_tak {
 border: 1px solid green;
-background: url(grafiki/tak2_ikona.png) 4px 1px no-repeat, #c3d5e2;    
+background: url(grafiki/tak2_ikona.png) 4px 1px no-repeat, whitesmoke;    
 }
 
 footer#stopka ul li.tech_nie {
 border: 1px solid darkred;
-background: url(grafiki/nie_ikona.png) 4px 1px no-repeat, #c3d5e2;    
+background: url(grafiki/nie_ikona.png) 4px 1px no-repeat, whitesmoke;    
 }
 
 h1 {
@@ -1066,6 +1126,111 @@ filter: grayscale(80%);
 /*
 filter: brightness(120%);
 */
+}
+
+
+
+
+input[type=range] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;    
+    appearance: none;
+    padding-left: 0;
+    padding-right: 0;
+    /*fix for FF unable to apply focus style bug */
+/*    border: 1px solid white;*/
+    
+    /*required for proper track sizing in FF*/
+/*    width: 300px;*/
+}
+input[type=range]::-webkit-slider-runnable-track {
+/*    width: 300px;*/
+    height: 5px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: yellow;
+    margin-top: -4px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+input[type=range]::-moz-range-track {
+/*    width: 300px;*/
+    height: 5px;
+        /*    background-color: #5d6ad0;    */
+    background-color: #c3d5e2;
+    border: none;
+    border-radius: 3px;
+}
+
+input[type=range]:hover::-moz-range-track,
+input[type=range]:focus::-moz-range-track {
+    background-color: #eee;
+}
+
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: yellow;
+}
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring {
+    outline: 1px solid white;
+    outline-offset: 1px;
+}
+
+input[type=range]::-ms-track {
+/*    width: 300px;*/
+    height: 5px;
+    
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+    
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background-color: darkorange;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+/*    background: #ddd;*/
+    background-color: #c3d5e2;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: yellow;
+}
+input[type=range]:focus::-ms-fill-lower,
+input[type=range]:hover::-ms-fill-lower {
+    background-color: orange;
+}
+input[type=range]:focus::-ms-fill-upper,
+input[type=range]:hover::-ms-fill-upper {
+    background-color: #eee;
 }
 
 
@@ -1344,6 +1509,11 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 	div#spis_tresci div.kontener_odnosnik img {
 	max-height: 250px;
 	}
+    
+    div#gra {
+    display: block;    
+    }
+
 }
 
 
