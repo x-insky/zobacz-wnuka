@@ -18,10 +18,16 @@ overflow: hidden;
 /* background: radial-gradient( ellipse, center, #222 15%, #333 100%);	*/
 }
 
+header#naglowek {
+border-radius: 10px;    
+background-color: aquamarine;    
+overflow: hidden;  
+
+}
+
 header#naglowek div#naglowek_kontener {
 background-color: #c3d5e2;
-border-bottom-left-radius: 10px;
-border-bottom-right-radius: 10px;
+border-radius: 10px;
 }
 
 header#naglowek h1 span {
@@ -50,8 +56,7 @@ max-height: 26px;
 
 
 header#naglowek div#banner {
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;	
+border-radius: 10px;
 background-color: cornflowerblue;	
 /* background-color: #009de0;	*/
 overflow:	hidden;
@@ -60,24 +65,28 @@ height: 180px;
 }
 
 header#naglowek div#banner {
+position: relative;
+width: auto;
+max-width: 1400px;  /* tyle co kontener ograniczający winien mieć w innych miejscach - ".kontener" */      
+height: 180px;
+overflow:	hidden;
 background-color: cornflowerblue;	
 /* background-color: #009de0;	*/
-overflow:	hidden;
-width: auto;
-height: 180px;
-position: relative;
+
 }
 
 
 
 header#naglowek div#logo {
-position: relative;	
+position: relative;
+height: 200px;
+width: 200px;	
+  
 /*float: left;	*/
 
 	background-color: cornflowerblue;	
 	/*background-color: rgba(85, 85, 185, 0.3); */
-height: 200px;
-width: 200px;	
+
 
 }
 
@@ -1140,7 +1149,8 @@ input[type=range] {
     background-color: transparent;      /* WEBKIT: puste wypełenie, bo mimo wszystko kolor domyślny ze stylu przeglądarki!  */
     /*fix for FF unable to apply focus style bug */
 /*    border: 1px solid white;*/
-    
+    border: none;
+    transition: all 0.3s;
     /*required for proper track sizing in FF*/
 /*    width: 300px;*/
 }
@@ -1165,6 +1175,7 @@ input[type=range]:hover::-webkit-slider-runnable-track {
         /* stare Chromy nie obsługują ":focus" */
     background-color: #eee;
     height: 11px;
+    box-shadow: 0 0 2px white;
 }
 
 /*
@@ -1180,6 +1191,7 @@ input[type=range]::-webkit-slider-thumb {
     width: 16px;
     border-radius: 50%;
     background-color: yellow;
+    margin-top: -4.5px;
     cursor: pointer;
 }
 
@@ -1211,6 +1223,7 @@ input[type=range]::-moz-range-track {
 input[type=range]:hover::-moz-range-track,
 input[type=range]:focus::-moz-range-track {
     background-color: #eee;
+    box-shadow: 0 0 2px white;    
 }
 
 input[type=range]::-moz-range-thumb {
@@ -1278,11 +1291,13 @@ input[type=range]:focus::-ms-fill-lower,
 input[type=range]:hover::-ms-fill-lower {
 /*    background-color: orange;*/
     background-color: royalblue; 
+    box-shadow: 0 0 4px white;    
 }
 
 input[type=range]:focus::-ms-fill-upper,
 input[type=range]:hover::-ms-fill-upper {
     background-color: #eee;
+    box-shadow: 0 0 2px white;    
 }
 
 
@@ -1567,10 +1582,28 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 
 }
 
+@media screen and (min-width: 1300px) { 
 
+ /*    header#naglowek div#naglowek_kontener {
+   border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    max-height: 600px;    
+    }*/
+    
+    header#naglowek div#banner {
+    margin-left: auto;
+    margin-right: auto;    
+    border: 2px solid white;
+    border-top: none;    
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;    
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;  
+    box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);     
+    }    
 
-
-
+    
+}
 
 /*        KWERENDY MOBILE-LAST      */
 /* 

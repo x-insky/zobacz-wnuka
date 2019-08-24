@@ -19,8 +19,13 @@
 	<div id="witryna">
 
         <header id="naglowek">
-        <div class="kontener">
-            <div id="banner">
+        <!-- <div class="kontener">  -->
+
+            <!-- tu </div> -- kontener -- tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamnknąc w tych okowach... choć ideaklnie pasuje to ułatwienie  --> 
+
+            <div id="naglowek_kontener">
+
+                <div id="banner">
 
                     <div id="logo">
                         <div id="slonce_logo"><!-- <img src="grafiki/slonce.png"> --></div>
@@ -37,23 +42,20 @@
                 </div>
 
             </div>
-            <!-- tu </div> -- kontener -- tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamnknąc w tych okowach... choć ideaklnie pasuje to ułatwienie  --> 
-
-            <div id="naglowek_kontener">
-
+                <!-- formularz-antyk
                 <h1 class="zmienny">Do uruchomienia galerii wymagane podanie adresu witryny ze zdjęciami <button id="odswiez" style="margin: 0.05em; padding: 0.1em 0.6em; font-size: 60%;">Odśwież</button></h1>
                 <h3>Wpisz/wklej pełny adres do przeglądania galerii z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a> lub po prostu skorzystaj z poniższej listy galerii</h3>
                 <div id="formularz">
                     <form action="#" method="post" id="wyszukaj">
-                        <fieldset>
-                            <label for="http_adres">Adres galerii</label>
-                            <input type="text" id="http_adres" name="http_adres" placeholder="np. http://zlobek.chojnow.eu/u_tygryskow,a146.html" alt="Podaj adres podstrony konkretnej galerii" />
-                            <input type="button" id="testowy_adres_button" name="testowy_adres_button" value="Testowy adres" />
-                            <input type="submit" id="http_adres_submit" role="submit" value="Zobacz wnuki" />
-                            <div id="form_error">Wymagane uzupełnienie pola tekstowego, wpisz adres podstrony z serwisu zlobek.chojnow.eu</div>				
-                        </fieldset>
+                        <label for="http_adres">Adres galerii</label>
+                        <input type="text" id="http_adres" name="http_adres" placeholder="np. http://zlobek.chojnow.eu/u_tygryskow,a146.html" alt="Podaj adres podstrony konkretnej galerii" />
+                        <input type="button" id="testowy_adres_button" name="testowy_adres_button" value="Testowy adres" />
+                        <input type="submit" id="http_adres_submit" role="submit" value="Zobacz wnuki" />
+                        <div id="form_error">Wymagane uzupełnienie pola tekstowego, wpisz adres podstrony z serwisu zlobek.chojnow.eu</div>				
                     </form>
-                </div>	
+                </div>	 
+                        -->
+
 
                 <div id="spis_tresci">
                     <div id="zaczytany_spis">
@@ -166,7 +168,7 @@
                     </nav>	
                 </div>  <!-- div#spis_tresci -->
             </div>	<!-- div#naglowek_kontener -->
-            </div> <!-- div-kontener  (na próbę) -->
+            <!-- </div> -->  <!-- div-kontener  (na próbę) -->
         </header>
 
         <div id="glowna">
@@ -223,7 +225,7 @@
         </div>
         
         
-        <footer id="stopka">&copy;2018 v0.4.8 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.4.9 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <div class="kontener">
                     <h3>Jaki jest cel?</h3>

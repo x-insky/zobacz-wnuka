@@ -1,3 +1,41 @@
+v0.4.9 - form in header gone, rebuilded header and changed when great screen; sliders of form polished;  
+
+* v0.4.9 -- [2018-07-23]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added first styles directly for main header element
+  - previously used only as main level container
+* added hover state styles with shadows to sliders of forms
+  -  achieved effect like backlight bright
+* added extra media query for the widest screens which are more than 1400px
+  - redefines some rules for elements
+  - for now used only to control 'div' element with 'banner' id (centers that element and adds border and rounds only bottom corners to it)
+
+[*] MODIFIED
+
+-- index.php
+* removed container class element from header
+
+-- zlobek-styl.css
+*  added all rounded corners for main header's child elements (previously only selected top or bottom was round)
+* 'div' element with id of 'naglowek_kontener' treaded as main logo box
+  - added max-width for visible header
+  - if screen size exceeds max-width of container then element gets white border and it's horizontal centered (modified by styles of media query)  
+* added transition to all sliders attributes
+  - with box-shadow in white color on hover state it's nice effect in almost every browser
+  - added box-shadow attribute inside vendor specific selectors (if supports it; feature mentioned in added section)
+
+[-] REMOVED
+
+-- index.php
+* finally the form has been removed from the page header
+  - it is no longer necessary to enter the address of a particular gallery that had to be obtained when using the original nursery site
+  - temporary inserted the whole form elements into one big comment
+
+---------------------------
+
 v0.4.8 - CSS fixes of sliders
 
 * v0.4.8 -- [2018-07-22]
