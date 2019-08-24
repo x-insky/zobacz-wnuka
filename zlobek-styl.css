@@ -20,15 +20,10 @@ overflow: hidden;
 
 header#naglowek {
 border-radius: 10px;    
-background-color: aquamarine;    
+background-color: #c3d5e2;    
 overflow: hidden;  
-
 }
 
-header#naglowek div#naglowek_kontener {
-background-color: #c3d5e2;
-border-radius: 10px;
-}
 
 header#naglowek h1 span {
 color: yellow;
@@ -154,10 +149,10 @@ text-decoration :	underline;
 
 header#naglowek div#naglowek_kontener {
 background-color: #c3d5e2;
+/*border-radius: 10px;*/
 border-bottom-left-radius: 10px;
 border-bottom-right-radius: 10px;
 box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	
-/* min-height: 6em;	 */
 }
 
 header#naglowek div#naglowek_kontener div#formularz {
@@ -213,15 +208,16 @@ font-weight: bold;
 
 
 
-div#naglowek_kontener div#spis_tresci, 
-div#naglowek_kontener div#zaczytany_spis
+header#naglowek div#spis_tresci, 
+header#naglowek div#zaczytany_spis
 {
 overflow: hidden; 
 width: 100%;	
 }
 
-div#naglowek_kontener .ciemne_tlo_spis {
+header#naglowek .ciemne_tlo_spis {
 background-color: cornflowerblue;
+width: 100%;    
 }
 
 div#spis_tresci div#galeria_spis {
@@ -267,7 +263,7 @@ width: 100%;
 
 div#spis_tresci div.kontener_odnosnik:hover div.dolna_zaslonka {
 background-color: #5d6ad0;  /* #5d6ad0 == rgb(93,106,208) */
-background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(93,106,208,1) 50%, rgba(93,106,208,1) 100%);; 
+background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(93,106,208,1) 50%, rgba(93,106,208,1) 100%); 
 }
 
 div#spis_tresci div.tytul_odnosnik {
@@ -1584,11 +1580,16 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 
 @media screen and (min-width: 1300px) { 
 
- /*    header#naglowek div#naglowek_kontener {
-   border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    max-height: 600px;    
-    }*/
+    header#naglowek div#naglowek_kontener {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: none;
+    background-image: linear-gradient( to bottom, rgba(100, 149, 237, 0.7), rgba(195, 213, 226, 0.8) 95%),
+            radial-gradient( ellipse at bottom center, rgba(195, 213, 226, 0.8), rgba(100, 149, 237, 0.7));
+    background: linear-gradient( to bottom, rgba(100, 149, 237, 0.7), rgba(195, 213, 226, 0.8) 95%), 
+            radial-gradient( ellipse at bottom center, rgba(195, 213, 226, 0.8) 20%, rgba(100, 149, 237, 0.7));
+        
+    }
     
     header#naglowek div#banner {
     margin-left: auto;

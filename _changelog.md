@@ -1,3 +1,57 @@
+v0.4.10 - indroduced game background; wide gradient under logo; CSS cleanings
+
+* v0.4.10 -- [2018-07-24]
+
+[+] ADDED
+
+-- new folder 'grafiki/gra'
+* as a container for any future puzzle game 
+
+-- new folder 'grafiki/gra/autobus'
+*  first prepared folder for internal use in game quest
+
+-- new file 'grafiki/gra/autobus/autobus.png'
+* a background file for game interaction
+  - first puzzle quest
+  - so far in PNG format, later maybe in SVG if capable 
+
+-- zlobek-styl.css
+* added gradient under the logo
+  - defined inside media query
+  - mix of two gradients with semi transparent colors in one background
+  - used color from blue to the same color as the parent's element background color (light blue turning steel)
+  - visible only on widest screens, with more than 1400px
+
+-- witryna.js
+* added scaffolding for future use of interactive game
+* defined function 'InicjujGre' just to start the game
+* defined function 'WybierzPlansze' to choose a starting level of game
+  - for now always returns 'autobus' level with bus graphic
+* all game logic not yet connected with page elements except inserting a background for a given element
+  - autostart of 'InicjujGre' on each page refresh
+  - so it looks like graphic file was loaded by a webpage itself, as a standard GET request... but it's not
+  - for now the whole game elements are fully visible, there is no interaction
+
+[*] MODIFIED
+
+-- index.php
+* little changes of indentations in header 
+
+-- zlobek-styl.css
+* redefined styles on widest screens of element 'div#naglowek_kontener' by media queries
+  - bottom rounded corners changes
+  - also redefined background as an semi transparent gradient image (mentioned in added section)
+
+[F] FIXED
+
+-- zlobek-styl.css
+* removed duplicated selector for 'div#naglowek_kontener'
+  - joined efficient rules into one selector
+* fixed selector for applying defined rules for two elements with ids and one with subordinated class element
+* fixed extra ';' inside gradient definition in rule for element 'div.dolna_zaslonka'
+
+---------------------------
+
 v0.4.9 - form in header gone, rebuilded header and changed when great screen; sliders of form polished;  
 
 * v0.4.9 -- [2018-07-23]

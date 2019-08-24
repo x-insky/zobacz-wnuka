@@ -1147,6 +1147,28 @@ $('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY)+'px' }
 }   
 
     
+// ---------- ***      GRA      *** --------------     
+    
+function WybierzPlansze( nrPlanszy ){   // docelowo będzie ajax/api
+var tloSrc = '';
+var obrazki = [];
+    if ( !nrPlanszy ) nrPlanszy = 0;
+    
+    switch ( nrPlanszy ) {
+     case 0:
+        tloSrc = './grafiki/gra/autobus/autobus.png';
+    // ...
+            
+    }   // switch-( nrPlanszy )-END
+    
+    $('div#rysunek').css({ 'backgroundImage': 'url(' + tloSrc + ')', 'backgroundRepeat' : 'no-repeat' });
+}    
+    
+    
+function InicjujGre() { 
+    WybierzPlansze();
+    
+}
     
 
 	
@@ -1579,7 +1601,9 @@ InicjujPrzyciskiWyboruPodstronyGalerii();
 	
 ZaczytajSpisGalerii();
 	
-
+// testowo też do autouruchamiania gry - pierwsza plansza
+InicjujGre();
+    
 	
 // ***************************************************************************		
 

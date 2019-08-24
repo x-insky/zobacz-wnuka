@@ -31,17 +31,20 @@
                         <div id="slonce_logo"><!-- <img src="grafiki/slonce.png"> --></div>
                     </div>
     
-                <div id="napisy">
-                    <h1 class="logo">Zobacz Wnuka!</h1>
-                    <h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w Chojnowie</h2>
-                    <p class="clearfix2" ></p>
+                    <div id="napisy">
+                        <h1 class="logo">Zobacz Wnuka!</h1>
+                        <h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w Chojnowie</h2>
+                        <p class="clearfix2" ></p>
 
-                </div>
-                <div id="napis_spod">
-                    <h3>Serwis umożliwia łatwiejszy podgląd rozrabiajacych wnuków przez dziadków ... i nie tylko. Treści pochodzą z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
-                </div>
+                    </div>
+                    <div id="napis_spod">
+                        <h3>Serwis umożliwia łatwiejszy podgląd rozrabiajacych wnuków przez dziadków ... i nie tylko. Treści pochodzą z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
+                    </div>
 
-            </div>
+                </div> <!-- div#banner -->
+                
+            </div>	<!-- div#naglowek_kontener -->    
+                
                 <!-- formularz-antyk
                 <h1 class="zmienny">Do uruchomienia galerii wymagane podanie adresu witryny ze zdjęciami <button id="odswiez" style="margin: 0.05em; padding: 0.1em 0.6em; font-size: 60%;">Odśwież</button></h1>
                 <h3>Wpisz/wklej pełny adres do przeglądania galerii z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a> lub po prostu skorzystaj z poniższej listy galerii</h3>
@@ -167,7 +170,7 @@
                         </div>
                     </nav>	
                 </div>  <!-- div#spis_tresci -->
-            </div>	<!-- div#naglowek_kontener -->
+        <!--    </div>	-->  <!-- div#naglowek_kontener -->
             <!-- </div> -->  <!-- div-kontener  (na próbę) -->
         </header>
 
@@ -225,7 +228,7 @@
         </div>
         
         
-        <footer id="stopka">&copy;2018 v0.4.9 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.4.10 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <div class="kontener">
                     <h3>Jaki jest cel?</h3>
