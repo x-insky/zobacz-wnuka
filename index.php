@@ -21,7 +21,7 @@
         <header id="naglowek">
         <!-- <div class="kontener">  -->
 
-            <!-- tu </div> -- kontener -- tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamnknąc w tych okowach... choć ideaklnie pasuje to ułatwienie  --> 
+            <!-- tu </div> - kontener - tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamnknąc w tych okowach... choć ideaklnie pasuje to ułatwienie  --> 
 
             <div id="naglowek_kontener">
 
@@ -32,13 +32,21 @@
                     </div>
     
                     <div id="napisy">
-                        <h1 class="logo">Zobacz Wnuka!</h1>
-                        <h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w Chojnowie</h2>
-                        <p class="clearfix2" ></p>
-
+                    <h1 class="logo">Zobacz Wnuka!</h1>
+                    <h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w&nbsp;Chojnowie</h2>
+                    <p class="clearfix2" ></p>
                     </div>
+                    
+                    <div id="zagraj">
+                        <div id="zagraj_srodek">
+                        <h4>Czekasz na załadowanie?</h4>
+                        <h3>Zagraj w grę!</h3>
+                        <p id="zagraj_play">&gt;</p>
+                        </div>
+                    </div>
+                    
                     <div id="napis_spod">
-                        <h3>Serwis umożliwia łatwiejszy podgląd rozrabiajacych wnuków przez dziadków ... i nie tylko. Treści pochodzą z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
+                    <h3>Serwis umożliwia łatwiejszy podgląd rozrabiajacych wnuków przez dziadków ... i nie tylko. Treści pochodzą z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
                     </div>
 
                 </div> <!-- div#banner -->
@@ -91,13 +99,13 @@
                     
                     <nav id="spis_sterowanie">
                         <div class="kontener">
-                            <p id="status_galerii_spis"></p>
+                        <p id="status_galerii_spis"></p>
                         </div>
                         <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
 
                         
                         <div id="wczytywanie_spis">
-                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
+                        <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
                         </div>
 
                         <div class="kontener">
@@ -108,48 +116,46 @@
                                         <div id="wybor_galerii">
                                          <div id="suwak">
                                                 <div>
-                                                    <label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
-                                                    <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
+                                                <label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
+                                                <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
                                                 </div>
                                                 <div>
-                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" alt="Wybierz numer galerii z zakresu" />
+                                                <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
                                             </div>
                                             <div id="suwak_info">
                                                 <div>
-                                                    <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1 &lt;" />
-                                                    <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1 &gt;" />
+                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1 &lt;" />
+                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1 &gt;" />
                                                 </div>
                                             </div>
                                             <div>
                                                 <input type="button" id="losuj_zakres" name="losuj_zakres" value="Losuj galerię" />
                                                 <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" role="submit" value="Zobacz wybrany" />
                                                 <div id="form_error">Wymagany wybór spośród dostępnych numerów galerii</div>			
-
                                             </div>	
                                         </div>  <!-- div#wybor_galerii -->  
                                         
                                     <div id="wybor_podstrony_galerii">
                                          <div id="suwak_podstrony">
                                                 <div>
-                                                    <label for="podstrona_wybrany_nr">Wybrany numer podstrony:</label>
-                                                    <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
+                                                <label for="podstrona_wybrany_nr">Wybrany numer podstrony:</label>
+                                                <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
                                                 </div>
                                                 <div>
-                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
+                                                <input type="range" min="1" selectionDirection="backward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
                                             </div>
                                             <div id="suwak_podstrona_info">
                                                 <div>
-                                                    <input type="button" id="wybrany_nr_podstrony_zmniejsz" class="maly_guzik" value="◄" />
-                                                    <input type="button" id="wybrany_nr_podstrony_zwieksz" class="maly_guzik" value="►" />
+                                                <input type="button" id="wybrany_nr_podstrony_zmniejsz" class="maly_guzik" value="◄" />
+                                                <input type="button" id="wybrany_nr_podstrony_zwieksz" class="maly_guzik" value="►" />
                                                 </div>
                                             </div>
                                             <div>
                                                 <input type="button" id="losuj_zakres_podstrony" name="losuj_zakres_podstrony" value="Losuj podstronę" />
                                                 <input type="submit" id="suwak_podstrony_submit" name="suwak_podstrony_submit" role="submit" value="Zobacz wybrany" />
                                                 <div id="form_error">Wymagany wybór spośród dostępnych numerów podstron galerii</div>			
-
                                             </div>	
                                         </div>  <!-- div#wybor_podstrony_galerii --> 
                                         
@@ -181,9 +187,9 @@
 
             <div id="nazwa_galerii">
                 <div class="kontener">
-                    <h2></h2>
-                    <img />
-                    <p></p>
+                <h2></h2>
+                <img />
+                <p></p>
                 </div>    
             </div>	
 
@@ -209,14 +215,18 @@
         
         <div id="gra">
             <div id="reguły">
-                <h1>Pokoloruj duży obrazek poprzez ułożenie małych obrazków we właściwych miejscach.</h1>
-                <p>Rozgrywaka na czas, spróbuj osiągnąć najlepszy wynik.</p>
+            <h1>Pokoloruj duży obrazek poprzez ułożenie małych obrazków we właściwych miejscach.</h1>
+            <h2>Użyj myszy lub gładzika komputera, bo małe ekrany dotykowe są be!</h2>    
+            <p>Rozgrywka jest na czas, spróbuj osiągnąć najlepszy wynik.</p>
             </div>
             <div id="sterowanie">
-                <button>Start/Od nowa</button> <button>Losuj planszę</button> <button>Pokaż podpowiedź</button> <button>Moje wyniki</button>
+                <div class="kontener">
+                <button>Start/Od nowa</button> <button>Losuj planszę</button> <button>Pokaż podpowiedź</button> <button>Moje wyniki</button>                
+                </div>
+
             </div>
             <div class="kontener">
-                <div id="plansza">
+                <div id="plansza" droppable="true" ondrop="" ondragover=""> <!-- "ON!? to je gupie" -->
                     <div id="rysunek">
                     </div>
                     <div id="prawy_zasobnik">
@@ -228,7 +238,7 @@
         </div>
         
         
-        <footer id="stopka">&copy;2018 v0.4.11 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.4.12 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <div class="kontener">
                     <h3>Jaki jest cel?</h3>

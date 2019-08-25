@@ -1158,6 +1158,23 @@ console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ',
 $('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY)+'px' }, czasAnimacji);    
 }   
 
+function OkreslPolozenieElementuJS ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
+var pozycja = element.getBoundingClientRect();
+    // debug do kasacji gdy OK
+    console.log('Element "' + element + '" ma X:' + ( parseInt( pozycja.left ) + parseInt( window.scrollX ) ) +  
+                ', Y:' + ( parseInt( pozycja.top ) + parseInt( window.scrollY ) ) );    
+return { left: pozycja.left + window.scrollX,
+         top: pozycja.top + window.scrollY };
+}    
+    
+function OkreslPolozenieElementu ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
+var pozycja = $(element).offset();
+    // debug do kasacji gdy OK
+    console.log('Element "', element, '" ma X:' + pozycja.left, ', Y:' + pozycja.top );    
+return { left: pozycja.left, top: pozycja.top };
+}    
+       
+    
     
 // ---------- ***      GRA      *** --------------     
 
@@ -1183,23 +1200,33 @@ function WybierzPlansze( nrPlanszy )        // docelowo będzie ajax/api
      case 0:
         g_tloSrc = './grafiki/gra/autobus/autobus.png';
         var noweTlo = new Image();  // tworzenie nowego obrazka w pamięci dla ścieżki dla tła graficznego, celem określenia wymiarów tego obrazka
-            noweTlo.src = g_tloSrc;
-        var wysokoscTla = noweTlo.height;
-        var szerokoscTla = noweTlo.width;
-            // środkowanie względem kontenera 1090px x 700px
-        g_przesuniecieTlaX = String( ( $('#rysunek').width() - szerokoscTla ) / 2 ) + 'px';  
-        g_przesuniecieTlaY = String( ( $('#rysunek').height() - wysokoscTla ) / 2 ) + 'px';    
+
+
+        noweTlo.onload = function() {
+            var wysokoscTla = noweTlo.height;
+            var szerokoscTla = noweTlo.width;
+                // środkowanie względem kontenera 1090px x 700px
+            g_przesuniecieTlaX = String( ( $('#rysunek').width() - szerokoscTla ) / 2 ) + 'px';  
+            g_przesuniecieTlaY = String( ( $('#rysunek').height() - wysokoscTla ) / 2 ) + 'px'; 
+
+                // wyświetlenie i centrowanie dopiero, gdy przeliczą się wymiary tego obrazka
+            $('div#rysunek').css({ 'backgroundImage': 'url(' + g_tloSrc + ')', 'backgroundRepeat' : 'no-repeat', 
+                               'backgroundPosition' : g_przesuniecieTlaX + ' ' + g_przesuniecieTlaY });    
+            // debug
+            var statusTla = '<p>Grafika \'' + noweTlo.src + '\' ma szerokość ' + szerokoscTla + ' i wysokość ' + wysokoscTla + '<br />'  
+                + 'Przesunięcie wyśrodkowania to (' + g_przesuniecieTlaX + ', ' + g_przesuniecieTlaY + ').</p>';
+            $('#dolny_zasobnik').append(statusTla);    
+            };  // noweTlo.onload = function()-END
+ 
+        noweTlo.src = g_tloSrc;    
             
     // ...
             
     }   // switch-( nrPlanszy )-END
     
-    $('div#rysunek').css({ 'backgroundImage': 'url(' + g_tloSrc + ')', 'backgroundRepeat' : 'no-repeat', 
-                           'backgroundPosition' : g_przesuniecieTlaX + ' ' + g_przesuniecieTlaY });
-// debug
-    var statusTla = '<p>Grafika \'' + noweTlo.src + '\' ma szerokość ' + szerokoscTla + ' i wysokość ' + wysokoscTla + '<br />'  
-        + 'Przesunięcie wyśrodkowania to (' + g_przesuniecieTlaX + ', ' + g_przesuniecieTlaY + ').</p>';
-    $('#dolny_zasobnik').append(statusTla);
+    //
+
+
 return { dx : g_przesuniecieTlaX, dy: g_przesuniecieTlaY };    // dobrze by było zwrócić jakąś tabelę rekordów lub cokolwiek...
 }    
     
@@ -1220,6 +1247,8 @@ var przesuniecieX1 = 1110,
         else numerPliku = String( i );
     var nowyObrazek = new Image();
     nowyObrazek.src = g_nazwaPlanszySciezka + g_nazwaElementu + numerPliku + '.png';
+        
+
     nowyObrazek.alt = numerPliku;
     nowyObrazek.classList.add('przenosny');    
     
@@ -1232,7 +1261,7 @@ var przesuniecieX1 = 1110,
     nowyObrazek.setAttribute('data-zindex', nowyObrazek.style.zIndex);    
     nowyObrazek.setAttribute('draggable', true);  
     //nowyObrazek.draggable = true;    // tak też działa, ale ustawianym atrybutem chyba lepiej niż po omacku, próbując z bezpośrednią nazwą atrybutu
-    $('#plansza').append( nowyObrazek );    // po wprawdzeniu tak <img> na www i tak są tracone atrybuty elementu: TOP, LEFT, ZINDEX i  z JS dla tego elmenty
+    $('#plansza').append( nowyObrazek );    
     //$('#plansza img:last').css({ top : przesuniecieY1, left : przesuniecieX1, zIndex : 100 + i })
     //                    .attr({ 'draggable' : true });
         
@@ -1250,18 +1279,26 @@ g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // zachowywanie obu 
     if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
     // poruszany wyskakuje przed szereg podczas wyciągania co najwużej kilka razy i tak już zostaje... 
     // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
+console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
+                ', e.offsetY:', e.offsetY,')]');
 }
+    
     
 function RuchUpuszczania (e)    // 'drop'
 {
-e = e || window.event;    
-e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
-g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
-g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px'; 
+e = e || window.event;
+var scena = document.querySelector('#rysunek'); 
+var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
+//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
+/* g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
+g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px'; */
+g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';    
+g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';    
     
-console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", e.pageY:", e.pageY, ", g_mojY:", g_mojY );
+console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
+            ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
 console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
-    
+e.preventDefault();    
 }
     
 function RuchPrzeciagania (e) { // 'dragover'
@@ -1275,6 +1312,20 @@ function ResetujZ()
 var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
   //  for ( var i =   )
 }
+ 
+function dragover_handler(ev) {
+ ev.preventDefault();
+ // Set the dropEffect to move
+/* ev.dataTransfer.dropEffect = "move"*/
+}
+    
+function drop_handler(ev) {
+ ev.preventDefault();
+ // Get the id of the target and add the moved element to the target's DOM
+/* var data = ev.dataTransfer.getData("text");
+ ev.target.appendChild(document.getElementById(data));*/
+}    
+    
     
 function InicjujGre() 
 {
@@ -1712,11 +1763,11 @@ $('#banner').hover( function() {
 ); // #banner hover-END
 
     
-$('#gra').on('dragstart', '.przenosny', PoczatekRuchuPrzeciagania );
+$('body').on('dragstart', '.przenosny', PoczatekRuchuPrzeciagania ); // $('#gra).on... bez zmian
     
-$('#gra').on('drop', '.przenosny', RuchUpuszczania );  
+$('body').on('drop', '.przenosny', RuchPrzeciagania );   // RuchUpuszczania 
     
-$('#gra').on('dragover', '.przenosny', RuchPrzeciagania );     
+$('body').on('dragover', '.przenosny', RuchUpuszczania );  // RuchPrzeciagania   
     
     
 
@@ -1739,8 +1790,8 @@ InicjujGre();
 	// sterowanie wielkością czcionki nagłówka
 	
 	//$("#banner h1.logo").fitText();
-	 $("#napisy h1").fitText(1.0, { minFontSize: '15px', maxFontSize: '65px' });
-	 $("#napisy h2").fitText(2.7, { minFontSize: '10px', maxFontSize: '28px' });
+	 $("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '60px' });
+	 $("#napisy h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
 	 $("#napis_spod h3").fitText(3.0, { minFontSize: '6px', maxFontSize: '20px' });    
     
 

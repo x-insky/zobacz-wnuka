@@ -1,3 +1,80 @@
+v0.4.12 - centered logo with **proportionally** resized fittext; header changes to fit a logo; first game board centered
+
+* v0.4.12 -- [2018-07-26]
+
+[+] ADDED
+
+-- index.php
+* added a structure like button for future stars of the game
+  - placed element into header area as a div element with 'zagraj' id
+* added a new header text inside 'game' area
+* added an attribute 'droppable' with value of 'true' into a element with id 'plansza' for enabling drop functionality
+  - also added an empty values to new event like attributes 'ondrop' and 'ondragover'
+
+-- zlobek-styl.css
+* added a silly styles for game-start-button
+  - just for distinction of each planned elements
+  - visible only on the widest screens (+1400px)
+  - any screen shrinks below set media query tresholds hides this structure with id 'zagraj'
+* added new styles for div with 'napisy' id inside a media query
+  - changed position 
+  - magic begins with new 'max-width' of 75%, which allows for center the childs elements text
+  - increasing screen size allow the proportionall grow of the size of text for childs elements (fith fittext plugin)
+  - the max size of a header and set values for text are limiting this groving
+
+-- witryna.js
+* added new functions 'OkreslPolozenieElementu' and 'kreslPolozenieElementuJS' to determine the absolute position of given element
+  - function with postfix 'JS' returns selected size of an element and its position relative to the viewport
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* set styles for logo elements for placing it in central of header element
+* modified style of logo in almost each treshold of used media queries to ensure a nice look
+* a header container is higher on basic mobile-first layout - 'banner' id 
+  - to hold whole content with a moving sun animation without covering any texts of logo inside div element of id 'napisy'
+  - modified to -100px lower version when width grows by media query (with 180px total width)
+  - added +30px to element with id 'napisy' (for total high of 310px) when screen width reaches 320px  to better fit a growing text of logo
+  - screens wider than 470px changes layout to horizontal from semi vertical 
+  - tested width of available tresholds to hold all logo text in horizontal way
+  - logo text resized properly with constrains of screen width between changes horizontal/vertical layout
+* rearranged order of many attributes inside few CSS declarations
+
+-- index.php
+* changed indentations of elements inside their groups
+  - removed unnecessary indentations for siblings
+* tiny changes at text content of few headers
+
+-- witryna.js
+* tested fittetxt plugin with many changes values of used parameters to display logo text as big as possible on any screen sizes
+  - logo texts displayed mostly on two lines (excluding narrow screens)
+  - tests connected with fix from this update
+* added an anonymous function when ocurs 'onload' event for loading content into a newly created image
+  - defined all maths inside that event function
+  - correctly readed image sizes when 'it loads'
+  - function event uses all the same calculations as previously defined 
+  - linked with second 'fixed' section of this update
+* changed the all drag & drop event object delegation
+  - before was defined a element with 'gra' id, now it's a 'body'
+  - also changed a function for given event (switched 'RuchPrzeciagania' with 'RuchUpuszczania')   
+
+[F] FIXED
+
+-- zlobek-styl.css
+* no more of logo text shrinking while screen width is decreased and left it in smalest size
+  - fixed proportional sizing of the logo, based on actual width of the screen
+  - added new width attribute of '100%' for parent container of any logo text's element
+  - an absolute positioned parent needs a set specific width attribute  
+  - fixes #6 - 'logo texts size decreases when page window shrinks but won't increase if window width grows'
+
+-- witryna.js
+* a bus picture is not centered inside area of a 'game' desk element
+  - fixed unknown size of a not yet loaded image
+  - added an anonymous function to serve 'load' event  
+  - fixes #18 - 'a bus picture is not centered inside area of a 'game' desk element' from v0.4.11
+  
+---------------------------
+
 v0.4.11 - origin of starting of game logic; picture loading in backgrounds; first puzzle quest elems
 
 * v0.4.11 -- [2018-07-25]
@@ -14,7 +91,7 @@ v0.4.11 - origin of starting of game logic; picture loading in backgrounds; firs
 * added a one button with show prompt text
 
 -- zlobek-styl.css
-* added style for any draggable element ([[draggable])
+* added style for any draggable element ([draggable])
   - used high 'z-index' value
 * defined a fixed style for any selected draggable element
   - uses an own class 'przenosny' mostly for img elements

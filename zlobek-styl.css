@@ -54,23 +54,13 @@ max-height: 26px;
 
 
 header#naglowek div#banner {
+position: relative;    
 border-radius: 10px;
 background-color: cornflowerblue;	
-/* background-color: #009de0;	*/
-overflow:	hidden;
+overflow: hidden;
 width: auto;
-height: 180px;
-}
-
-header#naglowek div#banner {
-position: relative;
-width: auto;
+height: 280px;
 max-width: 1400px;  /* tyle co kontener ograniczający winien mieć w innych miejscach - ".kontener" */      
-height: 180px;
-overflow:	hidden;
-background-color: cornflowerblue;	
-/* background-color: #009de0;	*/
-
 }
 
 
@@ -89,28 +79,16 @@ width: 200px;
 }
 
 div#logo div#slonce_logo {
-height: 160px;
+position: absolute;	
 height: 256px;
-	
-width: 	160px;
 width: 266px;
-
 background-image: url(grafiki/slonce.png); 
 background-repeat: no-repeat;	
-/*background-position: -112px -112px; 
-*/
-position: absolute;	
+/* background-position: -112px -112px; */
 left: -115px;
 top: -115px;	
-	
-/* outline: 2px solid red; */
-	
 transform-origin: 50% 50%;
-
 transition: all 0.5s ease 0.1s;	 
-
-
-
 	/*transform-origin: center center;*/
 }
 
@@ -127,11 +105,9 @@ top: -85px;
 header#naglowek div#napisy {
 /*float: left;*/
 position: absolute;
-left: 200px;
-top: 0;	
-		
-		background-color: cornflowerblue;	
-		/* background-color: rgba(95, 95, 225, 0.7); */	
+left: 0px;
+top: 160px;	
+width: 100%;
 }
 
 header#naglowek div#napisy p {
@@ -140,6 +116,42 @@ width: 0;
 clear: both;	
 }
 
+
+header#naglowek div#zagraj {
+display: none;
+position: absolute;
+width: 300px;
+height: 100px;
+right: 30px;
+top: 20px;    
+background-color: lightcyan;
+border: 2px solid #ccc;    
+}
+
+div#zagraj div#zagraj_srodek {
+position: relative;
+align-content: center;    
+width: 95%;
+height: 95%;
+background-color: aqua;    
+}
+
+
+div#zagraj div#zagraj_srodek p#zagraj_play {
+position: absolute;
+width: 80px;
+height: 80%;    
+right: 0px;
+top: 10px;
+color: white;
+font-size: 666%;
+font-weight: bolder;    
+background-color: forestgreen;
+}
+
+                        <h4>Czekasz na załadowanie?</h4>
+                        <h3>Zagraj w grę!</h3>
+                    </div>
 
 
 
@@ -936,7 +948,7 @@ div#gra div#plansza img.przenosny {
     position: absolute;
     width: 200px; /* jakieś wymiary początkowe muszą być określone przy ustawianiu absolutnym */
     height: 200px;
-    outline: 1px solid white;
+    outline: 2px solid white;
     z-index: 100;
 }
 
@@ -1101,6 +1113,17 @@ text-shadow: 1px 1px 3px #ccc;
 padding: 0.2em 0.5em;	
 text-align: center;	
 }
+
+h4 {
+font-size: 115%;
+font-weight: bold;
+color: darkblue;
+text-shadow: 1px 1px 1px #ccc;
+padding: 0.2em 0.5em;	
+text-align: center;	
+}
+
+
 
 p {
 text-align: justify;	
@@ -1466,9 +1489,13 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 	font-size: 70%;	
 	}     
     
-    div#witryna {
-/*	margin: 0.4em auto;*/
-	}
+    header#naglowek div#banner {
+    height: 310px;    
+    }
+
+    header#naglowek div#banner #napisy {
+    
+    }
     
     div#spis_tresci div.kontener_odnosnik {
 	min-height: 375px;			
@@ -1501,6 +1528,16 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
     width: 98.5%;    
     }
 
+    header#naglowek div#banner {
+    height: 180px;    
+    }
+    
+    header#naglowek div#napisy {
+    left: 140px;
+    top: 5px;	
+    max-width: 75%;
+    }
+    
 	div#spis_tresci div.kontener_odnosnik {
 	min-height: 415px;			
 	max-height: 415px;
@@ -1622,6 +1659,9 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
     box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);     
     }    
 
+    header#naglowek div#zagraj {
+    display: block;
+    }
     
 }
 
