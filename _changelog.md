@@ -1,3 +1,184 @@
+v0.4.12 - centered logo with **proportionally** resized fittext; header changes to fit a logo; first game board centered
+
+* v0.4.12 -- [2018-07-26]
+
+[+] ADDED
+
+-- index.php
+* added a structure like button for future stars of the game
+  - placed element into header area as a div element with 'zagraj' id
+* added a new header text inside 'game' area
+* added an attribute 'droppable' with value of 'true' into a element with id 'plansza' for enabling drop functionality
+  - also added an empty values to new event like attributes 'ondrop' and 'ondragover'
+
+-- zlobek-styl.css
+* added a silly styles for game-start-button
+  - just for distinction of each planned elements
+  - visible only on the widest screens (+1400px)
+  - any screen shrinks below set media query tresholds hides this structure with id 'zagraj'
+* added new styles for div with 'napisy' id inside a media query
+  - changed position 
+  - magic begins with new 'max-width' of 75%, which allows for center the childs elements text
+  - increasing screen size allow the proportionall grow of the size of text for childs elements (fith fittext plugin)
+  - the max size of a header and set values for text are limiting this groving
+
+-- witryna.js
+* added new functions 'OkreslPolozenieElementu' and 'kreslPolozenieElementuJS' to determine the absolute position of given element
+  - function with postfix 'JS' returns selected size of an element and its position relative to the viewport
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* set styles for logo elements for placing it in central of header element
+* modified style of logo in almost each treshold of used media queries to ensure a nice look
+* a header container is higher on basic mobile-first layout - 'banner' id 
+  - to hold whole content with a moving sun animation without covering any texts of logo inside div element of id 'napisy'
+  - modified to -100px lower version when width grows by media query (with 180px total width)
+  - added +30px to element with id 'napisy' (for total high of 310px) when screen width reaches 320px  to better fit a growing text of logo
+  - screens wider than 470px changes layout to horizontal from semi vertical 
+  - tested width of available tresholds to hold all logo text in horizontal way
+  - logo text resized properly with constrains of screen width between changes horizontal/vertical layout
+* rearranged order of many attributes inside few CSS declarations
+
+-- index.php
+* changed indentations of elements inside their groups
+  - removed unnecessary indentations for siblings
+* tiny changes at text content of few headers
+
+-- witryna.js
+* tested fittetxt plugin with many changes values of used parameters to display logo text as big as possible on any screen sizes
+  - logo texts displayed mostly on two lines (excluding narrow screens)
+  - tests connected with fix from this update
+* added an anonymous function when ocurs 'onload' event for loading content into a newly created image
+  - defined all maths inside that event function
+  - correctly readed image sizes when 'it loads'
+  - function event uses all the same calculations as previously defined 
+  - linked with second 'fixed' section of this update
+* changed the all drag & drop event object delegation
+  - before was defined a element with 'gra' id, now it's a 'body'
+  - also changed a function for given event (switched 'RuchPrzeciagania' with 'RuchUpuszczania')   
+
+[F] FIXED
+
+-- zlobek-styl.css
+* no more of logo text shrinking while screen width is decreased and left it in smalest size
+  - fixed proportional sizing of the logo, based on actual width of the screen
+  - added new width attribute of '100%' for parent container of any logo text's element
+  - an absolute positioned parent needs a set specific width attribute  
+  - fixes #6 - 'logo texts size decreases when page window shrinks but won't increase if window width grows'
+
+-- witryna.js
+* a bus picture is not centered inside area of a 'game' desk element
+  - fixed unknown size of a not yet loaded image
+  - added an anonymous function to serve 'load' event  
+  - fixes #18 - 'a bus picture is not centered inside area of a 'game' desk element' from v0.4.11
+  
+---------------------------
+
+v0.4.11 - origin of starting of game logic; picture loading in backgrounds; first puzzle quest elems
+
+* v0.4.11 -- [2018-07-25]
+
+[+] ADDED
+
+-- 10 new files (in words: 'ten'), first starting with the name 'grafiki/gra/autobus/cz_01.png'
+* one of an images for a game puzzle
+  - one of the draggable element
+* next one is 'cz_02.png' and the last one in series is 'cz_10.png'
+  - every file is set with transparency
+
+-- index.php
+* added a one button with show prompt text
+
+-- zlobek-styl.css
+* added style for any draggable element ([draggable])
+  - used high 'z-index' value
+* defined a fixed style for any selected draggable element
+  - uses an own class 'przenosny' mostly for img elements
+
+-- witryna.js
+* added a semi global list of variables for using a future funcionality of builded game
+* changed logic of a start game
+  - first is auto fired of function 'InicjujGre', which fires internally function 'LosujPlansze' to gain a level number/name
+  - later is fired a function 'WybierzPlansze' which pick a level by given number or name and a level is built 
+  - the assigned images are loaded into main game area and it's centered inside of that container in axis Y and X
+ - image inserted as a background image 
+* a defined function 'RozmiescCzesci' arranges the set of 'parts' insidea workable area
+  - function 'InicjujGre' starts 'RozmiescCzesci' as a last with passed number/name of the level or needed parts list lenght
+  - any element in a list is placed absolute on the next element in vertical axis with little horizontal shift
+  - every two is shifted by several dozen px in right
+* defined a set of functions to run as a event service in any event encounter
+* later defined an event listener with assign of already defined functions as a respones on a given event
+  - defined also event delagation, uses an event on a specified element (with class 'przeciagany') which is inside given container with id 'gra'
+  - function 'PoczatekRuchuPrzeciagania' on a 'dragstart' event response
+  - function 'RuchPrzeciagania' on a 'dragover' event response   
+  - function 'RuchUpuszczania' on a 'drop' event response
+
+ [*] MODIFIED
+
+-- zlobek-styl.css
+* resized containers inside game area 
+  - mostly added 100px in any direction to most important containers
+  - using fixed size of given containers & absolute positioning
+  - if it's possible the elements uses a full width of container which is 1400px
+  - mostly low values of 'z-index' is used, only for element 'div#rysunek' is needed a value higher than 1
+
+---------------------------
+
+v0.4.10 - indroduced game background; wide gradient under logo; CSS cleanings
+
+* v0.4.10 -- [2018-07-24]
+
+[+] ADDED
+
+-- new folder 'grafiki/gra'
+* as a container for any future puzzle game 
+
+-- new folder 'grafiki/gra/autobus'
+*  first prepared folder for internal use in game quest
+
+-- new file 'grafiki/gra/autobus/autobus.png'
+* a background file for game interaction
+  - first puzzle quest
+  - so far in PNG format, later maybe in SVG if capable 
+
+-- zlobek-styl.css
+* added gradient under the logo
+  - defined inside media query
+  - mix of two gradients with semi transparent colors in one background
+  - used color from blue to the same color as the parent's element background color (light blue turning steel)
+  - visible only on widest screens, with more than 1400px
+
+-- witryna.js
+* added scaffolding for future use of interactive game
+* defined function 'InicjujGre' just to start the game
+* defined function 'WybierzPlansze' to choose a starting level of game
+  - for now always returns 'autobus' level with bus graphic
+* all game logic not yet connected with page elements except inserting a background for a given element
+  - autostart of 'InicjujGre' on each page refresh
+  - so it looks like graphic file was loaded by a webpage itself, as a standard GET request... but it's not
+  - for now the whole game elements are fully visible, there is no interaction
+
+[*] MODIFIED
+
+-- index.php
+* little changes of indentations in header 
+
+-- zlobek-styl.css
+* redefined styles on widest screens of element 'div#naglowek_kontener' by media queries
+  - bottom rounded corners changes
+  - also redefined background as an semi transparent gradient image (mentioned in added section)
+
+[F] FIXED
+
+-- zlobek-styl.css
+* removed duplicated selector for 'div#naglowek_kontener'
+  - joined efficient rules into one selector
+* fixed selector for applying defined rules for two elements with ids and one with subordinated class element
+* fixed extra ';' inside gradient definition in rule for element 'div.dolna_zaslonka'
+
+---------------------------
+
 v0.4.9 - form in header gone, rebuilded header and changed when great screen; sliders of form polished;  
 
 * v0.4.9 -- [2018-07-23]

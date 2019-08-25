@@ -43,7 +43,19 @@ var g_element_zewnetrzny = "table.galeria",		//wszystko jest w tablicy o klasie 
  $g_input_nr_galerii	= $('input#galeria_wybrany_nr'), 
  $g_suwak_nr_galerii	= $('input#suwak_galerii'), 
  $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'), 
- $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony');
+ $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),
+    
+ g_tloSrc = '',   //
+ g_ileCzesci = 0,
+ g_nazwaPlanszy = '',
+ g_nazwaPlanszySciezka = '',
+ g_nazwaElementu = '',    
+ g_obrazki = [],
+ g_przesuniecieTlaX = 0,  // korekta umieszczenia obrazka w tle     
+ g_przesuniecieTlaY = 0,  // korekta umieszczenia obrazka w tle    
+ g_ktoraGrafika = '',
+ g_mojX = '',
+ g_mojY= '';    
     
 	
 // ---------- ***  FUNKCJE PRAWIE GLOBALNE *** --------------		
@@ -1146,7 +1158,187 @@ console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ',
 $('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY)+'px' }, czasAnimacji);    
 }   
 
+function OkreslPolozenieElementuJS ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
+var pozycja = element.getBoundingClientRect();
+    // debug do kasacji gdy OK
+    console.log('Element "' + element + '" ma X:' + ( parseInt( pozycja.left ) + parseInt( window.scrollX ) ) +  
+                ', Y:' + ( parseInt( pozycja.top ) + parseInt( window.scrollY ) ) );    
+return { left: pozycja.left + window.scrollX,
+         top: pozycja.top + window.scrollY };
+}    
     
+function OkreslPolozenieElementu ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
+var pozycja = $(element).offset();
+    // debug do kasacji gdy OK
+    console.log('Element "', element, '" ma X:' + pozycja.left, ', Y:' + pozycja.top );    
+return { left: pozycja.left, top: pozycja.top };
+}    
+       
+    
+    
+// ---------- ***      GRA      *** --------------     
+
+function LosujPlansze( zakres ) 
+{
+    if ( !zakres ) zakres = 1;    
+var wylosowanyNr = Math.floor( Math.random() * zakres );    
+return wylosowanyNr;    
+}       
+    
+function WybierzPlansze( nrPlanszy )        // docelowo będzie ajax/api
+{   
+/* var tloSrc = '', // poszło w global
+    ileCzesci = 0,
+    nazwa = '',
+    nazwaSrc = '',
+    obrazki = []; */
+    
+    if ( !nrPlanszy ) nrPlanszy = 0;
+    
+    switch ( nrPlanszy ) 
+    {
+     case 0:
+        g_tloSrc = './grafiki/gra/autobus/autobus.png';
+        var noweTlo = new Image();  // tworzenie nowego obrazka w pamięci dla ścieżki dla tła graficznego, celem określenia wymiarów tego obrazka
+
+
+        noweTlo.onload = function() {
+            var wysokoscTla = noweTlo.height;
+            var szerokoscTla = noweTlo.width;
+                // środkowanie względem kontenera 1090px x 700px
+            g_przesuniecieTlaX = String( ( $('#rysunek').width() - szerokoscTla ) / 2 ) + 'px';  
+            g_przesuniecieTlaY = String( ( $('#rysunek').height() - wysokoscTla ) / 2 ) + 'px'; 
+
+                // wyświetlenie i centrowanie dopiero, gdy przeliczą się wymiary tego obrazka
+            $('div#rysunek').css({ 'backgroundImage': 'url(' + g_tloSrc + ')', 'backgroundRepeat' : 'no-repeat', 
+                               'backgroundPosition' : g_przesuniecieTlaX + ' ' + g_przesuniecieTlaY });    
+            // debug
+            var statusTla = '<p>Grafika \'' + noweTlo.src + '\' ma szerokość ' + szerokoscTla + ' i wysokość ' + wysokoscTla + '<br />'  
+                + 'Przesunięcie wyśrodkowania to (' + g_przesuniecieTlaX + ', ' + g_przesuniecieTlaY + ').</p>';
+            $('#dolny_zasobnik').append(statusTla);    
+            };  // noweTlo.onload = function()-END
+ 
+        noweTlo.src = g_tloSrc;    
+            
+    // ...
+            
+    }   // switch-( nrPlanszy )-END
+    
+    //
+
+
+return { dx : g_przesuniecieTlaX, dy: g_przesuniecieTlaY };    // dobrze by było zwrócić jakąś tabelę rekordów lub cokolwiek...
+}    
+    
+function RozmiescCzesci( nrPlanszy ) {
+g_nazwaPlanszy = 'Autobus';
+g_nazwaPlanszySciezka = './grafiki/gra/autobus/';
+g_ileCzesci = 10;
+g_nazwaElementu = 'cz_';    
+var przesuniecieX1 = 1110,
+    przesuniecieY1 = -30,
+    przesuniecieX2 = 30,    // co drugi przestawiac pomiędzy kontenerami dla lepszej widoczności... w planach 
+    przesuniecieY2 = 720,
+    numerPliku;
+    
+    for ( var i=1; i <= g_ileCzesci; i++ ) 
+    {
+        if ( i < 10 ) numerPliku = String( '0' + i );
+        else numerPliku = String( i );
+    var nowyObrazek = new Image();
+    nowyObrazek.src = g_nazwaPlanszySciezka + g_nazwaElementu + numerPliku + '.png';
+        
+
+    nowyObrazek.alt = numerPliku;
+    nowyObrazek.classList.add('przenosny');    
+    
+        if ( i % 2 ) przesuniecieX1 += 80;
+        else przesuniecieX1 -= 80;
+    nowyObrazek.style.left = String( przesuniecieX1 ) + 'px';
+    przesuniecieY1 += 50;
+    nowyObrazek.style.top = String( przesuniecieY1 ) + 'px';
+    nowyObrazek.style.zIndex = 100 + i;    
+    nowyObrazek.setAttribute('data-zindex', nowyObrazek.style.zIndex);    
+    nowyObrazek.setAttribute('draggable', true);  
+    //nowyObrazek.draggable = true;    // tak też działa, ale ustawianym atrybutem chyba lepiej niż po omacku, próbując z bezpośrednią nazwą atrybutu
+    $('#plansza').append( nowyObrazek );    
+    //$('#plansza img:last').css({ top : przesuniecieY1, left : przesuniecieX1, zIndex : 100 + i })
+    //                    .attr({ 'draggable' : true });
+        
+    }
+}    
+
+    
+function PoczatekRuchuPrzeciagania (e)  // 'dragstart'
+{
+e = e || window.event;    
+g_ktoraGrafika = e.target;
+g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach 
+g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // zachowywanie obu położeń początkowych
+    var pionowosc = g_ktoraGrafika.style.zIndex;
+    if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
+    // poruszany wyskakuje przed szereg podczas wyciągania co najwużej kilka razy i tak już zostaje... 
+    // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
+console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
+                ', e.offsetY:', e.offsetY,')]');
+}
+    
+    
+function RuchUpuszczania (e)    // 'drop'
+{
+e = e || window.event;
+var scena = document.querySelector('#rysunek'); 
+var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
+//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
+/* g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
+g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px'; */
+g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';    
+g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';    
+    
+console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
+            ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
+console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
+e.preventDefault();    
+}
+    
+function RuchPrzeciagania (e) { // 'dragover'
+e = e || window.event;
+e.preventDefault();     // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elemntu
+    // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
+}    
+    
+function ResetujZ()
+{
+var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
+  //  for ( var i =   )
+}
+ 
+function dragover_handler(ev) {
+ ev.preventDefault();
+ // Set the dropEffect to move
+/* ev.dataTransfer.dropEffect = "move"*/
+}
+    
+function drop_handler(ev) {
+ ev.preventDefault();
+ // Get the id of the target and add the moved element to the target's DOM
+/* var data = ev.dataTransfer.getData("text");
+ ev.target.appendChild(document.getElementById(data));*/
+}    
+    
+    
+function InicjujGre() 
+{
+var nrPlanszy = LosujPlansze(); // póki co na pusto
+console.log('Wylosowano nr planszy: ', nrPlanszy);    
+var przesuniecie = WybierzPlansze( nrPlanszy );
+  
+    
+RozmiescCzesci( nrPlanszy );
+    
+    
+    
+}
     
 
 	
@@ -1570,6 +1762,14 @@ $('#banner').hover( function() {
     }
 ); // #banner hover-END
 
+    
+$('body').on('dragstart', '.przenosny', PoczatekRuchuPrzeciagania ); // $('#gra).on... bez zmian
+    
+$('body').on('drop', '.przenosny', RuchPrzeciagania );   // RuchUpuszczania 
+    
+$('body').on('dragover', '.przenosny', RuchUpuszczania );  // RuchPrzeciagania   
+    
+    
 
 // ***************************************************************************	
 // ---------- *** AUTOURUCHAMIANIE *** --------------	 
@@ -1579,7 +1779,9 @@ InicjujPrzyciskiWyboruPodstronyGalerii();
 	
 ZaczytajSpisGalerii();
 	
-
+// testowo też do autouruchamiania gry - pierwsza plansza
+InicjujGre();
+    
 	
 // ***************************************************************************		
 
@@ -1588,8 +1790,8 @@ ZaczytajSpisGalerii();
 	// sterowanie wielkością czcionki nagłówka
 	
 	//$("#banner h1.logo").fitText();
-	 $("#napisy h1").fitText(1.0, { minFontSize: '15px', maxFontSize: '65px' });
-	 $("#napisy h2").fitText(2.7, { minFontSize: '10px', maxFontSize: '28px' });
+	 $("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '60px' });
+	 $("#napisy h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
 	 $("#napis_spod h3").fitText(3.0, { minFontSize: '6px', maxFontSize: '20px' });    
     
 
