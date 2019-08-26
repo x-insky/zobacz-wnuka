@@ -1,3 +1,42 @@
+v0.4.16 - anims touched game-init-button; email address & its security; footer content reordered by little; greater buttons in game section
+
+* v0.4.16 -- [2018-08-07]
+
+[+] ADDED
+
+-- index.php
+* added few header with paragraph inside footer
+  - added a fake email adres to be updated by JS
+  - simple safety against web crawlers
+* added a paragraph inside game area
+
+-- witryna.js
+* added a function 'OdkryjEmail' to build a real contact email in a place of faked one in static html page (php here)
+  - it changes a text of existing email string and also modifies its 'href' parameter
+  - the actual email address is concatenated from few fractions with use 'String.fromCharCode(64)' to encode '@' symbol
+  - function can be run with parameters ('code is reusable, right?') but without them it should build working contacty email to the author, dedicated to this project
+* added above function call to block of auto run code
+
+-- zlobek-styl.css
+* added a hover state for parent which is a whole container, but real change is padding inside 'h3' element in bottom line
+  - looks like yellow rectangle pushes away text of blue left rectangle
+  - defined a little delay, but even without it, a whole effect looks fine 
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* increased horizontal padding inside class 'gra_odnosnik' for better organising the space inside parent container
+  - changed differently in both 'h3' and 'h4' elements
+* added margin from top to all buttons inside div container with id 'sterowanie'
+* buttons in game section are greater from a while ago  
+
+[-] REMOVED
+
+-- witryna.js
+* removed 'auxclick' and 'contextmenu' as a possible trigger of the event function on any gallery list element
+
+---------------------------
+
 v0.4.15 - easy differentiate gallery number in hover details
 
 * v0.4.15 -- [2018-07-28]
@@ -70,7 +109,7 @@ v0.4.14 - header area retested; styled button of game init; no-status-bar; drag 
   - there is no possibility that gallery title is on the image 
   - tested inside many mentioned situations and selected best values for shifting image or gallery title inside their parent container  
 
- -- witryna.js
+-- witryna.js
 * commented changing of the opacity of dragged element inside event function 'PoczatekRuchuPrzeciagania' and 'PoczatekRuchuPrzeciaganiaJS'
 * moved 'preventDefault()' call at the end of ovent functions 'RuchPrzeciaganiaJS' and 'RuchPrzeciagania' for 'dragover' event
   - changed opacity and border color for the event element
@@ -83,7 +122,7 @@ v0.4.14 - header area retested; styled button of game init; no-status-bar; drag 
 
 [-] REMOVED
 
- -- witryna.js
+-- witryna.js
 * there is no more showing of a status for readed gallery elements into violet rectangle, just before load-next-subpage button
   - updating of that summary text is also disabled
   - everything mentioned is inside comment for so

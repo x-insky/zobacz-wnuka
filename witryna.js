@@ -1177,6 +1177,16 @@ var pozycja = $(element).offset();
 return { left: pozycja.left, top: pozycja.top };
 }    
        
+
+function OdkryjEmail ( element, adres, adresPokazywany, wariant )   // zrobić z atrybutów obiekt?! 
+{
+    // wartości domyślne, aby nie wklepywać atrybutów
+element = element || $("#adres_email");
+adres = adres || 'zobaczwnuka' + String.fromCharCode(64) + 'em' + 'ail' + '.c' + 'om';   // takie tam rozbicie ze scaleniem dla szukaczy
+adresPokazywany = adresPokazywany || 'kontakt';     
+var adresEmail = 'mailto:' + adres;    
+$( element ).text( adresPokazywany ).attr( 'href', adresEmail ); 
+}
     
     
 // ---------- ***      GRA      *** --------------     
@@ -1635,9 +1645,9 @@ return; // wyjście, aby nie przechodzić do odnosnika
 });	//  on("click")-$('#nawigacja_galeria')-END		
 */	
     // DLA KOLEJNYCH GALERII: '$('#galeria_spis').on("click", "a", function(e){'
-$('#galeria_spis, #wybrane_galerie_spis').on("click auxclick contextmenu", "a", function(e){ 
+$('#galeria_spis, #wybrane_galerie_spis').on("click", "a", function(e){    // testowo dopisano także inne 'kliknięcia' - "click auxclick contextmenu"
     
-console.log (e);
+// console.log (e);     // DEBUG dla 'kliknięć'
     /*
     if ( e.type == "contextmenu" )
     {
@@ -1645,6 +1655,7 @@ console.log (e);
     // return false;
     }*/
     
+    /*  
     //if ( e.which == 2 ) // jeśli naciśnięto to ŚPM - ŚRODKOWYM przyciskiem myszy
     if ( e && (e.which == 2 || e.button == 4 ) )
     {
@@ -1660,7 +1671,8 @@ console.log (e);
     alert("INNY-PM!");
     //return false;    
     //$(this).attr('href', '#');  // ;)
-    }  
+    } */
+    // testowanie innych przycisków/kliknięc
 
 e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku    
 var $this = $(this);
@@ -1798,6 +1810,8 @@ ZaczytajSpisGalerii();
 	
 // testowo też do autouruchamiania gry - pierwsza plansza
 InicjujGre();
+OdkryjEmail(); 
+    
     
 var Przeciaganie = ( function() {
     

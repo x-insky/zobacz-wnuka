@@ -217,8 +217,9 @@
             <div id="reguły">
                 <div class="kontener">    
                 <h1>Pokoloruj duży obrazek poprzez ułożenie małych obrazków we właściwych miejscach.</h1>
-                <h2>Użyj myszy lub gładzika komputera, bo małe ekrany dotykowe są be (póki co jest dramat)!</h2>    
-                <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik.</p>
+                <h2>Użyj myszy lub gładzika komputera, bo małe ekrany dotykowe są be (póki co jest dramat)!</h2>
+                <p style="text-decoration: line-through;"><em>Podobne widowisko teatralne</em> jest z użyciem czegokolwiek na czymkolwiek do obsługi przeciągania, więc póki co zdobywanie punktów i budowanie rankingów jest odłożone w bliżej nieokreslone <em>kiedyś</em>.</p>   
+                <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (zakładając, że system nie oszukuje przy przydziale punktów).</p>
                 </div>
             </div>
             <div id="sterowanie">
@@ -240,7 +241,7 @@
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka">&copy;2018 v0.4.15 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.4.16 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <div class="kontener">
                     <h3>Dla Hani</h3>
@@ -248,9 +249,13 @@
                     <h3>Jaki jest cel?</h3>
                     <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
                     <h3>Jeszcze raz po polskiemu</h3>
-                    <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie żłobka. Chęć przedłużenia życia myszy oraz powierzchni dotykowych komputerów zdecydowała o przeniesieniu obciążenia na klik i klawisze strzałek. Nadmiernie porysowanych ekranów w telefonach, czy tabletach też nie chemy, prawada? A nadmiernie zużyty klawisz <em>powrót</em> z przyciskiem <em>klikanie</em> mogłyby wypaść.</p>    
+                    <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie żłobka. Chęć przedłużenia życia myszom oraz powierzchniom dotykowym komputerów zdecydowała o zmniejszeniu obciążenia (konkretnie z niepotrzebnego klikania kursorem w przycisk <em>powrót</em> -- [&lt;-] i kolejnego niepotrzebnego kliknięcia w kolejne zdjęcie, itd. aż do końca danej galerii przemnożone przez ilość podstron danej galerii...). Nadmiernie porysowanych ekranów w telefonach, czy tabletach też nie chemy, prawda? Nazbyt zużyty przycisk myszy lub wytarty (albo przebity) gładzik w laptopie zmusza do zakupu urządzenia wskazującego... <p>
+                    <h3>(to nie jest antyreklama pewnego sklepu komputerowego)</h3>    
+                    <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi, a do tego zmniejsza zużycie pasma internetowego użytkownika (pakietu transmisji danych na tzw. <em>urządzeniach mobilnych</em>) w porównaniu do przeglądania orygionalnej witryny. Do tego nie katuje serwera przy każdym dużym obrazku. Same plusy wynikają z korzystania z tej <em>nakładki</em>, zachęcam do dalszego korzystania.</p>    
                     <h3>Informacje i zastrzeżenia</h3>
                     <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
+                    <h3>Kontakt</h3>
+                    <p>Wszelkie uwagi, skargi, wnioski i propozycje funkcjonalności lub zaobserwowane błędy w działaniu serwisu można słać na poniższy adres email <a href="#" id="adres_email">nieodbieram@gdzieś.w.internecie.com</a></p>
                 </div>
             </div>
             <div id="pomoc">
@@ -294,6 +299,8 @@
                         <li class="tech_nie">CSS&nbsp;Grid</li>
                         <li class="tech_nie">SVG?</li>
                     </ul>
+                    <h3>Nadal na etapie projektowania</h3>
+                    <p>Status projektu nieukończony, nadal nie w <em>produkcji</em>.</p> 
                 </div>
             </div>
         </footer>	

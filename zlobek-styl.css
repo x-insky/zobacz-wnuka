@@ -175,7 +175,7 @@ text-shadow: 1px 1px 1px #ccc;
 div#zagraj div#zagraj_srodek h3.gra_odnosnik {
 font-size: 27px;
 font-weight: bold;
-padding: 0.3em 0.4em;
+padding: 0.3em 1.1em;
 text-align: left;
 color: yellow;
 background-color: #5d6ad0;
@@ -184,6 +184,7 @@ transition: all 0.5s 0.1s;
 }
 
 div#zagraj:hover div#zagraj_srodek h3.gra_odnosnik {
+padding: 0.3em 0.4em;    
 text-shadow: 1px 1px 3px #ccc;
 background-color: cornflowerblue;    
 }
@@ -1010,6 +1011,12 @@ border-radius: 10px;
 box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	    
 } 
 
+div#gra div#sterowanie 
+{
+margin-top: 1em;    
+}
+
+
 div#gra div#plansza {
 height: 930px;
 width: 1400px;    
@@ -1667,6 +1674,7 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 	div#spis_tresci div.kontener_odnosnik img {
 	max-height: 230px;
 	}
+	
 }
 
 
@@ -1689,7 +1697,7 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 
 	div#spis_tresci div.kontener_odnosnik img {
 	max-height: 240px;
-	}   
+    }
 }
 
 
