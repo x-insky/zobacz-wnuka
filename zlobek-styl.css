@@ -57,7 +57,7 @@ width: 100%;
 
 div#napis_spod h3 {
 width: 100%;	
-max-height: 26px;	
+max-height: 60px;	
 	
 }
 
@@ -68,7 +68,7 @@ border-radius: 10px;
 background-color: cornflowerblue;	
 overflow: hidden;
 width: auto;
-height: 280px;
+height: 290px;
 max-width: 1400px;  /* tyle co kontener ograniczający winien mieć w innych miejscach - ".kontener" */      
 }
 
@@ -130,33 +130,88 @@ header#naglowek div#zagraj {
 display: none;
 position: absolute;
 width: 300px;
-height: 100px;
+height: 97px;
 right: 30px;
 top: 20px;
 cursor: pointer;
-background-color: lightcyan;
-border: 2px solid #ccc;    
+border: 2px solid #ccc;
+border-radius: 5px;    
+background-color: #5d6ad0;
+transition: all 0.5s 0.1s;
+}
+
+header#naglowek div#zagraj:hover {
+border-color: yellow;    
+box-shadow: 0px 0px 4px 1px yellow;
 }
 
 div#zagraj div#zagraj_srodek {
 position: relative;
-align-content: center;    
-width: 95%;
-height: 95%;
-background-color: aqua;    
+align-content: center;
+width: 100%;
+height: 100%;
+background-color: #5d6ad0;
+border-radius: 2px;
+overflow: hidden;    
 }
 
+div#zagraj div#zagraj_srodek h4.gra_odnosnik {
+font-size: 22px;
+font-weight: bold;
+padding: 0.3em 0.2em;
+text-align: center;
+text-shadow: none;    
+color: #5d6ad0;    
+background-color: #eee;
+transition: all 0.5s 0.1s;    
+}
 
-div#zagraj div#zagraj_srodek p#zagraj_play {
+div#zagraj:hover div#zagraj_srodek h4.gra_odnosnik {
+color: #54c;
+background-color: #f6f6f6;
+text-shadow: 1px 1px 1px #ccc;    
+}
+
+div#zagraj div#zagraj_srodek h3.gra_odnosnik {
+font-size: 27px;
+font-weight: bold;
+padding: 0.3em 0.4em;
+text-align: left;
+color: yellow;
+background-color: #5d6ad0;
+text-shadow: none;    
+transition: all 0.5s 0.1s;       
+}
+
+div#zagraj:hover div#zagraj_srodek h3.gra_odnosnik {
+text-shadow: 1px 1px 3px #ccc;
+background-color: cornflowerblue;    
+}
+
+div#zagraj div#zagraj_srodek p.gra_odnosnik {
 position: absolute;
-width: 80px;
-height: 80%;    
+width: 70px;
+height: 53px;
 right: 0px;
-top: 10px;
+top: 41px;
 color: white;
-font-size: 666%;
-font-weight: bolder;    
-background-color: forestgreen;
+font-size: 72px;
+font-weight: bolder;
+background-color: #eff506;
+z-index: 0;
+line-height: 41px;
+padding-left: 0.1em;
+text-shadow: 1px 1px 3px #666;
+transition: all 0.25s 0.05s;      
+}
+
+div#zagraj:hover div#zagraj_srodek p.gra_odnosnik {
+width: 102px;
+background-color: yellow;    
+}
+
+div#zagraj:hover div#zagraj_srodek p.gra_odnosnik::after {
+content: ">";
 }
 
 /*                        <h4>Czekasz na załadowanie?</h4>
@@ -165,11 +220,16 @@ background-color: forestgreen;
 
 
 
-header#naglowek a.odnosnik_czerwony {
-font-size : 120% ;
-font-weight : bold ;
-color : #d46	;
-text-decoration :	underline;	
+header#naglowek a.odnosnik_kolor {
+font-size: 120%;
+font-weight: bold;
+color: yellow;
+text-decoration: underline;
+transition: color 0.3s 0.05s;   
+}
+
+header#naglowek a.odnosnik_kolor:hover {
+color: white;
 }
 
 header#naglowek div#naglowek_kontener {
@@ -219,6 +279,11 @@ width: 35em;
 input[type="button"] {
 /*background-color: darkblue; 
 color: yellow;	*/
+padding: 0.25em 1em;
+font-size: 120%;
+}
+
+button {
 padding: 0.25em 1em;
 font-size: 120%;
 }
@@ -293,11 +358,13 @@ background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(93,106,208,1
 
 div#spis_tresci div.tytul_odnosnik {
 height: 6em;
+
     /*    vertical-align: bottom;	*/
 }
 
 div#spis_tresci div.kontener_odnosnik a {
 cursor: pointer;    /* sztucznie, na usunięty 'href' */
+text-decoration: none;        
 }
 
 
@@ -437,11 +504,7 @@ font-size: 125%;
 font-weight: bolder;
     /*line-height: 60px;    */
 line-height: 45px;
-}
-
-div#spis_tresci div.szczegoly > p:last-of-type 
-{
-color: #5a8ae8;   
+color: #5a8ae8;      
 }
 
 div#spis_tresci div.kontener_odnosnik div.dolna_zaslonka {
@@ -965,7 +1028,7 @@ div#gra div#plansza img.przenosny {
 div#plansza div#rysunek { 
 position: absolute;       
 background-color: white;
-left: 0;    /* "trza" na sztywno określić, albowiem po kontenerze lata p wprowadznieu innych elementów */ 
+left: 0;    /* "trza" na sztywno określić, albowiem po kontenerze lata po wprowadzniu dalszych elementów */ 
 top: 0;    
 width: 1090px;       
 height: 700px;   
@@ -1025,7 +1088,7 @@ background-color: deepskyblue;
 background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue); 	
 }
 
-footer#stopka div#poco p:first-of-type {
+footer#stopka div#poco p:nth-of-type(2) {
 font-style: italic ;	
 }
 
@@ -1090,9 +1153,6 @@ font-size: 300%;
 padding-bottom: 0.05em;	
 }
 
-
-
-
 h2 {
 font-size: 175%;
 font-weight: bold;
@@ -1113,8 +1173,6 @@ padding-top: 0;
 line-height: 20px;	
 }
 
-
-
 h3 {
 font-size: 125%;
 font-weight: bold;
@@ -1133,10 +1191,19 @@ padding: 0.2em 0.5em;
 text-align: center;	
 }
 
-
-
+a {
+font-weight: bold;
+text-decoration-line: underline;
+text-decoration-style: solid;
+color: indigo;
+}
+    
 p {
 text-align: justify;	
+}
+
+em {
+font-style: italic;    
 }
 
 form {
@@ -1500,9 +1567,11 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 	}     
     
     header#naglowek div#banner {
-    height: 310px;    
+    height: 330px;    
     }
+    
 
+    
     header#naglowek div#banner #napisy {
     
     }
@@ -1539,7 +1608,11 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
     }
 
     header#naglowek div#banner {
-    height: 180px;    
+    height: 190px;    
+    }
+    
+    header#naglowek div#banner div#napis_spod h3 {
+    max-height: 75px;	
     }
     
     header#naglowek div#napisy {
@@ -1590,7 +1663,6 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 	div#spis_tresci div.kontener_odnosnik img {
 	max-height: 230px;
 	}
-	
 }
 
 
@@ -1613,7 +1685,7 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 
 	div#spis_tresci div.kontener_odnosnik img {
 	max-height: 240px;
-	}
+	}   
 }
 
 
@@ -1628,6 +1700,10 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
     width: 99.5%;    
     }
 
+    header#naglowek div#banner {
+    height: 170px;    
+    }
+    
 	div#spis_tresci div.kontener_odnosnik {
 	min-height: 490px;			
 	max-height: 490px;
@@ -1638,10 +1714,17 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 	max-height: 250px;
 	}
     
-    /* div#gra {
-    display: block;    
-    } */
-
+    div#glowna div#nazwa_galerii img {
+    margin-top: -2.5em;
+    }
+    
+    div#glowna div#nazwa_galerii h2 {
+    padding-left: 5em;
+    }
+    
+/*    div#gra { */  /* ukrywać zdarzeniami, CSS nie schowa ponownie, jeśli pokazana  z MIN-width */
+/*    display: none;    
+    }*/
 }
 
 @media screen and (min-width: 1300px) { 

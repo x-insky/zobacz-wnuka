@@ -745,12 +745,15 @@ var $listaPodstron = $( g_tag_do_podmiany_spis + ' td[colspan=2] a.link_tresc' )
 	g_zaczytana_ilosc_paginacji_galerii = ilePodstronSpisuTresci;	  // !!! muerto importante !!!
 
     // debugowanie -- wprowadzenie nowych treści w statusie dla zaczytanych właśnie treści 
+/*
 	$('p#status_galerii_spis').show( 100 ).html('Znaleziono '  + $wierszeTabeli.length + ' wierszy tabeli źródłowej oraz ' + $listaPodstron.length 
                                         + ' wszystkich podstron(-y) spisu treści (razem ze starsze i nowsze bez bieżącej).<br />Jesteś na ' 
                                         + g_biezaca_pozycja_galerii + '. stronie galerii.<br />'
                                         + 'A wcześniej zaczytano: "' + g_zaczytana_ilosc_paginacji_galerii + '" paginacji, a załadowano łącznie ' 
                                         + g_biezaca_pozycja_galerii + ' (vs ' + g_ilosc_zaczytanych_galerii + ') elementów galerii ze wszystkich ' 
                                         + g_ilosc_wszystkich_galerii + ' galerii');
+*/
+        
 	} // if-END ( $listaPodstron.length >= 1 )
 	
 $('h2#zaladuj_galerie_spis').show();  // pokaż przycisk/element do ładowania kolejnych galerii 
@@ -1272,7 +1275,7 @@ function PoczatekRuchuPrzeciagania (e)  // 'dragstart'
 {
 e = e || window.event;    
 g_ktoraGrafika = e.target;
-    this.style.opacity = '0.9';
+    //this.style.opacity = '0.9';
 g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach 
 g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // zachowywanie obu położeń początkowych
     
@@ -1800,9 +1803,9 @@ var Przeciaganie = ( function() {
     
 function PoczatekRuchuPrzeciaganiaJS (e)  // 'dragstart'
 {
-e = e || window.event;    
-g_ktoraGrafika = e.target;
-    this.style.opacity = '0.9';
+//e = e || window.event;    
+g_ktoraGrafika = e.target;      // !!! wpisanie namiarów na przeciagany element, który będzie dalej używany w kolejnych zdarzeniach 
+    //this.style.opacity = '0.9';
 g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // róznica odległoścvi pomiedzy kliknięciem, a początkiem klikniętego elementu  
 g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach
    // pobranie pozycji "globalnej" danego elementu - ofsetu
@@ -1824,16 +1827,20 @@ console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX,
     
 function RuchPrzeciaganiaJS (e)    // 'dragover'
 {
-e = e || window.event;
-e.preventDefault();     // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elemntu
+//e = e || window.event;
+   // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elementu
     // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
+    g_ktoraGrafika.style.opacity = 0.5;
+    g_ktoraGrafika.style.outlineColor = "#d00";
+    
+e.preventDefault();      
 return false;   // dodane    
 }        
     
 function RuchUpuszczaniaJS (e)  // 'drop'
 {
-e = e || window.event;
-e.preventDefault(); // przestawione znów do góry    
+//e = e || window.event;
+ // przestawione znów do góry    
 var scena = document.querySelector('#rysunek'); 
 var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
 //e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
@@ -1846,7 +1853,10 @@ g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecie
 
 g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + g_mojX + 'px';    
 g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + g_mojY + 'px';    
-     
+
+g_ktoraGrafika.style.outlineStyle = "solid";    
+g_ktoraGrafika.style.outlineColor = "#00d"; 
+g_ktoraGrafika.style.opacity = 1;
     
 /*g_ktoraGrafika.style.left = 200 + 'px';    
 g_ktoraGrafika.style.top = 100 + 'px';  */
@@ -1854,7 +1864,7 @@ g_ktoraGrafika.style.top = 100 + 'px';  */
 console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
             ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
 console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
-
+e.preventDefault();
 return false;
 }
        
@@ -1872,8 +1882,26 @@ function PoczatekDotykuJS ( e )
 e.preventDefault(); // zapobieganie przewijaniu ekranu przy dotyku elementów przesuwnych    
 var ktoraGrafika = e.target;    // wewnątrzna zmienna o tym samym znaczniu
 var dotykJednopalczasty = e.touches[0]; // tablica dla pierwszej "operacji jednopalcowej", czyli gestów z jednym naciskiem palca
+var ruchOsX = ktoraGrafika.offsetLeft - dotykJednopalczasty.pageX;  
+var ruchOsY = ktoraGrafika.offsetTop - dotykJednopalczasty.pageY;     
+ResetujZIndexWszystkimJS();
+ktoraGrafika.style.zIndex = 200;    
+//debug
+console.log('Dotyk ekranu');    
     
-}
+    
+//od razu podpięcie do obiektu poruszanego kolejnego zdarzenia (podległość)
+ktoraGrafika.addEventListener('touchmove', function() {
+    //debug
+console.log('Dotyk ekranu - przeciąganie elementu');    
+    var pozycjaX = dotykJednopalczasty.pageX + ruchOsX;
+    var pozycjaY = dotykJednopalczasty.pageY + ruchOsY;
+    
+    // pozycjonowanie elementu do poruszania
+    ktoraGrafika.style.left = pozycjaX + 'px';
+    ktoraGrafika.style.top = pozycjaY + 'px';
+}, false); // jako 'bublowanie'    
+} // function PoczatekDotykuJS-END
     
     
 function KlikniecieObrazkaJS ( e ) 
@@ -1905,7 +1933,7 @@ document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, 
 	//$("#banner h1.logo").fitText();
 	 $("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '60px' });
 	 $("#napisy h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
-	 $("#napis_spod h3").fitText(3.0, { minFontSize: '6px', maxFontSize: '20px' });    
+	 $("#napis_spod h3").fitText(3, { minFontSize: '7px', maxFontSize: '17px' });    
     
 
 

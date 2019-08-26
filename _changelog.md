@@ -1,3 +1,82 @@
+v0.4.14 - header area retested; styled button of game init; no-status-bar; drag & drop event redefinitions
+
+* v0.4.14 -- [2018-07-28]
+
+[+] ADDED
+
+-- index.php
+* added unified class 'gra_odnosnik' to all elements of semi-button-structure with id of 'zagraj', inside of page header
+
+-- zlobek-styl.css
+* added basic style for a standard elements
+  - extends for elements: 'button', 'a', 'em' and 'form'
+* created new styles fo the button-like element and its subelement
+  - added many changes on hover state to animate changes by transitions
+  - added yellow shadow and new color of the border
+  - added lighter colors for backgrounds
+  - added darker colors for texts
+  - many tests with placements and better visual reception of the whole element
+* modified a style by adding a max-height attribute to properly displaying of paragraph inside lower belt of the header
+  - lets be scaled text size along with logo text scaling when screen size changes
+  - possible little fluctuations inserted by media query to hold all the text content when font size is changing and also a width is different
+* added fixed height for a parent of every gallery item title
+  - uses an 'em' units so it can be scaled with changes of the font size of the title, which is placed inside
+* polished also any of the inside items of any gallery list
+  - added poining mouse cursor on 'a' elements to proper looks when its attrib 'href' was removed  
+
+[*] MODIFIED
+
+-- index.php
+* modified text of the lower belt inside header
+  - added non breaking spaces near the short words
+* renamed and rebuilded class for original nursery URL ('odnośnik czerwony' to 'odnosnik_kolor')
+  - slighty changed style and added transition animation on hover  
+* used arrows-like shapes inside buttons of form for gallery selecting number
+* added a paragraph styled with strikethrough
+* changed some paragraph texts inside footer
+  - also added a few sentences
+
+-- zlobek-styl.css
+* modified height of container with id 'banner' inside the header to 290px as the mobile basis (+10px)
+  - and it's possible to grow to 330px after
+  - but for wider screen than 470px its size is set to 190px (also +10px from previous defined)
+  - but for the width treshold more than 940px element high is lowed to standard 170px 
+* styled all subelements inside button-like-structure with id 'zagraj' in the header to arrange them
+  - previously styled with silly idea 
+  - rearanged styles for better look (mentioned also in added section)
+  - changed many attributes, depending of the elements placing or its content
+* added style to newly class 'gra_odnosnik' which is used inside by all text element of button-like-element
+  - mainly positioning, size and margins
+  - also well defined transition in one place for three elements
+  - also added conditional style, depending from the parent elementent's class or id to distinguish lines of button-like-element
+  - added new content based on pseudoelement
+  - class 'gra_odnosnik' previously used name was 'zagraj_play'
+* fixed arrangement of the items inside of selected gallery
+  - on screens wider than 1180px the image is placed near the left upper corner and gallery title is slighty moved to the right
+  - it helps to better experience of showing content especially when image is high and the text description is very short
+  - there is no possibility that gallery title is on the image 
+  - tested inside many mentioned situations and selected best values for shifting image or gallery title inside their parent container  
+
+ -- witryna.js
+* commented changing of the opacity of dragged element inside event function 'PoczatekRuchuPrzeciagania' and 'PoczatekRuchuPrzeciaganiaJS'
+* moved 'preventDefault()' call at the end of ovent functions 'RuchPrzeciaganiaJS' and 'RuchPrzeciagania' for 'dragover' event
+  - changed opacity and border color for the event element
+* added extra behavior on 'drop' inside function 'RuchUpuszczania' and 'RuchUpuszczaniaJS' for 'drop' event
+  - trying to get coordinates and change position of the element using absolute positioning or relative from 'game' context
+  - needed to rethink about distance from top left corner of the element ant the point where mouse cursor 'drags' that item  
+  - for now achieved 'jumping placement' 
+* trying to start touch event inside function 'PoczatekDotykuJS' where is added also another listener to the same element, the 'touchmove' event
+* change parameters for fittext initialization for target element inside lower dark belt inside header 
+
+[-] REMOVED
+
+ -- witryna.js
+* there is no more showing of a status for readed gallery elements into violet rectangle, just before load-next-subpage button
+  - updating of that summary text is also disabled
+  - everything mentioned is inside comment for so
+
+---------------------------
+
 v0.4.13 - game content on demand; second Vanilla JS event system; restyled draggable elems
 
 * v0.4.13 -- [2018-07-27]
