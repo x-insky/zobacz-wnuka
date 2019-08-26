@@ -504,11 +504,15 @@ font-size: 125%;
 font-weight: bolder;
     /*line-height: 60px;    */
 line-height: 45px;
-color: #5a8ae8;      
 }
 
+div#spis_tresci div.szczegoly > p:last-of-type
+{
+color: #5a8ae8;   
+}
+    
 div#spis_tresci div.kontener_odnosnik div.dolna_zaslonka {
-    /* użyć CSS-clip, gdy bedzie działał we wszystkich przeglądarkach to bedzie raj; póki co gradient, albo ostatecznie jednolite tło */
+    /* użyć CSS-clip, gdy będzie funkcjonował we wszystkich przeglądarkach (to bedzie raj;), póki co gradient, albo ostatecznie jednolite tło */
 position: absolute;
 z-index: 1;    
 width: 100%; 
@@ -517,7 +521,7 @@ left: 0px;
 bottom: 0px;
 background-color: cornflowerblue;       /* tło dokładnie jak kontener główny */
 background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, cornflowerblue 50%, cornflowerblue 100%);      
-transition: background-color 0.25s ease-out;	/* też ten sam styl "podatności" na zmianę */
+transition: background-color 0.25s ease-out;	    /* też ten sam styl "podatności" na zmianę */
 }
 
 div#spis_tresci div#wybrany_zaczytany_spis {

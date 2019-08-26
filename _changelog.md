@@ -1,3 +1,16 @@
+v0.4.15 - easy differentiate gallery number in hover details
+
+* v0.4.15 -- [2018-07-28]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* restored strong color to easy differentiate gallery number (left value) from subpage number (right value)
+  - the same color as legend in central elemend whe whole belt
+* just a cosmetic touches of comments & spaces
+
+---------------------------
+
 v0.4.14 - header area retested; styled button of game init; no-status-bar; drag & drop event redefinitions
 
 * v0.4.14 -- [2018-07-28]
