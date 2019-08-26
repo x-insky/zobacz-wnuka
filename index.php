@@ -39,14 +39,14 @@
                     
                     <div id="zagraj">
                         <div id="zagraj_srodek">
-                        <h4>Czekasz na załadowanie?</h4>
-                        <h3>Zagraj w grę!</h3>
-                        <p id="zagraj_play">&gt;</p>
+                        <h4 class="gra_odnosnik">Czekasz na załadowanie?</h4>
+                        <h3 class="gra_odnosnik">Zagraj w grę!</h3>
+                        <p class="gra_odnosnik">&gt;</p>
                         </div>
                     </div>
                     
                     <div id="napis_spod">
-                    <h3>Serwis umożliwia łatwiejszy podgląd rozrabiajacych wnuków przez dziadków ... i nie tylko. Treści pochodzą z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
+                    <h3>Serwis umożliwia łatwiejszy podgląd rozrabiających wnuków przez dziadków... i nie tylko. Treści pochodzą&nbsp;z&nbsp;witryny <a class="odnosnik_kolor" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
                     </div>
 
                 </div> <!-- div#banner -->
@@ -125,8 +125,8 @@
                                             </div>
                                             <div id="suwak_info">
                                                 <div>
-                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1 &lt;" />
-                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1 &gt;" />
+                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="◄" />
+                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="►" />
                                                 </div>
                                             </div>
                                             <div>
@@ -210,14 +210,17 @@
                 <!-- a tu miniaturki z adresu zewnętrznego oraz klikane przejście do galerii -->
             </div>
 		
-        </div> <!-- glowna -->
+        </div> <!-- <div id="glowna"> -->
 
         
         <div id="gra">
             <div id="reguły">
-            <h1>Pokoloruj duży obrazek poprzez ułożenie małych obrazków we właściwych miejscach.</h1>
-            <h2>Użyj myszy lub gładzika komputera, bo małe ekrany dotykowe są be!</h2>    
-            <p>Rozgrywka jest na czas, spróbuj osiągnąć najlepszy wynik.</p>
+                <div class="kontener">    
+                <h1>Pokoloruj duży obrazek poprzez ułożenie małych obrazków we właściwych miejscach.</h1>
+                <h2>Użyj myszy lub gładzika komputera, bo małe ekrany dotykowe są be (póki co jest dramat)!</h2>
+                <p style="text-decoration: line-through;"><em>Podobne widowisko teatralne</em> jest z użyciem czegokolwiek na czymkolwiek do obsługi przeciągania, więc póki co zdobywanie punktów i budowanie rankingów jest odłożone w bliżej nieokreslone <em>kiedyś</em>.</p>   
+                <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (zakładając, że system nie oszukuje przy przydziale punktów).</p>
+                </div>
             </div>
             <div id="sterowanie">
                 <div class="kontener">
@@ -235,28 +238,32 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka">&copy;2018 v0.4.12 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.4.16 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <div class="kontener">
+                    <h3>Dla Hani</h3>
+                    <p>Bo tak! Z mniejszą dedykacją dla Szymonka i Ninki też. Niech za jakiś czas maluchy zobaczą siebie, jak wyglądały kiedyś (czyli teraz).</p>
                     <h3>Jaki jest cel?</h3>
                     <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
-                    <h3>Po polskiemu</h3>
-                    <p>Galerię żłobka przeglądało się karygodnie, więc należało coś z tym zrobić. Wcześniejsza obsługa tego serwisu również była mało intuicyjna, ale z czasem zapewniono (w miarę) łatwe nawigowanie pomiędzy kolejnymi zdjęciami w ramach wielu galerii. Bieżący wygląd interefejsu stanowi niemal końcową funkcjonalność witryny. Dla testów i zauważalności postępów nad intuicyjnością interejsu zachowano relikt z formularzem i koniecznością kopiowania odnośników.</p>
-                    <h3>Jeszcze raz</h3>
-                    <p>Poniższa witryna ma za zadanie tylko ułatwić korzytanie z materiałów zawartych w serwisie żłobka. Twórcy zależy na przedłużeniu życia myszy oraz powierzchni dotykowych komputerów, dlatego jego celem jest przeniesienie obciążenia na klawisze strzałek oraz w przyszłości na ewentulane kółko myszy (funkcjonalność zależna od dostawcy usług, a w zasadzie wyboru innego dostawcy).     
+                    <h3>Jeszcze raz po polskiemu</h3>
+                    <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie żłobka. Chęć przedłużenia życia myszom oraz powierzchniom dotykowym komputerów zdecydowała o zmniejszeniu obciążenia (konkretnie z niepotrzebnego klikania kursorem w przycisk <em>powrót</em> -- [&lt;-] i kolejnego niepotrzebnego kliknięcia w kolejne zdjęcie, itd. aż do końca danej galerii przemnożone przez ilość podstron danej galerii...). Nadmiernie porysowanych ekranów w telefonach, czy tabletach też nie chemy, prawda? Nazbyt zużyty przycisk myszy lub wytarty (albo przebity) gładzik w laptopie zmusza do zakupu urządzenia wskazującego... <p>
+                    <h3>(to nie jest antyreklama pewnego sklepu komputerowego)</h3>    
+                    <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi, a do tego zmniejsza zużycie pasma internetowego użytkownika (pakietu transmisji danych na tzw. <em>urządzeniach mobilnych</em>) w porównaniu do przeglądania orygionalnej witryny. Do tego nie katuje serwera przy każdym dużym obrazku. Same plusy wynikają z korzystania z tej <em>nakładki</em>, zachęcam do dalszego korzystania.</p>    
                     <h3>Informacje i zastrzeżenia</h3>
-                    <p>Wszelkie prawa do materiałów i zdjęć należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
+                    <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
+                    <h3>Kontakt</h3>
+                    <p>Wszelkie uwagi, skargi, wnioski i propozycje funkcjonalności lub zaobserwowane błędy w działaniu serwisu można słać na poniższy adres email <a href="#" id="adres_email">nieodbieram@gdzieś.w.internecie.com</a></p>
                 </div>
             </div>
             <div id="pomoc">
                 <div class="kontener">            
-                    <h3>Witryna wymaga dostępu do lokalizacji, skąd pochodzą oryginalne materiały.</h3>
-                    <p>Niniejszy serwis służy tylko do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagany dostęp do oryginalnego serwisu.</p>
-                    <h3>Kopiuj-wklej</h3>
-                    <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu, po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz wklajanie w pole formularza nie jest wymagane i prawodpodobnie ta uprzykrzająca funkcjonalnośc zostanie wkrótce usunięta.
+                    <h3>To tylko przeglądarka</h3>
+                    <p>Niniejszy serwis służy do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagany dostęp do macierzystego serwisu www, bez niego nie pojawiają się treści tutaj.</p>
+                    <h3>Pożegnanie <em>kopiuj-wklej</em></h3>
+                    <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu, po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz przegląd galerii odbywa się bezpośrednio na tej witrynie.</p>
                     <h3>Podstrony</h3>
                     <p>Przeglądanie w galeriach ograniczających klikanie działa prawiłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis ma umożliwić łatwą nawigację pomiędzy kolejnymi obrazkami.</p>
                     <h3>Uwaga</h3> 
@@ -292,6 +299,8 @@
                         <li class="tech_nie">CSS&nbsp;Grid</li>
                         <li class="tech_nie">SVG?</li>
                     </ul>
+                    <h3>Nadal na etapie projektowania</h3>
+                    <p>Status projektu nieukończony, nadal nie w <em>produkcji</em>.</p> 
                 </div>
             </div>
         </footer>	

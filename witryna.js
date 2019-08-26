@@ -684,7 +684,7 @@ var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " td blockquote div[align=justi
         // problemy z określeniem wysokości łącznej zaczytanej treści (tytuł + obrazek + data + opis) - często jeszcze w trakcie ładowania obrazka...
         // wysokość obrazka w zakresie (częste minimum wstawianych zdjęć ) [120...320]px (jak narzucono w css), treść opisu losowo długa;
         // wyskakują wysokości dla szablonu pojemnika - obrazki w trakcie (pierwszego) ładowania; dobra wysokośc gdy już są w cache (pobrane wcześniej);    
-        // proście jest ukrywać nadmiar w <div.opis>, niż mierzyć wysokośc zaczytywanego obrazka (przechwytywanie zdarzenia ładowania) i skracać wysokośc
+        // łatwiej jest ukrywać nadmiar w <div.opis>, niż mierzyć wysokośc zaczytywanego obrazka (przechwytywanie zdarzenia ładowania) i skracać wysokośc
         // tego <div> o pozostałą wysokość.... + zasłanianie tekstu przy końcu całego pojemnika prostokątem z przezroczystym gradientem/pełnym kolorem
         // niepotrzebna treść wyleciała      
         } // for-END
@@ -745,12 +745,15 @@ var $listaPodstron = $( g_tag_do_podmiany_spis + ' td[colspan=2] a.link_tresc' )
 	g_zaczytana_ilosc_paginacji_galerii = ilePodstronSpisuTresci;	  // !!! muerto importante !!!
 
     // debugowanie -- wprowadzenie nowych treści w statusie dla zaczytanych właśnie treści 
+/*
 	$('p#status_galerii_spis').show( 100 ).html('Znaleziono '  + $wierszeTabeli.length + ' wierszy tabeli źródłowej oraz ' + $listaPodstron.length 
                                         + ' wszystkich podstron(-y) spisu treści (razem ze starsze i nowsze bez bieżącej).<br />Jesteś na ' 
                                         + g_biezaca_pozycja_galerii + '. stronie galerii.<br />'
                                         + 'A wcześniej zaczytano: "' + g_zaczytana_ilosc_paginacji_galerii + '" paginacji, a załadowano łącznie ' 
                                         + g_biezaca_pozycja_galerii + ' (vs ' + g_ilosc_zaczytanych_galerii + ') elementów galerii ze wszystkich ' 
                                         + g_ilosc_wszystkich_galerii + ' galerii');
+*/
+        
 	} // if-END ( $listaPodstron.length >= 1 )
 	
 $('h2#zaladuj_galerie_spis').show();  // pokaż przycisk/element do ładowania kolejnych galerii 
@@ -1174,6 +1177,16 @@ var pozycja = $(element).offset();
 return { left: pozycja.left, top: pozycja.top };
 }    
        
+
+function OdkryjEmail ( element, adres, adresPokazywany, wariant )   // zrobić z atrybutów obiekt?! 
+{
+    // wartości domyślne, aby nie wklepywać atrybutów
+element = element || $("#adres_email");
+adres = adres || 'zobaczwnuka' + String.fromCharCode(64) + 'em' + 'ail' + '.c' + 'om';   // takie tam rozbicie ze scaleniem dla szukaczy
+adresPokazywany = adresPokazywany || 'kontakt';     
+var adresEmail = 'mailto:' + adres;    
+$( element ).text( adresPokazywany ).attr( 'href', adresEmail ); 
+}
     
     
 // ---------- ***      GRA      *** --------------     
@@ -1200,25 +1213,24 @@ function WybierzPlansze( nrPlanszy )        // docelowo będzie ajax/api
      case 0:
         g_tloSrc = './grafiki/gra/autobus/autobus.png';
         var noweTlo = new Image();  // tworzenie nowego obrazka w pamięci dla ścieżki dla tła graficznego, celem określenia wymiarów tego obrazka
-
+        noweTlo.src = g_tloSrc;
 
         noweTlo.onload = function() {
-            var wysokoscTla = noweTlo.height;
-            var szerokoscTla = noweTlo.width;
-                // środkowanie względem kontenera 1090px x 700px
-            g_przesuniecieTlaX = String( ( $('#rysunek').width() - szerokoscTla ) / 2 ) + 'px';  
-            g_przesuniecieTlaY = String( ( $('#rysunek').height() - wysokoscTla ) / 2 ) + 'px'; 
-
-                // wyświetlenie i centrowanie dopiero, gdy przeliczą się wymiary tego obrazka
-            $('div#rysunek').css({ 'backgroundImage': 'url(' + g_tloSrc + ')', 'backgroundRepeat' : 'no-repeat', 
-                               'backgroundPosition' : g_przesuniecieTlaX + ' ' + g_przesuniecieTlaY });    
-            // debug
-            var statusTla = '<p>Grafika \'' + noweTlo.src + '\' ma szerokość ' + szerokoscTla + ' i wysokość ' + wysokoscTla + '<br />'  
-                + 'Przesunięcie wyśrodkowania to (' + g_przesuniecieTlaX + ', ' + g_przesuniecieTlaY + ').</p>';
-            $('#dolny_zasobnik').append(statusTla);    
-            };  // noweTlo.onload = function()-END
+        var wysokoscTla = noweTlo.height;
+        var szerokoscTla = noweTlo.width;
+            // środkowanie względem kontenera 1090px x 700px
+        g_przesuniecieTlaX = String( ( $('#rysunek').width() - szerokoscTla ) / 2 ) + 'px';  
+        g_przesuniecieTlaY = String( ( $('#rysunek').height() - wysokoscTla ) / 2 ) + 'px'; 
+            
+            // wyświetlenie i centrowanie dopiero, gdy przeliczą się wymiary tego obrazka
+        $('div#rysunek').css({ 'backgroundImage': 'url(' + g_tloSrc + ')', 'backgroundRepeat' : 'no-repeat', 
+                           'backgroundPosition' : g_przesuniecieTlaX + ' ' + g_przesuniecieTlaY });    
+        // debug
+        var statusTla = '<p>Grafika \'' + noweTlo.src + '\' ma szerokość ' + szerokoscTla + ' i wysokość ' + wysokoscTla + '<br />'  
+            + 'Przesunięcie wyśrodkowania to (' + g_przesuniecieTlaX + ', ' + g_przesuniecieTlaY + ').</p>';
+        $('#dolny_zasobnik').append(statusTla);    
+        };  // noweTlo.onload = function()-END
  
-        noweTlo.src = g_tloSrc;    
             
     // ...
             
@@ -1273,20 +1285,25 @@ function PoczatekRuchuPrzeciagania (e)  // 'dragstart'
 {
 e = e || window.event;    
 g_ktoraGrafika = e.target;
+    //this.style.opacity = '0.9';
 g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach 
 g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // zachowywanie obu położeń początkowych
+    
+ResetujZIndexWszystkim();    
     var pionowosc = g_ktoraGrafika.style.zIndex;
     if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
     // poruszany wyskakuje przed szereg podczas wyciągania co najwużej kilka razy i tak już zostaje... 
     // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
 console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
                 ', e.offsetY:', e.offsetY,')]');
+
 }
     
     
 function RuchUpuszczania (e)    // 'drop'
 {
 e = e || window.event;
+    
 var scena = document.querySelector('#rysunek'); 
 var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
 //e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
@@ -1298,48 +1315,52 @@ g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecie
 console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
             ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
 console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
-e.preventDefault();    
+e.preventDefault(); // przestawione z góry
+return false;
 }
     
 function RuchPrzeciagania (e) { // 'dragover'
 e = e || window.event;
 e.preventDefault();     // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elemntu
     // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
+return false;   // dodane    
 }    
     
-function ResetujZ()
+function ResetujZIndexWszystkim ()
 {
 var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
-  //  for ( var i =   )
+    for ( var i = elementy.length-1 ; i >= 0 ; i-- )
+    {
+    elementy[i].style.zIndex = 20;  // ustawianie z-indeksu na wartość wzorcową (różnica pomiędzy początkiem)
+    }
 }
  
-function dragover_handler(ev) {
- ev.preventDefault();
- // Set the dropEffect to move
-/* ev.dataTransfer.dropEffect = "move"*/
-}
-    
-function drop_handler(ev) {
- ev.preventDefault();
- // Get the id of the target and add the moved element to the target's DOM
-/* var data = ev.dataTransfer.getData("text");
- ev.target.appendChild(document.getElementById(data));*/
-}    
-    
+    // archaiczne połączneie z htmlem ... do wywalenie obie poniższe funkcje
+        function dragover_handler(ev) {
+         ev.preventDefault();
+         // Set the dropEffect to move
+        /* ev.dataTransfer.dropEffect = "move"*/
+        }
+
+        function drop_handler(ev) {
+         ev.preventDefault();
+         // Get the id of the target and add the moved element to the target's DOM
+        /* var data = ev.dataTransfer.getData("text");
+         ev.target.appendChild(document.getElementById(data));*/
+        }    
+
     
 function InicjujGre() 
 {
 var nrPlanszy = LosujPlansze(); // póki co na pusto
 console.log('Wylosowano nr planszy: ', nrPlanszy);    
-var przesuniecie = WybierzPlansze( nrPlanszy );
+var przesuniecie = WybierzPlansze( nrPlanszy );     // od arzu zwrot, choć on już wstawiony do zmiennych globalnych
   
-    
 RozmiescCzesci( nrPlanszy );
-    
-    
     
 }
     
+
 
 	
 	
@@ -1624,9 +1645,9 @@ return; // wyjście, aby nie przechodzić do odnosnika
 });	//  on("click")-$('#nawigacja_galeria')-END		
 */	
     // DLA KOLEJNYCH GALERII: '$('#galeria_spis').on("click", "a", function(e){'
-$('#galeria_spis, #wybrane_galerie_spis').on("click auxclick contextmenu", "a", function(e){ 
+$('#galeria_spis, #wybrane_galerie_spis').on("click", "a", function(e){    // testowo dopisano także inne 'kliknięcia' - "click auxclick contextmenu"
     
-console.log (e);
+// console.log (e);     // DEBUG dla 'kliknięć'
     /*
     if ( e.type == "contextmenu" )
     {
@@ -1634,6 +1655,7 @@ console.log (e);
     // return false;
     }*/
     
+    /*  
     //if ( e.which == 2 ) // jeśli naciśnięto to ŚPM - ŚRODKOWYM przyciskiem myszy
     if ( e && (e.which == 2 || e.button == 4 ) )
     {
@@ -1649,7 +1671,8 @@ console.log (e);
     alert("INNY-PM!");
     //return false;    
     //$(this).attr('href', '#');  // ;)
-    }  
+    } */
+    // testowanie innych przycisków/kliknięc
 
 e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku    
 var $this = $(this);
@@ -1762,14 +1785,20 @@ $('#banner').hover( function() {
     }
 ); // #banner hover-END
 
+$('div#zagraj').click( function() {
+    $('div#gra').show(300);
+    PrzewinEkranDoElementu( 'div#gra', 500, 10 ); // + korekta marginesu górnego elementu
+});    
     
+    // nie działa mi w JQ, próba powrotu do JS... te sdame zdarzenie i funkcje użyte w wywołaniu 
+/*
 $('body').on('dragstart', '.przenosny', PoczatekRuchuPrzeciagania ); // $('#gra).on... bez zmian
     
-$('body').on('drop', '.przenosny', RuchPrzeciagania );   // RuchUpuszczania 
+$('body').on('drop', '.przenosny', RuchUpuszczania );   // RuchUpuszczania 
     
-$('body').on('dragover', '.przenosny', RuchUpuszczania );  // RuchPrzeciagania   
+$('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania   
     
-    
+    */
 
 // ***************************************************************************	
 // ---------- *** AUTOURUCHAMIANIE *** --------------	 
@@ -1781,6 +1810,132 @@ ZaczytajSpisGalerii();
 	
 // testowo też do autouruchamiania gry - pierwsza plansza
 InicjujGre();
+OdkryjEmail(); 
+    
+    
+var Przeciaganie = ( function() {
+    
+function PoczatekRuchuPrzeciaganiaJS (e)  // 'dragstart'
+{
+//e = e || window.event;    
+g_ktoraGrafika = e.target;      // !!! wpisanie namiarów na przeciagany element, który będzie dalej używany w kolejnych zdarzeniach 
+    //this.style.opacity = '0.9';
+g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // róznica odległoścvi pomiedzy kliknięciem, a początkiem klikniętego elementu  
+g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach
+   // pobranie pozycji "globalnej" danego elementu - ofsetu
+var pozycjaElementu = OkreslPolozenieElementu ( e.target );
+e.target.setAttribute( 'data-offset_x', e.target.style.left );
+e.target.setAttribute( 'data-offset_y', e.target.style.top );
+e.target.setAttribute( 'data-mysz_pocz_x', e.pageX );
+e.target.setAttribute( 'data-mysz_pocz_y', e.pageY );    
+
+ResetujZIndexWszystkimJS();    
+    var pionowosc = g_ktoraGrafika.style.zIndex;
+    if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
+    // poruszany wyskakuje przed szereg podczas wyciągania co najwużej kilka razy i tak już zostaje... 
+    // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
+console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
+            ', e.offsetY:', e.offsetY,')], zaś globalnie to (', pozycjaElementu.left, ', ', pozycjaElementu.top, 
+            '), MYSZ (', e.pageX, ',' , e.pageY, ' )', 'ELEMENT (', e.target.style.left, ',' , e.target.style.top, ' )' );
+}
+    
+function RuchPrzeciaganiaJS (e)    // 'dragover'
+{
+//e = e || window.event;
+   // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elementu
+    // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
+    g_ktoraGrafika.style.opacity = 0.5;
+    g_ktoraGrafika.style.outlineColor = "#d00";
+    
+e.preventDefault();      
+return false;   // dodane    
+}        
+    
+function RuchUpuszczaniaJS (e)  // 'drop'
+{
+//e = e || window.event;
+ // przestawione znów do góry    
+var scena = document.querySelector('#rysunek'); 
+var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
+//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
+//g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
+//g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px';    
+/*g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';    
+g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';*/  
+//g_ktoraGrafika.style.left = e.pageX - e.target.getAttribute( 'data-mysz_pocz_x' ) - polozenieTla.left + parseInt( g_przesuniecieTlaX ) - g_mojX + 'px';    
+//g_ktoraGrafika.style.top = e.pageY - e.target.getAttribute( 'data-mysz_pocz_y' ) - polozenieTla.top + parseInt( g_przesuniecieTlaY ) - g_mojY + 'px';    
+
+g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + g_mojX + 'px';    
+g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + g_mojY + 'px';    
+
+g_ktoraGrafika.style.outlineStyle = "solid";    
+g_ktoraGrafika.style.outlineColor = "#00d"; 
+g_ktoraGrafika.style.opacity = 1;
+    
+/*g_ktoraGrafika.style.left = 200 + 'px';    
+g_ktoraGrafika.style.top = 100 + 'px';  */
+    
+console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
+            ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
+console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
+e.preventDefault();
+return false;
+}
+       
+function ResetujZIndexWszystkimJS ()
+{
+var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
+    for ( var i = elementy.length-1 ; i >= 0 ; i-- )
+    {
+    elementy[i].style.zIndex = 20;  // ustawianie z-indeksu na wartość wzorcową (różnica pomiędzy początkiem)
+    }
+}    
+
+function PoczatekDotykuJS ( e ) 
+{
+e.preventDefault(); // zapobieganie przewijaniu ekranu przy dotyku elementów przesuwnych    
+var ktoraGrafika = e.target;    // wewnątrzna zmienna o tym samym znaczniu
+var dotykJednopalczasty = e.touches[0]; // tablica dla pierwszej "operacji jednopalcowej", czyli gestów z jednym naciskiem palca
+var ruchOsX = ktoraGrafika.offsetLeft - dotykJednopalczasty.pageX;  
+var ruchOsY = ktoraGrafika.offsetTop - dotykJednopalczasty.pageY;     
+ResetujZIndexWszystkimJS();
+ktoraGrafika.style.zIndex = 200;    
+//debug
+console.log('Dotyk ekranu');    
+    
+    
+//od razu podpięcie do obiektu poruszanego kolejnego zdarzenia (podległość)
+ktoraGrafika.addEventListener('touchmove', function() {
+    //debug
+console.log('Dotyk ekranu - przeciąganie elementu');    
+    var pozycjaX = dotykJednopalczasty.pageX + ruchOsX;
+    var pozycjaY = dotykJednopalczasty.pageY + ruchOsY;
+    
+    // pozycjonowanie elementu do poruszania
+    ktoraGrafika.style.left = pozycjaX + 'px';
+    ktoraGrafika.style.top = pozycjaY + 'px';
+}, false); // jako 'bublowanie'    
+} // function PoczatekDotykuJS-END
+    
+    
+function KlikniecieObrazkaJS ( e ) 
+{
+e.target.style.zIndex = e.target.style.zIndex + 1;
+}
+    
+    
+document.querySelector('#gra').addEventListener('dragstart', PoczatekRuchuPrzeciaganiaJS, false );
+document.querySelector('#gra').addEventListener('dragover', RuchPrzeciaganiaJS, false );
+document.querySelector('#gra').addEventListener('drop', RuchUpuszczaniaJS, false );
+
+document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, false );
+    
+/*var obrazki = document.querySelectorAll('img.przenosny');
+    obrazki.forEach( function ( obrazek ) {
+    obrazek.addEventListener('click', KlikniecieObrazkaJS, false );    
+    });*/
+    
+})();      
     
 	
 // ***************************************************************************		
@@ -1792,9 +1947,11 @@ InicjujGre();
 	//$("#banner h1.logo").fitText();
 	 $("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '60px' });
 	 $("#napisy h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
-	 $("#napis_spod h3").fitText(3.0, { minFontSize: '6px', maxFontSize: '20px' });    
+	 $("#napis_spod h3").fitText(3, { minFontSize: '7px', maxFontSize: '17px' });    
     
 
 
 	
 }); //document-ready-END
+
+
