@@ -9,7 +9,16 @@ font-size: 65%;
 }
 
 [draggable] {   /* jak zachowuje się dopwolny przeciągany element   */
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;    
     cursor: move;
+width: auto;
+height: auto;    
 }
 
 div#witryna {
@@ -123,7 +132,8 @@ position: absolute;
 width: 300px;
 height: 100px;
 right: 30px;
-top: 20px;    
+top: 20px;
+cursor: pointer;
 background-color: lightcyan;
 border: 2px solid #ccc;    
 }
@@ -149,9 +159,9 @@ font-weight: bolder;
 background-color: forestgreen;
 }
 
-                        <h4>Czekasz na załadowanie?</h4>
+/*                        <h4>Czekasz na załadowanie?</h4>
                         <h3>Zagraj w grę!</h3>
-                    </div>
+                    </div>                      */
 
 
 
@@ -948,7 +958,7 @@ div#gra div#plansza img.przenosny {
     position: absolute;
     width: 200px; /* jakieś wymiary początkowe muszą być określone przy ustawianiu absolutnym */
     height: 200px;
-    outline: 2px solid white;
+    outline: 2px dotted #333;
     z-index: 100;
 }
 
@@ -1628,9 +1638,9 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 	max-height: 250px;
 	}
     
-    div#gra {
+    /* div#gra {
     display: block;    
-    }
+    } */
 
 }
 

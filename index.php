@@ -238,7 +238,7 @@
         </div>
         
         
-        <footer id="stopka">&copy;2018 v0.4.12 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.4.13 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <div class="kontener">
                     <h3>Jaki jest cel?</h3>

@@ -1,3 +1,41 @@
+v0.4.13 - game content on demand; second Vanilla JS event system; restyled draggable elems
+
+* v0.4.13 -- [2018-07-27]
+
+[+] ADDED
+
+-- witryna.js
+* game content is presented after a pressing a button structure in header with id of 'zagraj'
+  - aded an event serving function
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* modified style for draggable elements 
+  - added popular vendor prefixes
+  - added auto dimensions
+* added pointer cursor for the game content init button structure, with 'zagraj' id
+* non-style-content inside style sheet wrapped with comment
+* changed default border of the draggable images to dotted style
+* removed showing of game contents on the highest treshold of media query
+  - showing the board only on demand by pressing the button-like-element inside the page header 
+
+-- witryna.js
+* restored the right connections between events and their event calling functions
+  - previously was switched event functions for 'drag' with 'drop' event function
+* added returning false value to end of function 'RuchPrzeciagania'
+  - also added this statement to the end of new function 'RuchPrzeciaganiaJS', which similary function but written in pure JavaScript
+* changed appearance of dragged element inside function 'PoczatekRuchuPrzeciagania' for better distinguish dragging (for 'dragstart' event)
+  - just added a little transparency by 10%
+* added a second event system, handled by Vanilla JavaScript
+  - added similar definitions inside a one declared function with subfunctions declarations
+  - new function names similary to already defined jQuery functions
+  - defined almost the same behavior with default JS DOM manipulation
+  - the purpose is to check the right behavior and select better solution
+  - trying to include touch events also
+
+---------------------------
+
 v0.4.12 - centered logo with **proportionally** resized fittext; header changes to fit a logo; first game board centered
 
 * v0.4.12 -- [2018-07-26]
