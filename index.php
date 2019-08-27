@@ -21,7 +21,7 @@
         <header id="naglowek">
         <!-- <div class="kontener">  -->
 
-            <!-- tu </div> - kontener - tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamnknąc w tych okowach... choć ideaklnie pasuje to ułatwienie  --> 
+            <!-- tu </div> - kontener - tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamknąć w tych okowach... choć ideaklnie pasuje to ułatwienie  --> 
 
             <div id="naglowek_kontener">
 
@@ -77,6 +77,11 @@
                                 </div>
                             </div>    
                         </div>
+                        
+                        <div id="wczytywanie_spis">
+                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
+                        </div>
+                        
                     </div>
                 
                     <div id="wybrany_zaczytany_spis">
@@ -103,11 +108,14 @@
                         </div>
                         <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
 
-                        
+                        <!-- pierwotne położenie animacji wczytywania --> 
+                        <!-- 
                         <div id="wczytywanie_spis">
                         <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
                         </div>
-
+                        -->
+                      
+                       
                         <div class="kontener">
                             <div id="selektor">     
                                 <h2 id="selektor_naglowek">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
@@ -125,8 +133,8 @@
                                             </div>
                                             <div id="suwak_info">
                                                 <div>
-                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="◄" />
-                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="►" />
+                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1 ◄ &larr;" />
+                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1 ► &rarr;" />
                                                 </div>
                                             </div>
                                             <div>
@@ -241,7 +249,7 @@
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka">&copy;2018 v0.4.18 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.4.19 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <div class="kontener">
                     <h3>Dla Hani</h3>
@@ -312,7 +320,9 @@
 		<script src="witryna.js"></script> 		
 		<script src="lightbox/js/lightbox.js"></script>
         <script>
-            lightbox.option({ albumLabel : "Zdjęcie %1 z %2"
+            lightbox.option({   albumLabel : "Zdjęcie %1 z %2", 
+                                positionFromTop : 10
+
             });
         </script>
 		

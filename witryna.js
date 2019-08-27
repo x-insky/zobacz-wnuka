@@ -355,7 +355,7 @@ console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOk
 //PrzewinEkranDoElementu('div#skladowisko', 200, -8);  // złe miejsce, przed trteścią
 
 
-$('nav#nawigacja_galeria').html('<div class="kontener"></div>').show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
+$('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
 $('#wczytywanie').hide(100);	// schowaj informację, skoro wczytano zawartość
 $('#glowna div#komentarz').hide(100);	//showaj opis-informację o ile była pokazana
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
@@ -378,7 +378,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
     if ( $listaPodstron.length >= 1 )	// czy są jakieś odnośniki do podstron/paginacji galerii?
     {					// startujemy od kolej strony po pierwszej, ale ostatni zawiera ciąg "starsze"
 
-
+    $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Pozostałe podstrony wybranej galerii</h3></div>');
         
     var nazwaPodstronyGalerii = '';
 /*    var numerPodstronyDoWyswietlenia = 0;
@@ -416,7 +416,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
             id : "galeria_paginacja_" + ( i+1 ),
             class : "przycisk_galeria",
             value : nrGalerii, 
-            text : "Galeria nr " + nrGalerii,
+            text : "Podstrona nr " + nrGalerii,
             "data-tag" : g_tag_do_podmiany_zdjecia,
             "data-adres_strony" : g_adres_strony,
             "data-adres_galerii" : odnosnikPodstrony,
@@ -426,7 +426,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         $('nav#nawigacja_galeria > div:first').append( nowyPrzycisk ); // wstawianie przycisku innego niż "poprzednia/następna" podstrona danej galerii
                 // też brak przycisku dla bieżacej galerii, np. w formie wyłączonego (nieaktywnego), bo brak takiego odnośnika teraz na www
         } // for-END
-    } // //if-END $listaPodstron.length 
+    } // //if-END $listaPodstron.length >= 1
 
 //przeszukiwanie odnośników dla miniatur w galerii, link z miniatury prowadzi do normalnej (większej) kopii obrazka
 // do galerii prowadzą odnośniki z tą klasą, do paginacji niestety też ;) | same zdjęcia i miniatury bez przypisanej klasy dla <a>

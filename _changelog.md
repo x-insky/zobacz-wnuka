@@ -1,3 +1,55 @@
+v0.4.19 - loading notification moved up, text before subgallery nav, buttons labelled 'subgallery'; CSS: generic first, cleanings, comment-headers, hand icon for selective forms bar; F: removed white border of sliders in FF;
+
+* v0.4.19 -- [2018-08-23]
+
+[*] MODIFIED
+
+-- index.php
+* moved up notification of loading of next gallery subpage, an element with id of 'wczytywanie_spis'
+  - placed before a button of loading next subpage
+  - so it's before when selected subpage gallery list is visible also
+* for test purpose changed label text of increment/decrement buttons
+  - using another symbols of arrows due to problems with displaing some of 'triangle arrows' on some old browsers
+* added another attribute to the object inside last block of 'script' tags
+  - used for global initialization fittext addon
+
+-- zlobek-styl.css
+
+* moved up definitions of generic styles for elements or classes
+  - the next selectors sometimes redefines this already defined styles  by placing parent class or ids at the begining of their selectors  
+  - anything is added to generic and always increase specifity of selector
+* added a pointer icon to 'h2' of id 'selektor_naglowek' to easily differentiate possible action on this element
+  - also added separately icon for child 'span' element
+* CSS cleaning
+  - completely removed from file, already commented rules, 'mobile-last' with 'max-width' values instead 'min-width'
+  - removed unnecessary new lines
+* added comment lines with names as separators for grouped content
+  - it groups many selectors by similar topics or areas of the page
+  - each semantic group contents is easier to find
+  - it was done before and intentionally, there wasn't only a named  descriptions for groups
+  - also added new comments as a subgroups or headers, to easier distiguish any content of CSS 
+
+-- witryna.js
+* little changes inside function 'GenerujPodstronyGalerii'
+  - first any previous content of possible navigations are removed by 'empty()' method
+  - and secondly to empty container may be placed generic text, that informs about any subpage, only if any subpage of given gallery exists
+  - if so the button or buttons are placed under the previously generated text of header
+  - changed the label on the button form 'Gallery #No' to 'Subpage #No' 
+  - all the dynamic content is surronded by container class that limits the total width of its contents on larger screens
+
+[F] FIXED
+
+-- zlobek-style.css
+* removed white border  around the slider, which is in a focus state
+  - changed color of used outline to transparent inside vendor specified selector ':-moz-focusring '
+  - still in use 3px thin border around slider but it's invisible now
+  - couldn't change any internal behavior of thin black border, which is also dotted
+  - probably a usability thing that can't be styled by a programmer
+  - fixes: #21 - 'Firefox: a white box around the active form'
+  - modified also the color of outline itself to value of 'none' inside vendor specified selector ('::-moz-range-thumb') to stayed a center of slider handle in the same place when is hovered, focused or inactive
+
+---------------------------
+
 v0.4.18 - verified media queries for 4 gallery items in a line; touches CSS of sliders and draggable 'imgs'; cleaning of coding style of styles
 
 * v0.4.18 -- [2018-08-15]
