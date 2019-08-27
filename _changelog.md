@@ -1,3 +1,34 @@
+v0.4.17 - modified headings & pagraphs texts of footer; and theirs padings also; computing of subgallery number; arrangement of current gallery details on wider screens;
+
+* v0.4.17 -- [2018-08-12]
+
+[*] MODIFIED
+
+-- index.php
+* changed texts of paragraphs of many paragraph and subheaders in footer area and in 'game area'
+  - extended for some longer sentences
+  - some of them were shortened
+  - used quotations, cites and brackets
+
+-- witryna.js
+* removed conditional statement inside function 'KtoraPodstronaWGalerii'
+  - now the same formula used to calculate subpage based by given gallery number
+  - probably a possible error in computations if total gallery number is divisible by 5!!!
+  - hard to test when last digit in number of lastly added gallery (total gallery number) isn't 0 or 5
+  - it's hard to test when gallery total number is read form another place and any substitution of it or simulations breaks loaded subpages numbers or the awaitet result (fault of grouping results in reverse order, which affects the numbering of each subpage)  
+
+-- zlobek-styl.css
+* increased paddings for current gallery details container, with id of 'nazwa_galerii'
+* increased left padding for current gallery description to visual align it in vertical axis with photo
+* modified recently builded layout inside current gallery details on wide screens
+  - moved into 940px treshold of media query from previously defined in 1180px
+  - slighty decreased images top margin to 2em from previously 2.5em 
+  - increased left padding  for a title element to 6.5em (previously it was 5em) 
+* increased by 10% font size for paragraphs inside footer
+* added extra bottom pading after a last paragraph inside footer
+
+---------------------------
+
 v0.4.16 - anims touched game-init-button; email address & its security; footer content reordered by little; greater buttons in game section
 
 * v0.4.16 -- [2018-08-07]
