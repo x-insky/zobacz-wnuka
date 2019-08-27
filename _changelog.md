@@ -1,3 +1,26 @@
+v0.4.18 - verified media queries for 4 gallery items in a line; touches CSS of sliders and draggable 'imgs'; cleaning of coding style of styles
+
+* v0.4.18 -- [2018-08-15]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* verified the media query tresholds for proper displaying of given number of gallery list items
+  - tested why four items cannot be displayed in one line, when screen wides from about 500 to 1200px  
+  - above 700px wide the page shows three gallery items side by side
+  - above 940px is displayed a four gallery items in one row
+  - five elements when it's wider than 1180px
+* redefined global selector for any draggable ('[draggable]') element to a child and draggable 'img' element of container 'gra'
+* trying to create more compatible look the slider between main browsers
+  - experimented with paddings, margins and their values (negatives also)
+  - mainly to achieve similar look into Chrome
+  - slighty changes color of sliders, especially for extended IE style
+  - also modified in IE a separate hover and focus state for achieving three different sizes of the handle of the slider
+* slighty changes of padding inside footer by media queries
+* matched indentations to be equal or just similar inside the same selector, especially in defined media query
+
+---------------------------
+
 v0.4.17 - modified headings & pagraphs texts of footer; and theirs padings also; computing of subgallery number; arrangement of current gallery details on wider screens;
 
 * v0.4.17 -- [2018-08-12]
@@ -8,7 +31,7 @@ v0.4.17 - modified headings & pagraphs texts of footer; and theirs padings also;
 * changed texts of paragraphs of many paragraph and subheaders in footer area and in 'game area'
   - extended for some longer sentences
   - some of them were shortened
-  - used quotations, cites and brackets
+  - used quotations, cites and parentheses
 
 -- witryna.js
 * removed conditional statement inside function 'KtoraPodstronaWGalerii'

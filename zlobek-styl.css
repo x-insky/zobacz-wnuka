@@ -8,19 +8,6 @@ body {
 font-size: 65%;	
 }
 
-[draggable] {   /* jak zachowuje się dopwolny przeciągany element   */
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  /* Required to make elements draggable in old WebKit */
-  -khtml-user-drag: element;
-  -webkit-user-drag: element;    
-    cursor: move;
-width: auto;
-height: auto;    
-}
-
 div#witryna {
 margin: 0.3em auto;
 width: 98%;
@@ -1013,6 +1000,19 @@ border-radius: 10px;
 box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	    
 } 
 
+div#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   */
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;    
+    cursor: move;
+width: auto;
+height: auto;    
+}
+
 div#gra div#sterowanie 
 {
 margin-top: 1em;    
@@ -1295,6 +1295,7 @@ input[type=range] {
     transition: all 0.3s;
     /*required for proper track sizing in FF*/
 /*    width: 300px;*/
+/*        height: auto;*/
 }
 
 input[type=range]:focus {
@@ -1345,6 +1346,9 @@ input[type=range]:hover::-webkit-slider-thumb {
     border: 1px solid #888;
     height: 20px;
     width: 20px;
+/*       margin-top: -8.5px; */
+        margin-bottom: -4px;
+    
    /* background-color: orange;*/
 }
 
@@ -1388,6 +1392,7 @@ input[type=range]:-moz-focusring {
   outline-offset: 1px;
 }
 
+    /* UWAGA: EDGE "rozumie" i przejmuje style z prefiksem "-WEBKIT" mimo, że są okreśłone później dla niego z "-MS-" (ale inne atrybuty)  */    
 input[type=range]::-ms-track {
 /*    width: 300px;*/
     height: 6px;
@@ -1402,11 +1407,14 @@ input[type=range]::-ms-track {
     /*remove default tick marks*/
     color: transparent;
     cursor: pointer;
+        margin-top: 4px;
+        margin-bottom: 4px;
 }
 
 input[type=range]::-ms-fill-lower {
 /*    background-color: darkorange;*/
-    background-color: #54c;
+    background-color: #54c; 
+/*    background-color: royalblue;     */
     border-radius: 10px;
 }
 
@@ -1423,16 +1431,34 @@ input[type=range]::-ms-thumb {
     border-radius: 50%;
     background: yellow;
     cursor: pointer;
+    margin-top: 0; /* przejmowany zły atrybut z WEBKITA */
+    margin-bottom: 0; /* ++ */
 }
 
-input[type=range]:focus::-ms-thumb {
+input[type=range]:hover::-ms-thumb
+{
     border: 2px solid yellow;
+    margin-top: -2px;     
+    margin-bottom: -2px;
+        height: 18px;
+        width: 18px;
+    
+}
+
+input[type=range]:focus::-ms-thumb
+{
+    border: 4px solid yellow;
+        height: 20px;
+        width: 20px;
+        margin-top: -2px;   
+         margin-bottom: -2px;    
 }
 
 input[type=range]:focus::-ms-fill-lower,
 input[type=range]:hover::-ms-fill-lower {
-/*    background-color: orange;*/
-    background-color: royalblue; 
+/*    background-color: orange; */
+/*    background-color: royalblue; */
+    background-color: #54c;     
     box-shadow: 0 0 4px white;    
 }
 
@@ -1589,48 +1615,49 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 /*      --- K W E R E N D Y ---     */
 
 @media screen and (min-width: 320px) {
-	body {
-	font-size: 70%;	
-	}     
     
+    body {
+    font-size: 70%;	
+    }     
+
     header#naglowek div#banner {
     height: 330px;    
     }
-    
 
-    
+
+
     header#naglowek div#banner #napisy {
-    
+
     }
-    
+
     div#spis_tresci div.kontener_odnosnik {
-	min-height: 375px;			
-	max-height: 375px;
-	}
-	
-	div#spis_tresci div.kontener_odnosnik img {
-	max-height: 210px;
-	}
-    
+    min-height: 375px;			
+    max-height: 375px;
+    }
+
+    div#spis_tresci div.kontener_odnosnik img {
+    max-height: 210px;
+    }
+
     nav#spis_sterowanie h2#zaladuj_galerie_spis {
     max-width: 16em;
     }
-        
-/*    footer#stopka {
+
+    /*    footer#stopka {
     padding: 1em 0;	
-	}*/
+    }*/
     
 } 
 
 
 @media screen and (min-width: 470px) { 
 
-	body {
-	font-size: 80%;	
-	}
-	
-	div#witryna {
-/*	margin: 0.4em auto;*/
+    body {
+    font-size: 80%;	
+    }
+
+    div#witryna {
+    /*	margin: 0.4em auto;*/
     width: 98.5%;    
     }
 
@@ -1648,21 +1675,21 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
     max-width: 75%;
     }
     
-	div#spis_tresci div.kontener_odnosnik {
-	min-height: 415px;			
-	max-height: 415px;
+    div#spis_tresci div.kontener_odnosnik {
+    min-height: 415px;			
+    max-height: 415px;
     width: 48.2%;    
-	}
+    }
 
-	div#spis_tresci div.kontener_odnosnik img {
-	max-height: 220px;
-	}
-	
+    div#spis_tresci div.kontener_odnosnik img {
+    max-height: 220px;
+    }
+
     form#wybierz_galerie input.maly_guzik {
     display: block;
     }
-    
-	footer#stopka {
+
+    footer#stopka {
     padding: 1em 0.2em;	
     }
 
@@ -1671,84 +1698,84 @@ animation: obroty_delikatne_3 6.5s infinite ease-out;
 
 @media screen and (min-width: 700px) { 
 
-	body {
-	font-size: 85%;	
-	}
-	
-	div#witryna {
-/*	margin: 0.4em auto;*/
+    body {
+    font-size: 85%;	
+    }
+
+    div#witryna {
+    /*	margin: 0.4em auto;*/
     width: 99%;    
     }        
 
-    
-	div#spis_tresci div.kontener_odnosnik {
-	min-height: 425px;			
-	max-height: 425px;
- width: 32%;    
-	}
 
-	div#spis_tresci div.kontener_odnosnik img {
-	max-height: 230px;
-	}
+    div#spis_tresci div.kontener_odnosnik {
+    min-height: 425px;			
+    max-height: 425px;
+    width: 32%;    
+    }
+
+    div#spis_tresci div.kontener_odnosnik img {
+    max-height: 230px;
+    }
 	
 }
 
 
 @media screen and (min-width: 940px) { 
 
-	body {
-	font-size: 90%;	
-	}
-    
- div#witryna {
- /*	margin: 0.3em auto;*/
- width: 99.25%;      
- }
-	
-	div#spis_tresci div.kontener_odnosnik {
-	min-height: 465px;			
-	max-height: 465px;
- width: 24%;     
-	}
+     body {
+     font-size: 90%;	
+     }
 
-	div#spis_tresci div.kontener_odnosnik img {
-	max-height: 240px;
-	}
+     div#witryna {
+     /*	margin: 0.3em auto;*/
+     width: 99.25%;      
+     }
 
- div#glowna div#nazwa_galerii img {
- margin-top: -2em;
- }
+     div#spis_tresci div.kontener_odnosnik {
+     min-height: 465px;			
+     max-height: 465px;
+     width: 24%;     
+     }
 
- div#glowna div#nazwa_galerii h2 {
- padding-left: 6.5em;    /* 208px szerokośc obrazxka / 16px == 6.5 */
+     div#spis_tresci div.kontener_odnosnik img {
+     max-height: 240px;
+     }
+
+     div#glowna div#nazwa_galerii img {
+     margin-top: -2em;
+     }
+
+     div#glowna div#nazwa_galerii h2 {
+     padding-left: 6.5em;    /* 208px szerokośc obrazxka / 16px == 6.5 */
+    }
 }
-
 
 @media screen and (min-width: 1180px) { 
 
-	body {
-	font-size: 100%;	
-	}
-    
+    body {
+    font-size: 100%;	
+    }
+
     div#witryna {
-/*	margin: 0.2em auto;*/
+    /*	margin: 0.2em auto;*/
     width: 99.5%;    
     }
 
     header#naglowek div#banner {
     height: 170px;    
     }
-    
-	div#spis_tresci div.kontener_odnosnik {
-	min-height: 490px;			
-	max-height: 490px;
-width: 19.1%;       
-	}
 
-	div#spis_tresci div.kontener_odnosnik img {
-	max-height: 250px;
-	}
-    
+    div#spis_tresci div.kontener_odnosnik {
+    min-height: 490px;			
+    max-height: 490px;
+    width: 19.1%;       
+    }
+
+    div#spis_tresci div.kontener_odnosnik img {
+    max-height: 250px;
+    }
+
     /* div#gra {
     display: block;    
     } */
