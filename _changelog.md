@@ -1,3 +1,109 @@
+v0.4.19 - loading notification moved up, text before subgallery nav, buttons labelled 'subgallery'; CSS: generic first, cleanings, comment-headers, hand icon for selective forms bar; F: removed white border of sliders in FF;
+
+* v0.4.19 -- [2018-08-23]
+
+[*] MODIFIED
+
+-- index.php
+* moved up notification of loading of next gallery subpage, an element with id of 'wczytywanie_spis'
+  - placed before a button of loading next subpage
+  - so it's before when selected subpage gallery list is visible also
+* for test purpose changed label text of increment/decrement buttons
+  - using another symbols of arrows due to problems with displaing some of 'triangle arrows' on some old browsers
+* added another attribute to the object inside last block of 'script' tags
+  - used for global initialization fittext addon
+
+-- zlobek-styl.css
+
+* moved up definitions of generic styles for elements or classes
+  - the next selectors sometimes redefines this already defined styles  by placing parent class or ids at the begining of their selectors  
+  - anything is added to generic and always increase specifity of selector
+* added a pointer icon to 'h2' of id 'selektor_naglowek' to easily differentiate possible action on this element
+  - also added separately icon for child 'span' element
+* CSS cleaning
+  - completely removed from file, already commented rules, 'mobile-last' with 'max-width' values instead 'min-width'
+  - removed unnecessary new lines
+* added comment lines with names as separators for grouped content
+  - it groups many selectors by similar topics or areas of the page
+  - each semantic group contents is easier to find
+  - it was done before and intentionally, there wasn't only a named  descriptions for groups
+  - also added new comments as a subgroups or headers, to easier distiguish any content of CSS 
+
+-- witryna.js
+* little changes inside function 'GenerujPodstronyGalerii'
+  - first any previous content of possible navigations are removed by 'empty()' method
+  - and secondly to empty container may be placed generic text, that informs about any subpage, only if any subpage of given gallery exists
+  - if so the button or buttons are placed under the previously generated text of header
+  - changed the label on the button form 'Gallery #No' to 'Subpage #No' 
+  - all the dynamic content is surronded by container class that limits the total width of its contents on larger screens
+
+[F] FIXED
+
+-- zlobek-style.css
+* removed white border  around the slider, which is in a focus state
+  - changed color of used outline to transparent inside vendor specified selector ':-moz-focusring '
+  - still in use 3px thin border around slider but it's invisible now
+  - couldn't change any internal behavior of thin black border, which is also dotted
+  - probably a usability thing that can't be styled by a programmer
+  - fixes: #21 - 'Firefox: a white box around the active form'
+  - modified also the color of outline itself to value of 'none' inside vendor specified selector ('::-moz-range-thumb') to stayed a center of slider handle in the same place when is hovered, focused or inactive
+
+---------------------------
+
+v0.4.18 - verified media queries for 4 gallery items in a line; touches CSS of sliders and draggable 'imgs'; cleaning of coding style of styles
+
+* v0.4.18 -- [2018-08-15]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* verified the media query tresholds for proper displaying of given number of gallery list items
+  - tested why four items cannot be displayed in one line, when screen wides from about 500 to 1200px  
+  - above 700px wide the page shows three gallery items side by side
+  - above 940px is displayed a four gallery items in one row
+  - five elements when it's wider than 1180px
+* redefined global selector for any draggable ('[draggable]') element to a child and draggable 'img' element of container 'gra'
+* trying to create more compatible look the slider between main browsers
+  - experimented with paddings, margins and their values (negatives also)
+  - mainly to achieve similar look into Chrome
+  - slighty changes color of sliders, especially for extended IE style
+  - also modified in IE a separate hover and focus state for achieving three different sizes of the handle of the slider
+* slighty changes of padding inside footer by media queries
+* matched indentations to be equal or just similar inside the same selector, especially in defined media query
+
+---------------------------
+
+v0.4.17 - modified headings & pagraphs texts of footer; and theirs padings also; computing of subgallery number; arrangement of current gallery details on wider screens;
+
+* v0.4.17 -- [2018-08-12]
+
+[*] MODIFIED
+
+-- index.php
+* changed texts of paragraphs of many paragraph and subheaders in footer area and in 'game area'
+  - extended for some longer sentences
+  - some of them were shortened
+  - used quotations, cites and parentheses
+
+-- witryna.js
+* removed conditional statement inside function 'KtoraPodstronaWGalerii'
+  - now the same formula used to calculate subpage based by given gallery number
+  - probably a possible error in computations if total gallery number is divisible by 5!!!
+  - hard to test when last digit in number of lastly added gallery (total gallery number) isn't 0 or 5
+  - it's hard to test when gallery total number is read form another place and any substitution of it or simulations breaks loaded subpages numbers or the awaitet result (fault of grouping results in reverse order, which affects the numbering of each subpage)  
+
+-- zlobek-styl.css
+* increased paddings for current gallery details container, with id of 'nazwa_galerii'
+* increased left padding for current gallery description to visual align it in vertical axis with photo
+* modified recently builded layout inside current gallery details on wide screens
+  - moved into 940px treshold of media query from previously defined in 1180px
+  - slighty decreased images top margin to 2em from previously 2.5em 
+  - increased left padding  for a title element to 6.5em (previously it was 5em) 
+* increased by 10% font size for paragraphs inside footer
+* added extra bottom pading after a last paragraph inside footer
+
+---------------------------
+
 v0.4.16 - anims touched game-init-button; email address & its security; footer content reordered by little; greater buttons in game section
 
 * v0.4.16 -- [2018-08-07]

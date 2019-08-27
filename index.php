@@ -21,7 +21,7 @@
         <header id="naglowek">
         <!-- <div class="kontener">  -->
 
-            <!-- tu </div> - kontener - tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamnknąc w tych okowach... choć ideaklnie pasuje to ułatwienie  --> 
+            <!-- tu </div> - kontener - tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamknąć w tych okowach... choć ideaklnie pasuje to ułatwienie  --> 
 
             <div id="naglowek_kontener">
 
@@ -77,6 +77,11 @@
                                 </div>
                             </div>    
                         </div>
+                        
+                        <div id="wczytywanie_spis">
+                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
+                        </div>
+                        
                     </div>
                 
                     <div id="wybrany_zaczytany_spis">
@@ -103,11 +108,14 @@
                         </div>
                         <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
 
-                        
+                        <!-- pierwotne położenie animacji wczytywania --> 
+                        <!-- 
                         <div id="wczytywanie_spis">
                         <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
                         </div>
-
+                        -->
+                      
+                       
                         <div class="kontener">
                             <div id="selektor">     
                                 <h2 id="selektor_naglowek">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
@@ -125,8 +133,8 @@
                                             </div>
                                             <div id="suwak_info">
                                                 <div>
-                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="◄" />
-                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="►" />
+                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1 ◄ &larr;" />
+                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1 ► &rarr;" />
                                                 </div>
                                             </div>
                                             <div>
@@ -217,9 +225,9 @@
             <div id="reguły">
                 <div class="kontener">    
                 <h1>Pokoloruj duży obrazek poprzez ułożenie małych obrazków we właściwych miejscach.</h1>
-                <h2>Użyj myszy lub gładzika komputera, bo małe ekrany dotykowe są be (póki co jest dramat)!</h2>
-                <p style="text-decoration: line-through;"><em>Podobne widowisko teatralne</em> jest z użyciem czegokolwiek na czymkolwiek do obsługi przeciągania, więc póki co zdobywanie punktów i budowanie rankingów jest odłożone w bliżej nieokreslone <em>kiedyś</em>.</p>   
-                <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (zakładając, że system nie oszukuje przy przydziale punktów).</p>
+                <h2>Użyj myszy lub gładzika komputera, bo małe ekrany dotykowe są &quot;be&quot; (póki co jest dramat)!</h2>
+                <p style="text-decoration: line-through;"><em>Podobne widowisko teatralne</em> jest z użyciem czegokolwiek na czymkolwiek do obsługi przeciągania, więc póki co zdobywanie punktów i budowanie rankingów jest odłożone w bliżej nieokreślone &quot;kiedyś&quot;.</p>   
+                <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (...zakładając, że system nie oszukuje przy przydziale punktów - ale to nie jest spisek).</p>
                 </div>
             </div>
             <div id="sterowanie">
@@ -241,7 +249,7 @@
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka">&copy;2018 v0.4.16 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.4.19 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <div class="kontener">
                     <h3>Dla Hani</h3>
@@ -249,9 +257,9 @@
                     <h3>Jaki jest cel?</h3>
                     <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
                     <h3>Jeszcze raz po polskiemu</h3>
-                    <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie żłobka. Chęć przedłużenia życia myszom oraz powierzchniom dotykowym komputerów zdecydowała o zmniejszeniu obciążenia (konkretnie z niepotrzebnego klikania kursorem w przycisk <em>powrót</em> -- [&lt;-] i kolejnego niepotrzebnego kliknięcia w kolejne zdjęcie, itd. aż do końca danej galerii przemnożone przez ilość podstron danej galerii...). Nadmiernie porysowanych ekranów w telefonach, czy tabletach też nie chemy, prawda? Nazbyt zużyty przycisk myszy lub wytarty (albo przebity) gładzik w laptopie zmusza do zakupu urządzenia wskazującego... <p>
-                    <h3>(to nie jest antyreklama pewnego sklepu komputerowego)</h3>    
-                    <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi, a do tego zmniejsza zużycie pasma internetowego użytkownika (pakietu transmisji danych na tzw. <em>urządzeniach mobilnych</em>) w porównaniu do przeglądania orygionalnej witryny. Do tego nie katuje serwera przy każdym dużym obrazku. Same plusy wynikają z korzystania z tej <em>nakładki</em>, zachęcam do dalszego korzystania.</p>    
+                    <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie żłobka. Przede wszystkim wygoda, ale też chęć przedłużenia życia myszom oraz powierzchniom dotykowym komputerów zdecydowała o zmniejszeniu obciążenia (konkretnie z niepotrzebnego klikania kursorem w przycisk <em>powrót</em> -- [&lt;-] w przeglądarce www oraz powiązanego z nim kolejnego niepotrzebnego kliknięcia w kolejne zdjęcie, itd. aż do końca danej galerii, przemnożone przez ilość podstron danej galerii...). Nadmiernie porysowanych ekranów w telefonach, czy tabletach też nie chemy, prawda? Nazbyt zużyty przycisk myszy lub wytarty (albo przebity) gładzik w laptopie zmusza do zakupu urządzenia wskazującego... <p>
+                    <h3>(to nie jest antyreklama pewnego sklepu komputerowego) &plus; trochę technologicznego bełkotu</h3>    
+                    <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi, a do tego zmniejsza zużycie pobieranych danych (pakietu transmisji danych, istotnego na tzw. <em>urządzeniach mobilnych</em>, korzystających z sieci operatora GSM) w porównaniu do przeglądania orygionalnej witryny. Przy braku limitów na transfer też zyskujemy, bo przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania obrazków (funkcji &quot;cache&quot; nie liczę). Do tego &quot;serwer&quot; tej nakładki nie katuje serwera macierzystego przy każdym podglądzie dużego obrazka oraz ponownym przejścu do kolejnego (licząc uprzedni powrót do zasobów w pamięci przeglądarki). Prawda, że same plusy wynikają z korzystania z tej <em>nakładki</em>? Zachęcam do dalszego użytkowania i testowania.</p>    
                     <h3>Informacje i zastrzeżenia</h3>
                     <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
                     <h3>Kontakt</h3>
@@ -261,13 +269,13 @@
             <div id="pomoc">
                 <div class="kontener">            
                     <h3>To tylko przeglądarka</h3>
-                    <p>Niniejszy serwis służy do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagany dostęp do macierzystego serwisu www, bez niego nie pojawiają się treści tutaj.</p>
+                    <p>Niniejszy serwis służy do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagane istnienie i funkcjonowanie macierzystego serwisu www, bez niego po prostu nie pojawiają się żadne treści tutaj &colon;P.</p>
                     <h3>Pożegnanie <em>kopiuj-wklej</em></h3>
-                    <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu, po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz przegląd galerii odbywa się bezpośrednio na tej witrynie.</p>
+                    <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu do tutejszego formularza (wklejenia lub wpisania), po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz przegląd wszystkich dostępnych galerii odbywa się bezpośrednio z tej witryny.</p>
                     <h3>Podstrony</h3>
-                    <p>Przeglądanie w galeriach ograniczających klikanie działa prawiłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis ma umożliwić łatwą nawigację pomiędzy kolejnymi obrazkami.</p>
+                    <p>Wygodne przeglądanie w galeriach, ograniczających nadmiarowe klikanie działa prawidłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis umożliwia łatwą nawigację pomiędzy kolejnymi obrazkami i ewentualnymi podstronami (kolejnymi grupami obrazków).</p>
                     <h3>Uwaga</h3> 
-                    <p>Witryna umożliwia oglądanie pokazu zdjęć poprzez mechanizm galerii tylko dla wskazanego żłobka, serwis nie wyświetli pokazu zdjęć dla innych adresów.</p>
+                    <p>Witryna umożliwia oglądanie pokazów zdjęć poprzez mechanizm galerii tylko dla wskazanego żłobka, serwis nie wyświetli pokazu zdjęć dla innych adresów.</p>
                     <h3>Użyte technologie - co tutaj zawarto (oczywistości i nie~)</h3> 
                     <ul>
                         <li class="tech_tak">HTML5</li>
@@ -282,7 +290,7 @@
                         <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
                         <li class="tech_tak">kompatybilność</li>
                     </ul>
-                    <h3>Zgodność źródeł z konwencjami JS na poziomie 99,7% ;P</h3> 
+                    <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 
                     <ul>
                         <li>WielBłąd(&nbsp;),&nbsp;a&nbsp;camelCamel()</li>
                         <li>no(n)Tacja&nbsp;{...}</li>
@@ -296,11 +304,11 @@
                         <li class="tech_nie">promesy</li>                    
                         <li class="tech_nie">Node.js</li>
                         <li class="tech_nie">SASS/LESS/PostCSS</li>
-                        <li class="tech_nie">CSS&nbsp;Grid</li>
+                        <li class="tech_nie">CSS&nbsp;grid</li>
                         <li class="tech_nie">SVG?</li>
                     </ul>
-                    <h3>Nadal na etapie projektowania</h3>
-                    <p>Status projektu nieukończony, nadal nie w <em>produkcji</em>.</p> 
+                    <h3>Status projektu</h3>
+                    <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla ukończenia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>w produkcji</em>...</p> 
                 </div>
             </div>
         </footer>	
@@ -312,7 +320,9 @@
 		<script src="witryna.js"></script> 		
 		<script src="lightbox/js/lightbox.js"></script>
         <script>
-            lightbox.option({ albumLabel : "Zdjęcie %1 z %2"
+            lightbox.option({   albumLabel : "Zdjęcie %1 z %2", 
+                                positionFromTop : 10
+
             });
         </script>
 		
