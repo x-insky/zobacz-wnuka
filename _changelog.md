@@ -1,3 +1,20 @@
+v0.5.1 - just a regular CSS styles cleaning inside a CSS file
+
+* v0.5.1  -- [2018-09-24]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* CSS cleaning style
+  - added proper indentations to rules inside all defined selectors
+  - text of rule is indented by one tab unit (or four spaces) inside a selector
+  - still in test or temporary rules are indented more
+  - 'so many changes' -- looks like it's different file but it's not
+  - the same rules, just another indentations
+  - some irrelevant content may have disappeared
+
+---------------------------
+
 v0.5 - animated dimensions of a screen/window @ change; better readability of main headers; footer columns; text-shadows of headers; better texts; greater +1/-1 btns; header link; main gallery photo on smallest screens; recursion gray logic; title with coma no problem; html like xhtml; fixed counting from zero when div5;
 
 * v0.5 -- [2018-09-24]
