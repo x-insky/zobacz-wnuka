@@ -6,9 +6,9 @@
 		<title>Galeria ze Żłobka w Chojnowie</title>
 		<link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
 		<link rel="stylesheet" href="reset.css">
-		<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">  <!-- czcionka Muli -->	
-		<link rel="stylesheet" href="zlobek-styl.css">
-		<link rel="stylesheet" href="lightbox/css/lightbox.css">
+		<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />  <!-- czcionka Muli -->	
+		<link rel="stylesheet" href="zlobek-styl.css" />
+		<link rel="stylesheet" href="lightbox/css/lightbox.css" />
 
 		<script src="jquery-3.2.1.js"></script>
 
@@ -133,8 +133,8 @@
                                             </div>
                                             <div id="suwak_info">
                                                 <div>
-                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1 ◄ &larr;" />
-                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1 ► &rarr;" />
+                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
+                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
                                                 </div>
                                             </div>
                                             <div>
@@ -147,7 +147,7 @@
                                     <div id="wybor_podstrony_galerii">
                                          <div id="suwak_podstrony">
                                                 <div>
-                                                <label for="podstrona_wybrany_nr">Wybrany numer podstrony:</label>
+                                                <label for="podstrona_wybrany_nr">Numer podstrony spisu treści:</label>
                                                 <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
                                                 </div>
                                                 <div>
@@ -156,14 +156,14 @@
                                             </div>
                                             <div id="suwak_podstrona_info">
                                                 <div>
-                                                <input type="button" id="wybrany_nr_podstrony_zmniejsz" class="maly_guzik" value="◄" />
-                                                <input type="button" id="wybrany_nr_podstrony_zwieksz" class="maly_guzik" value="►" />
+                                                <input type="button" id="wybrany_nr_podstrony_zmniejsz" class="maly_guzik" value="-1" />
+                                                <input type="button" id="wybrany_nr_podstrony_zwieksz" class="maly_guzik" value="+1" />
                                                 </div>
                                             </div>
                                             <div>
                                                 <input type="button" id="losuj_zakres_podstrony" name="losuj_zakres_podstrony" value="Losuj podstronę" />
                                                 <input type="submit" id="suwak_podstrony_submit" name="suwak_podstrony_submit" role="submit" value="Zobacz wybrany" />
-                                                <div id="form_error">Wymagany wybór spośród dostępnych numerów podstron galerii</div>			
+                                                <div id="form_error">Wymagany wybór spośród dostępnych numerów podstron w spisie treści</div>			
                                             </div>	
                                         </div>  <!-- div#wybor_podstrony_galerii --> 
                                         
@@ -224,10 +224,11 @@
         <div id="gra">
             <div id="reguły">
                 <div class="kontener">    
-                <h1>Pokoloruj duży obrazek poprzez ułożenie małych obrazków we właściwych miejscach.</h1>
+                <h1>Pokoloruj duży obrazek poprzez ułożenie jego małych fragmentów we właściwych miejscach.</h1>
                 <h2>Użyj myszy lub gładzika komputera, bo małe ekrany dotykowe są &quot;be&quot; (póki co jest dramat)!</h2>
                 <p style="text-decoration: line-through;"><em>Podobne widowisko teatralne</em> jest z użyciem czegokolwiek na czymkolwiek do obsługi przeciągania, więc póki co zdobywanie punktów i budowanie rankingów jest odłożone w bliżej nieokreślone &quot;kiedyś&quot;.</p>   
-                <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (...zakładając, że system nie oszukuje przy przydziale punktów - ale to nie jest spisek).</p>
+                <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (...zakładając, że system nie oszukuje przy przydziale punktów, a Firefoks > v57 Ci w tym nie przeszkadza - ale to jest zupełnie przypadkowe, nie węszymy tu spisku).</p>
+                <p>Pierwszej planszy nie ukończył jeszcze Nikt z zadowalającym wynikiem (zapewne z racji wyśrubowanego warunku zakończenia).</p>
                 </div>
             </div>
             <div id="sterowanie">
@@ -249,72 +250,86 @@
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka">&copy;2018 v0.4.19 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.5.1 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
+                <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
-                    <h3>Dla Hani</h3>
-                    <p>Bo tak! Z mniejszą dedykacją dla Szymonka i Ninki też. Niech za jakiś czas maluchy zobaczą siebie, jak wyglądały kiedyś (czyli teraz).</p>
-                    <h3>Jaki jest cel?</h3>
-                    <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
-                    <h3>Jeszcze raz po polskiemu</h3>
-                    <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie żłobka. Przede wszystkim wygoda, ale też chęć przedłużenia życia myszom oraz powierzchniom dotykowym komputerów zdecydowała o zmniejszeniu obciążenia (konkretnie z niepotrzebnego klikania kursorem w przycisk <em>powrót</em> -- [&lt;-] w przeglądarce www oraz powiązanego z nim kolejnego niepotrzebnego kliknięcia w kolejne zdjęcie, itd. aż do końca danej galerii, przemnożone przez ilość podstron danej galerii...). Nadmiernie porysowanych ekranów w telefonach, czy tabletach też nie chemy, prawda? Nazbyt zużyty przycisk myszy lub wytarty (albo przebity) gładzik w laptopie zmusza do zakupu urządzenia wskazującego... <p>
-                    <h3>(to nie jest antyreklama pewnego sklepu komputerowego) &plus; trochę technologicznego bełkotu</h3>    
-                    <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi, a do tego zmniejsza zużycie pobieranych danych (pakietu transmisji danych, istotnego na tzw. <em>urządzeniach mobilnych</em>, korzystających z sieci operatora GSM) w porównaniu do przeglądania orygionalnej witryny. Przy braku limitów na transfer też zyskujemy, bo przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania obrazków (funkcji &quot;cache&quot; nie liczę). Do tego &quot;serwer&quot; tej nakładki nie katuje serwera macierzystego przy każdym podglądzie dużego obrazka oraz ponownym przejścu do kolejnego (licząc uprzedni powrót do zasobów w pamięci przeglądarki). Prawda, że same plusy wynikają z korzystania z tej <em>nakładki</em>? Zachęcam do dalszego użytkowania i testowania.</p>    
-                    <h3>Informacje i zastrzeżenia</h3>
-                    <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
-                    <h3>Kontakt</h3>
-                    <p>Wszelkie uwagi, skargi, wnioski i propozycje funkcjonalności lub zaobserwowane błędy w działaniu serwisu można słać na poniższy adres email <a href="#" id="adres_email">nieodbieram@gdzieś.w.internecie.com</a></p>
+                   <div>
+                        <h3>Dla Hani</h3>
+                        <p>Bo tak! Z mniejszą dedykacją dla Szymonka i Ninki też. Niech za jakiś czas maluchy zobaczą siebie, jak wyglądały kiedyś (czyli teraz).</p>
+                        <h3>Jaki jest cel?</h3>
+                        <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
+                        <h3>Jeszcze raz po polskiemu</h3>
+                        <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie żłobka. Przede wszystkim wygoda, ale też chęć przedłużenia życia myszom oraz powierzchniom dotykowym komputerów zdecydowała o zmniejszeniu obciążenia (konkretnie z niepotrzebnego klikania kursorem w przycisk <em>powrót</em> -- [&lt;-] w przeglądarce www oraz powiązanego z nim kolejnego niepotrzebnego kliknięcia w kolejne zdjęcie, itd. aż do końca danej galerii, przemnożone przez ilość podstron danej galerii...). Nadmiernie porysowanych ekranów w telefonach, czy tabletach też nie chemy, prawda? Nazbyt zużyty przycisk myszy lub wytarty (albo przebity) gładzik w laptopie zmusza do zakupu urządzenia wskazującego... </p>
+                    </div>
+                    <div>       
+                        <h3>(to nie jest antyreklama pewnego sklepu komputerowego) &plus; trochę technologicznego bełkotu</h3>    
+                        <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi, a do tego zmniejsza zużycie pobieranych danych (pakietu transmisji danych, istotnego na tzw. <em>urządzeniach mobilnych</em>, korzystających z sieci operatora GSM) w porównaniu do przeglądania orygionalnej witryny. Przy braku limitów na transfer też zyskujemy, bo przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania obrazków (funkcji &quot;cache&quot; nie liczę). Do tego &quot;serwer&quot; tej nakładki nie katuje serwera macierzystego przy każdym podglądzie dużego obrazka oraz ponownym przejścu do kolejnego (licząc uprzedni powrót do zasobów w pamięci przeglądarki). Prawda, że same plusy wynikają z korzystania z tej <em>nakładki</em>? Zachęcam do dalszego użytkowania i testowania.</p>    
+                        <h3>Informacje i zastrzeżenia</h3>
+                        <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
+                        <h3>Kontakt</h3>
+                        <p>Wszelkie uwagi, skargi, wnioski i propozycje funkcjonalności lub zaobserwowane błędy w działaniu serwisu można słać na poniższy adres email <a href="#" id="adres_email">nieodbieram@gdzieś.w.internecie.com</a></p>
+                    </div>
                 </div>
             </div>
             <div id="pomoc">
-                <div class="kontener">            
-                    <h3>To tylko przeglądarka</h3>
-                    <p>Niniejszy serwis służy do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagane istnienie i funkcjonowanie macierzystego serwisu www, bez niego po prostu nie pojawiają się żadne treści tutaj &colon;P.</p>
-                    <h3>Pożegnanie <em>kopiuj-wklej</em></h3>
-                    <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu do tutejszego formularza (wklejenia lub wpisania), po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz przegląd wszystkich dostępnych galerii odbywa się bezpośrednio z tej witryny.</p>
-                    <h3>Podstrony</h3>
-                    <p>Wygodne przeglądanie w galeriach, ograniczających nadmiarowe klikanie działa prawidłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis umożliwia łatwą nawigację pomiędzy kolejnymi obrazkami i ewentualnymi podstronami (kolejnymi grupami obrazków).</p>
-                    <h3>Uwaga</h3> 
-                    <p>Witryna umożliwia oglądanie pokazów zdjęć poprzez mechanizm galerii tylko dla wskazanego żłobka, serwis nie wyświetli pokazu zdjęć dla innych adresów.</p>
-                    <h3>Użyte technologie - co tutaj zawarto (oczywistości i nie~)</h3> 
-                    <ul>
-                        <li class="tech_tak">HTML5</li>
-                        <li class="tech_tak">CSS3</li>
-                        <li class="tech_tak">RWD&nbsp;+&nbsp;<em>mobile&nbsp;first</em></li>
-                        <li class="tech_tak">Flexbox</li>                        
-                        <li class="tech_tak">JavaScript</li>
-                        <li class="tech_tak">jQuery</li>
-                        <li class="tech_tak">AJAX</li>
-                        <li class="tech_tak">PHP</li>
-                        <li class="tech_tak">SPA</li>                        
-                        <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
-                        <li class="tech_tak">kompatybilność</li>
-                    </ul>
-                    <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 
-                    <ul>
-                        <li>WielBłąd(&nbsp;),&nbsp;a&nbsp;camelCamel()</li>
-                        <li>no(n)Tacja&nbsp;{...}</li>
-                    </ul>
-                    <h3>Czego tutaj nie ma</h3> 
-                    <ul>
-                        <li class="tech_nie">Angular.js</li>
-                        <li class="tech_nie">React</li>
-                        <li class="tech_nie">Bootstrap</li>
-                        <li class="tech_nie">ES6&nbsp;===&nbsp;ES2015</li>
-                        <li class="tech_nie">promesy</li>                    
-                        <li class="tech_nie">Node.js</li>
-                        <li class="tech_nie">SASS/LESS/PostCSS</li>
-                        <li class="tech_nie">CSS&nbsp;grid</li>
-                        <li class="tech_nie">SVG?</li>
-                    </ul>
-                    <h3>Status projektu</h3>
-                    <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla ukończenia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>w produkcji</em>...</p> 
+                <h2>Pomoc - jak to działa</h2>
+                <div class="kontener">
+                    <div>            
+                        <h3>To tylko przeglądarka</h3>
+                        <p>Niniejszy serwis służy do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagane istnienie i funkcjonowanie macierzystego serwisu www, bez niego po prostu nie pojawiają się żadne treści tutaj &colon;P.</p>
+                        <h3>Pożegnanie <em>kopiuj-wklej</em></h3>
+                        <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu do tutejszego formularza (wklejenia lub wpisania), po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz przegląd wszystkich dostępnych galerii odbywa się bezpośrednio z tej witryny.</p>
+                        <h3>Podstrony</h3>
+                        <p>Wygodne przeglądanie w galeriach, ograniczających nadmiarowe klikanie działa prawidłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis umożliwia łatwą nawigację pomiędzy kolejnymi obrazkami i ewentualnymi podstronami (kolejnymi grupami obrazków).</p>
+                        <h3>Uwaga</h3> 
+                        <p>Witryna umożliwia oglądanie pokazów zdjęć poprzez mechanizm galerii tylko dla wskazanego żłobka, serwis nie wyświetli pokazu zdjęć dla innych adresów.</p>
+                    </div>
+                    <div>
+                        <h3>Użyte technologie - co tutaj zawarto (oczywistości i nie~)</h3> 
+                        <ul>
+                            <li class="tech_tak">HTML5</li>
+                            <li class="tech_tak">CSS3</li>
+                            <li class="tech_tak">RWD&nbsp;+&nbsp;<em>mobile&nbsp;first</em></li>
+                            <li class="tech_tak">Flexbox</li>                        
+                            <li class="tech_tak">JavaScript</li>
+                            <li class="tech_tak">jQuery</li>
+                            <li class="tech_tak">AJAX</li>
+                            <li class="tech_tak">PHP</li>
+                            <li class="tech_tak">SPA</li>                        
+                            <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
+                            <li class="tech_tak">kompatybilność</li>
+                        </ul>
+                        <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 
+                        <ul>
+                            <li>WielBłąd(&nbsp;),&nbsp;a&nbsp;camelCamel()</li>
+                            <li>no(n)Tacja&nbsp;{...}</li>
+                            <li>INDENT&rarr;acja&nbsp;{...}</li>
+                        </ul>
+                        <h3>Czego tutaj nie ma</h3> 
+                        <ul>
+                            <li class="tech_nie">Angular.js</li>
+                            <li class="tech_nie">React</li>
+                            <li class="tech_nie">Bootstrap</li>
+                            <li class="tech_nie">ES6&nbsp;===&nbsp;ES2015</li>
+                            <li class="tech_nie">promesy</li>                    
+                            <li class="tech_nie">Node.js</li>
+                            <li class="tech_nie">SASS/LESS/PostCSS</li>
+                            <li class="tech_nie">CSS&nbsp;grid</li>
+                            <li class="tech_nie">SVG?</li>
+                        </ul>
+                        <h3>Status projektu</h3>
+                        <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla zamknięcia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>w produkcji</em>...</p>
+                    </div> 
                 </div>
             </div>
         </footer>	
-	
+
     </div>	<!-- DIV#witryna -->
-	
+
+<div id="wymiary">
+    <h1>&nbsp;</h1>    
+</div>	
 
 		<script src="fittext/jquery.fittext.js"></script>	
 		<script src="witryna.js"></script> 		
