@@ -1,3 +1,116 @@
+v0.5 - animated dimensions of a screen/window @ change; better readability of main headers; footer columns; text-shadows of headers; better texts; greater +1/-1 btns; header link; main gallery photo on smallest screens; recursion gray logic; title with coma no problem; html like xhtml; fixed counting from zero when div5;
+
+* v0.5 -- [2018-09-24]
+
+[+] ADDED
+
+-- index.php
+* added new absolute positioned div element of id 'wymiary' to showing **actual size of the visible content inside browser window**
+  - dimmensions of all active area where is displayed page
+  - available area might change when browser window resizes or flipps screen of mobile device or a web browser hides its toolbars while scrolling contents (some mobile browsers saves space of constantly showed address bar, status menu, e.t.c.)
+  - area element appers when available width or height changed, always presenting the actual size of program window or screen it that moment
+* added a main header texts for each of two groups in footer
+  - easy distinguis which content is presenting after a click on a button in footer
+  - before cointaner element, not inside that container class
+* added two divs to divide text content on a half
+  - purpose is to get two column layout in each of two sections of footer
+* added XML style endings for all tags without ending tag 
+
+-- zlobek-styl.css
+* styled the new 'wymiary' element
+  - displays in the bottom of the screen in semi transparent rectangle (if available) in fixed position
+  - experimenting with dimensions of this element by putting new size in almost every threshold of media query
+* defined new animation to hide element with dimensions
+  - after short time 'area element' shifts down outside the visible part of the screen
+* defined also a class where that animation is configured
+  - class addition or removing is controlled by JavaScript, which is fired by browser events
+* added all purpose 'flex_kontener' class for marking any element as a flex container
+* also added a definition for a flex item for first 'div' element encountered inside a flex container
+* added a style to raise flex container and flex items but without using previously defined general class
+  - here used a structure of elements with connection to the concrete parent element
+  - also a pseudo classes are used to target first or last element of given type
+* added the largest media query threshold as a method to hide game content when screen size is below 1300px
+  - should operate with JavaScript because showing 'game contents' is logic which is triggered by click on specified button
+* added bright shadow with slighty blur to secondary text of logo
+  - for better distinguis dark blue text on bluish background
+* added a polyfill for a 'szara_zawartosc' class for old Internet Explorers
+  - existing filter declaration is preceded by simple 'filter: grayscale;' which alows 'gray 100% filter' to work in IE 6..9
+* added subtle dark gray shadow with high blur for 'span' elements inside 'h2' in header area
+
+-- witryna.js
+* builded a function 'AktualnyRozmiarOkna' to get actual size of the window, screen or working space of screen
+  - it returns the size and also displays the result inside a given element
+  - adding a class of defined animation to hide a result after a short period of time
+  - conditionally tested if an element is already animating or after an ended animation
+  - uses a jQuery hack to add again the same class to the element to achieve element animation from the beginning
+* created an event for changing size of the window/screen
+  - fired when screen size or window size changes
+  - can be fired repeatedly like the nature of resize event
+
+[*] MODIFIED
+
+-- index.php
+* changed accordingly labels of forms increment / decrements buttons as '+1' / '-1'
+  - removed all previously labels with symbols
+* also changed label text of selecting subpage from gallery list
+* changed text content of some paragraphs and header inside 'game area'
+  - as a better explaination of rules or purposes
+
+-- zlobek-styl.css
+* changed 'h1' headers
+ - text color is now yellow, used in logo header and game section main text
+  - changed first text-shadow to darker sharp shadow to easy distinguish letters on complementary color of blue background
+  - expressive logo text
+* increased by about 20% size of form buttons for incrementing / decrementing
+  - no need to set a new dimension, just a font size of button text is increased to 140%
+  - also increased horizontal padding from 0.25em to 0.45em
+  - for easier use of touch screens 
+* changed style of 'h2' element
+  - slighty increased vertical padding
+  - shadow under the element without oblique displacement and with brighter color and lower blur ratio
+* modifed the style of 'h3' element
+  - changed color from darkmagenta to violet with increased font size to 135% (from previously 125%)
+  - added soft shadow of gray color (slighty darker than before)
+* increased font size to 125% for 'h4' elements (instead 115% before)
+* changed color of 'h3' elements inside header to yellow
+  - added a semi dark shadow with average blur ratio
+  - a nice and sharp look even while text font is reducing
+* changed default style of 'odnosnik_kolor' class from yellow to creamy white
+  - hover state also affected, changed color from white to almost black and added contrast creamy white
+  - also included new 'text-shadow' property in transition definition (with color already defined)
+* removed bottom margin from container for all readed content, a div element with id of 'galeria_spis'
+* added medium dark shadow under the 'h2' headers
+  - easier to read text from next-subpage-load button and top belt of selecting form
+  - the same style for both elements in one place
+* increased margin from 1em to 1.5em of next-subpage-load button
+* modified default mobile-first basis for main gallery photo inside current gallery details
+  - 'img' itself set to block type
+  - increased usability on smallest screens
+  - 'float: left' enabled by media query above 320px width screen
+  - added a transition for 'margin-top', which change was defined already in media query
+* added gray shadow for every yellow notification texts, just next to the rotating sun image
+
+-- witryna.js
+* modified all messages text if there was a typo
+* removed unnecessary blank lines or outdated comments
+* conditionally removings class 'szara_zawartosc' if given element has it
+  - used with recursions when the final functions call should remove grays and display a expectations content there  
+* changed logic when counting last occurrence of number in given URL inside function 'GenerujPodstronyGalerii'
+  - avoided an error for the title that contains the comma separator
+* added new comments if necessary
+
+[F] FIXED
+
+-- witryna.js
+* modified logic and formula inside function 'KtoraPodstronaWGalerii'
+  - used a condition to set the value additional variable to '1' or leaves the default value of '0'
+  - using that variable as a corrector inside slighty modified formula
+  - generally speaking it increments the result in some condition or just leaves that value unmodified
+  - tested with different total galleries number and from now the result is always good
+  - fixes: #23 - 'Periodic problem with gallery numbering'
+
+---------------------------
+
 v0.4.19 - loading notification moved up, text before subgallery nav, buttons labelled 'subgallery'; CSS: generic first, cleanings, comment-headers, hand icon for selective forms bar; F: removed white border of sliders in FF;
 
 * v0.4.19 -- [2018-08-23]

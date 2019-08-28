@@ -104,15 +104,13 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             catch (err2) 
             {
-            var komunikatOBledzie = "BŁAD! " + err2 + "/nProblem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
             //alert(komunikatOBledzie);	
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
             PrzewinEkranDoElementu('p.blad', 500);    
             }
 
-
             break;
-
 
         case "spis_galerii" :
 
@@ -146,7 +144,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             catch (err2) 
             {
-            var komunikatOBledzie = "BŁAD! " + err2 + "/nProblem z dołączeniem kolejnego spisu galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;   
+            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z dołączeniem kolejnego spisu galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;   
             //alert(komunikatOBledzie);
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );     
             PrzewinEkranDoElementu('p.blad', 500); 
@@ -164,8 +162,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 UsunBrakujaceSRCwIMGPozaPrzekazanym ( tag_podmieniany, dane.pozycjaWGalerii );    
                 console.log( "Ładowanie przed rekurencją (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
                     
-                    
-                $('#nazwa_galerii').removeClass('szara_zawartosc'); 
+                    if ( $('#nazwa_galerii').hasClass('szara_zawartosc') ) $('#nazwa_galerii').removeClass('szara_zawartosc'); 
                     
                 var namiaryWybranejGalerii = OdczytajTresciOdnosnikaWybranejGalerii ( tag_podmieniany, dane.pozycjaWGalerii );
 
@@ -194,15 +191,13 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             catch (err2) 
             {
-            var komunikatOBledzie = "BŁAD! " + err2 + "/nProblem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
             //alert(komunikatOBledzie);
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );                 
             PrzewinEkranDoElementu('p.blad', 500); 
             }
-
                     // ...		
             break;
-
 
         case "wybrana_galeria" :
 
@@ -216,22 +211,17 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 //UsunBrakujaceSRCwKontenerze ( element_witryny );  // ponowne kasowanie, teraz wszystkie bez wyjątku wylatują elementy  
                     
                 $('#wczytywanie').hide(100);	// dopiero teraz usunięcie animacji ładowania
-
                 $('#skladowisko').empty();  // zerowanie ewentualnej zawartości w tym kontenerze    
-                
                 $('#skladowisko').show(100);    
                 //$('#skladowisko').show( 100, PrzewinEkranDoElementu( 'div#skladowisko', 200, -8 )  );	// pokaż kontener na zaczytaną zawartość + 
                                                 // + przewiń po wyświetleniu całości    
                    
                 $('#skladowisko').html('<h1>Tu wkrótce pojawią się elementy - pierwsza podstrona zdjęć z wybranej galerii nr ' + dane.pozycjaWGalerii + 
                                        '</h1><p>Adres docelowej galerii: ' + adres_zasobu + '</p>' );    
-                //JakaśFunkcja();	// tu wywołaj jakąś fukcję
                     
                 NaprawBrakujaceSRCwKontenerze ( '#skladowisko_status_wybranej_galerii', 'przetwarzaj galerię, nie spis treści' ); // taki teścik
                 GenerujPodstronyGalerii ( '#skladowisko_status_wybranej_galerii' );    
-                    
-                    
-                    // a w niej wywołaj samą siebie
+
                 }
                 else
                 {	
@@ -239,7 +229,6 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 //alert(komunikatOBledzie);
                 $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
                 PrzewinEkranDoElementu('p.blad', 500);     
-                    
                 }
 
             }); // load-END
@@ -247,7 +236,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             catch (err2) 
             {
-            var komunikatOBledzie = "BŁAD! " + err2 + "/nProblem z pobraniem wybranej galerii! Ponów próbę. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z pobraniem wybranej galerii! Ponów próbę. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
             PrzewinEkranDoElementu('p.blad', 500);     
             alert(komunikatOBledzie);   // tu wyjatkowo zostaje komunikat w formie okna
@@ -274,9 +263,6 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 NaprawBrakujaceSRCwKontenerze( 'div#skladowisko_wybrane_galerie_spis');
                     
                 GenerujSpisWybranejGalerii( 'div#skladowisko_wybrane_galerie_spis', 'div#wybrane_galerie_spis', dane.wybranaPaginacja );
-                    
-                    
-                    
                     // zaczytanie wybranego spisu poniżej już istniejącego spisu
                 }
                 else
@@ -293,7 +279,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             catch (err2) 
             {
-            var komunikatOBledzie = "BŁAD! " + err2 + "/nNie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+            var komunikatOBledzie = "BŁĄD! " + err2 + "/nNie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
             PrzewinEkranDoElementu('p.blad', 500);     
             alert(komunikatOBledzie);   // tu wyjatkowo zostaje komunikat w formie okna
@@ -396,7 +382,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         console.log('Natrafiono na odnośnik nr ' + (i+1) + ' o zawartości \'' + odnosnikPodstrony + '\'');
 
         //var nrGalerii = odnosnikPodstrony.split(",")[2]; // to był wystarczający warunek, póki w "tytule" nie zawarto przecinka/ów (",")
-        var nrGalerii = parseInt ( odnosnikPodstrony.substr( odnosnikPodstrony.lastIndexOf(",") + 2, odnosnikPodstrony.length - 5 )	);
+        var nrGalerii = parseInt ( odnosnikPodstrony.substr( odnosnikPodstrony.lastIndexOf(",p") + 2, odnosnikPodstrony.length - 5 )	);
             // http.../u_misiow,a20,p2.html	
             // usuwanie przecinka i "p", które są o "2 przed" numerem podstrony galerii 
             // treść z numerem kończy się ".html" - pomijane te 5 znaków przy krojeniu STRINGU)
@@ -489,8 +475,6 @@ console.log("Wymiary PO - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysok
 	
 
 function GenerujSpisGalerii() {
-console.log('Wszystkich podstron jest ' + g_ilosc_wszystkich_paginacji_galerii + ', zaczytano ' + g_zaczytana_ilosc_paginacji_galerii 
-            + ' podstron, pozycja w galerii to ' + g_biezaca_pozycja_galerii +', a kliknięć było ' + g_suma_klikniec_zaladuj + '.'); 
 
     // schowaj informację, skoro wczytano zawartość
     if ( ( g_biezaca_pozycja_galerii > 0 ) && ( ( g_biezaca_pozycja_galerii + 1 ) >= g_suma_klikniec_zaladuj ) ) $( g_wczytywanie_spis ).hide(100);	
@@ -503,7 +487,6 @@ $( g_miejsce_na_spis ).show(100);
 // tworzenie szablonu spisu
  //g_zaczytana_ilosc_paginacji_galerii = $( g_miejsce_na_spis + " div.kontener_odnosnik" ).length; // ma być o 5 więcej niż na stronie (szablon do wstawienia), co to robi???
 g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa zawsze na +5 elementów na stronie, nie oblicza warunku na podstawie 
-
 	
     if ( g_biezaca_pozycja_galerii === 0 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
     {
@@ -512,7 +495,7 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa za
     var $temp_odnosnik_tytul = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link:first" );	 // dobre do czasu, o ile nie powstanie nowa galeria w trakcie przeglądania starej listy! 
     var atrybut_href = $( $temp_odnosnik_tytul ).attr('href'); // np. "http://zlobek.chojnow.eu/u_tygryskow,a153.html"
     //temp_atrybut = temp_atrybut.split(",")[1]; // jest dobre, ale leży przy dodanym ',' w adresie odnosnika (jako treść)
-    var atrybut_href_pozycja = atrybut_href.lastIndexOf(",");		
+    var atrybut_href_pozycja = atrybut_href.lastIndexOf(",a");		    // łatwiejsze nawigowanie z kontekstem - "a" jako numerem galerii
     atrybut_href = atrybut_href.substr( atrybut_href_pozycja + 2 ); // +2 znaki za pozycją (',' i 'a'), poprawna konwersja liczby na początku danego ciągu
     g_ilosc_wszystkich_galerii = parseInt( atrybut_href );
         
@@ -563,10 +546,15 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa za
     
     g_suma_klikniec_zaladuj++;  // użycie w ch-rze licznika automatycznego     
     } //if-END ( g_biezaca_pozycja_galerii === 0 )
+
     
 g_biezaca_pozycja_galerii++;
 g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; //inkrementacja o każde 5 zdjęc z poszczególnych zaczytanych galerii 	
-	
+
+    // poniższy log przeniesiono z początku tej funkcji z uwagi na celowość wyświetlania w nim zaczytanych danych z zewnatrz przy pierwszym przebiegu
+console.log('Wszystkich podstron jest ' + g_ilosc_wszystkich_paginacji_galerii + ', zaczytano ' + g_zaczytana_ilosc_paginacji_galerii 
+            + ' podstron, pozycja w galerii to ' + g_biezaca_pozycja_galerii +', a kliknięć było ' + g_suma_klikniec_zaladuj + '.');        
+    	
 //	for( var i=1 + g_zaczytana_ilosc_paginacji_galerii ; i <= 5 + g_zaczytana_ilosc_paginacji_galerii ; i++ ) {
     
 var odnosnikPojemnik = '';  // do przechowywania spisu galerii, będzie budowana treść htmla dla kolejnych elementów
@@ -611,11 +599,11 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" 
     var trescTytulu = '';    
         
         for( var i=0 ; i < $odnosnikiTytuly.length ; i++ ){
-            
+            // np. http://zlobek.chojnow.eu/u_misiow_i_motylkow,a3.html     // "a" + nr_galerii + ".html"
         ktoraToGaleria = $( $odnosnikiTytuly[i] ).removeAttr('class').attr('href'); // pobranie 'href" + wcześniejsze wywalenie pustego 'class' z tego odnośnika
-        ktoraToGaleria = parseInt( ktoraToGaleria.substr( ktoraToGaleria.lastIndexOf(",") + 2 ) ); // całość przekształcenia w jednym przypisaniu
+        ktoraToGaleria = parseInt( ktoraToGaleria.substr( ktoraToGaleria.lastIndexOf(",a") + 2 ) ); // całość przekształcenia w jednym przypisaniu
         
-        ktoraToPodstrona = KtoraPodstronaWGalerii ( ktoraToGaleria ); // obliczenie podstrony dla aktualnej galerii (wszystkie 1..5 ładowane w jednym rzucie powinny mieć identyczna podstronę!)
+        ktoraToPodstrona = KtoraPodstronaWGalerii ( ktoraToGaleria ); // obliczenie podstrony dla aktualnej galerii (wszystkie [1..5] ładowane w jednym rzucie powinny mieć identyczna podstronę!)
             
             // skoro pierwotny 'href' już użyto (odczytano), to podmiana na 'data-href' i rezygnacja z wzorcowego atrybutu
         $( $odnosnikiTytuly[i] ).attr('data-href', $( $odnosnikiTytuly[i] ).attr('href') ).removeAttr('href') ;   
@@ -686,7 +674,7 @@ var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " td blockquote div[align=justi
         // wyskakują wysokości dla szablonu pojemnika - obrazki w trakcie (pierwszego) ładowania; dobra wysokośc gdy już są w cache (pobrane wcześniej);    
         // łatwiej jest ukrywać nadmiar w <div.opis>, niż mierzyć wysokośc zaczytywanego obrazka (przechwytywanie zdarzenia ładowania) i skracać wysokośc
         // tego <div> o pozostałą wysokość.... + zasłanianie tekstu przy końcu całego pojemnika prostokątem z przezroczystym gradientem/pełnym kolorem
-        // niepotrzebna treść wyleciała      
+        // ... niepotrzebna treść wyleciała      
         } // for-END
     } // if-end $odnosnikiOpis
 	
@@ -822,7 +810,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
             for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ){
             // dodatkowo odczytanie numeru galerii, aby od razu to wyświetlić wraz z numerem podstrony    
             ktoraToGaleria = $( $szukaneElementy[i] ).removeAttr('class').attr('href'); // pobranie 'href" + wcześniejsze wywalenie pustego 'class' z tego odnośnika    
-            ktoraToGaleria = parseInt( ktoraToGaleria.substr( ktoraToGaleria.lastIndexOf(",") + 2 ) ); // w jednym przypisaniu wiele instrukcji, bez rozbijania na pojedyncze
+            ktoraToGaleria = parseInt( ktoraToGaleria.substr( ktoraToGaleria.lastIndexOf(",a") + 2 ) ); // w jednym przypisaniu wiele instrukcji, bez rozbijania na pojedyncze
   
                 // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' i usuwanie tego pierwotnego atrybutu
             $( $szukaneElementy[i] ).attr('data-href', $( $szukaneElementy[i] ).attr('href') ).removeAttr('href') ;              
@@ -1060,7 +1048,7 @@ function UzupełnijNaglowekBiezacejGalerii ( galeria, diagnostyka )
 { // atrybuty { tytul, opis, srcObrazka, data }
 var trescDaty = galeria.data;   // przykładowa: "z dnia: 2016-02-25 18:45"
 trescDaty = trescDaty.slice( trescDaty.indexOf(":")+2, trescDaty.lastIndexOf(":")-3 ); 
-trescDaty = '(' + trescDaty.replace(/-/g, '.') + ')'; // zamiana WSZYTSKICH dwóch łaczników na kropki
+trescDaty = '(' + trescDaty.replace(/-/g, '.') + ')'; // zamiana WSZYSTKICH dwóch łaczników na kropki
     
 var trescHtml = '<div class="kontener"><h2>' + galeria.tytul + '</h2>'; // najpierw <h2>, aby go ewentualny <img> z float nie wyprzedzał na wąskim ekranie
 trescHtml += '<img src="' + galeria.srcObrazka +'" alt="' + galeria.tytul + '" />';
@@ -1089,13 +1077,16 @@ return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszys
 
 function KtoraPodstronaWGalerii ( nrGalerii )
 {
-var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();	// albo ze zmiennej globalnej da się też już odczytać
-var ileRazy = Math.floor( nrGalerii / 5 ) ;  // teraz niepotrzebne, choć zachowane
-var ileReszty = nrGalerii % 5 ;         // teraz niepotrzebne
-var pozycjaWGalerii = KtoraPozycjaWGalerii( nrGalerii ) ;
-var nrPodstronyGalerii = ileRazy ;    // POPRAWIĆ TE WARUNKI NA OBLICZANIE GALERII DLA DANEGO NUMERU (PODSTRONA + POZYCJA)
-    // if ( g_ilosc_wszystkich_galerii % 5 != 0 )
-    nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.floor( ( nrGalerii + pozycjaWGalerii ) / 5 ) ;   
+var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();	// ze zmiennej globalnej da się też już odczytać (obie MAX już istnieją, bo w pierwzym wywołaniu są określane)
+//var ileRazy = Math.floor( nrGalerii / 5 ) ;  // teraz niepotrzebne, choć zachowane
+//var ileReszty = nrGalerii % 5 ;         // teraz niepotrzebne
+var pozycjaWGalerii = KtoraPozycjaWGalerii( nrGalerii );
+var nrPodstronyGalerii;
+var korekta = 0;    // wykryto różnice w przypadku pełnych podstron (czyli zawierających po pięć obrazków na OSTATNIEJ podstronie spisu treści)... wtedy ==1
+
+    if ( ( g_ilosc_wszystkich_galerii % nrPodstronyGaleriiMAX ) == 0 ) korekta = 1; //  dodać +1 gdy galerie to wielokrotność pełnych spisów galerii
+nrPodstronyGalerii = nrPodstronyGaleriiMAX + korekta - Math.floor( ( nrGalerii + pozycjaWGalerii ) / 5 ) ;  // da się zrobić warunek inaczej, bez dodatkowej zmiennej?
+    //nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.ceil( ( nrGalerii + pozycjaWGalerii ) / 5 ) ;
 return nrPodstronyGalerii;
 } // KtoraPodstronaWGalerii-END    
     
@@ -1188,11 +1179,49 @@ adresPokazywany = adresPokazywany || 'kontakt';
 var adresEmail = 'mailto:' + adres;    
 $( element ).text( adresPokazywany ).attr( 'href', adresEmail ); 
 }
+
     
+function AktualnyRozmiarOkna ( elementWyswietlajacy, poziomWidocznosci ) 
+{
+    
+var szerokoscOkna = $(window).outerWidth(true),
+    wysokoscOkna = $(window).outerHeight(true);
+poziomWidocznosci = poziomWidocznosci || '0.7';
+
+
+    // zawartość w <h1> powinna otrzymać aktualny wymiar okna i go wyswietlić... warunek element powinien mieć specyficzną klasę, żeby nie wyświetlał 'X' przy wyłączonym JS! 
+    // nadać klasę ręcznie, czy z automatu ponownie przypisać na początku tej funkcji?
+
+$(elementWyswietlajacy + '> h1').text( szerokoscOkna + ' x ' + wysokoscOkna );  // najpierw nadanie aktualnej treści (rozmiaru X x Y)
+    
+    if ( !$(elementWyswietlajacy).hasClass('animacja_zanikanie2') ) $(elementWyswietlajacy).addClass('animacja_zanikanie2');    // ewentualne nadanie klasy z konretną animacją
+
+    // taka parodia, ale chodzi o przerwanie aktualnie zanikającej animacji i uruchomienie jej od nowa
+    // $(elementWyswietlajacy).hasClass('animacja_zanikanie').removeClass('animacja_zanikanie').addClass('animacja_zanikanie');
+    // istotny jest odstęp czasu pomiędzy zabranie, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)    
+$(elementWyswietlajacy).removeClass('animacja_zanikanie2').height(); 
+
+$(elementWyswietlajacy).addClass('animacja_zanikanie2');    
+
+/*
+    if ( $( elementWyswietlajacy ).hasClass('animacja_zanikanie2') ) 
+    {
+    //$(elementWyswietlajacy).css({ animationName : '', animationDuration : '', animationTimingFunction : '' }); 
+        //  $(elementWyswietlajacy).css({ animationPlayState : 'paused' }).width();
+        //  $(elementWyswietlajacy).css({ animationPlayState : 'running' });    
+    //$(elementWyswietlajacy).stop().removeClass('animacja_zanikanie').css({ animationName : '', animationDuration : '', animationTimingFunction : '', animationIterationCount : '0' }); 
+        //alert('W trakcie animacji');    
+    }  
+    //if ( $(elementWyswietlajacy + ':animated') ) $(elementWyswietlajacy).stop().removeClass('animacja_zanikanie');
+*/
+
+//$(elementWyswietlajacy).addClass('animacja_zanikanie');
+return szerokoscOkna;    
+}   // AktualnyRozmiarOkna-END
     
 // ---------- ***      GRA      *** --------------     
 
-function LosujPlansze( zakres ) 
+function LosujPlansze ( zakres ) 
 {
     if ( !zakres ) zakres = 1;    
 var wylosowanyNr = Math.floor( Math.random() * zakres );    
@@ -1515,7 +1544,13 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
             trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
             $('#status_wybranej_galerii').html( trescWygenerowana );*/
         
-    $('#nazwa_galerii').addClass('szara_zawartosc');
+  //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii
+    var zawartoscH2 = $('#nazwa_galerii').find('h2').text();    
+        if ( zawartoscH2 != '' )
+        {
+        console.info('W <h2> do zabarwienia na szaro siedzi treść "' + zawartoscH2 + '" i nie chce zmienić koloru w IE/Edge.');    
+        $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii ...NIE DZIAŁA w IE
+        }
     $( g_miejsce_na_zdjecia ).empty();
     $('nav#nawigacja_galeria').empty(); 
     $('#wczytywanie').show(100);    
@@ -1545,7 +1580,8 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
 
     $('#status_wybranej_galerii').html( trescWygenerowana );	*/        
-    $('div#wybrane_galerie_spis').addClass('szara_zawartosc');
+    //$('div#wybrane_galerie_spis').addClass('szara_zawartosc');      
+        if ( $('#wybrane_galerie_spis').find('span:first').text() != '' ) $('#wybrane_galerie_spis').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu    
           
     WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
                                 "wybrany_spis_galerii", { 'wybranaPaginacja' : wybranyNrPaginacji } ); 	// ES6 unfriendly
@@ -1565,8 +1601,6 @@ return false;  // konieczny warunek pomimo .preventDefault na "niewysyłanie for
 $('h2#selektor_naglowek').click(function () {
     if ( $(this).hasClass('rozwiniety') ) $(this).removeClass('rozwiniety').next('div').hide(100);
     else $(this).addClass('rozwiniety').next('div').show(100);
-   
-    
 });    
 	
 	/*	
@@ -1740,7 +1774,7 @@ pelny_adres_wpisany = pelny_adres_wpisany.stripHTML(); // czyszczenie z formular
 	}
 	else
 	{
-	g_wyszukiwany_serwer = "";	// zerowamie potrzebne?!
+	g_wyszukiwany_serwer = "";	// zerowanie potrzebne?!
     $('#form_error').slideDown(500); // rozwinięcie
 	return false;	 // !!! i wyjście z przetwarzania !!!
 	}
@@ -1786,9 +1820,22 @@ $('#banner').hover( function() {
     }
 ); // #banner hover-END
 
+$(window).on('resize', function() {
+var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
+    
+    // warunkowe ukrywanie elementu z grą, gdy najpierw naciśnięto "Zagraj" -- element posiada style INLINE, których nie nadpisuje standardowy CSS w @media
+    /*  if ( szeroskoscOkna < 1300 ) 
+    {
+    $('#gra').hide();
+    }   */
+    
+});    
+    
+    
 $('div#zagraj').click( function() {
     $('div#gra').show(300);
     PrzewinEkranDoElementu( 'div#gra', 500, 10 ); // + korekta marginesu górnego elementu
+    
 });    
     
     // nie działa mi w JQ, próba powrotu do JS... te sdame zdarzenie i funkcje użyte w wywołaniu 
@@ -1946,11 +1993,12 @@ document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, 
 	// sterowanie wielkością czcionki nagłówka
 	
 	//$("#banner h1.logo").fitText();
-	 $("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '60px' });
-	 $("#napisy h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
-	 $("#napis_spod h3").fitText(3, { minFontSize: '7px', maxFontSize: '17px' });    
-    
+$("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '60px' });
+$("#napisy h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
+$("#napis_spod h3").fitText(3, { minFontSize: '7px', maxFontSize: '17px' });    
 
+//$('#wymiary').addClass('animacja_zanikanie2');  // dynamiczne przypisanie klasy    
+AktualnyRozmiarOkna('#wymiary');
 
 	
 }); //document-ready-END
