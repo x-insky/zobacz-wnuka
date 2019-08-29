@@ -138,8 +138,8 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <input type="button" id="losuj_zakres" name="losuj_zakres" value="Losuj galerię" />
-                                                <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" role="submit" value="Zobacz wybrany" />
+                                                <input type="button" id="losuj_zakres" name="losuj_zakres" class="maly_guzik szerszy_guzik" value="Losuj galerię" />
+                                                <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" class="maly_guzik szerszy_guzik" role="submit" value="Zobacz wybrany" />
                                                 <div id="form_error">Wymagany wybór spośród dostępnych numerów galerii</div>			
                                             </div>	
                                         </div>  <!-- div#wybor_galerii -->  
@@ -250,7 +250,7 @@
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka">&copy;2018 v0.5.2 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.5.3 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
@@ -283,8 +283,8 @@
                         Bieżący serwis zezwala na przeglądania tylko zawartości określonego żłobka, nie wyświetlą się pokazy zdjęć z innych adresów.</p>
                         <h3>Pożegnanie <em>kopiuj-wklej</em></h3>
                         <p>Niegdysiejsza funkcjonalność zmuszała do podania działającego odnośnika z serwisu <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a>, tj. adresu  konkretnej grupy zdjęć. Teraz przegląd wszystkich dostępnych galerii odbywa się bezpośrednio z tej witryny. Przekazywania adresu podstrony ze zdjęciami do tutejszego formularza zostało zaniechane z uwagi na małą wygodę tej operacji.</p>
-                        <h3>Reklamy z hostingu</h3>
-                        <p>Rzeczywistość darmowego hostingu nie rozpieszcza, zatem ewentualne, możliwe i narzucane przez firmy hostingowe treści (reklamy!) mogą psuć ogólne odczucia, a przede wszystkim mogą diametralnie zmieniać wygląd i zachowanie witryny na małych ekranach. Mogą się tylko pojawić, jeżeli posiadają wysoką odporność na magię znikania.</p>
+                        <h3>Reklamy z hostingu? Panie, jakie reklamy?!</h3>
+                        <p>Rzeczywistość darmowego hostingu nie rozpieszcza, zatem ewentualne, możliwe i narzucane przez firmy hostingowe treści (reklamy!) mogą psuć ogólne odczucia, a przede wszystkim mogą diametralnie zmieniać wygląd i zachowanie witryny na małych ekranach. Mogą się pojawiać, jeżeli tylko posiadają wysoką odporność na magię znikania.</p>
                     </div>
                     <div>
                         <h3>Użyte technologie - co tutaj zawarto (oczywistości i nie~)</h3> 

@@ -75,10 +75,11 @@ h2.logo {
 h3 {
     font-size: 135%;
     font-weight: bold;
-    /*    color: darkmagenta;    */
-    color: #54c;
-
-    text-shadow: 0px 0px 6px #d6d6d6;
+    /*  color: darkmagenta;    */
+    /*  color: #54c;
+        text-shadow: 0px 0px 6px #d6d6d6;    */
+    color: yellow;
+    text-shadow:0px 0px 4px #555;
     padding: 0.2em 0.5em;	
     text-align: center;	
 }
@@ -117,16 +118,22 @@ form input {
     font-size: 110%;		
 }
 
-p.blad {
-    padding: 2em;
+p.blad,
+p.blad_dolaczenia,
+p.blad_odswiez {
+    padding: 1.2em;
     margin: 3px auto;
     width: 90%;
     color: yellow;
     text-align: center;
-    font-size: 2em;
+    font-size: 1.7em;
     font-weight: bold;
     background-color: darkred;
-    border: 2px solid #eee;
+    border: 3px solid #eee;
+    /*  box-shadow: 0px 0px 10px 2px #333 inset; 
+        transition: all 0.7s;
+        animation: zolty_blysk 2s ease-out;
+        animation-fill-mode: both; */
 }
 
 .clearfix::after {
@@ -905,13 +912,19 @@ form#wybierz_galerie input#suwak_podstrony
 }
 
 form#wybierz_galerie input.maly_guzik {
-    padding: 0.45em 2em;    
+    padding: 0.45em 1.8em;    
         /*display: block;*/
-    min-width: 120px;
+    min-width: 130px;
     margin: 0.3em auto;
     font-size: 140%;
 }
 
+form#wybierz_galerie input.szerszy_guzik {
+    min-width: 200px;
+    padding: 0.45em 1em;
+    /*  margin: 0.3em auto;
+        font-size: 140%;    */
+}
 
 form#wybierz_galerie input[type=text] {
     font-size: 140%;
@@ -1479,22 +1492,27 @@ input[type=range]:hover::-ms-fill-upper {
 
 /* tempklasse */
 .animacja_1 {
-/* transform-origin: center center;	*/	
-animation: obroty_delikatne_3 6.5s infinite ease-out;	
+    /* transform-origin: center center;	*/	
+    animation: obroty_delikatne_3 6.5s infinite ease-out;	
 }
 
 .animacja_zanikanie {
-animation: zanikanie 3s ease-out;
-animation-direction: normal;    
-/*animation-fill-mode: forwards;*/
-animation-fill-mode: both;
+    animation: zanikanie 3s ease-out;
+    animation-direction: normal;    
+    /*animation-fill-mode: forwards;*/
+    animation-fill-mode: both;
 }
 
 .animacja_zanikanie2 {
-animation: zanikanie2 2s ease-out;
-animation-direction: normal;    
-/*animation-fill-mode: forwards;*/
-animation-fill-mode: both;
+    animation: zanikanie2 2s ease-out;
+    animation-direction: normal;    
+    /*animation-fill-mode: forwards;*/
+    animation-fill-mode: both;
+}
+
+.animacja_zolty_blysk {
+    animation: zolty_blysk 2s ease-out;
+    animation-fill-mode: both;    
 }
 
 
@@ -1646,20 +1664,33 @@ animation-fill-mode: both;
 @keyframes zanikanie2 {
     0% {
 /*    visibility: visible; */
-    opacity: 0.2;
+        opacity: 0.2;
 /*    transform: translateY(-40px);    */
     }
     20% {
 /*    transform: translateY(50px);*/
-    opacity: 0.7;     
+        opacity: 0.7;     
     }
     70% {
-    transform: translateY(0);
-    opacity: 0.7;     
+        transform: translateY(0);
+        opacity: 0.7;     
     }
     100% {
-    transform: translateY(40px);      
-    opacity: 0;
+        transform: translateY(40px);      
+        opacity: 0;
+    }
+}
+
+
+@keyframes zolty_blysk {
+    0% {
+        border-color: yellow;
+    }
+    20% {
+        border-color: yellow;
+    }
+    100% {
+        border-color: white;
     }
 }
 
@@ -1741,6 +1772,11 @@ animation-fill-mode: both;
         max-width: 75%;
     }
     
+    
+    form#wybierz_galerie input.szerszy_guzik {
+        min-width: 210px;
+       }
+    
     div#spis_tresci div.kontener_odnosnik {
         min-height: 415px;			
         max-height: 415px;
@@ -1790,6 +1826,10 @@ animation-fill-mode: both;
         max-height: 230px;
     }
     
+    form#wybierz_galerie input.szerszy_guzik {
+        min-width: 220px;
+    }
+    
     div#wymiary {
         width: 35%;
         left: 32.5%;
@@ -1821,6 +1861,10 @@ animation-fill-mode: both;
         max-height: 240px;
     }
 
+    form#wybierz_galerie input.szerszy_guzik {
+        min-width: 255px;
+    }
+    
     div#glowna div#nazwa_galerii img {
         margin-top: -2em;
     }

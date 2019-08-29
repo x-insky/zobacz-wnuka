@@ -45,7 +45,8 @@ var g_element_zewnetrzny = "table.galeria",		//wszystko jest w tablicy o klasie 
  $g_input_nr_galerii	= $('input#galeria_wybrany_nr'), 
  $g_suwak_nr_galerii	= $('input#suwak_galerii'), 
  $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'), 
- $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),
+ $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),    
+ g_niewyslane_podstrony = [],     // wszystkie żądania wyświetlenia ...vs lub tylko te do kolejnych podstron 
     
  g_tloSrc = '',   //
  g_ileCzesci = 0,
@@ -95,7 +96,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 else
                 {
                 // to nie powinno się generalnie wywoływać, lepiej odwołać się do obsługi błędu w CATCH    
-                var komunikatOBledzie = "Problem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
+                var komunikatOBledzie = "Problem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
                 //alert(komunikatOBledzie);
                 $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );  
                 PrzewinEkranDoElementu('p.blad', 500);    
@@ -106,7 +107,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             catch (err2) 
             {
-            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
             //alert(komunikatOBledzie);	
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
             PrzewinEkranDoElementu('p.blad', 500);    
@@ -115,6 +116,10 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             break;
 
         case "spis_galerii" :
+            // tylko tu dodanie żądania GET do tablicy -- STANDARDOWO BRAK MOŻLIWOŚCI PONOWIENIA TEGO ŻĄDANIA -- dlatego rozszerzona obsługa błędów 
+            g_niewyslane_podstrony.push({ adres : g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny,
+                                            tag : tag_podmieniany });
+            console.info( g_niewyslane_podstrony );
 
             try 
             {	
@@ -131,14 +136,28 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 NaprawBrakujaceSRCwKontenerze ( tag_podmieniany );
                 CzyscNiepotrzebneElementy();	    
                 GenerujSpisGalerii();
+                UsunPobraneZadanie( adres_zasobu );   // wyrzucenie rekordu z tablicy żądań -- już przetworzono dany odnośnik (!?...ewentualny wpływ asynchroniczności...!?)  
                 }
                 else
                 {
-                var komunikatOBledzie = "Problem z dołączeniem kolejnego spisu galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")";    
+                var ileRazyBlad = $('.blad_dolaczenia span').text();
+                    if ( ileRazyBlad == "" ) ileRazyBlad = 0;
+                ileRazyBlad = parseInt( ileRazyBlad ) + 1;
+                console.info('Błąd niepobrania podstrony spisu treści po raz ' + ileRazyBlad);
+                var komunikatOBledzie = "Problem z dołączeniem kolejnego spisu galerii po raz <span>" + ileRazyBlad + "</span>! (STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "))";
+                //var trescKomunikatu = '<p class="blad_dolaczany">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>';    
                 //alert(komunikatOBledzie);
-                $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
-                PrzewinEkranDoElementu('p.blad', 500); 
-
+                    if ( ileRazyBlad > 1 )  // zmień istniejący element lub utwórz jego pierwszą instancję
+                    {
+                    $('.blad_dolaczenia').html( komunikatOBledzie + ' <button>Spróbuj ponownie</button>' );
+                    }
+                    else
+                    {    
+                    $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>' );
+                    }
+                $('.blad_dolaczenia').removeClass('animacja_zolty_blysk').height(); // usunięcie i bzdurny odczyt z DOM...
+                $('.blad_dolaczenia').addClass('animacja_zolty_blysk');  // aby zmienić stan animacji -- od nowa      
+                PrzewinEkranDoElementu('p.blad_dolaczenia', 500); 
                 }
 
             }); // load-END
@@ -146,7 +165,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             catch (err2) 
             {
-            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z dołączeniem kolejnego spisu galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;   
+            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z dołączeniem kolejnego spisu galerii! STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;   
             //alert(komunikatOBledzie);
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );     
             PrzewinEkranDoElementu('p.blad', 500); 
@@ -172,17 +191,16 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     
                     // poniżej wywołanie ponownego ładowania po określeniu adresu docelowej galerii
                     // to samo miejsce docelowe, tam samo dołączane elementy zaczytane -- nadpisywanie już niepotrzebnej zawartości
-                // $.extend( dane, namiaryWybranejGalerii ); 
+                    // $.extend( dane, namiaryWybranejGalerii ); // dodać tę formę?!
                     
                 WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, namiaryWybranejGalerii.adres, element_witryny, "wybrana_galeria", dane );    
                     
                     // zmienić parametry wywołania dla rekurencji !!! 
                     // WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zasobu, element_witryny, rodzaj_dzialania, dane );
-                
                 }
                 else
                 {
-                var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
+                var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
                 //alert(komunikatOBledzie);
                 $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );                       
                 PrzewinEkranDoElementu('p.blad', 500); 
@@ -193,7 +211,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             catch (err2) 
             {
-            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
             //alert(komunikatOBledzie);
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );                 
             PrzewinEkranDoElementu('p.blad', 500); 
@@ -204,7 +222,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
         case "wybrana_galeria" :
 
             try 
-            {	  // tu "adres_zasobu" już jako ścieżka bezwzględna
+            {	  // tu "adres_zasobu" już OBECNY jako ścieżka bezwzględna -- ODMIENNA składnia dla zapytania
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
                 if ( status === "success" )
                 {	
@@ -227,7 +245,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 }
                 else
                 {	
-                var komunikatOBledzie = "Problem z pobraniem wskazanej galerii! Ponów próbę. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+                var komunikatOBledzie = "Problem z pobraniem wskazanej galerii! Ponów próbę. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
                 //alert(komunikatOBledzie);
                 $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
                 PrzewinEkranDoElementu('p.blad', 500);     
@@ -238,7 +256,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             catch (err2) 
             {
-            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z pobraniem wybranej galerii! Ponów próbę. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+            var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z pobraniem wybranej galerii! Ponów próbę. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
             PrzewinEkranDoElementu('p.blad', 500);     
             alert(komunikatOBledzie);   // tu wyjatkowo zostaje komunikat w formie okna
@@ -269,7 +287,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 }
                 else
                 {	
-                var komunikatOBledzie = "Nie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+                var komunikatOBledzie = "Nie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
                 //alert(komunikatOBledzie);
                 $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
                 PrzewinEkranDoElementu('p.blad', 500);     
@@ -281,7 +299,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             catch (err2) 
             {
-            var komunikatOBledzie = "BŁĄD! " + err2 + "/nNie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + " , XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+            var komunikatOBledzie = "BŁĄD! " + err2 + "/nNie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
             PrzewinEkranDoElementu('p.blad', 500);     
             alert(komunikatOBledzie);   // tu wyjatkowo zostaje komunikat w formie okna
@@ -513,6 +531,11 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa za
         ostatniaPaginacja = $( g_tag_do_podmiany_spis + " table.galeria tbody tr td a.link_tresc:last" );    
         
         ilePaginacji = parseInt( ostatniaPaginacja.text() ); //  zmieniana "warunkowo" treść z warunku
+        
+            if ( isNaN( ilePaginacji ) || isNaN( g_ilosc_wszystkich_galerii ) ) // jakoby nowy warunek w istniejącym warunku, ale zmienionym już -- zawsze wstawi tylko jeden element info o błędzie
+            {
+            $('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button id="odswiez_strone">Odswież stronę</button> </p>' );   
+            }
         }
 
     //alert('ILE_PAGINACJI: ' + ilePaginacji);
@@ -1087,7 +1110,7 @@ var nrPodstronyGalerii;
 var korekta = 0;    // wykryto różnice w przypadku pełnych podstron (czyli zawierających po pięć obrazków na OSTATNIEJ podstronie spisu treści)... wtedy ==1
 
     if ( ( g_ilosc_wszystkich_galerii % nrPodstronyGaleriiMAX ) == 0 ) korekta = 1; //  dodać +1 gdy galerie to wielokrotność pełnych spisów galerii
-nrPodstronyGalerii = nrPodstronyGaleriiMAX + korekta - Math.floor( ( nrGalerii + pozycjaWGalerii ) / 5 ) ;  // da się zrobić warunek inaczej, bez dodatkowej zmiennej?
+nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.floor( ( nrGalerii + pozycjaWGalerii ) / 5 ) + korekta;  // da się zrobić warunek inaczej, wzór bez dodatkowej zmiennej?
     //nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.ceil( ( nrGalerii + pozycjaWGalerii ) / 5 ) ;
 return nrPodstronyGalerii;
 } // KtoraPodstronaWGalerii-END    
@@ -1186,11 +1209,9 @@ $( element ).text( adresPokazywany ).attr( 'href', adresEmail );
     
 function AktualnyRozmiarOkna ( elementWyswietlajacy, poziomWidocznosci ) 
 {
-    
 var szerokoscOkna = $(window).outerWidth(true),
     wysokoscOkna = $(window).outerHeight(true);
 poziomWidocznosci = poziomWidocznosci || '0.7';
-
 
     // zawartość w <h1> powinna otrzymać aktualny wymiar okna i go wyswietlić... warunek element powinien mieć specyficzną klasę, żeby nie wyświetlał 'X' przy wyłączonym JS! 
     // nadać klasę ręcznie, czy z automatu ponownie przypisać na początku tej funkcji?
@@ -1223,9 +1244,37 @@ return szerokoscOkna;
 }   // AktualnyRozmiarOkna-END
     
     
+function UsunPobraneZadanie ( adres_zasobu )
+{
+var indeksZnalezionego = false;
+    
+    // wymaga to FOR (jest break), czy da się zrobić poprzez forEach
+    for ( var i = 0; i < g_niewyslane_podstrony.length ; i++ )
+    {
+        if ( g_niewyslane_podstrony[i].adres.indexOf( adres_zasobu ) != -1 )
+        {
+        indeksZnalezionego = i; // przypisanie indeksu z tabeli "nieobsłużonych" żądań
+        break;    
+        }
+    }
+    
+    if ( indeksZnalezionego >= 0 )
+    {
+    g_niewyslane_podstrony.splice( indeksZnalezionego, 1 ); //wyrzucenie z listy żądań oczekujących jednego, właśnie obsłużonego odnośnika     
+    return indeksZnalezionego;    
+    }
+return false;
+    
+    /*    g_niewyslane_podstrony.forEach( function ( elementNiewyslany )
+    //  ...
+    )*/
+    
+}   // UsunPobraneZadanie-END
+        
+    
 function UbijReklamy()
 {   // 000webhost.com || 000webhostapp.com
-$('a[href*=000webhost]').parent().remove();
+$('a[href*=000webhost]').parent('div').remove();
     
     //cba.pl
 var cbaReklamaBig = $('center');
@@ -1245,7 +1294,7 @@ var wylosowanyNr = Math.floor( Math.random() * zakres );
 return wylosowanyNr;    
 }       
     
-function WybierzPlansze( nrPlanszy )        // docelowo będzie ajax/api
+function WybierzPlansze ( nrPlanszy )        // docelowo będzie ajax/api
 {   
 /* var tloSrc = '', // poszło w global
     ileCzesci = 0,
@@ -1282,12 +1331,10 @@ function WybierzPlansze( nrPlanszy )        // docelowo będzie ajax/api
     // ...
             
     }   // switch-( nrPlanszy )-END
-    
     //
 
-
 return { dx : g_przesuniecieTlaX, dy: g_przesuniecieTlaY };    // dobrze by było zwrócić jakąś tabelę rekordów lub cokolwiek...
-}    
+}   // WybierzPlansze-END    
     
 function RozmiescCzesci( nrPlanszy ) {
 g_nazwaPlanszy = 'Autobus';
@@ -1971,8 +2018,10 @@ g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecie
 //g_ktoraGrafika.style.left = e.pageX - e.target.getAttribute( 'data-mysz_pocz_x' ) - polozenieTla.left + parseInt( g_przesuniecieTlaX ) - g_mojX + 'px';    
 //g_ktoraGrafika.style.top = e.pageY - e.target.getAttribute( 'data-mysz_pocz_y' ) - polozenieTla.top + parseInt( g_przesuniecieTlaY ) - g_mojY + 'px';    
 
-g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + g_mojX + 'px';    
-g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + g_mojY + 'px';    
+//g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + g_mojX + 'px';    
+//g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + g_mojY + 'px';    
+g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + 'px';    // o dziwo dwie poniższe linie są wierniejsze ułożeniu finalnemu?!
+g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + 'px';      // tu też?!
 
 g_ktoraGrafika.style.outlineStyle = "solid";    
 g_ktoraGrafika.style.outlineColor = "#00d"; 
@@ -2054,7 +2103,7 @@ document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, 
 	// sterowanie wielkością czcionki nagłówka
 	
 	//$("#banner h1.logo").fitText();
-$("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '60px' });
+$("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '62px' });
 $("#napisy h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
 $("#napis_spod h3").fitText(3, { minFontSize: '7px', maxFontSize: '17px' });    
 

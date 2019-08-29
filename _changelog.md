@@ -1,3 +1,75 @@
+v0.5.3 - collecting of unsuccessful ajax requests, one place of notification of that & flashing last error notif; yellow h3s better visible; bigger buttons in upper form field
+
+* v0.5.3  -- [2018-10-19]
+
+[+] ADDED
+
+-- witryna.js
+* added semi global variable for collecting of unsuccessful ajax request  ('g_niewyslane_podstrony')
+  - element is an object which saves a full address and a number of requested gallery inside
+  - each element is added to collection inside function 'WczytajZewnetrznyHTMLdoTAGU', when that function is called with param 'spis_galerii'
+  - adding just before any ajax request connected with read of next gallery subpage list 
+  - on successful resolves this element is removed from the list
+  - but in any error occurs that object stays inside the list of not done 
+* added an extra condition to first displaying of an error notification or changing an existing notification
+  - notification as a singular and one item for errors connected with next gallery page
+* whatever goes wrong with next gallery subpage a user screen will be shifted to a place where the actual content of error is displayed
+  - upper area of page is a target place, just before any gallery list items
+  - current notification text with newly defined animation
+* defined a function 'UsunPobraneZadanie' for purpose removing item from the list of unsuccessful calls by given attribute value
+  - done by internal search inside a collection if any element's attrib is the same as given parameter
+  - then the element of match is removed from the list and its previously index is returned
+  - returned false means that no element found and nothing was removed
+  - above function is fired on each successful ajax calls, when requested data received 
+
+-- zlobek-styl.css
+* added a two classes for distinguish new 'error' notification of 'p' element
+  - basis as a defined already common 'error' 
+  - defined selectors in one rules set of modified class 'blad'
+* defined a 'szerszy_guzik' class for input buttons
+  - slighty wider basis than inputs defined by 'maly_guzik' class
+  - less pading for wider labels
+* defined new animation 'zolty_blysk' and an the same named 'animacja_zolty_blysk' class for notifying about newly inserted errors
+  - animation like a differentiator of active element
+* added modificators for wider screen by media queries
+  - redefined slighty wider 'min-width' on some thresholds for form buttons
+   
+[*] MODIFIED
+
+-- index.php
+* added an extra class to the first button group of selecting any gallery number
+  - visually bigger buttons inside upper form fields
+  - for test purpose of usability on touch screens 
+* changed some word order or text of a header inside footer
+* modified a value of fittext call function for main heading of logo
+ 
+-- zlobek-styl.css
+* changed global 'h3' element
+  - colored to yellow from previously violet
+  - changed shadow from light gray to darker for better contrast under yellow texts
+* modified class 'blad' as the basis for another class element
+  - slighty decreased font size to 1.7em from 2ems
+  - added padding around
+  - increased border width from 2px to 3px
+* little changes on class 'maly_guzik'
+  - min-width increased by 10px to 130px
+  - slighty decreased horizontal padding
+* added indentions to lastly defined animations
+
+-- witryna.js
+* modified logic inside function 'GenerujSpisGalerii'
+  - if any error occurs while initial ajax request and some values can't be readed then page display an error notificastion and any further actions will be suspended
+  - no show up navigation links or action button in that case
+  - immediate page refresh needed or delayed action by undefined waiting time for working nursery webserver
+* changes logic of computing target coordinates for dropped puzzle elements
+  - inside function 'RuchUpuszczaniaJS'
+* changed expression inside function 'UbijReklamy', because hosting company changed method of displaying their big adverisements
+* code cleanings
+  - removed unnecessary spaces from the code (mainly before commas, inside functions calls, e.t.c.)
+  - or added extra spaces or comments on function declaration endings
+
+---------------------------
+
 v0.5.2 - draggable items of game are initially arranged after clicks; hosting ad-killer; newer footer contents; slighty improved readability of some JS code
 
 * v0.5.2  -- [2018-09-25]
