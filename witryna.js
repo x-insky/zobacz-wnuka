@@ -1,5 +1,7 @@
 
 $(document).ready(function () {
+'use strict';    
+    
 /** GARŚĆ TEORII i FAKTÓW:
 * ścieżka pełna do zdjęcia:	
 * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdj_XXXXX.jpg			// <-- adres zdjęcia, X to cyfra [0..9]
@@ -1153,6 +1155,7 @@ console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ',
 $('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY)+'px' }, czasAnimacji);    
 }   
 
+    
 function OkreslPolozenieElementuJS ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
 var pozycja = element.getBoundingClientRect();
     // debug do kasacji gdy OK
@@ -1218,6 +1221,20 @@ $(elementWyswietlajacy).addClass('animacja_zanikanie2');
 //$(elementWyswietlajacy).addClass('animacja_zanikanie');
 return szerokoscOkna;    
 }   // AktualnyRozmiarOkna-END
+    
+    
+function UbijReklamy()
+{   // 000webhost.com || 000webhostapp.com
+$('a[href*=000webhost]').parent().remove();
+    
+    //cba.pl
+var cbaReklamaBig = $('center');
+    if ( cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tą wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
+    {
+    $( cbaReklamaBig ).parent().prev().remove();    // wywal małą reklamę - pasek u góry (ewentualeni to moze pozostać)
+    $( cbaReklamaBig ).parent().remove();           // ale to bezwzględnie wylatuje (sorry cba)
+    }
+}
     
 // ---------- ***      GRA      *** --------------     
 
@@ -1310,6 +1327,35 @@ var przesuniecieX1 = 1110,
     }
 }    
 
+    
+function RozmiescCzesciWzorcowo() 
+{
+var fragmenty = $('#plansza img.przenosny');
+var ileFragmentow = fragmenty.length;
+    
+    // to skopiowane z funkcji powyżej - docelowo przydzielić to jako parametry/podfunkcje, by nie kopiowac dalszej treści
+var przesuniecieX1 = 1110,
+    przesuniecieY1 = -30,
+    przesuniecieX2 = 30,  
+    przesuniecieY2 = 720;    
+    
+    for (var i = 0 ; i < ileFragmentow ; i++ )
+    {
+    $( fragmenty[i] ).css({outlineColor: '', outlineStyle: ''}); 
+        // kasować resztę dodanych atrybutów dla czystego zerowania, czy pozostawić je do nadpisania?
+        
+        if ( !( i % 2 ) ) przesuniecieX1 += 80;
+        else przesuniecieX1 -= 80;
+    fragmenty[i].style.left = String( przesuniecieX1 ) + 'px';
+    przesuniecieY1 += 50;
+    fragmenty[i].style.top = String( przesuniecieY1 ) + 'px';
+    fragmenty[i].style.zIndex = 100 + i;     
+    }
+}
+    
+function UsunCzesci() {
+ $('#plansza img.przenosny').remove();
+}
     
 function PoczatekRuchuPrzeciagania (e)  // 'dragstart'
 {
@@ -1835,7 +1881,17 @@ var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
 $('div#zagraj').click( function() {
     $('div#gra').show(300);
     PrzewinEkranDoElementu( 'div#gra', 500, 10 ); // + korekta marginesu górnego elementu
+//    InicjujGre();
+    RozmiescCzesciWzorcowo();
+    // ...
     
+});    
+    
+    
+$('#gra_start').click( function() {
+    // ...
+    RozmiescCzesciWzorcowo();
+    // ...
 });    
     
     // nie działa mi w JQ, próba powrotu do JS... te sdame zdarzenie i funkcje użyte w wywołaniu 
@@ -1851,6 +1907,7 @@ $('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania
 // ***************************************************************************	
 // ---------- *** AUTOURUCHAMIANIE *** --------------	 
 	
+UbijReklamy();    
 InicjujPrzyciskiWyboruGalerii();
 InicjujPrzyciskiWyboruPodstronyGalerii();    
 	
@@ -1861,9 +1918,10 @@ InicjujGre();
 OdkryjEmail(); 
     
     
+    
 var Przeciaganie = ( function() {
     
-function PoczatekRuchuPrzeciaganiaJS (e)  // 'dragstart'
+function PoczatekRuchuPrzeciaganiaJS ( e )  // 'dragstart'
 {
 //e = e || window.event;    
 g_ktoraGrafika = e.target;      // !!! wpisanie namiarów na przeciagany element, który będzie dalej używany w kolejnych zdarzeniach 
@@ -1887,7 +1945,7 @@ console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX,
             '), MYSZ (', e.pageX, ',' , e.pageY, ' )', 'ELEMENT (', e.target.style.left, ',' , e.target.style.top, ' )' );
 }
     
-function RuchPrzeciaganiaJS (e)    // 'dragover'
+function RuchPrzeciaganiaJS ( e )    // 'dragover'
 {
 //e = e || window.event;
    // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elementu
@@ -1899,7 +1957,7 @@ e.preventDefault();
 return false;   // dodane    
 }        
     
-function RuchUpuszczaniaJS (e)  // 'drop'
+function RuchUpuszczaniaJS ( e )  // 'drop'
 {
 //e = e || window.event;
  // przestawione znów do góry    
@@ -1982,6 +2040,9 @@ document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, 
     obrazki.forEach( function ( obrazek ) {
     obrazek.addEventListener('click', KlikniecieObrazkaJS, false );    
     });*/
+
+    
+    
     
 })();      
     

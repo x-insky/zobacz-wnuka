@@ -233,7 +233,7 @@
             </div>
             <div id="sterowanie">
                 <div class="kontener">
-                <button>Start/Od nowa</button> <button>Losuj planszę</button> <button>Pokaż podpowiedź</button> <button>Moje wyniki</button>                
+                <button id="gra_start">Start/Od nowa</button> <button>Losuj planszę</button> <button>Pokaż podpowiedź</button> <button>Moje wyniki</button>                
                 </div>
 
             </div>
@@ -250,7 +250,7 @@
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka">&copy;2018 v0.5.1 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.5.2 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
@@ -278,12 +278,13 @@
                     <div>            
                         <h3>To tylko przeglądarka</h3>
                         <p>Niniejszy serwis służy do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagane istnienie i funkcjonowanie macierzystego serwisu www, bez niego po prostu nie pojawiają się żadne treści tutaj &colon;P.</p>
-                        <h3>Pożegnanie <em>kopiuj-wklej</em></h3>
-                        <p>Pierwotna funkcjonalnośc wymagała podania działającego odnośnika do serwisu zlobek.chojnow.eu, konkretnie do jednej z wielu galerii. Wiązało się to z koniecznością przekazania adresu do tutejszego formularza (wklejenia lub wpisania), po uprzednim odwiedzeniu witryny żłobka i skopiowania zawartości z paska adresu. Teraz przegląd wszystkich dostępnych galerii odbywa się bezpośrednio z tej witryny.</p>
                         <h3>Podstrony</h3>
-                        <p>Wygodne przeglądanie w galeriach, ograniczających nadmiarowe klikanie działa prawidłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis umożliwia łatwą nawigację pomiędzy kolejnymi obrazkami i ewentualnymi podstronami (kolejnymi grupami obrazków).</p>
-                        <h3>Uwaga</h3> 
-                        <p>Witryna umożliwia oglądanie pokazów zdjęć poprzez mechanizm galerii tylko dla wskazanego żłobka, serwis nie wyświetli pokazu zdjęć dla innych adresów.</p>
+                        <p>Wygodne przeglądanie w galeriach, ograniczających nadmiarowe klikanie działa prawidłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis umożliwia łatwą nawigację pomiędzy kolejnymi obrazkami i ewentualnymi podstronami danej galerii (kolejnymi grupami obrazków). <br />
+                        Bieżący serwis zezwala na przeglądania tylko zawartości określonego żłobka, nie wyświetlą się pokazy zdjęć z innych adresów.</p>
+                        <h3>Pożegnanie <em>kopiuj-wklej</em></h3>
+                        <p>Niegdysiejsza funkcjonalność zmuszała do podania działającego odnośnika z serwisu <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a>, tj. adresu  konkretnej grupy zdjęć. Teraz przegląd wszystkich dostępnych galerii odbywa się bezpośrednio z tej witryny. Przekazywania adresu podstrony ze zdjęciami do tutejszego formularza zostało zaniechane z uwagi na małą wygodę tej operacji.</p>
+                        <h3>Reklamy z hostingu</h3>
+                        <p>Rzeczywistość darmowego hostingu nie rozpieszcza, zatem ewentualne, możliwe i narzucane przez firmy hostingowe treści (reklamy!) mogą psuć ogólne odczucia, a przede wszystkim mogą diametralnie zmieniać wygląd i zachowanie witryny na małych ekranach. Mogą się tylko pojawić, jeżeli posiadają wysoką odporność na magię znikania.</p>
                     </div>
                     <div>
                         <h3>Użyte technologie - co tutaj zawarto (oczywistości i nie~)</h3> 
@@ -298,7 +299,8 @@
                             <li class="tech_tak">PHP</li>
                             <li class="tech_tak">SPA</li>                        
                             <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
-                            <li class="tech_tak">kompatybilność</li>
+                            <li class="tech_tak">kompatybilność</li><br />    <!-- psuje efekt, ale cóż robić skoro długi napis kolejny?! -->
+                            <li class="tech_tak">bezpośrednia manipulacja DOM</li>
                         </ul>
                         <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 
                         <ul>
@@ -318,9 +320,11 @@
                             <li class="tech_nie">CSS&nbsp;grid</li>
                             <li class="tech_nie">SVG?</li>
                         </ul>
+                        <h3>Zabawy z RWD</h3>
+                        <p>Próby zachowania podobnego wyglądu dla prawie każdego z urządzeń, które potrafią wyświetlać zawartość w trybie graficznym. Element rozrywkowo-interaktywny odstępny póki co tylko dla ekranów niedotykowych i to w ograniczonym trybie funkcjonalności.</p>
                         <h3>Status projektu</h3>
                         <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla zamknięcia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>w produkcji</em>...</p>
-                    </div> 
+                    </div>    
                 </div>
             </div>
         </footer>	
@@ -337,10 +341,7 @@
         <script>
             lightbox.option({   albumLabel : "Zdjęcie %1 z %2", 
                                 positionFromTop : 10
-
             });
         </script>
-		
-		
 </body>
 </html>

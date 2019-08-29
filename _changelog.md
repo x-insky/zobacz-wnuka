@@ -1,3 +1,47 @@
+v0.5.2 - draggable items of game are initially arranged after clicks; hosting ad-killer; newer footer contents; slighty improved readability of some JS code
+
+* v0.5.2  -- [2018-09-25]
+
+[+] ADDED
+
+-- index.php
+* added some id to target functional element
+  - assigned new id 'gra_start' to  button inside 'game area'
+
+-- witryna.js
+* added 'use strict' declaration at beginning of the code
+* built function 'UbijReklamy' to removal
+advertisement contents which are inserted to page by current hosting company
+  - removals only ads which destroys layout, i.g. too wide pictures, which set page width to its width
+  - traversing & removing parent container with all ad content
+  - some text based ads left as it is
+  - added function call to autostart block of page logic
+* created function 'RozmiescCzesciWzorcowo' to initially arange all draggable pictures into right container
+  - based on the existing function 'RozmiescCzesci'
+  - fires when click on button-like structure in page header
+  - also added as click event response do button with id 'gra_start'
+* created function 'UsunCzesci' to permanently removal draggable items from the page
+  - not yet connnected to program logic
+  
+[*] MODIFIED
+
+-- index.php
+* rearranged texts order inside footer
+  - some outdated paragraphs removed
+  - some old content replaced with new texts (e.g. RWD, live removal of hosting advertisements by JavaScript)
+* removed double empty lines
+ 
+-- zlobek-styl.css
+* changed bottom margin to absolute units
+  - the same 32 pixels equivalent on wide screen
+  - unchangeable on narrower screens
+
+-- witryna.js
+* changed written styles of code in few function declarations
+  - added just few spaces for better readability of code source
+
+---------------------------
+
 v0.5.1 - just a regular CSS styles cleaning inside a CSS file
 
 * v0.5.1  -- [2018-09-24]
