@@ -71,11 +71,6 @@
                 <div id="spis_tresci">
                     <div id="zaczytany_spis">
                         <h2>Lista galerii ze Żłobka</h2>
-                        <div class="kontener">
-                            <div id="odpluskwiacz_ajaksowy">
-                                <h4><span class="status_ajaksa">Bieżący stan AJAKSA</span><br/><input type="checkbox" name="awaria_na_stale" id="awaria_na_stale"><label for="awaria_na_stale">Ustawić na stałe?</label> <button class="zepsuj">Zepsuj</button> <button class="napraw">Napraw</button> </h4>
-                            </div>
-                        </div>
                         <div class="ciemne_tlo_spis">
                             <div class="kontener">
                                 <div id="galeria_spis">
@@ -255,7 +250,8 @@
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka">&copy;2018 v0.5.4 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka"><button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button> <button id="symulancja_button">Symul-A(JAX)-ncja</button>
+           <p>&copy;2018 v0.5.5 </p>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
@@ -340,7 +336,18 @@
 
 <div id="wymiary">
     <h1>&nbsp;</h1>    
-</div>	
+</div>
+
+<div class="kontener">
+    <div id="odpluskwiacz_ajaksowy">
+        <div>
+            <h4><span class="status_ajaksa">Bieżący stan AJAKSA</span> <button class="zepsuj">Zepsuj</button> <button class="napraw">Napraw</button> <label for="awaria_na_stale" title="Zaznacz/odznacz to pole przed wybraniem Napraw/Zepsuj"> <input type="checkbox" name="awaria_na_stale" id="awaria_na_stale" style="transform: scale(1.5);"> Ustawić na stałe?</label> </h4>
+            <div id="debugger_zamykanie">x</div>
+        </div>
+
+    </div>
+</div>                           	
+
 
 		<script src="fittext/jquery.fittext.js"></script>	
 		<script src="witryna.js"></script> 		

@@ -76,7 +76,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
     
     switch ( rodzaj_dzialania ) {
 				
-        case "galeria_podstrona":
+        case "galeria_podstrona" :
             try 
             {	
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
@@ -91,16 +91,17 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 NaprawBrakujaceSRCwKontenerze ( tag_podmieniany, true );
                 CzyscNiepotrzebneElementy();	
                 //GenerujPodstronyGalerii( element_witryny, dane.ktoraPodstrona );
+                    if ( $('#nazwa_galerii').hasClass('szara_zawartosc') ) $('#nazwa_galerii').removeClass('szara_zawartosc');  // w przypadku wuystapienia błędu z pobraniem wybranej galerii  -aby przywrócić zywae kolory tego kontenera 
                 GenerujPodstronyGalerii( tag_podmieniany, dane.ktoraPodstrona );                                        
                 }
                 else
                 {
                 // to nie powinno się generalnie wywoływać, lepiej odwołać się do obsługi błędu w CATCH    
-                var komunikatOBledzie = "Problem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
-                //alert(komunikatOBledzie);
-                $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );  
-                PrzewinEkranDoElementu('p.blad', 500);    
-
+                /* var komunikatOBledzie = "Problem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
+                $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); */
+                var komunikatOBledzie = "STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")";    
+                GenerujPowiadomienieOBledzie({ tytul : 'Problem z załadowaniem podstrony galerii!', tresc : komunikatOBledzie });    // działa lepeij niż wcześniejszy standard
+                PrzewinEkranDoElementu('div.blad', 500);    
                 }
             }); //load-END
             } //try-END
@@ -1138,26 +1139,39 @@ var elementRodzica = '#galeria_spis',
     budowanyElement = '';
 var opcjeDomyslne = {
     tytul : 'Wystapił błąd ogólny!',
-    tresc : 'Szczegóły tego błędu...',
-    tryb : 'dodawanie', // dodawanie / zamiana
-    nadanaKlasa : 'blad', // /.blad / .blad_dolaczenia / .blad_odswiez
-    ikonaZamykania : true
+    tresc : '&lt;tu szczegóły błędu...&gt;',
+    jednorazowy : true,
+    ikonaZamykania : true, // scalić to z powyższym (lub owrotnie) bo ta sama flaga
+    tryb : 'dodawanie', // dodawanie / zamiana / ... - też częściowo tożsame z tym co wyżej
+    nadanaKlasa : 'blad', // .blad / .blad_dolaczenia / .blad_odswiez
+    dodatkowaKlasa : '', // '' / .blad_dolaczenia / .blad_odswiez
+    przyciskAkcji : false,
+    trescPrzyciskuAkcjiDolaczanie : 'Powtórz działanie',
+    trescPrzyciskuAkcjiOdswiez : 'Odśwież stronę'
 };
     // budowanie po kolei z warunkowych fragmentów + zakładamy, że przekazana treść stanowi bezpieczny HTML ... pewnie dowolny framework zbudowałby to lepiej
 
 var opcje = $.extend ( {}, opcjeDomyslne, opcjePrzekazane );
 budowanyElement = '<div class="' + opcje.nadanaKlasa + '">' 
+    + '<h2 class="blad_tytul">' + opcje.tytul + '</h2>'
+    + '<div class="blad_tresc">'
     + '<div class="blad_ikona">!</div>'
-    + '<div><h2>' + opcje.tytul + '</h2>' 
-    + '<p>' + opcje.tresc + '</p>' 
+    + '<p>Szczegóły powstałego błędu:<br />' + opcje.tresc + '</p>' 
     + '</div>' ;
-        if ( ( opcje.nadanaKlasa == 'blad_dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
+        /* if ( ( opcje.nadanaKlasa == 'blad_dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
         {
         budowanyElement = budowanyElement + '<button class="odswiez_strone">Odśwież stronę</button>' ;
         // +++  wstawienie przycisku do oświeżenia witryny
+        }*/
+        if ( ( opcje.przyciskAkcji ) && ( opcje.dodatkowaKlasa != '' ) )    // wymaga dodania przycisku do odświeżenia strony
+        {
+            // działania zależne od ewentualnej dołączonej klasy (dwie pozycje wzajemnie wykluczające się) -- przy ewentualnym trzecim (hmm... czwartym) rodzaju błędu zastosować 'switch'
+            if ( opcje.dodatkowaKlasa == 'blad_dolaczenia' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiDolaczanie + '</button>';
+            else if ( opcje.dodatkowaKlasa == 'blad_odswiez' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiOdswiez + '</button>'; 
+        // +++  wstawienie przycisku do oświeżenia witryny
         }    
 
-        if ( opcje.tryb == 'dodawanie' )    // standardowy tryb i działanie
+        if ( opcje.ikonaZamykania )    // standardowy tryb i działanie
         {
         budowanyElement = budowanyElement + '<div class="krzyzyk_zamykanie">x</div>' ;
         
@@ -1173,10 +1187,10 @@ $( elementRodzica ).prepend( budowanyElement );
 }   //GenerujPowiadomienieOBledzie-END
     
     
-function WystartujDebuggerLokalny ( czyZepsuc ) 
+function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie ) 
 {
 // definicje wewnątrz wywołania - podległości... tylko, gdy mamy LOKALNE uruchamianie (też testowanie) ;)
-    if ( window.location.host == 'localhost' ) 
+    if ( window.location.host == 'localhost' || nieTylkoLokalnie )  // też drugi parametr 
     {
         function NaprawAjaksa ()
         {
@@ -1197,27 +1211,90 @@ function WystartujDebuggerLokalny ( czyZepsuc )
         // zarejestruj operacje zdarzeń - dwa przeciwstawne przyciski
         $('.zepsuj').click( function () { 
             ZepsujAjaksa();
-                if ( $('#awaria_na_stale:checked').length == 1 ) localStorage.setItem('awariaNaStale', 'ZEPSUTE!');     
+                if ( $('#awaria_na_stale:checked').length == 1 ) AwariaWLocalStorage() ;
+                else ZerujLocalStorage();
         });    
 
         $('.napraw').click( function () { 
             NaprawAjaksa();
-                if ( $('#awaria_na_stale:checked').length == 1 ) localStorage.setItem('awariaNaStale', '<BRAK AWARII>');  
+                if ( $('#awaria_na_stale:checked').length == 1 ) NaprawaWLocalStorage() ;
+                else ZerujLocalStorage();
         });    
 
         // na koniec wymuś automatyczny start "naprawy" -- stan bieżący winien być prawidłowy (chyba, ze określony parametr opcjonalny)    
     NaprawAjaksa();
-            // odczytanie stanu ze zmiennej...
-        if  ( localStorage.getItem('awariaNaStale') == 'ZEPSUTE!' ) $( '#awaria_na_stale').prop('checked', true);   // ... ewentualnie zaznacz przełącznik na [X]
+        
+            // odczytanie stanu ze zmiennej... . 
+        
+        // ....
+            //     + dopracować PONIŻSZE warunki -- od nich zależy inicjownanie belki sterującej przy autortarcie programu..
+        // ...  + localStorage.removeItem()
+        
+        
+        if  ( localStorage.getItem('awariaNaStale') == '<AWARIA!>' )
+        {
+        $( '#awaria_na_stale').prop('checked', true);   // ... ewentualnie zaznacz przełącznik na [X] 
+            //  ... 
+        }    
             // odczytanie  stanu zminnej i ewentualna akcja (powtórzone 50% warunku :/)
-        if ( ( localStorage.getItem('awariaNaStale') == 'ZEPSUTE!') || ( czyZepsuc == 'ZEPSUJ!' ) ) ZepsujAjaksa();
+        if ( ( localStorage.getItem('awariaNaStale') == '<AWARIA!>') || ( czyZepsuc == 'ZEPSUJ!' ) ) 
+        {
+            // ...
+        ZepsujAjaksa();
+        }
 
-
-    $('#odpluskwiacz_ajaksowy').show(100);
+    PokazDebuggowanie();    //z tym bym poczekał na reakcje - kliknięcie własciwego przycisku... póxniej usunąć po testach komunikatów o błędach
     }
 // nie rób nic dla 
     
 } // WystartujDebuggerLokalny-END    
+
+function OdczytajLocalStorage ()
+{
+var zawartoscDebuggowaniaLocalStorage = localStorage.getItem('awariaNaStale');    
+    if ( ( zawartoscDebuggowaniaLocalStorage == '<AWARIA!>' ) || ( zawartoscDebuggowaniaLocalStorage == '<BRAK AWARII>' ) )
+    {    
+    return zawartoscDebuggowaniaLocalStorage;       
+    }
+return false;
+}
+    
+function InicjujLocalStorage () {
+var CoWStorage = OdczytajLocalStorage;
+    if ( CoWStorage == '<AWARIA!>' || CoWStorage == '<BRAK AWARII>')
+    {
+    $( '#awaria_na_stale').prop('checked', true);    
+    PokazDebuggowanie();
+    return zawartoscDebuggowaniaLocalStorage;    
+    }
+
+    // ...   ?  
+return false;
+}
+    
+function AwariaWLocalStorage ()
+{
+localStorage.setItem('awariaNaStale', '<AWARIA!>')    
+}
+    
+function NaprawaWLocalStorage ()
+{
+localStorage.setItem('awariaNaStale', '<BRAK AWARII>')    
+}
+    
+function ZerujLocalStorage ()
+{
+localStorage.removeItem('awariaNaStale');
+}
+    
+function PokazDebuggowanie () {
+    $('#odpluskwiacz_ajaksowy').fadeIn(200);
+}    
+    
+function UkryjDebuggowanie () {
+    $('#odpluskwiacz_ajaksowy').fadeOut(200);
+}    
+
     
     
 // ---------- *** AUTO URUCHAMIANE *** --------------	
@@ -1598,13 +1675,17 @@ $('#odswiez').click(function() {
 });	
 	
 $('#poco_button').click( function() {
- $('div#poco').toggle(200);	
+ $('#poco').toggle(200);	
 });
 	
 $('#pomoc_button').click( function() {
- $('div#pomoc').toggle(200);	
+ $('#pomoc').toggle(200);	
 });
 
+$('#symulancja_button').click( function() {
+ $('#odpluskwiacz_ajaksowy').fadeToggle(200);	
+});    
+    
 	
 $('#losuj_zakres').click( function() {
     if ( g_ilosc_wszystkich_galerii > 0 )
@@ -2006,7 +2087,10 @@ WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres
 
 return false; // !!! konieczne przy click/submit! || operować na obiekcie klikanym
 }); // click-END-#http_adres_submit
-	
+
+    
+// ---------- *** FUNKCJE ZDARZENIOWE - GLOBALNE *** --------------	    
+    
 	
 $('#banner').hover( function() {
     $(this).find('#slonce_logo').addClass('animacja_1');
@@ -2026,6 +2110,26 @@ var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
     }   */
     
 });    
+
+    
+$('#galeria_spis').on("click", ".krzyzyk_zamykanie", function(){ 
+var $this = $(this),
+    kontenerBledu = $this.parents('.blad');
+    kontenerBledu.hide(300, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
+    
+});
+    
+
+    
+$('#debugger_zamykanie').click(function(){ 
+/*var $this = $(this),
+    kontenerBledu = $this.parents('.blad');
+    kontenerBledu.hide(300, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu*/
+// ...
+UkryjDebuggowanie();
+});    
+    
+    
     
     
 $('div#zagraj').click( function() {

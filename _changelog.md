@@ -1,3 +1,93 @@
+v0.5.5 - Simulatron of Ajax, advanced controll, lot of logic & display; with OOP inside for logic & localSorage; better notifications with 'X', one sample notif @ start; restyled notif; footer button ON/OFF; header background
+
+* v0.5.5  -- [2018-10-30]
+
+[+] ADDED
+
+-- index.php
+* added a button with id of 'symulancja_button' inside footer area
+
+-- zlobek-styl.css
+* redefined a styles for an improved notifications
+  - better styles for advanced structure, with rounded corners
+  - increased font side to 1.5em to all text inside
+  - the whole container has really a darkblue background, which looks like title belt (title content is positioned by its padding)
+  - fixed size of element with exclamation-like-image
+  - all its content is centered and placed each on top of others, exclamation point  first then description text
+  - later the looks changes because of media queries, exclamation point is moved to the left side and the descriptive text to the right (works above 470px screen wide)
+  - the description area is dark red with inner dark shadow, with set 'min-height' needed for wider screens when text content might be too short (low actually) to fit exclamation-like-image inside the whole notification
+  - the element look is modified by media query, the exclamation-like-image is placed to the left of red background
+* defined a paragraph style for centering the copyright notes inside footer
+
+-- witryna.js
+* added an click event of new button in footer of id 'symulancja_button'
+  - a toggle for hide/show of Ajax status belt	
+* added event delegation for click on 'krzyzyk_zamykanie' of every notification, which inide container of id 'galeria_spis'
+  - a DOM up traversing, to hide parent element of clicked one, then start the animation on it and when it finish finally removes parent item 
+* added similar event for click on 'debugger_zamykanie' of status belt of Ajax
+  - fires a defined function for hiding that content, a function 'UkryjDebuggowanie'
+ 
+[*] MODIFIED
+
+-- index.php
+* rebuilded an Ajax state notification, a better structure and basis for further styling 
+* moved an ajax controlling state structure from place under header area to end of the HTML page
+  - just a semantic rearranging the content, the ajax state content is fixed positioned on the top of the page
+* a new paragraph surrounds a copyright notes, inside a footer, after its buttons
+  - for better displaying and centering  
+
+-- zlobek-styl.css
+* increased width from 90% to 94% for 'p' elements of class 'blad'
+* slighty changed background under the header when widh is greater than 1300px
+  - a horizontal threshold (a 'jump') between blue colors is unnoticeable 
+  - slighty modified ranges inside used radial gradient to smooth transition
+  - the same colors definiotion as previously
+  - defined a rule of full color backgound as a polyfill for super old browsers, without knowing the gradients
+* changed global style 'status_ajaksa' for more interesting look
+  - uses transparent background color as a basis
+  - increased paddings
+* the classses which JS dynamically adds has also a semi transporent background with less intensive color like their existing border
+  - saved definitions for no support of transparency, a full color background which stays as previously defined
+
+-- witryna.js
+* uses owned function definitions of 'GenerujPowiadomienieOBledzie' for displaying a notification on errors
+  - replaced some logic which displays simple notification by own code
+  - no more inserted contents by hand, no more searching given element inside DOM and create a new content as text and inserting it into a specified element ('p' element here)
+  - just use already defined function and put every needed parameters inside it to displaying expected notification
+  - an easy way to remove notification by click at 'X', and the indicate content will be gone with animation of sliding
+* for now function 'GenerujPowiadomienieOBledzie' works for every unsuccessful Ajax request but not for a gallery subpage, when the old notify method is still used
+  - for that case must be defined advanced logic of changing content, not creating a new notify each times error occurs
+  - and extra parameter must be passed to perform advanced logic
+* notification with sample texts is always showed while initial page loading for a test purpose
+  - just a presentation of a properly working content generator
+  - easy to remove by 'X' button
+* added verification logic inside function 'WczytajZewnetrznyHTMLdoTAGU'
+  - removes possible active gray filter from current gallery element when displaying new content after interrupted Ajax request (after selecting any gallery number)
+  - not a fully functional code by now, works nice for standard notifications, mosly for generated once on each error
+ 
+* modifed logic inside function 'GenerujPowiadomienieOBledzie' to build advanced notifications
+  - added more attributes and values inside default object
+  - changes at generated structure, added more conditional logic for purspose inserting contents and elements with given classes
+  - also a functional content, like closing button is configurable
+* changed logic inside function 'WystartujDebuggerLokalny'
+  - now uses two parameters, second is for 
+  - uses like a OOP principles ;)
+  - defined extra functions to perform standard operations, the same operations with long expressions which are duplicated in several places now
+  - removed long old code by specified task function
+  - slighty enchanced logic, added cleaning localStorage if value is modified or named differently
+  - at the end this 'debugger' inits the function of showing controls of Ajax state (place probably for further rethink)
+* functions used here:
+  - 'AwariaWLocalStorage' sets a specified variable with value inside localStorage, indicating a 'BAD' state
+  - 'NaprawaWLocalStorage' also sets a specified variable with value inside localStorage, but is opposite to previous and indicating a 'GOOD' state
+  - 'ZerujLocalStorage' cleans used variable and its value inside localStorage space (removal) 
+  - 'OdczytajLocalStorage' reads the specific value from localStorage and then verified that value with two possibilities, if matching any of them then it's returned
+  - 'InicjujLocalStorage' internally uses function 'OdczytajLocalStorage' and depending from the result it can display belt for controlling state of an Ajax with checkbox field checked or unchecked (fires 'PokazDebuggowanie' to show all the status content)
+  - 'PokazDebuggowanie' reveals all the Ajax status belt with animation
+  - 'UkryjDebuggowanie' hides belt of Ajax status area
+* changed selectors inside footer buttons to simply ids of elements when set event
+
+---------------------------
+
 v0.5.4 - ajax debugger & status info, engine of artificial notifications & localStorage, (& explainations); new logic of places with error notif; Error Notification System v0.2, not use by now; page refresh-button
 
 * v0.5.4  -- [2018-10-24]
@@ -106,7 +196,7 @@ v0.5.4 - ajax debugger & status info, engine of artificial notifications & local
   - the whole block element is enlarged to next line, when it's too much content inside it to fit in one row of available space
   - if any 'artificial spaces' are between content, the element can't be displayed properly in one o more lines (TODO: fix a content inside 'index.php') 
   - abandon all 'artificial spaces' in future of making texts, when creating static or generated content
-  - fixes: #25 - 'Problem with breaking content (CSS)
+  - fixes: #25 - 'Problem with breaking content (CSS)'
 
 ---------------------------
 
