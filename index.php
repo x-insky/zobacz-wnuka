@@ -250,7 +250,8 @@
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka">&copy;2018 v0.5.3 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka"><button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button> <button id="symulancja_button">Symul-A(JAX)-ncja</button>
+           <p>&copy;2018 v0.5.5 </p>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
@@ -299,8 +300,10 @@
                             <li class="tech_tak">PHP</li>
                             <li class="tech_tak">SPA</li>                        
                             <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
-                            <li class="tech_tak">kompatybilność</li><br />    <!-- psuje efekt, ale cóż robić skoro długi napis kolejny?! -->
+                            <li class="tech_tak">kompatybilność</li>
+                            <li class="tech_tak">localStorage (lokalnie)</li>   <!-- <br /> psuje efekt, ale cóż robić skoro długi napis kolejny?! -->
                             <li class="tech_tak">bezpośrednia manipulacja DOM</li>
+
                         </ul>
                         <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 
                         <ul>
@@ -333,7 +336,18 @@
 
 <div id="wymiary">
     <h1>&nbsp;</h1>    
-</div>	
+</div>
+
+<div class="kontener">
+    <div id="odpluskwiacz_ajaksowy">
+        <div>
+            <h4><span class="status_ajaksa">Bieżący stan AJAKSA</span> <button class="zepsuj">Zepsuj</button> <button class="napraw">Napraw</button> <label for="awaria_na_stale" title="Zaznacz/odznacz to pole przed wybraniem Napraw/Zepsuj"> <input type="checkbox" name="awaria_na_stale" id="awaria_na_stale" style="transform: scale(1.5);"> Ustawić na stałe?</label> </h4>
+            <div id="debugger_zamykanie">x</div>
+        </div>
+
+    </div>
+</div>                           	
+
 
 		<script src="fittext/jquery.fittext.js"></script>	
 		<script src="witryna.js"></script> 		

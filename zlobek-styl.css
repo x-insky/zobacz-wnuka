@@ -123,7 +123,7 @@ p.blad_dolaczenia,
 p.blad_odswiez {
     padding: 1.2em;
     margin: 3px auto;
-    width: 90%;
+    width: 94%;
     color: yellow;
     text-align: center;
     font-size: 1.7em;
@@ -134,6 +134,103 @@ p.blad_odswiez {
         transition: all 0.7s;
         animation: zolty_blysk 2s ease-out;
         animation-fill-mode: both; */
+}
+
+div.blad {
+    position: relative;
+    width: 90%;
+    background-color: #00b;
+    border-radius: 5px;
+    /*font-size: 16px;*/    /* RESET wielkości czcionki dla podległych elementów!*/
+/*    color: yellow;
+    text-align: center;
+    font-size: 1.7em;
+    font-weight: bold;*/
+  /*  padding: 1.2em;*/
+    margin: 3px auto;
+    border: 3px solid #eee;
+    transition: all 0.7s;
+    
+    /*    animation: zolty_blysk 2s ease-out;
+        animation-fill-mode: both; */
+}
+
+div.blad .blad_tytul {
+    padding: 0.25em;
+    padding-top: 0.8em;
+    padding-right: 55px;
+
+}
+
+div.blad .blad_tresc {
+    background-color: darkred;
+    box-shadow: 0px 0px 10px 2px #333 inset; 
+    min-height: 120px;
+    padding: 0.5em;
+    margin-top: 10px;
+}
+
+
+div.blad .blad_ikona {
+    /*    float: left;*/
+    margin: 0 auto;
+   /* margin-top: 15px;*/
+    width: 100px;
+    height: 100px;
+/*  margin: 0.5em;*/
+    text-align: center;
+    color: darkred;
+    font-size: 104px;    /* wartośc bezwzględna */
+    /*    font-size: 6.5em;*/
+
+    line-height: 98px;
+    /*line-height: 0.95em;*/
+    font-weight: bolder;
+    text-shadow: 0 0 2.5px white;
+/*    width: 1.3em;    */
+/*    padding: 0.5em 1em;    */
+    background-color: yellow;
+    border-radius: 50%;
+    
+}
+
+div.blad p {
+    font-size: 1.5em;
+    padding: 0.5em;
+}
+
+
+div.blad .krzyzyk_zamykanie
+{
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    padding: 0.2em;
+    padding-bottom: 0.45em;
+    font-weight: bolder;
+    font-size: 48px;
+    line-height: 16px;
+/*  font-size: 3em;
+    line-height: 0.8em;    */
+    background-color: yellow;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+
+div.blad .krzyzyk_zamykanie:hover
+{
+    background-color: #ddd;
+}
+
+
+div.blad h2
+{
+    color: yellow;
+}
+
+div.blad p
+{
+    color: white;
 }
 
 .clearfix::after {
@@ -660,8 +757,6 @@ div#spis_tresci div#wybrane_galerie_spis {
     overflow: hidden;
     width: 100%;	
 }
-
-
 
 
 div#spis_tresci nav#spis_sterowanie {
@@ -1210,8 +1305,13 @@ footer#stopka {
 
 footer#stopka button {
     font-size: 120%;
-    margin-left: 0.5em;	
+    margin-left: 0.3em;	
     padding: 0.35em 2em;	
+}
+
+footer#stopka p {
+    text-align: center;
+    padding: 0.5em;
 }
 
 footer#stopka div#poco {
@@ -1252,12 +1352,15 @@ footer#stopka ul {
 }
 
 footer#stopka ul li {
-    display: inline;
+    display: inline-block;    /* inline było */
     background-color: whitesmoke;       /*  #c3d5e2 */
     padding: 0.1em 0.5em;
     padding-left: 2em;
+    margin-bottom: 0.4em;
+    margin-left: 0.25em;
     font-size: 13px;
-    line-height: 28px;    
+    line-height: 18px; 
+    /*line-height: 28px;*/        /* 28px dla inline, kilkanaście px dla inline-block */
     text-align: center; 
     border: 1px solid #333;
     background: url(grafiki/tak_nie_ikona.png) 4px 1px no-repeat, whitesmoke;
@@ -1772,6 +1875,17 @@ input[type=range]:hover::-ms-fill-upper {
         max-width: 75%;
     }
     
+    /*    div.blad .blad_tresc div:first-of-type {
+        max-width: 70%;
+        margin: 0 auto;
+    }*/
+    
+    div.blad .blad_ikona {
+        float: left;
+        margin-left: 12%;
+        margin-right: 8%;
+        /*margin-top: 10px;*/
+    }
     
     form#wybierz_galerie input.szerszy_guzik {
         min-width: 210px;
@@ -1826,6 +1940,12 @@ input[type=range]:hover::-ms-fill-upper {
         max-height: 230px;
     }
     
+    div.blad .krzyzyk_zamykanie {
+        top: 6px;
+        right: 6px;
+        padding-bottom: 0.5em;
+    }
+    
     form#wybierz_galerie input.szerszy_guzik {
         min-width: 220px;
     }
@@ -1861,6 +1981,11 @@ input[type=range]:hover::-ms-fill-upper {
         max-height: 240px;
     }
 
+    div.blad .krzyzyk_zamykanie {
+        top: 8px;
+        right: 8px;
+    }
+    
     form#wybierz_galerie input.szerszy_guzik {
         min-width: 255px;
     }
@@ -1922,6 +2047,12 @@ input[type=range]:hover::-ms-fill-upper {
         max-height: 250px;
     }
 
+    div.blad .krzyzyk_zamykanie {
+        top: 10px;
+        right: 10px;
+        padding-bottom: 0.55em;
+    }
+    
     div#wymiary {
         width: 25%;
         left: 37.5%;
@@ -1940,10 +2071,13 @@ input[type=range]:hover::-ms-fill-upper {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         box-shadow: none;
-        background-image: linear-gradient( to bottom, rgba(100, 149, 237, 0.7), rgba(195, 213, 226, 0.8) 95%),
+        background-color: #c3d5e2; /* == rgb(195, 213, 226)  */
+/*        background-image: linear-gradient( to bottom, rgba(100, 149, 237, 0.7), rgba(195, 213, 226, 0.8) 95%),
                 radial-gradient( ellipse at bottom center, rgba(195, 213, 226, 0.8), rgba(100, 149, 237, 0.7));
         background: linear-gradient( to bottom, rgba(100, 149, 237, 0.7), rgba(195, 213, 226, 0.8) 95%), 
-                radial-gradient( ellipse at bottom center, rgba(195, 213, 226, 0.8) 20%, rgba(100, 149, 237, 0.7));
+                radial-gradient( ellipse at bottom center, rgba(195, 213, 226, 0.8) 20%, rgba(100, 149, 237, 0.7));*/
+        background-image: linear-gradient( to bottom, rgba(100, 149, 237, 0.7), rgb(195, 213, 226) 95%),
+            radial-gradient( ellipse at bottom center, rgba(195, 213, 226, 0.8) 20%, rgba(100, 149, 237, 0.7));
     }
     
     header#naglowek div#banner {
@@ -1977,3 +2111,84 @@ input[type=range]:hover::-ms-fill-upper {
         /*    background-color: firebrick !important;    */
     }
 }
+
+
+
+/*    --------------------------       DEBUGOWANIE     --------------------------    */
+
+
+#odpluskwiacz_ajaksowy {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top: 5px;
+    left: 5px;
+    right: 10px;
+    /*width: 100%;*/
+    height: auto;
+    opacity: 0.8;
+    background-color: white;
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+
+#odpluskwiacz_ajaksowy h4 {
+    color: #eee;
+    text-shadow: 1px 1px 1px darkblue;
+    
+}
+
+
+#odpluskwiacz_ajaksowy div:first-child {
+    position: relative;
+    padding-right: 55px;
+    width: 100%;
+    height: auto;
+}
+
+#odpluskwiacz_ajaksowy div #debugger_zamykanie {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    padding: 0.2em;
+    padding-bottom: 0.45em;
+    font-weight: bolder;
+    font-size: 48px;
+    line-height: 16px;
+/*  font-size: 3em;
+    line-height: 0.8em;    */
+    color: black;
+    background-color: yellow;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+
+#odpluskwiacz_ajaksowy div #debugger_zamykanie:hover {
+    background-color: #ddd;
+}
+
+
+#odpluskwiacz_ajaksowy label {
+    display: inline-block;
+}
+
+.status_ajaksa {
+    display: inline-block;
+    padding: 0.35em 0.8em;
+    border: 3px solid transparent;
+    background-color: transparent;
+    line-height: 1.6em;
+}
+
+.status_norma {
+    border-color: #0b0;
+    background-color: rgba(0, 200, 0, 0.2);
+}
+
+.status_awaria {
+    border-color: #b00;
+    background-color: rgba(200, 0, 0, 0.2);
+}
+
+
+
