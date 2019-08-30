@@ -136,6 +136,81 @@ p.blad_odswiez {
         animation-fill-mode: both; */
 }
 
+div.blad {
+    position: relative;
+    width: 90%;
+    /*font-size: 16px;*/    /* RESET wielkości czcionki dla podległych elementów!*/
+/*    color: yellow;
+    text-align: center;
+    font-size: 1.7em;
+    font-weight: bold;*/
+    padding: 1.2em;
+    margin: 3px auto;
+
+    background-color: darkred;
+    border: 3px solid #eee;
+    box-shadow: 0px 0px 10px 2px #333 inset; 
+    transition: all 0.7s;
+    
+    /*    animation: zolty_blysk 2s ease-out;
+        animation-fill-mode: both; */
+}
+
+
+div.blad .blad_ikona {
+    float: left;
+    width: 100px;
+    height: 100px;
+/*  margin: 0.5em;*/
+    text-align: center;
+    color: darkred;
+    font-size: 104px;    /* wartośc bezwzględna */
+    /*    font-size: 6.5em;*/
+
+    line-height: 98px;
+    /*line-height: 0.95em;*/
+    font-weight: bolder;
+    text-shadow: 0 0 2.5px white;
+/*    width: 1.3em;    */
+/*    padding: 0.5em 1em;    */
+    background-color: yellow;
+    border-radius: 50%;
+    
+}
+
+div.blad .krzyzyk_zamykanie
+{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 0.2em;
+    padding-bottom: 0.5em;
+    font-weight: bolder;
+    font-size: 48px;
+    line-height: 16px;
+/*  font-size: 3em;
+    line-height: 0.8em;    */
+    background-color: yellow;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+
+div.blad .krzyzyk_zamykanie:hover
+{
+    background-color: #ddd;
+}
+
+
+div.blad h2
+{
+    color: yellow;
+}
+
+div.blad p
+{
+    color: white;
+}
+
 .clearfix::after {
     content: "";
     clear: both;
@@ -660,8 +735,6 @@ div#spis_tresci div#wybrane_galerie_spis {
     overflow: hidden;
     width: 100%;	
 }
-
-
 
 
 div#spis_tresci nav#spis_sterowanie {
@@ -1252,12 +1325,15 @@ footer#stopka ul {
 }
 
 footer#stopka ul li {
-    display: inline;
+    display: inline-block;    /* inline było */
     background-color: whitesmoke;       /*  #c3d5e2 */
     padding: 0.1em 0.5em;
     padding-left: 2em;
+    margin-bottom: 0.4em;
+    margin-left: 0.25em;
     font-size: 13px;
-    line-height: 28px;    
+    line-height: 18px; 
+    /*line-height: 28px;*/        /* 28px dla inline, kilkanaście px dla inline-block */
     text-align: center; 
     border: 1px solid #333;
     background: url(grafiki/tak_nie_ikona.png) 4px 1px no-repeat, whitesmoke;
@@ -1976,4 +2052,27 @@ input[type=range]:hover::-ms-fill-upper {
         display: none !important;    /* albo tak, albo bezpośrednie kasowanie stylu w elemencie poprzez JS */ 
         /*    background-color: firebrick !important;    */
     }
+}
+
+
+
+/*    --------------------------       DEBUGOWANIE     --------------------------    */
+
+
+#odpluskwiacz_ajaksowy {
+    display: none;
+}
+
+.status_ajaksa {
+    padding: 0.35em 2em;
+    border: 3px solid transparent;
+    line-height: 2.5em;
+}
+
+.status_norma {
+    border-color: #090;
+}
+
+.status_awaria {
+    border-color: #900;
 }

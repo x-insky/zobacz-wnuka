@@ -1,3 +1,115 @@
+v0.5.4 - ajax debugger & status info, engine of artificial notifications & localStorage, (& explainations); new logic of places with error notif; Error Notification System v0.2, not use by now; page refresh-button
+
+* v0.5.4  -- [2018-10-24]
+
+[+] ADDED
+
+-- index.php
+* added a structure 'Ajax Debugger' just before gallery list into adiv with id of 'odpluskwiacz_ajaksowy'
+  - all the content placed into container class but the whole visible element is a element 'h4' content
+  - new line between content as a distributor 
+  - first row is a notifier of a state (working / errors)
+  - second row changes the state with buttons and their actions
+  - checkbox allows to remeber action as a permanent if is selected before click on button
+
+-- zlobek-styl.css
+* added style to describe simple displaying of 'Ajax debugger'
+  - set of two or more rows (second row may be divided, depending of the available width)
+  - initial hiding of the whole structure
+  - first row uses a class 'status_ajaksa', where defined transparent border color and little padding to push away element border
+* created also a two classes 'status_norma' and 'status_awaria', where defined only a border color
+  - these two classes are used by JS logic to assign only one of them to element with 'status_ajaksa' class
+* added new class for describing complex element of bug notify 
+  - a class with name 'blad' for 'div' elements
+  - different from a previously defined class 'blad' for 'p' elements ( these classes are similar but used in different elements)
+  - added also a stylesd for their subelements like: 'h2' - title, 'p' - error details, class 'blad_ikona' - like image attention, class 'krzyzyk_zamykanie' - an interactive element of closing
+  - also added hover state with changed look on interactive element to point a possible action
+  - on the left or upper side of main element is placed 'warning image', the closing button is situated on the top-right corner
+  - the description is displayed afer a title of the message
+  - selected dark red as background color and noticeable light colored texts as any description or title 
+  - a goal to create many error notifications by JS and live changing of the content of the page 
+
+-- witryna.js
+* explaination the logic of 'Ajax Debugger' here (with connection of its new HTML structure):
+  - presents the actual state of the ajax debugger with colors
+  - notification with green border means not interrupted actions
+  - notification with red border the ajax actions are disrupted
+  - next line box controlls the above border and Ajax request behavior, buttons changes that binary state from right work to error
+  - checkbox is used to remeber the state between any page reload, if selected then later action is remembered on client browser
+
+* constructed function 'GenerujPowiadomienieOBledzie' to build an error notification by given options
+  - uses default inside 
+  - also uses jQuery 'extend()' method to extend collection by given parameters
+  - at least is needed a title and a description to build a standard notification with closing button
+  - it's possible to build singulary notification with special value of attached attribute (used to build and modify the same notification element)
+  - a conditional builing of an inside structure, depending from the value of given parameters (with extra content returned, e.g. buttons, additional classes, etc.) 
+  - fired when any unsuccessful Ajax request or any error occurs connected with Ajax
+* added a sample notification with sample title and description
+  - there is no error now, it's just a test of a working system of 'Live Inserting Content'!
+  - but if something goes wrong with server or forced error occurs (from simulated environment of function 'WystartujDebuggerLokalny') then the 'real notification' will be presented
+  - for now old errors notification system works, not yet replacement by this new function
+
+* declared function 'WystartujDebuggerLokalny' to purpose of internally controlling state of ajax calls
+  - uses few declared inside functions
+* 'ZepsujAjaksa' is a function which can disturb in any Ajax request by messing in its address (incorect URL to file and/or bad query string)
+  - it also immediatelly changes the border color of the status notification to the red
+* 'NaprawAjaksa' is a function which is opposite to previously defined and it restores a good configuration of Ajax
+  - it removes class of 'status_awaria' and adds 'status_norma' to the status element so it's immediatelly noticeable that Ajax status is OK now (by green border around status element)
+* inside function ''WystartujDebuggerLokalny' defined also an event system on click on any two buttons under the status area
+  - buttons are ON/OFF switches and fires a functions, connected to the given click event (previously defined as 'NaprawAjaksa' or 'ZepsujAjaksa')
+  - also on every click of button is verified state of checkbox
+  - if it's set then a special values is set insida a localStorage mechanism
+  - depending that values the overall 'WystartujDebuggerLokalny' function operates
+* standard way is a positive working of logic with internal calling of 'NaprawAjaksa' inside
+  - but if special parameter value is present in firing of 'WystartujDebuggerLokalny' or inside a localStorage are stored another special value then is fired function 'ZepsujAjaksa'
+  - a checkbox is auto selected if it's stored a special variable and its value inside localStorage -- definitely the site won't work well then, and a notification of error will be shown
+* with above logic it's possible to behaviorally testing a communications between nursery webserver and this application
+  - simulating or just playing with try of reading of contents
+  - it's possible to catch new errors on new states of application
+  - localStorage saves the state for current web browser, resetting the state is possible by removing selection of checkbox and clicking on change-state-of-Ajax button
+
+[*] MODIFIED
+
+-- index.php
+* added new item inside a list in footer 
+
+-- zlobek-styl.css
+*  changed style of displaying list elements inside unordered list in footer area
+  - changed element do be displayed as 'inline-block' from previously defined 'inline'
+  - changed also a 'line-height' atribute from 28px to 18px for almost identical look
+  - added a little of bottom margin, which was impossible before 
+  - see more inside fixed section of this update    
+
+-- witryna.js
+* placed declaration 'use strict' at the beginning of file
+* changed logic condition of displaying error notifications while loading gallery list subpages (case 'spis_galerii')
+  - importance of init states of counting of loaded elements, when is first displaying of the error notification
+  - added extra button inwith action of rerfreshing the page in browser window
+  - click event function declared immediately after adding content (event delegations) 
+* also changed logic of every other notification of gallery subpage, is displayed first time or its content is edited if previously existed on page
+  - similar to previously defined logic, where all the errors are counted continuously if they coming from loading gallery subpage
+  - also uses a page scrolling to show current error notification
+* added a two extra error notifications inside function 'GenerujSpisGalerii'
+  - one of them might occur when improper values were readed from nursery webserwer
+  - or any disrupt occur and received content might be incomplete
+  - the first condition and notification is more likely then the second one, but if something was really were wrong then the previously generated conted form the 'WczytajZewnetrznyHTMLdoTAGU' will be displayed only!
+  - added numbers '(1)' and '(2)' inside each of extra two notification content to easier distinguish between them when requested content were received but it turned out that it was incomplete 
+  - tested many times and this extra conditions ocassionally might be met
+
+[F] FIXED
+
+-- zlobek-styl.css (& also depends from content inside 'index.php' or any generated content by JS)
+* changed displaying style of list element, previosly it was 'inline', now 'inline-block' 
+  - a well known option defined in CSS and working good for many years
+  - block element is more configurable by CSS (Eureca! I've reinvented the wheel! ;) )
+  - changes the behavior of element, its content is trying to fit inside the border and/or it's padding, eventually it increase this element height
+  - the whole block element is enlarged to next line, when it's too much content inside it to fit in one row of available space
+  - if any 'artificial spaces' are between content, the element can't be displayed properly in one o more lines (TODO: fix a content inside 'index.php') 
+  - abandon all 'artificial spaces' in future of making texts, when creating static or generated content
+  - fixes: #25 - 'Problem with breaking content (CSS)
+
+---------------------------
+
 v0.5.3 - collecting of unsuccessful ajax requests, one place of notification of that & flashing last error notif; yellow h3s better visible; bigger buttons in upper form field
 
 * v0.5.3  -- [2018-10-19]
@@ -65,7 +177,7 @@ v0.5.3 - collecting of unsuccessful ajax requests, one place of notification of 
   - inside function 'RuchUpuszczaniaJS'
 * changed expression inside function 'UbijReklamy', because hosting company changed method of displaying their big adverisements
 * code cleanings
-  - removed unnecessary spaces from the code (mainly before commas, inside functions calls, e.t.c.)
+  - removed unnecessary spaces from the code (mainly before commas, inside functions calls, etc.)
   - or added extra spaces or comments on function declaration endings
 
 ---------------------------

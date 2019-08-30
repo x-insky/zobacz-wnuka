@@ -1,7 +1,7 @@
+'use strict'; 
 
 $(document).ready(function () {
-'use strict';    
-    
+
 /** GARŚĆ TEORII i FAKTÓW:
 * ścieżka pełna do zdjęcia:	
 * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdj_XXXXX.jpg			// <-- adres zdjęcia, X to cyfra [0..9]
@@ -139,26 +139,38 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 UsunPobraneZadanie( adres_zasobu );   // wyrzucenie rekordu z tablicy żądań -- już przetworzono dany odnośnik (!?...ewentualny wpływ asynchroniczności...!?)  
                 }
                 else
-                {
-                var ileRazyBlad = $('.blad_dolaczenia span').text();
-                    if ( ileRazyBlad == "" ) ileRazyBlad = 0;
-                ileRazyBlad = parseInt( ileRazyBlad ) + 1;
-                console.info('Błąd niepobrania podstrony spisu treści po raz ' + ileRazyBlad);
-                var komunikatOBledzie = "Problem z dołączeniem kolejnego spisu galerii po raz <span>" + ileRazyBlad + "</span>! (STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "))";
-                //var trescKomunikatu = '<p class="blad_dolaczany">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>';    
-                //alert(komunikatOBledzie);
-                    if ( ileRazyBlad > 1 )  // zmień istniejący element lub utwórz jego pierwszą instancję
+                {       // różnicowanie błędu względem pierwszego przebiegu (wystarczy maksymalnie jeden AND)
+                    if ( ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ( g_zaczytana_ilosc_paginacji_galerii == 0 ) && ( g_biezaca_pozycja_galerii == 0 ) && ( g_ilosc_zaczytanych_galerii == 0 ) )  
                     {
-                    $('.blad_dolaczenia').html( komunikatOBledzie + ' <button>Spróbuj ponownie</button>' );
+                    $('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button class="odswiez_strone">Odśwież stronę</button> </p>' );
+                
+                    $('#galeria_spis').on('click', '.odswiez_strone', function () {   // nowa obsługa zdarzenia dla nowego elementu -- tu się wykona jako pierwsza
+                        location.reload(); 
+                    }); // on-click-END
+                        
                     }
                     else
-                    {    
-                    $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>' );
-                    }
-                $('.blad_dolaczenia').removeClass('animacja_zolty_blysk').height(); // usunięcie i bzdurny odczyt z DOM...
-                $('.blad_dolaczenia').addClass('animacja_zolty_blysk');  // aby zmienić stan animacji -- od nowa      
-                PrzewinEkranDoElementu('p.blad_dolaczenia', 500); 
-                }
+                    {
+                    var ileRazyBlad = $('.blad_dolaczenia span').text();
+                        if ( ileRazyBlad == "" ) ileRazyBlad = 0;
+                    ileRazyBlad = parseInt( ileRazyBlad ) + 1;
+                    console.info('Błąd niepobrania podstrony spisu treści po raz ' + ileRazyBlad);
+                    var komunikatOBledzie = "Problem z dołączeniem kolejnego spisu galerii po raz <span>" + ileRazyBlad + "</span>! (STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "))";
+                    //var trescKomunikatu = '<p class="blad_dolaczany">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>';    
+                    //alert(komunikatOBledzie);
+                        if ( ileRazyBlad > 1 )  // zmień istniejący element lub utwórz jego pierwszą instancję
+                        {
+                        $('.blad_dolaczenia').html( komunikatOBledzie + ' <button>Spróbuj ponownie</button>' );
+                        }
+                        else
+                        {    
+                        $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>' );
+                        }
+                    $('.blad_dolaczenia').removeClass('animacja_zolty_blysk').height(); // usunięcie i bzdurny odczyt z DOM...
+                    $('.blad_dolaczenia').addClass('animacja_zolty_blysk');  // aby zmienić stan animacji -- od nowa      
+                    PrzewinEkranDoElementu('p.blad_dolaczenia', 500);
+                    }   // if-END ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ...
+                }   // if-END ( status === "success" )
 
             }); // load-END
             } // try-END
@@ -518,7 +530,17 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa za
     var atrybut_href_pozycja = atrybut_href.lastIndexOf(",a");		    // łatwiejsze nawigowanie z kontekstem - "a" jako numerem galerii
     atrybut_href = atrybut_href.substr( atrybut_href_pozycja + 2 ); // +2 znaki za pozycją (',' i 'a'), poprawna konwersja liczby na początku danego ciągu
     g_ilosc_wszystkich_galerii = parseInt( atrybut_href );
+    
+        if ( ( $temp_odnosnik_tytul.length == 0 ) && ( atrybut_href == '' ) )
+        {
+            $('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej (1). <button class="odswiez_strone">Odśwież stronę</button> </p>' );
+                
+/*            $('#galeria_spis').on('click', '.odswiez_strone', function () {   // ta obsługa zdarzenia już określona  
+                location.reload(); 
+            }); // on-click-END*/
         
+        }
+            
         //g_ilosc_wszystkich_paginacji_galerii    // też szukamy "najostatniejszej" paginacji - podstrony z najwyższym numerem/odnośnikiem
         // czy to mniej zasmieci przestrzeń? (+) nie potrzeba tworzyć tablicy X-elementów, aby pobrać tylko jej ostatni lub przedostani element
     var ostatniaPaginacja = $( g_tag_do_podmiany_spis + " table.galeria tbody tr td a.link_tresc:last" );  // "najbardziej optymalny" wyróżnik toto nie jest 
@@ -534,7 +556,10 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa za
         
             if ( isNaN( ilePaginacji ) || isNaN( g_ilosc_wszystkich_galerii ) ) // jakoby nowy warunek w istniejącym warunku, ale zmienionym już -- zawsze wstawi tylko jeden element info o błędzie
             {
-            $('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button id="odswiez_strone">Odswież stronę</button> </p>' );   
+            $('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej (2). <button class="odswiez_strone">Odśwież stronę</button> </p>' );
+/*            $('#galeria_spis').on('click', '.odswiez_strone', function () {   // ta obsługa zdarzenia już określona 
+                location.reload(); 
+            }); // on-click-END*/
             }
         }
 
@@ -774,11 +799,7 @@ $('div#selektor').show();   // też natychmiast pokaż przycisk-kontener do wybi
 } // GenerujSpisGalerii-END
 
     
-    
-    
-    
-    
-    
+        
     
                 // * ** *** TO  PONIŻEJ  EDYTUJESZ *** ** * 
     
@@ -924,15 +945,10 @@ var $wierszeTabeli = $( kontenerZrodlowy + " tr:nth-child(4n-3)" );
     $(this).css({ "border" : "1px dotted gray" });	
 	}); // each-END
 } // GenerujSpisWybranejGalerii-END
-	    
-    
     
     
     
                 // * ** *** TO  POWYŻEJ  EDYTUJESZ *** ** * 
-    
-    
-    
     
     
     
@@ -1114,7 +1130,94 @@ nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.floor( ( nrGalerii + pozycjaWG
     //nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.ceil( ( nrGalerii + pozycjaWGalerii ) / 5 ) ;
 return nrPodstronyGalerii;
 } // KtoraPodstronaWGalerii-END    
+
     
+function GenerujPowiadomienieOBledzie ( opcjePrzekazane )
+{
+var elementRodzica = '#galeria_spis',
+    budowanyElement = '';
+var opcjeDomyslne = {
+    tytul : 'Wystapił błąd ogólny!',
+    tresc : 'Szczegóły tego błędu...',
+    tryb : 'dodawanie', // dodawanie / zamiana
+    nadanaKlasa : 'blad', // /.blad / .blad_dolaczenia / .blad_odswiez
+    ikonaZamykania : true
+};
+    // budowanie po kolei z warunkowych fragmentów + zakładamy, że przekazana treść stanowi bezpieczny HTML ... pewnie dowolny framework zbudowałby to lepiej
+
+var opcje = $.extend ( {}, opcjeDomyslne, opcjePrzekazane );
+budowanyElement = '<div class="' + opcje.nadanaKlasa + '">' 
+    + '<div class="blad_ikona">!</div>'
+    + '<div><h2>' + opcje.tytul + '</h2>' 
+    + '<p>' + opcje.tresc + '</p>' 
+    + '</div>' ;
+        if ( ( opcje.nadanaKlasa == 'blad_dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
+        {
+        budowanyElement = budowanyElement + '<button class="odswiez_strone">Odśwież stronę</button>' ;
+        // +++  wstawienie przycisku do oświeżenia witryny
+        }    
+
+        if ( opcje.tryb == 'dodawanie' )    // standardowy tryb i działanie
+        {
+        budowanyElement = budowanyElement + '<div class="krzyzyk_zamykanie">x</div>' ;
+        
+            // +++  "krzyżyk" do zamykania do treści
+        }
+    budowanyElement = budowanyElement + '</div>';    
+
+//...
+    
+    
+$( elementRodzica ).prepend( budowanyElement );      
+    
+}   //GenerujPowiadomienieOBledzie-END
+    
+    
+function WystartujDebuggerLokalny ( czyZepsuc ) 
+{
+// definicje wewnątrz wywołania - podległości... tylko, gdy mamy LOKALNE uruchamianie (też testowanie) ;)
+    if ( window.location.host == 'localhost' ) 
+    {
+        function NaprawAjaksa ()
+        {
+        g_przechwytywacz_php = "./przechwytywacz.php";    
+        g_przechwytywacz_php_zapytanie = "?url_zewn=";
+            // wizulizacja zmian  
+        $('.status_ajaksa').removeClass('status_awaria').addClass('status_norma');
+        }
+
+        function ZepsujAjaksa ()
+        {
+        g_przechwytywacz_php = "./przepuszczacz.php";    
+        g_przechwytywacz_php_zapytanie = "?url_dupa=";
+            // wizulizacja zmian  
+        $('.status_ajaksa').removeClass('status_norma').addClass('status_awaria');    
+        }
+
+        // zarejestruj operacje zdarzeń - dwa przeciwstawne przyciski
+        $('.zepsuj').click( function () { 
+            ZepsujAjaksa();
+                if ( $('#awaria_na_stale:checked').length == 1 ) localStorage.setItem('awariaNaStale', 'ZEPSUTE!');     
+        });    
+
+        $('.napraw').click( function () { 
+            NaprawAjaksa();
+                if ( $('#awaria_na_stale:checked').length == 1 ) localStorage.setItem('awariaNaStale', '<BRAK AWARII>');  
+        });    
+
+        // na koniec wymuś automatyczny start "naprawy" -- stan bieżący winien być prawidłowy (chyba, ze określony parametr opcjonalny)    
+    NaprawAjaksa();
+            // odczytanie stanu ze zmiennej...
+        if  ( localStorage.getItem('awariaNaStale') == 'ZEPSUTE!' ) $( '#awaria_na_stale').prop('checked', true);   // ... ewentualnie zaznacz przełącznik na [X]
+            // odczytanie  stanu zminnej i ewentualna akcja (powtórzone 50% warunku :/)
+        if ( ( localStorage.getItem('awariaNaStale') == 'ZEPSUTE!') || ( czyZepsuc == 'ZEPSUJ!' ) ) ZepsujAjaksa();
+
+
+    $('#odpluskwiacz_ajaksowy').show(100);
+    }
+// nie rób nic dla 
+    
+} // WystartujDebuggerLokalny-END    
     
     
 // ---------- *** AUTO URUCHAMIANE *** --------------	
@@ -1951,20 +2054,7 @@ $('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania
     
     */
 
-// ***************************************************************************	
-// ---------- *** AUTOURUCHAMIANIE *** --------------	 
-	
-UbijReklamy();    
-InicjujPrzyciskiWyboruGalerii();
-InicjujPrzyciskiWyboruPodstronyGalerii();    
-	
-ZaczytajSpisGalerii();
-	
-// testowo też do autouruchamiania gry - pierwsza plansza
-InicjujGre();
-OdkryjEmail(); 
-    
-    
+
     
 var Przeciaganie = ( function() {
     
@@ -2091,14 +2181,27 @@ document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, 
     });*/
 
     
-    
-    
-})();      
+})();   // Przeciaganie-END   
     
 	
+// ***************************************************************************	
+// ---------- *** AUTOURUCHAMIANIE *** --------------	 
 // ***************************************************************************		
-
+    
+//WystartujDebuggerLokalny( 'ZEPSUJ!' );    
+WystartujDebuggerLokalny();
+GenerujPowiadomienieOBledzie(); // wymuszony test po raz pierwszy    
+    
+UbijReklamy();    
+InicjujPrzyciskiWyboruGalerii();
+InicjujPrzyciskiWyboruPodstronyGalerii();    
 	
+ZaczytajSpisGalerii();
+	
+// testowo też do autouruchamiania gry - pierwsza plansza
+InicjujGre();
+OdkryjEmail();     
+    
 	
 	// sterowanie wielkością czcionki nagłówka
 	

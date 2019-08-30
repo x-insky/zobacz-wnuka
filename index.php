@@ -71,6 +71,11 @@
                 <div id="spis_tresci">
                     <div id="zaczytany_spis">
                         <h2>Lista galerii ze Żłobka</h2>
+                        <div class="kontener">
+                            <div id="odpluskwiacz_ajaksowy">
+                                <h4><span class="status_ajaksa">Bieżący stan AJAKSA</span><br/><input type="checkbox" name="awaria_na_stale" id="awaria_na_stale"><label for="awaria_na_stale">Ustawić na stałe?</label> <button class="zepsuj">Zepsuj</button> <button class="napraw">Napraw</button> </h4>
+                            </div>
+                        </div>
                         <div class="ciemne_tlo_spis">
                             <div class="kontener">
                                 <div id="galeria_spis">
@@ -250,7 +255,7 @@
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka">&copy;2018 v0.5.3 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
+        <footer id="stopka">&copy;2018 v0.5.4 <button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
@@ -299,8 +304,10 @@
                             <li class="tech_tak">PHP</li>
                             <li class="tech_tak">SPA</li>                        
                             <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
-                            <li class="tech_tak">kompatybilność</li><br />    <!-- psuje efekt, ale cóż robić skoro długi napis kolejny?! -->
+                            <li class="tech_tak">kompatybilność</li>
+                            <li class="tech_tak">localStorage (lokalnie)</li>   <!-- <br /> psuje efekt, ale cóż robić skoro długi napis kolejny?! -->
                             <li class="tech_tak">bezpośrednia manipulacja DOM</li>
+
                         </ul>
                         <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 
                         <ul>
