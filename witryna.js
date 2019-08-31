@@ -46,7 +46,8 @@ var g_element_zewnetrzny = "table.galeria",		//wszystko jest w tablicy o klasie 
  $g_suwak_nr_galerii	= $('input#suwak_galerii'), 
  $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'), 
  $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),    
- g_niewyslane_podstrony = [],     // wszystkie żądania wyświetlenia ...vs lub tylko te do kolejnych podstron 
+ g_niewyslane_podstrony = [],     // wszystkie żądania wyświetlenia ...vs lub tylko te do kolejnych podstron
+ g_prezentacja_wczytywania = {},    
     
  g_tloSrc = '',   //
  g_ileCzesci = 0,
@@ -80,8 +81,10 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             try 
             {	
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
-                if ( status === "success" )// alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
-                {	
+                if ( status === "success" ) // ("success" / "notmodified" / "error" / "timeout" / "parsererror")
+                {	    
+                    // alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
+
                 // logowanie sukcesu ;) -- do tego operacja nad obiektem 'dane', przekazano atrybut 'ktoraPodstrona' zawierający numer podstrony galerii do wyświetlenia 
                 console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania '" 
                             + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny 
@@ -91,18 +94,23 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 NaprawBrakujaceSRCwKontenerze ( tag_podmieniany, true );
                 CzyscNiepotrzebneElementy();	
                 //GenerujPodstronyGalerii( element_witryny, dane.ktoraPodstrona );
-                    if ( $('#nazwa_galerii').hasClass('szara_zawartosc') ) $('#nazwa_galerii').removeClass('szara_zawartosc');  // w przypadku wuystapienia błędu z pobraniem wybranej galerii  -aby przywrócić zywae kolory tego kontenera 
+                    if ( $('#nazwa_galerii').hasClass('szara_zawartosc') ) $('#nazwa_galerii').removeClass('szara_zawartosc');  // w przypadku wystąpienia błędu z pobraniem wybranej galerii - aby przywrócić żywe kolory tego kontenera 
                 GenerujPodstronyGalerii( tag_podmieniany, dane.ktoraPodstrona );                                        
                 }
-                else
+                else    // każdy inny niż "success" stanowi "zły przebieg"
                 {
                 // to nie powinno się generalnie wywoływać, lepiej odwołać się do obsługi błędu w CATCH    
                 /* var komunikatOBledzie = "Problem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
                 $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); */
-                var komunikatOBledzie = "STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")";    
+                var komunikatOBledzie = "STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
                 GenerujPowiadomienieOBledzie({ tytul : 'Problem z załadowaniem podstrony galerii!', tresc : komunikatOBledzie });    // działa lepeij niż wcześniejszy standard
                 PrzewinEkranDoElementu('div.blad', 500);    
                 }
+                if ( status === "complete" )    // test, ale tego stanu być nie powinno
+                {
+                alert('Test zakończenia żądania - galeria podstrona');
+                }
+                
             }); //load-END
             } //try-END
 
@@ -140,7 +148,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 UsunPobraneZadanie( adres_zasobu );   // wyrzucenie rekordu z tablicy żądań -- już przetworzono dany odnośnik (!?...ewentualny wpływ asynchroniczności...!?)  
                 }
                 else
-                {       // różnicowanie błędu względem pierwszego przebiegu (wystarczy maksymalnie jeden AND)
+                {       // różnicowanie błędu względem pierwszego przebiegu (wystarczy maksymalnie jeden AND z kolejnych)
                     if ( ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ( g_zaczytana_ilosc_paginacji_galerii == 0 ) && ( g_biezaca_pozycja_galerii == 0 ) && ( g_ilosc_zaczytanych_galerii == 0 ) )  
                     {
                     $('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button class="odswiez_strone">Odśwież stronę</button> </p>' );
@@ -211,7 +219,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     // zmienić parametry wywołania dla rekurencji !!! 
                     // WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zasobu, element_witryny, rodzaj_dzialania, dane );
                 }
-                else
+                else    // cokolwiek, głownie "error"
                 {
                 var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
                 //alert(komunikatOBledzie);
@@ -243,7 +251,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
                 //UsunBrakujaceSRCwKontenerze ( element_witryny );  // ponowne kasowanie, teraz wszystkie bez wyjątku wylatują elementy  
                     
-                $('#wczytywanie').hide(100);	// dopiero teraz usunięcie animacji ładowania
+                $('#wczytywanie_podstrony').hide(100);	// dopiero teraz usunięcie animacji ładowania
                 $('#skladowisko').empty();  // zerowanie ewentualnej zawartości w tym kontenerze    
                 $('#skladowisko').show(100);    
                 //$('#skladowisko').show( 100, PrzewinEkranDoElementu( 'div#skladowisko', 200, -8 )  );	// pokaż kontener na zaczytaną zawartość + 
@@ -256,7 +264,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 GenerujPodstronyGalerii ( '#skladowisko_status_wybranej_galerii' );    
 
                 }
-                else
+                else    // cokolwiek, głownie "error"
                 {	
                 var komunikatOBledzie = "Problem z pobraniem wskazanej galerii! Ponów próbę. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
                 //alert(komunikatOBledzie);
@@ -298,7 +306,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 GenerujSpisWybranejGalerii( 'div#skladowisko_wybrane_galerie_spis', 'div#wybrane_galerie_spis', dane.wybranaPaginacja );
                     // zaczytanie wybranego spisu poniżej już istniejącego spisu
                 }
-                else
+                else    // cokolwiek, głownie "error"
                 {	
                 var komunikatOBledzie = "Nie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
                 //alert(komunikatOBledzie);
@@ -365,7 +373,7 @@ var $kontenerDocelowy = $( kontenerDocelowyElement );
 
     
 var wysokoscDokumentu = $(document).height();
-var wysokoscDivWczytywanie = $('#wczytywanie').height();    
+var wysokoscDivWczytywanie = $('#wczytywanie_podstrony').height();    
 var wysokoscDivKomentarz = $('div#komentarz').height();    
 var odlegloscPionowaDocelowego = $kontenerDocelowy.offset().top;
 var wysokoscOknaPrzegladarki = $(window).height();
@@ -375,7 +383,7 @@ console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOk
 
 
 $('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
-$('#wczytywanie').hide(100);	// schowaj informację, skoro wczytano zawartość
+$('#wczytywanie_podstrony').hide(100);	// schowaj informację, skoro wczytano zawartość
 $('#glowna div#komentarz').hide(100);	//showaj opis-informację o ile była pokazana
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
 $kontenerDocelowy.show( 100 );	// pokaż kontener na zaczytaną zawartość ... + przewiń po wyświetleniu całości?
@@ -1132,6 +1140,90 @@ nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.floor( ( nrGalerii + pozycjaWG
 return nrPodstronyGalerii;
 } // KtoraPodstronaWGalerii-END    
 
+
+function InicjujRamkiLadowania ()    // dobrą nazwą okreslić ten kontener
+{
+// póki co trzy notyfikacje - IDeki: "wczytywanie" (podstrona galerii), "wczytywanie_spis", "wczytywanie_wybrane_galerie_spis" (dopisac ewentualne kolejne animacje ładowania)    
+    g_prezentacja_wczytywania = [   // raczej przypisać elmenty z HTMLa tu
+        {   element : 'wczytywanie_spis',
+            ile : 0 },
+        {   element : 'wczytywanie_wybrane_galerie_spis',
+            ile : 0 },
+        {   element : 'wczytywanie_podstrony',
+            ile : 0 },
+
+    ];
+    
+}   // InicjujRamkiLadowania-END
+
+
+function PokazRamkeLadowania ( element, czasPokazania )
+{
+    if ( ( !czasPokazania ) || ( czasPokazania < 0 ) ) czasPokazania = 100; // domyślnie       
+var wybranyElement = -1,
+    krotnoscElementu = -1; 
+    
+    switch ( element )  // też w odwołaniu do kolejnosci typu elementu względem umieszcznenia na www
+    {
+        case 'spis':
+        case 0:
+            wybranyElement =  g_prezentacja_wczytywania[0].element;
+            g_prezentacja_wczytywania[0].ile++;
+            krotnoscElementu = g_prezentacja_wczytywania[0].ile;
+            break;
+
+        case 'spis_wybrane_galerie':
+        case 1:
+            wybranyElement = g_prezentacja_wczytywania[1].element;
+            g_prezentacja_wczytywania[1].ile++;
+            krotnoscElementu = g_prezentacja_wczytywania[1].ile;
+            break;
+            
+        case 'podstrona':
+        case 2:
+            wybranyElement = g_prezentacja_wczytywania[2].element;
+            g_prezentacja_wczytywania[2].ile++;
+            krotnoscElementu = g_prezentacja_wczytywania[2].ile;
+            break;     
+    } // switch-END ( element )
+        
+    if ( ( wybranyElement != -1 ) && ( krotnoscElementu > 0 ) ) $('#' + wybranyElement ).show( czasPokazania );
+}   // PokazRamkeLadowania-END
+
+    
+function UkryRamkeLadowania ( ktoryElement, czasUkrycia )    // zachowanie i wewnatrzne warunki jako całkowite przeciwieństwo poprzednika - PokazRamkeLadowania() 
+{
+    if ( ( !czasPokazania ) || ( czasUkrycia < 0 ) ) czasUkrycia = 100; // domyślnie       
+var wybranyElement = -1,
+    krotnoscElementu = -1; 
+    
+    switch ( ktoryElement )  // też w odwołaniu do kolejnosci typu elementu względem umieszcznenia na www
+    {
+        case 'spis':
+        case 0:
+            wybranyElement =  g_prezentacja_wczytywania[0].element;
+            g_prezentacja_wczytywania[0].ile--;
+            krotnoscElementu = g_prezentacja_wczytywania[0].ile;
+            break;
+
+        case 'spis_wybrane_galerie':
+        case 1:
+            wybranyElement = g_prezentacja_wczytywania[1].element;
+            g_prezentacja_wczytywania[1].ile--;
+            krotnoscElementu = g_prezentacja_wczytywania[1].ile;
+            break;
+            
+        case 'podstrona':
+        case 2:
+            wybranyElement = g_prezentacja_wczytywania[2].element;
+            g_prezentacja_wczytywania[2].ile--;
+            krotnoscElementu = g_prezentacja_wczytywania[2].ile;
+            break;     
+    } // switch-END ( element )
+        
+    if ( ( wybranyElement != -1 ) && ( krotnoscElementu <= 0 ) ) $('#' + wybranyElement ).hide( czasPokazania );
+}   // PokazRamkeLadowania-END
+    
     
 function GenerujPowiadomienieOBledzie ( opcjePrzekazane )
 {
@@ -1211,13 +1303,13 @@ function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie )
         // zarejestruj operacje zdarzeń - dwa przeciwstawne przyciski
         $('.zepsuj').click( function () { 
             ZepsujAjaksa();
-                if ( $('#awaria_na_stale:checked').length == 1 ) AwariaWLocalStorage() ;
+                if ( $('#awaria_na_stale:checked').length == 1 ) AwariaWLocalStorage() ;    // ustawianie konkretnej wartości dla "awarii" lub czyszcznie pamięci dla tej komórki
                 else ZerujLocalStorage();
         });    
 
         $('.napraw').click( function () { 
             NaprawAjaksa();
-                if ( $('#awaria_na_stale:checked').length == 1 ) NaprawaWLocalStorage() ;
+                if ( $('#awaria_na_stale:checked').length == 1 ) NaprawaWLocalStorage() ;    // ustawianie konkretnej wartości dla "poprawnego działania" lub czyszcznie komórki pamięci
                 else ZerujLocalStorage();
         });    
 
@@ -1230,8 +1322,8 @@ function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie )
             //     + dopracować PONIŻSZE warunki -- od nich zależy inicjownanie belki sterującej przy autortarcie programu..
         // ...  + localStorage.removeItem()
         
-        
-        if  ( localStorage.getItem('awariaNaStale') == '<AWARIA!>' )
+            // inicjowanie stanu AJAKSA: 
+        if ( localStorage.getItem('awariaNaStale') == '<AWARIA!>' )
         {
         $( '#awaria_na_stale').prop('checked', true);   // ... ewentualnie zaznacz przełącznik na [X] 
             //  ... 
@@ -1243,7 +1335,7 @@ function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie )
         ZepsujAjaksa();
         }
 
-    PokazDebuggowanie();    //z tym bym poczekał na reakcje - kliknięcie własciwego przycisku... póxniej usunąć po testach komunikatów o błędach
+    PokazDebuggowanie();    //z tym bym poczekał na reakcje - kliknięcie własciwego przycisku... później usunąć po testach komunikatów o błędach
     }
 // nie rób nic dla 
     
@@ -1261,7 +1353,7 @@ return false;
     
 function InicjujLocalStorage () {
 var CoWStorage = OdczytajLocalStorage;
-    if ( CoWStorage == '<AWARIA!>' || CoWStorage == '<BRAK AWARII>')
+    if ( CoWStorage == '<AWARIA!>' || CoWStorage == '<BRAK AWARII>')    // "zaptaszenie" checkboksa tylko, gdy jedna z tych wartość jako zawartość 
     {
     $( '#awaria_na_stale').prop('checked', true);    
     PokazDebuggowanie();
@@ -1830,7 +1922,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
         }
     $( g_miejsce_na_zdjecia ).empty();
     $('nav#nawigacja_galeria').empty(); 
-    $('#wczytywanie').show(100);    
+    $('#wczytywanie_podstrony').show(100);    
 
     PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania           
         
