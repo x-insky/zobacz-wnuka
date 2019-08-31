@@ -1,3 +1,93 @@
+v0.5.7 - prepared logic for hide/show of notifications of loading contents by Ajax; exchanged color of closing buttons; centered belt of Ajax status; alt in imgs; renamed id of loading notification
+
+* v0.5.7  -- [2018-11-20]
+
+[+] ADDED
+
+-- index.php
+* added an 'alt' attribute inside all 'img' tag
+  - for now with empty content
+
+-- witryna.js
+* added semi-global variable for collecting the state of all page loading notifications, named 'g_prezentacja_wczytywania'
+  - used by many later defined function
+* JS logic allows for showing the animated notification while one or few Ajax requests were send simultaneously
+  - the same or similar sent request are counted (wielokrotnie)
+  - used mainly by showing next pages of gallery list, the load button might be pressed few times before any content returns from any  of Ajax requests (unordered resolving, also important!)
+* created function 'InicjujRamkiLadowania' to initialize that state
+  - defines a table of object, where each element is referenced to page element by its id and number of occurrences
+  - numbers initialized as 0
+* defined a function 'PokazRamkeLadowania' which allows to show given notifier element with specified time of appearing this animations
+  - defined for every notify element of loading content with rotating image inside
+  - added verifying logic values of parameters
+  - uses a referenced names similar to ids of existing notification elements on page
+  - uses also a consecutive number describing a occurence of next notification element on a page
+  - only if element is defined on an inner list then its status might change by parameter, which increases counter of given element inside object
+  - only if value of counter of given parameter is positive (important!), the specified element is showed on page with given time of appearing animation 
+* defined function 'UkryRamkeLadowania' which hides specified notification of loading content
+  - used when ended processing of Ajax request 
+  - logic as an opposite to previously defined function 'PokazRamkeLadowania'
+  - hides given element of notification only when its internal counter value is zero or below
+  - hiding ends with animation with given time as a parameter
+* two previously declared function for showing or hiding notification are not yet used on page!
+* added conditiona statement for test purpose of listening the state change to 'complete' of a 'load()' function
+* added many comments near the many conditional statements inside function 'WczytajZewnetrznyHTMLdoTAGU'
+  - or in other places of JS code, when any descriptive content is needed
+
+[*] MODIFIED
+
+-- index.php
+* changed name of id of the gallery loading notification element 
+   - changed from 'wczytywanie' to 'wczytywanie_podstrony'
+  - notification inside currently displayed gallery or its subpage 
+  - for distinguish from othe better names of loading notifications
+* slighty modified content inside list in footer area
+
+-- zlobek-styl.css
+* exchanged background color of site closing buttons
+  - all buttons have exchanged their background color with their hover state background color and back again
+  - also exchanged colors of borders
+  - exchanged yellow color to medium gray and vice versa
+  - including class 'krzyzyk_zamykanie' of notification and id 'debugger_zamykanie' of Ajax status belt
+  - a better notification of possible actions
+* proper centered of Ajax status belt with right side
+
+-- witryna.js
+* changed JS code references for already changed name of element id ('wczytywanie_podstrony')
+* cosmetic change of text of an error notification inside function 'WczytajZewnetrznyHTMLdoTAGU'
+
+---------------------------
+
+v0.5.6 - added compatibility of html5shiv; '&times' better for all than regular 'x', fit CSS & JS for that
+
+* v0.5.6  -- [2018-11-16]
+
+[+] ADDED
+
+-- index.php
+* added link to external script source, a 'html5shiv' script
+  - enables styling of 'unknown HTML5 elements' if youy are using an old version of IE 
+
+[*] MODIFIED
+
+-- index.php
+* added down arrow imnside footer button to indicate drop-down content underneath
+* changed closing 'x' symbol from a letter to special HTML character inside a Ajax status belt
+* decreased indentations inside HTML code of page head area
+
+-- zlobek-styl.css
+* changed styles for exchanged 'x' symbol of any closing action inside any notification
+   - class 'krzyzyk_zamykanie' needed corrected padding and line height due new element has different dimensions
+  - removed paddings from media gueries of wider screens 
+* added thin border around closing button of Ajax debugger with id 'debugger_zamykanie'
+  - almost the same colors like fill color of the element, also in hover state
+
+-- witryna.js
+* delicate modification of generated content inside function 'GenerujPowiadomienieOBledzie'
+  - uses a special HTML symbol of 'times;' instead regular 'x' letter for closing button when is builded a regular notification of error
+
+---------------------------
+
 v0.5.5 - Simulatron of Ajax, advanced controll, lot of logic & display; with OOP inside for logic & localSorage; better notifications with 'X', one sample notif @ start; restyled notif; footer button ON/OFF; header background
 
 * v0.5.5  -- [2018-10-30]

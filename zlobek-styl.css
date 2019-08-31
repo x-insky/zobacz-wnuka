@@ -206,20 +206,20 @@ div.blad .krzyzyk_zamykanie
     top: 4px;
     right: 4px;
     padding: 0.2em;
-    padding-bottom: 0.45em;
+    padding-bottom: 0.4em;
     font-weight: bolder;
     font-size: 48px;
-    line-height: 16px;
+    line-height: 26px;
 /*  font-size: 3em;
     line-height: 0.8em;    */
-    background-color: yellow;
+    background-color: #ddd;
     cursor: pointer;
     transition: background-color 0.5s;
 }
 
 div.blad .krzyzyk_zamykanie:hover
 {
-    background-color: #ddd;
+    background-color: yellow;
 }
 
 
@@ -1143,7 +1143,7 @@ nav#nawigacja_galeria button {
     /*border-radius: 4px;*/
 }
 
-div#wczytywanie, div#wczytywanie_spis, div#wczytywanie_wybrane_galerie_spis {
+div#wczytywanie_podstrony, div#wczytywanie_spis, div#wczytywanie_wybrane_galerie_spis {
     display: none;
     padding: 1.5em 2em;
     /* margin: 2em; */
@@ -1151,12 +1151,12 @@ div#wczytywanie, div#wczytywanie_spis, div#wczytywanie_wybrane_galerie_spis {
     border: 3px dotted yellow;
 }
 
-div#wczytywanie h2, div#wczytywanie_spis h2, div#wczytywanie_wybrane_galerie_spis h2 {
+div#wczytywanie_podstrony h2, div#wczytywanie_spis h2, div#wczytywanie_wybrane_galerie_spis h2 {
     color: yellow;
     text-shadow: 1px 1px 6px #666;
 }
 
-div#wczytywanie h2 img, div#wczytywanie_spis h2 img, div#wczytywanie_wybrane_galerie_spis h2 img {
+div#wczytywanie_podstrony h2 img, div#wczytywanie_spis h2 img, div#wczytywanie_wybrane_galerie_spis h2 img {
     /*animation: obroty360 1.2s infinite ease-in;	*/
     animation: obroty180 1.4s infinite ease-in;	  
 }
@@ -1943,7 +1943,7 @@ input[type=range]:hover::-ms-fill-upper {
     div.blad .krzyzyk_zamykanie {
         top: 6px;
         right: 6px;
-        padding-bottom: 0.5em;
+        /*padding-bottom: 0.5em;*/
     }
     
     form#wybierz_galerie input.szerszy_guzik {
@@ -2050,7 +2050,7 @@ input[type=range]:hover::-ms-fill-upper {
     div.blad .krzyzyk_zamykanie {
         top: 10px;
         right: 10px;
-        padding-bottom: 0.55em;
+        /*padding-bottom: 0.55em;*/
     }
     
     div#wymiary {
@@ -2123,7 +2123,7 @@ input[type=range]:hover::-ms-fill-upper {
     z-index: 100;
     top: 5px;
     left: 5px;
-    right: 10px;
+    right: 5px;
     /*width: 100%;*/
     height: auto;
     opacity: 0.8;
@@ -2158,13 +2158,15 @@ input[type=range]:hover::-ms-fill-upper {
 /*  font-size: 3em;
     line-height: 0.8em;    */
     color: black;
-    background-color: yellow;
+    background-color: #ddd;
     cursor: pointer;
+    border: 1px solid #666;
     transition: background-color 0.5s;
 }
 
 #odpluskwiacz_ajaksowy div #debugger_zamykanie:hover {
-    background-color: #ddd;
+    background-color: yellow;
+    border: 1px solid #660;
 }
 
 
