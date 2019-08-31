@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="pl">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Galeria ze Żłobka w Chojnowie</title>
-		<link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
-		<link rel="stylesheet" href="reset.css">
-		<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />  <!-- czcionka Muli -->	
-		<link rel="stylesheet" href="zlobek-styl.css" />
-		<link rel="stylesheet" href="lightbox/css/lightbox.css" />
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Galeria ze Żłobka w Chojnowie</title>
+    <link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
+    <link rel="stylesheet" href="reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />  <!-- czcionka Muli -->	
+    <link rel="stylesheet" href="zlobek-styl.css" />
+    <link rel="stylesheet" href="lightbox/css/lightbox.css" />
 
-		<script src="jquery-3.2.1.js"></script>
-
-	</head>
+    <script src="html5shiv.3.7.3.js"></script>
+    <script src="jquery-3.2.1.js"></script>
+</head>
 
 <body>
 
@@ -250,8 +250,8 @@
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka"><button id="poco_button">Ale po co?</button> <button id="pomoc_button">Pomoc</button> <button id="symulancja_button">Symul-A(JAX)-ncja</button>
-           <p>&copy;2018 v0.5.5 </p>
+        <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button">Symul-A(JAX)-ncja</button>
+           <p>&copy;2018 v0.5.6 </p>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
@@ -342,7 +342,7 @@
     <div id="odpluskwiacz_ajaksowy">
         <div>
             <h4><span class="status_ajaksa">Bieżący stan AJAKSA</span> <button class="zepsuj">Zepsuj</button> <button class="napraw">Napraw</button> <label for="awaria_na_stale" title="Zaznacz/odznacz to pole przed wybraniem Napraw/Zepsuj"> <input type="checkbox" name="awaria_na_stale" id="awaria_na_stale" style="transform: scale(1.5);"> Ustawić na stałe?</label> </h4>
-            <div id="debugger_zamykanie">x</div>
+            <div id="debugger_zamykanie">&times;</div>
         </div>
 
     </div>

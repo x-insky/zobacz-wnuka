@@ -1,3 +1,33 @@
+v0.5.6 - added compatibility of html5shiv; '&times' better for all than regular 'x', fit CSS & JS for that
+
+* v0.5.6  -- [2018-11-16]
+
+[+] ADDED
+
+-- index.php
+* added link to external script source, a 'html5shiv' script
+  - enables styling of 'unknown HTML5 elements' if youy are using an old version of IE 
+
+[*] MODIFIED
+
+-- index.php
+* added down arrow imnside footer button to indicate drop-down content underneath
+* changed closing 'x' symbol from a letter to special HTML character inside a Ajax status belt
+* decreased indentations inside HTML code of page head area
+
+-- zlobek-styl.css
+* changed styles for exchanged 'x' symbol of any closing action inside any notification
+   - class 'krzyzyk_zamykanie' needed corrected padding and line height due new element has different dimensions
+  - removed paddings from media gueries of wider screens 
+* added thin border around closing button of Ajax debugger with id 'debugger_zamykanie'
+  - almost the same colors like fill color of the element, also in hover state
+
+-- witryna.js
+* delicate modification of generated content inside function 'GenerujPowiadomienieOBledzie'
+  - uses a special HTML symbol of 'times;' instead regular 'x' letter for closing button when is builded a regular notification of error
+
+---------------------------
+
 v0.5.5 - Simulatron of Ajax, advanced controll, lot of logic & display; with OOP inside for logic & localSorage; better notifications with 'X', one sample notif @ start; restyled notif; footer button ON/OFF; header background
 
 * v0.5.5  -- [2018-10-30]

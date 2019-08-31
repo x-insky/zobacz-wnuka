@@ -1173,7 +1173,7 @@ budowanyElement = '<div class="' + opcje.nadanaKlasa + '">'
 
         if ( opcje.ikonaZamykania )    // standardowy tryb i działanie
         {
-        budowanyElement = budowanyElement + '<div class="krzyzyk_zamykanie">x</div>' ;
+        budowanyElement = budowanyElement + '<div class="krzyzyk_zamykanie">&times;</div>' ;
         
             // +++  "krzyżyk" do zamykania do treści
         }

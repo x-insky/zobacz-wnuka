@@ -206,10 +206,10 @@ div.blad .krzyzyk_zamykanie
     top: 4px;
     right: 4px;
     padding: 0.2em;
-    padding-bottom: 0.45em;
+    padding-bottom: 0.4em;
     font-weight: bolder;
     font-size: 48px;
-    line-height: 16px;
+    line-height: 26px;
 /*  font-size: 3em;
     line-height: 0.8em;    */
     background-color: yellow;
@@ -1943,7 +1943,7 @@ input[type=range]:hover::-ms-fill-upper {
     div.blad .krzyzyk_zamykanie {
         top: 6px;
         right: 6px;
-        padding-bottom: 0.5em;
+        /*padding-bottom: 0.5em;*/
     }
     
     form#wybierz_galerie input.szerszy_guzik {
@@ -2050,7 +2050,7 @@ input[type=range]:hover::-ms-fill-upper {
     div.blad .krzyzyk_zamykanie {
         top: 10px;
         right: 10px;
-        padding-bottom: 0.55em;
+        /*padding-bottom: 0.55em;*/
     }
     
     div#wymiary {
@@ -2152,6 +2152,7 @@ input[type=range]:hover::-ms-fill-upper {
     right: 4px;
     padding: 0.2em;
     padding-bottom: 0.45em;
+    border: 1px solid #660;
     font-weight: bolder;
     font-size: 48px;
     line-height: 16px;
@@ -2165,6 +2166,7 @@ input[type=range]:hover::-ms-fill-upper {
 
 #odpluskwiacz_ajaksowy div #debugger_zamykanie:hover {
     background-color: #ddd;
+    border: 1px solid #666;
 }
 
 
