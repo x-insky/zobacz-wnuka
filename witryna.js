@@ -102,7 +102,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 // to nie powinno się generalnie wywoływać, lepiej odwołać się do obsługi błędu w CATCH    
                 /* var komunikatOBledzie = "Problem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
                 $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); */
-                var komunikatOBledzie = "STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
+                var komunikatOBledzie = "Nie udało się załadować wskazanej podstrony galerii. Spróbuj ponownie.<br />Diagnostyka: kod błędu nr " + xhr.status + " (" + xhr.statusText.toLowerCase() + ") o statusie \"" + status + "\".";    
                 GenerujPowiadomienieOBledzie({ tytul : 'Problem z załadowaniem podstrony galerii!', tresc : komunikatOBledzie });    // działa lepeij niż wcześniejszy standard
                 PrzewinEkranDoElementu('div.blad', 500);    
                 }
@@ -153,12 +153,13 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 { 
                     // różnicowanie błędu względem pierwszego przebiegu (wystarczy maksymalnie jeden AND z kolejnych)
                     if ( ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ( g_zaczytana_ilosc_paginacji_galerii == 0 ) && ( g_biezaca_pozycja_galerii == 0 ) && ( g_ilosc_zaczytanych_galerii == 0 ) )  
-                    {
-                    $('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button class="odswiez_strone">Odśwież stronę</button> </p>' );
+                    {       // prawdopodobnie ten bład się juz nie wywoła, bo brak lub błędna zzawartość źródłowa wcześniej wywoła inny; dla pewności to samo działanie  
+                    //$('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button class="odswiez_strone">Odśwież stronę</button> </p>' );
+                    GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny.<br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true, ikonaZamykania : false });    
                 
-                    $('#galeria_spis').on('click', '.odswiez_strone', function () {   // nowa obsługa zdarzenia dla nowego elementu -- tu się wykona jako pierwsza
+/*                    $('#galeria_spis').on('click', '.odswiez_strone', function () {   // nowa obsługa zdarzenia dla nowego elementu -- tu się wykona jako pierwsza
                         location.reload(); 
-                    }); // on-click-END
+                    }); // on-click-END*/
                         
                     }
                     else
@@ -364,30 +365,28 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
     } //switch-rodzaj_dzialania-END
 	
 	
-	
-	function CzyscNiepotrzebneElementy() 
+    function CzyscNiepotrzebneElementy () 
     {
-    /* błedy zgłaszana w konsoli dla pobierania niepotrzebnych plików - grafiki:
-                    <img src="zdjecia/zlobek.gif" border="0" align="center">
-                    <img src="zdjecia/zlobek.jpg" border="0">
-                    <img src="zdjecia/zlobek_90_2.jpg" alt="(szerokość: 150 / wysokość: 92)">
-                    <img src="zdjecia/zlobek_90_132.jpg" alt="(szerokość: 190 / wysokość: 190)">
-    + odwołania do plików zewnętrznych witryny macierzystej;
-                    <SCRIPT src='js/cookie.js' type='text/javascript'></SCRIPT>
-                    <LINK href='style/stylglowny.css' rel='stylesheet' type='text/css' />
-    */	
-    var $pierwszyObrazek = $('img[src*="zdjecia/zlobek.gif"]');
-        if ( $pierwszyObrazek.length === 1 ) 
-        {
-        console.info('usuwanie pliku grafiki dla "zdjecia/zlobek.gif"');	
-        $pierwszyObrazek.remove();
-        }
-        //$('img[src*="zdjecia/zlobek.jpg"]').remove();
-        //
+        /* błedy zgłaszana w konsoli dla pobierania niepotrzebnych plików - grafiki:
+                        <img src="zdjecia/zlobek.gif" border="0" align="center">
+                        <img src="zdjecia/zlobek.jpg" border="0">
+                        <img src="zdjecia/zlobek_90_2.jpg" alt="(szerokość: 150 / wysokość: 92)">
+                        <img src="zdjecia/zlobek_90_132.jpg" alt="(szerokość: 190 / wysokość: 190)">
+        + odwołania do plików zewnętrznych witryny macierzystej;
+                        <SCRIPT src='js/cookie.js' type='text/javascript'></SCRIPT>
+                        <LINK href='style/stylglowny.css' rel='stylesheet' type='text/css' />
+        */	
+        var $pierwszyObrazek = $('img[src*="zdjecia/zlobek.gif"]');
+            if ( $pierwszyObrazek.length === 1 ) 
+            {
+            console.info('usuwanie pliku grafiki dla "zdjecia/zlobek.gif"');	
+            $pierwszyObrazek.remove();
+            }
+            //$('img[src*="zdjecia/zlobek.jpg"]').remove();
+            //
     };
 																
 } // END-WczytajZewnetrznyHTMLdoTAGU() - DEFINICJA
-
     
 
 function GenerujPodstronyGalerii ( kontenerZrodlowy, nrWyswietlanejGalerii ) 
@@ -407,7 +406,6 @@ var wysokoscOknaPrzegladarki = $(window).height();
 console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOknaPrzegladarki + "px, PozycjaY #skladowiska: " + odlegloscPionowaDocelowego 
             + "px, wysokość DIV#wczytywanie: " + wysokoscDivWczytywanie + "px, wysokość DIV#komentarz: " + wysokoscDivKomentarz );
 //PrzewinEkranDoElementu('div#skladowisko', 200, -8);  // złe miejsce, przed trteścią
-
 
 $('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
 //$('#wczytywanie_podstrony').hide(100);	// schowaj informację, skoro wczytano zawartość
@@ -541,12 +539,10 @@ console.log("Wymiary PO - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysok
 //	} //if-END $listaPodstron.length >= 1
 } // GenerujPodstronyGalerii-END    
     
-	
 
-function GenerujSpisGalerii() 
+function GenerujSpisGaleriiPierwszyPrzebieg ()
 {
-
- // skoro logika jest w wyswietlaniu ramki ładowania... to może ten warunek psuje efekt?!
+// skoro logika jest w wyswietlaniu ramki ładowania... to może ten warunek psuje efekt?!
 /*
     // schowaj informację, skoro wczytano zawartość
     // if ( ( g_biezaca_pozycja_galerii > 0 ) && ( ( g_biezaca_pozycja_galerii + 1 ) >= g_suma_klikniec_zaladuj ) ) $( g_wczytywanie_spis ).hide(100);
@@ -569,23 +565,27 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa za
     //$( g_wczytywanie_spis ).hide(100); // ukrycie animacji ładowania przy pierwszym zaczytywaniu automatycznym
     // UkryjRamkeLadowania('spis');    // chwilowo wylatuje, warunek 
         
-    // UkryjRamkeLadowania ('');    
     g_ilosc_zaczytanych_galerii	= -5 ;
     var $temp_odnosnik_tytul = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link:first" );	 // dobre do czasu, o ile nie powstanie nowa galeria w trakcie przeglądania starej listy! 
     var atrybut_href = $( $temp_odnosnik_tytul ).attr('href'); // np. "http://zlobek.chojnow.eu/u_tygryskow,a153.html"
     //temp_atrybut = temp_atrybut.split(",")[1]; // jest dobre, ale leży przy dodanym ',' w adresie odnosnika (jako treść)
-    var atrybut_href_pozycja = atrybut_href.lastIndexOf(",a");		    // łatwiejsze nawigowanie z kontekstem - "a" jako numerem galerii
-    atrybut_href = atrybut_href.substr( atrybut_href_pozycja + 2 ); // +2 znaki za pozycją (',' i 'a'), poprawna konwersja liczby na początku danego ciągu
-    g_ilosc_wszystkich_galerii = parseInt( atrybut_href );
+
     
-        if ( ( $temp_odnosnik_tytul.length == 0 ) && ( atrybut_href == '' ) )
+        if ( ( $temp_odnosnik_tytul.length == 0 ) && ( ( atrybut_href == '' ) || ( atrybut_href == undefined ) ) )
         {
-            $('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej (1). <button class="odswiez_strone">Odśwież stronę</button> </p>' );
-                
+            //$('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej (1). <button class="odswiez_strone">Odśwież stronę</button> </p>' );
+        GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny (1). <br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true });
+            
 /*            $('#galeria_spis').on('click', '.odswiez_strone', function () {   // ta obsługa zdarzenia już określona  
                 location.reload(); 
             }); // on-click-END*/
-        
+         return false; // !!!           
+        }
+        else
+        {   // bezpieczniejszy kod na później, bo istnienie wartości undefined generuje błedy
+        var atrybut_href_pozycja = atrybut_href.lastIndexOf(",a");		    // łatwiejsze nawigowanie z kontekstem - "a" jako numerem galerii
+        atrybut_href = atrybut_href.substr( atrybut_href_pozycja + 2 ); // +2 znaki za pozycją (',' i 'a'), poprawna konwersja liczby na początku danego ciągu
+        g_ilosc_wszystkich_galerii = parseInt( atrybut_href );
         }
             
         //g_ilosc_wszystkich_paginacji_galerii    // też szukamy "najostatniejszej" paginacji - podstrony z najwyższym numerem/odnośnikiem
@@ -603,10 +603,12 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa za
         
             if ( isNaN( ilePaginacji ) || isNaN( g_ilosc_wszystkich_galerii ) ) // jakoby nowy warunek w istniejącym warunku, ale zmienionym już -- zawsze wstawi tylko jeden element info o błędzie
             {
-            $('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej (2). <button class="odswiez_strone">Odśwież stronę</button> </p>' );
+            //$('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej (2). <button class="odswiez_strone">Odśwież stronę</button> </p>' );
+            GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny (2). <br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true });    
 /*            $('#galeria_spis').on('click', '.odswiez_strone', function () {   // ta obsługa zdarzenia już określona 
                 location.reload(); 
             }); // on-click-END*/
+            return false; // !!!
             }
         }
 
@@ -643,10 +645,18 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa za
     
     g_suma_klikniec_zaladuj++;  // użycie w ch-rze licznika automatycznego     
     } //if-END ( g_biezaca_pozycja_galerii === 0 )
-
+} // GenerujSpisGaleriiPierwszyPrzebieg-END
     
+
+function GenerujSpisGalerii () 
+{
+    if ( g_biezaca_pozycja_galerii === 0 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
+    {
+    GenerujSpisGaleriiPierwszyPrzebieg();
+    }
+        
 g_biezaca_pozycja_galerii++;
-g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; //inkrementacja o każde 5 zdjęc z poszczególnych zaczytanych galerii 	
+g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; // inkrementacja o każde 5 zdjęć z poszczególnych zaczytanych galerii 	
 
     // poniższy log przeniesiono z początku tej funkcji z uwagi na celowość wyświetlania w nim zaczytanych danych z zewnatrz przy pierwszym przebiegu
 console.log('Wszystkich podstron jest ' + g_ilosc_wszystkich_paginacji_galerii + ', zaczytano ' + g_zaczytana_ilosc_paginacji_galerii 
@@ -722,7 +732,7 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" 
             { 
             $( $odnosnikiTytuly[i] ).find('h2').addClass('wyzszy'); // klasa ze zwiększonym odstępem pionowym - wyśrodkowanie w pionie
             }				
-            if ( ( trescTytulu.length >= 25 ) && ( trescTytulu.length < 35 )  ) 
+            if ( ( trescTytulu.length >= 24 ) && ( trescTytulu.length < 35 )  ) 
             { 
             $( $odnosnikiTytuly[i] ).find('h2').addClass('mniejszy'); // klasa z mniejszą czcionką o 25% pkt.
             }
@@ -1000,23 +1010,25 @@ var $wierszeTabeli = $( kontenerZrodlowy + " tr:nth-child(4n-3)" );
     
     
 	
-function OdczytajTresciOdnosnikaWybranejGalerii ( przeszukiwanyKontener, pozycjaElementuWGalerii ) 
+function OdczytajTresciOdnosnikaWybranejGalerii ( przeszukiwanyKontener, pozycjaElementuWSpisiePodstrony ) 
 {
 var odczytaneNamiary = {};
-var roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor b a.link:eq(" + parseInt( pozycjaElementuWGalerii ) + ")" ); // zmienna ogólna
+var roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor b a.link:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ); // zmienna ogólna
 odczytaneNamiary.tytul = roboczaWartosc.text();
 odczytaneNamiary.adres = roboczaWartosc.attr('href'); // + normalizacja ścieżki na pełny zewnętrzny serwer poniżej  
 odczytaneNamiary.adres = g_protokol_www + g_adres_strony + "/" + odczytaneNamiary.adres ;
-odczytaneNamiary.opis = $( przeszukiwanyKontener + " td blockquote div[align=justify]:eq(" + parseInt( pozycjaElementuWGalerii ) + ")" ).text();
-roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWGalerii ) + ")").attr('src') ;    
+odczytaneNamiary.nrGalerii = parseInt( odczytaneNamiary.adres.substr( odczytaneNamiary.adres.lastIndexOf(",a") + 2 ) ); // już sprawdzony algorytm pozyskiwnia numeru galerii/podstrony
+odczytaneNamiary.opis = $( przeszukiwanyKontener + " td blockquote div[align=justify]:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).text();
+roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")").attr('src') ;    
 roboczaWartosc = g_protokol_www + g_adres_strony + "/" + roboczaWartosc ; // normalizacja ścieżki na pełny zewnętrzny serwer
 odczytaneNamiary.srcObrazka = roboczaWartosc;
-roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor font:eq(" + parseInt( pozycjaElementuWGalerii ) + ")" ).text();    
+roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor font:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).text();    
 odczytaneNamiary.data = roboczaWartosc.replace("data publikacji: ", "z dnia: "); 
     
-console.log('Przeszukując "' + przeszukiwanyKontener + '" natrafiono na datę publikacji "' + roboczaWartosc + '" dla tytułu o indeksie +' + pozycjaElementuWGalerii );
+console.log('Przeszukując "' + przeszukiwanyKontener + '" natrafiono na datę publikacji "' + roboczaWartosc + '" dla tytułu o indeksie +' + pozycjaElementuWSpisiePodstrony +
+            '. ADRES_pełny: ', odczytaneNamiary.adres, ', NR_galerii: ', odczytaneNamiary.nrGalerii);
     // kasowanie SRC z IMG dla wskazanego tytułu galerii, aby nie było problemu z GET dla otrzymanego wycinka witryny macierzystej 
-$( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWGalerii ) + ")" ).removeAttr('src');
+$( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).removeAttr('src');
 return odczytaneNamiary;    // zwróć obiekt 
 
 } // OdczytajTresciOdnosnikaWybranejGalerii-END
@@ -1138,7 +1150,7 @@ var trescDaty = galeria.data;   // przykładowa: "z dnia: 2016-02-25 18:45"
 trescDaty = trescDaty.slice( trescDaty.indexOf(":")+2, trescDaty.lastIndexOf(":")-3 ); 
 trescDaty = '(' + trescDaty.replace(/-/g, '.') + ')'; // zamiana WSZYSTKICH dwóch łaczników na kropki
     
-var trescHtml = '<div class="kontener"><h2>' + galeria.tytul + '</h2>'; // najpierw <h2>, aby go ewentualny <img> z float nie wyprzedzał na wąskim ekranie
+var trescHtml = '<div class="kontener"><h2><span>' + galeria.nrGalerii + '</span>' + galeria.tytul + '</h2>'; // najpierw <h2>, aby go ewentualny <img> z float nie wyprzedzał na wąskim ekranie
 trescHtml += '<img src="' + galeria.srcObrazka +'" alt="' + galeria.tytul + '" />';
 // trescHtml += '<h2>' + galeria.tytul + ' <span class="data">' + trescDaty + '</span></h2>';
 trescHtml += '<p class="data">' + trescDaty + '</p>';    
@@ -1267,7 +1279,7 @@ var wybranyElement = -1,
             g_prezentacja_wczytywania[2].ile--;
             krotnoscElementu = g_prezentacja_wczytywania[2].ile;
             break;     
-    } // switch-END ( element )
+    } // switch-END ( ktoryElement )
       
     // MA POZOSTAĆ PONIŻSZE: ... zamiast tego co po drugim komentarzu
 //    if ( ( wybranyElement != -1 ) && ( krotnoscElementu <= 0 ) ) $('#' + wybranyElement ).hide( czasUkrycia );
@@ -1287,49 +1299,76 @@ var elementRodzica = '#galeria_spis',
 var opcjeDomyslne = {
     tytul : 'Wystapił błąd ogólny!',
     tresc : '&lt;tu szczegóły błędu...&gt;',
-    jednorazowy : true,
-    ikonaZamykania : true, // scalić to z powyższym (lub owrotnie) bo ta sama flaga
+    ikonaZamykania : true, 
+        jednorazowy : true, // scalić to z powyższym (lub odwrotnie) bo ta sama flaga
     tryb : 'dodawanie', // dodawanie / zamiana / ... - też częściowo tożsame z tym co wyżej
-    nadanaKlasa : 'blad', // .blad / .blad_dolaczenia / .blad_odswiez
-    dodatkowaKlasa : '', // '' / .blad_dolaczenia / .blad_odswiez
-    przyciskAkcji : false,
-    trescPrzyciskuAkcjiDolaczanie : 'Powtórz działanie',
-    trescPrzyciskuAkcjiOdswiez : 'Odśwież stronę'
+        nadanaKlasa : 'blad', // .blad / .blad_dolaczenia / .blad_odswiez
+        dodatkowaKlasa : '', // '' / .blad_dolaczenia / .blad_odswiez -- dwie powyższe do rezygnacji po precyzyjnej kategoryzacji przyciskow
+    przyciskAkcjiOdswiez : false,
+    trescPrzyciskuAkcjiOdswiez : 'Odśwież stronę',
+    przyciskAkcjiDolacz : false,
+    trescPrzyciskuAkcjiDolacz : 'Powtórz działanie'
 };
-    // budowanie po kolei z warunkowych fragmentów + zakładamy, że przekazana treść stanowi bezpieczny HTML ... pewnie dowolny framework zbudowałby to lepiej
+    // budowanie po kolei z warunkowych fragmentów + zakładamy, że przekazana treść stanowi bezpieczny HTML ... pewnie dowolny framework frontendowy zlepiłby to lepiej w lepszego htmla
 
 var opcje = $.extend ( {}, opcjeDomyslne, opcjePrzekazane );
+    
+    
 budowanyElement = '<div class="' + opcje.nadanaKlasa + '">' 
     + '<h2 class="blad_tytul">' + opcje.tytul + '</h2>'
     + '<div class="blad_tresc">'
-    + '<div class="blad_ikona">!</div>'
-    + '<p>Szczegóły powstałego błędu:<br />' + opcje.tresc + '</p>' 
-    + '</div>' ;
-        /* if ( ( opcje.nadanaKlasa == 'blad_dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
+    + '<div class="blad_ikona">!</div>';
+    //    + '<p>Szczegóły powstałego błędu:<br />' // rezygnacja z "zajmowacza miejsca"
+        if ( opcje.tryb == 'zamiana' )
         {
-        budowanyElement = budowanyElement + '<button class="odswiez_strone">Odśwież stronę</button>' ;
-        // +++  wstawienie przycisku do oświeżenia witryny
-        }*/
-        if ( ( opcje.przyciskAkcji ) && ( opcje.dodatkowaKlasa != '' ) )    // wymaga dodania przycisku do odświeżenia strony
-        {
-            // działania zależne od ewentualnej dołączonej klasy (dwie pozycje wzajemnie wykluczające się) -- przy ewentualnym trzecim (hmm... czwartym) rodzaju błędu zastosować 'switch'
-            if ( opcje.dodatkowaKlasa == 'blad_dolaczenia' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiDolaczanie + '</button>';
-            else if ( opcje.dodatkowaKlasa == 'blad_odswiez' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiOdswiez + '</button>'; 
-        // +++  wstawienie przycisku do oświeżenia witryny
-        }    
+            // generowanie treści sztucznej z doklejeniem tego do przekazanego komunikatu o błędzie (przed lub za treścią)
+            // tu weryfikacja, czy powiadomienie tego typu już jest na stronie -> ewentualne pobranie wartości 
 
-        if ( opcje.ikonaZamykania )    // standardowy tryb i działanie
-        {
-        budowanyElement = budowanyElement + '<div class="krzyzyk_zamykanie">&times;</div>' ;
-        
-            // +++  "krzyżyk" do zamykania do treści
         }
-    budowanyElement = budowanyElement + '</div>';    
+        else
+        {
+        budowanyElement += '<p>' + opcje.tresc + '</p>';  
+        }
+        
+        if ( ( opcje.przyciskAkcjiOdswiez ) || ( opcje.przyciskAkcjiDolacz) )    // wersja zagmatwana
+        {   // nigdy więcej składania htmla w postaci tekstowej!
+        budowanyElement += '<h4>';
+            if ( opcje.przyciskAkcjiOdswiez )
+            {
+            budowanyElement += '<button class="odswiez_strone">' + opcje.trescPrzyciskuAkcjiOdswiez + '</button> ';
+            }
+            if ( opcje.przyciskAkcjiDolacz )
+            {
+            budowanyElement += '<button class="dodaj_strone">' + opcje.trescPrzyciskuAkcjiDolacz + '</button> ';   // określić klasę lub id dla przycisku 
+            }
+        budowanyElement += '</h4>'; 
+        }     
+budowanyElement += '</div>'; // zamykacz dla div.blad_tresc
+    
+    /* if ( ( opcje.nadanaKlasa == 'blad_dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
+    {
+    budowanyElement = budowanyElement + '<button class="odswiez_strone">Odśwież stronę</button>' ;
+    // +++  wstawienie przycisku do oświeżenia witryny
+    }*/
+/*        if ( ( opcje.przyciskAkcji ) && ( opcje.dodatkowaKlasa != '' ) )    // wymaga dodania przycisku do odświeżenia strony
+    {
+        // działania zależne od ewentualnej dołączonej klasy (dwie pozycje wzajemnie wykluczające się) -- przy ewentualnym trzecim (hmm... czwartym) rodzaju błędu zastosować 'switch'
+        if ( opcje.dodatkowaKlasa == 'blad_dolaczenia' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiDolaczanie + '</button>';
+        else if ( opcje.dodatkowaKlasa == 'blad_odswiez' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiOdswiez + '</button>'; 
+    // +++  wstawienie przycisku do oświeżenia witryny
+    }  */  
 
+    if ( opcje.ikonaZamykania )    // standardowy tryb i działanie
+    {
+    budowanyElement = budowanyElement + '<div class="krzyzyk_zamykanie">&times;</div>' ;
+        // +++  "krzyżyk" do zamykania do treści
+    }
+budowanyElement = budowanyElement + '</div>' ;  // znacznik zamykający cały tag 
 //...
+
     
-    
-$( elementRodzica ).prepend( budowanyElement );      
+$( elementRodzica ).prepend( budowanyElement ); 
+    if ( opcje.dodatkowaKlasa ) $( elementRodzica ).addClass( opcje.dodatkowaKlasa );   // jeżeli ma mieć dodatkowa klasę ten element, to wstawienie jej po wyrenderowiu 
     
 }   //GenerujPowiadomienieOBledzie-END
     
@@ -1616,7 +1655,7 @@ return false;
 }   // UsunPobraneZadanie-END
         
     
-function UbijReklamy()
+function UbijReklamy ()
 {   // 000webhost.com || 000webhostapp.com
 $('a[href*=000webhost]').parent('div').remove();
     
@@ -1682,7 +1721,7 @@ return { dx : g_przesuniecieTlaX, dy: g_przesuniecieTlaY };    // dobrze by był
 }   // WybierzPlansze-END    
 
 
-function RozmiescCzesci( nrPlanszy ) {
+function RozmiescCzesci ( nrPlanszy ) {
 g_nazwaPlanszy = 'Autobus';
 g_nazwaPlanszySciezka = './grafiki/gra/autobus/';
 g_ileCzesci = 10;
@@ -1721,7 +1760,7 @@ var przesuniecieX1 = 1110,
 }    
 
     
-function RozmiescCzesciWzorcowo() 
+function RozmiescCzesciWzorcowo () 
 {
 var fragmenty = $('#plansza img.przenosny');
 var ileFragmentow = fragmenty.length;
@@ -1747,7 +1786,7 @@ var przesuniecieX1 = 1110,
 }
 
     
-function UsunCzesci() {
+function UsunCzesci () {
  $('#plansza img.przenosny').remove();
 }
 
@@ -1823,7 +1862,7 @@ var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpo
         }    
 
     
-function InicjujGre() 
+function InicjujGre () 
 {
 var nrPlanszy = LosujPlansze(); // póki co na pusto
 console.log('Wylosowano nr planszy: ', nrPlanszy);    
@@ -2288,6 +2327,7 @@ $('#banner').hover( function() {
     }
 ); // #banner hover-END
 
+    
 $(window).on('resize', function() {
 var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
     
@@ -2297,7 +2337,12 @@ var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
     $('#gra').hide();
     }   */
     
-});    
+});
+    
+    
+$('#galeria_spis').on('click', '.odswiez_strone', function () {   // globalnie obsługa zdarzenia dla odświeżenia strony -- niezależnie od kolejności wygenerowania komunikatu o błędzie
+    location.reload(); 
+}); // on-click-END    
 
     
 $(document).on('keypress', function( evt ) {    // warunkowanie globalne względem nacisnięcia klawisza 
@@ -2505,7 +2550,8 @@ document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, 
 InicjujRamkiLadowania();    
 //WystartujDebuggerLokalny( 'ZEPSUJ!' );    
 WystartujDebuggerLokalny();
-GenerujPowiadomienieOBledzie(); // wymuszony test po raz pierwszy    
+// GenerujPowiadomienieOBledzie(); // TEST wymuszony po raz pierwszy    
+GenerujPowiadomienieOBledzie({ tytul : 'TEST! Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny (1). (To jest tylko test wywołania, błędu nie ma... ale przycisk reaguje)', przyciskAkcjiOdswiez : true, ikonaZamykania : false });
     
 UbijReklamy();    
 InicjujPrzyciskiWyboruGalerii();

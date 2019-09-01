@@ -162,8 +162,8 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <input type="button" id="losuj_zakres_podstrony" name="losuj_zakres_podstrony" value="Losuj podstronę" />
-                                                <input type="submit" id="suwak_podstrony_submit" name="suwak_podstrony_submit" role="submit" value="Zobacz wybrany" />
+                                                <input type="button" id="losuj_zakres_podstrony" class="szerszy_guzik" name="losuj_zakres_podstrony" value="Losuj podstronę" />
+                                                <input type="submit" id="suwak_podstrony_submit" class="szerszy_guzik" name="suwak_podstrony_submit" role="submit" value="Zobacz wybrany" />
                                                 <div id="form_error">Wymagany wybór spośród dostępnych numerów podstron w spisie treści</div>			
                                             </div>	
                                         </div>  <!-- div#wybor_podstrony_galerii --> 
@@ -252,7 +252,7 @@
         
         
         <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button">Symul-A(JAX)-ncja</button>
-           <p>&copy;2018 v0.5.8 </p>
+           <p>&copy;2018 v0.5.9 </p>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">

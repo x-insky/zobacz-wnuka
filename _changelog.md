@@ -1,3 +1,62 @@
+v0.5.9 - internal error notifications improved, &shadow; separated logic of many function calls; form buttons wider; 
+
+* v0.5.9  -- [2018-11-29]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added a shadow to a class of error notification 
+
+-- witryna.js
+* added false error notification as a test, with button
+  - starts on page init
+  - just a test notification to observe a behavior of connected action elements (notification closing or page refreshing)
+
+[*] MODIFIED
+
+-- index.php
+* added 'szerszy_guzik' class to lower form buttons of selecting any gallery subpage number (for submit and randomizer)
+
+-- zlobek-styl.css
+* marked some styles to future removal by comments
+* added a style for 'span' element, inside a 'h2' element of title
+  - as a better distinguish of gallery number  
+  - also added content for created pseudoelement, created by CSS
+
+-- witryna.js
+* added more descriptive statement text of any prepared error notification instead just a status texts of unsuccessful Ajax request
+  - for easier distinction between notifications of any action requests
+* modified place of click event on element with 'odswiez_strone' class
+  - an event on button inside error notification
+  - moved from the conditional area of code 
+  - moved to the end of the file as a global registered event
+* added an indentation to function declaration code of 'CzyscNiepotrzebneElementy', which is placed inside function 'WczytajZewnetrznyHTMLdoTAGU'
+* separated conditional code statements of function 'GenerujSpisGalerii' into a function 'GenerujSpisGaleriiPierwszyPrzebieg'
+  - code logic from conditional first run
+  - direct call from a function 'GenerujSpisGalerii'
+* added extra conditional statement inside function ''GenerujSpisGaleriiPierwszyPrzebieg''
+  - a purpose of possible Ajax error, so generating a notification of error is a good thing
+  - of course an own defined function is a better way to a notify, than a DOM manipulation
+  - added a secondary condition to get proper values of requested number (here the highest gallery number), if something fails when reading that number by a first time
+* changed a lower range by one inside a conditional statement, inside function 'GenerujSpisGalerii'
+  - corrected after many random tests by displaying lists of galleries
+* changed parameter name inside function 'OdczytajTresciOdnosnikaWybranejGalerii'
+  - to goal of better comprehension by right name
+  - changed every internal use of new name as variable
+* slighty modification inside inside function 'UzupełnijNaglowekBiezacejGalerii' to generate content with new 'span' tag, which surrounds a current gallery number
+  - it's just a test, number not always presented (possible error in display) if not directly selected by an upper form! (TODO of course)
+* modification inside function 'GenerujPowiadomienieOBledzie'
+  - changed order of definition existing attributes of default object
+  - few attributes doubles the already defined ones
+  - simplified the logic and structure of built object
+  - added more conditional and working logic inside already defined logic of adding buttons inside a notify 
+  - also slighty changed logic of adding a closing button of that notification
+* code cleanigs
+  - removed unnecessary empty new lines
+  - added or removed spaces inside declared functions
+
+---------------------------
+
 v0.5.8 - jQuery lib v1 instead v3; Loading Content Notification System in use, showing simultaneous number of requests; blocking & unblocking buttons after action done; enchanced error notifies in use; default keyboard actions blocked
 
 * v0.5.8  -- [2018-11-26]
