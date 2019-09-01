@@ -25,8 +25,8 @@ var g_element_zewnetrzny = "table.galeria",		//wszystko jest w tablicy o klasie 
 
  g_tag_do_podmiany_zdjecia = "div#zawartosc_do_podmiany", //element DOM, do którego load() wstawi zawartość tagu table.galeria z witryny zewnętrznej
  g_miejsce_na_zdjecia = "div#skladowisko", // zamienić na coś sensowniejszego
- g_wczytywanie = "#wczytywanie",
- g_wczytywanie_spis = "#wczytywanie_spis",	
+ // g_wczytywanie_podstrony = "#wczytywanie_podstrony",
+ // g_wczytywanie_spis = "#wczytywanie_spis",	
 
  g_element_zewnetrzny_spis = "table.galeria",   // g_element_zewnetrzny_spis = "td#tresc_glowna.tlo_artykulow",
  g_tag_do_podmiany_spis = "div#galeria_spis_podmiana",
@@ -47,7 +47,7 @@ var g_element_zewnetrzny = "table.galeria",		//wszystko jest w tablicy o klasie 
  $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'), 
  $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),    
  g_niewyslane_podstrony = [],     // wszystkie żądania wyświetlenia ...vs lub tylko te do kolejnych podstron
- g_prezentacja_wczytywania = {},    
+ g_prezentacja_wczytywania = [],  // niejako kontener na stan wszystkich powiadomień o wczytywaniu  
     
  g_tloSrc = '',   //
  g_ileCzesci = 0,
@@ -81,10 +81,10 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             try 
             {	
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
-                if ( status === "success" ) // ("success" / "notmodified" / "error" / "timeout" / "parsererror")
-                {	    
-                    // alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
 
+            UkryjRamkeLadowania('podstrona');  // jawne ukrycie, niezależnie od wyniku + wywalenie tego z wewnatrz GenerujPodstronyGalerii()  
+                if ( status === "success" ) // ("success" / "notmodified" / "error" / "timeout" / "parsererror")
+                {
                 // logowanie sukcesu ;) -- do tego operacja nad obiektem 'dane', przekazano atrybut 'ktoraPodstrona' zawierający numer podstrony galerii do wyświetlenia 
                 console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania '" 
                             + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny 
@@ -133,6 +133,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             try 
             {	
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
+                
+            UkryjRamkeLadowania('spis');    // jawne wymuszenie ukrycia powiadomienia o wczytywania aktualnego "spisu treści", niezależnie czy się elementy wczytały, czy wystapił błąd         
                 if ( status === "success" )
                 {	
                 // alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
@@ -148,7 +150,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 UsunPobraneZadanie( adres_zasobu );   // wyrzucenie rekordu z tablicy żądań -- już przetworzono dany odnośnik (!?...ewentualny wpływ asynchroniczności...!?)  
                 }
                 else
-                {       // różnicowanie błędu względem pierwszego przebiegu (wystarczy maksymalnie jeden AND z kolejnych)
+                { 
+                    // różnicowanie błędu względem pierwszego przebiegu (wystarczy maksymalnie jeden AND z kolejnych)
                     if ( ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ( g_zaczytana_ilosc_paginacji_galerii == 0 ) && ( g_biezaca_pozycja_galerii == 0 ) && ( g_ilosc_zaczytanych_galerii == 0 ) )  
                     {
                     $('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button class="odswiez_strone">Odśwież stronę</button> </p>' );
@@ -218,14 +221,20 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     
                     // zmienić parametry wywołania dla rekurencji !!! 
                     // WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zasobu, element_witryny, rodzaj_dzialania, dane );
+   
                 }
                 else    // cokolwiek, głownie "error"
                 {
-                var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
-                //alert(komunikatOBledzie);
-                $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );                       
-                PrzewinEkranDoElementu('p.blad', 500); 
+                UkryjRamkeLadowania('podstrona');      // tu schowania powiadomienia, skoro błąd przerwał docelowe pobieranie treści dla danej galerii      
+                //var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
+                var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! Nie udało się określić wstępnej lokalizacji.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
+                GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej galerii - wstępny etap!', tresc : komunikatOBledzie });
+                    //alert(komunikatOBledzie);
+                    // $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );                       
+                PrzewinEkranDoElementu('p.blad', 500);
+                OdblokujPrzycisk ( '#suwak_galerii_submit' );   // warunkowo zezwól na kolejną próbę, gdyby się pojawił błąd w komunikacji w trakcie 
                 }
+                
 
             }); // load-END
             } // try-END
@@ -245,13 +254,18 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             try 
             {	  // tu "adres_zasobu" już OBECNY jako ścieżka bezwzględna -- ODMIENNA składnia dla zapytania
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
+                
+            UkryjRamkeLadowania('podstrona');
+            OdblokujPrzycisk ( '#suwak_galerii_submit' );    // zezwól na ponowną akcję, zawsze wywoływane niezależnie od powodzenia bieżącej obsługi    
+                
                 if ( status === "success" )
                 {	
                 console.log( "Pierwsze ładowanie podwójnie zapętlone (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
 
                 //UsunBrakujaceSRCwKontenerze ( element_witryny );  // ponowne kasowanie, teraz wszystkie bez wyjątku wylatują elementy  
                     
-                $('#wczytywanie_podstrony').hide(100);	// dopiero teraz usunięcie animacji ładowania
+                // $('#wczytywanie_podstrony').hide(100);	
+                // UkryjRamkeLadowania('podstrona');   // dopiero teraz powinno być usunięcie animacji ładowania - ale wewnątrz GenerujPodstronyGalerii() jest takowe    
                 $('#skladowisko').empty();  // zerowanie ewentualnej zawartości w tym kontenerze    
                 $('#skladowisko').show(100);    
                 //$('#skladowisko').show( 100, PrzewinEkranDoElementu( 'div#skladowisko', 200, -8 )  );	// pokaż kontener na zaczytaną zawartość + 
@@ -265,10 +279,14 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
                 }
                 else    // cokolwiek, głownie "error"
-                {	
-                var komunikatOBledzie = "Problem z pobraniem wskazanej galerii! Ponów próbę. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+                {
+                //var komunikatOBledzie = "Problem z pobraniem wskazanej galerii! Ponów próbę. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
                 //alert(komunikatOBledzie);
-                $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
+                //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
+                    
+                var komunikatOBledzie = "Problem z załadowaniem wybranej galerii! Nie udało się pobrać docelowej lokalizacji.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
+                GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej galerii - konkretnej!', tresc : komunikatOBledzie });
+    
                 PrzewinEkranDoElementu('p.blad', 500);     
                 }
 
@@ -292,6 +310,10 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             try 
             {	  // tu "adres_zasobu" już jako ścieżka bezwzględna
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
+            
+            UkryjRamkeLadowania('wybrane_galerie_spis');    // jak poprzedni - jawne wywołanie dla dodolnego ze stanówi i zabranie tef funkcjonalności z Generuj...()     
+            OdblokujPrzycisk ( '#suwak_podstrony_submit' );    // zezwól na ponowną akcję, niezależnie od powodzenia bieżącej obsługi - zawsze zostaje to wywołane   
+                
                 if ( status === "success" )
                 {	// dane.wybranaPaginacja
                 console.log( "Ładowanie (" + rodzaj_dzialania + ") dla wybranego " + dane.wybranaPaginacja + " elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
@@ -299,20 +321,23 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 $('div#wybrane_galerie_spis').removeClass('szara_zawartosc');    
                 // Generuj spis wybranej galerii (podstrony spisu treści)
                 //$('div#wybrany_zaczytany_spis').show();    
-                $('div#wczytywanie_wybrane_galerie_spis').hide(100);
-                    
+                // $('div#wczytywanie_wybrane_galerie_spis').hide(100);
                 NaprawBrakujaceSRCwKontenerze( 'div#skladowisko_wybrane_galerie_spis');
                     
                 GenerujSpisWybranejGalerii( 'div#skladowisko_wybrane_galerie_spis', 'div#wybrane_galerie_spis', dane.wybranaPaginacja );
                     // zaczytanie wybranego spisu poniżej już istniejącego spisu
                 }
                 else    // cokolwiek, głownie "error"
-                {	
-                var komunikatOBledzie = "Nie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
-                //alert(komunikatOBledzie);
-                $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
-                PrzewinEkranDoElementu('p.blad', 500);     
+                {
                     
+                //var komunikatOBledzie = "Nie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
+                //alert(komunikatOBledzie);
+                //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
+                    
+                var komunikatOBledzie = "Problem z załadowaniem grupy wskazanych galerii! Ponów próbę.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
+                GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania grupy galerii!', tresc : komunikatOBledzie });
+                    
+                PrzewinEkranDoElementu('p.blad', 500);     
                 }
 
             }); // load-END
@@ -340,7 +365,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 	
 	
 	
-	function CzyscNiepotrzebneElementy() {
+	function CzyscNiepotrzebneElementy() 
+    {
     /* błedy zgłaszana w konsoli dla pobierania niepotrzebnych plików - grafiki:
                     <img src="zdjecia/zlobek.gif" border="0" align="center">
                     <img src="zdjecia/zlobek.jpg" border="0">
@@ -364,7 +390,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
     
 
-function GenerujPodstronyGalerii ( kontenerZrodlowy, nrWyswietlanejGalerii ) { 	// poniżej wartości domyślne dla parametrów ES5
+function GenerujPodstronyGalerii ( kontenerZrodlowy, nrWyswietlanejGalerii ) 
+{ 	     // poniżej wartości domyślne dla parametrów ES5
 nrWyswietlanejGalerii = parseInt( nrWyswietlanejGalerii );    
     if ( ( !kontenerZrodlowy ) || ( kontenerZrodlowy == '') ) kontenerZrodlowy = '#zawartosc_do_podmiany';
     if ( ( nrWyswietlanejGalerii == undefined ) || ( isNaN( nrWyswietlanejGalerii) ) ) nrWyswietlanejGalerii = 1;    
@@ -383,7 +410,8 @@ console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOk
 
 
 $('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
-$('#wczytywanie_podstrony').hide(100);	// schowaj informację, skoro wczytano zawartość
+//$('#wczytywanie_podstrony').hide(100);	// schowaj informację, skoro wczytano zawartość
+    // UkryjRamkeLadowania('podstrona');    // - to nie jest typowa funkcja generowania treści... albo się mylę   
 $('#glowna div#komentarz').hide(100);	//showaj opis-informację o ile była pokazana
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
 $kontenerDocelowy.show( 100 );	// pokaż kontener na zaczytaną zawartość ... + przewiń po wyświetleniu całości?
@@ -515,12 +543,19 @@ console.log("Wymiary PO - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysok
     
 	
 
-function GenerujSpisGalerii() {
+function GenerujSpisGalerii() 
+{
 
+ // skoro logika jest w wyswietlaniu ramki ładowania... to może ten warunek psuje efekt?!
+/*
     // schowaj informację, skoro wczytano zawartość
-    if ( ( g_biezaca_pozycja_galerii > 0 ) && ( ( g_biezaca_pozycja_galerii + 1 ) >= g_suma_klikniec_zaladuj ) ) $( g_wczytywanie_spis ).hide(100);	
-                                                // 'pozycja' się inkrementuje dopiero po ewentualnych dalszych przetworzeniach w tej funkcji
-
+    // if ( ( g_biezaca_pozycja_galerii > 0 ) && ( ( g_biezaca_pozycja_galerii + 1 ) >= g_suma_klikniec_zaladuj ) ) $( g_wczytywanie_spis ).hide(100);
+    if ( ( g_biezaca_pozycja_galerii > 0 ) && ( ( g_biezaca_pozycja_galerii + 1 ) >= g_suma_klikniec_zaladuj ) ) UkryjRamkeLadowania('spis');
+                                            // 'pozycja' się inkrementuje dopiero po ewentualnych dalszych przetworzeniach w tej funkcji
+*/
+    // dodanie jawnego ukrywania bez warunków na kolejne kliknięcie w trakcie bądź w pierwszym przebiegu
+    // UkryjRamkeLadowania('spis');     // lepie to "uzewnątrznić"
+    
 $( g_miejsce_na_spis ).show(100);	
 
 //debugger;	
@@ -531,7 +566,10 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // i tak późniejsza pętla działa za
 	
     if ( g_biezaca_pozycja_galerii === 0 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
     {
-    $( g_wczytywanie_spis ).hide(100); // ukrycie animacji ładowania przy pierwszym zaczytywaniu automatycznym    
+    //$( g_wczytywanie_spis ).hide(100); // ukrycie animacji ładowania przy pierwszym zaczytywaniu automatycznym
+    // UkryjRamkeLadowania('spis');    // chwilowo wylatuje, warunek 
+        
+    // UkryjRamkeLadowania ('');    
     g_ilosc_zaczytanych_galerii	= -5 ;
     var $temp_odnosnik_tytul = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link:first" );	 // dobre do czasu, o ile nie powstanie nowa galeria w trakcie przeglądania starej listy! 
     var atrybut_href = $( $temp_odnosnik_tytul ).attr('href'); // np. "http://zlobek.chojnow.eu/u_tygryskow,a153.html"
@@ -1141,19 +1179,23 @@ return nrPodstronyGalerii;
 } // KtoraPodstronaWGalerii-END    
 
 
-function InicjujRamkiLadowania ()    // dobrą nazwą okreslić ten kontener
+function InicjujRamkiLadowania ()  
 {
-// póki co trzy notyfikacje - IDeki: "wczytywanie" (podstrona galerii), "wczytywanie_spis", "wczytywanie_wybrane_galerie_spis" (dopisac ewentualne kolejne animacje ładowania)    
+// wstepnie ta prosta forma, tu rejestrowane są na sztywno wszystkie powiadomienia o ładowaniu konkretnych zawartości - wymaga podpięci do wuitryny
+// ... póki co trzy notyfikacje - IDeki: "wczytywanie_podstrony" (podstrona galerii), "wczytywanie_spis", "wczytywanie_wybrane_galerie_spis" 
+//    (dopisać ewentualne kolejne animacje ładowania)    
     g_prezentacja_wczytywania = [   // raczej przypisać elmenty z HTMLa tu
         {   element : 'wczytywanie_spis',
-            ile : 0 },
+            ile : 0 
+        },
         {   element : 'wczytywanie_wybrane_galerie_spis',
-            ile : 0 },
+            ile : 0 
+        },
         {   element : 'wczytywanie_podstrony',
-            ile : 0 },
-
+            ile : 0 
+        }
     ];
-    
+
 }   // InicjujRamkiLadowania-END
 
 
@@ -1167,12 +1209,12 @@ var wybranyElement = -1,
     {
         case 'spis':
         case 0:
-            wybranyElement =  g_prezentacja_wczytywania[0].element;
+            wybranyElement = g_prezentacja_wczytywania[0].element;
             g_prezentacja_wczytywania[0].ile++;
             krotnoscElementu = g_prezentacja_wczytywania[0].ile;
             break;
 
-        case 'spis_wybrane_galerie':
+        case 'wybrane_galerie_spis':
         case 1:
             wybranyElement = g_prezentacja_wczytywania[1].element;
             g_prezentacja_wczytywania[1].ile++;
@@ -1187,13 +1229,19 @@ var wybranyElement = -1,
             break;     
     } // switch-END ( element )
         
-    if ( ( wybranyElement != -1 ) && ( krotnoscElementu > 0 ) ) $('#' + wybranyElement ).show( czasPokazania );
+    if ( ( wybranyElement != -1 ) && ( krotnoscElementu > 0 ) )
+    { 
+        if ( krotnoscElementu == 1 ) $('#' + wybranyElement ).find('span').text('');  
+        else $('#' + wybranyElement ).find('span').text(' x ' + krotnoscElementu);  // z lewej i tak jedna spacja będzie  
+     $('#' + wybranyElement ).show( czasPokazania );
+        // !!! MA POZOSTAĆ WZORCOWE ZAMIAST POWYŻSZYCH: $('#' + wybranyElement ).show( czasPokazania ); // !!!
+    }                                                                                
 }   // PokazRamkeLadowania-END
 
     
-function UkryRamkeLadowania ( ktoryElement, czasUkrycia )    // zachowanie i wewnatrzne warunki jako całkowite przeciwieństwo poprzednika - PokazRamkeLadowania() 
+function UkryjRamkeLadowania ( ktoryElement, czasUkrycia )    // zachowanie i wewnatrzne warunki jako całkowite przeciwieństwo poprzednika - PokazRamkeLadowania() 
 {
-    if ( ( !czasPokazania ) || ( czasUkrycia < 0 ) ) czasUkrycia = 100; // domyślnie       
+    if ( ( !czasUkrycia ) || ( czasUkrycia < 0 ) ) czasUkrycia = 100; // domyślnie       
 var wybranyElement = -1,
     krotnoscElementu = -1; 
     
@@ -1201,12 +1249,12 @@ var wybranyElement = -1,
     {
         case 'spis':
         case 0:
-            wybranyElement =  g_prezentacja_wczytywania[0].element;
+            wybranyElement = g_prezentacja_wczytywania[0].element;
             g_prezentacja_wczytywania[0].ile--;
             krotnoscElementu = g_prezentacja_wczytywania[0].ile;
             break;
 
-        case 'spis_wybrane_galerie':
+        case 'wybrane_galerie_spis':
         case 1:
             wybranyElement = g_prezentacja_wczytywania[1].element;
             g_prezentacja_wczytywania[1].ile--;
@@ -1220,9 +1268,16 @@ var wybranyElement = -1,
             krotnoscElementu = g_prezentacja_wczytywania[2].ile;
             break;     
     } // switch-END ( element )
-        
-    if ( ( wybranyElement != -1 ) && ( krotnoscElementu <= 0 ) ) $('#' + wybranyElement ).hide( czasPokazania );
-}   // PokazRamkeLadowania-END
+      
+    // MA POZOSTAĆ PONIŻSZE: ... zamiast tego co po drugim komentarzu
+//    if ( ( wybranyElement != -1 ) && ( krotnoscElementu <= 0 ) ) $('#' + wybranyElement ).hide( czasUkrycia );
+    if ( krotnoscElementu == 1 ) $('#' + wybranyElement ).find('span').text('(- dbg)');    
+    if ( krotnoscElementu > 1 ) $('#' + wybranyElement ).find('span').text(' x ' + krotnoscElementu + ' (- dbg)');
+
+    if ( ( wybranyElement != -1 ) && ( krotnoscElementu <= 0 ) ) $('#' + wybranyElement ).hide( czasUkrycia );
+    
+    
+}   // UkryjRamkeLadowania-END
     
     
 function GenerujPowiadomienieOBledzie ( opcjePrzekazane )
@@ -1410,21 +1465,24 @@ var adres_zasobu_galerii = g_protokol_www + g_adres_strony;
         adres_ostatniej_galerii = "/galeria,k0,p" + String( g_suma_klikniec_zaladuj ) + ".html";	
     }
 
-$( g_wczytywanie_spis ).show(100); 
+//$( g_wczytywanie_spis ).show(100); //
+PokazRamkeLadowania('spis');    
+    
 console.log('Załadowano spis treści dla ' + g_biezaca_pozycja_galerii + '. pozycji galerii, adres z http: "' + adres_zasobu_galerii + '" odnośnik: "' + adres_ostatniej_galerii + '".');	
 WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres_ostatniej_galerii, g_element_zewnetrzny_spis, "spis_galerii" ); 
 }	// ZaczytajSpisGalerii-END
-	
+
+    
 function InicjujPrzyciskiWyboruGalerii ()	
 {
-
 g_wybrany_nr_galerii = Math.floor(Math.random() * 100) + 1;	
 console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_galerii + ') wartości pól formularza przeglądania galerii...');
 $g_input_nr_galerii.val( g_wybrany_nr_galerii );	
 $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );	
 $g_suwak_nr_galerii.attr( 'max' , 105 ); // nie trzeba teraz?	
 }   // InicjujPrzyciskiWyboruGalerii-END
- 
+
+    
 function InicjujPrzyciskiWyboruPodstronyGalerii ()	
 {
 g_wybrany_nr_podstrony_galerii = Math.floor(Math.random() * 5) + 1 ;	
@@ -1451,6 +1509,19 @@ $('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY)+'px' }
 }   
 
     
+function ZablokujPrzycisk ( przycisk )
+{
+//console.log('PRZYCISK:', przycisk);    
+$( przycisk ).prop('disabled', true);
+}
+
+    
+function OdblokujPrzycisk ( przycisk )
+{
+$( przycisk ).prop('disabled', false);  // oczekiwane działanie zamiast spodziewanego rezultatu poprzez: $.removeProperty('disabled');
+}
+
+    
 function OkreslPolozenieElementuJS ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
 var pozycja = element.getBoundingClientRect();
     // debug do kasacji gdy OK
@@ -1459,7 +1530,8 @@ var pozycja = element.getBoundingClientRect();
 return { left: pozycja.left + window.scrollX,
          top: pozycja.top + window.scrollY };
 }    
-    
+
+
 function OkreslPolozenieElementu ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
 var pozycja = $(element).offset();
     // debug do kasacji gdy OK
@@ -1548,12 +1620,12 @@ function UbijReklamy()
 {   // 000webhost.com || 000webhostapp.com
 $('a[href*=000webhost]').parent('div').remove();
     
-    //cba.pl
+    // cba.pl
 var cbaReklamaBig = $('center');
     if ( cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tą wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
     {
     $( cbaReklamaBig ).parent().prev().remove();    // wywal małą reklamę - pasek u góry (ewentualeni to moze pozostać)
-    $( cbaReklamaBig ).parent().remove();           // ale to bezwzględnie wylatuje (sorry cba)
+    $( cbaReklamaBig ).parent().remove();           // ale to wielgachne bezwzględnie wylatuje (sorry cba)
     }
 }
     
@@ -1565,7 +1637,8 @@ function LosujPlansze ( zakres )
 var wylosowanyNr = Math.floor( Math.random() * zakres );    
 return wylosowanyNr;    
 }       
-    
+
+
 function WybierzPlansze ( nrPlanszy )        // docelowo będzie ajax/api
 {   
 /* var tloSrc = '', // poszło w global
@@ -1607,7 +1680,8 @@ function WybierzPlansze ( nrPlanszy )        // docelowo będzie ajax/api
 
 return { dx : g_przesuniecieTlaX, dy: g_przesuniecieTlaY };    // dobrze by było zwrócić jakąś tabelę rekordów lub cokolwiek...
 }   // WybierzPlansze-END    
-    
+
+
 function RozmiescCzesci( nrPlanszy ) {
 g_nazwaPlanszy = 'Autobus';
 g_nazwaPlanszySciezka = './grafiki/gra/autobus/';
@@ -1671,11 +1745,13 @@ var przesuniecieX1 = 1110,
     fragmenty[i].style.zIndex = 100 + i;     
     }
 }
+
     
 function UsunCzesci() {
  $('#plansza img.przenosny').remove();
 }
-    
+
+
 function PoczatekRuchuPrzeciagania (e)  // 'dragstart'
 {
 e = e || window.event;    
@@ -1713,14 +1789,16 @@ console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", "
 e.preventDefault(); // przestawione z góry
 return false;
 }
-    
+
+
 function RuchPrzeciagania (e) { // 'dragover'
 e = e || window.event;
 e.preventDefault();     // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elemntu
     // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
 return false;   // dodane    
 }    
-    
+
+
 function ResetujZIndexWszystkim ()
 {
 var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
@@ -1765,15 +1843,18 @@ RozmiescCzesci( nrPlanszy );
 $('#odswiez').click(function() {
     location.reload();
 });	
-	
+
+    
 $('#poco_button').click( function() {
  $('#poco').toggle(200);	
 });
-	
+
+    
 $('#pomoc_button').click( function() {
  $('#pomoc').toggle(200);	
 });
 
+    
 $('#symulancja_button').click( function() {
  $('#odpluskwiacz_ajaksowy').fadeToggle(200);	
 });    
@@ -1830,6 +1911,7 @@ $('#wybrany_nr_zwieksz').click( function() {
     }
 }); //  #wybrany_nr_zwieksz click-END
 
+
 $('#wybrany_nr_zmniejsz').click( function() {
     if ( g_ilosc_wszystkich_galerii > 0 )
     {
@@ -1855,6 +1937,7 @@ $('#wybrany_nr_podstrony_zwieksz').click( function() {
     }
 }); //  #wybrany_nr_podstrony_zwieksz click-END
 
+    
 $('#wybrany_nr_podstrony_zmniejsz').click( function() {
     if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
     {
@@ -1889,7 +1972,8 @@ $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca );
 });
     
     
-$('#suwak_galerii_submit').click( function(evt) {
+$('#suwak_galerii_submit').click( function( evt ) 
+{
 evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     if ( g_ilosc_wszystkich_galerii > 0 )
     {
@@ -1920,9 +2004,13 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
         console.info('W <h2> do zabarwienia na szaro siedzi treść "' + zawartoscH2 + '" i nie chce zmienić koloru w IE/Edge.');    
         $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii ...NIE DZIAŁA w IE
         }
+
+    ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania w trakcie oczekiwnia na obsługę   
+        
     $( g_miejsce_na_zdjecia ).empty();
     $('nav#nawigacja_galeria').empty(); 
-    $('#wczytywanie_podstrony').show(100);    
+    // $('#wczytywanie_podstrony').show(100);  
+    PokazRamkeLadowania('podstrona');   // pokazanie ramki ładowania -- najbliższy obszar to podstrona galerii 
 
     PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania           
         
@@ -1940,7 +2028,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     var tagDocelowyDoZaczytania = 'div#skladowisko_wybrane_galerie_spis';	// tu ma byc nowe miejsce w spisie
     var wybranyNrPaginacji = NormalizujZakresPolaInput( $g_input_nr_podstrony_galerii.val(), 'naRzeczPaginacjiSpisuGalerii' ); // odczytanie z formularza jak jest + weryfikacja zakresu
           // http://zlobek.chojnow.eu/galeria,k0,p38.html	<-- 'k0' == 'kategoria WSZYSTKO', 'pXYZ' to XYZ-ta 'p'-odstrona w danej galerii (zawiera max 5 elem.)
-     var adresPodstrony =  '/' + 'galeria,k0,p' + wybranyNrPaginacji + '.html' ;    // po prostu podstawienie do ciagu tekstowego
+    var adresPodstrony =  '/' + 'galeria,k0,p' + wybranyNrPaginacji + '.html' ;    // po prostu podstawienie do ciagu tekstowego
  
     // DEBUG_MODE    
     /* var trescWygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nrPodstronyGaleriiMAX + "<br />"; 
@@ -1950,14 +2038,17 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
 
     $('#status_wybranej_galerii').html( trescWygenerowana );	*/        
     //$('div#wybrane_galerie_spis').addClass('szara_zawartosc');      
-        if ( $('#wybrane_galerie_spis').find('span:first').text() != '' ) $('#wybrane_galerie_spis').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu    
-          
+        if ( $('#wybrane_galerie_spis').find('span:first').text() != '' ) $('#wybrane_galerie_spis').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu
+        
+    ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania, gdyby wymusić kolejno w trakcie tej obsługi zdarzenia           
+        
     WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
                                 "wybrany_spis_galerii", { 'wybranaPaginacja' : wybranyNrPaginacji } ); 	// ES6 unfriendly
     
     $('div#wybrany_zaczytany_spis h2 span').text( wybranyNrPaginacji.toString() + '.' );    
     $('div#wybrany_zaczytany_spis').show(100);
-    $('div#wczytywanie_wybrane_galerie_spis').show(100);
+    // $('div#wczytywanie_wybrane_galerie_spis').show(100);
+    PokazRamkeLadowania('wybrane_galerie_spis');    
         
     PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -50);    // naddatek korekty, aby widzieć efekt szarosci... który jest niepotrzebny dle  
     //PrzewinEkranDoElementu('nav#spis_sterowanie', 500, -100);    // nie można przewinąc do 'div#wybrany_zaczytany_spis' jeśli jest jeszcze niewidoczny
@@ -1987,12 +2078,13 @@ $('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyśln
 	
 
     // uruchomienie
-$('#nawigacja_galeria').on("click", ".przycisk_galeria", function() { // IMG z galerii obiektem zdarzenia
+$('#nawigacja_galeria').on("click", ".przycisk_galeria", function( evt ) { // IMG z galerii obiektem zdarzenia
 var $this = $(this);	
 var serwer = g_protokol_www + $this.attr('data-adres_strony') + '/';
 var ktoraPodstrona = $this.attr('value');    
 
-$( g_wczytywanie ).show(100); // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
+//$( g_wczytywanie_podstrony ).show(100); 
+PokazRamkeLadowania('podstrona');   // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
 
 //alert("kliknięto '.przycisk_galeria'... albo kontener: " + this.tagName );
 //alert("VAL: '" + $this.attr('value') + "', DATA-TAG: " + $this.attr('data-tag') );
@@ -2006,7 +2098,7 @@ console.log('Naciśnięto wywołanie ' + ktoraPodstrona + '. podstrony danej gal
 WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), serwer, $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona", 
                             { 'ktoraPodstrona' : ktoraPodstrona } );    // ES5, nie ES6
 
-//<button class="przycisk_galeria" id="galeria_paginacja_1" data-tag="div#zawartosc_do_podmiany" data-adres_strony="http://zlobek.chojnow.eu/" data-elem_zewn="table.galeria" value="u_misiow,a20,p2.html" data-adres_galerii="u_misiow,a20,p2.html">Galeria nr 1</button>
+ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstorny-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nowno z pominięciem "aktualnego" przycisku == zawartośc aktulanej podstrony galerii    
 
 });	//  on("click")-$('#nawigacja_galeria')-END	
 	
@@ -2016,23 +2108,24 @@ g_suma_klikniec_zaladuj++;	// zliczaj naciśnięcia na ten przycisk
 
     if ( g_suma_klikniec_zaladuj < ( g_zaczytana_ilosc_paginacji_galerii + 1) ) // bieżącą stronę też liczyć jako paginację, dlatego +1
     {
-	//g_biezaca_pozycja_galerii++;  // zwiększenie licznika, przejście do wywołania kolejnej podstrony
-	// licznik zwiększa się już PO nacisnięciu odnosnika i PRZED zakończeniem przetwarznia uprzednio zaczytanych treści !!! 
-	// co najwyżej kolejność może być inna na liście wyników
-	
-		if ( g_biezaca_pozycja_galerii <= g_zaczytana_ilosc_paginacji_galerii )
-		{
-		$( g_wczytywanie_spis ).show(100); // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
-		console.log('Na ' + g_suma_klikniec_zaladuj + ' żądanie zaczytano kolejną podstronę w galerii ' + g_biezaca_pozycja_galerii + ' z ' + g_zaczytana_ilosc_paginacji_galerii + ' podstron.');
-			
-		//g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; //inkrementacja o każde 5 zdjęc z poszczególnych zaczytanych galerii 	
-		
-		ZaczytajSpisGalerii();
-		//wyświetlenie-dodanie kolejnego spisu do już wyświetlonej listy odnosników	
-		//WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona"	);
-		} 
+    //g_biezaca_pozycja_galerii++;  // zwiększenie licznika, przejście do wywołania kolejnej podstrony
+    // licznik zwiększa się już PO nacisnięciu odnosnika i PRZED zakończeniem przetwarznia uprzednio zaczytanych treści !!! 
+    // co najwyżej kolejność może być inna na liście wyników
+
+        if ( g_biezaca_pozycja_galerii <= g_zaczytana_ilosc_paginacji_galerii )
+        {
+        // $( g_wczytywanie_spis ).show(100); // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
+        // PokazRamkeLadowania('spis');  //  -- to jest zbedne, wewnatrz ZaczytajSpisGalerii() jest dodane wyświetlenie  
+
+        console.log('Na ' + g_suma_klikniec_zaladuj + ' żądanie zaczytano kolejną podstronę w galerii ' + g_biezaca_pozycja_galerii + ' z ' + g_zaczytana_ilosc_paginacji_galerii + ' podstron.');
+
+        //g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; //inkrementacja o każde 5 zdjęc z poszczególnych zaczytanych galerii 	
+
+        ZaczytajSpisGalerii();
+        //wyświetlenie-dodanie kolejnego spisu do już wyświetlonej listy odnosników	
+        //WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona"	);
+        } 
     }
-	
 });	// on("click")-$('#spis_sterowanie')-END		
 
 	
@@ -2049,7 +2142,7 @@ return; // wyjście, aby nie przechodzić do odnosnika
 });	//  on("click")-$('#nawigacja_galeria')-END		
 */	
     // DLA KOLEJNYCH GALERII: '$('#galeria_spis').on("click", "a", function(e){'
-$('#galeria_spis, #wybrane_galerie_spis').on("click", "a", function(e){    // testowo dopisano także inne 'kliknięcia' - "click auxclick contextmenu"
+$('#galeria_spis, #wybrane_galerie_spis').on("click", "a", function ( e ) {    // testowo dopisano także inne 'kliknięcia' - "click auxclick contextmenu"
     
 // console.log (e);     // DEBUG dla 'kliknięć'
     /*
@@ -2101,7 +2194,9 @@ console.log('ZDARZENIE: "Naciśnięto" i wywołano odnośnik dla galerii "' + ty
 UzupełnijNaglowekBiezacejGalerii ( { 'tytul' : tytulGalerii, 'opis' : opisGalerii, 'srcObrazka' : srcObrazkaGalerii, 'data' : dataGalerii } );    
 
     // wstawienie animacji na postęp ładowania
-$( g_wczytywanie ).show(100);
+// $( g_wczytywanie_podstrony ).show(100);
+    PokazRamkeLadowania('podstrona');
+
     // od razu zerowanie zawartości kontenerów docelowych do zaczytania zawartości
 $('nav#nawigacja_galeria').empty(); 
 $('div#skladowisko').empty(); 
@@ -2157,7 +2252,8 @@ $('#http_adres').prop("disabled", true); 								// wyłączenie, aby nie klikac
 $('#http_adres_submit').prop("disabled", true);	 // wyłączenie, aby nie klikac wielokrotnie || attr() vs prop()
 $('#testowy_adres_button').prop("disabled", true);	 // wyłączenie, aby nie klikac wielokrotnie || attr() vs prop()
 
-$( g_wczytywanie ).show(100);
+//$( g_wczytywanie_podstrony ).show(100);
+PokazRamkeLadowania('podstrona');
 
 console.log( 'ADRES_STRONY: ' + g_adres_strony + ', ADRES_GALERII: ' + adres_tej_galerii + ', ZNACZNIK_ZEWN: ' + g_element_zewnetrzny + '\nRAZEM: ' + g_adres_strony + adres_tej_galerii + ' | ' + g_element_zewnetrzny	) ;
 
@@ -2203,6 +2299,28 @@ var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
     
 });    
 
+    
+$(document).on('keypress', function( evt ) {    // warunkowanie globalne względem nacisnięcia klawisza 
+var elementZdarzenia = evt.target.tagName.toLowerCase();
+console.log('KLAWISZ: ', evt);
+console.info('Element zdarzenia to ', elementZdarzenia);    
+var nawigacjaKlawiaturowa = evt.originalEvent ? evt.originalEvent.keyCode : evt.keyCode,
+    czyAlt = evt.originalEvent ? evt.originalEvent.altKey : evt.altKey;
+    
+    if ( ( nawigacjaKlawiaturowa == 39 ) && ( czyAlt ) ) evt.preventDefault(); // GLOBALNIE: [->] + [Alt] -- nadrzędnie względem przeglądarki Firefox, IE nie słucha się
+    if ( ( nawigacjaKlawiaturowa == 37 ) && ( czyAlt ) ) evt.preventDefault(); // GLOBALNIE: [<-] + [Alt] -- nadrzędnie względem przeglądarki Firefox, IE nie słucha się
+    
+    if ( elementZdarzenia.indexOf('input') < 0 )   // ma NIE OBWIĄZYWAĆ wewnątrz pól input czy innych ewentulanych  
+    {
+    //console.log('KLAWISZE: ', evt);    
+        if ( evt.which == 8)
+        {
+        evt.preventDefault();
+        }
+    
+    }
+});    
+    
     
 $('#galeria_spis').on("click", ".krzyzyk_zamykanie", function(){ 
 var $this = $(this),
@@ -2383,7 +2501,8 @@ document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, 
 // ***************************************************************************	
 // ---------- *** AUTOURUCHAMIANIE *** --------------	 
 // ***************************************************************************		
-    
+
+InicjujRamkiLadowania();    
 //WystartujDebuggerLokalny( 'ZEPSUJ!' );    
 WystartujDebuggerLokalny();
 GenerujPowiadomienieOBledzie(); // wymuszony test po raz pierwszy    

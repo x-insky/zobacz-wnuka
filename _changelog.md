@@ -1,3 +1,98 @@
+v0.5.8 - jQuery lib v1 instead v3; Loading Content Notification System in use, showing simultaneous number of requests; blocking & unblocking buttons after action done; enchanced error notifies in use; default keyboard actions blocked
+
+* v0.5.8  -- [2018-11-26]
+
+[+] ADDED
+
+-- new file 'jquery-1.12.4.js'
+* changed library version for compatibility with older browsers (IE mostly)
+  - unpacked version for development purposes for now
+  - linked inside 'index.php' instead previously used version of 'jquery-3.2.1.js'
+
+-- index.php
+* added empty 'span' element inside of 'h2' element inside of each three of Ajax loading notifier 
+  - placed after an 'img' tag, at the ending of 'h2' tag
+  - a prepared structure for inserting new contents to that 'span'
+  - styles for 'span' inside 'h2' already defined and in use
+
+-- witryna.js
+* defined function 'ZablokujPrzycisk' for deactivated a given button or input form element
+  - e.g. interestingly used inside submit form event function (with event object data)
+* defined also a reversed logic function named 'OdblokujPrzycisk', which reenables previously disabled button/input form element
+* defined an global event function as a response on clicking given beyboard buttons or key combination
+  - uses 'keypress' event (not 'keydown' or 'keyup' event)
+  - it should block defined key or key combination of defined actions
+  - used here to block commonly used standard actions of 'previous_page' ('[Alt]' + '[<-]' and also '[Backspace]') or 'next_page' ('[Alt]' + '[->]')
+  - hack or improvement: pressing the '[Backspace]' key don't fires the blocking event inside any input text form fields (really the logic event is reversed)
+* placed the initial call of function 'InicjujRamkiLadowania' inside a auto runs block
+
+
+[*] MODIFIED
+
+-- witryna.js
+* few semi-global variables placed in a comment
+  - not used in referencing to the page element
+* changed type variable 'g_prezentacja_wczytywania'  from object to array
+* use of defined in previous update a function 'PokazRamkeLadowania' and 'UkryjRamkeLadowania' for show / hide notification while Ajax request is processing
+* changed logic of hiding notofications of loading contents inside function 'WczytajZewnetrznyHTMLdoTAGU'
+  - now the 'UkryjRamkeLadowania' function is fired as a first expression of a 'load()' callback
+  - does not matter which variant of callback will fire, the notification is always hided
+  - works good for any case of that function, but no in case 'wybrana_galeria_rekurencja', where is recursion case is also used
+  - while recursion works the each variant of success / failure is considered, so the hiding function is fired from beginnings of specific conditional expression
+  - using that logic to perform the same number of variants of notification hiding as the quantity of variants of previously showed notifications (for now there are three different areas of loading notifications)
+* every action button or input of that type on click is temporary disabled, it's impossible to redo any action until current action is complete
+  - the goal is to block multiple request for the same action which might occur on still active button
+  - when Ajax request is done (success or failure) the button is reenabled (or the new button or buttons list is created with active)
+  - expression of reenabling is near the expression of hiding notification (inside cases: 'wybrana_galeria' or 'galeria_podstrona' or 'wybrany_spis_galerii') where the form or gallery nav button might be previously clicked and still inactive
+  - thats why it's almost impossible to observe few requests until you can press fast any other of the neighboring buttons (if possible)
+  - this could generate unknown gallery subpage because the last clicked gallery subpage might not be expected to be displayed (greedy vs undetermined alghoritm)
+  - all the buttons might be disabled during Ajax request but no load-next-gallery-subpage big button (which is actually 'h2' element)
+* its possible from now to observe all the quantity of the multiple Ajax requests send by pressing repeatedly the load-next-gallery-subpage button (or previously mentioned click on many buttons)
+  - all the loading notification counts, with greater than one count, will generate that number isnide a notifiaction!
+  - the counter is decremented on each hide action of given element and for debugging purpose its value is presented with added ' (- dbg)' string
+* wherever possible from now is used previously defined function 'GenerujPowiadomienieOBledzie' to display an error details
+  - replaced code of direct DOM manipulations
+* changed logic inside function 'GenerujSpisGalerii'
+  - counting of clicks on load-next-gallery-subpage-button is moved directly to the anonymous event function
+  - a problem of new click when previous click is served (important!) 
+  - moved the logic of hiding that notification inside 'WczytajZewnetrznyHTMLdoTAGU' when any callback of 'load()' starts (success/failure) 
+* used 100% the same constants like referenced to the HTML id
+  - changed 'spis_wybrane_galerie' to 'wybrane_galerie_spis'
+  - changed took place inside many functions, which reads or modify the value or status of the connected HTML element 
+* extended logic of function 'PokazRamkeLadowania' to display number of active Ajax calls connected with given notification now
+  - presenting only a number if value is greater from one
+  - removes any number when its value is one now
+* also extended function 'UkryRamkeLadowania' in similar way
+  - present actual quantity of Ajax requests, connected with given element
+  - actual state is decrement beforre showing
+  - any number is only showed when the value is greater than one
+  - for decremented values equals one the simple variant is presented
+  - of course when its value is zero or low then it's finally hided as before
+  - important: added additional and temporary' (- dbg)' string to displayed content for debugging purposes, meaning that something was substarcted before showing!
+* near the event functions of clicking the active elements are placed as many calls to 'PokazRamkeLadowania' with conected element of page
+  - it allows for using system of simultaneous Ajax calls and extended notifications of loading
+  - or it's placed nside named functions which fired from that event function
+* changed logic to block next Ajax request inside event click on element with 'przycisk_galeria' class
+  - impossible to reclick on the same button number while Ajax request incomplete
+* removed showing element content immediately when click on load-next-gallery-subpage button
+  - showing gallery subpage starts when Ajax request is done somehow
+
+[-] REMOVED
+
+-- jquery-3.2.1.js
+* changed library version for compatibility with older browsers (IE mostly)
+  - used unpacked version for development purposes for now
+  - linked from 'index.php' instead previously used version of 'jquery-3.2.1.js'
+
+-- jquery-3.2.1.min.js
+* a minified version not really used inside this project
+  - for now the project state it's not production state
+  - removed from folder of application
+  - probably a further replacement by that library @ v1
+  - to absolute removal from project from now
+
+---------------------------
+
 v0.5.7 - prepared logic for hide/show of notifications of loading contents by Ajax; exchanged color of closing buttons; centered belt of Ajax status; alt in imgs; renamed id of loading notification
 
 * v0.5.7  -- [2018-11-20]

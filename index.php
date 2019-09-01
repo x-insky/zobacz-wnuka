@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="lightbox/css/lightbox.css" />
 
     <script src="html5shiv.3.7.3.js"></script>
-    <script src="jquery-3.2.1.js"></script>
+    <script src="jquery-1.12.4.js"></script>    <!-- testy uruchamiania nawet na kalkulatorach --> 
+    <!--<script src="./jquery-3.2.1.js"></script>-->
 </head>
 
 <body>
@@ -79,7 +80,7 @@
                         </div>
                         
                         <div id="wczytywanie_spis">
-                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /></h2>
+                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
                         </div>
                         
                     </div>
@@ -87,7 +88,7 @@
                     <div id="wybrany_zaczytany_spis">
                         <h2>Lista galerii z wybranej <span></span> podstrony</h2>
                         <div id="wczytywanie_wybrane_galerie_spis">
-                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /></h2>
+                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
                         </div>
                         <div class="ciemne_tlo_spis">                        
                             <div class="kontener">
@@ -201,7 +202,7 @@
                 </div>    
             </div>	
 
-            <div id="wczytywanie_podstrony"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" alt="" /></h2>
+            <div id="wczytywanie_podstrony"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
             </div>
             
             <div class="jasne_tlo_galeria">
@@ -251,7 +252,7 @@
         
         
         <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button">Symul-A(JAX)-ncja</button>
-           <p>&copy;2018 v0.5.7 </p>
+           <p>&copy;2018 v0.5.8 </p>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
@@ -316,6 +317,7 @@
                         <ul>
                             <li class="tech_nie">Angular.js</li>
                             <li class="tech_nie">React</li>
+                            <li class="tech_nie">Web Components</li>
                             <li class="tech_nie">Bootstrap</li>
                             <li class="tech_nie">ES6&nbsp;===&nbsp;ES2015</li>
                             <li class="tech_nie">promesy</li>                    
