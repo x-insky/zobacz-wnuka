@@ -118,6 +118,7 @@ form input {
     font-size: 110%;		
 }
 
+/* p.blad - deklaracjedo wywalenia po wprowadzeniu komunikatu - START */
 p.blad,
 p.blad_dolaczenia,
 p.blad_odswiez {
@@ -135,6 +136,7 @@ p.blad_odswiez {
         animation: zolty_blysk 2s ease-out;
         animation-fill-mode: both; */
 }
+/* p.blad - deklaracjedo wywalenia po wprowadzeniu komunikatu - STOP */
 
 div.blad {
     position: relative;
@@ -149,6 +151,7 @@ div.blad {
   /*  padding: 1.2em;*/
     margin: 3px auto;
     border: 3px solid #eee;
+    box-shadow: 2px 2px 4px #333;
     transition: all 0.7s;
     
     /*    animation: zolty_blysk 2s ease-out;
@@ -1090,6 +1093,18 @@ div#glowna div#nazwa_galerii {
     margin-bottom: 1em;	
     overflow: hidden;	
 }
+
+div#glowna div#nazwa_galerii h2 span {
+    padding: 0.5em;
+    background-color: antiquewhite;
+}
+
+
+div#glowna div#nazwa_galerii h2 span:after {
+    content: " - ";
+    background-color: transparent;
+}
+
 
 div#glowna div#nazwa_galerii img {
 /*    float : left;*/
