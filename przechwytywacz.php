@@ -1,5 +1,6 @@
 <?php
-//header('Content-Type: text/html; charset=iso-8859-2');
+//header(‚Content-Type: text/html; charset=iso-8859-2’);
+
 
 	// bez "var" przed zmienną w php, pamiętaj !!!
 $adres_przekierowania = $_GET['url_zewn'];
@@ -68,7 +69,7 @@ $obslugiwany_serwer = "zlobek.chojnow.eu";
 			 // szukanie klasy "galeria" 
 			 $pozycja_zakresu = stripos( $zawartosc_zewnetrzna_zaczytana, $tag_szukany_klasa, $tag_szukany_pozycja );  // szukaj klasy "galeria" tuż za znalezionym <table>			
 				$roznica_polozenia = $pozycja_zakresu - $tag_szukany_pozycja ;
-				 if ( ( $pozycja_zakresu > 0 ) && ( $roznica_polozenia < 100	|| $roznica_polozenia > -100 ) ) // jeżeli jest bliskie sąsiedztwo <table> i klasy, ...
+				 if ( ( $pozycja_zakresu > 0 ) && ( $roznica_polozenia < 100 || $roznica_polozenia > -100 ) ) // jeżeli jest bliskie sąsiedztwo <table> i klasy, ...
 					{	
 					$dlugosc_zawartosci = $tag_zamykajacy_pierwsza_pozycja - $tag_szukany_pozycja + strlen('</table>') ; // treść łącznie z tagiem zamykającym
 					$zawartosc_do_przegladarki = substr( $zawartosc_zewnetrzna_zaczytana, $tag_szukany_pozycja, $dlugosc_zawartosci ); // od <table.galeria> do </table> 
@@ -88,7 +89,7 @@ $obslugiwany_serwer = "zlobek.chojnow.eu";
 	
 		if ( $zawartosc_do_przegladarki != false )
 		{	
-		echo $zawartosc_do_przegladarki ; // ale wysłanie fragmentu "psuje" przetwarznie w JS
+		echo $zawartosc_do_przegladarki ; // ale wysłąeni fragmentu "psuje" przetwarznie w JS
 		}
 		else 
 		{ 
@@ -98,6 +99,6 @@ $obslugiwany_serwer = "zlobek.chojnow.eu";
 	}
  else
 	{
-	echo "Nieprawidłowy adres!!!";	
+	echo "!-A-W-A-R-I-A-! Użyto nieprawidłowego adresu w zapytaniu lub wystąpił inny błąd!";	
 	}
 ?>

@@ -1,6 +1,162 @@
+v0.5.10 - php ON, conditionally linking ext files; external minifications; so many logic changes but still invisible; interceptor file updated; visible red focus on all active elments of interface, when operating by keyboard, tabindex="0" is a goal; gallery number & title in yellow; restyled footer area; dimmension element hack for its dimensions
+
+* v0.5.10 -- [2019-01-15]
+
+[+] ADDED
+
+-- index.php
+* conditionally testing of environment and possible resetting value of a given variable 
+  - first php logic inside, just before any output content
+  - value of a variable tested inside later conditions, to determine 'local development' vs 'remote production'
+  - on production environment any kind of 'thin files' should be linked into project (*.js, *.css or others) as an opposite to develompent versions
+* first php variable testing condition
+  - if true then php outputs link to the unminified library version, othervise it's linked to minified file
+  - yes, the conditional could change only 'src' of the file but outputting the whole 'script' element is more clearly
+* for a test purpose the actual value of environment is showed under the page header, inside the 'h2' element
+* added 'tabindex' attributes with values od '0' inside any element with connected action or event
+  - mainly for 'h2' element as button of loading next-gallery-subpage or  'h2' next to it of a belt of expanded form of selecting galleries
+  - and also inside any closing button of existing (e.g. closing of Ajax status belt) or generated element
+  - interface elements of forms already owns internal 'tabindex=0' attribute even if not explicit specified 
+
+ -- zlobek-styl.css
+* added global style for focus state to any page element
+  - works with all standard and active elements of web interface (inputs, buttons, etc.)
+  - a noticeable red border with dots
+  - also works with regular HTML element when they has added 'tabindex' attribute! (important!)
+* added first style for 'h6' element, just centering for now
+  - only that element needs centering contents, all the texts inside 'p' elements inside footer should be aligned left, right or justified for better readability
+
+-- witryna.js
+* defined function 'ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera' to determine if received content is right (and also that parameters of the request were connected with nursery web server address) 
+* defined function 'GenerujDomyslnePowiadomienieOBledzieSerwera' to display a standard form of Ajax request error
+  - it could present any common error of improper readed page of nursery serwer or any wrongfully request
+  - uses the standard title and text of error comunicate, changes only a parameters of Ajax call inside notification details 
+* defined function 'OdczytajSpisGalerii' to build an improvement content generator for gallery subpages
+  - used 'GenerujSpisGalerii' as logic basis and later refactored
+  - for now it's just a definition, function isn't ready to use, to be fired (sic!) 
+  - for future use, because it uses different content generation method, based on existing objects and their attributes to create elements of page
+  - but after a rebuilded logic should replace an origin logic of  'GenerujSpisGalerii' 
+  - WORKING PURPOSE: a much simpler and shorter approach with basis, that explicit input data generates explicitly output structured data
+  - returned data are table of object with attribs, that describes any gallery item
+  - there is no any HTML element creating, just a read and building structured data 
+  - uses internally special defined subfunctions for blocks of original code 
+* another defined function of 'GenerujSpisOdczytanejGrupyGalerii', which allows to generate any content from given parameters
+  - also a refactored code from logic of existing function 'GenerujSpisGalerii' (for outputting next groups of gallery list subpages) and 'GenerujSpisGalerii' (for outputting selected subpages by a given subpage number)
+  - due to problems with global logic, many cross-conditions and setting few values for now unfinished
+  - but the refactored code better and faster should build any element structure by given objects from parameters
+  - much simplier way of creating, but it's hard to put all page logic inside one function ... :(
+  - future tests and using a 'OdczytajSpisGalerii' function to gain entry data will bring success
+* defined new function 'UstawSuwakiJakOdczytanoPierwszymPrzebiegiem' to set the default values of sliders (or simple input form field) at the half of teh max readed value
+  - fired after first read of source container, which almost guarantee  readings of max values inside project
+  - the input fields are immediately set by this values
+
+[*] MODIFIED
+
+-- przechwytywacz.php
+* changed returned string if unnable to read expected content or any valuable content
+  - returned special text with the most meaningfull fragment of string '!-A-W-A-R-I-A-!' for indicate an error of read of source (mainly incorrect address to source read)
+  - existing of this string value is verified JS logic when passed along 
+* code review: remotypos, spaces, new lines and comment 
+
+-- index.php
+* linked a minified file of slideshow logic from 'index.php'
+  - linked 'lightbox\js\lightbox.min.js' instead of 'lightbox\js\lightbox.js' file
+  - the same logic, just a minified JS code in place of regular to achieve about 50% less bytes to download
+* wrapped the copyright notes inside footer into a 'h6' element
+* extended a list inside footer by few elements, recently added into the project           
+* added 'alt' attributes into Ajax status belt
+  - as a detailed information of meaning every interface element
+* linked minified version of a slideshow plugin instead regular JS file from file 'index.php' ('lightbox/js/lightbox.min.js')
+  -  the same file used in application, regardless the environment variant
+
+-- zlobek-styl.css
+* commented out the selector for indicating current gallery number inside gallery title, placed inside details of gallery
+  - preoviously defined 'span' styles used for styling that gallery number and its title also
+  - styles for pseudo element also putted in comment
+* added darker shadow under the main picture, which is placed inside current gallery details
+* modified the align of text to justify, for all paragraphs inside footer area
+* modified the rules for 'wymiary' element, which shows actual dimension of available screen area
+  - modified fluid placement (centered on 50% any screen size) with defined width in relative units and nagative margin also (calculated as 50% of given width)
+  - this is a simply one place set, inside first media query threshold (like a pro)
+  - previously defined sizes inside almost all thresholds has been commented out
+  - but the element size is increased with connected increased font size, which its dimansion are based on 'ems' not fixed px size 
+
+-- witryna.js
+* moved definition of function 'InicjujPrzyciskiWyboruGalerii' to an application helpers area
+* moved definition of function 'InicjujPrzyciskiWyboruPodstronyGalerii' into an application helpers area
+* delicate touches inside function 'GenerujSpisGalerii'
+  - just a changes of few spaces, new lines or used code style
+  - corrected few comments also
+* little modifications inside function 'GenerujSpisWybranejGalerii'
+  - added 'tabindex' attribute with value of '0' to 'a' element of generated gallery title
+  - only for first title anchor but no the secondary 'a' element with image inside to unnecessary second keystroke of tab key on every item of gallery list
+  - changed comment style
+* added extra safety expression inside function 'OdczytajTresciOdnosnikaWybranejGalerii'
+  - just default value is 0 when parameter is not specified (means: read from the first encountered element)
+  - the gallery subpage is computed by function (and its inner formula) for given gallery number, not just readed from its context or counted subpage
+  - function build a complete object, which attributes describes any gallery
+  - modified loging with subpage of given gallery
+* just a few touches inside function 'UzupełnijNaglowekBiezacejGalerii'
+  - added string 'Galeria nr ' to displayed content of gallery title as a prefix
+  - surrounded each value from a variable by a 'span' element wit closing tag, so given gallery name and its number might be styled differently form static text of 'h2' element 
+  - comments content changes 
+* fixed typo in comment inside function declaration 'KtoraPodstronaWGalerii' 
+* changed text of notification inside function 'UkryjRamkeLadowania'
+  - removed temporary content for observe behavior and debugging purpose
+  - removed additional string ' (- dbg)' from displayed value when multiple request of given type finishes
+  - update of displayed value with decrementation of previous displayed value, if it was more than one (amount request can't be displayed when was no more than one)
+* little changes inside function 'GenerujPowiadomienieOBledzie'
+  - added 'tabindex' with default '0' value to closing element of built notification
+  - fixed typo in comment inside function 
+* cosmetic changes inside function 'WystartujDebuggerLokalny'
+  - added the comment and commented out previously content of assigning value into variable 
+* moved defined functions 'InicjujPrzyciskiWyboruGalerii' and 'InicjujPrzyciskiWyboruPodstronyGalerii' into another place of 'witryna.js' file
+  - a similar code should be kept near similar function
+  - the above functions are tools functions, moved up them inside definiotion list
+* fixed typo and spaces inside function 'UsunPobraneZadanie'
+* extend events on 'h2' element with id 'selektor_naglowek'  (an upper belt of form of selecting any gallery or subpage number)
+  - actions can by made by 'click' and 'keypress' also
+  - added a conditional logic, which reacts only for particular keys or mouse buttons (allowed: LMB, Space, Enter)
+* extended events on element with id 'zaladuj_galerie_spis'
+  - added 'keypress' event, similar to the previous event function 
+  - an element is changed only when three allowed keys (the same trio)  triggers an action
+  - all the previously defined logic of change placed inside a condition
+  - but also modified the another insider condition, which decides about blocking any furher operations on that element (added +1 to count current action)
+  - ... which allows to proper count of all subpages and block any further 'clicks/keypresses' if exceeds subpage max number
+  - aded console statement to log and verify actions
+  -  improved indentations inside this event function
+* added event of 'keydown' on elements inside ids 'galeria_spis' or 'wybrane_galerie_spis' (between 'keypress' or 'keydown' here is no difference, no keyboard combinations alowed now)
+  - event delegation, works on 'a' elements inside previously mentioned two containers
+  - the same trio of working trigger (LMB, Space & Enter) and conditionally read this keys
+  - added comments inside
+  - fixed also reading a gallery number from event object
+  - later that number is used to display into current gallery title
+  - rearanged logic to read the gallery title also
+  - finally the gallery number and title is read from given gallery, and it's no important what was an event object (a main picture or title in header) - used a function 'UzupełnijNaglowekBiezacejGalerii' to display a current gallery summary
+* modified the global event of keypress on any element of page (document is a selector)
+  - trying to invoke an alert() when 'a' element is triggered by Space or Enter key just for a test purpose (not shows)
+* code cleanings
+  - unified the 'vertical allignation' inside declarations, comments (just keepeing the same style & spaces, e.g. inside semi-global variable declarations) or one space before any text of the comment
+  - added proper indentations for code inside 'WczytajZewnetrznyHTMLdoTAGU', because the defined callback for 'load()' function wasn't previously indented
+  - added necessary comments if needed
+* changed the logic by using function 'ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera' any content is presented only when the right values were sent and answered
+  - extra block of biconditional logic inserted before output anything on the screen
+  - if the returned content from the Ajax request don't contains selective word, that means the content is expected
+  - if a content contains keyword, the default notify of error is provided by newly defined function 'GenerujDomyslnePowiadomienieOBledzieSerwera' and the logic won't allow to show any right content above error notification
+* changes inside function 'GenerujSpisGaleriiPierwszyPrzebieg'
+  - changed texts to longer of the first and second notification of error, which is generated from this function
+  - removed two comments, when previously was defined an event function of click on button to page refresh
+* used defined function 'GenerujPowiadomienieOBledzie' to generate notification in default block of switch statement
+  - no needed direct DOM modification
+  - but few simple error notification still based on DOM changes on demand (defined inside logic of error catching)
+* changed the description of a test notification of error, which shows on page init and after each refresh
+  - just a test notice, no actual error
+
+---------------------------
+
 v0.5.9 - internal error notifications improved, &shadow; separated logic of many function calls; form buttons wider; 
 
-* v0.5.9  -- [2018-11-29]
+* v0.5.9 -- [2018-11-29]
 
 [+] ADDED
 
@@ -59,7 +215,7 @@ v0.5.9 - internal error notifications improved, &shadow; separated logic of many
 
 v0.5.8 - jQuery lib v1 instead v3; Loading Content Notification System in use, showing simultaneous number of requests; blocking & unblocking buttons after action done; enchanced error notifies in use; default keyboard actions blocked
 
-* v0.5.8  -- [2018-11-26]
+* v0.5.8 -- [2018-11-26]
 
 [+] ADDED
 
@@ -154,7 +310,7 @@ v0.5.8 - jQuery lib v1 instead v3; Loading Content Notification System in use, s
 
 v0.5.7 - prepared logic for hide/show of notifications of loading contents by Ajax; exchanged color of closing buttons; centered belt of Ajax status; alt in imgs; renamed id of loading notification
 
-* v0.5.7  -- [2018-11-20]
+* v0.5.7 -- [2018-11-20]
 
 [+] ADDED
 
@@ -214,7 +370,7 @@ v0.5.7 - prepared logic for hide/show of notifications of loading contents by Aj
 
 v0.5.6 - added compatibility of html5shiv; '&times' better for all than regular 'x', fit CSS & JS for that
 
-* v0.5.6  -- [2018-11-16]
+* v0.5.6 -- [2018-11-16]
 
 [+] ADDED
 
@@ -244,7 +400,7 @@ v0.5.6 - added compatibility of html5shiv; '&times' better for all than regular 
 
 v0.5.5 - Simulatron of Ajax, advanced controll, lot of logic & display; with OOP inside for logic & localSorage; better notifications with 'X', one sample notif @ start; restyled notif; footer button ON/OFF; header background
 
-* v0.5.5  -- [2018-10-30]
+* v0.5.5 -- [2018-10-30]
 
 [+] ADDED
 
@@ -334,7 +490,7 @@ v0.5.5 - Simulatron of Ajax, advanced controll, lot of logic & display; with OOP
 
 v0.5.4 - ajax debugger & status info, engine of artificial notifications & localStorage, (& explainations); new logic of places with error notif; Error Notification System v0.2, not use by now; page refresh-button
 
-* v0.5.4  -- [2018-10-24]
+* v0.5.4 -- [2018-10-24]
 
 [+] ADDED
 
@@ -446,7 +602,7 @@ v0.5.4 - ajax debugger & status info, engine of artificial notifications & local
 
 v0.5.3 - collecting of unsuccessful ajax requests, one place of notification of that & flashing last error notif; yellow h3s better visible; bigger buttons in upper form field
 
-* v0.5.3  -- [2018-10-19]
+* v0.5.3 -- [2018-10-19]
 
 [+] ADDED
 
@@ -518,7 +674,7 @@ v0.5.3 - collecting of unsuccessful ajax requests, one place of notification of 
 
 v0.5.2 - draggable items of game are initially arranged after clicks; hosting ad-killer; newer footer contents; slighty improved readability of some JS code
 
-* v0.5.2  -- [2018-09-25]
+* v0.5.2 -- [2018-09-25]
 
 [+] ADDED
 
@@ -562,7 +718,7 @@ advertisement contents which are inserted to page by current hosting company
 
 v0.5.1 - just a regular CSS styles cleaning inside a CSS file
 
-* v0.5.1  -- [2018-09-24]
+* v0.5.1 -- [2018-09-24]
 
 [*] MODIFIED
 
