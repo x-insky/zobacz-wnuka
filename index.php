@@ -1,3 +1,9 @@
+<?php
+$serwerLokalny = false;
+    if ( $_SERVER['SERVER_NAME'] == 'localhost' ) $serwerLokalny = true;    // identyfikacja lokalnego lub zdalnego uruchamiania... 
+        //.. celem dołączania bibliotek/plików nieskompresowanych lub po kompresji
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -11,7 +17,13 @@
     <link rel="stylesheet" href="lightbox/css/lightbox.css" />
 
     <script src="html5shiv.3.7.3.js"></script>
-    <script src="jquery-1.12.4.js"></script>    <!-- testy uruchamiania nawet na kalkulatorach --> 
+    
+    <?php
+        if ( $serwerLokalny ) echo '<script src="jquery-1.12.4.js"></script>';  // pobieranie pliku nieskompresowanego przez przeglądarkę
+        else echo '<script src="jquery-1.12.4.min.js"></script>';    // pobieranie pliku z serwera w wariancie skompresowanym: *.MIN.js
+    ?>  <!-- testy uruchamiania nawet na kalkulatorach --> 
+
+    
     <!--<script src="./jquery-3.2.1.js"></script>-->
 </head>
 
@@ -71,6 +83,10 @@
 
                 <div id="spis_tresci">
                     <div id="zaczytany_spis">
+                        <?php
+                        // test aktualnego trybu, niejawnie określa to środowisko uruchomieniowe: DEBUGOWANIE / PRODUKCJA   
+                            if ( isset( $serwerLokalny ) ) echo("<h2>BIEŻĄCY SERWER: <strong>" . $_SERVER['SERVER_NAME'] . "</strong></h2>");
+                        ?>
                         <h2>Lista galerii ze Żłobka</h2>
                         <div class="ciemne_tlo_spis">
                             <div class="kontener">
@@ -107,7 +123,7 @@
                         <div class="kontener">
                         <p id="status_galerii_spis"></p>
                         </div>
-                        <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2">Załaduj kolejne galerie</h2>
+                        <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2" tabindex="0">Załaduj kolejne galerie</h2>
 
                         <!-- pierwotne położenie animacji wczytywania --> 
                         <!-- 
@@ -119,7 +135,7 @@
                        
                         <div class="kontener">
                             <div id="selektor">     
-                                <h2 id="selektor_naglowek">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
+                                <h2 id="selektor_naglowek" tabindex="0">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
                                 <div>
                                     <form action="#" method="post" id="wybierz_galerie" autocomplete="off">
                                         <div id="wybor_galerii">
@@ -252,7 +268,7 @@
         
         
         <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button">Symul-A(JAX)-ncja</button>
-           <p>&copy;2018 v0.5.9 </p>
+           <h6>&copy;2018&ndash;2019 v0.5.10 </h6>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
@@ -304,6 +320,9 @@
                             <li class="tech_tak">kompatybilność</li>
                             <li class="tech_tak">localStorage</li>  
                             <li class="tech_tak">bezpośrednia manipulacja DOM</li>
+                            <li class="tech_tak">obsługa błędów</li>
+                            <li class="tech_tak">komunikaty o błędach</li>
+                            <li class="tech_tak">wbudowane testowanie</li>
 
                         </ul>
                         <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 
@@ -344,8 +363,11 @@
 <div class="kontener">
     <div id="odpluskwiacz_ajaksowy">
         <div>
-            <h4><span class="status_ajaksa">Bieżący stan AJAKSA</span> <button class="zepsuj">Zepsuj</button> <button class="napraw">Napraw</button> <label for="awaria_na_stale" title="Zaznacz/odznacz to pole przed wybraniem Napraw/Zepsuj"> <input type="checkbox" name="awaria_na_stale" id="awaria_na_stale" style="transform: scale(1.5);"> Ustawić na stałe?</label> </h4>
-            <div id="debugger_zamykanie">&times;</div>
+            <h4><span class="status_ajaksa" title="Aktualny stan komunikowania się z serwerem.">Stan Komunikacji</span> 
+                <button class="zepsuj" title="Tworzy błędy w zapytaniach serwera, które uniemożliwiają pobranie i wyświetlenie oczekiwanych treści. Blokuje to nawigowanie po zawartości (wymuszenie powstania błędu, jako symulacja jego ewentualnego wystąpienia).">Zepsuj</button> 
+                <button class="napraw" title="Wznawia prawidłową komunikację.">Napraw</button> 
+                <label for="awaria_na_stale" title="Zaznacz/odznacz to pole przed wybraniem [Zepsuj]/[Napraw], aby ustalić trwałą zmianę. Opcja zostanie zapamiętana także po odświeżeniu strony. Usuwanie decyzji przez odznaczenie pola i zatwierdzeniu przyciskiem akcji."> <input type="checkbox" name="awaria_na_stale" id="awaria_na_stale" style="transform: scale(1.5);"> Ustawić na stałe?</label> </h4>
+            <div id="debugger_zamykanie" tabindex="0">&times;</div>
         </div>
 
     </div>
@@ -354,7 +376,7 @@
 
 		<script src="fittext/jquery.fittext.js"></script>	
 		<script src="witryna.js"></script> 		
-		<script src="lightbox/js/lightbox.js"></script>
+		<script src="lightbox/js/lightbox.min.js"></script>
         <script>
             lightbox.option({   albumLabel : "Zdjęcie %1 z %2", 
                                 positionFromTop : 10
