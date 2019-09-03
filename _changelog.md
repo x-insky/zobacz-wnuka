@@ -1,3 +1,37 @@
+v0.5.12 - code cleanings of JS: grouping defined functions into similar code blocks; removed test alert box triggered by keyboard; CSS: paddings & margins
+
+* v0.5.12 -- [2019-01-21]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* added small pading from top to 'h6' element inside footer to push away by little copyright text from buttons
+* also added little margin after each error notify
+
+-- witryna.js
+* code cleanings
+  - removed empty lines, added or removed spaces in function declarations or its calls 
+  - changed comon style of curly braces in new lines
+  - added few comments with function names on their endings
+  - also some content of comment changed by better descriptive texts
+* added or changed comments as named group of functional code or grouped similar logic
+  - extended the lines of comment with grouping content
+* moved function definitions connected with game logic into one common place with grouping comments
+  - changed place of few functions: 'PoczatekRuchuPrzeciaganiaJS', 'RuchPrzeciaganiaJS', 'RuchUpuszczaniaJS', 'ResetujZIndexWszystkimJS', 'PoczatekDotykuJS', 'KlikniecieObrazkaJS'
+* moved function definitions of global events into newly created area with new group name comment
+  - it concerns: 'resize' on window object and 'keypress' of the whole document
+* removed the alert box notification when triggered by keypressed  'Space' or 'Enter' key on global event 'keypressed' 
+  - no more test notification on keypressed this two keys, when operate keyboard on any anchor elements
+  - previously defined test notifications works fine only at 'standard' anchor elements, it means that which has 'href' attribute
+  - previously defined code worked fine on external link in header and for any generated contents of current gallery but no element inside gallery list
+* removed unused code from event function of 'click' and 'keypress' on any gallery list item 'a' tag (inside container ids: 'galeria_spis' and 'wybrane_galerie_spis')
+  - removed absolutely temporary code, sitting inside comments inside that event function
+* changed places of function definitions for events into one logically grouped place, e.g. 'global events' or 'keypressed gallery list elements'
+
+
+---------------------------
+
+
 v0.5.11 - improved project folder structure, linked logic in one place; secondary jQuery fuse & rerun; current year in footer
 
 * v0.5.11 -- [2019-01-17]
@@ -31,7 +65,6 @@ v0.5.11 - improved project folder structure, linked logic in one place; secondar
 
 ---------------------------
 
-
 v0.5.10 - php ON, conditionally linking ext files; external minifications; so many logic changes but still invisible; interceptor file updated; visible red focus on all active elments of interface, when operating by keyboard, tabindex="0" is a goal; gallery number & title in yellow; restyled footer area; dimmension element hack for its dimensions
 
 * v0.5.10 -- [2019-01-15]
@@ -52,7 +85,7 @@ v0.5.10 - php ON, conditionally linking ext files; external minifications; so ma
   - and also inside any closing button of existing (e.g. closing of Ajax status belt) or generated element
   - interface elements of forms already owns internal 'tabindex=0' attribute even if not explicit specified 
 
- -- zlobek-styl.css
+-- zlobek-styl.css
 * added global style for focus state to any page element
   - works with all standard and active elements of web interface (inputs, buttons, etc.)
   - a noticeable red border with dots

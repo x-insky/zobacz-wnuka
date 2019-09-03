@@ -1,7 +1,7 @@
 'use strict'; 
 
-$(document).ready(function () {
-
+$(document).ready(function () 
+{
 /** GARŚĆ TEORII i FAKTÓW:
 * ścieżka pełna do zdjęcia:	
 * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdj_XXXXX.jpg			// <-- adres zdjęcia, X to cyfra [0..9]
@@ -63,7 +63,7 @@ var g_element_zewnetrzny = "table.galeria",	//wszystko jest w tablicy o klasie "
  g_mojY= '';    
     
 	
-// ---------- ***  FUNKCJE PRAWIE GLOBALNE *** --------------		
+// ---------- *** ----------  FUNKCJE PRAWIE GLOBALNE *** ---------- *** ----------		
 	
 function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zasobu, element_witryny, rodzaj_dzialania, dane ) 
 { 
@@ -83,7 +83,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             {	
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
 
-                UkryjRamkeLadowania('podstrona');  // jawne ukrycie, niezależnie od wyniku + wywalenie tego z wewnatrz GenerujPodstronyGalerii()  
+                UkryjRamkeLadowania('podstrona');  // jawne ukrycie, niezależnie od wyniku + wywalenie tego z treści wewnętrznej GenerujPodstronyGalerii()  
                     if ( status === "success" ) // ("success" / "notmodified" / "error" / "timeout" / "parsererror")
                     {
                     // logowanie sukcesu ;) -- do tego operacja nad obiektem 'dane', przekazano atrybut 'ktoraPodstrona' zawierający numer podstrony galerii do wyświetlenia 
@@ -435,7 +435,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             //
     };
 																
-} // END-WczytajZewnetrznyHTMLdoTAGU() - DEFINICJA
+} // WczytajZewnetrznyHTMLdoTAGU-END
     
 
 function GenerujPodstronyGalerii ( kontenerZrodlowy, nrWyswietlanejGalerii ) 
@@ -1228,7 +1228,7 @@ return odczytaneNamiary;    // zwróć obiekt
 	
 
     
-// ---------- *** PRACA NA RZECZ APLIKACJI *** --------------	    
+// ---------- *** ----------  PRACA NA RZECZ APLIKACJI  ---------- *** ----------	    
     
     
 function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
@@ -1259,9 +1259,7 @@ var $obrazkiTytuloweGalerii = '';
     }
 }  // UsunBrakujaceSRCwKontenerze-END     
     
-    
-    
-    
+  
 function UsunBrakujaceSRCwIMGPozaPrzekazanym ( przeszukiwanyKontener, numerGaleriiDoPozostawienia )
 {
 var $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img");
@@ -1553,7 +1551,6 @@ var opcjeDomyslne = {
 
 var opcje = $.extend ( {}, opcjeDomyslne, opcjePrzekazane );
     
-    
 budowanyElement = '<div class="' + opcje.nadanaKlasa + '">' 
     + '<h2 class="blad_tytul">' + opcje.tytul + '</h2>'
     + '<div class="blad_tresc">'
@@ -1563,7 +1560,6 @@ budowanyElement = '<div class="' + opcje.nadanaKlasa + '">'
         {
             // generowanie treści sztucznej z doklejeniem tego do przekazanego komunikatu o błędzie (przed lub za treścią)
             // tu weryfikacja, czy powiadomienie tego typu już jest na stronie -> ewentualne pobranie wartości 
-
         }
         else
         {
@@ -1731,7 +1727,6 @@ function UkryjDebuggowanie () {
 }    
 
     
-    
 	
 function ZaczytajSpisGalerii () 
 {
@@ -1762,7 +1757,7 @@ WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres
     
     
 
-// ---------- *** OGÓLNE PRZEZNACZENIE *** --------------    
+// ---------- *** ----------  OGÓLNE PRZEZNACZENIE  ---------- *** ----------    
     
 function PrzewinEkranDoElementu ( element, czasAnimacji, korektaY ) 
 {
@@ -1786,7 +1781,7 @@ $( przycisk ).prop('disabled', true);
     
 function OdblokujPrzycisk ( przycisk )
 {
-$( przycisk ).prop('disabled', false);  // oczekiwane działanie zamiast spodziewanego rezultatu poprzez: $.removeProperty('disabled');
+$( przycisk ).prop('disabled', false);  // oczekiwane działanie OK, zamiast spodziewanego rezultatu poprzez: $.removeProperty('disabled');
 }
 
     
@@ -1816,7 +1811,7 @@ adres = adres || 'zobaczwnuka' + String.fromCharCode(64) + 'em' + 'ail' + '.c' +
 adresPokazywany = adresPokazywany || 'kontakt';     
 var adresEmail = 'mailto:' + adres;    
 $( element ).text( adresPokazywany ).attr( 'href', adresEmail ); 
-}
+}   // OdkryjEmail-END
 
     
 function AktualnyRozmiarOkna ( elementWyswietlajacy, poziomWidocznosci ) 
@@ -1895,10 +1890,12 @@ var cbaReklamaBig = $('center');
     $( cbaReklamaBig ).parent().prev().remove();    // wywal małą reklamę - pasek u góry (ewentualnie to moze pozostać)
     $( cbaReklamaBig ).parent().remove();           // ale to wielgachne bezwzględnie wylatuje (sorry cba)
     }
-}
-    
-// ---------- ***      GRA      *** --------------     
+}   // UbijReklamy-END
 
+    
+// ---------- *** ----------  GRA -- POMOCNICZA OBSŁUGA  ---------- *** ----------     
+
+    
 function LosujPlansze ( zakres ) 
 {
     if ( !zakres ) zakres = 1;    
@@ -1915,7 +1912,7 @@ function WybierzPlansze ( nrPlanszy )        // docelowo będzie ajax/api
     nazwaSrc = '',
     obrazki = []; */
     
-    if ( !nrPlanszy ) nrPlanszy = 0;
+    if ( !nrPlanszy ) nrPlanszy = 0;    // przydział startowy na sztywno w razie czego 
     
     switch ( nrPlanszy ) 
     {
@@ -1942,6 +1939,7 @@ function WybierzPlansze ( nrPlanszy )        // docelowo będzie ajax/api
  
             
     // ...
+            // tego oczywiście ma być więcej
             
     }   // switch-( nrPlanszy )-END
     //
@@ -1986,7 +1984,7 @@ var przesuniecieX1 = 1110,
     //                    .attr({ 'draggable' : true });
         
     }
-}    
+}   // RozmiescCzesci-END    
 
     
 function RozmiescCzesciWzorcowo () 
@@ -2012,7 +2010,7 @@ var przesuniecieX1 = 1110,
     fragmenty[i].style.top = String( przesuniecieY1 ) + 'px';
     fragmenty[i].style.zIndex = 100 + i;     
     }
-}
+}   // RozmiescCzesciWzorcowo-END
 
     
 function UsunCzesci () {
@@ -2020,7 +2018,7 @@ function UsunCzesci () {
 }
 
 
-function PoczatekRuchuPrzeciagania (e)  // 'dragstart'
+function PoczatekRuchuPrzeciagania ( e )  // 'dragstart'
 {
 e = e || window.event;    
 g_ktoraGrafika = e.target;
@@ -2036,10 +2034,10 @@ ResetujZIndexWszystkim();
 console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
                 ', e.offsetY:', e.offsetY,')]');
 
-}
+}   // PoczatekRuchuPrzeciagania-END
     
     
-function RuchUpuszczania (e)    // 'drop'
+function RuchUpuszczania ( e )    // 'drop'
 {
 e = e || window.event;
     
@@ -2056,15 +2054,15 @@ console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położ
 console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
 e.preventDefault(); // przestawione z góry
 return false;
-}
+}   // RuchUpuszczania-END
 
 
-function RuchPrzeciagania (e) { // 'dragover'
+function RuchPrzeciagania ( e ) { // 'dragover'
 e = e || window.event;
 e.preventDefault();     // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elemntu
     // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
 return false;   // dodane    
-}    
+}   // RuchPrzeciagania    
 
 
 function ResetujZIndexWszystkim ()
@@ -2099,13 +2097,185 @@ var przesuniecie = WybierzPlansze( nrPlanszy );     // od arzu zwrot, choć on j
   
 RozmiescCzesci( nrPlanszy );
     
-}
+}   // InicjujGre-END
     
+    
+// ---------- *** ----------  GRA W PRZECIĄGANIE ELEMENTÓW v.0.9 #1  ---------- *** ----------
+    
+var Przeciaganie = ( function() {
+    
+function PoczatekRuchuPrzeciaganiaJS ( e )  // 'dragstart'
+{
+//e = e || window.event;    
+g_ktoraGrafika = e.target;      // !!! wpisanie namiarów na przeciagany element, który będzie dalej używany w kolejnych zdarzeniach 
+    //this.style.opacity = '0.9';
+g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // róznica odległoścvi pomiedzy kliknięciem, a początkiem klikniętego elementu  
+g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach
+   // pobranie pozycji "globalnej" danego elementu - ofsetu
+var pozycjaElementu = OkreslPolozenieElementu ( e.target );
+e.target.setAttribute( 'data-offset_x', e.target.style.left );
+e.target.setAttribute( 'data-offset_y', e.target.style.top );
+e.target.setAttribute( 'data-mysz_pocz_x', e.pageX );
+e.target.setAttribute( 'data-mysz_pocz_y', e.pageY );    
 
+ResetujZIndexWszystkimJS();    
+    var pionowosc = g_ktoraGrafika.style.zIndex;
+    if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
+    // poruszany wyskakuje przed szereg podczas wyciągania co najwużej kilka razy i tak już zostaje... 
+    // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
+console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
+            ', e.offsetY:', e.offsetY,')], zaś globalnie to (', pozycjaElementu.left, ', ', pozycjaElementu.top, 
+            '), MYSZ (', e.pageX, ',' , e.pageY, ' )', 'ELEMENT (', e.target.style.left, ',' , e.target.style.top, ' )' );
+} // PoczatekRuchuPrzeciaganiaJS-END
 
-	
-	
-// ---------- *** FUNKCJE ZDARZENIOWE *** --------------	
+    
+function RuchPrzeciaganiaJS ( e )    // 'dragover'
+{
+//e = e || window.event;
+   // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elementu
+    // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
+    g_ktoraGrafika.style.opacity = 0.5;
+    g_ktoraGrafika.style.outlineColor = "#d00";
+    
+e.preventDefault();      
+return false;   // dodane    
+} // RuchPrzeciaganiaJS-END       
+    
+    
+function RuchUpuszczaniaJS ( e )  // 'drop'
+{
+//e = e || window.event;
+ // przestawione znów do góry    
+var scena = document.querySelector('#rysunek'); 
+var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
+//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
+//g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
+//g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px';    
+/*g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';    
+g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';*/  
+//g_ktoraGrafika.style.left = e.pageX - e.target.getAttribute( 'data-mysz_pocz_x' ) - polozenieTla.left + parseInt( g_przesuniecieTlaX ) - g_mojX + 'px';    
+//g_ktoraGrafika.style.top = e.pageY - e.target.getAttribute( 'data-mysz_pocz_y' ) - polozenieTla.top + parseInt( g_przesuniecieTlaY ) - g_mojY + 'px';    
+
+//g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + g_mojX + 'px';    
+//g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + g_mojY + 'px';    
+g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + 'px';    // o dziwo dwie poniższe linie są wierniejsze ułożeniu finalnemu?!
+g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + 'px';      // tu też?!
+
+g_ktoraGrafika.style.outlineStyle = "solid";    
+g_ktoraGrafika.style.outlineColor = "#00d"; 
+g_ktoraGrafika.style.opacity = 1;
+    
+/*g_ktoraGrafika.style.left = 200 + 'px';    
+g_ktoraGrafika.style.top = 100 + 'px';  */
+    
+console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
+            ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
+console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
+e.preventDefault();
+return false;
+} // RuchUpuszczaniaJS-END
+    
+    
+function ResetujZIndexWszystkimJS ()
+{
+var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
+    for ( var i = elementy.length-1 ; i >= 0 ; i-- )
+    {
+    elementy[i].style.zIndex = 20;  // ustawianie z-indeksu na wartość wzorcową (różnica pomiędzy początkiem)
+    }
+} // ResetujZIndexWszystkimJS-END   
+
+    
+function PoczatekDotykuJS ( e ) 
+{
+e.preventDefault(); // zapobieganie przewijaniu ekranu przy dotyku elementów przesuwnych    
+var ktoraGrafika = e.target;    // wewnątrzna zmienna o tym samym znaczniu
+var dotykJednopalczasty = e.touches[0]; // tablica dla pierwszej "operacji jednopalcowej", czyli gestów z jednym naciskiem palca
+var ruchOsX = ktoraGrafika.offsetLeft - dotykJednopalczasty.pageX;  
+var ruchOsY = ktoraGrafika.offsetTop - dotykJednopalczasty.pageY;     
+ResetujZIndexWszystkimJS();
+ktoraGrafika.style.zIndex = 200;    
+//debug
+console.log('Dotyk ekranu');    
+    
+    
+//od razu podpięcie do obiektu poruszanego kolejnego zdarzenia (podległość)
+ktoraGrafika.addEventListener('touchmove', function() {
+    //debug
+console.log('Dotyk ekranu - przeciąganie elementu');    
+    var pozycjaX = dotykJednopalczasty.pageX + ruchOsX;
+    var pozycjaY = dotykJednopalczasty.pageY + ruchOsY;
+    
+    // pozycjonowanie elementu do poruszania
+    ktoraGrafika.style.left = pozycjaX + 'px';
+    ktoraGrafika.style.top = pozycjaY + 'px';
+}, false); // jako 'bublowanie'    
+} // PoczatekDotykuJS-END
+    
+    
+function KlikniecieObrazkaJS ( e ) 
+{
+e.target.style.zIndex = e.target.style.zIndex + 1;
+}  
+    
+document.querySelector('#gra').addEventListener('dragstart', PoczatekRuchuPrzeciaganiaJS, false );
+document.querySelector('#gra').addEventListener('dragover', RuchPrzeciaganiaJS, false );
+document.querySelector('#gra').addEventListener('drop', RuchUpuszczaniaJS, false );
+
+document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, false );
+    
+/*var obrazki = document.querySelectorAll('img.przenosny');
+    obrazki.forEach( function ( obrazek ) {
+    obrazek.addEventListener('click', KlikniecieObrazkaJS, false );    
+    });*/
+
+    
+})();   // Przeciaganie-END   
+    
+    
+    
+    
+// ---------- *** ----------  FUNKCJE ZDARZENIOWE - GLOBALNE  ---------- *** --------------	    
+    
+    
+$(window).on('resize', function() {
+var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
+    // ...
+    
+    // warunkowe ukrywanie elementu z grą, gdy najpierw naciśnięto "Zagraj" -- element posiada style INLINE, których nie nadpisuje standardowy CSS w @media
+    /*  if ( szeroskoscOkna < 1300 ) 
+    {
+    $('#gra').hide();
+    }   */
+    
+});
+    
+    
+$(document).on('keypress', function( evt ) {    // warunkowanie globalne WYŁĄCZENIA względem naciśnięcia klawisza 
+var elementZdarzenia = evt.target.tagName.toLowerCase();    // określenie rodzaju elementu
+console.log('KLAWISZ: ', evt);
+console.info('Element zdarzenia to ', elementZdarzenia);    
+var nawigacjaKlawiaturowa = evt.originalEvent ? evt.originalEvent.keyCode : evt.keyCode,
+    czyAlt = evt.originalEvent ? evt.originalEvent.altKey : evt.altKey;
+    
+    if ( ( nawigacjaKlawiaturowa == 39 ) && ( czyAlt ) ) evt.preventDefault(); // GLOBALNIE: [->] + [Alt] -- nadrzędnie względem przeglądarki Firefox, IE nie słucha się
+    if ( ( nawigacjaKlawiaturowa == 37 ) && ( czyAlt ) ) evt.preventDefault(); // GLOBALNIE: [<-] + [Alt] -- nadrzędnie względem przeglądarki Firefox, IE nie słucha się
+    
+    if ( ( elementZdarzenia.indexOf('input') < 0 ) || ( elementZdarzenia.indexOf('textarea') < 0 ) )   // ma NIE OBWIĄZYWAĆ wewnątrz pól <input> czy innych ewentulanych TEXTAREA 
+    {
+    //console.log('KLAWISZE: ', evt); 
+
+        if ( evt.which == 8) evt.preventDefault();  // [BackSpace] - brak reakcji na niego poza polem wpisywania
+    }
+/*    if ( elementZdarzenia.indexOf('a') == 0 )   // odnośnik <a> -- testowe komunikowanie zdarzenia tylko dla odnośników
+    {
+        if ( ( evt.which == 13 ) || ( evt.which == 32 ) ) alert("KLAWISZ [Spacji] lub [Entera] w <a>");
+        // evt.preventDefault();
+    }*/
+});    
+
+    
+// ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI, ODNOŚNIKI, ELEMENTY, ...  ---------- *** --------------	
 	
 
 $('#odswiez').click(function() {
@@ -2219,7 +2389,6 @@ $('#wybrany_nr_podstrony_zmniejsz').click( function() {
 }); //  #wybrany_nr_zmniejsz click-END    
     
     
-    
 $('#galeria_wybrany_nr').blur( function() {
     
 var wartoscBiezaca = parseInt( $(this).val() );
@@ -2326,7 +2495,7 @@ return false;  // konieczny warunek pomimo .preventDefault na "niewysyłanie for
     
 	
     
-$('h2#selektor_naglowek').on("click keypress", function (e) {   // rozszerzone operowanie o klawiaturę
+$('h2#selektor_naglowek').on("click keypress", function (e) {   // rozszerzone operowanie o klawiaturę; zamiennie "keypress" z .which działa identycznie 
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]    
     {
         if ( $(this).hasClass('rozwiniety') ) $(this).removeClass('rozwiniety').next('div').hide(100);
@@ -2349,7 +2518,7 @@ $('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyśln
 	
 
     // uruchomienie
-$('#nawigacja_galeria').on("click", ".przycisk_galeria", function( evt ) { // IMG z galerii obiektem zdarzenia
+$('#nawigacja_galeria').on("click", ".przycisk_galeria", function( evt ) { // BUTTON z ewentualną podstroną galerii obiektem zdarzenia
 var $this = $(this);	
 var serwer = g_protokol_www + $this.attr('data-adres_strony') + '/';
 var ktoraPodstrona = $this.attr('value');    
@@ -2417,35 +2586,8 @@ return; // wyjście, aby nie przechodzić do odnosnika
 });	//  on("click")-$('#nawigacja_galeria')-END		
 */	
     // DLA KOLEJNYCH GALERII: '$('#galeria_spis').on("click", "a", function(e){'
-$('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e ) {    // testowo dopisano także inne 'kliknięcia' - "click auxclick contextmenu"
-    // włączono KEYPRESSED/KEYDOWN i CLICK -- bez rozbijania na przyciski
-// console.log (e);     // DEBUG dla 'kliknięć'
-    /*
-    if ( e.type == "contextmenu" )
-    {
-    console.log("Menu kontekstowe");
-    // return false;
-    }*/
-    
-    /*  
-    //if ( e.which == 2 ) // jeśli naciśnięto to ŚPM - ŚRODKOWYM przyciskiem myszy
-    if ( e && (e.which == 2 || e.button == 4 ) )
-    {
-    e.preventDefault();
-    alert("ŚPM!");
-    return false;    
-    //$(this).attr('href', '#');  // ;)
-    }    
-    
-    if ( e.which == 3 ) // jeśli naciśnięto to PPM?! - PRAWYM przyciskiem myszy
-    {
-    e.preventDefault();
-    alert("INNY-PM!");
-    //return false;    
-    //$(this).attr('href', '#');  // ;)
-    } */
-    // testowanie innych przycisków/kliknięc 
-   
+$('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e ) {    // 
+    // włączono KEYPRESSED/KEYDOWN i CLICK -- bez rozbijania na przyciski "warunkowe" - "click auxclick contextmenu"
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
     {
     e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku     
@@ -2559,77 +2701,45 @@ WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres
 return false; // !!! konieczne przy click/submit! || operować na obiekcie klikanym
 }); // click-END-#http_adres_submit
 
+
+
+// ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI  ---------- *** --------------	        
     
-// ---------- *** FUNKCJE ZDARZENIOWE - GLOBALNE *** --------------	    
     
-	
 $('#banner').hover( function() {
     $(this).find('#slonce_logo').addClass('animacja_1');
     },
     function() {
     $(this).find('#slonce_logo').removeClass('animacja_1');	
     }
-); // #banner hover-END
-
-    
-$(window).on('resize', function() {
-var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
-    
-    // warunkowe ukrywanie elementu z grą, gdy najpierw naciśnięto "Zagraj" -- element posiada style INLINE, których nie nadpisuje standardowy CSS w @media
-    /*  if ( szeroskoscOkna < 1300 ) 
-    {
-    $('#gra').hide();
-    }   */
-    
-});
+); // #banner hover-END    
     
     
 $('#galeria_spis').on('click', '.odswiez_strone', function () {   // globalnie obsługa zdarzenia dla odświeżenia strony -- niezależnie od kolejności wygenerowania komunikatu o błędzie
     location.reload(); 
 }); // on-click-END    
-
     
-$(document).on('keypress', function( evt ) {    // warunkowanie globalne WYŁĄCZENIA względem naciśnięcia klawisza 
-var elementZdarzenia = evt.target.tagName.toLowerCase();    // określenie rodzaju elementu
-console.log('KLAWISZ: ', evt);
-console.info('Element zdarzenia to ', elementZdarzenia);    
-var nawigacjaKlawiaturowa = evt.originalEvent ? evt.originalEvent.keyCode : evt.keyCode,
-    czyAlt = evt.originalEvent ? evt.originalEvent.altKey : evt.altKey;
     
-    if ( ( nawigacjaKlawiaturowa == 39 ) && ( czyAlt ) ) evt.preventDefault(); // GLOBALNIE: [->] + [Alt] -- nadrzędnie względem przeglądarki Firefox, IE nie słucha się
-    if ( ( nawigacjaKlawiaturowa == 37 ) && ( czyAlt ) ) evt.preventDefault(); // GLOBALNIE: [<-] + [Alt] -- nadrzędnie względem przeglądarki Firefox, IE nie słucha się
     
-    if ( elementZdarzenia.indexOf('input') < 0 )   // ma NIE OBWIĄZYWAĆ wewnątrz pól <input> czy innych ewentulanych  
+$('#galeria_spis').on("click keydown", ".krzyzyk_zamykanie", function( e ) { 
+var $this = $(this);
+    // jakoby warunkowe wykonanie, mimo że na CLICK wstępnie reagowało 
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
     {
-    //console.log('KLAWISZE: ', evt); 
-
-        if ( evt.which == 8) evt.preventDefault();  // [BackSpace] - brak reakcji na niego poza polem <input>
+    var kontenerBledu = $this.parent('.blad');  // wystarczający krok o jeden poziom w górę
+//    kontenerBledu.hide(300, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
+    kontenerBledu.slideUp(1000, function() { this.remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
+        // TODO: z jakiejś racji dowolny typ animacji chowającej rodzica elementu z focusem się zacina
     }
-    if ( elementZdarzenia.indexOf('a') == 0 )   // odnośnik <a> -- testowe komunikowanie zdarzenia
-    {
-        if ( ( evt.which == 13 ) || ( evt.which == 32 ) ) alert("KLAWISZ [Spacji] lub [Entera] w &lt;a&gt;");
-    }
-});    
-    
-    
-$('#galeria_spis').on("click", ".krzyzyk_zamykanie", function(){ 
-var $this = $(this),
-    kontenerBledu = $this.parents('.blad');
-    kontenerBledu.hide(300, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
-    
 });
-    
 
     
-$('#debugger_zamykanie').click(function(){ 
-/*var $this = $(this),
-    kontenerBledu = $this.parents('.blad');
-    kontenerBledu.hide(300, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu*/
-// ...
-UkryjDebuggowanie();
+$('#debugger_zamykanie').on("click keydown", function( e ) { 
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+    {
+    UkryjDebuggowanie();
+    }
 });    
-    
-    
     
     
 $('div#zagraj').click( function() {
@@ -2642,7 +2752,7 @@ $('div#zagraj').click( function() {
 });    
     
     
-$('#gra_start').click( function() {
+$('#gra_start').click( function() { // start tylko dla naciśnięcia elementu myszą/dotykiem, bo klawaiturą nie da się przeciągać efektywnie
     // ...
     RozmiescCzesciWzorcowo();
     // ...
@@ -2658,138 +2768,10 @@ $('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania
     
     */
 
-
-    
-var Przeciaganie = ( function() {
-    
-function PoczatekRuchuPrzeciaganiaJS ( e )  // 'dragstart'
-{
-//e = e || window.event;    
-g_ktoraGrafika = e.target;      // !!! wpisanie namiarów na przeciagany element, który będzie dalej używany w kolejnych zdarzeniach 
-    //this.style.opacity = '0.9';
-g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // róznica odległoścvi pomiedzy kliknięciem, a początkiem klikniętego elementu  
-g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach
-   // pobranie pozycji "globalnej" danego elementu - ofsetu
-var pozycjaElementu = OkreslPolozenieElementu ( e.target );
-e.target.setAttribute( 'data-offset_x', e.target.style.left );
-e.target.setAttribute( 'data-offset_y', e.target.style.top );
-e.target.setAttribute( 'data-mysz_pocz_x', e.pageX );
-e.target.setAttribute( 'data-mysz_pocz_y', e.pageY );    
-
-ResetujZIndexWszystkimJS();    
-    var pionowosc = g_ktoraGrafika.style.zIndex;
-    if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
-    // poruszany wyskakuje przed szereg podczas wyciągania co najwużej kilka razy i tak już zostaje... 
-    // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
-console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
-            ', e.offsetY:', e.offsetY,')], zaś globalnie to (', pozycjaElementu.left, ', ', pozycjaElementu.top, 
-            '), MYSZ (', e.pageX, ',' , e.pageY, ' )', 'ELEMENT (', e.target.style.left, ',' , e.target.style.top, ' )' );
-}
-    
-function RuchPrzeciaganiaJS ( e )    // 'dragover'
-{
-//e = e || window.event;
-   // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elementu
-    // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
-    g_ktoraGrafika.style.opacity = 0.5;
-    g_ktoraGrafika.style.outlineColor = "#d00";
-    
-e.preventDefault();      
-return false;   // dodane    
-}        
-    
-function RuchUpuszczaniaJS ( e )  // 'drop'
-{
-//e = e || window.event;
- // przestawione znów do góry    
-var scena = document.querySelector('#rysunek'); 
-var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
-//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
-//g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
-//g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px';    
-/*g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';    
-g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';*/  
-//g_ktoraGrafika.style.left = e.pageX - e.target.getAttribute( 'data-mysz_pocz_x' ) - polozenieTla.left + parseInt( g_przesuniecieTlaX ) - g_mojX + 'px';    
-//g_ktoraGrafika.style.top = e.pageY - e.target.getAttribute( 'data-mysz_pocz_y' ) - polozenieTla.top + parseInt( g_przesuniecieTlaY ) - g_mojY + 'px';    
-
-//g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + g_mojX + 'px';    
-//g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + g_mojY + 'px';    
-g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + 'px';    // o dziwo dwie poniższe linie są wierniejsze ułożeniu finalnemu?!
-g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + 'px';      // tu też?!
-
-g_ktoraGrafika.style.outlineStyle = "solid";    
-g_ktoraGrafika.style.outlineColor = "#00d"; 
-g_ktoraGrafika.style.opacity = 1;
-    
-/*g_ktoraGrafika.style.left = 200 + 'px';    
-g_ktoraGrafika.style.top = 100 + 'px';  */
-    
-console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
-            ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
-console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
-e.preventDefault();
-return false;
-}
-       
-function ResetujZIndexWszystkimJS ()
-{
-var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
-    for ( var i = elementy.length-1 ; i >= 0 ; i-- )
-    {
-    elementy[i].style.zIndex = 20;  // ustawianie z-indeksu na wartość wzorcową (różnica pomiędzy początkiem)
-    }
-}    
-
-function PoczatekDotykuJS ( e ) 
-{
-e.preventDefault(); // zapobieganie przewijaniu ekranu przy dotyku elementów przesuwnych    
-var ktoraGrafika = e.target;    // wewnątrzna zmienna o tym samym znaczniu
-var dotykJednopalczasty = e.touches[0]; // tablica dla pierwszej "operacji jednopalcowej", czyli gestów z jednym naciskiem palca
-var ruchOsX = ktoraGrafika.offsetLeft - dotykJednopalczasty.pageX;  
-var ruchOsY = ktoraGrafika.offsetTop - dotykJednopalczasty.pageY;     
-ResetujZIndexWszystkimJS();
-ktoraGrafika.style.zIndex = 200;    
-//debug
-console.log('Dotyk ekranu');    
-    
-    
-//od razu podpięcie do obiektu poruszanego kolejnego zdarzenia (podległość)
-ktoraGrafika.addEventListener('touchmove', function() {
-    //debug
-console.log('Dotyk ekranu - przeciąganie elementu');    
-    var pozycjaX = dotykJednopalczasty.pageX + ruchOsX;
-    var pozycjaY = dotykJednopalczasty.pageY + ruchOsY;
-    
-    // pozycjonowanie elementu do poruszania
-    ktoraGrafika.style.left = pozycjaX + 'px';
-    ktoraGrafika.style.top = pozycjaY + 'px';
-}, false); // jako 'bublowanie'    
-} // function PoczatekDotykuJS-END
-    
-    
-function KlikniecieObrazkaJS ( e ) 
-{
-e.target.style.zIndex = e.target.style.zIndex + 1;
-}
-    
-    
-document.querySelector('#gra').addEventListener('dragstart', PoczatekRuchuPrzeciaganiaJS, false );
-document.querySelector('#gra').addEventListener('dragover', RuchPrzeciaganiaJS, false );
-document.querySelector('#gra').addEventListener('drop', RuchUpuszczaniaJS, false );
-
-document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, false );
-    
-/*var obrazki = document.querySelectorAll('img.przenosny');
-    obrazki.forEach( function ( obrazek ) {
-    obrazek.addEventListener('click', KlikniecieObrazkaJS, false );    
-    });*/
-
-    
-})();   // Przeciaganie-END   
     
 	
 // ***************************************************************************	
-// ---------- *** AUTOURUCHAMIANIE *** --------------	 
+// ---------- *** ----------  AUTOURUCHAMIANIE  ---------- *** ----------	 
 // ***************************************************************************		
 
 InicjujRamkiLadowania();    

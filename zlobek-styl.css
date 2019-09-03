@@ -99,6 +99,7 @@ h4 {
 
 h6 {
     text-align: center;
+    padding-top: 0.7em;
 }
 
 a {
@@ -161,6 +162,7 @@ div.blad {
     border: 3px solid #eee;
     box-shadow: 2px 2px 4px #333;
     transition: all 0.7s;
+    margin-bottom: 0.8em;
     
     /*    animation: zolty_blysk 2s ease-out;
         animation-fill-mode: both; */
