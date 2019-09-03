@@ -1,3 +1,37 @@
+v0.5.11 - improved project folder structure, linked logic in one place; secondary jQuery fuse & rerun; current year in footer
+
+* v0.5.11 -- [2019-01-17]
+
+[+] ADDED
+
+-- new folder 'lib'
+* as a container for any external libraries
+* any locally existing Javascript resources should be linked from here to 'index.php' or 'witryna.js'
+* may contains functional elements of used libs, such as CSS, graphic content or any other neccessary files if they're needed
+
+-- index.php
+* added displaying current year in footer as the upper range
+  - changed at 2019 so scope can't be wrong unless server is configured badly
+* added reserve link to jQuery library if occured a problem of loading primary link from page head
+  - some kind of fuse if still a jQuery object not defined iun browser
+  - secondary link when activated then links library code inside page body
+  - secondary link to jQuery is always local while primary might be external, depeds from used server and user location (local when using 'localhost' hosting)
+  - a hack nesting 'script' tag inside external 'script' tag
+
+[*] MODIFIED
+
+* modified locations of all used JavaScript libraries and their subfolders to use a 'lib' folder
+  - the same file versions still in use, changed only their location and linking to
+
+-- index.php
+* changed all paths to libraries used in project to use a folder of 'lib'
+  - paths in 'scr' attributes of 'script' tags are just prefixed with that folder name
+* little touches on list element inside footer
+* and cleaning new lines, indentation of 'script' tags and their contents at the end of the file
+
+---------------------------
+
+
 v0.5.10 - php ON, conditionally linking ext files; external minifications; so many logic changes but still invisible; interceptor file updated; visible red focus on all active elments of interface, when operating by keyboard, tabindex="0" is a goal; gallery number & title in yellow; restyled footer area; dimmension element hack for its dimensions
 
 * v0.5.10 -- [2019-01-15]
