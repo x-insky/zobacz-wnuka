@@ -1,3 +1,185 @@
+v0.5.13 - 
+
+* v0.5.13 -- [2019-01-24]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added global active state for all element
+  - removed outline from any element
+* added global style for 'a' elements on state 'active' and 'focus'
+  - outline removal while 'active'
+  - adding dotted outline when 'focused'
+* added global strong style for 'strong' elements
+* added hover state for any generated notification of error, a 'div' element with class of 'blad'
+  - changed original size of element by transform it about +5%  in both directions
+  - animated transform by smooth transition, defined in basis element
+  - possibly focus state is not affected
+* added the same rule to the 'focus' state, like element which already has a 'hover' state, an element with class 'krzyzyk_zamykanie' 
+  - just added another selector for the same element, next to the already defined state
+* with the same idea added selector '#debugger_zamykanie:focus' into previous existing selector with 'hover', for an element of closing for Ajax status belt   
+* used the the same idea of adding new pseudoclass selectors on another elements to restyle them the same, as did it inside previously declared and similar selector
+  - added 'h2#zaladuj_galerie_spis:focus' next to existing one with ':hover' state
+  - or into next belt of selecting gallery numbers: 'div#selektor h2#selektor_naglowek:focus'
+  - interactive elements of loading or sliding new content acts the same on hovering by cursor or on focusing by keyboard
+* defined special style for button with id 'symulancja_button' of show/hide Ajax status belt
+  - rule of bold font style, for noticeable its text visibility
+* defined new animation to cyclic color change
+  - from black to black generally but with some noticeable seven colors between last black
+  - most of used colors in this animation are similar to already used site palette, but some of the are totally different for drawing attention of user to click the button of Ajax status and encouragement to have fun with Ajax contoling state
+* defined also new class to configure properties of previously mentioned animation
+  - added long time of 30 second duration and inifinite loop
+  - class was assigned into a button of id 'symulancja_button', which sits inside footer 
+  - tested many variants of colors and duration times to gain a nice and smooth changing colors of text 
+
+-- witryna.js
+* defined a new event function, fired when 'click' or 'keypressed' on 'a' elements inside container with id 'glowna' (a container for current gallery details)
+  - to purpose of hiding a red outline on active element (here an anchor element outside thumbnail, linking to a original image element), after its click a 'blur()' method is fired
+  - function could block default actions, might stop default behavior when space is used to fire a link with thumbnail, uses 'preventDefault()' on event object
+  - detailed: a space key won't scroll a page content, when operate on 'a' tag inside id of 'glowna' container
+  - a false 'click' is generated after pressing space key
+  - some kind of hack defined here 
+
+[*] MODIFIED
+
+-- index.php
+* added a class of 'animacja_zmiana_kolorow' to a button with id of 'symulancja_button' inside footer
+  - class definition includes connected animation named 'zmiana_kolorow' 
+* changed name of element on a list, inside footer 
+
+-- zlobek-styl.css
+* altered transition definition for class 'blad' of a 'div' element
+  - defined precisely animated argument inside transition
+  - only for selected argument 'shadow' and 'transform', instead for 'all' (all animated attributes isn't)
+  - improved efficiency of animation (see fixed section of rhis file)
+* redefined animation of 'zolty_blysk'
+  - more changes than only a border color
+  - added more stages and a changes of background color
+  - animation for existing and styled element, colors must fit to already defined 
+
+-- witryna.js
+* temporary commented out declaration of 'use strict' for the impact on whole project (and this file)
+* many changes of internal notifications texts inside logic defined in function 'WczytajZewnetrznyHTMLdoTAGU', details below 
+* changed message inside generated notification of internal error while displaying new gallery details or any subpage of current gallery, starting from one (sometimes the only one)
+  - notification title element contains a number conected gallery, which cannot be readed
+  - the error description contains also a given gallery subpage number, which cannot be readed and the overall gallery number, where problem encountered   
+* changed the default internal message error while first read problem occurs ('spis_galerii' variant)
+  - with better explanatory text now
+* added new style of defined notification for any internal error which concerns loading of next gallery subpage ('spis_galerii' variant)
+  - next to the old style notification a improved notification shows
+  - yes, for now two notofication are coming out! (just for a test purpose and to finish developing it)
+  - added title, detailed description and action button which should allow repeat unsuccesfull action (for now it can't do anything)
+  - content of the notifications should update on every next error of that type, now only the old one is updated
+  - also its class is changed, so the next error animates the whole element (now only the first ocurrence changes anything)
+  - for now only the previously defined notification are changed by yellow animation on every new error 
+* altered the message text of internal notification while providing specified gallery number ('wybrana_galeria_rekurencja' variant, which is the first step of two to displaying it)
+  - the given gallery number is not mentioned, but the title and decription broadcasts the number of its subpage, where is placed
+now
+  - also mentioned that it's the initial step of loading contents (to gain address for given gallery number)
+*  altered the message text of internal notification while providing specified gallery number ('wybrana_galeria' variant, thich is the second and the final step of displaying it)
+  - displays the final notice and the desired gallery number in title
+* modified the logic inside function 'GenerujPowiadomienieOBledzie'
+  - changed the defaults of the option for adding animation and using CSS animation class
+  - expanded logic of builded HTML structure
+* modified logic of function 'PrzewinEkranDoElementu'
+  - placed previous logic inside conditional statement
+  - for safety purpose of doing an action only on existing page element  as passed parameter (...previously an error occurs)
+* just a simple change of single quotes to double quotes in definition of global event function of 'keypress' event
+* modified function event when 'clicked' or 'keypressed' on element with id of 'selektor_naglowek'
+  - when clicked then auto blur status is applied on event element,  which provides an auto removal of a red outline from event element
+  - defined logic: 'blur()' method removes focus state of event object  
+  - but after a keypress of space key, there is no more scrolling content of the page which is standard functionality for that key
+  - uses 'preventDefault()' method for blocking that event
+* modified the logic of actions 'click' and 'keydown' on any elements of gallery list (regular or selected subpages of gallery list items)
+  - any 'a' element inside this containers are blurred after a click
+  - no changing focus when Space or Enter key is used (focus remains on that element while new contents is being loaded) 
+* little but significant changes inside event on every closing button of class 'krzyzyk_zamykanie' inside generated notification of error (container with id of 'galeria_spis')
+  - blocking scrolling of page contents when pressed space (if scrolling available), so only a notification is closed by space
+  - also verified animation 'slideUp' of jQuery lib (two version ago it was simply hide)
+  - 'slideUp' is better for context, when closing it's rolled up as unactual notification 
+  - also a better distinguish an short animation, when only one dimension is changing 
+  - fixed connected with CSS problem and its animations efficiency
+* cleanings
+  - fixed some typos inside comments
+  - added some comments
+  - added comments with function name at the ending of the some declared functions  
+
+[F] FIXED
+
+-- zlobek-styl.css
+* altered transition definition for class 'blad' of a 'div' element
+  - removed 'all' from defined transition attributes, instead used only selected arguments 'shadow' and 'transform' with parameters on a list
+  - a clue was an old web browser, which don't understands the power of CSS transitions, and the animation of hiding notification was smooth and immediately started, after a click/keypress
+  - improved efficiency of animation, now it's playing smoothly 
+  - fixes: #31 - 'Slow and not smooth hide animation (internal page notifications)
+
+---------------------------
+
+v0.5.12 - code cleanings of JS: grouping defined functions into similar code blocks; removed test alert box triggered by keyboard; CSS: paddings & margins
+
+* v0.5.12 -- [2019-01-21]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* added small pading from top to 'h6' element inside footer to push away by little copyright text from buttons
+* also added little margin after each error notify
+
+-- witryna.js
+* code cleanings
+  - removed empty lines, added or removed spaces in function declarations or its calls 
+  - changed comon style of curly braces in new lines
+  - added few comments with function names on their endings
+  - also some content of comment changed by better descriptive texts
+* added or changed comments as named group of functional code or grouped similar logic
+  - extended the lines of comment with grouping content
+* moved function definitions connected with game logic into one common place with grouping comments
+  - changed place of few functions: 'PoczatekRuchuPrzeciaganiaJS', 'RuchPrzeciaganiaJS', 'RuchUpuszczaniaJS', 'ResetujZIndexWszystkimJS', 'PoczatekDotykuJS', 'KlikniecieObrazkaJS'
+* moved function definitions of global events into newly created area with new group name comment
+  - it concerns: 'resize' on window object and 'keypress' of the whole document
+* removed the alert box notification when triggered by keypressed  'Space' or 'Enter' key on global event 'keypressed' 
+  - no more test notification on keypressed this two keys, when operate keyboard on any anchor elements
+  - previously defined test notifications works fine only at 'standard' anchor elements, it means that which has 'href' attribute
+  - previously defined code worked fine on external link in header and for any generated contents of current gallery but no element inside gallery list
+* removed unused code from event function of 'click' and 'keypress' on any gallery list item 'a' tag (inside container ids: 'galeria_spis' and 'wybrane_galerie_spis')
+  - removed absolutely temporary code, sitting inside comments inside that event function
+* changed places of function definitions for events into one logically grouped place, e.g. 'global events' or 'keypressed gallery list elements'
+
+---------------------------
+
+v0.5.11 - improved project folder structure, linked logic in one place; secondary jQuery fuse & rerun; current year in footer
+
+* v0.5.11 -- [2019-01-17]
+
+[+] ADDED
+
+-- new folder 'lib'
+* as a container for any external libraries
+* any locally existing Javascript resources should be linked from here to 'index.php' or 'witryna.js'
+* may contains functional elements of used libs, such as CSS, graphic content or any other neccessary files if they're needed
+
+-- index.php
+* added displaying current year in footer as the upper range
+  - changed at 2019 so scope can't be wrong unless server is configured badly
+* added reserve link to jQuery library if occured a problem of loading primary link from page head
+  - some kind of fuse if still a jQuery object not defined iun browser
+  - secondary link when activated then links library code inside page body
+  - secondary link to jQuery is always local while primary might be external, depeds from used server and user location (local when using 'localhost' hosting)
+  - a hack nesting 'script' tag inside external 'script' tag
+
+[*] MODIFIED
+
+* modified locations of all used JavaScript libraries and their subfolders to use a 'lib' folder
+  - the same file versions still in use, changed only their location and linking to
+
+-- index.php
+* changed all paths to libraries used in project to use a folder of 'lib'
+  - paths in 'scr' attributes of 'script' tags are just prefixed with that folder name
+* little touches on list element inside footer
+* and cleaning new lines, indentation of 'script' tags and their contents at the end of the file
+
+---------------------------
+
 v0.5.10 - php ON, conditionally linking ext files; external minifications; so many logic changes but still invisible; interceptor file updated; visible red focus on all active elments of interface, when operating by keyboard, tabindex="0" is a goal; gallery number & title in yellow; restyled footer area; dimmension element hack for its dimensions
 
 * v0.5.10 -- [2019-01-15]
@@ -18,7 +200,7 @@ v0.5.10 - php ON, conditionally linking ext files; external minifications; so ma
   - and also inside any closing button of existing (e.g. closing of Ajax status belt) or generated element
   - interface elements of forms already owns internal 'tabindex=0' attribute even if not explicit specified 
 
- -- zlobek-styl.css
+-- zlobek-styl.css
 * added global style for focus state to any page element
   - works with all standard and active elements of web interface (inputs, buttons, etc.)
   - a noticeable red border with dots

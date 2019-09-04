@@ -14,13 +14,13 @@ $serwerLokalny = false;
     <link rel="stylesheet" href="reset.css">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />  <!-- czcionka Muli -->	
     <link rel="stylesheet" href="zlobek-styl.css" />
-    <link rel="stylesheet" href="lightbox/css/lightbox.css" />
+    <link rel="stylesheet" href="./lib/lightbox/css/lightbox.css" />
 
-    <script src="html5shiv.3.7.3.js"></script>
+    <script src="./lib/html5shiv.3.7.3.js"></script>
     
     <?php
-        if ( $serwerLokalny ) echo '<script src="jquery-1.12.4.js"></script>';  // pobieranie pliku nieskompresowanego przez przeglądarkę
-        else echo '<script src="jquery-1.12.4.min.js"></script>';    // pobieranie pliku z serwera w wariancie skompresowanym: *.MIN.js
+        if ( $serwerLokalny ) echo '<script src="./lib/jquery-1.12.4.js"></script>';  // pobieranie pliku nieskompresowanego przez przeglądarkę
+        else echo '<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>';    // pobieranie pliku z serwera zewnętrznego w wariancie skompresowanym: *.MIN.js
     ?>  <!-- testy uruchamiania nawet na kalkulatorach --> 
 
     
@@ -267,8 +267,8 @@ $serwerLokalny = false;
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button">Symul-A(JAX)-ncja</button>
-           <h6>&copy;2018&ndash;2019 v0.5.10 </h6>
+        <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button" class="animacja_zmiana_kolorow">Symul-A(JAX)-ncja</button>
+           <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.13</h6>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
@@ -334,10 +334,11 @@ $serwerLokalny = false;
                         </ul>
                         <h3>Czego tutaj nie ma</h3> 
                         <ul>
-                            <li class="tech_nie">Angular.js</li>
+                            <li class="tech_nie">Angular</li>
                             <li class="tech_nie">React</li>
                             <li class="tech_nie">Web Components</li>
                             <li class="tech_nie">Bootstrap</li>
+                            <li class="tech_nie">Foundation</li>
                             <li class="tech_nie">ES6&nbsp;===&nbsp;ES2015</li>
                             <li class="tech_nie">promesy</li>                    
                             <li class="tech_nie">Node.js</li>
@@ -369,18 +370,20 @@ $serwerLokalny = false;
                 <label for="awaria_na_stale" title="Zaznacz/odznacz to pole przed wybraniem [Zepsuj]/[Napraw], aby ustalić trwałą zmianę. Opcja zostanie zapamiętana także po odświeżeniu strony. Usuwanie decyzji przez odznaczenie pola i zatwierdzeniu przyciskiem akcji."> <input type="checkbox" name="awaria_na_stale" id="awaria_na_stale" style="transform: scale(1.5);"> Ustawić na stałe?</label> </h4>
             <div id="debugger_zamykanie" tabindex="0">&times;</div>
         </div>
-
     </div>
 </div>                           	
+    <!-- ratunkowe jquery z serwera, ale przeglądarki i edytory nie lubią zagnieżdżonego SCRIPT, a zwłaszcza </SCRIPT> -->
+    <script>
+        window.jQuery || document.write('<script src="./lib/jquery-1.12.4.min.js"></script' + '>');
+    </script>
 
-
-		<script src="fittext/jquery.fittext.js"></script>	
-		<script src="witryna.js"></script> 		
-		<script src="lightbox/js/lightbox.min.js"></script>
-        <script>
-            lightbox.option({   albumLabel : "Zdjęcie %1 z %2", 
-                                positionFromTop : 10
-            });
-        </script>
+    <script src="./lib/fittext/jquery.fittext.js"></script>	
+    <script src="./witryna.js"></script> 		
+    <script src="./lib/lightbox/js/lightbox.min.js"></script>
+    <script>
+        lightbox.option({   albumLabel : "Zdjęcie %1 z %2", 
+                            positionFromTop : 10
+        });
+    </script>
 </body>
 </html>
