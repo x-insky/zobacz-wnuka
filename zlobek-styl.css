@@ -1127,6 +1127,7 @@ div#glowna article{
 
 div#glowna div#nazwa_galerii {
     background-color: deepskyblue;
+    background: radial-gradient(circle at bottom, deepskyblue 10%, #c3d5e2); 	
     display: none;
     padding: 0.5em;
     padding-right: 1em;
@@ -1180,7 +1181,8 @@ div#glowna div#nazwa_galerii span.data {
 }
 
 div#glowna .jasne_tlo_galeria {
-    background-color: #c3d5e2;    
+    background-color: #c3d5e2; 
+    background: radial-gradient(circle at top, deepskyblue 10%, #c3d5e2); 	
 }
 
 nav#nawigacja_galeria {
@@ -1234,7 +1236,7 @@ div#zawartosc_do_podmiany {
 
 div#skladowisko {
     /* background-color: coral; */
-    background-color: #c3d5e2;
+    /* background-color: #c3d5e2; */
     padding: 0.5em 0.6em;
     overflow: hidden;
     display: none;
@@ -1682,7 +1684,7 @@ input[type=range]:hover::-ms-fill-upper {
 
 .animacja_zolty_blysk {
     animation: zolty_blysk 2s ease-out;
-    animation-fill-mode: both;    
+    animation-fill-mode: forwards;  /* 'both' było*/  
 }
 
 .animacja_zmiana_kolorow {

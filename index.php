@@ -43,13 +43,15 @@ $serwerLokalny = false;
                     <div id="logo">
                         <div id="slonce_logo"><!-- <img src="grafiki/slonce.png"> --></div>
                     </div>
-    
-                    <div id="napisy">
-                    <h1 class="logo">Zobacz Wnuka!</h1>
-                    <h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w&nbsp;Chojnowie</h2>
-                    <p class="clearfix2" ></p>
-                    </div>
-                    
+
+                    <a href=".">
+                        <div id="napisy">
+                        <h1 class="logo">Zobacz Wnuka!</h1>
+                        <h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w&nbsp;Chojnowie</h2>
+                        <p class="clearfix2" ></p>
+                        </div>
+                    </a>
+
                     <div id="zagraj">
                         <div id="zagraj_srodek">
                         <h4 class="gra_odnosnik">Czekasz na załadowanie?</h4>
@@ -57,13 +59,13 @@ $serwerLokalny = false;
                         <p class="gra_odnosnik">&gt;</p>
                         </div>
                     </div>
-                    
+
                     <div id="napis_spod">
                     <h3>Serwis umożliwia łatwiejszy podgląd rozrabiających wnuków przez dziadków... i nie tylko. Treści pochodzą&nbsp;z&nbsp;witryny <a class="odnosnik_kolor" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
                     </div>
 
                 </div> <!-- div#banner -->
-                
+
             </div>	<!-- div#naglowek_kontener -->    
                 
                 <!-- formularz-antyk
@@ -268,7 +270,7 @@ $serwerLokalny = false;
         
         
         <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button" class="animacja_zmiana_kolorow">Symul-A(JAX)-ncja</button>
-           <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.13</h6>
+           <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.14</h6>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
@@ -322,6 +324,7 @@ $serwerLokalny = false;
                             <li class="tech_tak">bezpośrednia manipulacja DOM</li>
                             <li class="tech_tak">obsługa błędów</li>
                             <li class="tech_tak">komunikaty o błędach</li>
+                            <li class="tech_tak">obsługa z klawiatury</li>
                             <li class="tech_tak">wbudowane testowanie</li>
 
                         </ul>
@@ -339,10 +342,10 @@ $serwerLokalny = false;
                             <li class="tech_nie">Web Components</li>
                             <li class="tech_nie">Bootstrap</li>
                             <li class="tech_nie">Foundation</li>
-                            <li class="tech_nie">ES6&nbsp;===&nbsp;ES2015</li>
-                            <li class="tech_nie">promesy</li>                    
+                            <li class="tech_nie">ES >= v6 / ES >= 2015</li>
+                            <li class="tech_nie">promise / observable / async</li>                    
                             <li class="tech_nie">Node.js</li>
-                            <li class="tech_nie">SASS/LESS/PostCSS</li>
+                            <li class="tech_nie">SASS / LESS / PostCSS</li>
                             <li class="tech_nie">CSS&nbsp;grid</li>
                             <li class="tech_nie">SVG?</li>
                         </ul>

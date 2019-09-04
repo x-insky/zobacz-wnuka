@@ -1,4 +1,68 @@
-v0.5.13 - 
+v0.5.14 - start page link in logo title, current gallery details with gradient backgrounds; replacements in logic for generating improvement internal notifications of errors (mainly in function 'WczytajZewnetrznyHTMLdoTAGU'), all with animation of newly created; footer content touched
+
+* v0.5.14 -- [2019-01-30]
+
+[+] ADDED
+
+-- index.php
+* added anchor element which surrounds the whole div element with id 'napisy'
+  - wrapped a whole logo element with a link which leads to itself (to main site), href leads to itself 
+  - a popular web convention of adding link to start from main page
+  - here is SPA, so it's some kind of starting point or page refresh
+
+[*] MODIFIED
+
+-- index.php
+* extended some values of list elements inside footer area
+* also some '&nbsb;'-spaces replaced with regular spaces from list elements of that footer area
+* replaced few tab characters by new line characters in HTML
+
+-- zlobek-styl.css
+* changed background color of element with id 'nazwa_galerii'
+  - background of current gallery title and description
+  - bottom centered radial gradien with instead of full color 
+  - a previous color definition stays as a polyfill for older browsers
+* defined new background for next element of class 'jasne_tlo_galeria'
+  - the same colors of gradient, but defined its center to the top of element
+  - a horizontal reflection of previously defined gradient
+  - also a previous definition of background color stays as a polyfill for older browsers
+* removed background color definition from element with id 'skladowisko', which is inside an element with newly defined class 'jasne_tlo_galeria'
+  - to purpose not covering defined gradient in wider element (its container) by its background color
+* changed fill style of animation in its configuration of class 'animacja_zolty_blysk' from 'both' to 'forwards'
+
+-- witryna.js
+* altered internal notification of error inside function 'WczytajZewnetrznyHTMLdoTAGU' on 'spis_galerii' variant
+  - an extended description with more intuitive text is passed to an argument while launching function 'GenerujPowiadomienieOBledzie' to build this notification
+* before error notification is built, a text of its description is concatenated with some other parts
+  - the whole error description text is builded as a HTML with emphasis on usuccessful requested gallery number and counted number of total occurences that unsuccessful action of showing gallery subpage
+  - all the important numbers are surrounded by 'strong' tags, and thats way they are presented better 
+  - the current subpage number is calculated from last unsuccessful request address, and not by counting next subpages of gallery list!
+* later notification is build with concatenated description, which is used to first time creation a new internal notification error 
+  - ... or the logic is trying to modify the content of existing notification by owned string of current error
+  - in case of modify the existing notification, a class with conected CSS animation must be reapplied to that element, so it's removed and added in two expressions, because jQuery won't allow to reapply the same class to element, which already owns that class (important!)
+  - but when notification of error loading-next-gallery-subpages is first time builded, then the function 'GenerujPowiadomienieOBledzie' must use a object parameter of 'dodatkowaKlasa' with new value 'blad_dolaczania' (instead previous value 'dolacz'), so the already defined logic inside that function can do the job right
+  - also a basic version of notification is generated (but soon won't)
+* changed also an element to scroll to in page
+  - now page is scrolled to place of new notification, which is always placed before old style notification (yes, soon will be removed), with basic notification text (e.g. not contains desired subpage number) 
+
+* renamed local variable name to more meaningful name inside function 'WczytajZewnetrznyHTMLdoTAGU' on 'wybrana_galeria_rekurencja' variant
+
+* altered internal notification of error inside function 'WczytajZewnetrznyHTMLdoTAGU' on 'wybrana_galeria' variant
+  - commented out logic of temporary showing container with generated new content before finish the reading of source and couldn't replace that container content, so it might be uneccessary
+  - slighty changed the description of notification text, replacing acronym by full word and adding "second stage" instead meaningless 'concrete' in tranlations 
+
+* changed internal notification of error inside function 'WczytajZewnetrznyHTMLdoTAGU' on 'wybrany_spis_galerii' variant (selected subpage of gallery list)
+  - altered the text of notification from general to detailed
+  - read out requested gallery number form address of request
+  - put that value inside notification title and description of an error, where surround it by 'strong' tag 
+
+* changed generated text for current gallery inside function 'GenerujPodstronyGalerii', where the current gallery subpage is displayed
+  - replaced word 'selected' by 'current' in translation
+* added new comment or altered text of few existing
+
+---------------------------
+
+v0.5.13 - added focus style like hover on active like-buttons-elements and belts, when keyboard navigation; redefined click event to support keypress/keydown too; redefined event functions to hide focus state on anchors on selected elements; better notifications of internal errors, now with gallery number on title and subgallery in details; scaled notification of error when hover; bolded text button & cycle animation; blinking animation for new notification (first time presented); verified function of sliding to page content; fixed slow animation of a disappearing element by complicated transition
 
 * v0.5.13 -- [2019-01-24]
 
