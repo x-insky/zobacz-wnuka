@@ -1,4 +1,4 @@
-'use strict'; 
+// 'use strict'; 
 
 $(document).ready(function () 
 {
@@ -73,7 +73,6 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
     if ( !dane ) dane = { ktoraPodstrona : 1 }; // aby nie było "TypeError" przy braku tego parametru w auto-wywołaniu bez kliknięcia podstrony (pierwsza podstrona)
         
     //$( g_miejsce_na_spis ).show( 100 ); // zawsze pokaż przestrzeń do załadowania dynamicznego gdyby ukryta (treść zewnętrzna lub błędy...)
-    
     // var zawartoscUTF = unescape(encodeURIComponent( zawartoscOryginalna )); // kodowanie zaczytanych znaków?! // ... już załatwione w php
     
     switch ( rodzaj_dzialania ) {
@@ -110,8 +109,12 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     // to nie powinno się generalnie wywoływać, lepiej odwołać się do obsługi błędu w CATCH    
                     /* var komunikatOBledzie = "Problem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
                     $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); */
-                    var komunikatOBledzie = "Nie udało się załadować wskazanej podstrony galerii. Spróbuj ponownie.<br />Diagnostyka: kod błędu nr " + xhr.status + " (" + xhr.statusText.toLowerCase() + ") o statusie \"" + status + "\".";    
-                    GenerujPowiadomienieOBledzie({ tytul : 'Problem z załadowaniem podstrony galerii!', tresc : komunikatOBledzie });    // działa lepeij niż wcześniejszy standard
+                    var nrGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",a") + 2 ) ), 
+                        nrPodstronyGalerii = dane.ktoraPodstrona; 
+                        // nrGalerii = adres_zasobu 
+                    //console.log('Podstrona - odnośnik niezaładowany: ' + adres_zasobu + ", podstrona " + dane.ktoraPodstrona);    
+                    var komunikatOBledzie = "Nie udało się załadować wskazanej podstrony nr <strong>" + nrPodstronyGalerii + "</strong>. dla galerii o numerze <strong>" + nrGalerii + "</strong>. Spróbuj ponownie.<br />Diagnostyka: kod błędu nr " + xhr.status + " (" + xhr.statusText.toLowerCase() + ") o statusie \"" + status + "\".";    
+                    GenerujPowiadomienieOBledzie({ tytul : 'Problem z załadowaniem galerii #' + nrGalerii +'!', tresc : komunikatOBledzie });    // działa lepeij niż wcześniejszy standard
                     PrzewinEkranDoElementu('div.blad', 500);    
                     }
                     if ( status === "complete" )    // test, ale tego stanu być nie powinno
@@ -172,9 +175,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     { 
                         // różnicowanie błędu względem pierwszego przebiegu (wystarczy maksymalnie jeden AND z kolejnych) lub odwołać się do ilości błędów (może wprowadzić chaos przy kasowaniu błędów!!!)
                         if ( ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ( g_zaczytana_ilosc_paginacji_galerii == 0 ) && ( g_biezaca_pozycja_galerii == 0 ) && ( g_ilosc_zaczytanych_galerii == 0 ) )  
-                        {       // prawdopodobnie ten bład się juz nie wywoła, bo brak lub błędna zzawartość źródłowa wcześniej wywoła inny; dla pewności to samo działanie  
+                        {       // prawdopodobnie ten błąd się juz nie wywoła, bo brak lub błędna zzawartość źródłowa wcześniej wywoła inny; dla pewności to samo działanie  
                         //$('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button class="odswiez_strone">Odśwież stronę</button> </p>' );
-                        GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny.<br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true, ikonaZamykania : false });    
+                        GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Nawigacja po witrynie będzie znacznie ograniczona - konieczność przeładowania zawartości witryny.<br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true, ikonaZamykania : false });    
 
     /*                    $('#galeria_spis').on('click', '.odswiez_strone', function () {   // nowa obsługa zdarzenia dla nowego elementu -- tu się wykona jako pierwsza
                             location.reload(); 
@@ -189,22 +192,30 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         ileRazyBlad = parseInt( ileRazyBlad ) + 1; */
                         g_suma_bledow_dolaczania++ ;     // zwiększenie licznika przy błędzie
                         console.info('Błąd niepobrania podstrony spisu treści po raz ' + g_suma_bledow_dolaczania );
-                        var komunikatOBledzie = "Problem z dołączeniem kolejnego spisu galerii po raz <span>" + g_suma_bledow_dolaczania + 
+                        var komunikatOBledzieOld = "Problem z dołączeniem kolejnego spisu galerii po raz <span>" + g_suma_bledow_dolaczania + 
                             "</span>! (STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "))";
+                        var komunikatOBledzie = "Problem z dołączeniem kolejnego spisu galerii (nr " + (g_biezaca_pozycja_galerii + 1) + ") po raz <span>" + g_suma_bledow_dolaczania 
+                                + "</span>! (STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "))";
+                        var tytulBledu = "Błąd w pobieraniu kolejnych elementów";    
+
                         //var trescKomunikatu = '<p class="blad_dolaczany">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>';    
                         //alert(komunikatOBledzie);
                             if ( g_suma_bledow_dolaczania > 1 )  // zmień istniejący element lub utwórz jego pierwszą instancję
                             {
-                                // 
+                                // po prostu zmieniać istniejący komunmikat o błędzie - inkrementacja wystapień
+                            $('.blad_dolaczenia').html( komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' ); // + jakaś klasa dla przycisku                                
+
                                 
                                 
-                            $('.blad_dolaczenia').html( komunikatOBledzie + ' <button>Spróbuj ponownie</button>' ); // + jakaś klasa dla przycisku
+                                
                             }
-                            else
+                            else // pierwsze generowanie komunikatu do sumowania niewyswietlonych podstron
                             {
                              // generowanier pierwszego ulepszonego powiadomienia   
                                 
-                            $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>' );
+                            $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' + '</p>' );
+                            GenerujPowiadomienieOBledzie({ tytul : tytulBledu, tresc : komunikatOBledzie, ikonaZamykania : false, 
+                                                          dodatkowaKlasa : "dolacz", przyciskAkcjiDolacz : true });
                             }
                         $('.blad_dolaczenia').removeClass('animacja_zolty_blysk').height(); // usunięcie i bzdurny odczyt z DOM...
                         $('.blad_dolaczenia').addClass('animacja_zolty_blysk');  // aby zmienić stan animacji -- od nowa      
@@ -261,14 +272,15 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     {
                     UkryjRamkeLadowania('podstrona');      // tu schowania powiadomienia, skoro błąd przerwał docelowe pobieranie treści dla danej galerii      
                     //var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
-                    var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! Nie udało się określić wstępnej lokalizacji.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
-                    GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej galerii - wstępny etap!', tresc : komunikatOBledzie });
+                    var nrPodstronyGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );  // określon apodstron ajako parametr
+                    var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! Nie udało się określić wstępnej lokalizacji - błąd ładowania podstrony nr <strong>" 
+                                            + nrPodstronyGalerii + "</strong>.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
+                    GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej #' + nrPodstronyGalerii + ' podstrony galerii - wstępny etap!', tresc : komunikatOBledzie });
                         //alert(komunikatOBledzie);
                         // $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );                       
                     PrzewinEkranDoElementu('.blad', 500);
                     OdblokujPrzycisk ( '#suwak_galerii_submit' );   // warunkowo zezwól na kolejną próbę, gdyby się pojawił błąd w komunikacji w trakcie 
                     }
-
 
                 }); // load-END
             } // try-END
@@ -317,18 +329,17 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         {
                         GenerujDomyslnePowiadomienieOBledzieSerwera( xhr, status );
                         }    
-
                     }
-                    else    // cokolwiek, głownie "error"
+                    else    // 'NIE-succes', czyli cokolwiek - głównie "error"
                     {
                     //var komunikatOBledzie = "Problem z pobraniem wskazanej galerii! Ponów próbę. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
                     //alert(komunikatOBledzie);
                     //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
+                    var nrGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",a") + 2 ) ); 
+                    var komunikatOBledzie = "Problem z załadowaniem wybranej galerii (nr <strong>" + nrGalerii + "</strong>)! Nie udało się pobrać docelowej lokalizacji.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
+                    GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej galerii #<strong>' + nrGalerii + '</strong> - konkretnej!', tresc : komunikatOBledzie });
 
-                    var komunikatOBledzie = "Problem z załadowaniem wybranej galerii! Nie udało się pobrać docelowej lokalizacji.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
-                    GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej galerii - konkretnej!', tresc : komunikatOBledzie });
-
-                    PrzewinEkranDoElementu('p.blad', 500);     
+                    PrzewinEkranDoElementu('.blad', 500);     
                     }
 
                 }); // load-END
@@ -1533,6 +1544,7 @@ var wybranyElement = -1,
 function GenerujPowiadomienieOBledzie ( opcjePrzekazane )
 {
 var elementRodzica = '#galeria_spis',
+    klasaAnimacji = 'animacja_zolty_blysk', // określony na sztywno 
     budowanyElement = '';
 var opcjeDomyslne = {
     tytul : 'Wystapił błąd ogólny!',
@@ -1545,13 +1557,18 @@ var opcjeDomyslne = {
     przyciskAkcjiOdswiez : false,
     trescPrzyciskuAkcjiOdswiez : 'Odśwież stronę',
     przyciskAkcjiDolacz : false,
-    trescPrzyciskuAkcjiDolacz : 'Powtórz działanie'
+    trescPrzyciskuAkcjiDolacz : 'Powtórz działanie',
+    animacja : true
 };
     // budowanie po kolei z warunkowych fragmentów + zakładamy, że przekazana treść stanowi bezpieczny HTML ... pewnie dowolny framework frontendowy zlepiłby to lepiej w prawidłowego htmla
 
 var opcje = $.extend ( {}, opcjeDomyslne, opcjePrzekazane );
     
-budowanyElement = '<div class="' + opcje.nadanaKlasa + '">' 
+budowanyElement = '<div class="' + opcje.nadanaKlasa; 
+
+    if ( opcje.animacja ) budowanyElement += " " + klasaAnimacji; // dopisanie elementu dodatkowej klasy z przypisaną animacją
+    if ( opcje.dodatkowaKlasa ) budowanyElement += " " + opcje.dodatkowaKlasa;
+budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik  
     + '<h2 class="blad_tytul">' + opcje.tytul + '</h2>'
     + '<div class="blad_tresc">'
     + '<div class="blad_ikona">!</div>';
@@ -1603,8 +1620,9 @@ budowanyElement = budowanyElement + '</div>' ;  // znacznik zamykający cały ta
 //...
 
     
-$( elementRodzica ).prepend( budowanyElement ); 
-    if ( opcje.dodatkowaKlasa ) $( elementRodzica ).addClass( opcje.dodatkowaKlasa );   // jeżeli ma mieć dodatkowa klasę ten element, to wstawienie jej po wyrenderowiu 
+$( elementRodzica ).prepend( budowanyElement ); // dopisanie elementu do strony
+    
+//    if ( opcje.dodatkowaKlasa ) $( elementRodzica + "div:first-child" ).addClass( opcje.dodatkowaKlasa );   // jeżeli ma mieć dodatkowa klasę ten element, to wstawienie jej po wyrenderowiu 
     
 }   // GenerujPowiadomienieOBledzie-END
 
@@ -1761,14 +1779,18 @@ WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres
     
 function PrzewinEkranDoElementu ( element, czasAnimacji, korektaY ) 
 {
+var pozycjaElementuWPionie;    
         //parametryzacja parametru domyślnego by ES5 ;)
     if ( korektaY === undefined ) korektaY = -10;
         //jeśli jest kilka elmentów, to użyj pierwszego w kolekcji jako "wybranego"
-    if ( $(element).length > 1 ) element = $(element)[0];
-var pozycjaElementuWPionie = $(element).offset().top;
-console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ', pozycjaElementuWPionie, ' [px] (korektaY: ' + korektaY 
-            + ', czasA: ' + czasAnimacji + ')');    
-$('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY)+'px' }, czasAnimacji);    
+    if ( $(element).length > 0 ) 
+    {
+        if ( $(element).length > 1 ) element = $(element)[0];
+    pozycjaElementuWPionie = $(element).offset().top; 
+    console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ', pozycjaElementuWPionie, ' [px] (korektaY: ' + korektaY 
+                + ', czasA: ' + czasAnimacji + ')');    
+    $('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY)+'px' }, czasAnimacji);  
+    }
 }   
 
     
@@ -2239,8 +2261,9 @@ document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, 
     
     
 $(window).on('resize', function() {
+    
 var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
-    // ...
+    // ... tez można coś z tą wartościa zrobić prócz samego wyświetlenia  
     
     // warunkowe ukrywanie elementu z grą, gdy najpierw naciśnięto "Zagraj" -- element posiada style INLINE, których nie nadpisuje standardowy CSS w @media
     /*  if ( szeroskoscOkna < 1300 ) 
@@ -2248,10 +2271,10 @@ var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
     $('#gra').hide();
     }   */
     
-});
+}); // $(window).on('resize')-END
     
     
-$(document).on('keypress', function( evt ) {    // warunkowanie globalne WYŁĄCZENIA względem naciśnięcia klawisza 
+$(document).on("keypress", function( evt ) {    // warunkowanie globalne WYŁĄCZENIA względem naciśnięcia klawisza 
 var elementZdarzenia = evt.target.tagName.toLowerCase();    // określenie rodzaju elementu
 console.log('KLAWISZ: ', evt);
 console.info('Element zdarzenia to ', elementZdarzenia);    
@@ -2272,8 +2295,23 @@ var nawigacjaKlawiaturowa = evt.originalEvent ? evt.originalEvent.keyCode : evt.
         if ( ( evt.which == 13 ) || ( evt.which == 32 ) ) alert("KLAWISZ [Spacji] lub [Entera] w <a>");
         // evt.preventDefault();
     }*/
-});    
+}); // $(document).on('keypress')-END    
 
+
+$('#glowna').on("click keypress", "a", function ( e ) {  // kasowanie FOCUSU przy kliknięciu w obrazek dla LIGHTBOXa oraz aktywacji spacją
+    
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]    
+    {
+        if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po ewentualnym kliknięciu
+
+        if ( e.which == 32 ) 
+        {
+        e.preventDefault(); // blokowanie przewijania ekranu spacją oraz aktywacja elementu - symulacja klieknięcia
+        $(this).click();    // sztuczne kliknięcie myszą na tym samym elemencie - przekierowanie do tego samego zdarzenia (+ kasacja obrysu)
+        }
+    }    
+}); // $('#glowna').on('click keypress')-END
+    
     
 // ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI, ODNOŚNIKI, ELEMENTY, ...  ---------- *** --------------	
 	
@@ -2495,9 +2533,12 @@ return false;  // konieczny warunek pomimo .preventDefault na "niewysyłanie for
     
 	
     
-$('h2#selektor_naglowek').on("click keypress", function (e) {   // rozszerzone operowanie o klawiaturę; zamiennie "keypress" z .which działa identycznie 
+$('h2#selektor_naglowek').on("click keypress", function ( e ) {   // rozszerzone operowanie o klawiaturę; zamiennie "keypress" z .which działa identycznie 
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]    
     {
+        if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po ewentualnym kliknięciu
+        if ( e.which == 32 ) e.preventDefault(); // blokowanie przewijania ekranu spacją
+        
         if ( $(this).hasClass('rozwiniety') ) $(this).removeClass('rozwiniety').next('div').hide(100);
         else $(this).addClass('rozwiniety').next('div').show(100);
     }
@@ -2547,6 +2588,10 @@ $('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function(e) 
     
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
     {   
+        if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po kliknięciu
+        if ( e.which == 32 ) e.preventDefault();  // blokowanie przewijania zawartości spacją
+        
+        
     g_suma_klikniec_zaladuj++;	// zliczaj naciśnięcia na ten przycisk
 
         if ( g_suma_klikniec_zaladuj < ( g_zaczytana_ilosc_paginacji_galerii + 1) ) // bieżącą stronę też liczyć jako paginację, dlatego +1
@@ -2590,7 +2635,8 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
     // włączono KEYPRESSED/KEYDOWN i CLICK -- bez rozbijania na przyciski "warunkowe" - "click auxclick contextmenu"
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
     {
-    e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku     
+        if ( e.which == 1 ) $(this).blur(); // usunęcie focusu z elementu po jego kliknięciu
+    e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku && nieprzewijanie ekranu spacją   
         
     var $this = $(this);
     var galeriaDocelowa = $this.attr('data-href');	// pierwotnie był odczyt bezpośrednio z istniejącego 'href', teraz w jego miejscu 'data-href'
@@ -2726,10 +2772,13 @@ var $this = $(this);
     // jakoby warunkowe wykonanie, mimo że na CLICK wstępnie reagowało 
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
     {
+        if ( e.which == 32 ) e.preventDefault(); // tylko zamknie, bez ewentualnego przewijania      
+    $(this).blur(); // bezwarunkowe usunięcie focusu z elementu zamykającego
     var kontenerBledu = $this.parent('.blad');  // wystarczający krok o jeden poziom w górę
 //    kontenerBledu.hide(300, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
-    kontenerBledu.slideUp(1000, function() { this.remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
-        // TODO: z jakiejś racji dowolny typ animacji chowającej rodzica elementu z focusem się zacina
+    kontenerBledu.slideUp(1000, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
+        // TODO: z jakiejś racji dowolny typ animacji chowającej rodzica elementu z focusem się zacina... ale na starych przeglądarkach smiga dobrze?!
+        // problem w CSS: transition: ALL ...; "ALL" jest zbyt zasobożerne, a stare www nie ogarniają "przejść"
     }
 });
 
