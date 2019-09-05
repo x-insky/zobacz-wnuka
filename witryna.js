@@ -143,7 +143,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             // tylko tu dodanie żądania GET do tablicy -- STANDARDOWO BRAK MOŻLIWOŚCI PONOWIENIA TEGO ŻĄDANIA -- dlatego rozszerzona obsługa błędów 
                 if ( !dane.trybPowtorki )   // dodawanie TYLKO nowych zadań, aby nie wprowadzać powtórnych żądań (ciągl epozostaną na liście)
                 {
-                g_niewyslane_podstrony.push({ adres : g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny,
+                g_niewyslane_podstrony.push({ adresPelny : g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny,
+                                                adresZasobu : adres_zasobu,
+                                                elementWitryny : element_witryny,
                                                 tag : tag_podmieniany });
                 console.info( g_niewyslane_podstrony ); // taka stopklatka do przeglądu (brak dostępu z zewnatrz do zmiennej)
                 }
@@ -168,14 +170,14 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         CzyscNiepotrzebneElementy();	    
                         GenerujSpisGalerii();
                         UsunPobraneZadanie( adres_zasobu );   // wyrzucenie rekordu z tablicy żądań -- już przetworzono dany odnośnik (!?...ewentualny wpływ asynchroniczności...!?)  
-                        /*  if ( dane.trybPowtorki ) // if (magicznyParametr)... czy zachowana poprawnośc zliczania odebranych/przetworzonych   
+                            if ( dane.trybPowtorki ) // if (magicznyParametr)... czy zachowana poprawnośc zliczania odebranych/przetworzonych   
                             {
                             g_suma_bledow_dolaczania--; // dekrementacja wywołanych błędów
                             // i tu modyfikacja wyświetlanych komunikatów lub ich ukrywanie ... 
                                 // ... wymaga uglobalnienia zmiennych z treścią wyswietlanych komunikatów lub powtarzanie się z generowniem zmiany komunikatu :/ 
-                            AktualizujLubUkryjKomunikat( elementKomunikatu, krotnoscBledu ); // + tytul, tresc; ale to funkcja ma odszukać ostatni nr niepobrany i go zmienić
-                            OdblokujPrzycisk( elementKomunikatu.find('button') );   // ... lub to wstawić w tę funkcję powyżej
-                            } */
+                            //AktualizujLubUkryjKomunikat( elementKomunikatu, krotnoscBledu ); // + tytul, tresc; ale to funkcja ma odszukać ostatni nr niepobrany i go zmienić
+                            OdblokujPrzycisk( '#przywroc_strone' );   // hardkod... lub to wstawić w tę funkcję powyżej
+                            } 
                         }
                         else
                         {
@@ -1677,12 +1679,12 @@ function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTres
     
 function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie ) 
 {
-// definicje wewnątrz wywołania - podległości... tylko, gdy mamy LOKALNE uruchamianie (też testowanie) ;)
+// definicje funkcji wewnątrz wywołania - podległości... tylko, gdy mamy LOKALNE uruchamianie (też testowanie) ;)
     if ( window.location.host == 'localhost' || nieTylkoLokalnie )  // też drugi parametr 
     {
         function NaprawAjaksa ()
         {
-        g_przechwytywacz_php = "./przechwytywacz.php";    
+        g_przechwytywacz_php = "./przechwytywacz.php";    // ewentualnie użyć "stałych", aby nie powodować błędu i hardkodu w kilku miejscach
         g_przechwytywacz_php_zapytanie = "?url_zewn=";
             // + wizualizacja zmian  
         $('.status_ajaksa').removeClass('status_awaria').addClass('status_norma');
@@ -1920,7 +1922,7 @@ var indeksZnalezionego = false;
     // wymaga to FOR (jest break), czy da się zrobić poprzez forEach
     for ( var i = 0; i < g_niewyslane_podstrony.length ; i++ )
     {
-        if ( g_niewyslane_podstrony[i].adres.indexOf( adresZasobu ) != -1 ) // że odnaleziono cały adres z poszukiwanym fragmentem
+        if ( g_niewyslane_podstrony[i].adresPelny.indexOf( adresZasobu ) != -1 ) // że odnaleziono cały adres z poszukiwanym fragmentem
         {
         indeksZnalezionego = i; // przypisanie indeksu z tabeli "nieobsłużonych" żądań
         break;    
@@ -1940,6 +1942,12 @@ return false;
     
 }   // UsunPobraneZadanie-END
         
+    
+function PobierzPierwszyNieodebrany() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+    if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[0];  // weryfikacja jest przed wywołaniem tej funkcji, ale nie zaszkodzi
+return false;    
+}    
+    
     
 function UbijReklamy ()
 {   // 000webhost.com || 000webhostapp.com
@@ -2806,7 +2814,7 @@ $('#galeria_spis').on('click', '.odswiez_strone', function () {   // globalnie o
 }); // on-click-END    
     
     
-$('#galeria_spis').on('click', '.przywroc_strone', function ( evt ) { // też delegacja, ponawianie wyswietlania nieudanej transmisji
+$('#galeria_spis').on('click', '#przywroc_strone', function ( evt ) { // też delegacja, ponawianie wyswietlania nieudanej transmisji
 
     var ileNaLiscieNieotrzymanych = g_niewyslane_podstrony.length;    // sprawdzenie długości listy   
     
@@ -2814,28 +2822,46 @@ $('#galeria_spis').on('click', '.przywroc_strone', function ( evt ) { // też de
     {
     
         
-        if ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) || ( $('.status_ajaksa').hasClass('status_norma') ) )  // tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
+        if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status_ajaksa').hasClass('status_norma') ) ) 
+            || ( $('.status_ajaksa').hasClass('status_norma') ) )  // tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
         {
-        // to pobierz kolejny OSTATNI/pierwszy z tej listy niepobranych i spóbuj ponownie wszystkie operacje z transferem
+            // dodatkowa weryfikacja, ewentualnie zrobić hardkoda
+            if ( ( g_przechwytywacz_php == g_przechwytywacz_php_ok ) && ( g_przechwytywacz_php_zapytanie == g_przechwytywacz_php_zapytanie_ok ) )
+            {
+        // to pobierz kolejny ostatni/PIERWSZY z tej listy niepobranych i spóbuj ponownie wszystkie operacje z transferem
             // do pobrania jest więcej danych "fragmentowych" z jednego linku        
         // ... ale nie zdejmuj póki co tego zadania z listy, zablokuj też przycisk na tę operację 
             
+        var zadanieNieodebrane = PobierzPierwszyNieodebrany();
+        /*
+        // var nrPodstronyNiewczytanejGalerii = parseInt( zadanieNieodebrane.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );
+        // var adresZasobu = zadanieNieodebrane.adres.indexOf();
+            // ewentualna walidacja zapytań
+            if ( zadanieNieodebrane.adres.substr( g_przechwytywacz_php ) == -1 )   // nie "./przechwytywacz.php" lecz "./przepuszczacz.php"
+            {
+            zadanieNieodebrane.adres.replace('przepuszczacz.php', 'przechwytywacz.php');
+            }
             
+            if ( zadanieNieodebrane.adres.substr( g_przechwytywacz_php_zapytanie ) == -1 )   // nie "?url_zewn=" lecz "?url_dupa"
+            {
+            zadanieNieodebrane.adres.replace('?url_dupa=', '?url_zewn=');
+            }
+        */    
+        ZablokujPrzycisk( evt.target ); 
+        PokazRamkeLadowania('spis');          
+            // wywołanie tego samego, ale wystawić dodatkowy znacznik, by go interpretować po zwrotnym otrzymaniu danych   
+            // + DANE, np. daneDodatkowe = { trybPowtorki : true } 
+         WczytajZewnetrznyHTMLdoTAGU ( zadanieNieodebrane.tag, g_protokol_www + g_adres_strony, zadanieNieodebrane.adresZasobu, zadanieNieodebrane.elementWitryny, "spis_galerii", { trybPowtorki : true } );
+         console.log('NAPRAWA BŁĘDU DLA podstrony: "' + zadanieNieodebrane.adresZasobu + '"');
+                
+      // ...dużo wątków aktualizacyjnych przy okazji (dekrementacje i komunikaty), ale PO UDANEJ obsłudze ponowionego żądania!     
             
-        ZablokujPrzycisk( evt.target );    
-           // + DANE, np. DANE = { trybPowtorki : true } 
-        // WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zasobu, element_witryny, rodzaj_dzialania, dane )     
-            
-        
-        
-      // ...dużo wątków aktualizacyjnych przy okazji (dekrementacje)      
-            
-            
+            }   // if-(( g_przechwytywacz_php == g_przechwytywacz_php_ok )...-END 
         } // if-( !OdczytajLocalStorage() )-END
     } // if-( ileNaLiscieNieotrzymanych > 0 )-END
       
     
-}); //  on("click")-$('.przywroc_strone')-END	   
+}); //  on("click")-$('#przywroc_strone')-END	   
     
     
 $('#galeria_spis').on("click keydown", ".krzyzyk_zamykanie", function( e ) {    // zakykanie "okienek" i pasków

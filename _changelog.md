@@ -1,3 +1,44 @@
+v0.5.16 - on the offensive with JS logic of unsuccessful subpages adding, for now still as scaffolding; changed the button id from class; FIFO declared as a method of removing request form the un-done list
+
+* v0.5.16 -- [2019-02-01]
+
+[+] ADDED
+
+-- witryna.js
+* defined new function 'PobierzPierwszyNieodebrany'
+  - some kind implementation of FIFO queue
+  - used inside event function of re-done of previously unsuccessful request
+
+[*] MODIFIED
+
+-- index.php
+* changed the structure of object which is collected as an item of table, inside semi-global variable 'g_niewyslane_podstrony'
+  - from now are collected four attributes instead previously two
+  - changed first atrtribute name from 'address' to 'fullAddress' in translation
+  - 'tag' attribute not changed
+  - new attribute 'adresZasobu' and 'elementWitryny' intercepted from function parameters (the same names but with php-style names) for purpose of remebering the whole inforamtion about request
+* uncommented code for again adding of un-done displaying of next gallery subpage after a click on button with id 'zaladuj_galerie_spis'
+  - function 'WczytajZewnetrznyHTMLdoTAGU', 'spis_galerii' variant 
+  - for now only a condition is operating and some its expressions, e.g. decrementing sum of un-done displays of subpages and the button of notification is re-enabled (if there are more notifications == more undisplayed content)
+  - commented out invocation of non existing yet function
+* changed the used attributes names inside variables, which was renamed previously, e.g. 'adresPelny' (named previosly 'adres', 'address' in translation) 
+* changed event of clicking on id attribute of generated content, instead class attribute
+  - the same name attribute 'przywroc_strone' 
+  - but function 'GenerujPowiadomienieOBledzie' generates the HTML element with class attribute!
+* also a logic of this event function changed
+  - modified the first nested condition
+  - added extra condition inside with correct interceptor file name
+  - added some temporary code, for now placed inside comment
+  - but also some code added: blocking of clicked button, showing loading notification and the most important which is invocation of 'WczytajZewnetrznyHTMLdoTAGU' with passed parameters from the object of previously unsuccessful action! (added also log statement in console)
+  - passing of extra object with specified parameter ('{ trybPowtorki : true }') which indicates an re-done of action when invokes 'WczytajZewnetrznyHTMLdoTAGU'!
+  - using a declared function 'PobierzPierwszyNieodebrany' which selects and removes the first element from unsuccessful actions collection
+  - the returned first element of list of request is used as an active object and all the actions are carried on this object
+* code reviev
+  - added comment if existing code expression needed description
+  - fixed typos, mainly in comments
+
+---------------------------
+
 v0.5.15 - defined & used function to altering the whole content of already displayed error notification (action: next page of gallery list), scaffolded logic on re-action after error occurs on notification button; notification title with sum of errors; altered logic of changing content of error notification; JS cleaning
 
 * v0.5.15 -- [2019-01-31]
