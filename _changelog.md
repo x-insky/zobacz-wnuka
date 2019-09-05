@@ -1,4 +1,158 @@
-v0.5.13 - 
+v0.5.16 - on the offensive with JS logic of unsuccessful subpages adding, for now still as scaffolding; changed the button id from class; FIFO declared as a method of removing request form the un-done list
+
+* v0.5.16 -- [2019-02-01]
+
+[+] ADDED
+
+-- witryna.js
+* defined new function 'PobierzPierwszyNieodebrany'
+  - some kind implementation of FIFO queue
+  - used inside event function of re-done of previously unsuccessful request
+
+[*] MODIFIED
+
+-- index.php
+* changed the structure of object which is collected as an item of table, inside semi-global variable 'g_niewyslane_podstrony'
+  - from now are collected four attributes instead previously two
+  - changed first atrtribute name from 'address' to 'fullAddress' in translation
+  - 'tag' attribute not changed
+  - new attribute 'adresZasobu' and 'elementWitryny' intercepted from function parameters (the same names but with php-style names) for purpose of remebering the whole inforamtion about request
+* uncommented code for again adding of un-done displaying of next gallery subpage after a click on button with id 'zaladuj_galerie_spis'
+  - function 'WczytajZewnetrznyHTMLdoTAGU', 'spis_galerii' variant 
+  - for now only a condition is operating and some its expressions, e.g. decrementing sum of un-done displays of subpages and the button of notification is re-enabled (if there are more notifications == more undisplayed content)
+  - commented out invocation of non existing yet function
+* changed the used attributes names inside variables, which was renamed previously, e.g. 'adresPelny' (named previosly 'adres', 'address' in translation) 
+* changed event of clicking on id attribute of generated content, instead class attribute
+  - the same name attribute 'przywroc_strone' 
+  - but function 'GenerujPowiadomienieOBledzie' generates the HTML element with class attribute!
+* also a logic of this event function changed
+  - modified the first nested condition
+  - added extra condition inside with correct interceptor file name
+  - added some temporary code, for now placed inside comment
+  - but also some code added: blocking of clicked button, showing loading notification and the most important which is invocation of 'WczytajZewnetrznyHTMLdoTAGU' with passed parameters from the object of previously unsuccessful action! (added also log statement in console)
+  - passing of extra object with specified parameter ('{ trybPowtorki : true }') which indicates an re-done of action when invokes 'WczytajZewnetrznyHTMLdoTAGU'!
+  - using a declared function 'PobierzPierwszyNieodebrany' which selects and removes the first element from unsuccessful actions collection
+  - the returned first element of list of request is used as an active object and all the actions are carried on this object
+* code reviev
+  - added comment if existing code expression needed description
+  - fixed typos, mainly in comments
+
+---------------------------
+
+v0.5.15 - defined & used function to altering the whole content of already displayed error notification (action: next page of gallery list), scaffolded logic on re-action after error occurs on notification button; notification title with sum of errors; altered logic of changing content of error notification; JS cleaning
+
+* v0.5.15 -- [2019-01-31]
+
+[+] ADDED
+
+-- witryna.js
+* defined function 'ZmienTrescKomunikatu'
+  - changes the whole content of already displayed error notification
+  - need element object of page and two error text (for title and description text) to passed as arguments
+  - conditional sttement of existing element to change, and when it's true then the content is changed as passed parameters
+  - function body taken from content where is fired, then slighty modified (taken from 'WczytajZewnetrznyHTMLdoTAGU')
+* defined new event function for clicking on button inside internal notification error
+  - targeted specific class 'przywroc_strone' of notification button, inside container with id 'galeria_spis'
+  - an event delegation of click function
+  - logic verify an application state and conditionally trying to perform a selected actions
+  - IMPORTANT: for now only the scaffolding of logic defined, only a disabling a button is visible as an action! 
+  - used pseudo code or description of logic inside comment
+
+[*] MODIFIED
+
+-- index.php
+* altered 'title' attrib of span with id 'status_ajaksa', where the Ajax status is displayed and extra explained by mouse hovering
+  - added longer text 
+
+-- witryna.js
+* slighty altered logic function 'WczytajZewnetrznyHTMLdoTAGU', on variant of 'spis_galerii' (inserting next gallery subpage, next group of items)
+  - if no provided attrib value, then default logic works
+  - the list of unsend actions is build conditionally, not always the new item is inserted as previously
+  - to purpose not inserting the same element multiple times into collection!
+* added comement inside future builded condition statement
+  - for now only a pseudocode or listed executions of not defined functions yet
+  - to purpose od serving second time of the same action on button from error notification, which was previously un done from button of load-next-gallery-subpage (last modified notify text is directly connected with unsuccessful action)
+* altered console log statement with inclusion of counted sum of unsuccessful actions and number of current subpage of gallery on this unsuccessful action
+* altered logic of displaying of title for internal notification error while any notification exists on page
+  - a title contains total number of unsuccessful actions, not only is placed inside its description modified 
+* internal use of function 'ZmienTrescKomunikatu' to modify content of existing error notification
+  - no more direct manipulation on live content, which was generated by antother function (which was also defined not to manipulate on DOM object!)
+* modified added class to element when is passed ON option of attrib  'opcje.przyciskAkcjiDolacz' inside 'GenerujPowiadomienieOBledzie'
+  - from now is 'przywroc_strone' class addition instead of class 'dodaj_strone'
+* code reviev
+  - renamed variable ty camelCase style
+  - added spaces after each line comment, if the text of comments touched a closing slash symbols of given comment
+  - added space between words in statements (like text concatenation)
+  - fixed typos, mainly in comments
+  - added comment if existing code expression needed description
+
+---------------------------
+
+v0.5.14 - start page link in logo title, current gallery details with gradient backgrounds; replacements in logic for generating improvement internal notifications of errors (mainly in function 'WczytajZewnetrznyHTMLdoTAGU'), all with animation of newly created; footer content touched
+
+* v0.5.14 -- [2019-01-30]
+
+[+] ADDED
+
+-- index.php
+* added anchor element which surrounds the whole div element with id 'napisy'
+  - wrapped a whole logo element with a link which leads to itself (to main site), href leads to itself 
+  - a popular web convention of adding link to start from main page
+  - here is SPA, so it's some kind of starting point or page refresh
+
+[*] MODIFIED
+
+-- index.php
+* extended some values of list elements inside footer area
+* also some '&nbsb;'-spaces replaced with regular spaces from list elements of that footer area
+* replaced few tab characters by new line characters in HTML
+
+-- zlobek-styl.css
+* changed background color of element with id 'nazwa_galerii'
+  - background of current gallery title and description
+  - bottom centered radial gradien with instead of full color 
+  - a previous color definition stays as a polyfill for older browsers
+* defined new background for next element of class 'jasne_tlo_galeria'
+  - the same colors of gradient, but defined its center to the top of element
+  - a horizontal reflection of previously defined gradient
+  - also a previous definition of background color stays as a polyfill for older browsers
+* removed background color definition from element with id 'skladowisko', which is inside an element with newly defined class 'jasne_tlo_galeria'
+  - to purpose not covering defined gradient in wider element (its container) by its background color
+* changed fill style of animation in its configuration of class 'animacja_zolty_blysk' from 'both' to 'forwards'
+
+-- witryna.js
+* altered internal notification of error inside function 'WczytajZewnetrznyHTMLdoTAGU' on 'spis_galerii' variant
+  - an extended description with more intuitive text is passed to an argument while launching function 'GenerujPowiadomienieOBledzie' to build this notification
+* before error notification is built, a text of its description is concatenated with some other parts
+  - the whole error description text is builded as a HTML with emphasis on usuccessful requested gallery number and counted number of total occurences that unsuccessful action of showing gallery subpage
+  - all the important numbers are surrounded by 'strong' tags, and thats way they are presented better 
+  - the current subpage number is calculated from last unsuccessful request address, and not by counting next subpages of gallery list!
+* later notification is build with concatenated description, which is used to first time creation a new internal notification error 
+  - ... or the logic is trying to modify the content of existing notification by owned string of current error
+  - in case of modify the existing notification, a class with conected CSS animation must be reapplied to that element, so it's removed and added in two expressions, because jQuery won't allow to reapply the same class to element, which already owns that class (important!)
+  - but when notification of error loading-next-gallery-subpages is first time builded, then the function 'GenerujPowiadomienieOBledzie' must use a object parameter of 'dodatkowaKlasa' with new value 'blad_dolaczania' (instead previous value 'dolacz'), so the already defined logic inside that function can do the job right
+  - also a basic version of notification is generated (but soon won't)
+* changed also an element to scroll to in page
+  - now page is scrolled to place of new notification, which is always placed before old style notification (yes, soon will be removed), with basic notification text (e.g. not contains desired subpage number) 
+
+* renamed local variable name to more meaningful name inside function 'WczytajZewnetrznyHTMLdoTAGU' on 'wybrana_galeria_rekurencja' variant
+
+* altered internal notification of error inside function 'WczytajZewnetrznyHTMLdoTAGU' on 'wybrana_galeria' variant
+  - commented out logic of temporary showing container with generated new content before finish the reading of source and couldn't replace that container content, so it might be uneccessary
+  - slighty changed the description of notification text, replacing acronym by full word and adding "second stage" instead meaningless 'concrete' in tranlations 
+
+* changed internal notification of error inside function 'WczytajZewnetrznyHTMLdoTAGU' on 'wybrany_spis_galerii' variant (selected subpage of gallery list)
+  - altered the text of notification from general to detailed
+  - read out requested gallery number form address of request
+  - put that value inside notification title and description of an error, where surround it by 'strong' tag 
+
+* changed generated text for current gallery inside function 'GenerujPodstronyGalerii', where the current gallery subpage is displayed
+  - replaced word 'selected' by 'current' in translation
+* added new comment or altered text of few existing
+
+---------------------------
+
+v0.5.13 - added focus style like hover on active like-buttons-elements and belts, when keyboard navigation; redefined click event to support keypress/keydown too; redefined event functions to hide focus state on anchors on selected elements; better notifications of internal errors, now with gallery number on title and subgallery in details; scaled notification of error when hover; bolded text button & cycle animation; blinking animation for new notification (first time presented); verified function of sliding to page content; fixed slow animation of a disappearing element by complicated transition
 
 * v0.5.13 -- [2019-01-24]
 

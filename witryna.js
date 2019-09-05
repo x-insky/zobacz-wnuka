@@ -11,7 +11,7 @@ $(document).ready(function ()
 * http://zlobek.chojnow.eu/1-u_misiow,z1028,p2.html		// przykładowa strona druga (2) z powiększonym zdjęciem nr 1 ("1028" to nr zdjęcia w galerii) 	
 *
 */
-var g_element_zewnetrzny = "table.galeria",	//wszystko jest w tablicy o klasie "galeria", w komórce wyższej tablicy	
+var g_element_zewnetrzny = "table.galeria",	// wszystko jest w tablicy o klasie "galeria", w komórce wyższej tablicy	
  g_adres_strony = "zlobek.chojnow.eu",		// nazwa serwisu
  g_folder_serwera = "zdjecia_galeria",      // ścieżka ma serwerze, tj. folder udostepniony 
  g_wyszukiwany_serwer = "",		    // na przechowywanie adresu serwera z protkołem
@@ -20,8 +20,12 @@ var g_element_zewnetrzny = "table.galeria",	//wszystko jest w tablicy o klasie "
  g_matryca_nazwy_pliku_miniatury = "zlobek_zdjp_",	
  g_rozszerzenie_obrazka = ".jpg",
 
- g_przechwytywacz_php = "./przechwytywacz.php",			//skrypt z fopen do zaczytania strony przez stronę php. Wymaga serwera z PHP!
+ g_przechwytywacz_php = "./przechwytywacz.php",			// skrypt z fopen do zaczytania strony przez stronę php. Wymaga serwera z PHP!
+ g_przechwytywacz_php_ok = "./przechwytywacz.php",			// oczekiwana zawartość zmiennej jako prawidłowa
+    
  g_przechwytywacz_php_zapytanie = "?url_zewn=",			// adres zmiennej GET, zawartość bez weryfikacji !!!
+ g_przechwytywacz_php_zapytanie_ok = "?url_zewn=",			// oczekiwana zawartość zmiennej jako poprawna 
+    
 
  g_tag_do_podmiany_zdjecia = "div#zawartosc_do_podmiany", //element DOM, do którego load() wstawi zawartość tagu table.galeria z witryny zewnętrznej
  g_miejsce_na_zdjecia = "div#skladowisko", // zamienić na coś sensowniejszego
@@ -137,9 +141,14 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
         case "spis_galerii" :
             // tylko tu dodanie żądania GET do tablicy -- STANDARDOWO BRAK MOŻLIWOŚCI PONOWIENIA TEGO ŻĄDANIA -- dlatego rozszerzona obsługa błędów 
-            g_niewyslane_podstrony.push({ adres : g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny,
-                                            tag : tag_podmieniany });
-            console.info( g_niewyslane_podstrony ); // taka stopklatka do przeglądu (brak dostępu z zewnatrz do zmiennej)
+                if ( !dane.trybPowtorki )   // dodawanie TYLKO nowych zadań, aby nie wprowadzać powtórnych żądań (ciągl epozostaną na liście)
+                {
+                g_niewyslane_podstrony.push({ adresPelny : g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny,
+                                                adresZasobu : adres_zasobu,
+                                                elementWitryny : element_witryny,
+                                                tag : tag_podmieniany });
+                console.info( g_niewyslane_podstrony ); // taka stopklatka do przeglądu (brak dostępu z zewnatrz do zmiennej)
+                }
 
             try 
             {	
@@ -161,6 +170,14 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         CzyscNiepotrzebneElementy();	    
                         GenerujSpisGalerii();
                         UsunPobraneZadanie( adres_zasobu );   // wyrzucenie rekordu z tablicy żądań -- już przetworzono dany odnośnik (!?...ewentualny wpływ asynchroniczności...!?)  
+                            if ( dane.trybPowtorki ) // if (magicznyParametr)... czy zachowana poprawnośc zliczania odebranych/przetworzonych   
+                            {
+                            g_suma_bledow_dolaczania--; // dekrementacja wywołanych błędów
+                            // i tu modyfikacja wyświetlanych komunikatów lub ich ukrywanie ... 
+                                // ... wymaga uglobalnienia zmiennych z treścią wyswietlanych komunikatów lub powtarzanie się z generowniem zmiany komunikatu :/ 
+                            //AktualizujLubUkryjKomunikat( elementKomunikatu, krotnoscBledu ); // + tytul, tresc; ale to funkcja ma odszukać ostatni nr niepobrany i go zmienić
+                            OdblokujPrzycisk( '#przywroc_strone' );   // hardkod... lub to wstawić w tę funkcję powyżej
+                            } 
                         }
                         else
                         {
@@ -177,7 +194,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         if ( ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ( g_zaczytana_ilosc_paginacji_galerii == 0 ) && ( g_biezaca_pozycja_galerii == 0 ) && ( g_ilosc_zaczytanych_galerii == 0 ) )  
                         {       // prawdopodobnie ten błąd się juz nie wywoła, bo brak lub błędna zzawartość źródłowa wcześniej wywoła inny; dla pewności to samo działanie  
                         //$('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button class="odswiez_strone">Odśwież stronę</button> </p>' );
-                        GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Nawigacja po witrynie będzie znacznie ograniczona - konieczność przeładowania zawartości witryny.<br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true, ikonaZamykania : false });    
+                        GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Brak możliwości nawigacja po witrynie - konieczność przeładowania zawartości witryny.<br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true, ikonaZamykania : false });    
 
     /*                    $('#galeria_spis').on('click', '.odswiez_strone', function () {   // nowa obsługa zdarzenia dla nowego elementu -- tu się wykona jako pierwsza
                             location.reload(); 
@@ -190,36 +207,48 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         /* var ileRazyBlad = $('.blad_dolaczenia span').text();
                             if ( ileRazyBlad == "" ) ileRazyBlad = 0;
                         ileRazyBlad = parseInt( ileRazyBlad ) + 1; */
+                        var nrPodstronyNiewczytanejGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );    
+                            
                         g_suma_bledow_dolaczania++ ;     // zwiększenie licznika przy błędzie
-                        console.info('Błąd niepobrania podstrony spisu treści po raz ' + g_suma_bledow_dolaczania );
+                        console.info('Błąd niepobrania podstrony spisu treści po raz ' + g_suma_bledow_dolaczania + ' dla ' + nrPodstronyNiewczytanejGalerii 
+                                     + '. niewczytanej podstrony.' );
                         var komunikatOBledzieOld = "Problem z dołączeniem kolejnego spisu galerii po raz <span>" + g_suma_bledow_dolaczania + 
                             "</span>! (STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "))";
-                        var komunikatOBledzie = "Problem z dołączeniem kolejnego spisu galerii (nr " + (g_biezaca_pozycja_galerii + 1) + ") po raz <span>" + g_suma_bledow_dolaczania 
-                                + "</span>! (STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "))";
+                        var komunikatOBledzie = "Wystąpił problem z dołączeniem kolejnego spisu galerii po raz <strong><span>" + g_suma_bledow_dolaczania 
+                                + "</span></strong>! Ostatni błąd to odczyt podstrony o numerze <strong><span>" + nrPodstronyNiewczytanejGalerii 
+                                + "</span></strong>. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "). Naciśnij poniższy przycisk, aby ponowić próbę załadowania.";
                         var tytulBledu = "Błąd w pobieraniu kolejnych elementów";    
 
                         //var trescKomunikatu = '<p class="blad_dolaczany">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>';    
                         //alert(komunikatOBledzie);
-                            if ( g_suma_bledow_dolaczania > 1 )  // zmień istniejący element lub utwórz jego pierwszą instancję
+                            if ( g_suma_bledow_dolaczania > 1 )  // zmień istniejący element komunikatu
                             {
+                            tytulBledu += ' x' + g_suma_bledow_dolaczania; // warunkowo dopisywana treść
+                                
                                 // po prostu zmieniać istniejący komunmikat o błędzie - inkrementacja wystapień
                             $('.blad_dolaczenia').html( komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' ); // + jakaś klasa dla przycisku                                
-
-                                
-                                
+                                // zmiana wybranych fragmentów w istniejących treściach dla drugiego (nowego) elementu... później z tego zrobić funkcję
+                            ZmienTrescKomunikatu( $('.blad_dolaczania'), tytulBledu, komunikatOBledzie );
+                        /*  var nowyKomunikatBledu = $('.blad_dolaczania');
+                            nowyKomunikatBledu.removeClass('animacja_zolty_blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
+                            nowyKomunikatBledu.find('strong:first-of-type > span').text( g_suma_bledow_dolaczania );
+                            nowyKomunikatBledu.addClass('animacja_zolty_blysk').find('strong:last-of-type > span').text( nrPodstronyNiewczytanejGalerii );    */
+                                // rozbicie powyższego na dwa/trzy, aby zabrać i nadać tę samą klasę dla ponownego wyswietlenia animacji (.end() nie daje rady w jednym łańcuchu)      
                                 
                             }
                             else // pierwsze generowanie komunikatu do sumowania niewyswietlonych podstron
                             {
-                             // generowanier pierwszego ulepszonego powiadomienia   
+                             // generowanier pierwszego ulepszonego powiadomienia - tworzenie jego pierwszej instancji 
                                 
                             $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' + '</p>' );
                             GenerujPowiadomienieOBledzie({ tytul : tytulBledu, tresc : komunikatOBledzie, ikonaZamykania : false, 
-                                                          dodatkowaKlasa : "dolacz", przyciskAkcjiDolacz : true });
+                                                          dodatkowaKlasa : "blad_dolaczania", przyciskAkcjiDolacz : true });
+                            console.log('Generuję błąd dołączania po raz #' + g_suma_bledow_dolaczania + ' dla ' + nrPodstronyNiewczytanejGalerii 
+                                        + ' niewczytanej podstrony spisu teści: ' + komunikatOBledzie );    
                             }
                         $('.blad_dolaczenia').removeClass('animacja_zolty_blysk').height(); // usunięcie i bzdurny odczyt z DOM...
                         $('.blad_dolaczenia').addClass('animacja_zolty_blysk');  // aby zmienić stan animacji -- od nowa      
-                        PrzewinEkranDoElementu('p.blad_dolaczenia', 500);
+                        PrzewinEkranDoElementu('.blad_dolaczania', 500);    // przewijanie już do nowego (później dodanego) komunikatu 
                         }   // if-END ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ...
                     }   // if-END ( status === "success" )
 
@@ -272,9 +301,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     {
                     UkryjRamkeLadowania('podstrona');      // tu schowania powiadomienia, skoro błąd przerwał docelowe pobieranie treści dla danej galerii      
                     //var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
-                    var nrPodstronyGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );  // określon apodstron ajako parametr
+                    var nrPodstronySpisuGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );  // określona podstrona jako parametr
                     var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! Nie udało się określić wstępnej lokalizacji - błąd ładowania podstrony nr <strong>" 
-                                            + nrPodstronyGalerii + "</strong>.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
+                                            + nrPodstronySpisuGalerii + "</strong>.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
                     GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej #' + nrPodstronyGalerii + ' podstrony galerii - wstępny etap!', tresc : komunikatOBledzie });
                         //alert(komunikatOBledzie);
                         // $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );                       
@@ -319,8 +348,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         //$('#skladowisko').show( 100, PrzewinEkranDoElementu( 'div#skladowisko', 200, -8 )  );	// pokaż kontener na zaczytaną zawartość + 
                                                         // + przewiń po wyświetleniu całości    
 
-                        $('#skladowisko').html('<h1>Tu wkrótce pojawią się elementy - pierwsza podstrona zdjęć z wybranej galerii nr ' + dane.pozycjaWGalerii + 
-                                               '</h1><p>Adres docelowej galerii: ' + adres_zasobu + '</p>' );    
+                        // $('#skladowisko').html('<h1>Tu wkrótce pojawią się elementy - pierwsza podstrona zdjęć z wybranej galerii nr ' + dane.pozycjaWGalerii + 
+                        //                        '</h1><p>Adres docelowej galerii: ' + adres_zasobu + '</p>' );    
 
                         NaprawBrakujaceSRCwKontenerze ( '#skladowisko_status_wybranej_galerii', 'przetwarzaj galerię, nie spis treści' ); // taki teścik
                         GenerujPodstronyGalerii ( '#skladowisko_status_wybranej_galerii' );
@@ -335,9 +364,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     //var komunikatOBledzie = "Problem z pobraniem wskazanej galerii! Ponów próbę. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
                     //alert(komunikatOBledzie);
                     //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
-                    var nrGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",a") + 2 ) ); 
-                    var komunikatOBledzie = "Problem z załadowaniem wybranej galerii (nr <strong>" + nrGalerii + "</strong>)! Nie udało się pobrać docelowej lokalizacji.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
-                    GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej galerii #<strong>' + nrGalerii + '</strong> - konkretnej!', tresc : komunikatOBledzie });
+                    var nrGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",a") + 2 ) );  // która galeria miała być wyswietlona 
+                    var komunikatOBledzie = "Problem z załadowaniem wybranej galerii o numerze <strong>" + nrGalerii + "</strong>)! Nie udało się pobrać docelowej lokalizacji.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
+                    GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej galerii #<strong>' + nrGalerii + '</strong> - drugi etap!', tresc : komunikatOBledzie });
 
                     PrzewinEkranDoElementu('.blad', 500);     
                     }
@@ -393,9 +422,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     //var komunikatOBledzie = "Nie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
                     //alert(komunikatOBledzie);
                     //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
-
-                    var komunikatOBledzie = "Problem z załadowaniem grupy wskazanych galerii! Ponów próbę.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
-                    GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania grupy galerii!', tresc : komunikatOBledzie });
+                    var nrPodstronySpisuGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );  // określona podstrona spisu treści jako parametr
+                    var komunikatOBledzie = "Problem z załadowaniem grupy galerii, wskazanej podstrony o numerze <strong>" + nrPodstronySpisuGalerii + "</strong>! Ponów próbę.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
+                    GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej #<strong>' + nrPodstronySpisuGalerii + '</strong> grupy galerii!', tresc : komunikatOBledzie });
 
                     PrzewinEkranDoElementu('.blad', 500);     
                     }
@@ -490,7 +519,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
     if ( $listaPodstron.length >= 1 )	// czy są jakieś odnośniki do podstron/paginacji galerii?
     {					// startujemy od kolej strony po pierwszej, ale ostatni zawiera ciąg "starsze"
 
-    $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Pozostałe podstrony wybranej galerii</h3></div>');
+    $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Pozostałe podstrony w tej galerii</h3></div>');
         
     var nazwaPodstronyGalerii = '';
 /*    var numerPodstronyDoWyswietlenia = 0;
@@ -1426,7 +1455,7 @@ return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszys
 }
 
 
-function KtoraPodstronaWGalerii ( nrGalerii )
+function KtoraPodstronaWGalerii ( nrGalerii )   // oblicza podstronę spisu treści na podstawie numeru danej galerii
 {
 var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();	// ze zmiennej globalnej da się też już odczytać (obie MAX już istnieją, bo w pierwszym wywołaniu są określane)
 //var ileRazy = Math.floor( nrGalerii / 5 ) ;  // teraz niepotrzebne, choć zachowane
@@ -1444,7 +1473,7 @@ return nrPodstronyGalerii;
 
 function InicjujRamkiLadowania ()  
 {
-// wstepnie ta prosta forma, tu rejestrowane są na sztywno wszystkie powiadomienia o ładowaniu konkretnych zawartości - wymaga podpięci do wuitryny
+// oto wstepna, prosta forma; tu rejestrowane są na sztywno wszystkie powiadomienia o ładowaniu konkretnych zawartości - wymaga podpięci do wuitryny
 // ... póki co trzy notyfikacje - IDeki: "wczytywanie_podstrony" (podstrona galerii), "wczytywanie_spis", "wczytywanie_wybrane_galerie_spis" 
 //    (dopisać ewentualne kolejne animacje ładowania)    
     g_prezentacja_wczytywania = [   // raczej przypisać elmenty z HTMLa tu
@@ -1592,7 +1621,7 @@ budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik
             }
             if ( opcje.przyciskAkcjiDolacz )
             {
-            budowanyElement += '<button class="dodaj_strone">' + opcje.trescPrzyciskuAkcjiDolacz + '</button> ';   // określić klasę lub id dla przycisku 
+            budowanyElement += '<button class="przywroc_strone">' + opcje.trescPrzyciskuAkcjiDolacz + '</button> ';   // określić klasę lub id dla przycisku 
             }
         budowanyElement += '</h4>'; 
         }     
@@ -1635,22 +1664,35 @@ PrzewinEkranDoElementu('div.blad', 500);
 }   // GenerujDomyslnePowiadomienieOBledzieSerwera-END
 
     
+function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTresc )
+{
+    if ( $( elementKomunikatu ).length > 0 )
+    {
+        if ( $( elementKomunikatu ).length > 1 ) elementKomunikatu = $( elementKomunikatu)[0];    // w razie gdyby to jednak jakaś kolekcja była
+    elementKomunikatu.removeClass('animacja_zolty_blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
+    elementKomunikatu.addClass('animacja_zolty_blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
+        
+    elementKomunikatu.find('h2.blad_tytul').html( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
+    elementKomunikatu.find('div.blad_tresc p').html( komunikatTresc ); 
+    }
+}   // ZmienTrescKomunikatu-END
+    
 function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie ) 
 {
-// definicje wewnątrz wywołania - podległości... tylko, gdy mamy LOKALNE uruchamianie (też testowanie) ;)
+// definicje funkcji wewnątrz wywołania - podległości... tylko, gdy mamy LOKALNE uruchamianie (też testowanie) ;)
     if ( window.location.host == 'localhost' || nieTylkoLokalnie )  // też drugi parametr 
     {
         function NaprawAjaksa ()
         {
-        g_przechwytywacz_php = "./przechwytywacz.php";    
+        g_przechwytywacz_php = "./przechwytywacz.php";    // ewentualnie użyć "stałych", aby nie powodować błędu i hardkodu w kilku miejscach
         g_przechwytywacz_php_zapytanie = "?url_zewn=";
-            // wizulizacja zmian  
+            // + wizualizacja zmian  
         $('.status_ajaksa').removeClass('status_awaria').addClass('status_norma');
         }
 
         function ZepsujAjaksa ()
         {
-        g_przechwytywacz_php = "./przepuszczacz.php";  // tak dodatkowo psuto zapytanie    
+        g_przechwytywacz_php = "./przepuszczacz.php";  // dodatkowo zepsuto zapytanie    
         //g_przechwytywacz_php = "./przechwytywacz.php";  // powrót do prawidłowgo oryginału z "przepuszczacza"  
         g_przechwytywacz_php_zapytanie = "?url_dupa=";
             // wizulizacja zmian  
@@ -1789,7 +1831,7 @@ var pozycjaElementuWPionie;
     pozycjaElementuWPionie = $(element).offset().top; 
     console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ', pozycjaElementuWPionie, ' [px] (korektaY: ' + korektaY 
                 + ', czasA: ' + czasAnimacji + ')');    
-    $('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY)+'px' }, czasAnimacji);  
+    $('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY) + 'px' }, czasAnimacji);  
     }
 }   
 
@@ -1803,7 +1845,7 @@ $( przycisk ).prop('disabled', true);
     
 function OdblokujPrzycisk ( przycisk )
 {
-$( przycisk ).prop('disabled', false);  // oczekiwane działanie OK, zamiast spodziewanego rezultatu poprzez: $.removeProperty('disabled');
+$( przycisk ).prop('disabled', false);  // działanie OK, zamiast spodziewanego rezultatu poprzez: $.removeProperty('disabled');
 }
 
     
@@ -1873,14 +1915,14 @@ return szerokoscOkna;
 }   // AktualnyRozmiarOkna-END
     
     
-function UsunPobraneZadanie ( adres_zasobu )
+function UsunPobraneZadanie ( adresZasobu )
 {
 var indeksZnalezionego = false;
     
     // wymaga to FOR (jest break), czy da się zrobić poprzez forEach
     for ( var i = 0; i < g_niewyslane_podstrony.length ; i++ )
     {
-        if ( g_niewyslane_podstrony[i].adres.indexOf( adres_zasobu ) != -1 )
+        if ( g_niewyslane_podstrony[i].adresPelny.indexOf( adresZasobu ) != -1 ) // że odnaleziono cały adres z poszukiwanym fragmentem
         {
         indeksZnalezionego = i; // przypisanie indeksu z tabeli "nieobsłużonych" żądań
         break;    
@@ -1900,6 +1942,12 @@ return false;
     
 }   // UsunPobraneZadanie-END
         
+    
+function PobierzPierwszyNieodebrany() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+    if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[0];  // weryfikacja jest przed wywołaniem tej funkcji, ale nie zaszkodzi
+return false;    
+}    
+    
     
 function UbijReklamy ()
 {   // 000webhost.com || 000webhostapp.com
@@ -2550,7 +2598,7 @@ var contentURI= 'http://zlobek.chojnow.eu/u_tygryskow,a147.html table.galeria'; 
 $('#zawartosc_do_podmiany').load('przechwytywacz.php?url_zewn='+ contentURI);
 });
 */
-$('#testowy_adres_button').click(function() {
+$('#testowy_adres_button').click(function() {       // z tego nastąpiła już rezygnacja 
 var testowy_adres_galerii = "http://zlobek.chojnow.eu/30-u_misiow,z1058,p1.html";
 	
 $('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyślnej do pola wpisywania 
@@ -2678,7 +2726,7 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
 });	//  on("click")-$('#galeria_spis')-END			
 		
 	
-    // wkrótce REZYGNACJA z poniższego!
+    // JUŻ NIEWYKORZYSTYWANE --- REZYGNACJA z poniższego!!!
 $('#http_adres_submit').click(function() {	// submit ble?
 	
 //wycięte do wyżej !!!
@@ -2752,7 +2800,7 @@ return false; // !!! konieczne przy click/submit! || operować na obiekcie klika
 // ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI  ---------- *** --------------	        
     
     
-$('#banner').hover( function() {
+$('#banner').hover( function() {    // animacje z "wychodzeniem" obrotowego słoneczka
     $(this).find('#slonce_logo').addClass('animacja_1');
     },
     function() {
@@ -2761,13 +2809,62 @@ $('#banner').hover( function() {
 ); // #banner hover-END    
     
     
-$('#galeria_spis').on('click', '.odswiez_strone', function () {   // globalnie obsługa zdarzenia dla odświeżenia strony -- niezależnie od kolejności wygenerowania komunikatu o błędzie
+$('#galeria_spis').on('click', '.odswiez_strone', function () {   // globalnie obsługa zdarzenia z delegacją dla odświeżenia strony -- niezależnie od kolejności wygenerowania komunikatu o błędzie
     location.reload(); 
 }); // on-click-END    
     
     
+$('#galeria_spis').on('click', '#przywroc_strone', function ( evt ) { // też delegacja, ponawianie wyswietlania nieudanej transmisji
+
+    var ileNaLiscieNieotrzymanych = g_niewyslane_podstrony.length;    // sprawdzenie długości listy   
     
-$('#galeria_spis').on("click keydown", ".krzyzyk_zamykanie", function( e ) { 
+    if ( ileNaLiscieNieotrzymanych > 0 )    // jeżeli istnieje nadal lista niepobranych/nieotrzymanych...    
+    {
+    
+        
+        if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status_ajaksa').hasClass('status_norma') ) ) 
+            || ( $('.status_ajaksa').hasClass('status_norma') ) )  // tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
+        {
+            // dodatkowa weryfikacja, ewentualnie zrobić hardkoda
+            if ( ( g_przechwytywacz_php == g_przechwytywacz_php_ok ) && ( g_przechwytywacz_php_zapytanie == g_przechwytywacz_php_zapytanie_ok ) )
+            {
+        // to pobierz kolejny ostatni/PIERWSZY z tej listy niepobranych i spóbuj ponownie wszystkie operacje z transferem
+            // do pobrania jest więcej danych "fragmentowych" z jednego linku        
+        // ... ale nie zdejmuj póki co tego zadania z listy, zablokuj też przycisk na tę operację 
+            
+        var zadanieNieodebrane = PobierzPierwszyNieodebrany();
+        /*
+        // var nrPodstronyNiewczytanejGalerii = parseInt( zadanieNieodebrane.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );
+        // var adresZasobu = zadanieNieodebrane.adres.indexOf();
+            // ewentualna walidacja zapytań
+            if ( zadanieNieodebrane.adres.substr( g_przechwytywacz_php ) == -1 )   // nie "./przechwytywacz.php" lecz "./przepuszczacz.php"
+            {
+            zadanieNieodebrane.adres.replace('przepuszczacz.php', 'przechwytywacz.php');
+            }
+            
+            if ( zadanieNieodebrane.adres.substr( g_przechwytywacz_php_zapytanie ) == -1 )   // nie "?url_zewn=" lecz "?url_dupa"
+            {
+            zadanieNieodebrane.adres.replace('?url_dupa=', '?url_zewn=');
+            }
+        */    
+        ZablokujPrzycisk( evt.target ); 
+        PokazRamkeLadowania('spis');          
+            // wywołanie tego samego, ale wystawić dodatkowy znacznik, by go interpretować po zwrotnym otrzymaniu danych   
+            // + DANE, np. daneDodatkowe = { trybPowtorki : true } 
+         WczytajZewnetrznyHTMLdoTAGU ( zadanieNieodebrane.tag, g_protokol_www + g_adres_strony, zadanieNieodebrane.adresZasobu, zadanieNieodebrane.elementWitryny, "spis_galerii", { trybPowtorki : true } );
+         console.log('NAPRAWA BŁĘDU DLA podstrony: "' + zadanieNieodebrane.adresZasobu + '"');
+                
+      // ...dużo wątków aktualizacyjnych przy okazji (dekrementacje i komunikaty), ale PO UDANEJ obsłudze ponowionego żądania!     
+            
+            }   // if-(( g_przechwytywacz_php == g_przechwytywacz_php_ok )...-END 
+        } // if-( !OdczytajLocalStorage() )-END
+    } // if-( ileNaLiscieNieotrzymanych > 0 )-END
+      
+    
+}); //  on("click")-$('#przywroc_strone')-END	   
+    
+    
+$('#galeria_spis').on("click keydown", ".krzyzyk_zamykanie", function( e ) {    // zakykanie "okienek" i pasków
 var $this = $(this);
     // jakoby warunkowe wykonanie, mimo że na CLICK wstępnie reagowało 
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
