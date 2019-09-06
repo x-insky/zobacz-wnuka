@@ -1207,7 +1207,7 @@ nav#nawigacja_galeria button {
     /*border-radius: 4px;*/
 }
 
-div#wczytywanie_podstrony, div#wczytywanie_spis, div#wczytywanie_wybrane_galerie_spis {
+div#wczytywanie_podstrona, div#wczytywanie_spis, div#wczytywanie_wybrane_galerie_spis {
     display: none;
     padding: 1.5em 2em;
     /* margin: 2em; */
@@ -1215,12 +1215,12 @@ div#wczytywanie_podstrony, div#wczytywanie_spis, div#wczytywanie_wybrane_galerie
     border: 3px dotted yellow;
 }
 
-div#wczytywanie_podstrony h2, div#wczytywanie_spis h2, div#wczytywanie_wybrane_galerie_spis h2 {
+div#wczytywanie_podstrona h2, div#wczytywanie_spis h2, div#wczytywanie_wybrane_galerie_spis h2 {
     color: yellow;
     text-shadow: 1px 1px 6px #666;
 }
 
-div#wczytywanie_podstrony h2 img, div#wczytywanie_spis h2 img, div#wczytywanie_wybrane_galerie_spis h2 img {
+div#wczytywanie_podstrona h2 img, div#wczytywanie_spis h2 img, div#wczytywanie_wybrane_galerie_spis h2 img {
     /*animation: obroty360 1.2s infinite ease-in;	*/
     animation: obroty180 1.4s infinite ease-in;	  
 }

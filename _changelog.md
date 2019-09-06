@@ -1,3 +1,79 @@
+v0.5.17 - replaced FIFO to LIFO queue function, new logic of undisplayed next subpages of gallery list, redisplaying collection by button inside notification error; renamed id of button element of notification (genarated); renamed id of loading notification: HTML,  CSS and JS changes
+
+* v0.5.17 -- [2019-02-04]
+
+[+] ADDED
+
+-- witryna.js
+* defined new function 'PobierzOstatnieNieodebrane' as a LIFO queue
+  - picks and removes the last element of the unsuccessful notification from the table of un-done Ajax calls
+  - opposite to already defined function 'PobierzPierwszeNieodebrane'
+  - probably to replacemnet of that function
+  - defines the order of serving un-done Ajax requests
+  - internally used inside event function on button click inside internal error notiifcation (button id of 'przywroc_niewczytane')
+* defined new function 'UsunKomunikatLubZmienNumeracjeWTresci' to purpose of replacing content existing notification of error or remoing the whole notification element 
+  - added safety conditions, to verify if there is any element of notification and to check if its the only one (even though the passed id name)
+  - if it was the only error for gallery subpage list then the whole error notification is removed form the page with 'slideUp', the jQuery animation (like for the rest of error notifications)
+  - but when it was more of them encountered then the function removes the current notification text and replaces it by the previous notification 
+  - the element of previous request is removed form the collection and its specified quantity (subpage gallery number and error uccurence) modifies the numbers from the text of notiofication
+  - but when quantity result is '1', then the extra condition removes string ' x [quantity]' from  the notification title
+  - at the end function reapplies animation of yellow blink to that notify element
+
+[*] MODIFIED
+
+-- index.php
+* changed id of element from 'wczytywanie_podstrony' to  'wczytywanie_podstrona'
+  - a notificationelement of loading content of current gallery details and its each subpage
+
+-- zlobek-styl.css
+* renamed all the exististing selectors, where the '#wczytywanie_podstrona' was a content
+  - renamed to '#wczytywanie_podstrony'
+
+-- witryna.js
+* changed names of all jQuery selectors, where the previously '#wczytywanie_podstrona' was used and now its '#wczytywanie_podstrona'
+  - renamed also semi-global variable with new selector content (previously used, now storaged logic inside comments)
+  - changed also initialization semi-global variable inside function 'InicjujRamkiLadowania' where the structure of all loading notification is built
+* finally added invocation of newly defined function 'UsunKomunikatLubZmienNumeracjeWTresci' into body of 'WczytajZewnetrznyHTMLdoTAGU' function
+  - variant 'spis_galerii', which displays next subpages of gallery list
+  - used here to redisplay of any subpage, which cannot be displayed before
+  - at the end of the conditional logic the button of the notification is reenabled to be active (newly name of id of button is used)
+  - also the notification text changes to be displayed for the previously noticed error, for previous subpage loading error (the whole text concerns another notification error of previous loading) 
+  - but if there was only one error notification, then  the whole element of notification is removed and error count is decrementeded to '0' value (really an errou counter is differentiator of removal of cumulated error notification which concerns)
+  - slighty changed also the text of first occurence of the loading error of gallery subpage
+  - now contains a text with extra new line, so looks better on wider screens with picture-like exclamation on the left side of text notification
+* altered text of returned html string inside function 'GenerujPowiadomienieOBledzie'
+  - here builded notification element contains newly set id attribute with value 'przywroc_niewczytane' which is used in click event and for a differentiator to enable/disable this button by JS
+(see also 'fixed' section of this update)
+  - prevoiusly the butoon has a class attribute instead id, inside returned HTML content
+  - added new attribute 'title' which can explain, that the action is only possible when internal Ajax status is OK (displays this text when mouse hover on button)
+* added some fixed conditionally logic inside function 'ZmienTrescKomunikatu'
+  - uses the whole jQuery object, when there is only one notification on the page
+* renamed function 'PobierzPierwszyNieodebrany' to 'PobierzPierwszeNieodebrane'
+  - just a better semantic name for FIFO selector
+  - probably the better way is using the last one picker, the LIFO queue (to rethink)
+* changed definition for click event serve, while event object id has changed  from 'przywroc_strone' to 'przywroc_niewczytane'
+  - contains all the logic for removing last/first of un-done request of loading next gallery subpage (inside comment added notes of pro and cons)
+  - decided to use LIFO queue by defined function 'PobierzOstatnieNieodebrane' instead FIFO function on collection of undisplayed subpages of gallery list
+  - removed bad indentation from function body
+* JS code improvements
+  - typos, generally inside comments
+  - extra spaces
+  - added comments if explain or refresh something is needed
+
+[F] FIXED
+
+* fixed button click event of internal error notification
+  - alteredy inserted element of notification has the same class name as event object has id inside event function
+  - so event listened the clicking of non exist element id, and the page logic generated and replacing content for any next error but there was no connection bestween two actions
+  - there was no way to initialize the logic from notification, by click on placed there button
+  - finally renamed the generated content of error notification with newly created id instead class attribute of the button
+  - also for better distinguish of element, renamed this new id to 'przywroc_niewczytane' (insteda previously defined id of 'przywroc_strone')
+  - the same 'przywroc_niewczytane' id is used inside event function on click on it
+  - also the 'przywroc_niewczytane' is used inside jQuery selectors to disable or reenable the button while click event action persists 
+  - fixes: #34 - 'No response to the button inside the error notification'
+
+---------------------------
+
 v0.5.16 - on the offensive with JS logic of unsuccessful subpages adding, for now still as scaffolding; changed the button id from class; FIFO declared as a method of removing request form the un-done list
 
 * v0.5.16 -- [2019-02-01]

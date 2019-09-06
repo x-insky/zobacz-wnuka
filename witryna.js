@@ -29,7 +29,7 @@ var g_element_zewnetrzny = "table.galeria",	// wszystko jest w tablicy o klasie 
 
  g_tag_do_podmiany_zdjecia = "div#zawartosc_do_podmiany", //element DOM, do którego load() wstawi zawartość tagu table.galeria z witryny zewnętrznej
  g_miejsce_na_zdjecia = "div#skladowisko", // zamienić na coś sensowniejszego
- // g_wczytywanie_podstrony = "#wczytywanie_podstrony",
+ // g_wczytywanie_podstrona = "#wczytywanie_podstrona",
  // g_wczytywanie_spis = "#wczytywanie_spis",	
 
  g_element_zewnetrzny_spis = "table.galeria",   // g_element_zewnetrzny_spis = "td#tresc_glowna.tlo_artykulow",
@@ -141,7 +141,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
         case "spis_galerii" :
             // tylko tu dodanie żądania GET do tablicy -- STANDARDOWO BRAK MOŻLIWOŚCI PONOWIENIA TEGO ŻĄDANIA -- dlatego rozszerzona obsługa błędów 
-                if ( !dane.trybPowtorki )   // dodawanie TYLKO nowych zadań, aby nie wprowadzać powtórnych żądań (ciągl epozostaną na liście)
+                if ( !dane.trybPowtorki )   // dodawanie TYLKO nowych zadań, aby nie wprowadzać powtórnych żądań (ciągle pozostaną na liście)
                 {
                 g_niewyslane_podstrony.push({ adresPelny : g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny,
                                                 adresZasobu : adres_zasobu,
@@ -166,7 +166,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         //$(tag_podmieniany).html( unescape(encodeURIComponent(podmieniona_zawartosc)) );	// jednao z wielu mozliwych zamian kodowania
 
                     // ... // przetwarzanie spisu treści
-                        NaprawBrakujaceSRCwKontenerze ( tag_podmieniany );
+                        NaprawBrakujaceSRCwKontenerze( tag_podmieniany );
                         CzyscNiepotrzebneElementy();	    
                         GenerujSpisGalerii();
                         UsunPobraneZadanie( adres_zasobu );   // wyrzucenie rekordu z tablicy żądań -- już przetworzono dany odnośnik (!?...ewentualny wpływ asynchroniczności...!?)  
@@ -175,8 +175,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                             g_suma_bledow_dolaczania--; // dekrementacja wywołanych błędów
                             // i tu modyfikacja wyświetlanych komunikatów lub ich ukrywanie ... 
                                 // ... wymaga uglobalnienia zmiennych z treścią wyswietlanych komunikatów lub powtarzanie się z generowniem zmiany komunikatu :/ 
-                            //AktualizujLubUkryjKomunikat( elementKomunikatu, krotnoscBledu ); // + tytul, tresc; ale to funkcja ma odszukać ostatni nr niepobrany i go zmienić
-                            OdblokujPrzycisk( '#przywroc_strone' );   // hardkod... lub to wstawić w tę funkcję powyżej
+                            UsunKomunikatLubZmienNumeracjeWTresci ( '.blad_dolaczania' );  // tylko element, numeracja będzie odnaleziona
+                            // AktualizujLubUkryjKomunikat( elementKomunikatu, krotnoscBledu ); // + tytul, tresc; ale to funkcja ma odszukać ostatni nr niepobrany i go zmienić
+                            OdblokujPrzycisk( '#przywroc_niewczytane' );   // hardkod... lub to wstawić w tę funkcję powyżej
                             } 
                         }
                         else
@@ -194,7 +195,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         if ( ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ( g_zaczytana_ilosc_paginacji_galerii == 0 ) && ( g_biezaca_pozycja_galerii == 0 ) && ( g_ilosc_zaczytanych_galerii == 0 ) )  
                         {       // prawdopodobnie ten błąd się juz nie wywoła, bo brak lub błędna zzawartość źródłowa wcześniej wywoła inny; dla pewności to samo działanie  
                         //$('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button class="odswiez_strone">Odśwież stronę</button> </p>' );
-                        GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Brak możliwości nawigacja po witrynie - konieczność przeładowania zawartości witryny.<br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true, ikonaZamykania : false });    
+                        GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Brak możliwości nawigacja po witrynie - konieczność przeładowania zawartości witryny.<br />Spróbuj za chwilę &ndash; naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true, ikonaZamykania : false });    
 
     /*                    $('#galeria_spis').on('click', '.odswiez_strone', function () {   // nowa obsługa zdarzenia dla nowego elementu -- tu się wykona jako pierwsza
                             location.reload(); 
@@ -238,7 +239,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                             }
                             else // pierwsze generowanie komunikatu do sumowania niewyswietlonych podstron
                             {
-                             // generowanier pierwszego ulepszonego powiadomienia - tworzenie jego pierwszej instancji 
+                             // generowanie pierwszego ulepszonego powiadomienia - tworzenie jego pierwszej instancji 
                                 
                             $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' + '</p>' );
                             GenerujPowiadomienieOBledzie({ tytul : tytulBledu, tresc : komunikatOBledzie, ikonaZamykania : false, 
@@ -341,7 +342,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
                         //UsunBrakujaceSRCwKontenerze ( element_witryny );  // ponowne kasowanie, teraz wszystkie bez wyjątku wylatują elementy  
 
-                        // $('#wczytywanie_podstrony').hide(100);	
+                        // $('#wczytywanie_podstrona').hide(100);	
                         // UkryjRamkeLadowania('podstrona');   // dopiero teraz powinno być usunięcie animacji ładowania - ale wewnątrz GenerujPodstronyGalerii() jest takowe    
                         $('#skladowisko').empty();  // zerowanie ewentualnej zawartości w tym kontenerze    
                         $('#skladowisko').show(100);    
@@ -487,7 +488,7 @@ var kontenerDocelowyElement = "div#skladowisko";
 var $kontenerDocelowy = $( kontenerDocelowyElement ); 
     
 var wysokoscDokumentu = $(document).height();
-var wysokoscDivWczytywanie = $('#wczytywanie_podstrony').height();    
+var wysokoscDivWczytywanie = $('#wczytywanie_podstrona').height();    
 var wysokoscDivKomentarz = $('div#komentarz').height();    
 var odlegloscPionowaDocelowego = $kontenerDocelowy.offset().top;
 var wysokoscOknaPrzegladarki = $(window).height();
@@ -496,7 +497,7 @@ console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOk
 //PrzewinEkranDoElementu('div#skladowisko', 200, -8);  // złe miejsce, przed trteścią
 
 $('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
-//$('#wczytywanie_podstrony').hide(100);	// schowaj informację, skoro wczytano zawartość
+//$('#wczytywanie_podstrona').hide(100);	// schowaj informację, skoro wczytano zawartość
     // UkryjRamkeLadowania('podstrona');    // - to nie jest typowa funkcja generowania treści... albo się mylę   
 $('#glowna div#komentarz').hide(100);	//showaj opis-informację o ile była pokazana
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
@@ -1474,7 +1475,7 @@ return nrPodstronyGalerii;
 function InicjujRamkiLadowania ()  
 {
 // oto wstepna, prosta forma; tu rejestrowane są na sztywno wszystkie powiadomienia o ładowaniu konkretnych zawartości - wymaga podpięci do wuitryny
-// ... póki co trzy notyfikacje - IDeki: "wczytywanie_podstrony" (podstrona galerii), "wczytywanie_spis", "wczytywanie_wybrane_galerie_spis" 
+// ... póki co trzy notyfikacje - IDeki: "wczytywanie_podstrona" (podstrona galerii), "wczytywanie_spis", "wczytywanie_wybrane_galerie_spis" 
 //    (dopisać ewentualne kolejne animacje ładowania)    
     g_prezentacja_wczytywania = [   // raczej przypisać elmenty z HTMLa tu
         {   element : 'wczytywanie_spis',
@@ -1483,7 +1484,7 @@ function InicjujRamkiLadowania ()
         {   element : 'wczytywanie_wybrane_galerie_spis',
             ile : 0 
         },
-        {   element : 'wczytywanie_podstrony',
+        {   element : 'wczytywanie_podstrona',
             ile : 0 
         }
     ];
@@ -1621,7 +1622,7 @@ budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik
             }
             if ( opcje.przyciskAkcjiDolacz )
             {
-            budowanyElement += '<button class="przywroc_strone">' + opcje.trescPrzyciskuAkcjiDolacz + '</button> ';   // określić klasę lub id dla przycisku 
+            budowanyElement += '<button id="przywroc_niewczytane" title="Przycisk reaguje tylko podczas niesymulowanej awarii (w trybie prawidowej komunikacji). Wymuś prawidłową komunikację by kontynuować.">' + opcje.trescPrzyciskuAkcjiDolacz + '</button> ';   // określić klasę lub id dla przycisku 
             }
         budowanyElement += '</h4>'; 
         }     
@@ -1664,11 +1665,12 @@ PrzewinEkranDoElementu('div.blad', 500);
 }   // GenerujDomyslnePowiadomienieOBledzieSerwera-END
 
     
-function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTresc )
+function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTresc ) // tworzy nowe zawartości tekstowe (+html) na podstawie parametrów
 {
     if ( $( elementKomunikatu ).length > 0 )
     {
-        if ( $( elementKomunikatu ).length > 1 ) elementKomunikatu = $( elementKomunikatu)[0];    // w razie gdyby to jednak jakaś kolekcja była
+        if ( $( elementKomunikatu ).length > 1 ) elementKomunikatu = $( elementKomunikatu )[0];    // w razie gdyby to jednak jakaś kolekcja była
+        else elementKomunikatu = $( elementKomunikatu );    // poprawka na element jQuery
     elementKomunikatu.removeClass('animacja_zolty_blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
     elementKomunikatu.addClass('animacja_zolty_blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
         
@@ -1676,6 +1678,52 @@ function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTres
     elementKomunikatu.find('div.blad_tresc p').html( komunikatTresc ); 
     }
 }   // ZmienTrescKomunikatu-END
+    
+    
+function UsunKomunikatLubZmienNumeracjeWTresci ( elementKomunikatu )    // usuwa komunikat lub modyfikuje (zmniejsza) jego numerację, zależnie od przeprowadzonech chwilę wcześniej dekrementacji listy błędów
+{                                                           // UWAGA: operuje na pomniejszonej (aktualnej) numeracji błędów
+    if ( $( elementKomunikatu ).length > 0 )
+    {
+        if ( $( elementKomunikatu ).length > 1 ) elementKomunikatu = $( elementKomunikatu )[0];    // w razie gdyby to jednak jakaś kolekcja była
+        else elementKomunikatu = $( elementKomunikatu ) ; // przekształć wskazany elelemnt na jQuery (owiń tym obiektem)    
+
+        // pobierz aktualnie wyświetlane wartości przed usunięciem/aktualizacją komunikatu
+    var krotnoscBledu = parseInt( elementKomunikatu.find('strong:first-of-type > span').text() ),   // pobierz pierwszy == g_suma_bledow_dolaczania ... więc po co odczytywać DOM
+        poprzedniBladPodstrony = 0, // ta i kolejne zmienne zostaną obliczone później, o ile jest sens
+        tekstTytulu = "",
+        zawartoscKomunikatu = "";
+
+        if ( g_suma_bledow_dolaczania < 1 ) // jeżeli był to pierwszy/jedyny błąd dołączania -- usuń okno komunikatu
+        {
+        elementKomunikatu.slideUp(1000, function() { $(this).remove(); });  // usuń okno z komunikatem po animacji
+        }
+            
+        if ( g_suma_bledow_dolaczania >= 1 )  // jeżeli to kolejny błąd dołączania -- zmień treści w wyświetlanym oknie komunikatu (zmniejsz liczby)
+        {
+        // do LIFO, określenie wcześniejszego błędu - odczytanie przedostatniego elementu z nieobsłuzonych żądań    
+            // zmiana w zasadniczej treści komunikatu
+        elementKomunikatu.find('strong:first-of-type > span').text( g_suma_bledow_dolaczania );
+        poprzedniBladPodstrony = PobierzOstatnieNieodebrane().adresZasobu;
+        poprzedniBladPodstrony = parseInt( poprzedniBladPodstrony.substr( poprzedniBladPodstrony.lastIndexOf(",p") + 2 ) ); // numer podstrony niewczytanej
+        elementKomunikatu.find('strong:last-of-type > span').text( poprzedniBladPodstrony );
+        tekstTytulu = elementKomunikatu.find('.blad_tytul').text(); // odczytanie tytułu komunkatu (choć niemal zawsze stała, inny postfiks)
+            
+            if ( g_suma_bledow_dolaczania == 1 )   // usuń "x" i krotność w tytule
+            {    
+            tekstTytulu = tekstTytulu.substr(0, tekstTytulu.lastIndexOf(' x') );    // do ostatniej spacji włącznie?
+            elementKomunikatu.find('.blad_tytul').text( tekstTytulu );  // obcięcie treści z numeracją    
+            }
+            else    // po prostu zmień krotność w tytule 
+            {
+            tekstTytulu = tekstTytulu.substr(0, tekstTytulu.lastIndexOf(' x')+2 );    // tresc do ostatniego "x" włącznie
+            elementKomunikatu.find('.blad_tytul').text( tekstTytulu + g_suma_bledow_dolaczania );  // dodanie nowej numeracji  
+            }
+        // zawsze też odśwież treść istniejącego komunikatu i zwróc uwagę obserwatora na to 
+        elementKomunikatu.removeClass('animacja_zolty_blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
+        elementKomunikatu.addClass('animacja_zolty_blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
+        }
+    }   // if-( g_suma_bledow_dolaczania > 1 )-END
+}   // UsunKomunikatLubZmienNumeracjeWTresci
     
 function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie ) 
 {
@@ -1943,10 +1991,16 @@ return false;
 }   // UsunPobraneZadanie-END
         
     
-function PobierzPierwszyNieodebrany() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+function PobierzPierwszeNieodebrane() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
     if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[0];  // weryfikacja jest przed wywołaniem tej funkcji, ale nie zaszkodzi
 return false;    
 }    
+    
+
+function PobierzOstatnieNieodebrane() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+    if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[g_niewyslane_podstrony.length-1];  // weryfikacja jest przed wywołaniem tej funkcji, ale dodatkowa nie zaszkodzi
+return false;    
+}       
     
     
 function UbijReklamy ()
@@ -2532,7 +2586,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
         
     $( g_miejsce_na_zdjecia ).empty();
     $('nav#nawigacja_galeria').empty(); 
-    // $('#wczytywanie_podstrony').show(100);  
+    // $('#wczytywanie_podstrona').show(100);  
     PokazRamkeLadowania('podstrona');   // pokazanie ramki ładowania -- najbliższy obszar to podstrona galerii 
 
     PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania           
@@ -2612,7 +2666,7 @@ var $this = $(this);
 var serwer = g_protokol_www + $this.attr('data-adres_strony') + '/';
 var ktoraPodstrona = $this.attr('value');    
 
-//$( g_wczytywanie_podstrony ).show(100); 
+//$( g_wczytywanie_podstrona ).show(100); 
 PokazRamkeLadowania('podstrona');   // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
 
 //alert("kliknięto '.przycisk_galeria'... albo kontener: " + this.tagName );
@@ -2712,7 +2766,7 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
                                             'nrGalerii' : nrGalerii, 'nrPodstronyGalerii' : nrPodstronyGalerii } );     // lista uzupełniona o numerację odczytanych   
 
         // wstawienie animacji na postęp ładowania
-    // $( g_wczytywanie_podstrony ).show(100);
+    // $( g_wczytywanie_podstrona ).show(100);
         PokazRamkeLadowania('podstrona');
 
         // od razu zerowanie zawartości kontenerów docelowych do zaczytania zawartości
@@ -2771,7 +2825,7 @@ $('#http_adres').prop("disabled", true); 								// wyłączenie, aby nie klikac
 $('#http_adres_submit').prop("disabled", true);	 // wyłączenie, aby nie klikac wielokrotnie || attr() vs prop()
 $('#testowy_adres_button').prop("disabled", true);	 // wyłączenie, aby nie klikac wielokrotnie || attr() vs prop()
 
-//$( g_wczytywanie_podstrony ).show(100);
+//$( g_wczytywanie_podstrona ).show(100);
 PokazRamkeLadowania('podstrona');
 
 console.log( 'ADRES_STRONY: ' + g_adres_strony + ', ADRES_GALERII: ' + adres_tej_galerii + ', ZNACZNIK_ZEWN: ' + g_element_zewnetrzny + '\nRAZEM: ' + g_adres_strony + adres_tej_galerii + ' | ' + g_element_zewnetrzny	) ;
@@ -2814,25 +2868,28 @@ $('#galeria_spis').on('click', '.odswiez_strone', function () {   // globalnie o
 }); // on-click-END    
     
     
-$('#galeria_spis').on('click', '#przywroc_strone', function ( evt ) { // też delegacja, ponawianie wyswietlania nieudanej transmisji
+$('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt ) { // też delegacja, ponawianie wyswietlania nieudanej transmisji
 
     var ileNaLiscieNieotrzymanych = g_niewyslane_podstrony.length;    // sprawdzenie długości listy   
     
     if ( ileNaLiscieNieotrzymanych > 0 )    // jeżeli istnieje nadal lista niepobranych/nieotrzymanych...    
     {
-    
-        
         if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status_ajaksa').hasClass('status_norma') ) ) 
-            || ( $('.status_ajaksa').hasClass('status_norma') ) )  // tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
+            || ( $('.status_ajaksa').hasClass('status_norma') ) )  // wstępna weryfikacja po wyglądzie/zachowaniu
+                    //tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
         {
             // dodatkowa weryfikacja, ewentualnie zrobić hardkoda
             if ( ( g_przechwytywacz_php == g_przechwytywacz_php_ok ) && ( g_przechwytywacz_php_zapytanie == g_przechwytywacz_php_zapytanie_ok ) )
             {
-        // to pobierz kolejny ostatni/PIERWSZY z tej listy niepobranych i spóbuj ponownie wszystkie operacje z transferem
+        // to pobierz kolejny OSTATNI/pierwszy z tej listy niepobranych i spóbuj ponownie wszystkie operacje z transferem
+            // #OSTATNI: psuje kolejność dołączania (gdy kilka się nie udało), ale odświeżane powiadomienie o błędzie ma sens
+            // #pierwszy: kolejka FIFO lepsza względem "sprawiedliwości" niewczytania, przeciwnieństwo wcześniejszego  
             // do pobrania jest więcej danych "fragmentowych" z jednego linku        
         // ... ale nie zdejmuj póki co tego zadania z listy, zablokuj też przycisk na tę operację 
             
-        var zadanieNieodebrane = PobierzPierwszyNieodebrany();
+        //var zadanieNieodebrane = PobierzPierwszeNieodebrane();
+        var zadanieNieodebrane = PobierzOstatnieNieodebrane();  // tu odczytywana jest ostatnia pozycja z tablicy
+                
         /*
         // var nrPodstronyNiewczytanejGalerii = parseInt( zadanieNieodebrane.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );
         // var adresZasobu = zadanieNieodebrane.adres.indexOf();
@@ -2848,11 +2905,12 @@ $('#galeria_spis').on('click', '#przywroc_strone', function ( evt ) { // też de
             }
         */    
         ZablokujPrzycisk( evt.target ); 
-        PokazRamkeLadowania('spis');          
+        PokazRamkeLadowania('spis'); 
+        PrzewinEkranDoElementu('#wczytywanie_spis', 500); // hardkod #elementu        
             // wywołanie tego samego, ale wystawić dodatkowy znacznik, by go interpretować po zwrotnym otrzymaniu danych   
             // + DANE, np. daneDodatkowe = { trybPowtorki : true } 
-         WczytajZewnetrznyHTMLdoTAGU ( zadanieNieodebrane.tag, g_protokol_www + g_adres_strony, zadanieNieodebrane.adresZasobu, zadanieNieodebrane.elementWitryny, "spis_galerii", { trybPowtorki : true } );
-         console.log('NAPRAWA BŁĘDU DLA podstrony: "' + zadanieNieodebrane.adresZasobu + '"');
+        WczytajZewnetrznyHTMLdoTAGU ( zadanieNieodebrane.tag, g_protokol_www + g_adres_strony, zadanieNieodebrane.adresZasobu, zadanieNieodebrane.elementWitryny, "spis_galerii", { trybPowtorki : true } );    // + znacznik: .tryb
+        console.log('NAPRAWA BŁĘDU DLA podstrony: "' + zadanieNieodebrane.adresZasobu + '"');
                 
       // ...dużo wątków aktualizacyjnych przy okazji (dekrementacje i komunikaty), ale PO UDANEJ obsłudze ponowionego żądania!     
             
@@ -2861,7 +2919,7 @@ $('#galeria_spis').on('click', '#przywroc_strone', function ( evt ) { // też de
     } // if-( ileNaLiscieNieotrzymanych > 0 )-END
       
     
-}); //  on("click")-$('#przywroc_strone')-END	   
+}); //  on("click")-$('#przywroc_niewczytane')-END	   
     
     
 $('#galeria_spis').on("click keydown", ".krzyzyk_zamykanie", function( e ) {    // zakykanie "okienek" i pasków

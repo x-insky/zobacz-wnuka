@@ -220,7 +220,7 @@ $serwerLokalny = false;
                 </div>    
             </div>	
 
-            <div id="wczytywanie_podstrony"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
+            <div id="wczytywanie_podstrona"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
             </div>
             
             <div class="jasne_tlo_galeria">
@@ -270,7 +270,7 @@ $serwerLokalny = false;
         
         
         <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button" class="animacja_zmiana_kolorow">Symul-A(JAX)-ncja</button>
-           <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.16</h6>
+           <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.17</h6>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
