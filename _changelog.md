@@ -1,3 +1,85 @@
+v0.5.18 - noJS first problem, re-initied CSS to hide/change bahavior when noJS, later reenable by JS; new pulsing anim of button; descriptive logic of function 'WczytajZewnetrznyHTMLdoTAGU'; meaning re-naming; removed old page elements & CSS
+
+* v0.5.18 -- [2019-04-02]
+
+[+] ADDED
+
+-- index.php
+*  added 'div' element with id 'brak_skryptow' inside 'header' area
+  - placed there some default content, which will be displayed when JavaScript is disabled in web browser
+  - this element will be immediately hide by JavaScript, just when the DOM structure will be accessible (specifically jQuery will fire hiding method)
+  
+-- zlobek-styl.css
+* defined a new style for elements which is active, when Javascript is not present inside browser
+  - noticeable dark red background color with white letters and yellow border
+  - targets 'div' element with id 'brak_skryptow' as a main container
+* defined new animtion config class named 'animacja_pulsowanie_kolorow', which is similary defined as previously used 'animacja_zmiana_kolorow'
+  - different animation is used, where colors belongs to the colors used inside this project
+  - much shorter time of lap, 10 seconds instead of 30
+  - also defined new animation 'pulsowanie_kolorow', which is defined based on 'zmiana_kolorow' keyframes
+
+-- witryna.js
+* defined new function 'UstawCSSzAktywnymJS' to reset the style of selected page elements 
+  - some elements was intentionally changed just a moment ago in a CSS, by initially set, e.g. to be invisible or hided or changed their behavior like animation, initial placement
+  - changed the elements, which are always showed but when is no JS logic, their content may be empty or improper or just unnecessary, so the better way is to hide the element or change its initial behavior 
+  - used for proper initialization elements of the page by JavaScript, which disables the hiding values of CSS atributes or resets the new changes like before used in this project
+  - when no JS is enabled in browser, then the selected elements of page shouldn't be visible
+  - so it's the real purpose rather than application logic for gradually showing contents of this application!
+  - invocation of this function is added to the auto run block of JS code
+* above function 'UstawCSSzAktywnymJS' used for resetting initial behavior of elements
+  - hides text notification of disabled JavaScript (when it's enabled now, right, because this is a JS code ;) ), by hiding 'div' with id of 'brak_skryptow'
+  - showing element with id 'wymiary', where showing are the active size of working area of browser
+  - moving harder the sun to the left top corner of logo and removing its rotating animation (displacement and animation should works only on hover state, not on initial page display when JS operates)
+* changed the hover state event function, because the class name has changed from 'animacja_1' to 'animacja_slonca'
+  - the same behavior of logo element, despite changed name of class (it's only a different name)
+
+[*] MODIFIED
+
+-- index.php
+* added extra two classes for element with id 'slonce_logo'
+  - the element of animating sun inside page header 
+  - added class of 'startowe_przesuniecie', which positioning the sun the same as in hover state (moving it to bottom and right by defined pixels value)  
+  - and second added class 'animacja_slonca', which enables rotating animation by default, without hover state needed (hover event is build by JS, then the class is added or removed)
+  - both classes initialy enables the same state as hovering on header area, when JS is enabled 
+* changed class name, which has button element with id 'symulancja_button', placed inside footer area
+  - changed class name from 'animacja_zmiana_kolorow' to 'animacja_pulsowanie_kolorow'
+
+-- zlobek-styl.css
+* alterations for 'div' of id of 'slonce_logo'
+  - removed from hover state a rule for 'transform-origin' which was really a default value, and already defined in basis element (temporary put it inside comment)
+  - added also the same absolute positioning coordinates for hover state, with added class 'startowe_przesuniecie' and with both )hover + that class)
+  - some kind of negation of rule DRY!
+* changed displayed style of element with id 'wymiary'
+  - set default 'visibility' to 'hidden' value, which don't allow to be displayed initially inside browser, but later 'visibility' can be enabled by JS
+* renamed animation config class name from 'animacja_1' to self explaining 'animacja_slonca' ('animation of the sun' in translation)
+* indented definition of class 'animacja_zmiana_kolorow'
+* keeping common style for CSS file
+  - removed uneccessary spaces, tab keys, or typos inside comments 
+
+-- witryna.js
+* added descriptive comment inside function 'WczytajZewnetrznyHTMLdoTAGU', which describe each variant (or each case of possible loading content by Ajax request)
+   - a good reminder of purpose for each case value of switch statement for passed parameter, also a default value
+* altered logic of function 'GenerujSpisOdczytanejGrupyGalerii', where after the whole reading requested content, the source container is emptying from any contents
+  - but this function isn't operated yet!
+* used the same logic of emptying source container after reading ('BAR', like a spy ;) ) inside function 'GenerujSpisGalerii'
+  - emptying expression added at the end of this function
+  - for purpose of better keyboard navigation, element is placed ouside the visible area of page window but is still accessible by 'Tab' key
+  - inside one element in moment of creating this page was ~40 subpages and this number still grows
+  - each subpage of gallery list is displayed inside original nursery webserwer, so it's presented also in this source container
+  - ech link to a subpage is an extra unnecessary 'Tab' pressing, so much irritating when you can't use mouse!!!  
+
+[-] REMOVED
+
+-- index.php
+* removed 'div' element with id 'komentarz' which content of notification text was constantly hided, so it's no neccessary to hold this item and its content on page
+
+-- zlobek-styl.css
+* removed declarations for non existing elements inside project (file 'index.php' or its dynamically genarated contents inside browser)  
+  - removed 'h1.zmienny' with 'hover' state
+  - removed 'div' element with id 'komentarz', because it's not used inside index file
+
+---------------------------
+
 v0.5.17 - replaced FIFO to LIFO queue function, new logic of undisplayed next subpages of gallery list, redisplaying collection by button inside notification error; renamed id of button element of notification (genarated); renamed id of loading notification: HTML,  CSS and JS changes
 
 * v0.5.17 -- [2019-02-04]

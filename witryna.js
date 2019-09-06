@@ -81,7 +81,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
     
     switch ( rodzaj_dzialania ) {
 				
-        case "galeria_podstrona" :
+        case "galeria_podstrona" :      // wyświetlenie dowolnej galerii (pierwsza strona albunu lub dowolna podstrona)
             try 
             {	
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
@@ -139,7 +139,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
             break;
 
-        case "spis_galerii" :
+        case "spis_galerii" :       // dodawanie do listy spisu treści - kolejne +1..5 podstron spisu treści 
             // tylko tu dodanie żądania GET do tablicy -- STANDARDOWO BRAK MOŻLIWOŚCI PONOWIENIA TEGO ŻĄDANIA -- dlatego rozszerzona obsługa błędów 
                 if ( !dane.trybPowtorki )   // dodawanie TYLKO nowych zadań, aby nie wprowadzać powtórnych żądań (ciągle pozostaną na liście)
                 {
@@ -266,7 +266,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
          break;
 
-        case "wybrana_galeria_rekurencja" :
+        case "wybrana_galeria_rekurencja" :     // wyświetlenie wybranej galerii, 1-szy etap (jej pierwsza podstrona) 
 
             try 
             {	
@@ -325,7 +325,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     // ...		
             break;
 
-        case "wybrana_galeria" :
+        case "wybrana_galeria" :        // wyświetlenie wybranej galerii, 2-gi etap (jej pierwsza podstrona)     
 
             try 
             {	  // tu "adres_zasobu" już OBECNY jako ścieżka bezwzględna -- ODMIENNA składnia dla zapytania
@@ -387,7 +387,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             break;				
 
  
-        case "wybrany_spis_galerii" :
+        case "wybrany_spis_galerii" :       // wyświetlenie wskazanego spisu treści z ustalonwgo zakresu
 
             try 
             {	  // tu "adres_zasobu" już jako ścieżka bezwzględna
@@ -444,7 +444,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             break;	               
             
 
-        default:
+        default:    // gdyby się nie udało dowolne żądanie to wystawić domyślny komunikat o błędzie (raczej niewykonalne, bo błędy żądań mają swoje powiadomienia) 
             //var komunikatOBledzie = 'Wystąpił ogólny problem z żądaniem! (PARAMETRY - tag: ' + tag_podmieniany + ', domena: ' + adres_domeny + ', zasób: ' + adres_zasobu + ', elem: ' + element_witryny + ', działanie: ' +  rodzaj_dzialania + ') ... COŚ POSZŁO NIE TAK' ;
             //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
             var komunikatOBledzie = 'Wystąpił ogólny problem z żądaniem! Logowanie parametrów żądania - tag: "' + tag_podmieniany + '", domena: "' + adres_domeny + '", zasób: "' + adres_zasobu + '", elem: "' + element_witryny + '", działanie: "' +  rodzaj_dzialania + '... COŚ POSZŁO NIE TAK.' ;
@@ -791,14 +791,11 @@ var ileSpisowGalerii = grupaGalerii.length,
 $( miejsceDocelowe ).append( html );
 
     // czyszczenie kontenera źródłowego, dla testów pozostaje paginacja galerii -- docelowo i tak ten pojemnik źródłowy jest zerowany przy każdym odczycie/odpowiedzi
-$( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();    
+$( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
     
     // złożone działanie w przypadku dołączania kolejnych podstron galerii
     if ( czyWybrane != 'WYBRANE' ) // lub jakikolwiek inna wartość niepusta argumentu
     {
-        
-
-
 
 
         // obowiązakowe czyszczenie nadmiaru, warunek na szablon vs na ilość załadowanych
@@ -864,7 +861,14 @@ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();
     */
         } // if-END ( $listaPodstron.length >= 1 )
     }   //if-(czyWybrane)-END
+    else
+    {
+    // prostszy wariant dla uzupełnienia wskazanej galerii 
+        
+    }
 	
+    $( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie 
+    
     // poniższe przenieść poza funkcję? (istotne przy pierwszym wywołaniu)
     if ( ( g_ilosc_zaczytanych_galerii > 0 ) && ( g_ilosc_zaczytanych_galerii <= 5 ) )
     {
@@ -1015,9 +1019,11 @@ var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " td blockquote div[align=justi
         } // for-END
     } // if-end $odnosnikiOpis
 	
-	// czyszczenie kontenera źródłowego, dla testów pozostaje paginacja galerii -- docelowo zerować cały pojemnik źródłowy
-$( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();
-	// obowiązakowe czyszczenie nadmiaru, warunek na szablon vs na ilość załadowanych
+	// czyszczenie kontenera źródłowego, dla testów pozostaje paginacja galerii -- docelowo zerować cały pojemnik źródłowy, ALE PÓŹNIEJ NIE TUTAJ!!!
+ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();     // tutaj czyścimy wszystkie niepotrzebne już tytuły, ale pozostała zawartośc linków jeszcze ma użytek 
+                                    // dalej jest obliczana dynamicznie ilość podstron z tego kontenera!
+    
+    // obowiązakowe czyszczenie nadmiaru, warunek na szablon vs na ilość załadowanych
 //debugger;
 	
 var $nadmiar = $( g_miejsce_na_spis + " div.kontener_odnosnik:has(h3)");
@@ -1068,6 +1074,7 @@ var $listaPodstron = $( g_tag_do_podmiany_spis + ' td[colspan=2] a.link_tresc' )
 	ilePodstronSpisuTresci++; // konieczne do zliczenia aktualnej galerii, która nie generuje odnosnika	-- a przecież ją wyświetlamy teraz
 		
 	g_zaczytana_ilosc_paginacji_galerii = ilePodstronSpisuTresci;	  // !!! muerto importante !!!
+    console.info('DEBUG_INFO: g_zaczytana_ilosc_paginacji_galerii: ' + g_zaczytana_ilosc_paginacji_galerii );    
 
     // debugowanie -- wprowadzenie nowych treści w statusie dla zaczytanych właśnie treści 
 /*
@@ -1080,7 +1087,9 @@ var $listaPodstron = $( g_tag_do_podmiany_spis + ' td[colspan=2] a.link_tresc' )
 */
         
 	} // if-END ( $listaPodstron.length >= 1 )
-	
+
+$( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie 
+    
 $('h2#zaladuj_galerie_spis').show();  // pokaż przycisk/element do ładowania kolejnych galerii 
 $('div#selektor').show();   // też natychmiast pokaż przycisk-kontener do wybiórczego ładowania wybranych treści
 } // GenerujSpisGalerii-END
@@ -1270,6 +1279,18 @@ return odczytaneNamiary;    // zwróć obiekt
 
     
 // ---------- *** ----------  PRACA NA RZECZ APLIKACJI  ---------- *** ----------	    
+    
+function UstawCSSzAktywnymJS()  // UWAGA! style kierowane pod konkretne elementy oraz mozliwy hardkod 
+{
+$('#brak_skryptow').css('display', 'none');    // usuń ramkę z komunikatem o braku JS
+    
+$('#wymiary').css('visibility', 'visible');  // pokazywanie prostokąta z aktualnymi wymiarami okna przeglądarki
+    
+var slonceLogo = $('#slonce_logo');
+slonceLogo.removeClass('startowe_przesuniecie');
+    if ( slonceLogo.not(':hover') ) slonceLogo.removeClass('animacja_slonca');  // zabierz trwałą animację oraz przemieszczenie, nadawane poprzez JS dla loga w stanie hover (uwaga, "mysza" może być nad elemenetem w tym czasie!)
+// alternatywnie dla loga można po prostu wywalić atrybut klasy w całości (z całą zawartością), nie bacząc na skutki 
+}   // UstawCSSzAktywnymJS-END
     
     
 function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
@@ -2688,6 +2709,7 @@ ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycis
 	   // "przycisk" ładujący kolejne +5 galerii (max), porządek ujemnie chronologiczny
 $('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function(e) { 
     
+console.info('DEBUG: przycisk naciśnieto już ' + g_suma_klikniec_zaladuj + ' razy, a paginacji odczytano wcześniej ' + g_zaczytana_ilosc_paginacji_galerii );
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
     {   
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po kliknięciu
@@ -2855,10 +2877,10 @@ return false; // !!! konieczne przy click/submit! || operować na obiekcie klika
     
     
 $('#banner').hover( function() {    // animacje z "wychodzeniem" obrotowego słoneczka
-    $(this).find('#slonce_logo').addClass('animacja_1');
+    $(this).find('#slonce_logo').addClass('animacja_slonca');
     },
     function() {
-    $(this).find('#slonce_logo').removeClass('animacja_1');	
+    $(this).find('#slonce_logo').removeClass('animacja_slonca');	
     }
 ); // #banner hover-END    
     
@@ -2978,6 +3000,7 @@ $('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania
 // ---------- *** ----------  AUTOURUCHAMIANIE  ---------- *** ----------	 
 // ***************************************************************************		
 
+UstawCSSzAktywnymJS();
 InicjujRamkiLadowania();    
 //WystartujDebuggerLokalny( 'ZEPSUJ!' );    
 WystartujDebuggerLokalny();

@@ -43,17 +43,6 @@ h1 {
     text-shadow: 1px 1px 1px #222, 3px 3px 10px #666;
 }
 
-h1.zmienny {
-    transition: all 0.8s ease-out 0.1s;
-    text-align: center;	
-}
-
-h1.zmienny:hover {
-    margin-left: 30px;
-    color: #ee6699;
-    text-shadow: 1px 1px 1px #eee, 3px 3px 8px #444, 1px 1px 4px #222;
-}
-
 h1.logo {
     color: yellow;
     font-size: 300%;
@@ -284,7 +273,7 @@ div.blad p
 }
 
 .kontener {
-    width : 100% ;
+    width : 100%;
     max-width: 1400px;    
     align-items: center;
     margin: 0 auto;
@@ -389,9 +378,22 @@ div#logo div#slonce_logo {
      /*transform-origin: center center;*/
 }
 
+
 div#banner:hover div#slonce_logo {
     /* transform: scale(1.25, 1.25); */
-    transform-origin: 50% 50%;
+        /*transform-origin: 50% 50%;*/
+    left: -85px;
+    top: -85px;		
+}
+
+div#logo div#slonce_logo.startowe_przesuniecie {
+        /* DRY: niby jest małe powielenie, ale to na potrzeby braku aktywnego JS (+ siła dwóch ID po sobie) */
+    left: -85px;
+    top: -85px;		
+}
+
+div#banner:hover div#slonce_logo.startowe_przesuniecie {
+        /* DRY #2: znów powielenie, ale efekt nieosiągniety...  */
     left: -85px;
     top: -85px;		
 }
@@ -1074,11 +1076,11 @@ form#wybierz_galerie input[type=submit] {
 }
 
 div#spis_tresci div#galeria_spis_podmiana {
-    background-color : #ddd ;
-    float : right ;	
-    padding : 1em ;	
-    margin : 1em ;
-    border : 2px solid red ;	
+    background-color: #ddd ;
+    float: right ;	
+    padding: 1em ;	
+    margin: 1em ;
+    border: 2px solid red ;	
         display: none;
 }
 
@@ -1098,6 +1100,17 @@ div#spis_tresci div#skladowisko_status_wybranej_galerii {
     display: none;  
 }
 
+div#brak_skryptow {
+    background-color: darkred;
+    margin: 3em 2em;
+    padding: 1.5em 2em;
+    border: 2px dotted yellow;
+}
+
+div#brak_skryptow h2 {
+color: white;
+}
+
 /*    --------------------------       GŁÓWNY ZACZYTYWANY BLOK      --------------------------    */
 
 div#glowna {
@@ -1113,9 +1126,7 @@ div#glowna h2 span {
     font-weight: bolder;
 }
 
-div#glowna>div#komentarz {
-    background-color: brown;
-}
+
 
 div#glowna div#zawartosc {
     background-color: bisque;
@@ -1458,6 +1469,8 @@ div#wymiary {
     border: 2px solid yellow;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.7);
     opacity: 0.7;
+    visibility: hidden; /* wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
+        /*display: none;*/
 }
 
 div#wymiary > h1 {
@@ -1662,8 +1675,7 @@ input[type=range]:hover::-ms-fill-upper {
 
 /*    --------------------------       ANIMACJE     --------------------------    */
 
-/* tempklasse */
-.animacja_1 {
+.animacja_slonca {
     /* transform-origin: center center;	*/	
     animation: obroty_delikatne_3 6.5s infinite ease-out;	
 }
@@ -1687,11 +1699,15 @@ input[type=range]:hover::-ms-fill-upper {
     animation-fill-mode: forwards;  /* 'both' było*/  
 }
 
-.animacja_zmiana_kolorow {
-    animation: zmiana_kolorow 30s ease-out infinite;
+    .animacja_zmiana_kolorow {
+        animation: zmiana_kolorow 30s ease-out infinite;
+        animation-fill-mode: both;      
+    }
+
+.animacja_pulsowanie_kolorow {
+    animation: pulsowanie_kolorow 10s ease-out infinite;
     animation-fill-mode: both;      
 }
-
 
 /*    -----     DEFINICE ANIMACJI     -----     */
 
@@ -1886,36 +1902,79 @@ input[type=range]:hover::-ms-fill-upper {
     }
 }
 
-@keyframes zmiana_kolorow
+    @keyframes zmiana_kolorow
+    {
+        0%  {
+            color: black;
+        }
+        15% {
+            color: darkblue;
+        }    
+        30% {
+            color: #5d6ad0; /* mediumslateblue */
+        }
+        40% {
+            color: red;
+        }    
+        50% {
+            color: magenta;
+        }    
+        60% {
+            color: darkviolet;
+        }
+        70% {
+            color: blue;
+        }
+        85% {
+            color: darkgreen;
+        }
+        100%    {
+            color: black;
+        }
+    }
+
+@keyframes pulsowanie_kolorow
 {
-    0%   {
+    0%    {
+        color: #333;
+    }
+    10%   {
         color: black;
     }
-    15%   {
+    20%   {
+        color: cornflowerblue; /* #5d6ad0 - mediumslateblue */
+    }    
+    25%   {
         color: darkblue;
-    }    
-    30%   {
-        color: #5d6ad0; /* mediumslateblue */
     }
-    40%   {
-        color: red;
+    30%   {
+        color: cornflowerblue;
     }    
-    50%   {
-        color: magenta;
-    }    
-    60%   {
-        color: darkviolet;
+    35%   {
+        color: #333;
     }
     70%   {
-        color: blue;
+        color: #333;
+    }
+    75%   {
+        color: #54c; /* #5d6ad0 - mediumslateblue */
+    }    
+    80%   {
+        color: darkblue;
     }
     85%   {
-        color: darkgreen;
-    }
-    100%   {
+        color: #54c;
+    }    
+    90%    {
         color: black;
     }
+    100%   {
+        color: #333;
+    }
+    
+    
 }
+
 
 /*    --------------------------       KWERENDY     --------------------------    */
 
