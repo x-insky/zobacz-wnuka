@@ -40,8 +40,8 @@ $serwerLokalny = false;
 
                 <div id="banner">
 
-                    <div id="logo">
-                        <div id="slonce_logo"><!-- <img src="grafiki/slonce.png"> --></div>
+                    <div id="logo"> 
+                        <div id="slonce_logo" class="startowe_przesuniecie animacja_slonca"><!-- <img src="grafiki/slonce.png"> --></div>  <!-- jawnie nadane klasy, na rzecz nieaktywnego JS -->
                     </div>
 
                     <a href=".">
@@ -205,12 +205,15 @@ $serwerLokalny = false;
                 </div>  <!-- div#spis_tresci -->
         <!--    </div>	-->  <!-- div#naglowek_kontener -->
             <!-- </div> -->  <!-- div-kontener  (na próbę) -->
+            
+            <div id="brak_skryptow">
+                <h2>A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
+                <h3>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.</h3>
+            </div>
+            
         </header>
 
         <div id="glowna">
-            <div id="komentarz">
-            <!--<h2>A poniżej może pojawią się zdjęcia wnuków, o ile podamy dobry adres i reszta zadziała prawidłowo...</h2>-->
-            </div>
 
             <div id="nazwa_galerii">
                 <div class="kontener">
@@ -220,7 +223,7 @@ $serwerLokalny = false;
                 </div>    
             </div>	
 
-            <div id="wczytywanie_podstrony"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
+            <div id="wczytywanie_podstrona"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
             </div>
             
             <div class="jasne_tlo_galeria">
@@ -236,7 +239,7 @@ $serwerLokalny = false;
             <div id="zawartosc_do_podmiany">
                 <!-- a tu miniaturki z adresu zewnętrznego oraz klikane przejście do galerii -->
             </div>
-		
+            
         </div> <!-- <div id="glowna"> -->
 
         
@@ -257,7 +260,7 @@ $serwerLokalny = false;
 
             </div>
             <div class="kontener">
-                <div id="plansza" droppable="true" ondrop="" ondragover=""> <!-- "ON!? to je gupie" -->
+                <div id="plansza" droppable="true" ondrop="" ondragover=""> <!-- '"ON"!? to je gupie' -->
                     <div id="rysunek">
                     </div>
                     <div id="prawy_zasobnik">
@@ -269,8 +272,8 @@ $serwerLokalny = false;
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button" class="animacja_zmiana_kolorow">Symul-A(JAX)-ncja</button>
-           <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.16</h6>
+        <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
+           <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.18</h6>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">

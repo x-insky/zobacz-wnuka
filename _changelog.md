@@ -1,3 +1,161 @@
+v0.5.18 - noJS first problem, re-initied CSS to hide/change bahavior when noJS, later reenable by JS; new pulsing anim of button; descriptive logic of function 'WczytajZewnetrznyHTMLdoTAGU'; meaning re-naming; removed old page elements & CSS
+
+* v0.5.18 -- [2019-04-02]
+
+[+] ADDED
+
+-- index.php
+*  added 'div' element with id 'brak_skryptow' inside 'header' area
+  - placed there some default content, which will be displayed when JavaScript is disabled in web browser
+  - this element will be immediately hide by JavaScript, just when the DOM structure will be accessible (specifically jQuery will fire hiding method)
+  
+-- zlobek-styl.css
+* defined a new style for elements which is active, when Javascript is not present inside browser
+  - noticeable dark red background color with white letters and yellow border
+  - targets 'div' element with id 'brak_skryptow' as a main container
+* defined new animtion config class named 'animacja_pulsowanie_kolorow', which is similary defined as previously used 'animacja_zmiana_kolorow'
+  - different animation is used, where colors belongs to the colors used inside this project
+  - much shorter time of lap, 10 seconds instead of 30
+  - also defined new animation 'pulsowanie_kolorow', which is defined based on 'zmiana_kolorow' keyframes
+
+-- witryna.js
+* defined new function 'UstawCSSzAktywnymJS' to reset the style of selected page elements 
+  - some elements was intentionally changed just a moment ago in a CSS, by initially set, e.g. to be invisible or hided or changed their behavior like animation, initial placement
+  - changed the elements, which are always showed but when is no JS logic, their content may be empty or improper or just unnecessary, so the better way is to hide the element or change its initial behavior 
+  - used for proper initialization elements of the page by JavaScript, which disables the hiding values of CSS atributes or resets the new changes like before used in this project
+  - when no JS is enabled in browser, then the selected elements of page shouldn't be visible
+  - so it's the real purpose rather than application logic for gradually showing contents of this application!
+  - invocation of this function is added to the auto run block of JS code
+* above function 'UstawCSSzAktywnymJS' used for resetting initial behavior of elements
+  - hides text notification of disabled JavaScript (when it's enabled now, right, because this is a JS code ;) ), by hiding 'div' with id of 'brak_skryptow'
+  - showing element with id 'wymiary', where showing are the active size of working area of browser
+  - moving harder the sun to the left top corner of logo and removing its rotating animation (displacement and animation should works only on hover state, not on initial page display when JS operates)
+* changed the hover state event function, because the class name has changed from 'animacja_1' to 'animacja_slonca'
+  - the same behavior of logo element, despite changed name of class (it's only a different name)
+
+[*] MODIFIED
+
+-- index.php
+* added extra two classes for element with id 'slonce_logo'
+  - the element of animating sun inside page header 
+  - added class of 'startowe_przesuniecie', which positioning the sun the same as in hover state (moving it to bottom and right by defined pixels value)  
+  - and second added class 'animacja_slonca', which enables rotating animation by default, without hover state needed (hover event is build by JS, then the class is added or removed)
+  - both classes initialy enables the same state as hovering on header area, when JS is enabled 
+* changed class name, which has button element with id 'symulancja_button', placed inside footer area
+  - changed class name from 'animacja_zmiana_kolorow' to 'animacja_pulsowanie_kolorow'
+
+-- zlobek-styl.css
+* alterations for 'div' of id of 'slonce_logo'
+  - removed from hover state a rule for 'transform-origin' which was really a default value, and already defined in basis element (temporary put it inside comment)
+  - added also the same absolute positioning coordinates for hover state, with added class 'startowe_przesuniecie' and with both )hover + that class)
+  - some kind of negation of rule DRY!
+* changed displayed style of element with id 'wymiary'
+  - set default 'visibility' to 'hidden' value, which don't allow to be displayed initially inside browser, but later 'visibility' can be enabled by JS
+* renamed animation config class name from 'animacja_1' to self explaining 'animacja_slonca' ('animation of the sun' in translation)
+* indented definition of class 'animacja_zmiana_kolorow'
+* keeping common style for CSS file
+  - removed uneccessary spaces, tab keys, or typos inside comments 
+
+-- witryna.js
+* added descriptive comment inside function 'WczytajZewnetrznyHTMLdoTAGU', which describe each variant (or each case of possible loading content by Ajax request)
+   - a good reminder of purpose for each case value of switch statement for passed parameter, also a default value
+* altered logic of function 'GenerujSpisOdczytanejGrupyGalerii', where after the whole reading requested content, the source container is emptying from any contents
+  - but this function isn't operated yet!
+* used the same logic of emptying source container after reading ('BAR', like a spy ;) ) inside function 'GenerujSpisGalerii'
+  - emptying expression added at the end of this function
+  - for purpose of better keyboard navigation, element is placed ouside the visible area of page window but is still accessible by 'Tab' key
+  - inside one element in moment of creating this page was ~40 subpages and this number still grows
+  - each subpage of gallery list is displayed inside original nursery webserwer, so it's presented also in this source container
+  - ech link to a subpage is an extra unnecessary 'Tab' pressing, so much irritating when you can't use mouse!!!  
+
+[-] REMOVED
+
+-- index.php
+* removed 'div' element with id 'komentarz' which content of notification text was constantly hided, so it's no neccessary to hold this item and its content on page
+
+-- zlobek-styl.css
+* removed declarations for non existing elements inside project (file 'index.php' or its dynamically genarated contents inside browser)  
+  - removed 'h1.zmienny' with 'hover' state
+  - removed 'div' element with id 'komentarz', because it's not used inside index file
+
+---------------------------
+
+v0.5.17 - replaced FIFO to LIFO queue function, new logic of undisplayed next subpages of gallery list, redisplaying collection by button inside notification error; renamed id of button element of notification (genarated); renamed id of loading notification: HTML,  CSS and JS changes
+
+* v0.5.17 -- [2019-02-04]
+
+[+] ADDED
+
+-- witryna.js
+* defined new function 'PobierzOstatnieNieodebrane' as a LIFO queue
+  - picks and removes the last element of the unsuccessful notification from the table of un-done Ajax calls
+  - opposite to already defined function 'PobierzPierwszeNieodebrane'
+  - probably to replacemnet of that function
+  - defines the order of serving un-done Ajax requests
+  - internally used inside event function on button click inside internal error notiifcation (button id of 'przywroc_niewczytane')
+* defined new function 'UsunKomunikatLubZmienNumeracjeWTresci' to purpose of replacing content existing notification of error or remoing the whole notification element 
+  - added safety conditions, to verify if there is any element of notification and to check if its the only one (even though the passed id name)
+  - if it was the only error for gallery subpage list then the whole error notification is removed form the page with 'slideUp', the jQuery animation (like for the rest of error notifications)
+  - but when it was more of them encountered then the function removes the current notification text and replaces it by the previous notification 
+  - the element of previous request is removed form the collection and its specified quantity (subpage gallery number and error uccurence) modifies the numbers from the text of notiofication
+  - but when quantity result is '1', then the extra condition removes string ' x [quantity]' from  the notification title
+  - at the end function reapplies animation of yellow blink to that notify element
+
+[*] MODIFIED
+
+-- index.php
+* changed id of element from 'wczytywanie_podstrony' to  'wczytywanie_podstrona'
+  - a notificationelement of loading content of current gallery details and its each subpage
+
+-- zlobek-styl.css
+* renamed all the exististing selectors, where the '#wczytywanie_podstrona' was a content
+  - renamed to '#wczytywanie_podstrony'
+
+-- witryna.js
+* changed names of all jQuery selectors, where the previously '#wczytywanie_podstrona' was used and now its '#wczytywanie_podstrona'
+  - renamed also semi-global variable with new selector content (previously used, now storaged logic inside comments)
+  - changed also initialization semi-global variable inside function 'InicjujRamkiLadowania' where the structure of all loading notification is built
+* finally added invocation of newly defined function 'UsunKomunikatLubZmienNumeracjeWTresci' into body of 'WczytajZewnetrznyHTMLdoTAGU' function
+  - variant 'spis_galerii', which displays next subpages of gallery list
+  - used here to redisplay of any subpage, which cannot be displayed before
+  - at the end of the conditional logic the button of the notification is reenabled to be active (newly name of id of button is used)
+  - also the notification text changes to be displayed for the previously noticed error, for previous subpage loading error (the whole text concerns another notification error of previous loading) 
+  - but if there was only one error notification, then  the whole element of notification is removed and error count is decrementeded to '0' value (really an errou counter is differentiator of removal of cumulated error notification which concerns)
+  - slighty changed also the text of first occurence of the loading error of gallery subpage
+  - now contains a text with extra new line, so looks better on wider screens with picture-like exclamation on the left side of text notification
+* altered text of returned html string inside function 'GenerujPowiadomienieOBledzie'
+  - here builded notification element contains newly set id attribute with value 'przywroc_niewczytane' which is used in click event and for a differentiator to enable/disable this button by JS
+(see also 'fixed' section of this update)
+  - prevoiusly the butoon has a class attribute instead id, inside returned HTML content
+  - added new attribute 'title' which can explain, that the action is only possible when internal Ajax status is OK (displays this text when mouse hover on button)
+* added some fixed conditionally logic inside function 'ZmienTrescKomunikatu'
+  - uses the whole jQuery object, when there is only one notification on the page
+* renamed function 'PobierzPierwszyNieodebrany' to 'PobierzPierwszeNieodebrane'
+  - just a better semantic name for FIFO selector
+  - probably the better way is using the last one picker, the LIFO queue (to rethink)
+* changed definition for click event serve, while event object id has changed  from 'przywroc_strone' to 'przywroc_niewczytane'
+  - contains all the logic for removing last/first of un-done request of loading next gallery subpage (inside comment added notes of pro and cons)
+  - decided to use LIFO queue by defined function 'PobierzOstatnieNieodebrane' instead FIFO function on collection of undisplayed subpages of gallery list
+  - removed bad indentation from function body
+* JS code improvements
+  - typos, generally inside comments
+  - extra spaces
+  - added comments if explain or refresh something is needed
+
+[F] FIXED
+
+* fixed button click event of internal error notification
+  - alteredy inserted element of notification has the same class name as event object has id inside event function
+  - so event listened the clicking of non exist element id, and the page logic generated and replacing content for any next error but there was no connection bestween two actions
+  - there was no way to initialize the logic from notification, by click on placed there button
+  - finally renamed the generated content of error notification with newly created id instead class attribute of the button
+  - also for better distinguish of element, renamed this new id to 'przywroc_niewczytane' (insteda previously defined id of 'przywroc_strone')
+  - the same 'przywroc_niewczytane' id is used inside event function on click on it
+  - also the 'przywroc_niewczytane' is used inside jQuery selectors to disable or reenable the button while click event action persists 
+  - fixes: #34 - 'No response to the button inside the error notification'
+
+---------------------------
+
 v0.5.16 - on the offensive with JS logic of unsuccessful subpages adding, for now still as scaffolding; changed the button id from class; FIFO declared as a method of removing request form the un-done list
 
 * v0.5.16 -- [2019-02-01]
