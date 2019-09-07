@@ -1,4 +1,97 @@
-v0.5.18 - noJS first problem, re-initied CSS to hide/change bahavior when noJS, later reenable by JS; new pulsing anim of button; descriptive logic of function 'WczytajZewnetrznyHTMLdoTAGU'; meaning re-naming; removed old page elements & CSS
+v0.5.19 - unified page buttons, increased size; CSS logic of noJS by main container class, static footer content visible on init; renamed functions
+
+* v0.5.19 -- [2019-04-05]
+
+[+] ADDED
+
+-- index.php
+* added to a outermost 'div' of id 'witryna' a class 'brak_js'
+  - as a differentiator of working JS or not is CSS
+* added a new 'div' element with id 'przyciski_stopka' as a wrapper of buttons inside footer
+
+-- zlobek-styl.css
+* added new delarations for text inputs filed inside form of id 'wybierz_galerie'
+  - font size to 140% as global form elements style
+* set all submit buttons inside the same form
+  - bolded font style for easy differentiate confirmation buttons
+* added new definition for 'div' element with id 'brak_skryptow'
+  - a 'block' display is set
+  - with preceding the main container by class 'brak_js' has a higher specificy than a regular, already defined in CSS 
+  - this element should be initially displayed on page, when the JS is not present
+* defined new rules for showing 'div' element with id 'przyciski_stopka'
+  - container of footer buttons
+  - initially not displayed ('display: none') when page starts, because of page main div has class 'brak_js' (selector: '.brak_js #przyciski_stopka')
+  - only after JS later removing this class, the element will show the buttons inside (rule of regular block display defined by shorter selector of only this element '#przyciski_stopka', with no ancestor defined inside selector)
+* defined new selector for initial showing static elements, which are controlled by JS
+  - forces the footer content to be displayed when JS is not present in browser
+  - it allows to read about purpose of this site, which was previously unaccessible without active JS
+  - added two selectors with ancestor element class and a ids of two 'div' elemnet from footer ('.brak_js div#poco' and 'div#pomoc') to change their initial display property to 'block') 
+* the same idea assigned to game area content, added new ancestor class but the display property is set to 'none'
+  - an opposite logic not to show that content when JS is disabled
+  - no value of game when is no JS (game fueled by JS!) 
+
+
+[*] MODIFIED
+
+-- index.php
+* used the same classes in builded structure form field of lower form as the form above
+  - removed class 'maly_guzik' from the class list of both form elements of lower selection buttons
+  - gained the same look of both buttons selection, the same their sizes
+* changed the text of displayed message for disabled JavaScript
+
+-- zlobek-styl.css
+* modified global style of all buttons and inputs type of button of page form field
+  - the same size and look of both types buttons
+  - 40% more horizontal padding (0.25em to 0.35em) and slighty increased font size (by 5 percent point)
+* shortened the selector for the 'div#zagraj' and its hover state
+* slighty correction of padding for 'h4' element inside game init button in header
+  - selector  'div#zagraj div#zagraj_srodek h4.gra_odnosnik'
+* modifed general font size inside form for all form inputs
+  - increased to 140%, but many element has already defined this by its own declarations 
+* redeclared class 'maly_guzik'
+  - set padding style like newly defined global styl efor buttons
+* redefine stykle for class 'szerszy_guzik'
+  - now some kind of global class, removed the container form selector
+  - slighty increased paddings
+  - added the same font size of 140% and added new margins with 'auto' for horizontal contering 
+* changed the display property of 'div' element with id 'brak_skryptow'
+  - negation to 'none' from previously rule of 'block'
+  - as a initial hide, when the JS will remove 'brak_js' of a main parent container 
+* changed style for button inside footer
+  - increased font size to 140% from 120%
+  - increased horizontal padding to 0.35em and added little margins from left and bottom
+* shortened the selectors of elements inside footer area only to its id name, with removing id of ancestor
+  - general purpose is to initial hiding by new CSS rules defined, which don't allow to show the element when the ancestor still has got given class
+  - removed ancestor id for button with id 'symulancja_button'
+  - the same for 'div' element of 'poco' and 'pomoc' but here a purpose is to show that static content, especially when the JS is not present (important difference!)
+* shortened also the selector of game area container to purpose of initial hiding
+* added indentation for some new rules
+
+-- witryna.js
+* redefined order of internal logic inside function 'GenerujSpisGalerii'
+  - moved the block of code for cleaning source container from unnecessary expression to the end of the function
+  - it logic that come content can't be removed while some instructions need the 'data' gathered inside source container (here: a list of all links to all subpages is needed to count that elements)
+  - the removal code works fine at the ending of this function, when the all work is done with 'source data'
+  - changed the emptying code to total clean of source container, the whole 'table' tag is removed 
+  - altered text of some comments inside this function 
+* changed name and the logic of function, from the name  'UstawCSSzAktywnymJS' to 'InicjalizujCSSzAktywnymJS'
+  - removed previously expressions, which reenables hided content for each specified element (each time defined a new value of 'visibility' or 'display' for given elements)
+  - now the showing or hiding the particular element is defined inside a CSS, and the only place where JS removes or adds anything on page init is removing class of 'brak_js' from element with id 'witryna'!
+  - this ancestor class defines hiding or showing its descendant elements (behavior change defined in CSS in this update)  
+- but the changes inside logo with adding class and animation is continued and for dimension element is also preserved
+* renamed few already defined function with propere use 'initialize' word ('initialize' not 'initiate', in translation)
+  - also changed each place where function is fired
+  - changed name of function 'InicjujPrzyciskiWyboruGalerii' to 'InicjalizujPrzyciskiWyboruGalerii'
+  - changed name of function 'InicjujPrzyciskiWyboruPodstronyGalerii' to 'InicjalizujPrzyciskiWyboruPodstronyGalerii'
+  - changed name of function 'InicjujRamkiLadowania' to 'InicjalizujRamkiLadowania'
+  - changed name of function 'InicjujLocalStorage' to 'InicjalizujLocalStorage'
+  - changed name of function 'InicjujGre' to 'InicjalizujGre'
+* better code
+  - removed blank lines, added or rearranged few comments or its typos 
+
+---------------------------
+
+v0.5.18 - noJS first problem, re-initied CSS to hide/change behavior when noJS, later reenable by JS; new pulsing anim of button; descriptive logic of function 'WczytajZewnetrznyHTMLdoTAGU'; meaning re-naming; removed old page elements & CSS
 
 * v0.5.18 -- [2019-04-02]
 
@@ -80,7 +173,7 @@ v0.5.18 - noJS first problem, re-initied CSS to hide/change bahavior when noJS, 
 
 ---------------------------
 
-v0.5.17 - replaced FIFO to LIFO queue function, new logic of undisplayed next subpages of gallery list, redisplaying collection by button inside notification error; renamed id of button element of notification (genarated); renamed id of loading notification: HTML,  CSS and JS changes
+v0.5.17 - replaced FIFO to LIFO queue function, new logic of undisplayed next subpages of gallery list, redisplaying collection by button inside notification error; renamed id of button element of notification (genarated); renamed id of loading notification: HTML, CSS and JS changes
 
 * v0.5.17 -- [2019-02-04]
 

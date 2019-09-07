@@ -29,7 +29,7 @@ $serwerLokalny = false;
 
 <body>
 
-	<div id="witryna">
+	<div id="witryna" class="brak_js">
 
         <header id="naglowek">
         <!-- <div class="kontener">  -->
@@ -157,8 +157,8 @@ $serwerLokalny = false;
                                                 </div>
                                             </div>
                                             <div>
-                                                <input type="button" id="losuj_zakres" name="losuj_zakres" class="maly_guzik szerszy_guzik" value="Losuj galerię" />
-                                                <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" class="maly_guzik szerszy_guzik" role="submit" value="Zobacz wybrany" />
+                                                <input type="button" id="losuj_zakres" name="losuj_zakres" class="szerszy_guzik" value="Losuj galerię" />
+                                                <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" class="szerszy_guzik" role="submit" value="Zobacz wybrany" />
                                                 <div id="form_error">Wymagany wybór spośród dostępnych numerów galerii</div>			
                                             </div>	
                                         </div>  <!-- div#wybor_galerii -->  
@@ -208,7 +208,7 @@ $serwerLokalny = false;
             
             <div id="brak_skryptow">
                 <h2>A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
-                <h3>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.</h3>
+                <h3>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Zweryfikuj to i włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.</h3>
             </div>
             
         </header>
@@ -272,8 +272,13 @@ $serwerLokalny = false;
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
-           <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.18</h6>
+        <footer id="stopka">
+            <div id="przyciski_stopka">
+                <button id="poco_button">Ale po co? &darr;</button>
+                <button id="pomoc_button">Pomoc &darr;</button>
+                <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
+            </div>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.19</h6>
             <div id="poco">
                 <h2>Ale na co to komu?! - sens projektu</h2>
                 <div class="kontener">
