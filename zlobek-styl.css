@@ -119,6 +119,16 @@ em {
     font-style: italic;    
 }
 
+
+h1 > em,
+h2 > em,
+h3 > em,
+h4 > em,
+h5 > em,
+h6 > em {
+    font-weight: bold;    
+}
+
 strong {
     font-weight: bold;
 }
@@ -1303,6 +1313,15 @@ div#gra {
     box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	    
 } 
 
+div#gra h2 {
+    color: gold;
+    font-size: 160%;
+}
+
+div#gra h3 {
+    
+}
+
 div#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   */
       -moz-user-select: none;
       -khtml-user-select: none;
@@ -1315,6 +1334,56 @@ div#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   
     width: auto;
     height: auto;    
 }
+
+div#gra div#zasady {
+    position: relative;
+    overflow: hidden;
+    height: 260px;
+}
+
+div#gra div#zasady p:first {
+    margin-top: 18em;
+}
+
+
+.zasada1 {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    width: 94%;
+    z-index: 8;
+    text-align: left;
+/*    background-color: dimgray;*/
+    border: 1px dotted #ccc;
+    transform: rotateZ(-1.36deg);
+}
+
+.zasada2 {
+    position: absolute;
+    left: 525px;
+    top: 45px;
+    width: 60%;
+    z-index: 7;
+    text-align: left;
+    color: goldenrod;
+/*    background-color: lightslategray;*/
+    border: 1px dotted #ccc;
+    transform: rotateZ(1.66deg);    
+}
+
+.zasada3 {
+    position: absolute;
+    left: 23px;
+    top: 69px;
+    width: 95%;
+    z-index: 6;
+    color: darkgoldenrod;
+    background-color: lightskyblue;
+    transform: rotateZ(-2.1deg);     
+}
+
+
+
 
 div#gra div#sterowanie 
 {

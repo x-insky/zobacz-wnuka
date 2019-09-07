@@ -798,7 +798,8 @@ $( miejsceDocelowe ).append( html );
 
     // czyszczenie kontenera źródłowego, dla testów pozostaje paginacja galerii -- docelowo i tak ten pojemnik źródłowy jest zerowany przy każdym odczycie/odpowiedzi
 $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
-//$( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie 
+// $( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie 
+    
     
     // złożone działanie w przypadku dołączania kolejnych podstron galerii
     if ( czyWybrane != 'WYBRANE' ) // lub jakikolwiek inna wartość niepusta argumentu
@@ -873,9 +874,9 @@ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
     // prostszy wariant dla uzupełnienia wskazanej galerii 
         
     }
-	
+
 $( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie 
-    
+
     // poniższe przenieść poza funkcję? (istotne przy pierwszym wywołaniu)
     if ( ( g_ilosc_zaczytanych_galerii > 0 ) && ( g_ilosc_zaczytanych_galerii <= 5 ) )
     {
@@ -3019,7 +3020,7 @@ InicjalizujRamkiLadowania();
 //WystartujDebuggerLokalny( 'ZEPSUJ!' );    
 WystartujDebuggerLokalny();
 // GenerujPowiadomienieOBledzie(); // TEST wymuszony po raz pierwszy    
-GenerujPowiadomienieOBledzie({ tytul : 'TEST! Problem z odczytem zawartości zdalnej! TEST!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny (1). TO JEST TYLKO PRÓBNE WYWOŁANIE POWIADOMIENIA, BŁĘDU NIE MA... ale przycisk reaguje.', przyciskAkcjiOdswiez : true, ikonaZamykania : false });
+GenerujPowiadomienieOBledzie({ tytul : 'TEST! Problem z odczytem zawartości zdalnej! TEST!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny (1). TO JEST TYLKO PRÓBNE WYWOŁANIE POWIADOMIENIA, BŁĘDU NIE MA... ale przycisk reaguje.', przyciskAkcjiOdswiez : true, ikonaZamykania : true });
     
 UbijReklamy();    
 InicjalizujPrzyciskiWyboruGalerii();

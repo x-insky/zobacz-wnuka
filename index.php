@@ -9,7 +9,7 @@ $serwerLokalny = false;
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Galeria ze Żłobka w Chojnowie</title>
+    <title>Galeria ze Żłobka w Chojnowie<?php   if ( $serwerLokalny ) echo " &ndash; " . $_SERVER['SERVER_NAME'] ?></title>
     <link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
     <link rel="stylesheet" href="reset.css">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />  <!-- czcionka Muli -->	
@@ -244,13 +244,13 @@ $serwerLokalny = false;
 
         
         <div id="gra">
-            <div id="reguły">
+            <div id="zasady">
                 <div class="kontener">    
-                <h1>Pokoloruj duży obrazek poprzez ułożenie jego małych fragmentów we właściwych miejscach.</h1>
-                <h2>Użyj myszy lub gładzika komputera, bo małe ekrany dotykowe są &quot;be&quot; (póki co jest dramat)!</h2>
-                <p style="text-decoration: line-through;"><em>Podobne widowisko teatralne</em> jest z użyciem czegokolwiek na czymkolwiek do obsługi przeciągania, więc póki co zdobywanie punktów i budowanie rankingów jest odłożone w bliżej nieokreślone &quot;kiedyś&quot;.</p>   
-                <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (...zakładając, że system nie oszukuje przy przydziale punktów, a Firefoks > v57 Ci w tym nie przeszkadza - ale to jest zupełnie przypadkowe, nie węszymy tu spisku).</p>
-                <p>Pierwszej planszy nie ukończył jeszcze Nikt z zadowalającym wynikiem (zapewne z racji wyśrubowanego warunku zakończenia).</p>
+                    <h2 class="zasada1"><input type="checkbox"> Pokoloruj duży obrazek poprzez ułożenie jego małych fragmentów we właściwych miejscach.</h1>
+                    <h2 class="zasada2"><input type="checkbox"> Użyj myszy lub gładzika komputera, <br />bo małe ekrany dotykowe są &quot;be&quot; (póki co jest dramat)!</h2>
+                    <p style="text-decoration: line-through;"><em>Podobne widowisko teatralne</em> jest z użyciem czegokolwiek na czymkolwiek do obsługi przeciągania, więc póki co zdobywanie punktów i budowanie rankingów jest odłożone w bliżej nieokreślone &quot;kiedyś&quot;.</p>   
+                    <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (...zakładając, że system nie oszukuje przy przydziale punktów, a Firefoks > v57 Ci w tym nie przeszkadza - ale to jest zupełnie przypadkowe, nie węszymy tu spisku).</p>
+                    <p>Pierwszej planszy nie ukończył jeszcze Nikt z zadowalającym wynikiem (zapewne z racji wyśrubowanego warunku zakończenia).</p>
                 </div>
             </div>
             <div id="sterowanie">
@@ -278,9 +278,9 @@ $serwerLokalny = false;
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.19</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.20</h6>
             <div id="poco">
-                <h2>Ale na co to komu?! - sens projektu</h2>
+                <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
                    <div>
                         <h3>Dla Hani</h3>
@@ -292,7 +292,7 @@ $serwerLokalny = false;
                     </div>
                     <div>       
                         <h3>(to nie jest antyreklama pewnego sklepu komputerowego) &plus; trochę technologicznego bełkotu</h3>    
-                        <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi, a do tego zmniejsza zużycie pobieranych danych (pakietu transmisji danych, istotnego na tzw. <em>urządzeniach mobilnych</em>, korzystających z sieci operatora GSM) w porównaniu do przeglądania orygionalnej witryny. Przy braku limitów na transfer też zyskujemy, bo przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania obrazków (funkcji &quot;cache&quot; nie liczę). Do tego &quot;serwer&quot; tej nakładki nie katuje serwera macierzystego przy każdym podglądzie dużego obrazka oraz ponownym przejścu do kolejnego (licząc uprzedni powrót do zasobów w pamięci przeglądarki). Prawda, że same plusy wynikają z korzystania z tej <em>nakładki</em>? Zachęcam do dalszego użytkowania i testowania.</p>    
+                        <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi i zużywa mniej <em>pakietów mobilnego internetu</em>. Zyskujemy przy przeglądaniu kolejnych zdjęć z danej galerii, skoro nie musi być pobierana, przetwarzana i wyświetlana od nowa prawie ta sama struktura witryny, odpowiedzialna za wygląd każdej podstrony z dużym zdjęciem. <em>Duże zdjęcia</em>, jako podgląd galerii, tworzone są dynamicznie. Przy braku limitów na transfer też zyskujemy, bo przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania miniatur obrazków (funkcji &quot;cache&quot; nie liczę). Pośrednim efektem jest mniejsze &quot;katowanie&quot; serwera macierzystego przy każdym podglądzie dużego obrazka oraz ponownym przejściu do kolejnego (licząc uprzedni powrót do zasobów w pamięci przeglądarki). Same plusy wynikają z korzystania z tej <em>nakładki</em>, prawda? Zachęcam do dalszego użytkowania i testowania.</p>    
                         <h3>Informacje i zastrzeżenia</h3>
                         <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
                         <h3>Kontakt</h3>
@@ -301,7 +301,7 @@ $serwerLokalny = false;
                 </div>
             </div>
             <div id="pomoc">
-                <h2>Pomoc - jak to działa</h2>
+                <h2>Pomoc &ndash; jak to działa</h2>
                 <div class="kontener">
                     <div>            
                         <h3>To tylko przeglądarka</h3>
@@ -328,12 +328,13 @@ $serwerLokalny = false;
                             <li class="tech_tak">SPA</li>                        
                             <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
                             <li class="tech_tak">kompatybilność</li>
-                            <li class="tech_tak">localStorage</li>  
+                            <li class="tech_tak">asynchroniczność</li>                              
                             <li class="tech_tak">bezpośrednia manipulacja DOM</li>
-                            <li class="tech_tak">obsługa błędów</li>
-                            <li class="tech_tak">komunikaty o błędach</li>
-                            <li class="tech_tak">obsługa z klawiatury</li>
+                            <li class="tech_tak">Web Storage (local)</li>  
+                            <li class="tech_tak">komunikaty i obsługa błędów</li>
                             <li class="tech_tak">wbudowane testowanie</li>
+                            <li class="tech_tak">obsługa z klawiatury</li>
+
 
                         </ul>
                         <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 

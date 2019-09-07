@@ -1,3 +1,49 @@
+v0.5.20 - static content rearranged, mainly in footer; game area rules also redefined; new CSS for arrangements; test notification is possible to close; longer page title @localhost
+
+* v0.5.20 -- [2019-04-16]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* defined 'em' element which is directly inside any header (h1...h6)
+  - the same one rule for listed headers selector
+  - to purpose of font being bold also, not only standard italic
+* defined the style for heade 'h2' and 'h3' inside game container of id 'gra'
+  - for 'h2' set gold text and +60% bigger font
+* defined the rules for game rules container, a 'div' with id 'zasady'
+  - a positioning context for its content ('position: relative')
+  - fixed heigt in pixels and hidden overflow outside its area
+* defined CSS rules for first, second and third game rule inside specified classes
+  - similar between each classes but another absolute positions and transform method 
+  - (common rules, build pattern class?)  
+
+[*] MODIFIED
+
+-- index.php
+* added dynamic variant of page title, when runs on local server then ' - localhost' is added to existing title
+* renamed 'div' element id from 'reguły' to 'zasady' inside game area
+  - also added some indentation to containing elements
+previously (as first) in this group
+* changed the presentation of main rules of the game
+  - used 'h2' elements inside rules container, instead one 'h1' element
+  - added new class to each existing 'h2' element of rules
+  - different class name for each 'h2' element because class defines a position of its element (used here: 'zasada1' and 'zasada2')
+  - there are only two element for now, but also three classes has been defined for now
+  - positions are temporary, testing for a better places in progress
+  - element of rules is being animated before it finally lands on desired place
+* little changes in some block of text, subheaders or headers
+  - redefined text content of footer
+  - list elements reordered, few items added
+  - slighty altered text of game rules
+  - 'mdash' HTML character added instead regular dash 
+
+-- witryna.js
+* unblocked closing button for test run of test and default error notification, which is launched with each page refresh 
+  - for purpose of easy get rid that content if no Ajax requests or any internal error notification are being tested 
+* cosmetic changes of few indentations or empty lines
+
+---------------------------
+
 v0.5.19 - unified page buttons, increased size; CSS logic of noJS by main container class, static footer content visible on init; renamed functions
 
 * v0.5.19 -- [2019-04-05]
@@ -29,7 +75,6 @@ v0.5.19 - unified page buttons, increased size; CSS logic of noJS by main contai
 * the same idea assigned to game area content, added new ancestor class but the display property is set to 'none'
   - an opposite logic not to show that content when JS is disabled
   - no value of game when is no JS (game fueled by JS!) 
-
 
 [*] MODIFIED
 
