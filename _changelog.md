@@ -1,3 +1,51 @@
+v0.5.21 - testing status of server and its environment by php, preparation for cookies and saved data; experiments on internal notification system, a form of displaying an image element and notification text; flex container redefined in footer
+
+* v0.5.21 -- [2019-06-24]
+
+[+] ADDED
+
+-- new file 'funkcje.php'
+* a php file with a declared list of functions
+  - for now only one function declared inside
+* linked form main 'index.php' file
+
+-- funkcje.php
+* defined function 'Wyswietl_zmienna_serwera' which returns a string containing given value of variable from superglobal table of $_SERVER
+  - returned value contains variable name of superglobals and its value (concatenation is used)
+  - purpose of displaying given value with given parameter name
+
+-- index.php
+* new php logic at the start of file
+  - linked to another file, where function definition are stored (for now only one function: see 'funkcje.php')
+  - added php session initialization
+* added some default values for initializing the few state variables
+  - later the coditional statement changes their values if condition is met
+  - tested for redirection, if the regerer link coming form external site
+  - tested for existing specific cookie name, if it's registered inside browser data
+* added special container for displaying status of php server
+  - placed inside footera area, inside container of id 'pomoc'
+  - displayed on demand when displayed container of id 'pomoc' by button click
+  - created container static content and series of invokes of defined function 'Wyswietl_zmienna_serwera' to display given parameter value of used server and the name of specified parameter (long invocations list)
+
+[*] MODIFIED
+
+-- index.php
+* modified init php block at the file beginning (see 'added' section)
+  - renamed variable name from '$serwerLokalny' to '$serwer_lokalny' for all its encounters (php style)
+
+-- zlobek-styl.css
+* modified the right padding of error notification text description
+  - a 'p' element inside a 'div' element of class 'blad' 
+  - added bigger pading for better visual presentation
+*  altered all margins value for element of class 'blad_ikona' inside error notifier (selector: 'div.blad .blad_ikona')
+  - testing the best selected value for positioning
+  - but if any button might exists inside given notification, then itsn't anymore horizontal centered inside the whole notification element
+* changed the selectors of flex containers, placed inside footer
+  - new definition is needed when changed structure of the footer elements
+  - new selectors based on pseudo-classes: 'div#pomoc > div:first-of-type' and 'div#poco > div:first-of-type'
+
+---------------------------
+
 v0.5.20 - static content rearranged, mainly in footer; game area rules also redefined; new CSS for arrangements; test notification is possible to close; longer page title @localhost
 
 * v0.5.20 -- [2019-04-16]

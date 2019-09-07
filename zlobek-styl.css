@@ -235,6 +235,7 @@ div.blad .blad_ikona {
 div.blad p {
     font-size: 1.5em;
     padding: 0.5em;
+    padding-right: 1em;
 }
 
 
@@ -2158,8 +2159,15 @@ input[type=range]:hover::-ms-fill-upper {
     
     div.blad .blad_ikona {
         float: left;
+        margin-top: 1.5%;
+        margin-right: 7%;
+        margin-bottom: 5%; /* nie więcej niż 6% lub kilkadziesiąt px, bo przesuwa kafelki galerii */
+        margin-left: 10%;
+/*
         margin-left: 12%;
         margin-right: 8%;
+        margin-bottom: 7%;
+*/
         /*margin-top: 10px;*/
     }
     
@@ -2268,8 +2276,8 @@ input[type=range]:hover::-ms-fill-upper {
         padding-left: 6.5em;    /* 208px szerokośc obrazxka / 16px == 6.5 */
     }
     
-    div#pomoc > div,
-    div#poco > div {
+    div#pomoc > div:first-of-type,
+    div#poco > div:first-of-type {
         display: flex;
         /*    max-width: 49%;*/
     }

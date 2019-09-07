@@ -1,7 +1,19 @@
 <?php
-$serwerLokalny = false;
-    if ( $_SERVER['SERVER_NAME'] == 'localhost' ) $serwerLokalny = true;    // identyfikacja lokalnego lub zdalnego uruchamiania... 
+
+include 'funkcje.php';
+
+session_start();
+
+$serwer_lokalny = false;            // identyfikacja lokalnego lub zdalnego uruchamiania... 
+    if ( $_SERVER['SERVER_NAME'] == 'localhost' ) $serwer_lokalny = true;    
         //.. celem dołączania bibliotek/plików nieskompresowanych lub po kompresji
+
+$adres_przekierowania = false;      // wejście na witrynę z konkretnego odnośnika lub z odsyłacza wyszukiwarki 
+    if ( $_SERVER['HTTP_REFERER'] ) $adres_przekierowania = $_SERVER['HTTP_REFERER']; 
+
+$ciastko_uzytkowania = false;
+    if ( isset( $_COOKIES['odwiedzone'] ) ) $ciastko_uzytkowania = true;
+
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +21,7 @@ $serwerLokalny = false;
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Galeria ze Żłobka w Chojnowie<?php   if ( $serwerLokalny ) echo " &ndash; " . $_SERVER['SERVER_NAME'] ?></title>
+    <title>Galeria ze Żłobka w Chojnowie<?php   if ( $serwer_lokalny ) echo " &ndash; " . $_SERVER['SERVER_NAME'] ?></title>
     <link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
     <link rel="stylesheet" href="reset.css">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />  <!-- czcionka Muli -->	
@@ -19,7 +31,7 @@ $serwerLokalny = false;
     <script src="./lib/html5shiv.3.7.3.js"></script>
     
     <?php
-        if ( $serwerLokalny ) echo '<script src="./lib/jquery-1.12.4.js"></script>';  // pobieranie pliku nieskompresowanego przez przeglądarkę
+        if ( $serwer_lokalny ) echo '<script src="./lib/jquery-1.12.4.js"></script>';  // pobieranie pliku nieskompresowanego przez przeglądarkę
         else echo '<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>';    // pobieranie pliku z serwera zewnętrznego w wariancie skompresowanym: *.MIN.js
     ?>  <!-- testy uruchamiania nawet na kalkulatorach --> 
 
@@ -85,9 +97,10 @@ $serwerLokalny = false;
 
                 <div id="spis_tresci">
                     <div id="zaczytany_spis">
+                    <!--    <pre><?php /* var_dump( $_SERVER ); */ ?></pre>    -->
                         <?php
                         // test aktualnego trybu, niejawnie określa to środowisko uruchomieniowe: DEBUGOWANIE / PRODUKCJA   
-                            if ( isset( $serwerLokalny ) ) echo("<h2>BIEŻĄCY SERWER: <strong>" . $_SERVER['SERVER_NAME'] . "</strong></h2>");
+                            if ( isset( $serwer_lokalny ) ) echo("<h2>BIEŻĄCY SERWER: <strong>" . $_SERVER['SERVER_NAME'] . "</strong></h2>");
                         ?>
                         <h2>Lista galerii ze Żłobka</h2>
                         <div class="ciemne_tlo_spis">
@@ -278,7 +291,7 @@ $serwerLokalny = false;
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.20</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.21</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -363,6 +376,35 @@ $serwerLokalny = false;
                         <h3>Status projektu</h3>
                         <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla zamknięcia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>w produkcji</em>...</p>
                     </div>    
+                </div> <!-- .kontener -->
+                <div>
+                <h3>Info o przeglądarce i serwerze</h3>
+                <p>I jeszcz odrobina treści do wyswietlenia. I tu nieco tekstu, może trochę więcej albo nieco mniej. A tu nieco tekstu, może trochę więcej albo nieco mniej. A tu nieco tekstu, może trochę więcej albo nieco mniej.</p>    
+                <p>
+                    <?php
+
+                    Wyswietl_zmienna_serwera( "PHP_SELF" );
+                    Wyswietl_zmienna_serwera( "SCRIPT_FILENAME" );
+                    Wyswietl_zmienna_serwera( "DOCUMENT_ROOT" );
+
+
+                    Wyswietl_zmienna_serwera( "SERVER_NAME" );
+                    Wyswietl_zmienna_serwera( 'SERVER_ADDR' );
+                    Wyswietl_zmienna_serwera( 'SERVER_PORT' );
+                    
+                    //Wyswietl_zmienna_serwera( $_SERVER['SERVER_PORT'] );
+                    echo "<br />";
+                    Wyswietl_zmienna_serwera( 'REMOTE_HOST' );
+                    Wyswietl_zmienna_serwera( 'REMOTE_ADDR' );
+                    Wyswietl_zmienna_serwera( 'REMOTE_PORT' );
+                    Wyswietl_zmienna_serwera( 'HTTP_REFERER' );
+                    Wyswietl_zmienna_serwera( 'REQUEST_URI' );
+                    Wyswietl_zmienna_serwera( 'REQUEST_METHOD' );
+                    Wyswietl_zmienna_serwera( 'HTTP_USER_AGENT' );
+                    
+                    ?>
+                    
+                </p>        
                 </div>
             </div>
         </footer>	
