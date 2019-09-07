@@ -22,13 +22,13 @@ body {
 input[type="button"] {
     /*background-color: darkblue; 
     color: yellow;	*/
-    padding: 0.25em 1em;
-    font-size: 120%;
+    padding: 0.45em 1em;
+    font-size: 125%;
 }
 
 button {
-    padding: 0.25em 1em;
-    font-size: 120%;
+    padding: 0.45em 1em;
+    font-size: 125%;
 }
 
 
@@ -117,6 +117,16 @@ p {
 
 em {
     font-style: italic;    
+}
+
+
+h1 > em,
+h2 > em,
+h3 > em,
+h4 > em,
+h5 > em,
+h6 > em {
+    font-weight: bold;    
 }
 
 strong {
@@ -225,6 +235,7 @@ div.blad .blad_ikona {
 div.blad p {
     font-size: 1.5em;
     padding: 0.5em;
+    padding-right: 1em;
 }
 
 
@@ -412,7 +423,7 @@ header#naglowek div#napisy p {
     clear: both;	
 }
 
-header#naglowek div#zagraj {
+div#zagraj {
     display: none;
     position: absolute;
     width: 300px;
@@ -426,7 +437,7 @@ header#naglowek div#zagraj {
     transition: all 0.5s 0.1s;
 }
 
-header#naglowek div#zagraj:hover {
+div#zagraj:hover {
     border-color: yellow;    
     box-shadow: 0px 0px 4px 1px yellow;
 }
@@ -444,7 +455,7 @@ div#zagraj div#zagraj_srodek {
 div#zagraj div#zagraj_srodek h4.gra_odnosnik {
     font-size: 22px;
     font-weight: bold;
-    padding: 0.3em 0.2em;
+    padding: 0.33em 0.2em;
     text-align: center;
     text-shadow: none;    
     color: #5d6ad0;    
@@ -1028,7 +1039,7 @@ form#wybierz_galerie {
 form#wybierz_galerie input {
     padding-left: 1em;
     padding-right: 1em;
-    font-size: 120%;    
+    font-size: 140%;    
 }
 
 form#wybierz_galerie input[type=range] {
@@ -1052,21 +1063,6 @@ form#wybierz_galerie input#suwak_podstrony
     width: 90%;	
 }
 
-form#wybierz_galerie input.maly_guzik {
-    padding: 0.45em 1.8em;    
-        /*display: block;*/
-    min-width: 130px;
-    margin: 0.3em auto;
-    font-size: 140%;
-}
-
-form#wybierz_galerie input.szerszy_guzik {
-    min-width: 200px;
-    padding: 0.45em 1em;
-    /*  margin: 0.3em auto;
-        font-size: 140%;    */
-}
-
 form#wybierz_galerie input[type=text] {
     font-size: 140%;
 }
@@ -1074,6 +1070,24 @@ form#wybierz_galerie input[type=text] {
 form#wybierz_galerie input[type=submit] {
     font-weight: bold;
 }
+
+
+.maly_guzik {
+    min-width: 130px;
+    padding: 0.45em 1em;    
+    margin: 0.3em auto;
+    font-size: 140%;
+}
+
+.szerszy_guzik {
+    min-width: 200px;
+    padding: 0.5em 1.8em;
+    margin: 0.3em auto;
+    font-size: 140%;    
+    /*  margin: 0.3em auto;
+        font-size: 140%;    */
+}
+
 
 div#spis_tresci div#galeria_spis_podmiana {
     background-color: #ddd ;
@@ -1100,7 +1114,12 @@ div#spis_tresci div#skladowisko_status_wybranej_galerii {
     display: none;  
 }
 
+.brak_js div#brak_skryptow {
+    display: block;      /* bieżące powinno mieć wyższą specyficzność, niż standardowe poniżej -- gdy brak JS */
+}
+
 div#brak_skryptow {
+    display: none;
     background-color: darkred;
     margin: 3em 2em;
     padding: 1.5em 2em;
@@ -1108,7 +1127,7 @@ div#brak_skryptow {
 }
 
 div#brak_skryptow h2 {
-color: white;
+    color: white;
 }
 
 /*    --------------------------       GŁÓWNY ZACZYTYWANY BLOK      --------------------------    */
@@ -1295,6 +1314,15 @@ div#gra {
     box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	    
 } 
 
+div#gra h2 {
+    color: gold;
+    font-size: 160%;
+}
+
+div#gra h3 {
+    
+}
+
 div#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   */
       -moz-user-select: none;
       -khtml-user-select: none;
@@ -1307,6 +1335,56 @@ div#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   
     width: auto;
     height: auto;    
 }
+
+div#gra div#zasady {
+    position: relative;
+    overflow: hidden;
+    height: 260px;
+}
+
+div#gra div#zasady p:first {
+    margin-top: 18em;
+}
+
+
+.zasada1 {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    width: 94%;
+    z-index: 8;
+    text-align: left;
+/*    background-color: dimgray;*/
+    border: 1px dotted #ccc;
+    transform: rotateZ(-1.36deg);
+}
+
+.zasada2 {
+    position: absolute;
+    left: 525px;
+    top: 45px;
+    width: 60%;
+    z-index: 7;
+    text-align: left;
+    color: goldenrod;
+/*    background-color: lightslategray;*/
+    border: 1px dotted #ccc;
+    transform: rotateZ(1.66deg);    
+}
+
+.zasada3 {
+    position: absolute;
+    left: 23px;
+    top: 69px;
+    width: 95%;
+    z-index: 6;
+    color: darkgoldenrod;
+    background-color: lightskyblue;
+    transform: rotateZ(-2.1deg);     
+}
+
+
+
 
 div#gra div#sterowanie 
 {
@@ -1378,13 +1456,22 @@ footer#stopka {
     box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);		
 }
 
-footer#stopka button {
-    font-size: 120%;
-    margin-left: 0.3em;	
-    padding: 0.35em 2em;	
+.brak_js #przyciski_stopka {
+    display: none;
 }
 
-footer#stopka button#symulancja_button {
+#przyciski_stopka {
+    display: block;
+}
+
+footer#stopka button {
+    font-size: 140%;
+    margin-left: 0.3em;
+    margin-bottom: 0.5em;
+    padding: 0.45em 2em;	
+}
+
+button#symulancja_button {
     font-weight: bold;
 }
     
@@ -1393,7 +1480,7 @@ footer#stopka p {
     padding: 0.5em;
 }
 
-footer#stopka div#poco {
+div#poco {
     display: none;	
     padding: .5em 1em;
     margin: 0.5em 0;
@@ -1401,11 +1488,15 @@ footer#stopka div#poco {
     background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue); 	
 }
 
-footer#stopka div#poco p:nth-of-type(2) {
+.brak_js div#poco {
+    display: block;	
+}
+
+div#poco p:nth-of-type(2) {
     font-style: italic ;	
 }
 
-footer#stopka div#pomoc {
+div#pomoc {
     display: none;	
     padding: .5em 1em;
     margin: 0.5em 0;	
@@ -1414,6 +1505,9 @@ footer#stopka div#pomoc {
     background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue ); 	
 }
 
+.brak_js div#pomoc {
+    display: block;
+}
 
 footer#stopka h3 {
     padding: 0.6em;
@@ -2065,8 +2159,15 @@ input[type=range]:hover::-ms-fill-upper {
     
     div.blad .blad_ikona {
         float: left;
+        margin-top: 1.5%;
+        margin-right: 7%;
+        margin-bottom: 5%; /* nie więcej niż 6% lub kilkadziesiąt px, bo przesuwa kafelki galerii */
+        margin-left: 10%;
+/*
         margin-left: 12%;
         margin-right: 8%;
+        margin-bottom: 7%;
+*/
         /*margin-top: 10px;*/
     }
     
@@ -2175,8 +2276,8 @@ input[type=range]:hover::-ms-fill-upper {
         padding-left: 6.5em;    /* 208px szerokośc obrazxka / 16px == 6.5 */
     }
     
-    div#pomoc > div,
-    div#poco > div {
+    div#pomoc > div:first-of-type,
+    div#poco > div:first-of-type {
         display: flex;
         /*    max-width: 49%;*/
     }
@@ -2265,10 +2366,13 @@ input[type=range]:hover::-ms-fill-upper {
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);     
     }    
 
-    header#naglowek div#zagraj {
+    div#zagraj {
         display: block;
-    }
+    }   
     
+    .brak_js div#zagraj {
+        display: none;
+    }
    /* div#wymiary {
         width: 22%;
         left: 39%;

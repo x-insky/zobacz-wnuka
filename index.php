@@ -1,7 +1,19 @@
 <?php
-$serwerLokalny = false;
-    if ( $_SERVER['SERVER_NAME'] == 'localhost' ) $serwerLokalny = true;    // identyfikacja lokalnego lub zdalnego uruchamiania... 
+
+include 'funkcje.php';
+
+session_start();
+
+$serwer_lokalny = false;            // identyfikacja lokalnego lub zdalnego uruchamiania... 
+    if ( $_SERVER['SERVER_NAME'] == 'localhost' ) $serwer_lokalny = true;    
         //.. celem dołączania bibliotek/plików nieskompresowanych lub po kompresji
+
+$adres_przekierowania = false;      // wejście na witrynę z konkretnego odnośnika lub z odsyłacza wyszukiwarki 
+    if ( $_SERVER['HTTP_REFERER'] ) $adres_przekierowania = $_SERVER['HTTP_REFERER']; 
+
+$ciastko_uzytkowania = false;
+    if ( isset( $_COOKIES['odwiedzone'] ) ) $ciastko_uzytkowania = true;
+
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +21,7 @@ $serwerLokalny = false;
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Galeria ze Żłobka w Chojnowie</title>
+    <title>Galeria ze Żłobka w Chojnowie<?php   if ( $serwer_lokalny ) echo " &ndash; " . $_SERVER['SERVER_NAME'] ?></title>
     <link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
     <link rel="stylesheet" href="reset.css">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />  <!-- czcionka Muli -->	
@@ -19,7 +31,7 @@ $serwerLokalny = false;
     <script src="./lib/html5shiv.3.7.3.js"></script>
     
     <?php
-        if ( $serwerLokalny ) echo '<script src="./lib/jquery-1.12.4.js"></script>';  // pobieranie pliku nieskompresowanego przez przeglądarkę
+        if ( $serwer_lokalny ) echo '<script src="./lib/jquery-1.12.4.js"></script>';  // pobieranie pliku nieskompresowanego przez przeglądarkę
         else echo '<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>';    // pobieranie pliku z serwera zewnętrznego w wariancie skompresowanym: *.MIN.js
     ?>  <!-- testy uruchamiania nawet na kalkulatorach --> 
 
@@ -29,7 +41,7 @@ $serwerLokalny = false;
 
 <body>
 
-	<div id="witryna">
+	<div id="witryna" class="brak_js">
 
         <header id="naglowek">
         <!-- <div class="kontener">  -->
@@ -85,9 +97,10 @@ $serwerLokalny = false;
 
                 <div id="spis_tresci">
                     <div id="zaczytany_spis">
+                    <!--    <pre><?php /* var_dump( $_SERVER ); */ ?></pre>    -->
                         <?php
                         // test aktualnego trybu, niejawnie określa to środowisko uruchomieniowe: DEBUGOWANIE / PRODUKCJA   
-                            if ( isset( $serwerLokalny ) ) echo("<h2>BIEŻĄCY SERWER: <strong>" . $_SERVER['SERVER_NAME'] . "</strong></h2>");
+                            if ( isset( $serwer_lokalny ) ) echo("<h2>BIEŻĄCY SERWER: <strong>" . $_SERVER['SERVER_NAME'] . "</strong></h2>");
                         ?>
                         <h2>Lista galerii ze Żłobka</h2>
                         <div class="ciemne_tlo_spis">
@@ -157,8 +170,8 @@ $serwerLokalny = false;
                                                 </div>
                                             </div>
                                             <div>
-                                                <input type="button" id="losuj_zakres" name="losuj_zakres" class="maly_guzik szerszy_guzik" value="Losuj galerię" />
-                                                <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" class="maly_guzik szerszy_guzik" role="submit" value="Zobacz wybrany" />
+                                                <input type="button" id="losuj_zakres" name="losuj_zakres" class="szerszy_guzik" value="Losuj galerię" />
+                                                <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" class="szerszy_guzik" role="submit" value="Zobacz wybrany" />
                                                 <div id="form_error">Wymagany wybór spośród dostępnych numerów galerii</div>			
                                             </div>	
                                         </div>  <!-- div#wybor_galerii -->  
@@ -208,7 +221,7 @@ $serwerLokalny = false;
             
             <div id="brak_skryptow">
                 <h2>A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
-                <h3>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.</h3>
+                <h3>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Zweryfikuj to i włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.</h3>
             </div>
             
         </header>
@@ -244,13 +257,13 @@ $serwerLokalny = false;
 
         
         <div id="gra">
-            <div id="reguły">
+            <div id="zasady">
                 <div class="kontener">    
-                <h1>Pokoloruj duży obrazek poprzez ułożenie jego małych fragmentów we właściwych miejscach.</h1>
-                <h2>Użyj myszy lub gładzika komputera, bo małe ekrany dotykowe są &quot;be&quot; (póki co jest dramat)!</h2>
-                <p style="text-decoration: line-through;"><em>Podobne widowisko teatralne</em> jest z użyciem czegokolwiek na czymkolwiek do obsługi przeciągania, więc póki co zdobywanie punktów i budowanie rankingów jest odłożone w bliżej nieokreślone &quot;kiedyś&quot;.</p>   
-                <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (...zakładając, że system nie oszukuje przy przydziale punktów, a Firefoks > v57 Ci w tym nie przeszkadza - ale to jest zupełnie przypadkowe, nie węszymy tu spisku).</p>
-                <p>Pierwszej planszy nie ukończył jeszcze Nikt z zadowalającym wynikiem (zapewne z racji wyśrubowanego warunku zakończenia).</p>
+                    <h2 class="zasada1"><input type="checkbox"> Pokoloruj duży obrazek poprzez ułożenie jego małych fragmentów we właściwych miejscach.</h1>
+                    <h2 class="zasada2"><input type="checkbox"> Użyj myszy lub gładzika komputera, <br />bo małe ekrany dotykowe są &quot;be&quot; (póki co jest dramat)!</h2>
+                    <p style="text-decoration: line-through;"><em>Podobne widowisko teatralne</em> jest z użyciem czegokolwiek na czymkolwiek do obsługi przeciągania, więc póki co zdobywanie punktów i budowanie rankingów jest odłożone w bliżej nieokreślone &quot;kiedyś&quot;.</p>   
+                    <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (...zakładając, że system nie oszukuje przy przydziale punktów, a Firefoks > v57 Ci w tym nie przeszkadza - ale to jest zupełnie przypadkowe, nie węszymy tu spisku).</p>
+                    <p>Pierwszej planszy nie ukończył jeszcze Nikt z zadowalającym wynikiem (zapewne z racji wyśrubowanego warunku zakończenia).</p>
                 </div>
             </div>
             <div id="sterowanie">
@@ -272,10 +285,15 @@ $serwerLokalny = false;
         </div> <!--     <div id="gra">  -->
         
         
-        <footer id="stopka"><button id="poco_button">Ale po co? &darr;</button> <button id="pomoc_button">Pomoc &darr;</button> <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
-           <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.18</h6>
+        <footer id="stopka">
+            <div id="przyciski_stopka">
+                <button id="poco_button">Ale po co? &darr;</button>
+                <button id="pomoc_button">Pomoc &darr;</button>
+                <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
+            </div>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.21</h6>
             <div id="poco">
-                <h2>Ale na co to komu?! - sens projektu</h2>
+                <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
                    <div>
                         <h3>Dla Hani</h3>
@@ -287,7 +305,7 @@ $serwerLokalny = false;
                     </div>
                     <div>       
                         <h3>(to nie jest antyreklama pewnego sklepu komputerowego) &plus; trochę technologicznego bełkotu</h3>    
-                        <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi, a do tego zmniejsza zużycie pobieranych danych (pakietu transmisji danych, istotnego na tzw. <em>urządzeniach mobilnych</em>, korzystających z sieci operatora GSM) w porównaniu do przeglądania orygionalnej witryny. Przy braku limitów na transfer też zyskujemy, bo przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania obrazków (funkcji &quot;cache&quot; nie liczę). Do tego &quot;serwer&quot; tej nakładki nie katuje serwera macierzystego przy każdym podglądzie dużego obrazka oraz ponownym przejścu do kolejnego (licząc uprzedni powrót do zasobów w pamięci przeglądarki). Prawda, że same plusy wynikają z korzystania z tej <em>nakładki</em>? Zachęcam do dalszego użytkowania i testowania.</p>    
+                        <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi i zużywa mniej <em>pakietów mobilnego internetu</em>. Zyskujemy przy przeglądaniu kolejnych zdjęć z danej galerii, skoro nie musi być pobierana, przetwarzana i wyświetlana od nowa prawie ta sama struktura witryny, odpowiedzialna za wygląd każdej podstrony z dużym zdjęciem. <em>Duże zdjęcia</em>, jako podgląd galerii, tworzone są dynamicznie. Przy braku limitów na transfer też zyskujemy, bo przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania miniatur obrazków (funkcji &quot;cache&quot; nie liczę). Pośrednim efektem jest mniejsze &quot;katowanie&quot; serwera macierzystego przy każdym podglądzie dużego obrazka oraz ponownym przejściu do kolejnego (licząc uprzedni powrót do zasobów w pamięci przeglądarki). Same plusy wynikają z korzystania z tej <em>nakładki</em>, prawda? Zachęcam do dalszego użytkowania i testowania.</p>    
                         <h3>Informacje i zastrzeżenia</h3>
                         <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
                         <h3>Kontakt</h3>
@@ -296,7 +314,7 @@ $serwerLokalny = false;
                 </div>
             </div>
             <div id="pomoc">
-                <h2>Pomoc - jak to działa</h2>
+                <h2>Pomoc &ndash; jak to działa</h2>
                 <div class="kontener">
                     <div>            
                         <h3>To tylko przeglądarka</h3>
@@ -323,12 +341,13 @@ $serwerLokalny = false;
                             <li class="tech_tak">SPA</li>                        
                             <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
                             <li class="tech_tak">kompatybilność</li>
-                            <li class="tech_tak">localStorage</li>  
+                            <li class="tech_tak">asynchroniczność</li>                              
                             <li class="tech_tak">bezpośrednia manipulacja DOM</li>
-                            <li class="tech_tak">obsługa błędów</li>
-                            <li class="tech_tak">komunikaty o błędach</li>
-                            <li class="tech_tak">obsługa z klawiatury</li>
+                            <li class="tech_tak">Web Storage (local)</li>  
+                            <li class="tech_tak">komunikaty i obsługa błędów</li>
                             <li class="tech_tak">wbudowane testowanie</li>
+                            <li class="tech_tak">obsługa z klawiatury</li>
+
 
                         </ul>
                         <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 
@@ -357,6 +376,35 @@ $serwerLokalny = false;
                         <h3>Status projektu</h3>
                         <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla zamknięcia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>w produkcji</em>...</p>
                     </div>    
+                </div> <!-- .kontener -->
+                <div>
+                <h3>Info o przeglądarce i serwerze</h3>
+                <p>I jeszcz odrobina treści do wyswietlenia. I tu nieco tekstu, może trochę więcej albo nieco mniej. A tu nieco tekstu, może trochę więcej albo nieco mniej. A tu nieco tekstu, może trochę więcej albo nieco mniej.</p>    
+                <p>
+                    <?php
+
+                    Wyswietl_zmienna_serwera( "PHP_SELF" );
+                    Wyswietl_zmienna_serwera( "SCRIPT_FILENAME" );
+                    Wyswietl_zmienna_serwera( "DOCUMENT_ROOT" );
+
+
+                    Wyswietl_zmienna_serwera( "SERVER_NAME" );
+                    Wyswietl_zmienna_serwera( 'SERVER_ADDR' );
+                    Wyswietl_zmienna_serwera( 'SERVER_PORT' );
+                    
+                    //Wyswietl_zmienna_serwera( $_SERVER['SERVER_PORT'] );
+                    echo "<br />";
+                    Wyswietl_zmienna_serwera( 'REMOTE_HOST' );
+                    Wyswietl_zmienna_serwera( 'REMOTE_ADDR' );
+                    Wyswietl_zmienna_serwera( 'REMOTE_PORT' );
+                    Wyswietl_zmienna_serwera( 'HTTP_REFERER' );
+                    Wyswietl_zmienna_serwera( 'REQUEST_URI' );
+                    Wyswietl_zmienna_serwera( 'REQUEST_METHOD' );
+                    Wyswietl_zmienna_serwera( 'HTTP_USER_AGENT' );
+                    
+                    ?>
+                    
+                </p>        
                 </div>
             </div>
         </footer>	
