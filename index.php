@@ -2,7 +2,7 @@
 
 include 'funkcje.php';
 
-session_start();
+//session_start();
 
 $czas_teraz = time();
 
@@ -23,7 +23,8 @@ $ciastko_poprzedniej_wizyty = false;   // już wizytowana witryna niegdyś?
         {
         $ciastko_poprzedniej_wizyty = true; // tu negacja wzorcowej logiki
         $data_poprzedniej_wizyty = $_COOKIE['zlobek_wizyta'];
-        $data_poprzedniej_wizyty_format = strftime( "%Y.%m.%d %H:%M:%S", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
+        $data_poprzedniej_wizyty_format = strftime( "%Y.%m.%d", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
+        $godzina_poprzedniej_wizyty_format = strftime( "%H:%M:%S", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
         }
     }
 
@@ -120,17 +121,19 @@ setcookie('zlobek_wizyta', $czas_teraz, $czas_teraz + 3600 * 24 * 365 * 2 );  //
 
                             if ( $czy_z_przekierowania === false )  // tworzenie elementu z notyfikacją przekierownia TRUE MA BY BYĆ!
                             {
-                            echo '<div id="powiadamiacz_przekierowania">';    
-                            echo "<h3>Witaj Wędrowcze! Trafiłeś tu z adresu <span>{$adres_przekierowania}</span></h3>";   
+                            echo '<div id="powiadamiacz_przekierowania" class="powiadamiacz">';    
+                            echo "<h3>Witaj Wędrowcze! Trafiłeś tu z adresu <span>{$adres_przekierowania}</span></h3>";
+                            echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund.</p>';    
                             echo '<div class="pasek"></div>';
                             echo '</div>';    
                             }
                         
                             if ( $ciastko_poprzedniej_wizyty )  // tworzenie elementu z notyfikacją daty ostatnich odwiedzin (jakiś odległy termin)
                             {
-                            echo '<div id="powiadamiacz_ciastka">';    
-                            echo "<h4>Istnieje ciastko z zawartością {$data_poprzedniej_wizyty_format} - wtedy ostatnio odwiedzono ten serwis.</h4>";
+                            echo '<div id="powiadamiacz_ciastka" class="powiadamiacz">';    
+                            echo "<h4>Pamiętamy, że w dniu {$data_poprzedniej_wizyty_format} konkretnie o godzinie {$godzina_poprzedniej_wizyty_format} ostatnio odwiedzono ten serwis.</h4>";
                             echo "<h4>Witamy ponownie po X dniach nieobecności.</h4>";  // tak, wzór wprowadzić...  
+                            echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund.</p>';    
                             echo '<div class="pasek"></div>';
                             echo '</div>';    
                             }
@@ -324,7 +327,7 @@ setcookie('zlobek_wizyta', $czas_teraz, $czas_teraz + 3600 * 24 * 365 * 2 );  //
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.22</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.23</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
