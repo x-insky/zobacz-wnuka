@@ -49,6 +49,10 @@ h1.logo {
     padding-bottom: 0.05em;	
 }
 
+h1 > span {
+    color: #54c;
+}
+
 h2 {
     font-size: 175%;
     font-weight: bold;
@@ -70,6 +74,11 @@ h2.logo {
     text-shadow: 0px 0px 3px #ccc;
 }
 
+h2 > span {
+    color: darkblue;
+    
+}
+
 h3 {
     font-size: 135%;
     font-weight: bold;
@@ -80,6 +89,10 @@ h3 {
     text-shadow:0px 0px 4px #555;
     padding: 0.2em 0.5em;	
     text-align: center;	
+}
+
+h3 > span {
+    color: #eee;
 }
 
 h4 {
@@ -128,6 +141,8 @@ h5 > em,
 h6 > em {
     font-weight: bold;    
 }
+
+
 
 strong {
     font-weight: bold;
@@ -592,6 +607,34 @@ header#naglowek .ciemne_tlo_spis {
     background-color: cornflowerblue;
     width: 100%;    
 }
+
+div#powiadamiacz_przekierowania,
+div#powiadamiacz_ciastka {
+    width: 90%;
+    background-color: cornflowerblue;
+    border: 1px solid #00b;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px darkblue;
+    padding: 0.5em;
+    margin: 0.5em auto;
+    
+}
+
+header#naglowek .pasek {
+    width: 100%;
+    max-width: 98%;
+    height: 10px;
+    background-color: mediumblue;
+    background: linear-gradient(to right, #54c 0%, #5d6ad0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5544cc', endColorstr='#5d6ad0',GradientType=1 ); /* IE6-9 */
+    box-shadow: 1px 1px darkblue; 
+    border-radius: 2px;
+    margin: 0 1%;
+    transition: width 10s 0.2s linear; 
+
+}
+
+
 
 div#spis_tresci div#galeria_spis {
     background-color: cornflowerblue;

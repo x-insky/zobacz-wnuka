@@ -1,3 +1,63 @@
+v0.5.22 - info notifications about last visit and referral link address, animations of hiding, cookie of last visit; more debug info inside footer; better hiding site email address
+
+* v0.5.22 -- [2019-06-27]
+
+[+] ADDED
+
+-- index.php
+* few environment verifications inside first php block
+  - read actual time
+  - assigned 'true/false' to referral variable '$czy_z_przekierowania', depends from address referral value is the same like server name
+  - a cookie is set with the name of 'zlobek_wizyta' with the current value of time, and a two years of valid this cookie at the end of php block
+* later the logic verifies the values of variables '$czy_z_przekierowania' and '$ciastko_poprzedniej_wizyty'
+  - if any of this variables is set then the notify is built, using different texts and variables
+  - a 'div' element with id 'powiadamiacz_przekierowania' is conditionally built, which contains info about referral address
+  - another condition check to built a 'div' element of id 'powiadamiacz_ciastka', which notify about proevious visit the site in the past (date and hour of previously visit is displayed inside)
+* added displaying values of cookie and connected variables with this cookie, that might conditionally assigned when the condition of passed time is met
+  - displaying under the already displayed values of server environment
+  - test purpose only for debugging the conditions and assigns 
+
+-- zlobek-styl.css
+* added global style for 'span' elements, which are direct childern of 'h1' or 'h2' or 'h3'
+  - easy differentiate by color, depending form each parent type
+* added new styles for notification items, which are generated from php
+  - the same style defined for two elements of ids 'powiadamiacz_przekierowania' and 'powiadamiacz_ciastka'
+  - defined 90% width, light background color and noticeable blue border with rounded corners
+* builded rules to style for negative progress bar with animation
+  - defined initial 100% width but JS changes it to 0% after a page is shown
+  - transition animation used to animate two state of this belt, between shorten it width from 100% to 0%
+  - animated by transition proceed ten second long time, much longer than standard transition time    
+  - linear time function used for exact animation of passing time
+  - used also filter rule for IE 6--9 to achieve gradient effect in this older browsers
+
+-- witryna.js
+* defined new function 'UkryjPowiadomieniaOOdwiedzinach' for purpose of hiding the notification info by JS, which previously might by conditionally built by php 
+  - passed parameter changes the duration time of animation in seconds
+  - default is 5 seconds time
+  - function changes given time duration of transition and belt width directly inside CSS for each belt of notification (for each of max two of notifications)
+  - the same duration animation of transition is set for each belt element, so if there are two notification the showed animation is the same
+  - setTimeout function is used for starting animation of hiding after given time (multiplying that time, because milisecond units)
+  - at the end the whole notification or notifications element is hided by 'slideUp' animation
+* added the invocation of 'UkryjPowiadomieniaOOdwiedzinach' inside auto run code block
+  - set 10 second as animation time for now 
+
+[*] MODIFIED
+
+-- index.php
+* changed the logic from first php block, before any HTML output
+  - rebuilt conditionally check if specified cookie is set
+  - checking value from cookie and if it greater than specified value then is saved into another variable to further display
+  - comparing time used in previous conditional is set to be greater than 60s, which guarantee a good testing of showing an info notification
+  - the finally used value of time shoul be much longer, about one week is to achieve (hard to test in local development that long period)
+* added the correct ending tag for 'h2' element of the game rule, with class 'zasada1' ('/h1' prevously)
+
+-- witryna.js
+* altered the function 'OdkryjEmail' body
+  - now the email address string is built by more puzzle elements (the protocol string is concatenated from more fragments)
+
+
+---------------------------
+
 v0.5.21 - testing status of server and its environment by php, preparation for cookies and saved data; experiments on internal notification system, a form of displaying an image element and notification text; flex container redefined in footer
 
 * v0.5.21 -- [2019-06-24]
@@ -37,7 +97,7 @@ v0.5.21 - testing status of server and its environment by php, preparation for c
 * modified the right padding of error notification text description
   - a 'p' element inside a 'div' element of class 'blad' 
   - added bigger pading for better visual presentation
-*  altered all margins value for element of class 'blad_ikona' inside error notifier (selector: 'div.blad .blad_ikona')
+* altered all margins value for element of class 'blad_ikona' inside error notifier (selector: 'div.blad .blad_ikona')
   - testing the best selected value for positioning
   - but if any button might exists inside given notification, then itsn't anymore horizontal centered inside the whole notification element
 * changed the selectors of flex containers, placed inside footer

@@ -1304,7 +1304,22 @@ slonceLogo.removeClass('startowe_przesuniecie');
 
     // pokazywanie prostokąta z aktualnymi wymiarami okna przeglądarki    
 $('#wymiary').css('visibility', 'visible');  
+    
 }   // InicjalizujCSSzAktywnymJS-END
+
+
+function UkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
+{
+    
+sekundowyCzasAnimacji = parseInt( sekundowyCzasAnimacji ) || 5;
+
+    // zmniejszanie długości pasków powiadamiania
+$('#naglowek .pasek').css({ 'transition-duration' : sekundowyCzasAnimacji + 's', 'width' : 0 });    // tu wymuszona i niejawna konwersja liczby na string
+setTimeout( function() {
+    $('#naglowek .pasek').parent('div').slideUp(1000);
+}, sekundowyCzasAnimacji * 1010 );
+    
+}   // UkryjPowiadomieniaOOdwiedzinach-END
     
     
 function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
@@ -1956,7 +1971,7 @@ function OdkryjEmail ( element, adres, adresPokazywany, wariant )   // zrobić z
 element = element || $("#adres_email");
 adres = adres || 'zobaczwnuka' + String.fromCharCode(64) + 'em' + 'ail' + '.c' + 'om';   // takie tam rozbicie ze scaleniem dla szukaczy
 adresPokazywany = adresPokazywany || 'kontakt';     
-var adresEmail = 'mailto:' + adres;    
+var adresEmail = 'ma' + 'ilt' + 'o:' + adres;  // tu już to rozdzielanie niepotrzebne, to nie jest parsowany plik html  
 $( element ).text( adresPokazywany ).attr( 'href', adresEmail ); 
 }   // OdkryjEmail-END
 
@@ -3016,6 +3031,7 @@ $('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania
 // ***************************************************************************		
 
 InicjalizujCSSzAktywnymJS();
+UkryjPowiadomieniaOOdwiedzinach(10);    
 InicjalizujRamkiLadowania();    
 //WystartujDebuggerLokalny( 'ZEPSUJ!' );    
 WystartujDebuggerLokalny();
