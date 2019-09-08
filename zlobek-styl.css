@@ -49,6 +49,10 @@ h1.logo {
     padding-bottom: 0.05em;	
 }
 
+h1 > span {
+    color: #54c;
+}
+
 h2 {
     font-size: 175%;
     font-weight: bold;
@@ -70,6 +74,11 @@ h2.logo {
     text-shadow: 0px 0px 3px #ccc;
 }
 
+h2 > span {
+    color: darkblue;
+    
+}
+
 h3 {
     font-size: 135%;
     font-weight: bold;
@@ -80,6 +89,10 @@ h3 {
     text-shadow:0px 0px 4px #555;
     padding: 0.2em 0.5em;	
     text-align: center;	
+}
+
+h3 > span {
+    color: #eee;
 }
 
 h4 {
@@ -128,6 +141,8 @@ h5 > em,
 h6 > em {
     font-weight: bold;    
 }
+
+
 
 strong {
     font-weight: bold;
@@ -178,7 +193,7 @@ div.blad {
     border: 3px solid #eee;
     box-shadow: 2px 2px 4px #333;
     transition: box-shadow 0.3s 0.1s, transform 0.3s 0.1s;
-    margin-bottom: 0.8em;
+    margin-bottom: 12px;    /* 0.8em; - czasem się mści przy za dużym/małym ekranie - nieproporcjonalność nachodzenia przy 'transform: scale' */
     
     /*    animation: zolty_blysk 2s ease-out;
         animation-fill-mode: both; */
@@ -203,7 +218,7 @@ div.blad .blad_tytul {
 div.blad .blad_tresc {
     background-color: darkred;
     box-shadow: 0px 0px 10px 2px #333 inset; 
-    min-height: 120px;
+    min-height: 140px;
     padding: 0.5em;
     margin-top: 10px;
 }
@@ -235,7 +250,6 @@ div.blad .blad_ikona {
 div.blad p {
     font-size: 1.5em;
     padding: 0.5em;
-    padding-right: 1em;
 }
 
 
@@ -592,6 +606,37 @@ header#naglowek .ciemne_tlo_spis {
     background-color: cornflowerblue;
     width: 100%;    
 }
+
+div.powiadamiacz {
+    width: 90%;
+    background-color: cornflowerblue;
+    border: 1px solid #00b;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px darkblue;
+    padding: 0.5em;
+    margin: 0.5em auto;
+}
+
+div.powiadamiacz p {
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+header#naglowek .pasek {
+    width: 100%;
+    max-width: 98%;
+    height: 10px;
+    background-color: mediumblue;
+    background: linear-gradient(to right, #54c 0%, #5d6ad0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5544cc', endColorstr='#5d6ad0',GradientType=1 ); /* IE6-9 */
+    box-shadow: 1px 1px darkblue; 
+    border-radius: 2px;
+    margin: 0 1%;
+    transition: width 10s 0.2s linear; 
+
+}
+
+
 
 div#spis_tresci div#galeria_spis {
     background-color: cornflowerblue;
@@ -2160,20 +2205,31 @@ input[type=range]:hover::-ms-fill-upper {
     div.blad .blad_ikona {
         float: left;
         margin-top: 1.5%;
-        margin-right: 7%;
-        margin-bottom: 5%; /* nie więcej niż 6% lub kilkadziesiąt px, bo przesuwa kafelki galerii */
+         margin-right: 3%;  /* próby przeniesionia do lewego-paddingu dla sąsiada <p>' */
+        /* margin-bottom: 5%; */ /* nie więcej niż 6% lub kilkadziesiąt px, bo przesuwa kafelki galerii */
         margin-left: 10%;
-/*
-        margin-left: 12%;
+
+        /* Próby ustalenia znacznego prawego lub/i dolnego marginesu powodują rozjeżdżanie się treści w danym elemencie grupującym
+        to powiadomienie, np. przesunięty o 50% w prawo przycisk akcji lub tytuł kolejnego elementu. 
+        Sąsiednie elementy powiadomień mogą być rozsunięte lub przesunięte, albo treści za ostatnim z nich, np. ikony tytułów galerii. 
+        Tekstowa zwartość akapitu generowana dynamicznie z różną długością opisu danego błędu. Standardowe problemy z "układem pływającym" :/.*/
+        
+        /*      margin-left: 12%;
         margin-right: 8%;
-        margin-bottom: 7%;
-*/
-        /*margin-top: 10px;*/
+        margin-bottom: 7%;  */
     }
+    
+    div.blad p {
+        padding-left: 1em;
+        padding-right: 1em;
+        padding-bottom: 0.8em;  /* generalenie ten parametr decyduje o dodatkowej pionowej przestrzeni w dole okienka, zamiast marginesu obrazka */
+        min-height: 130px;  /* w połączeniu z min-height kontenera pozwala zwiększyć jego wysokość, "odpychając" od dolnej krawędzi obrazka  */
+    }
+    
     
     form#wybierz_galerie input.szerszy_guzik {
         min-width: 210px;
-       }
+    }
     
     div#spis_tresci div.kontener_odnosnik {
         min-height: 415px;			
@@ -2209,7 +2265,7 @@ input[type=range]:hover::-ms-fill-upper {
     div#witryna {
     /*	margin: 0.4em auto;*/
         width: 99%;    
-    }        
+    } 
 
     div#spis_tresci div.kontener_odnosnik {
         min-height: 425px;			
@@ -2258,7 +2314,7 @@ input[type=range]:hover::-ms-fill-upper {
     div#spis_tresci div.kontener_odnosnik img {
         max-height: 240px;
     }
-
+    
     div.blad .krzyzyk_zamykanie {
         top: 8px;
         right: 8px;
@@ -2323,6 +2379,10 @@ input[type=range]:hover::-ms-fill-upper {
         max-height: 250px;
     }
 
+    div.powiadamiacz {
+        max-width: 1100px;   
+    }   
+    
     div.blad .krzyzyk_zamykanie {
         top: 10px;
         right: 10px;
@@ -2373,6 +2433,10 @@ input[type=range]:hover::-ms-fill-upper {
     .brak_js div#zagraj {
         display: none;
     }
+    
+    div.blad {
+        max-width: 1200px;   
+    }  
    /* div#wymiary {
         width: 22%;
         left: 39%;

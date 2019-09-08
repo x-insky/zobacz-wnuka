@@ -2,19 +2,36 @@
 
 include 'funkcje.php';
 
-session_start();
+//session_start();
+
+$czas_teraz = time();
 
 $serwer_lokalny = false;            // identyfikacja lokalnego lub zdalnego uruchamiania... 
     if ( $_SERVER['SERVER_NAME'] == 'localhost' ) $serwer_lokalny = true;    
         //.. celem dołączania bibliotek/plików nieskompresowanych lub po kompresji
 
-$adres_przekierowania = false;      // wejście na witrynę z konkretnego odnośnika lub z odsyłacza wyszukiwarki 
+$adres_przekierowania = false;      // wejście na witrynę z konkretnego odnośnika (wewn/zewn) lub z odsyłacza wyszukiwarki 
+        // uwaga na parametry $_SERVER - nie wszystkie dostępne w środowiskach różnych (czytaj STARYCH) przeglądarek, np. REFERER
     if ( $_SERVER['HTTP_REFERER'] ) $adres_przekierowania = $_SERVER['HTTP_REFERER']; 
 
-$ciastko_uzytkowania = false;
-    if ( isset( $_COOKIES['odwiedzone'] ) ) $ciastko_uzytkowania = true;
+$czy_z_przekierowania = strpos( $_SERVER['HTTP_REFERER'], $_SERVER['NAME'] );   // czy z tego samego serwera czy z obcego adresu -- do tworzenia elementu html 
+
+$ciastko_poprzedniej_wizyty = false;   // już wizytowana witryna niegdyś?
+    if ( isset( $_COOKIE['zlobek_wizyta'] ) )  // weryfikacja istnienia zapisanego ciastka
+    {
+        if ( $czas_teraz - (int) $_COOKIE['zlobek_wizyta'] > 60 ) // docelowo warunek na poprzednią wizytę zostanie wydłużony
+        {
+        $ciastko_poprzedniej_wizyty = true; // tu negacja wzorcowej logiki
+        $data_poprzedniej_wizyty = $_COOKIE['zlobek_wizyta'];
+        $data_poprzedniej_wizyty_format = strftime( "%Y.%m.%d", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
+        $godzina_poprzedniej_wizyty_format = strftime( "%H:%M:%S", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
+        }
+    }
+
+setcookie('zlobek_wizyta', $czas_teraz, $czas_teraz + 3600 * 24 * 365 * 2 );  // ustawianie ciastka -- tak, dwa lata ważności ;)
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pl">
@@ -101,6 +118,25 @@ $ciastko_uzytkowania = false;
                         <?php
                         // test aktualnego trybu, niejawnie określa to środowisko uruchomieniowe: DEBUGOWANIE / PRODUKCJA   
                             if ( isset( $serwer_lokalny ) ) echo("<h2>BIEŻĄCY SERWER: <strong>" . $_SERVER['SERVER_NAME'] . "</strong></h2>");
+
+                            if ( $czy_z_przekierowania === false )  // tworzenie elementu z notyfikacją przekierownia TRUE MA BY BYĆ!
+                            {
+                            echo '<div id="powiadamiacz_przekierowania" class="powiadamiacz">';    
+                            echo "<h3>Witaj Wędrowcze! Trafiłeś tu z adresu <span>{$adres_przekierowania}</span></h3>";
+                            echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund.</p>';    
+                            echo '<div class="pasek"></div>';
+                            echo '</div>';    
+                            }
+                        
+                            if ( $ciastko_poprzedniej_wizyty )  // tworzenie elementu z notyfikacją daty ostatnich odwiedzin (jakiś odległy termin)
+                            {
+                            echo '<div id="powiadamiacz_ciastka" class="powiadamiacz">';    
+                            echo "<h4>Pamiętamy, że w dniu {$data_poprzedniej_wizyty_format} konkretnie o godzinie {$godzina_poprzedniej_wizyty_format} ostatnio odwiedzono ten serwis.</h4>";
+                            echo "<h4>Witamy ponownie po X dniach nieobecności.</h4>";  // tak, wzór wprowadzić...  
+                            echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund.</p>';    
+                            echo '<div class="pasek"></div>';
+                            echo '</div>';    
+                            }
                         ?>
                         <h2>Lista galerii ze Żłobka</h2>
                         <div class="ciemne_tlo_spis">
@@ -259,7 +295,7 @@ $ciastko_uzytkowania = false;
         <div id="gra">
             <div id="zasady">
                 <div class="kontener">    
-                    <h2 class="zasada1"><input type="checkbox"> Pokoloruj duży obrazek poprzez ułożenie jego małych fragmentów we właściwych miejscach.</h1>
+                    <h2 class="zasada1"><input type="checkbox"> Pokoloruj duży obrazek poprzez ułożenie jego małych fragmentów we właściwych miejscach.</h2>
                     <h2 class="zasada2"><input type="checkbox"> Użyj myszy lub gładzika komputera, <br />bo małe ekrany dotykowe są &quot;be&quot; (póki co jest dramat)!</h2>
                     <p style="text-decoration: line-through;"><em>Podobne widowisko teatralne</em> jest z użyciem czegokolwiek na czymkolwiek do obsługi przeciągania, więc póki co zdobywanie punktów i budowanie rankingów jest odłożone w bliżej nieokreślone &quot;kiedyś&quot;.</p>   
                     <p style="text-decoration: line-through;">Rozgrywka jest na czas, spróbuj osiągnąć możliwie najlepszy wynik (...zakładając, że system nie oszukuje przy przydziale punktów, a Firefoks > v57 Ci w tym nie przeszkadza - ale to jest zupełnie przypadkowe, nie węszymy tu spisku).</p>
@@ -291,7 +327,7 @@ $ciastko_uzytkowania = false;
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.21</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.23</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -401,7 +437,9 @@ $ciastko_uzytkowania = false;
                     Wyswietl_zmienna_serwera( 'REQUEST_URI' );
                     Wyswietl_zmienna_serwera( 'REQUEST_METHOD' );
                     Wyswietl_zmienna_serwera( 'HTTP_USER_AGENT' );
-                    
+                    echo '$_COOKIES[\'zlobek_wizyta\']: <strong>' . $_COOKIE['zlobek_wizyta'] . '</strong><br />';
+                    echo '$data_poprzedniej_wizyty: <strong>' . $data_poprzedniej_wizyty . '</strong><br />';
+                    echo '$data_poprzedniej_wizyty_format: <strong>' . $data_poprzedniej_wizyty_format . '</strong><br />';
                     ?>
                     
                 </p>        

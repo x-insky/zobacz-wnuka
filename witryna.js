@@ -74,14 +74,14 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 //debugger; 
     if ( element_witryny.length > 0 ) element_witryny = " " + element_witryny; // dodanie spacji na początku, separator dla TAGU po nazwie pliku     				
    
-    if ( !dane ) dane = { ktoraPodstrona : 1 }; // aby nie było "TypeError" przy braku tego parametru w auto-wywołaniu bez kliknięcia podstrony (pierwsza podstrona)
+    if ( !dane ) dane = { ktoraPodstrona : 1, wybranyNrGalerii : 1 }; // aby nie było "TypeError" przy braku tego parametru w auto-wywołaniu bez kliknięcia podstrony (pierwsza podstrona)
         
     //$( g_miejsce_na_spis ).show( 100 ); // zawsze pokaż przestrzeń do załadowania dynamicznego gdyby ukryta (treść zewnętrzna lub błędy...)
     // var zawartoscUTF = unescape(encodeURIComponent( zawartoscOryginalna )); // kodowanie zaczytanych znaków?! // ... już załatwione w php
     
     switch ( rodzaj_dzialania ) {
 				
-        case "galeria_podstrona" :      // wyświetlenie dowolnej galerii (pierwsza strona albunu lub dowolna podstrona)
+        case "galeria_podstrona" :      // wyświetlenie dowolnej galerii (pierwsza strona albumu lub dowolna podstrona)
             try 
             {	
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
@@ -123,7 +123,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     }
                     if ( status === "complete" )    // test, ale tego stanu być nie powinno
                     {
-                    alert('Test zakończenia żądania - galeria podstrona');
+                    alert('Test zakończenia żądania - galeria podstrona');  // czekajcie, a może kiedyś zobaczycie ten alert
                     }
                 
                 }); //load-END
@@ -305,7 +305,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     var nrPodstronySpisuGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );  // określona podstrona jako parametr
                     var komunikatOBledzie = "Problem z ładowaniem w tle dla generowania wybranej galerii! Nie udało się określić wstępnej lokalizacji - błąd ładowania podstrony nr <strong>" 
                                             + nrPodstronySpisuGalerii + "</strong>.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
-                    GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej #' + nrPodstronyGalerii + ' podstrony galerii - wstępny etap!', tresc : komunikatOBledzie });
+                    //GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej #' + nrPodstronySpisuGalerii + ' strony galerii - wstępny etap!', tresc : komunikatOBledzie });
+                    GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej #' + dane.wybranyNrGalerii + ' galerii - wstępny etap!', tresc : komunikatOBledzie });
                         //alert(komunikatOBledzie);
                         // $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );                       
                     PrzewinEkranDoElementu('.blad', 500);
@@ -366,7 +367,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     //alert(komunikatOBledzie);
                     //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
                     var nrGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",a") + 2 ) );  // która galeria miała być wyswietlona 
-                    var komunikatOBledzie = "Problem z załadowaniem wybranej galerii o numerze <strong>" + nrGalerii + "</strong>)! Nie udało się pobrać docelowej lokalizacji.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
+                    var komunikatOBledzie = "Problem z załadowaniem wybranej galerii o numerze <strong>" + nrGalerii + "</strong>! Nie udało się pobrać docelowej lokalizacji.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
                     GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej galerii #<strong>' + nrGalerii + '</strong> - drugi etap!', tresc : komunikatOBledzie });
 
                     PrzewinEkranDoElementu('.blad', 500);     
@@ -1304,7 +1305,28 @@ slonceLogo.removeClass('startowe_przesuniecie');
 
     // pokazywanie prostokąta z aktualnymi wymiarami okna przeglądarki    
 $('#wymiary').css('visibility', 'visible');  
+    
 }   // InicjalizujCSSzAktywnymJS-END
+
+
+function UkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
+{
+    
+sekundowyCzasAnimacji = parseInt( sekundowyCzasAnimacji ) || 5;
+
+    // zmniejszanie długości pasków powiadamiania - indywidualne czasy dla każdego z pasków z wspólnego zakesu
+$('#naglowek .pasek').each( function() {
+    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / 2 ; // maksymalnie -49% parametru (też częsci całości)
+    sekundowyCzasAnimacji -= dodatkowe_sekundy;    // tu ewentualna dekrementacja 
+    var aktualnyPasek = this;
+    $(this).css({ 'transition-duration' : sekundowyCzasAnimacji + 's', 'width' : 0 });    // tu wymuszona (i niejawna) konwersja liczby na string
+    setTimeout( function() {
+        $(aktualnyPasek).parent('div').slideUp(1000);
+    }, sekundowyCzasAnimacji * 1010 );  // + minimalny nadkład opóźnienia
+    
+}); // each-$('#naglowek .pasek')-END
+    
+}   // UkryjPowiadomieniaOOdwiedzinach-END
     
     
 function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
@@ -1956,7 +1978,7 @@ function OdkryjEmail ( element, adres, adresPokazywany, wariant )   // zrobić z
 element = element || $("#adres_email");
 adres = adres || 'zobaczwnuka' + String.fromCharCode(64) + 'em' + 'ail' + '.c' + 'om';   // takie tam rozbicie ze scaleniem dla szukaczy
 adresPokazywany = adresPokazywany || 'kontakt';     
-var adresEmail = 'mailto:' + adres;    
+var adresEmail = 'ma' + 'ilt' + 'o:' + adres;  // tu już to rozdzielanie niepotrzebne, to nie jest parsowany plik html  
 $( element ).text( adresPokazywany ).attr( 'href', adresEmail ); 
 }   // OdkryjEmail-END
 
@@ -2627,7 +2649,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania           
         
     WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
-                                "wybrana_galeria_rekurencja", { 'pozycjaWGalerii' : pozycjaWGalerii } ); 	// ES6 unfriendly
+                                "wybrana_galeria_rekurencja", { 'pozycjaWGalerii' : pozycjaWGalerii, 'wybranyNrGalerii' : wybranyNrGalerii } ); 	// ES6 unfriendly
     }
 return false;  // to jest lepszy i konieczny warunek na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nierobienie nic" po kliknięciu
 }); // click('#suwak_galerii_submit')-END
@@ -3016,6 +3038,7 @@ $('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania
 // ***************************************************************************		
 
 InicjalizujCSSzAktywnymJS();
+UkryjPowiadomieniaOOdwiedzinach(10);    
 InicjalizujRamkiLadowania();    
 //WystartujDebuggerLokalny( 'ZEPSUJ!' );    
 WystartujDebuggerLokalny();

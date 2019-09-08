@@ -1,3 +1,140 @@
+v0.5.23 - changed error notification of selected gallery, first stage of loading display; no displacements on page by error notification image; no overlaping between error notifications; info notifications touched: builded as common, separately animated belts, date and time separation in text; max width of notfication types; fixed: selected number of gallery in notification
+
+* v0.5.23 -- [2019-06-28]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* defined new style for any 'p' element inside notification element with class 'powiadamiacz' 
+  - centered text with little margin on top
+* added new rules for error description ('p' element), inside notifier element of class 'blad'
+  - the same 1em paddings from left and right side, and slighty less from bottom side
+  - defined max height of 130px, which is always more than high of left sided exclamation (image-like element uses float left)
+* defined new delimiters for width notifier element inside media queries
+  - info notification can't be wider than 1100px (selector: 'div.powiadamiacz' on +1180px screens)
+  - error notification can't be wider than 1200px (selector: 'div.blad' on +1300px screens)
+
+[*] MODIFIED
+
+-- index.php
+* changed the expressions inside first php block, before HTML output
+  - commented out starting of session
+  - breaking formated date variable into two variables, separate for date and hour
+  - easier use of separately date and time variables
+* changed the structure of info notification
+  - now each of notification element has class 'powiadamiacz', where the previously common style is stored
+  - id of item is for targeting purpose
+  - added static text inside 'p' element, that inform this notification will disappear after short time
+  - using the two variables of time and date the text of notification is built easier    
+
+-- zlobek-styl.css
+* removed possible overlaping error notifications on hover
+  - connected with every more than one 'div' with class of 'blad' 
+  - changed bottom margin of error notification to fixed 12px instead 0.8em previously
+  - on thiner screens problem might be visible, when the pixels from 'ems' shrinks
+* modified the minimal width of container for an error description from 120 to 140px
+  - this element contains also the image-like warning exclamation on the top (screens thinner than 470px) or rather on the left side of notify (wider screens)
+  - fixed minimal height helps when the description text of error is short and/or there is no button
+  - also that is always higher than the heght of the image-like warning, which is inside
+* removed 1em right padding of 'p' element inside error notification container ('div' with class 'blad') for the basic style
+  - this padding value is restored after screen reaches width of 470px
+* removed selectors for two info notification but added here one common class of 'powiadamiacz' for that 'div' elements
+  - removed selector 'div#powiadamiacz_przekierowania' and 'div#powiadamiacz_ciastka'
+* redefined margins of semi-image exclamation inside each error notify on screens at least 470px wide (second media query threshold)
+  - (selector: 'div.blad .blad_ikona') 
+  - experiments with values, trying optimal fit by already defined values as percentage margins
+  - decreased right margin to 3% from 7% previously
+  - margin left also returned to 10% from 12% lastly value
+  - totally removed bottom margins because the button after text content of error notofication was moved to the right!!!
+  - but the worse was the moved gallery content to the bottom of the page - A TOTAL CHAOS AND DISPLACEMENT OF ELEMENT ORDER ON FIRST ROW OF GALLERY LIST when error notification is displayed!!!
+  - standard problems of float, described it inside new comment
+* some new lines or tabs might changed
+
+-- witryna.js
+* altered logic of function 'WczytajZewnetrznyHTMLdoTAGU', 'wybrana_galeria_rekurencja' variant, where given gallery number is passed to be displayed (first stage)
+  - altered the default object definiotion, if not set any attributes by function parameter (here added attrib 'wybranyNrGalerii' with value of  1)
+  - later this value is used to display given gallery number inside a title of error notification, as proper selected value in form field
+  - an old error notification saved in comment just before changed function invocation
+  - if any error occurs when loading that given gallery number ast stage two (after reading its subpage number and target address is gained), then the notification text is right presented, and fixed the closing parenthesis is removed from the target string
+  - repaired the invocation inside event function when click on submit button with id 'suwak_galerii_submit', now contains new attribute with selected gallery number
+  - connected with 'fixed' section of this update 
+* changed the logic of function 'UkryjPowiadomieniaOOdwiedzinach'
+  - now the each notification is treated separately, so the different animation duration of a decreasing width of belt is set to any of them
+  - similar code is usede for each existing notification to differentiate the time of transition
+  - a randomization to nearly 50% of given time from parameter for each element of info notification (time shortened by random value to max 50% original value of function parameter)
+  - similar code as before, just separately generated with each notification info belt element
+* code cleaning: added new comments, fixed typos in few of them
+
+[F] FIXED
+
+-- witryna.js 
+* now error notifications contains selected gallery number, indepedently that was first or second error stage of loading selected gallery number
+  - added extra attribute to passed object to a function to easy differentiate selected gallery number on each stage
+  - used that number inside function for any purpose, mainly displaying of error
+  - see first list element of 'modified' section of this update, inside file 'witryna.js' 
+  - fixes: #37 - 'The selected gallery number is not displayed in the error notification'
+
+---------------------------
+
+v0.5.22 - info notifications about last visit and referral link address, animations of hiding, cookie of last visit; more debug info inside footer; better hiding site email address
+
+* v0.5.22 -- [2019-06-27]
+
+[+] ADDED
+
+-- index.php
+* few environment verifications inside first php block
+  - read actual time
+  - assigned 'true/false' to referral variable '$czy_z_przekierowania', depends from address referral value is the same like server name
+  - a cookie is set with the name of 'zlobek_wizyta' with the current value of time, and a two years of valid this cookie at the end of php block
+* later the logic verifies the values of variables '$czy_z_przekierowania' and '$ciastko_poprzedniej_wizyty'
+  - if any of this variables is set then the notify is built, using different texts and variables
+  - a 'div' element with id 'powiadamiacz_przekierowania' is conditionally built, which contains info about referral address
+  - another condition check to built a 'div' element of id 'powiadamiacz_ciastka', which notify about proevious visit the site in the past (date and hour of previously visit is displayed inside)
+* added displaying values of cookie and connected variables with this cookie, that might conditionally assigned when the condition of passed time is met
+  - displaying under the already displayed values of server environment
+  - test purpose only for debugging the conditions and assigns 
+
+-- zlobek-styl.css
+* added global style for 'span' elements, which are direct childern of 'h1' or 'h2' or 'h3'
+  - easy differentiate by color, depending form each parent type
+* added new styles for notification items, which are generated from php
+  - the same style defined for two elements of ids 'powiadamiacz_przekierowania' and 'powiadamiacz_ciastka'
+  - defined 90% width, light background color and noticeable blue border with rounded corners
+* builded rules to style for negative progress bar with animation
+  - defined initial 100% width but JS changes it to 0% after a page is shown
+  - transition animation used to animate two state of this belt, between shorten it width from 100% to 0%
+  - animated by transition proceed ten second long time, much longer than standard transition time    
+  - linear time function used for exact animation of passing time
+  - used also filter rule for IE 6--9 to achieve gradient effect in this older browsers
+
+-- witryna.js
+* defined new function 'UkryjPowiadomieniaOOdwiedzinach' for purpose of hiding the notification info by JS, which previously might by conditionally built by php 
+  - passed parameter changes the duration time of animation in seconds
+  - default is 5 seconds time
+  - function changes given time duration of transition and belt width directly inside CSS for each belt of notification (for each of max two of notifications)
+  - the same duration animation of transition is set for each belt element, so if there are two notification the showed animation is the same
+  - setTimeout function is used for starting animation of hiding after given time (multiplying that time, because milisecond units)
+  - at the end the whole notification or notifications element is hided by 'slideUp' animation
+* added the invocation of 'UkryjPowiadomieniaOOdwiedzinach' inside auto run code block
+  - set 10 second as animation time for now 
+
+[*] MODIFIED
+
+-- index.php
+* changed the logic from first php block, before any HTML output
+  - rebuilt conditionally check if specified cookie is set
+  - checking value from cookie and if it greater than specified value then is saved into another variable to further display
+  - comparing time used in previous conditional is set to be greater than 60s, which guarantee a good testing of showing an info notification
+  - the finally used value of time shoul be much longer, about one week is to achieve (hard to test in local development that long period)
+* added the correct ending tag for 'h2' element of the game rule, with class 'zasada1' ('/h1' prevously)
+
+-- witryna.js
+* altered the function 'OdkryjEmail' body
+  - now the email address string is built by more puzzle elements (the protocol string is concatenated from more fragments)
+
+---------------------------
+
 v0.5.21 - testing status of server and its environment by php, preparation for cookies and saved data; experiments on internal notification system, a form of displaying an image element and notification text; flex container redefined in footer
 
 * v0.5.21 -- [2019-06-24]
@@ -37,7 +174,7 @@ v0.5.21 - testing status of server and its environment by php, preparation for c
 * modified the right padding of error notification text description
   - a 'p' element inside a 'div' element of class 'blad' 
   - added bigger pading for better visual presentation
-*  altered all margins value for element of class 'blad_ikona' inside error notifier (selector: 'div.blad .blad_ikona')
+* altered all margins value for element of class 'blad_ikona' inside error notifier (selector: 'div.blad .blad_ikona')
   - testing the best selected value for positioning
   - but if any button might exists inside given notification, then itsn't anymore horizontal centered inside the whole notification element
 * changed the selectors of flex containers, placed inside footer
