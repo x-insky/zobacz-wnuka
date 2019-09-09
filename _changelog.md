@@ -1,3 +1,41 @@
+v0.5.26 - information notification changed; trying to hide elements but proper empty area and animated content should be displayed later by working JS, by 'PokazIUkryjPowiadomieniaOOdwiedzinach', and finally removed; no meta-robots tag; redefined static texts of footer area
+
+* v0.5.26 -- [2019-07-18]
+
+[*] MODIFIED
+
+-- index.php
+* altered the text of variable to direct show, that local server is used, even if no redirection
+  - value used in displayed inforamation notification
+* removed 'robots' meta tag, because its value is default, so the whole tag is useless
+* added XML style ending to existing meta tag of description 
+* changed the static texts which are fragments of both information notifications, about redirection and about last visit date
+* rearrange the static text of footer area, mainly inside container of id 'poco'
+  - broken text content of longer paragraphs into new shorter paragraph, which are separated by subheaders
+  - trying to keep the logically context of previus longer description
+  - the rule of short text for web content was applied
+* altered some texts of paragraphs, subheadings or list items
+* changed many comments for better explanatory content
+
+-- zlobek-styl.css
+* added hidden visibility rule to 'div' element of 'powiadamiacz' class (temporary visible notification)
+  - needed some property to be initial hided from CSS
+  - JS will reenable visibility for element but the area is constantly occupied by that element no mater of value of visibility!
+  - 'display: none' is better for no-area but the elements inside can't be animated by transition when element is initally not displayed, so when JS reenable their content some of them will be invisible!	
+* trying to alter the inner element of informational notification that way, to its occupied area will be empty and after showing its content will be full operate and be animated 
+  - added block type display to belt of initial 100% width (rather this is not the right way...)
+* removed few new lines or empty spaces or tabs
+
+-- witryna.js
+* renamed function 'UkryjPowiadomieniaOOdwiedzinach' to 'PokazIUkryjPowiadomieniaOOdwiedzinach'
+  - just for right name, because now first expression from its body are showing the contents of selected and initially hided element, by changing visibility attribute (instead previously changing the display property)
+  - changed also the behavior, now after the hiding animation the element is removed form the DOM structure 
+* removed loging from function 'UbijReklamy'
+  - the right effect is visible in browser, until the hosting find the new big ads
+  - changed the name in invocation of that function, of course
+
+---------------------------
+
 v0.5.25 - conditionally loading of minified versions of resources (CSS & JS) if available; meta tags 'description' & 'robots' in head; better reenabling button & functions: 'UbijREklamy', 'GenerujPodstronyGalerii' & 'WystartujDebuggerLokalny'; removed dual-basic notify of error for next-page-loads; removed displayed 'localhost'; no seconds inside info notify; debug notes in footer surrounded by box
 
 * v0.5.25 -- [2019-07-11]

@@ -1311,12 +1311,14 @@ $('#wymiary').css('visibility', 'visible');
 }   // InicjalizujCSSzAktywnymJS-END
 
 
-function UkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
+function PokazIUkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
 {
-    
 sekundowyCzasAnimacji = parseInt( sekundowyCzasAnimacji ) || 5;
     if ( sekundowyCzasAnimacji < 5 ) sekundowyCzasAnimacji = 5; // ogólnie na (+), też by zapobiec dzieleniu przez 0
 
+//$('#naglowek .powiadamiacz').css('display', 'block');   // pokaż każdę z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie    
+$('#naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje    
+    
     // zmniejszanie długości pasków powiadamiania - indywidualne czasy dla każdego z pasków z wspólnego zakesu
 $('#naglowek .pasek').each( function() {
 //    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / 2 ; // maksymalnie -49% parametru (też częsci całości)
@@ -1325,12 +1327,14 @@ $('#naglowek .pasek').each( function() {
     var aktualnyPasek = this;
     $(this).css({ 'transition-duration' : sekundowyCzasAnimacji + 's', 'width' : 0 });    // tu wymuszona (i niejawna) konwersja liczby na string
     setTimeout( function() {
-        $(aktualnyPasek).parent('div').slideUp(1000);
+        $(aktualnyPasek).parent('div').slideUp(1000, function() {    // dla każdego z elementów powinna być osobna funkcja po ukończnieu animacji
+            $(this).remove();   // najlepiej usuwać dany kontener po animacji zniknięcia - tu zniknie każdy <div.powiadamiacz> z osobna 
+        });   
     }, sekundowyCzasAnimacji * 1010 );  // + minimalny nadkład opóźnienia
     
 }); // each-$('#naglowek .pasek')-END
     
-}   // UkryjPowiadomieniaOOdwiedzinach-END
+}   // PokazIUkryjPowiadomieniaOOdwiedzinach-END
     
     
 function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
@@ -2080,7 +2084,7 @@ var $cbaReklamaBig = $('center');
     {
     $cbaReklamaBig.parent().prev().remove();    // wywal małą reklamę - pasek u góry (ewentualnie to może pozostać)
     $cbaReklamaBig.parent().remove();           // ale to wielgachne bezwzględnie wylatuje (sorry cba)
-        console.log('Ubijam_CBA #1 - <center>'); 
+        // console.log('Ubijam_CBA #1 - <center>'); 
     }
         // kolejna ewentualna reklama na CBA, co rozwala układ telefonu
 $cbaReklamaBig = $('img[usemap]');    
@@ -2088,7 +2092,7 @@ $cbaReklamaBig = $('img[usemap]');
     {
     // $cbaReklamaBig.sibling('map').remove();    // wywal opis odnośników do dużego bannera na górze, później właściwy obrazek
     $cbaReklamaBig.parent().remove();           // albo po prostu pogoń kontener nadrzędny z DOMu (div#top_10)
-        console.log('Ubijam_CBA #2 - <img usemap>');     
+        // console.log('Ubijam_CBA #2 - <img usemap>');     
     }
 
 }   // UbijReklamy-END
@@ -3057,7 +3061,7 @@ $('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania
 // ***************************************************************************		
 
 InicjalizujCSSzAktywnymJS();
-UkryjPowiadomieniaOOdwiedzinach(20);    
+PokazIUkryjPowiadomieniaOOdwiedzinach(20);    
 InicjalizujRamkiLadowania();    
 //WystartujDebuggerLokalny( 'ZEPSUJ!' );    
 WystartujDebuggerLokalny();

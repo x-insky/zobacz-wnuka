@@ -6,7 +6,7 @@ include 'funkcje.php';
 
 $czas_teraz = time();
 
-$serwer_lokalny = false;            // identyfikacja lokalnego lub zdalnego uruchamiania... 
+$serwer_lokalny = false;            // identyfikacja lokalnego lub zdalnego uruchamiania jako prosta detekcja DEV/PROD.. 
     if ( $_SERVER['SERVER_NAME'] == 'localhost' ) $serwer_lokalny = true;    
         //.. celem dołączania bibliotek/plików nieskompresowanych lub po kompresji
 
@@ -21,7 +21,7 @@ $adres_przekierowania = false;      // wejście na witrynę z konkretnego odnoś
         }
         if ( $czy_z_przekierowania >= 0 ) // STRPOS: false vs [0..inf+] !!! -- ten warunek jest ZBĘDNY - tylko dla testów
         {
-        $adres_przekierowania = 'TEN_SERWER_' . $_SERVER['HTTP_REFERER'] . '_TEN_ZASÓB';
+        $adres_przekierowania = 'DEBUG:TEST_BEZ_PRZEKIEROWANIA ' . $_SERVER['HTTP_REFERER'];
         }
     }     
 
@@ -45,7 +45,6 @@ $czy_ciastko_poprzedniej_wizyty = false;   // już wizytowana witryna niegdyś?
             $data_poprzedniej_wizyty_format = strftime( "%Y.%m.%d", $data_poprzedniej_wizyty );   // konwersja na "ludzki termin"  -- format standardowych parametrów zawsze kompatybilny 
             $godzina_poprzedniej_wizyty_format = strftime( "%H:%M", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"
             }
-        
         }
     }
 
@@ -67,8 +66,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Witryna jest pełnoekranową przeglądarką zdjęć, które są częścią galerii umieszczonych w serwisie Żłobka Miejskiego Słoneczko w Chojnowie.">
-    <meta name="robots" content="index, follow"> 
+    <meta name="description" content="Witryna jest pełnoekranową przeglądarką zdjęć, które są częścią galerii umieszczonych w serwisie Żłobka Miejskiego Słoneczko w Chojnowie." />
     <title>Galeria ze Żłobka w Chojnowie<?php   if ( $serwer_lokalny ) echo " &ndash; " . $_SERVER['SERVER_NAME'] ?></title>
     
     <link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
@@ -163,7 +161,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                             if ( ( $czy_z_przekierowania === false ) && ( $adres_przekierowania ) || true )  // tworzenie elementu z notyfikacją przekierownia !!!TRUE MA TU NIE BYĆ DOCELOWO!!!
                             {
                             echo '<div id="powiadamiacz_przekierowania" class="powiadamiacz">';    
-                            echo "<h3>Witaj Wędrowcze! Trafiłeś tu z adresu <span>{$adres_przekierowania}</span></h3>";
+                            echo "<h3>Witamy w skromnych progach Internetowy Wędrowcze! Trafiłeś tu z adresu <span>{$adres_przekierowania}</span></h3>";
                             echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund.</p>';    
                             echo '<div class="pasek"></div>';
                             echo '</div>';    
@@ -172,10 +170,10 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                             if ( $czy_ciastko_poprzedniej_wizyty )  // tworzenie elementu z notyfikacją daty ostatnich odwiedzin (jakiś odległy termin)
                             {
                             echo '<div id="powiadamiacz_ciastka" class="powiadamiacz">';    
-                            echo "<h4>Pamiętamy, że w dniu <span>{$data_poprzedniej_wizyty_format}</span> konkretnie o godzinie <span>{$godzina_poprzedniej_wizyty_format}</span> ostatnio odwiedzono ten serwis.</h4>";
-                            echo "<h4>Witamy ponownie po {$ile_dni_temu_odwiedzone}. dniach nieobecności";
+                            echo "<h4>Witamy ponownie po {$ile_dni_temu_odwiedzone}. dniach (/dniu) nieobecności";
                                 if ( $laczna_ilosc_wizyt > 1 ) echo ", jako <span>{$laczna_ilosc_wizyt}</span>. odwiedziny.</h4>";
-                                else echo ".</h4>"; 
+                                else echo "!</h4>";
+                            echo "<h4>Dobrze pamiętamy, że w dniu <span>{$data_poprzedniej_wizyty_format}</span> konkretnie o godzinie <span>{$godzina_poprzedniej_wizyty_format}</span> ostatnio odwiedzono ten serwis.</h4>";
                             echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund.</p>';    
                             echo '<div class="pasek"></div>';
                             echo '</div>';    
@@ -368,23 +366,34 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.25</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.26</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
-                   <div>
+                    <div>
                         <h3>Dla Hani</h3>
                         <p>Bo tak! Z mniejszą dedykacją dla Szymonka i Ninki też. Niech za jakiś czas maluchy zobaczą siebie, jak wyglądały kiedyś (czyli teraz).</p>
                         <h3>Jaki jest cel?</h3>
                         <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
                         <h3>Jeszcze raz po polskiemu</h3>
-                        <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie żłobka. Przede wszystkim wygoda, ale też chęć przedłużenia życia myszom oraz powierzchniom dotykowym komputerów zdecydowała o zmniejszeniu obciążenia (konkretnie z niepotrzebnego klikania kursorem w przycisk <em>powrót</em> -- [&lt;-] w przeglądarce www oraz powiązanego z nim kolejnego niepotrzebnego kliknięcia w kolejne zdjęcie, itd. aż do końca danej galerii, przemnożone przez ilość podstron danej galerii...). Nadmiernie porysowanych ekranów w telefonach, czy tabletach też nie chemy, prawda? Nazbyt zużyty przycisk myszy lub wytarty (albo przebity) gładzik w laptopie zmusza do zakupu urządzenia wskazującego... </p>
+                        <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie Żłobka Miejskiego w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> .</p>
+                        <h3>Wygoda i lepsza nawigacja</h3>
+                        <p>Przede wszystkim wygoda i ułatwienie nawigowania pomiędzy obrazkami lub/i grupami obrazków. Umożliwienie poprawnego wyświetlania i nawigowania na małych ekranach telefonów oraz ergonomia interfesu dotykowego na różnych urządzeniach jako kolejny motor zmian.</p>
+                        <h3>Inne cele</h3>
+                        <p>Pośrednio pojawiła się też chęć przedłużenia życia zabieganym i przyciśnętym myszom, wytartym powierzchniom dotykowych w laptopach oraz przetwornikom w wyświetlaczach mobilnych (że nie wspomnę przy tym nadmiernie zmęczonego przycisku <em>Powrót</em> w przeglądarce lub telefonie, udręczonego przez ciągły nacisk by przejśc do kolejnego obrazka/galerii w macierzystej witrynie Żłobka).<br />
+                        Nie jest to też antyreklama pewnego sklepu komputerowego, gdzie można zakupić sprzęt komputerowy lub w funkcjonującym serwisie naprawić niedomagania posiadanego sprzętu.</p>
                     </div>
                     <div>       
-                        <h3>(to nie jest antyreklama pewnego sklepu komputerowego) &plus; trochę technologicznego bełkotu</h3>    
-                        <p>Po prostu ten serwis zapewnia oszczędność czasu użytkownikowi i zużywa mniej <em>pakietów mobilnego internetu</em>. Zyskujemy przy przeglądaniu kolejnych zdjęć z danej galerii, skoro nie musi być pobierana, przetwarzana i wyświetlana od nowa prawie ta sama struktura witryny, odpowiedzialna za wygląd każdej podstrony z dużym zdjęciem. <em>Duże zdjęcia</em>, jako podgląd galerii, tworzone są dynamicznie. Przy braku limitów na transfer też zyskujemy, bo przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania miniatur obrazków (funkcji &quot;cache&quot; nie liczę). Pośrednim efektem jest mniejsze &quot;katowanie&quot; serwera macierzystego przy każdym podglądzie dużego obrazka oraz ponownym przejściu do kolejnego (licząc uprzedni powrót do zasobów w pamięci przeglądarki). Same plusy wynikają z korzystania z tej <em>nakładki</em>, prawda? Zachęcam do dalszego użytkowania i testowania.</p>    
+                        <h3>Ogólne superlatywy</h3>    
+                        <p><em>Zobacz Wnuka</em> zapewnia użytkownikowi łatwość przeglądania konkretnych zdjęć oraz ułatwia nawigowanie pomiędzy galeriami zdjęć, ale też oszczędza czas użytkownika podczas tego przeglądania. Do tego zużywa mniej <em>pakietów mobilnego internetu*</em>.</p>
+                        <h3>Pojedyncze pobieranie i dynamiczne tworzenie treści</h3>    
+                        <p>Zyskujemy przy przeglądaniu kolejnych zdjęć z danej galerii, nie potrzeba pobierać, przetwarzać i wyświetlać od nowa tej samej struktury witryny z podmienionym zdjęciem. U nas zmieniają się tylko miniatury lub podgląd dużych zdjęć, jako elementy bieżącej galerii - tworzone są one dynamicznie, podczas przeglądu konkretnej galerii.</p> 
+                        <h3>Zmienianie obrazków</h3>    
+                        <p>Przy braku limitów na transfer też zyskujemy, bo przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania miniatur obrazków (funkcji &quot;cache&quot; nie liczę). Pośrednim efektem jest mniejsze &quot;katowanie&quot; serwera macierzystego, które normalnie odbywa się przy każdym podglądzie kolejnego (dużego) obrazka.</p>
+                        <h3>Pojedyncze pobieranie #2</h3>    
+                        <p>Same plusy wynikają z korzystania z tej <em>nakładki</em>, prawda? Zachęcam do dalszego użytkowania i testowania.</p>    
                         <h3>Informacje i zastrzeżenia</h3>
-                        <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
+                        <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka Miejskiego w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
                         <h3>Kontakt</h3>
                         <p>Wszelkie uwagi, skargi, wnioski i propozycje funkcjonalności lub zaobserwowane błędy w działaniu serwisu można słać na poniższy adres email <a href="#" id="adres_email">nieodbieram@gdzieś.w.internecie.com</a></p>
                     </div>
@@ -398,9 +407,9 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <p>Niniejszy serwis służy do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagane istnienie i funkcjonowanie macierzystego serwisu www, bez niego po prostu nie pojawiają się żadne treści tutaj &colon;P.</p>
                         <h3>Podstrony</h3>
                         <p>Wygodne przeglądanie w galeriach, ograniczających nadmiarowe klikanie działa prawidłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis umożliwia łatwą nawigację pomiędzy kolejnymi obrazkami i ewentualnymi podstronami danej galerii (kolejnymi grupami obrazków). <br />
-                        Bieżący serwis zezwala na przeglądania tylko zawartości określonego żłobka, nie wyświetlą się pokazy zdjęć z innych adresów.</p>
+                        <em>Zobacz Wnuka</em> pozwala na przeglądania tylko zawartości tego Żłobka, nie wyświetlą się pokazy zdjęć z innych adresów.</p>
                         <h3>Pożegnanie <em>kopiuj-wklej</em></h3>
-                        <p>Niegdysiejsza funkcjonalność zmuszała do podania działającego odnośnika z serwisu <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a>, tj. adresu  konkretnej grupy zdjęć. Teraz przegląd wszystkich dostępnych galerii odbywa się bezpośrednio z tej witryny. Przekazywania adresu podstrony ze zdjęciami do tutejszego formularza zostało zaniechane z uwagi na małą wygodę tej operacji.</p>
+                        <p>Pierwotna funkcjonalność <em>Zobacz Wnuka</em> zmuszała do podania konkretnego (i działającego!) odnośnika z serwisu <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a>, jako &quot;namiar&quot; na daną grupy zdjęć (tę konkretną galerię lub adres jednego ze zdjęć). Mechanizm <em>kopiuj-wklej</em> nie był zbyt wygodny ani intuicyjny, co przeczyło zasadzie łatwej obsługi. Szybko wprowadzono udogodnienia w interfejsie, aby przegląd wszystkich dostępnych galerii odbywał się prosto i przyjemnie.</p>
                         <h3>Reklamy z hostingu? Panie, jakie reklamy?!</h3>
                         <p>Rzeczywistość darmowego hostingu nie rozpieszcza, zatem ewentualne, możliwe i narzucane przez firmy hostingowe treści (reklamy!) mogą psuć ogólne odczucia, a przede wszystkim mogą diametralnie zmieniać wygląd i zachowanie witryny na małych ekranach. Mogą się pojawiać, jeżeli tylko posiadają wysoką odporność na magię znikania.</p>
                     </div>
@@ -441,7 +450,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                             <li class="tech_nie">Web Components</li>
                             <li class="tech_nie">Bootstrap</li>
                             <li class="tech_nie">Foundation</li>
-                            <li class="tech_nie">ES >= v6 / ES >= 2015</li>
+                            <li class="tech_nie">ES >= v6 || ES >= 2015</li>
                             <li class="tech_nie">promise / observable / async</li>                    
                             <li class="tech_nie">Node.js</li>
                             <li class="tech_nie">SASS / LESS / PostCSS</li>
@@ -506,7 +515,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     echo "</pre>";
                     ?>
                     
-                Powyższe wkrótce zniknie, gdy tylko zostanie osiągnięty kolejny etap testów.   
+                <strong>Powyższe wkrótce zniknie, gdy tylko zostanie osiągnięty kolejny etap testów.</strong>   
                 </p>        
                 </div>
             </div>
