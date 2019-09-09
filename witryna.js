@@ -2,7 +2,7 @@
 
 $(document).ready(function () 
 {
-/** GARŚĆ TEORII i FAKTÓW:
+/* GARŚĆ TEORII i FAKTÓW:
 * ścieżka pełna do zdjęcia:	
 * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdj_XXXXX.jpg			// <-- adres zdjęcia, X to cyfra [0..9]
 * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdjp_XXXXX.jpg 	// <-- adres miniatury zdjęcia ()
@@ -119,11 +119,13 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     //console.log('Podstrona - odnośnik niezaładowany: ' + adres_zasobu + ", podstrona " + dane.ktoraPodstrona);    
                     var komunikatOBledzie = "Nie udało się załadować wskazanej podstrony nr <strong>" + nrPodstronyGalerii + "</strong>. dla galerii o numerze <strong>" + nrGalerii + "</strong>. Spróbuj ponownie.<br />Diagnostyka: kod błędu nr " + xhr.status + " (" + xhr.statusText.toLowerCase() + ") o statusie \"" + status + "\".";    
                     GenerujPowiadomienieOBledzie({ tytul : 'Problem z załadowaniem galerii #' + nrGalerii +'!', tresc : komunikatOBledzie });    // działa lepeij niż wcześniejszy standard
-                    PrzewinEkranDoElementu('div.blad', 500);    
+                    PrzewinEkranDoElementu('div.blad', 500);
+                    //OdblokujPrzycisk( '.przycisk_galeria:eq(' + ( dane.ktoraPodstrona - 1 ) + ')' );    // korekta na -1 brakującego, bieżący w jego miejscu (też wzpółgra z 0-podstawą dla EQ)
+                    OdblokujPrzycisk( '#galeria_paginacja_' + dane.ktoraPodstrona );    // łatwiej operować na konkretnym ID, jeśli najpierw prawidłowo tę paginację się wygenerowało (pasujące ID do przycisku) lub w oparciu o atr. VALUE 
                     }
-                    if ( status === "complete" )    // test, ale tego stanu być nie powinno
+                    if ( status === "complete" )    // test, ale tego stanu nie powinno być nigdy
                     {
-                    alert('Test zakończenia żądania - galeria podstrona');  // czekajcie, a może kiedyś zobaczycie ten alert
+                    alert('Test zakończenia żądania - galeria podstrona');  // czekajcie... a może kiedyś zobaczycie ten alert
                     }
                 
                 }); //load-END
@@ -241,7 +243,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                             {
                              // generowanie pierwszego ulepszonego powiadomienia - tworzenie jego pierwszej instancji 
                                 
-                            $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' + '</p>' );
+                            // $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' + '</p>' );
                             GenerujPowiadomienieOBledzie({ tytul : tytulBledu, tresc : komunikatOBledzie, ikonaZamykania : false, 
                                                           dodatkowaKlasa : "blad_dolaczania", przyciskAkcjiDolacz : true });
                             console.log('Generuję błąd dołączania po raz #' + g_suma_bledow_dolaczania + ' dla ' + nrPodstronyNiewczytanejGalerii 
@@ -539,7 +541,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         console.log('Natrafiono na odnośnik nr ' + (i+1) + ' o zawartości \'' + odnosnikPodstrony + '\'');
 
         //var nrGalerii = odnosnikPodstrony.split(",")[2]; // to był wystarczający warunek, póki w "tytule" nie zawarto przecinka/ów (",")
-        var nrGalerii = parseInt ( odnosnikPodstrony.substr( odnosnikPodstrony.lastIndexOf(",p") + 2, odnosnikPodstrony.length - 5 )	);
+        var nrGalerii = parseInt ( odnosnikPodstrony.substr( odnosnikPodstrony.lastIndexOf(",p") + 2, odnosnikPodstrony.length - 5 ) );
             // http.../u_misiow,a20,p2.html	
             // usuwanie przecinka i "p", które są o "2 przed" numerem podstrony galerii 
             // treść z numerem kończy się ".html" - pomijane te 5 znaków przy krojeniu STRINGU)
@@ -556,10 +558,11 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         var nowyPrzycisk = $('<button></button>', {
         // var nowyPrzycisk = $('<input></input>', { 
         // type : "button",            
-            id : "galeria_paginacja_" + ( i+1 ),
+            //id : "galeria_paginacja_" + ( i+1 ),  // tu generowane po kolei
+            id : "galeria_paginacja_" + nrGalerii,  // a tu użycie obliczonego numeru do konkretnej podstrony danej galerii (też po kolei, ale z wyłączeniem aktualnie wyswietlanej podstrony)
             class : "przycisk_galeria",
             value : nrGalerii, 
-            text : "Podstrona nr " + nrGalerii,
+            text : "Podstrona nr " + nrGalerii, // etykieta z konkretnym numerem do nawigowania
             "data-tag" : g_tag_do_podmiany_zdjecia,
             "data-adres_strony" : g_adres_strony,
             "data-adres_galerii" : odnosnikPodstrony,
@@ -716,7 +719,7 @@ $('div#selektor').show();   // też natychmiast pokaż przycisk-kontener do wybi
 } // GenerujSpisGaleriiPierwszyPrzebieg-END
 
     
-function OdczytajSpisGalerii ()     // refaktoryzacja jako NOWE - budowane na podstawie "GenerujSpisGalerii"
+function OdczytajSpisGalerii ()     // refaktoryzacja jako NOWE - budowane na podstawie "GenerujSpisGalerii" -- TO NIE JEST UŻYWANE JESZCZE
 {
     if ( g_biezaca_pozycja_galerii === 0 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
     {
@@ -800,7 +803,6 @@ $( miejsceDocelowe ).append( html );
     // czyszczenie kontenera źródłowego, dla testów pozostaje paginacja galerii -- docelowo i tak ten pojemnik źródłowy jest zerowany przy każdym odczycie/odpowiedzi
 $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
 // $( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie 
-    
     
     // złożone działanie w przypadku dołączania kolejnych podstron galerii
     if ( czyWybrane != 'WYBRANE' ) // lub jakikolwiek inna wartość niepusta argumentu
@@ -1309,24 +1311,30 @@ $('#wymiary').css('visibility', 'visible');
 }   // InicjalizujCSSzAktywnymJS-END
 
 
-function UkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
+function PokazIUkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
 {
-    
 sekundowyCzasAnimacji = parseInt( sekundowyCzasAnimacji ) || 5;
+    if ( sekundowyCzasAnimacji < 5 ) sekundowyCzasAnimacji = 5; // ogólnie na (+), też by zapobiec dzieleniu przez 0
 
+//$('#naglowek .powiadamiacz').css('display', 'block');   // pokaż każdę z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie    
+$('#naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje    
+    
     // zmniejszanie długości pasków powiadamiania - indywidualne czasy dla każdego z pasków z wspólnego zakesu
 $('#naglowek .pasek').each( function() {
-    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / 2 ; // maksymalnie -49% parametru (też częsci całości)
+//    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / 2 ; // maksymalnie -49% parametru (też częsci całości)
+    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / ( 2 + Math.floor( sekundowyCzasAnimacji % 5 ) ); 
     sekundowyCzasAnimacji -= dodatkowe_sekundy;    // tu ewentualna dekrementacja 
     var aktualnyPasek = this;
     $(this).css({ 'transition-duration' : sekundowyCzasAnimacji + 's', 'width' : 0 });    // tu wymuszona (i niejawna) konwersja liczby na string
     setTimeout( function() {
-        $(aktualnyPasek).parent('div').slideUp(1000);
+        $(aktualnyPasek).parent('div').slideUp(1000, function() {    // dla każdego z elementów powinna być osobna funkcja po ukończnieu animacji
+            $(this).remove();   // najlepiej usuwać dany kontener po animacji zniknięcia - tu zniknie każdy <div.powiadamiacz> z osobna 
+        });   
     }, sekundowyCzasAnimacji * 1010 );  // + minimalny nadkład opóźnienia
     
 }); // each-$('#naglowek .pasek')-END
     
-}   // UkryjPowiadomieniaOOdwiedzinach-END
+}   // PokazIUkryjPowiadomieniaOOdwiedzinach-END
     
     
 function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
@@ -1784,64 +1792,69 @@ function UsunKomunikatLubZmienNumeracjeWTresci ( elementKomunikatu )    // usuwa
     
 function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie ) 
 {
+// bez domyślnych parametrów staruje w tle i nie szkodzi zachowaniu; 
+// generalnie też bez rozgraniczenia LOCALHOST vs INNE_SERWERY i inne zachowanie domyślne
+//      tylko powiadomienie startuje w LOCALHOŚCIE (domyślnie jako środowisko DEV)
+ 
 // definicje funkcji wewnątrz wywołania - podległości... tylko, gdy mamy LOKALNE uruchamianie (też testowanie) ;)
-    if ( window.location.host == 'localhost' || nieTylkoLokalnie )  // też drugi parametr 
+    /*  if ( window.location.host == 'localhost' || nieTylkoLokalnie )  // też drugi parametr 
+    {   */
+    function NaprawAjaksa ()
     {
-        function NaprawAjaksa ()
-        {
-        g_przechwytywacz_php = "./przechwytywacz.php";    // ewentualnie użyć "stałych", aby nie powodować błędu i hardkodu w kilku miejscach
-        g_przechwytywacz_php_zapytanie = "?url_zewn=";
-            // + wizualizacja zmian  
-        $('.status_ajaksa').removeClass('status_awaria').addClass('status_norma');
-        }
-
-        function ZepsujAjaksa ()
-        {
-        g_przechwytywacz_php = "./przepuszczacz.php";  // dodatkowo zepsuto zapytanie    
-        //g_przechwytywacz_php = "./przechwytywacz.php";  // powrót do prawidłowgo oryginału z "przepuszczacza"  
-        g_przechwytywacz_php_zapytanie = "?url_dupa=";
-            // wizulizacja zmian  
-        $('.status_ajaksa').removeClass('status_norma').addClass('status_awaria');    
-        }
-
-        // zarejestruj operacje zdarzeń - dwa przeciwstawne przyciski
-        $('.zepsuj').click( function () { 
-            ZepsujAjaksa();
-                if ( $('#awaria_na_stale:checked').length == 1 ) AwariaWLocalStorage() ;    // ustawianie konkretnej wartości dla "awarii" lub czyszcznie pamięci dla tej komórki
-                else ZerujLocalStorage();
-        });    
-
-        $('.napraw').click( function () { 
-            NaprawAjaksa();
-                if ( $('#awaria_na_stale:checked').length == 1 ) NaprawaWLocalStorage() ;    // ustawianie konkretnej wartości dla "poprawnego działania" lub czyszcznie komórki pamięci
-                else ZerujLocalStorage();
-        });    
-
-        // na koniec wymuś automatyczny start "naprawy" -- stan bieżący winien być prawidłowy (chyba, ze określony parametr opcjonalny)    
-    NaprawAjaksa();
-        
-            // odczytanie stanu ze zmiennej... . 
-        
-        // ....
-            //     + dopracować PONIŻSZE warunki -- od nich zależy inicjownanie belki sterującej przy autortarcie programu..
-        // ...  + localStorage.removeItem()
-        
-            // inicjowanie stanu AJAKSA: 
-        if ( localStorage.getItem('awariaNaStale') == '<AWARIA!>' )
-        {
-        $( '#awaria_na_stale').prop('checked', true);   // ... ewentualnie zaznacz przełącznik na [X] 
-            //  ... 
-        }    
-            // odczytanie  stanu zminnej i ewentualna akcja (powtórzone 50% warunku :/)
-        if ( ( localStorage.getItem('awariaNaStale') == '<AWARIA!>') || ( czyZepsuc == 'ZEPSUJ!' ) ) 
-        {
-            // ...
-        ZepsujAjaksa();
-        }
-
-    PokazDebuggowanie();    //z tym bym poczekał na reakcje - kliknięcie własciwego przycisku... później usunąć po testach komunikatów o błędach
+    g_przechwytywacz_php = "./przechwytywacz.php";    // ewentualnie użyć "stałych", aby nie powodować błędu i hardkodu w kilku miejscach
+    g_przechwytywacz_php_zapytanie = "?url_zewn=";
+        // + wizualizacja zmian  
+    $('.status_ajaksa').removeClass('status_awaria').addClass('status_norma');
     }
-// nie rób nic dla 
+
+    function ZepsujAjaksa ()
+    {
+    g_przechwytywacz_php = "./przepuszczacz.php";  // dodatkowo zepsuto zapytanie    
+    //g_przechwytywacz_php = "./przechwytywacz.php";  // powrót do prawidłowgo oryginału z "przepuszczacza"  
+    g_przechwytywacz_php_zapytanie = "?url_dupa=";
+        // wizulizacja zmian  
+    $('.status_ajaksa').removeClass('status_norma').addClass('status_awaria');    
+    }
+
+    // zarejestruj operacje zdarzeń - dwa przeciwstawne przyciski
+    $('.zepsuj').click( function () { 
+        ZepsujAjaksa();
+            if ( $('#awaria_na_stale:checked').length == 1 ) AwariaWLocalStorage() ;    // ustawianie konkretnej wartości dla "awarii" lub czyszcznie pamięci dla tej komórki
+            else ZerujLocalStorage();
+    });    
+
+    $('.napraw').click( function () { 
+        NaprawAjaksa();
+            if ( $('#awaria_na_stale:checked').length == 1 ) NaprawaWLocalStorage() ;    // ustawianie konkretnej wartości dla "poprawnego działania" lub czyszcznie komórki pamięci
+            else ZerujLocalStorage();
+    });    
+
+    // na koniec wymuś automatyczny start "naprawy" -- stan bieżący winien być prawidłowy (chyba, ze określony parametr opcjonalny)    
+NaprawAjaksa();
+
+        // odczytanie stanu ze zmiennej... . 
+
+    // ....
+        //     + dopracować PONIŻSZE warunki -- od nich zależy inicjownanie belki sterującej przy autortarcie programu..
+    // ...  + localStorage.removeItem()
+
+        // inicjowanie stanu AJAKSA: 
+    if ( localStorage.getItem('awariaNaStale') == '<AWARIA!>' )
+    {
+    $( '#awaria_na_stale').prop('checked', true);   // ... ewentualnie zaznacz przełącznik na [X] 
+        //  ... 
+    }    
+        // odczytanie  stanu zminnej i ewentualna akcja (powtórzone 50% warunku :/)
+    if ( ( localStorage.getItem('awariaNaStale') == '<AWARIA!>') || ( czyZepsuc == 'ZEPSUJ!' ) ) 
+    {
+        // ...
+    ZepsujAjaksa();
+    }
+
+    if ( window.location.host == 'localhost' || nieTylkoLokalnie ) PokazDebuggowanie(); // drugi parametr też ma znacznie 
+        //tylko DEV lub z tym bym poczekał na reakcje - kliknięcie własciwego przycisku... później usunąć po testach komunikatów o błędach
+    
+    //} // if ( localhost )-END //... o czym wtedy myślałem?! -- nie zrobi nic dla innych serwerów 
     
 } // WystartujDebuggerLokalny-END    
 
@@ -1860,7 +1873,7 @@ var CoWStorage = OdczytajLocalStorage;
     if ( CoWStorage == '<AWARIA!>' || CoWStorage == '<BRAK AWARII>')    // "zaptaszenie" checkboksa tylko, gdy jedna z tych wartość jako zawartość 
     {
     $( '#awaria_na_stale').prop('checked', true);    
-    PokazDebuggowanie();
+    PokazDebuggowanie();    // bardzo dobre miejsce - gdy ustawione jest coś w pamięci przeglądarki to na starcie pokaż pasek debugowania (+)  
     return zawartoscDebuggowaniaLocalStorage;    
     }
 
@@ -1914,9 +1927,10 @@ var adres_zasobu_galerii = g_protokol_www + g_adres_strony;
 
 //$( g_wczytywanie_spis ).show(100); //
 PokazRamkeLadowania('spis');    
-    
 console.log('Załadowano spis treści dla ' + g_biezaca_pozycja_galerii + '. pozycji galerii, adres z http: "' + adres_zasobu_galerii + '" odnośnik: "' + adres_ostatniej_galerii + '".');	
+    // najpierw komunikat konsoli później działanie - odwrotnie niż każde zwykłe działanie
 WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres_ostatniej_galerii, g_element_zewnetrzny_spis, "spis_galerii" ); 
+
 }	// ZaczytajSpisGalerii-END
 
     
@@ -1936,7 +1950,7 @@ var pozycjaElementuWPionie;
     pozycjaElementuWPionie = $(element).offset().top; 
     console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ', pozycjaElementuWPionie, ' [px] (korektaY: ' + korektaY 
                 + ', czasA: ' + czasAnimacji + ')');    
-    $('html, body').animate({ scrollTop : (pozycjaElementuWPionie + korektaY) + 'px' }, czasAnimacji);  
+    $('html, body').animate( { scrollTop : (pozycjaElementuWPionie + korektaY) + 'px' }, czasAnimacji );  // dwa główne elementy dla zapewnienia kompatybilności
     }
 }   
 
@@ -2065,14 +2079,23 @@ function UbijReklamy ()
 $('a[href*=000webhost]').parent('div').remove();
     
     // cba.pl
-var cbaReklamaBig = $('center');
-    if ( cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tą wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
+var $cbaReklamaBig = $('center');
+    if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tę wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
     {
-    $( cbaReklamaBig ).parent().prev().remove();    // wywal małą reklamę - pasek u góry (ewentualnie to moze pozostać)
-    $( cbaReklamaBig ).parent().remove();           // ale to wielgachne bezwzględnie wylatuje (sorry cba)
+    $cbaReklamaBig.parent().prev().remove();    // wywal małą reklamę - pasek u góry (ewentualnie to może pozostać)
+    $cbaReklamaBig.parent().remove();           // ale to wielgachne bezwzględnie wylatuje (sorry cba)
+        // console.log('Ubijam_CBA #1 - <center>'); 
     }
-}   // UbijReklamy-END
+        // kolejna ewentualna reklama na CBA, co rozwala układ telefonu
+$cbaReklamaBig = $('img[usemap]');    
+    if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tą wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
+    {
+    // $cbaReklamaBig.sibling('map').remove();    // wywal opis odnośników do dużego bannera na górze, później właściwy obrazek
+    $cbaReklamaBig.parent().remove();           // albo po prostu pogoń kontener nadrzędny z DOMu (div#top_10)
+        // console.log('Ubijam_CBA #2 - <img usemap>');     
+    }
 
+}   // UbijReklamy-END
     
 // ---------- *** ----------  GRA -- POMOCNICZA OBSŁUGA  ---------- *** ----------     
 
@@ -2991,7 +3014,7 @@ var $this = $(this);
     var kontenerBledu = $this.parent('.blad');  // wystarczający krok o jeden poziom w górę
 //    kontenerBledu.hide(300, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
     kontenerBledu.slideUp(1000, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
-        // TODO: z jakiejś racji dowolny typ animacji chowającej rodzica elementu z focusem się zacina... ale na starych przeglądarkach smiga dobrze?!
+        // TODO: z jakiejś racji dowolny typ animacji chowającej rodzica elementu z focusem się zacina... ale na starych przeglądarkach śmiga dobrze?!
         // problem w CSS: transition: ALL ...; "ALL" jest zbyt zasobożerne, a stare www nie ogarniają "przejść"
     }
 });
@@ -3038,12 +3061,12 @@ $('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania
 // ***************************************************************************		
 
 InicjalizujCSSzAktywnymJS();
-UkryjPowiadomieniaOOdwiedzinach(10);    
+PokazIUkryjPowiadomieniaOOdwiedzinach(20);    
 InicjalizujRamkiLadowania();    
 //WystartujDebuggerLokalny( 'ZEPSUJ!' );    
 WystartujDebuggerLokalny();
 // GenerujPowiadomienieOBledzie(); // TEST wymuszony po raz pierwszy    
-GenerujPowiadomienieOBledzie({ tytul : 'TEST! Problem z odczytem zawartości zdalnej! TEST!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny (1). TO JEST TYLKO PRÓBNE WYWOŁANIE POWIADOMIENIA, BŁĘDU NIE MA... ale przycisk reaguje.', przyciskAkcjiOdswiez : true, ikonaZamykania : true });
+// GenerujPowiadomienieOBledzie({ tytul : 'TEST! Problem z odczytem zawartości zdalnej! TEST!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny (1). TO JEST TYLKO PRÓBNE WYWOŁANIE POWIADOMIENIA, BŁĘDU NIE MA... ale przycisk reaguje. I jeszcze nieco więcej tekstu, dla wzorcowego wypełnienia. <br />Jestę nowo linio?!', przyciskAkcjiOdswiez : true, ikonaZamykania : true });
     
 UbijReklamy();    
 InicjalizujPrzyciskiWyboruGalerii();

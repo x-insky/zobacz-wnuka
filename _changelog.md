@@ -1,3 +1,174 @@
+v0.5.26 - information notification changed; trying to hide elements but proper empty area and animated content should be displayed later by working JS, by 'PokazIUkryjPowiadomieniaOOdwiedzinach', and finally removed; no meta-robots tag; redefined static texts of footer area
+
+* v0.5.26 -- [2019-07-18]
+
+[*] MODIFIED
+
+-- index.php
+* altered the text of variable to direct show, that local server is used, even if no redirection
+  - value used in displayed inforamation notification
+* removed 'robots' meta tag, because its value is default, so the whole tag is useless
+* added XML style ending to existing meta tag of description 
+* changed the static texts which are fragments of both information notifications, about redirection and about last visit date
+* rearrange the static text of footer area, mainly inside container of id 'poco'
+  - broken text content of longer paragraphs into new shorter paragraph, which are separated by subheaders
+  - trying to keep the logically context of previus longer description
+  - the rule of short text for web content was applied
+* altered some texts of paragraphs, subheadings or list items
+* changed many comments for better explanatory content
+
+-- zlobek-styl.css
+* added hidden visibility rule to 'div' element of 'powiadamiacz' class (temporary visible notification)
+  - needed some property to be initial hided from CSS
+  - JS will reenable visibility for element but the area is constantly occupied by that element no mater of value of visibility!
+  - 'display: none' is better for no-area but the elements inside can't be animated by transition when element is initally not displayed, so when JS reenable their content some of them will be invisible!	
+* trying to alter the inner element of informational notification that way, to its occupied area will be empty and after showing its content will be full operate and be animated 
+  - added block type display to belt of initial 100% width (rather this is not the right way...)
+* removed few new lines or empty spaces or tabs
+
+-- witryna.js
+* renamed function 'UkryjPowiadomieniaOOdwiedzinach' to 'PokazIUkryjPowiadomieniaOOdwiedzinach'
+  - just for right name, because now first expression from its body are showing the contents of selected and initially hided element, by changing visibility attribute (instead previously changing the display property)
+  - changed also the behavior, now after the hiding animation the element is removed form the DOM structure 
+* removed loging from function 'UbijReklamy'
+  - the right effect is visible in browser, until the hosting find the new big ads
+  - changed the name in invocation of that function, of course
+
+---------------------------
+
+v0.5.25 - conditionally loading of minified versions of resources (CSS & JS) if available; meta tags 'description' & 'robots' in head; better reenabling button & functions: 'UbijREklamy', 'GenerujPodstronyGalerii' & 'WystartujDebuggerLokalny'; removed dual-basic notify of error for next-page-loads; removed displayed 'localhost'; no seconds inside info notify; debug notes in footer surrounded by box
+
+* v0.5.25 -- [2019-07-11]
+
+[+] ADDED
+
+-- new file 'zlobek-styl.min.css'
+* a minified version of 'zlobek-styl.css' file
+* for use on any external hosting (in 'production' environments) by conditionally generated 'link' tag, linked from 'index.php' file
+* 49,8% of original file size, in the time of this update (w/o zip transfer)
+
+-- new file 'witryna.min.js'
+* a minified version of 'witryna.min.js' file
+* for use on any external hosting by conditionally generated 'script' tag from 'index.php' file
+* for 'productional' use
+* 18,2% of original file size, in the time of this update (w/o server compression)
+
+-- index.php
+* added meta tags inside page head
+  - added meta tag of 'description' to describe the page to searchers 
+  - added meta tag of 'robots' but it's unnecessary when using default values of 'index, follow' and will be removed soon
+* created a logic of conditionally linking regular or minified version of needed resource
+  - used here for linking to a CSS file
+  - firstly the server environment detects variant of server, if it's local or remote
+  - depending this value as a differentiator, the external files are linked
+  - used here with 'link' attribute, precisely its 'href' attributre value
+  - a whole HTML element is built inside condition for simplicity, even if only a value of its attribute is changing
+  - a php function 'file_exists()' is used in condition to determine, if specified file exists
+  - if there is no minified file as specified, then the regular one is passed as a result of extra condition
+* the same idea works for loading another external resources, which can be minified, i.g. another CSS files or 'scripts'
+  - added new conditionally loaded script source, as main file of page logic
+  - 'script' element just before ending of 'body' tag
+* a lot less network traffic, less data to download
+
+[*] MODIFIED
+
+-- index.php
+* modified stored time inside variable, now it's hours and minutes only
+  - removed seconds because it's illogical from human point of view (it's too precisely specified time) 
+* moved inside comment the debug notification of local server, which was displayed under the page header
+* changed paragraph and added subheader just before place, where the debugging content is displayed (inside help section of footer)
+  - no more silly text
+  - all the content inside box wit container class, thich determines max width of that container
+* altered some comments, indentations, new lines or ending spaces
+
+-- zlobek-styl.css
+* changed lastly defined rule for error description of any notification (screens wider than 940px only)
+  - increased left padding from 9.5 to 10.5em
+  - added extra comment inside rule
+
+-- witryna.js
+* changed selection of previously disabled button, when navigating on gallery subpage ('galeria_podstrona' variant)
+  - invoked from inside of function 'WczytajZewnetrznyHTMLdoTAGU'
+  - from now the simpler and better working form of selector is used
+  - id of particular button is used with conjunction of its ordering number 
+  - no more too complicated selector with class and element counting and substraction at the end (sometimes misleading!)
+  - the same number used, which is taken from button extra defined attribute
+* finally removed the old style error notifications for internal notification system, mainly for simulating Ajax requests
+  - last place used was for displaying unsuccessful requests of loading next subpage of gallery list 
+  - previously logic generated double notification elements for new error, with old and new style already defined
+  - later defined notifications are better looking and working, so after many tests they should remains
+  - moved the prototype of error notifications into the comment 
+* slighty altered logic inside function 'GenerujPodstronyGalerii', where the subgallery navigation buttons are build
+  - the number at the ending of each gallery button id is determined by value of passed 'href' attribute 
+  - this number is not based on current step of internal loop  
+* removed unnecessary condition from function 'WystartujDebuggerLokalny'
+  - mainly removed that condition and returned to one level less of indentations for almost all of defined here functions
+  - but changed also the logic of auto displaying of Ajax status belt, depending from the server environment ('localhost: T/F') or extra parameter
+* expanded function 'UbijReklamy'
+  - renamed local variable name from 'cbaReklamaBig' to '$cbaReklamaBig'
+  - added condition to work if selected element was find
+  - added new code to removal new wide advertisement on selected hosting
+  - added loging statement to ensure that ad was here ;)
+* put into the comment the invocation of function, which displays the sample of error notification for test purposes
+  - just before commented out tested the longer text description and  layout with many new lines
+* JS code review
+  - added comments with current code description, if needed
+  - fixed mainly infirmities of comments: typos, missing letters or words 
+  - better indentations
+
+---------------------------
+
+v0.5.24 - info notifications with changed logic, now counting days of last visit and visit counter (also set in cookie); error notification text on right on wider screens; altered time of narrowing of belt inside info notification; a lot of debug info in footer area 
+
+* v0.5.24 -- [2019-07-06]
+
+[+] ADDED
+
+-- index.php
+* added the php code for counting the visits of the site
+  - for now the plain number is set into cookie
+  - define init value and some conditional logic if readed value form cookie is't right
+  - after each page display or it's refresh, a counter of visit is incremented by one and new value is stored init cookie of 'zlobek_zliczacz'
+  - also a two years of expiration set for this cookie 
+
+-- zlobek-styl.css
+* added new style for error notification description ('p' element inside 'div.blad'), when screen size exceeds 940px
+  - no text wrapping around image-like exclamation by high left padding value
+
+[*] MODIFIED
+
+-- index.php
+* changed the logic of referral link read, code inside first php block
+  - conditionally check both values of server environment and if they are present then try to obtain referral address
+  - if it's a local server, then referral string is pre and postfixed
+  - a 'strpos' function catch: 'false' vs '0 <= value'!!!
+* changed also the code of readed and created cookie, connected with last visit time
+  - the time value isn't saved as it is, to save the value inside cookie it's substracted by ten million of seconds (a big number is an equivalent about 115 days)
+  - when read this value from cookie, addition the same specified value is needed to retrieve proper value of time and date
+  - yes, encrypted value is a better way but this is simple use of cookie
+  - time and date values retrieved as previously on seperate variables
+  - if inner condition about differention in passed time of last cookie set is met, then the total days value is computed and stored as an integer value, and the extra differentiator of this state is set (variable indicator for cookie and passed unit of time)
+* just for debbuging and testing purposes modified the condition for showing info notification of site refferal
+  - it's always true, no dependants from server environment
+* if the cookie state variable is true, then the condition let displaying a message with previously visited date and time, your total visit number from and how long time passed since last visit in days
+  - to goal is presenting that notification only when about one week has passed since previous page visit, but it's hard to change text that notification without tampering cookie value
+  - visit counter is conditionally displayed if it's value is at least one (the text of notification changes)
+  - so for now the condition of counted time is much decreased, only to a one minute to frequently displays of this notification
+* added some variables and expression to display their results into  debugging content inside footer area (placed with other debugging code inside container with id 'pomoc')
+  - generating almost all of server environment values to show the difference between browsers (mainly new vs old version, almost no differences between current products)
+  - also printed some of inside conditional code values, used inside server processing this page
+  - just for observing the state and correcting conditional statements 
+  - all content here for future removal
+
+-- witryna.js
+* changed logic inside function 'UkryjPowiadomieniaOOdwiedzinach'
+  - added extra condition for general safety and not for setting too low numbers
+  - altered the formula of generated duration, based on given parameter
+  - achieved little longer animation durations, when values are multiples of five
+  - changed the passed value to 20 on function invocation
+  
+---------------------------
+
 v0.5.23 - changed error notification of selected gallery, first stage of loading display; no displacements on page by error notification image; no overlaping between error notifications; info notifications touched: builded as common, separately animated belts, date and time separation in text; max width of notfication types; fixed: selected number of gallery in notification
 
 * v0.5.23 -- [2019-06-28]

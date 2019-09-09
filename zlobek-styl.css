@@ -585,7 +585,6 @@ form#wyszukaj input {
 form#wyszukaj input[type="text"] {
     width: 35em;
 }
-
 	
 form#wyszukaj input[type="submit"] {
     /*background-color: darkblue; 
@@ -615,6 +614,7 @@ div.powiadamiacz {
     box-shadow: 1px 1px 3px darkblue;
     padding: 0.5em;
     margin: 0.5em auto;
+    visibility: hidden; /* gdy 'DISPLAY: NONE' to nie pokazuje i nie animuje się pasek wewnątrz tego kontenera */
 }
 
 div.powiadamiacz p {
@@ -623,6 +623,7 @@ div.powiadamiacz p {
 }
 
 header#naglowek .pasek {
+    display: block;
     width: 100%;
     max-width: 98%;
     height: 10px;
@@ -633,9 +634,7 @@ header#naglowek .pasek {
     border-radius: 2px;
     margin: 0 1%;
     transition: width 10s 0.2s linear; 
-
 }
-
 
 
 div#spis_tresci div#galeria_spis {
@@ -2320,6 +2319,10 @@ input[type=range]:hover::-ms-fill-upper {
         right: 8px;
     }
     
+    div.blad p {
+        padding-left: 10.5em;   /* brak zawijania pod obrazkiem z float w komunikacie */
+    }
+    
     form#wybierz_galerie input.szerszy_guzik {
         min-width: 255px;
     }
@@ -2380,7 +2383,7 @@ input[type=range]:hover::-ms-fill-upper {
     }
 
     div.powiadamiacz {
-        max-width: 1100px;   
+        max-width: 1100px;
     }   
     
     div.blad .krzyzyk_zamykanie {
