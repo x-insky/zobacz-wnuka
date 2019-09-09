@@ -2320,6 +2320,10 @@ input[type=range]:hover::-ms-fill-upper {
         right: 8px;
     }
     
+    div.blad p {
+        padding-left: 9.5em;
+    }
+    
     form#wybierz_galerie input.szerszy_guzik {
         min-width: 255px;
     }

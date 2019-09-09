@@ -1,3 +1,54 @@
+v0.5.24 - info notifications with changed logic, now counting days of last visit and visit counter (also set in cookie); error notification text on right on wider screens; altered time of narrowing of belt inside info notification; a lot of debug info in footer area 
+
+* v0.5.24 -- [2019-07-06]
+
+[+] ADDED
+
+-- index.php
+* added the php code for counting the visits of the site
+  - for now the plain number is set into cookie
+  - define init value and some conditional logic if readed value form cookie is't right
+  - after each page display or it's refresh, a counter of visit is incremented by one and new value is stored init cookie of 'zlobek_zliczacz'
+  - also a two years of expiration set for this cookie 
+
+-- zlobek-styl.css
+* added new style for error notification description ('p' element inside 'div.blad'), when screen size exceeds 940px
+  - no text wrapping around image-like exclamation by high left padding value
+
+[*] MODIFIED
+
+-- index.php
+* changed the logic of referral link read, code inside first php block
+  - conditionally check both values of server environment and if they are present then try to obtain referral address
+  - if it's a local server, then referral string is pre and postfixed
+  - a 'strpos' function catch: 'false' vs '0 <= value'!!!
+* changed also the code of readed and created cookie, connected with last visit time
+  - the time value isn't saved as it is, to save the value inside cookie it's substracted by ten million of seconds (a big number is an equivalent about 115 days)
+  - when read this value from cookie, addition the same specified value is needed to retrieve proper value of time and date
+  - yes, encrypted value is a better way but this is simple use of cookie
+  - time and date values retrieved as previously on seperate variables
+  - if inner condition about differention in passed time of last cookie set is met, then the total days value is computed and stored as an integer value, and the extra differentiator of this state is set (variable indicator for cookie and passed unit of time)
+* just for debbuging and testing purposes modified the condition for showing info notification of site refferal
+  - it's always true, no dependants from server environment
+* if the cookie state variable is true, then the condition let displaying a message with previously visited date and time, your total visit number from and how long time passed since last visit in days
+  - to goal is presenting that notification only when about one week has passed since previous page visit, but it's hard to change text that notification without tampering cookie value
+  - visit counter is conditionally displayed if it's value is at least one (the text of notification changes)
+  - so for now the condition of counted time is much decreased, only to a one minute to frequently displays of this notification
+* added some variables and expression to display their results into  debugging content inside footer area (placed with other debugging code inside container with id 'pomoc')
+  - generating almost all of server environment values to show the difference between browsers (mainly new vs old version, almost no differences between current products)
+  - also printed some of inside conditional code values, used inside server processing this page
+  - just for observing the state and correcting conditional statements 
+  - all content here for future removal
+
+-- witryna.js
+* changed logic inside function 'UkryjPowiadomieniaOOdwiedzinach'
+  - added extra condition for general safety and not for setting too low numbers
+  - altered the formula of generated duration, based on given parameter
+  - achieved little longer animation durations, when values are multiples of five
+  - changed the passed value to 20 on function invocation
+  
+---------------------------
+
 v0.5.23 - changed error notification of selected gallery, first stage of loading display; no displacements on page by error notification image; no overlaping between error notifications; info notifications touched: builded as common, separately animated belts, date and time separation in text; max width of notfication types; fixed: selected number of gallery in notification
 
 * v0.5.23 -- [2019-06-28]

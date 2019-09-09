@@ -12,24 +12,53 @@ $serwer_lokalny = false;            // identyfikacja lokalnego lub zdalnego uruc
 
 $adres_przekierowania = false;      // wejście na witrynę z konkretnego odnośnika (wewn/zewn) lub z odsyłacza wyszukiwarki 
         // uwaga na parametry $_SERVER - nie wszystkie dostępne w środowiskach różnych (czytaj STARYCH) przeglądarek, np. REFERER
-    if ( $_SERVER['HTTP_REFERER'] ) $adres_przekierowania = $_SERVER['HTTP_REFERER']; 
+    if ( isset( $_SERVER['HTTP_REFERER'] ) && isset( $_SERVER['SERVER_NAME'] ) ) 
+    {   
+    $czy_z_przekierowania = strpos( $_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME'] );   // czy z tego samego serwera czy z obcego adresu -- do tworzenia elementu html 
+        if ( $czy_z_przekierowania === false ) // nie jako alternatywa > -1 
+        {
+        $adres_przekierowania = $_SERVER['HTTP_REFERER'];
+        }
+        if ( $czy_z_przekierowania >= 0 ) // STRPOS: false vs [0..inf+] !!! -- ten warunek jest ZBĘDNY - tylko dla testów
+        {
+        $adres_przekierowania = 'TEN_SERWER_' . $_SERVER['HTTP_REFERER'] . '_TEN_ZASÓB';
+        }
+    }     
 
-$czy_z_przekierowania = strpos( $_SERVER['HTTP_REFERER'], $_SERVER['NAME'] );   // czy z tego samego serwera czy z obcego adresu -- do tworzenia elementu html 
-
-$ciastko_poprzedniej_wizyty = false;   // już wizytowana witryna niegdyś?
+$czy_ciastko_poprzedniej_wizyty = false;   // już wizytowana witryna niegdyś?
     if ( isset( $_COOKIE['zlobek_wizyta'] ) )  // weryfikacja istnienia zapisanego ciastka
     {
-        if ( $czas_teraz - (int) $_COOKIE['zlobek_wizyta'] > 60 ) // docelowo warunek na poprzednią wizytę zostanie wydłużony
-        {
-        $ciastko_poprzedniej_wizyty = true; // tu negacja wzorcowej logiki
-        $data_poprzedniej_wizyty = $_COOKIE['zlobek_wizyta'];
-        $data_poprzedniej_wizyty_format = strftime( "%Y.%m.%d", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
-        $godzina_poprzedniej_wizyty_format = strftime( "%H:%M:%S", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
+    $data_poprzedniej_wizyty = (int) $_COOKIE['zlobek_wizyta']; // też jakieś przekształcenie tu wstawić
+        if ( ( $data_poprzedniej_wizyty > 0 ) && ( $data_poprzedniej_wizyty < $czas_teraz ) )
+        { 
+            //dopiero tu przekształcenie wartości z ciastka (lepiej też odszyfrować)
+        $data_poprzedniej_wizyty += 10000000;
+        $roznica_czasu_odwiedzin = $czas_teraz - $data_poprzedniej_wizyty;    
+                    // 60 * 60 * 24 * 6.5 (6.5 dnia jako prawie pełny tydzień)
+            if ( $roznica_czasu_odwiedzin > 60 ) // docelowo warunek na poprzednią wizytę zostanie wydłużony
+            {
+            $ile_dni_temu_odwiedzone = intval( $roznica_czasu_odwiedzin / ( 60 * 60 * 24 ) );
+                // oblicznie różnicy czasu
+
+            $czy_ciastko_poprzedniej_wizyty = true; // tu negacja wzorcowej logiki
+            //$data_poprzedniej_wizyty = $_COOKIE['zlobek_wizyta'] + 
+            $data_poprzedniej_wizyty_format = strftime( "%Y.%m.%d", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
+            $godzina_poprzedniej_wizyty_format = strftime( "%H:%M:%S", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
+            }
+        
         }
     }
 
-setcookie('zlobek_wizyta', $czas_teraz, $czas_teraz + 3600 * 24 * 365 * 2 );  // ustawianie ciastka -- tak, dwa lata ważności ;)
+$laczna_ilosc_wizyt = 1;   
+    if ( isset( $_COOKIE['zlobek_zliczacz'] ) )  
+    {
+    $laczna_ilosc_wizyt = (int) $_COOKIE['zlobek_zliczacz'];
+        if ( $laczna_ilosc_wizyt < 0 ) $laczna_ilosc_wizyt = 0; // po prostu zerowanie stanu
+    $laczna_ilosc_wizyt++;    
+    }
 
+setcookie('zlobek_wizyta', $czas_teraz - 10000000, $czas_teraz + 3600 * 24 * 365 * 2 );  // ustawianie ciastka -- tak, dwa lata ważności ;)
+setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 * 2 );  // ustawianie ciastka -- zawsze z inkrementacją
 ?>
 
 
@@ -119,7 +148,7 @@ setcookie('zlobek_wizyta', $czas_teraz, $czas_teraz + 3600 * 24 * 365 * 2 );  //
                         // test aktualnego trybu, niejawnie określa to środowisko uruchomieniowe: DEBUGOWANIE / PRODUKCJA   
                             if ( isset( $serwer_lokalny ) ) echo("<h2>BIEŻĄCY SERWER: <strong>" . $_SERVER['SERVER_NAME'] . "</strong></h2>");
 
-                            if ( $czy_z_przekierowania === false )  // tworzenie elementu z notyfikacją przekierownia TRUE MA BY BYĆ!
+                            if ( ( $czy_z_przekierowania === false ) && ( $adres_przekierowania ) || true )  // tworzenie elementu z notyfikacją przekierownia !!!TRUE MA TU BYĆ!!!
                             {
                             echo '<div id="powiadamiacz_przekierowania" class="powiadamiacz">';    
                             echo "<h3>Witaj Wędrowcze! Trafiłeś tu z adresu <span>{$adres_przekierowania}</span></h3>";
@@ -128,11 +157,13 @@ setcookie('zlobek_wizyta', $czas_teraz, $czas_teraz + 3600 * 24 * 365 * 2 );  //
                             echo '</div>';    
                             }
                         
-                            if ( $ciastko_poprzedniej_wizyty )  // tworzenie elementu z notyfikacją daty ostatnich odwiedzin (jakiś odległy termin)
+                            if ( $czy_ciastko_poprzedniej_wizyty )  // tworzenie elementu z notyfikacją daty ostatnich odwiedzin (jakiś odległy termin)
                             {
                             echo '<div id="powiadamiacz_ciastka" class="powiadamiacz">';    
-                            echo "<h4>Pamiętamy, że w dniu {$data_poprzedniej_wizyty_format} konkretnie o godzinie {$godzina_poprzedniej_wizyty_format} ostatnio odwiedzono ten serwis.</h4>";
-                            echo "<h4>Witamy ponownie po X dniach nieobecności.</h4>";  // tak, wzór wprowadzić...  
+                            echo "<h4>Pamiętamy, że w dniu <span>{$data_poprzedniej_wizyty_format}</span> konkretnie o godzinie <span>{$godzina_poprzedniej_wizyty_format}</span> ostatnio odwiedzono ten serwis.</h4>";
+                            echo "<h4>Witamy ponownie po {$ile_dni_temu_odwiedzone}. dniach nieobecności";
+                                if ( $laczna_ilosc_wizyt > 1 ) echo ", jako <span>{$laczna_ilosc_wizyt}</span>. odwiedziny.</h4>";
+                                else echo ".</h4>"; 
                             echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund.</p>';    
                             echo '<div class="pasek"></div>';
                             echo '</div>';    
@@ -327,7 +358,7 @@ setcookie('zlobek_wizyta', $czas_teraz, $czas_teraz + 3600 * 24 * 365 * 2 );  //
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.23</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.24</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -427,6 +458,7 @@ setcookie('zlobek_wizyta', $czas_teraz, $czas_teraz + 3600 * 24 * 365 * 2 );  //
                     Wyswietl_zmienna_serwera( "SERVER_NAME" );
                     Wyswietl_zmienna_serwera( 'SERVER_ADDR' );
                     Wyswietl_zmienna_serwera( 'SERVER_PORT' );
+                    Wyswietl_zmienna_serwera( 'SERVER_PROTOCOL' );
                     
                     //Wyswietl_zmienna_serwera( $_SERVER['SERVER_PORT'] );
                     echo "<br />";
@@ -434,12 +466,35 @@ setcookie('zlobek_wizyta', $czas_teraz, $czas_teraz + 3600 * 24 * 365 * 2 );  //
                     Wyswietl_zmienna_serwera( 'REMOTE_ADDR' );
                     Wyswietl_zmienna_serwera( 'REMOTE_PORT' );
                     Wyswietl_zmienna_serwera( 'HTTP_REFERER' );
+                    Wyswietl_zmienna_serwera( 'HTTP_HOST' );
+                    
                     Wyswietl_zmienna_serwera( 'REQUEST_URI' );
                     Wyswietl_zmienna_serwera( 'REQUEST_METHOD' );
+                    Wyswietl_zmienna_serwera( 'REQUEST_TIME' );
                     Wyswietl_zmienna_serwera( 'HTTP_USER_AGENT' );
+                    Wyswietl_zmienna_serwera( "REDIRECT_STATUS" );
                     echo '$_COOKIES[\'zlobek_wizyta\']: <strong>' . $_COOKIE['zlobek_wizyta'] . '</strong><br />';
                     echo '$data_poprzedniej_wizyty: <strong>' . $data_poprzedniej_wizyty . '</strong><br />';
                     echo '$data_poprzedniej_wizyty_format: <strong>' . $data_poprzedniej_wizyty_format . '</strong><br />';
+                    echo '$czy_z_przekierowania: <strong>' . $czy_z_przekierowania . '</strong><br />';
+                    echo 'vs obliczona pozycja powyższego: <strong>' . strpos( $_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST'] ) . '</strong><br />';
+                    echo '$roznica_czasu_odwiedzin: ' . ( $roznica_czasu_odwiedzin / ( 60 * 60 * 24 * 7 ) );
+
+                    echo "<pre>";
+                    echo 'strpos(): <strong>' . strpos( "Mala dupa poszła spać", 'dupa') . '</strong><br />';
+                    echo 'isset $_SERVER["HTTP_REFERER"]: ' ;
+                    var_dump( isset( $_SERVER['HTTP_REFERER'] ) );
+                    echo 'isset $_SERVER["NAME"]: ' ;
+                    var_dump( isset( $_SERVER['NAME'] ) );
+                    echo '$czy_z_przekierowania: '; 
+                    var_dump( $czy_z_przekierowania );
+                    echo "<br />";
+                    echo '$adres_przekierowania: ';
+                    var_dump( $adres_przekierowania );
+                    echo "<br />";
+                    echo '$czy_z_przekierowania: <strong>' . $czy_z_przekierowania . "</strong><br />";
+                    echo '$dres_przekierowania: <strong>' . $adres_przekierowania . "</strong><br />";
+                    echo "</pre>";
                     ?>
                     
                 </p>        

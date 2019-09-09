@@ -799,8 +799,8 @@ $( miejsceDocelowe ).append( html );
 
     // czyszczenie kontenera źródłowego, dla testów pozostaje paginacja galerii -- docelowo i tak ten pojemnik źródłowy jest zerowany przy każdym odczycie/odpowiedzi
 $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
-// $( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie 
     
+// $( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie 
     
     // złożone działanie w przypadku dołączania kolejnych podstron galerii
     if ( czyWybrane != 'WYBRANE' ) // lub jakikolwiek inna wartość niepusta argumentu
@@ -1313,10 +1313,12 @@ function UkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
 {
     
 sekundowyCzasAnimacji = parseInt( sekundowyCzasAnimacji ) || 5;
+    if ( sekundowyCzasAnimacji < 5 ) sekundowyCzasAnimacji = 5; // ogólnie na (+), też by zapobiec dzieleniu przez 0
 
     // zmniejszanie długości pasków powiadamiania - indywidualne czasy dla każdego z pasków z wspólnego zakesu
 $('#naglowek .pasek').each( function() {
-    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / 2 ; // maksymalnie -49% parametru (też częsci całości)
+//    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / 2 ; // maksymalnie -49% parametru (też częsci całości)
+    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / ( 2 + Math.floor( sekundowyCzasAnimacji % 5 ) ); 
     sekundowyCzasAnimacji -= dodatkowe_sekundy;    // tu ewentualna dekrementacja 
     var aktualnyPasek = this;
     $(this).css({ 'transition-duration' : sekundowyCzasAnimacji + 's', 'width' : 0 });    // tu wymuszona (i niejawna) konwersja liczby na string
@@ -3038,7 +3040,7 @@ $('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania
 // ***************************************************************************		
 
 InicjalizujCSSzAktywnymJS();
-UkryjPowiadomieniaOOdwiedzinach(10);    
+UkryjPowiadomieniaOOdwiedzinach(20);    
 InicjalizujRamkiLadowania();    
 //WystartujDebuggerLokalny( 'ZEPSUJ!' );    
 WystartujDebuggerLokalny();
