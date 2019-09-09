@@ -1,3 +1,85 @@
+v0.5.25 - conditionally loading of minified versions of resources (CSS & JS) if available; meta tags 'description' & 'robots' in head; better reenabling button & functions: 'UbijREklamy', 'GenerujPodstronyGalerii' & 'WystartujDebuggerLokalny'; removed dual-basic notify of error for next-page-loads; removed displayed 'localhost'; no seconds inside info notify; debug notes in footer surrounded by box
+
+* v0.5.25 -- [2019-07-11]
+
+[+] ADDED
+
+-- new file 'zlobek-styl.min.css'
+* a minified version of 'zlobek-styl.css' file
+* for use on any external hosting (in 'production' environments) by conditionally generated 'link' tag, linked from 'index.php' file
+* 49,8% of original file size, in the time of this update (w/o zip transfer)
+
+-- new file 'witryna.min.js'
+* a minified version of 'witryna.min.js' file
+* for use on any external hosting by conditionally generated 'script' tag from 'index.php' file
+* for 'productional' use
+* 18,2% of original file size, in the time of this update (w/o server compression)
+
+-- index.php
+* added meta tags inside page head
+  - added meta tag of 'description' to describe the page to searchers 
+  - added meta tag of 'robots' but it's unnecessary when using default values of 'index, follow' and will be removed soon
+* created a logic of conditionally linking regular or minified version of needed resource
+  - used here for linking to a CSS file
+  - firstly the server environment detects variant of server, if it's local or remote
+  - depending this value as a differentiator, the external files are linked
+  - used here with 'link' attribute, precisely its 'href' attributre value
+  - a whole HTML element is built inside condition for simplicity, even if only a value of its attribute is changing
+  - a php function 'file_exists()' is used in condition to determine, if specified file exists
+  - if there is no minified file as specified, then the regular one is passed as a result of extra condition
+* the same idea works for loading another external resources, which can be minified, i.g. another CSS files or 'scripts'
+  - added new conditionally loaded script source, as main file of page logic
+  - 'script' element just before ending of 'body' tag
+* a lot less network traffic, less data to download
+
+[*] MODIFIED
+
+-- index.php
+* modified stored time inside variable, now it's hours and minutes only
+  - removed seconds because it's illogical from human point of view (it's too precisely specified time) 
+* moved inside comment the debug notification of local server, which was displayed under the page header
+* changed paragraph and added subheader just before place, where the debugging content is displayed (inside help section of footer)
+  - no more silly text
+  - all the content inside box wit container class, thich determines max width of that container
+* altered some comments, indentations, new lines or ending spaces
+
+-- zlobek-styl.css
+* changed lastly defined rule for error description of any notification (screens wider than 940px only)
+  - increased left padding from 9.5 to 10.5em
+  - added extra comment inside rule
+
+-- witryna.js
+* changed selection of previously disabled button, when navigating on gallery subpage ('galeria_podstrona' variant)
+  - invoked from inside of function 'WczytajZewnetrznyHTMLdoTAGU'
+  - from now the simpler and better working form of selector is used
+  - id of particular button is used with conjunction of its ordering number 
+  - no more too complicated selector with class and element counting and substraction at the end (sometimes misleading!)
+  - the same number used, which is taken from button extra defined attribute
+* finally removed the old style error notifications for internal notification system, mainly for simulating Ajax requests
+  - last place used was for displaying unsuccessful requests of loading next subpage of gallery list 
+  - previously logic generated double notification elements for new error, with old and new style already defined
+  - later defined notifications are better looking and working, so after many tests they should remains
+  - moved the prototype of error notifications into the comment 
+* slighty altered logic inside function 'GenerujPodstronyGalerii', where the subgallery navigation buttons are build
+  - the number at the ending of each gallery button id is determined by value of passed 'href' attribute 
+  - this number is not based on current step of internal loop  
+* removed unnecessary condition from function 'WystartujDebuggerLokalny'
+  - mainly removed that condition and returned to one level less of indentations for almost all of defined here functions
+  - but changed also the logic of auto displaying of Ajax status belt, depending from the server environment ('localhost: T/F') or extra parameter
+* expanded function 'UbijReklamy'
+  - renamed local variable name from 'cbaReklamaBig' to '$cbaReklamaBig'
+  - added condition to work if selected element was find
+  - added new code to removal new wide advertisement on selected hosting
+  - added loging statement to ensure that ad was here ;)
+* put into the comment the invocation of function, which displays the sample of error notification for test purposes
+  - just before commented out tested the longer text description and  layout with many new lines
+* JS code review
+  - added comments with current code description, if needed
+  - fixed mainly infirmities of comments: typos, missing letters or words 
+  - better indentations
+
+---------------------------
+
 v0.5.24 - info notifications with changed logic, now counting days of last visit and visit counter (also set in cookie); error notification text on right on wider screens; altered time of narrowing of belt inside info notification; a lot of debug info in footer area 
 
 * v0.5.24 -- [2019-07-06]

@@ -10,7 +10,7 @@ $serwer_lokalny = false;            // identyfikacja lokalnego lub zdalnego uruc
     if ( $_SERVER['SERVER_NAME'] == 'localhost' ) $serwer_lokalny = true;    
         //.. celem dołączania bibliotek/plików nieskompresowanych lub po kompresji
 
-$adres_przekierowania = false;      // wejście na witrynę z konkretnego odnośnika (wewn/zewn) lub z odsyłacza wyszukiwarki 
+$adres_przekierowania = false;      // wejście na witrynę z konkretnego odnośnika (wewn/zewn) lub z odsyłacza wyszukiwarki
         // uwaga na parametry $_SERVER - nie wszystkie dostępne w środowiskach różnych (czytaj STARYCH) przeglądarek, np. REFERER
     if ( isset( $_SERVER['HTTP_REFERER'] ) && isset( $_SERVER['SERVER_NAME'] ) ) 
     {   
@@ -42,8 +42,8 @@ $czy_ciastko_poprzedniej_wizyty = false;   // już wizytowana witryna niegdyś?
 
             $czy_ciastko_poprzedniej_wizyty = true; // tu negacja wzorcowej logiki
             //$data_poprzedniej_wizyty = $_COOKIE['zlobek_wizyta'] + 
-            $data_poprzedniej_wizyty_format = strftime( "%Y.%m.%d", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
-            $godzina_poprzedniej_wizyty_format = strftime( "%H:%M:%S", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"  -- format standardowych parametrów zawsze kompatybilny 
+            $data_poprzedniej_wizyty_format = strftime( "%Y.%m.%d", $data_poprzedniej_wizyty );   // konwersja na "ludzki termin"  -- format standardowych parametrów zawsze kompatybilny 
+            $godzina_poprzedniej_wizyty_format = strftime( "%H:%M", $data_poprzedniej_wizyty );   // konwersja na "ludzki czas"
             }
         
         }
@@ -67,10 +67,21 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Witryna jest pełnoekranową przeglądarką zdjęć, które są częścią galerii umieszczonych w serwisie Żłobka Miejskiego Słoneczko w Chojnowie.">
+    <meta name="robots" content="index, follow"> 
     <title>Galeria ze Żłobka w Chojnowie<?php   if ( $serwer_lokalny ) echo " &ndash; " . $_SERVER['SERVER_NAME'] ?></title>
+    
     <link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
     <link rel="stylesheet" href="reset.css">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />  <!-- czcionka Muli -->	
+    <?php
+    // odczyt warunkowej minifikacji styli   
+        if ( $serwer_lokalny ) echo '<link rel="stylesheet" href="zlobek-styl.css" />';
+        else 
+            if ( file_exists('zlobek-styl.min.css') ) echo '<link rel="stylesheet" href="zlobek-styl.min.css" />';
+            else echo '<link rel="stylesheet" href="zlobek-styl.css" />';
+    ?>
+    
     <link rel="stylesheet" href="zlobek-styl.css" />
     <link rel="stylesheet" href="./lib/lightbox/css/lightbox.css" />
 
@@ -146,9 +157,10 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     <!--    <pre><?php /* var_dump( $_SERVER ); */ ?></pre>    -->
                         <?php
                         // test aktualnego trybu, niejawnie określa to środowisko uruchomieniowe: DEBUGOWANIE / PRODUKCJA   
-                            if ( isset( $serwer_lokalny ) ) echo("<h2>BIEŻĄCY SERWER: <strong>" . $_SERVER['SERVER_NAME'] . "</strong></h2>");
+                            // DEBUG:
+                        //if ( isset( $serwer_lokalny ) ) echo("<h2>BIEŻĄCY SERWER: <strong>" . $_SERVER['SERVER_NAME'] . "</strong></h2>");
 
-                            if ( ( $czy_z_przekierowania === false ) && ( $adres_przekierowania ) || true )  // tworzenie elementu z notyfikacją przekierownia !!!TRUE MA TU BYĆ!!!
+                            if ( ( $czy_z_przekierowania === false ) && ( $adres_przekierowania ) || true )  // tworzenie elementu z notyfikacją przekierownia !!!TRUE MA TU NIE BYĆ DOCELOWO!!!
                             {
                             echo '<div id="powiadamiacz_przekierowania" class="powiadamiacz">';    
                             echo "<h3>Witaj Wędrowcze! Trafiłeś tu z adresu <span>{$adres_przekierowania}</span></h3>";
@@ -199,8 +211,6 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     </div>
                     
                     
-                    
-                    
                     <nav id="spis_sterowanie">
                         <div class="kontener">
                         <p id="status_galerii_spis"></p>
@@ -213,8 +223,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
                         </div>
                         -->
-                      
-                       
+
                         <div class="kontener">
                             <div id="selektor">     
                                 <h2 id="selektor_naglowek" tabindex="0">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
@@ -293,6 +302,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             
         </header>
 
+        
         <div id="glowna">
 
             <div id="nazwa_galerii">
@@ -358,7 +368,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.24</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.25</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -444,16 +454,15 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla zamknięcia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>w produkcji</em>...</p>
                     </div>    
                 </div> <!-- .kontener -->
-                <div>
-                <h3>Info o przeglądarce i serwerze</h3>
-                <p>I jeszcz odrobina treści do wyswietlenia. I tu nieco tekstu, może trochę więcej albo nieco mniej. A tu nieco tekstu, może trochę więcej albo nieco mniej. A tu nieco tekstu, może trochę więcej albo nieco mniej.</p>    
+                <div class="kontener">
+                <h3>DEBUG_MODE: Info o przeglądarce i serwerze</h3>
+                <p>Poniżej zmienne środowiskowe, które zapewnia konkretny serwer oraz używana przeglądarka. Znaczne różnice dla starszych środowisk, zwłaszcza przeglądarkowych. Generalnie co nowsze to lepsze, gdyż zasobniejsze w wybrane parametry.</p>    
                 <p>
                     <?php
 
                     Wyswietl_zmienna_serwera( "PHP_SELF" );
                     Wyswietl_zmienna_serwera( "SCRIPT_FILENAME" );
                     Wyswietl_zmienna_serwera( "DOCUMENT_ROOT" );
-
 
                     Wyswietl_zmienna_serwera( "SERVER_NAME" );
                     Wyswietl_zmienna_serwera( 'SERVER_ADDR' );
@@ -497,6 +506,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     echo "</pre>";
                     ?>
                     
+                Powyższe wkrótce zniknie, gdy tylko zostanie osiągnięty kolejny etap testów.   
                 </p>        
                 </div>
             </div>
@@ -525,7 +535,14 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
     </script>
 
     <script src="./lib/fittext/jquery.fittext.js"></script>	
-    <script src="./witryna.js"></script> 		
+    <?php
+    // tu minifikację warunkowo odczytywać, gdy dostępna (warunki jednowierszowe, dodać ewentualnie "{}" dla czytelności)   
+        if ( $serwer_lokalny ) echo '<script src="./witryna.js"></script>';
+        else 
+            if ( file_exists('witryna.min.js') ) echo '<script src="./witryna.min.js"></script>';
+            else echo '<script src="./witryna.js"></script>';
+    ?>
+    	
     <script src="./lib/lightbox/js/lightbox.min.js"></script>
     <script>
         lightbox.option({   albumLabel : "Zdjęcie %1 z %2", 

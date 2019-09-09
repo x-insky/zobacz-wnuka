@@ -2321,7 +2321,7 @@ input[type=range]:hover::-ms-fill-upper {
     }
     
     div.blad p {
-        padding-left: 9.5em;
+        padding-left: 10.5em;   /* brak zawijania pod obrazkiem z float w komunikacie */
     }
     
     form#wybierz_galerie input.szerszy_guzik {
