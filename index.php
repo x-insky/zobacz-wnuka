@@ -293,11 +293,22 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
         <!--    </div>	-->  <!-- div#naglowek_kontener -->
             <!-- </div> -->  <!-- div-kontener  (na próbę) -->
             
-            <div id="brak_skryptow">
+<!--            <div id="brak_skryptow">
                 <h2>A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
                 <h3>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Zweryfikuj to i włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.</h3>
-            </div>
+            </div>-->
             
+            <div id="brak_skryptow" style="">
+                <div class="blad animacja_zolty_blysk">
+                    <h2 class="blad_tytul">A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
+                    <div class="blad_tresc">
+                        <div class="blad_ikona">!</div>
+                        <p>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Zweryfikuj to i włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.<br />
+                        Nie zapomnij na koniec odświeżyć stronę.</p>
+                    </div>
+                    <!--<div class="krzyzyk_zamykanie" tabindex="0">×</div>-->
+                </div>
+            </div>
         </header>
 
         
@@ -366,7 +377,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.26</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.27</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -521,11 +532,13 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             </div>
         </footer>	
 
+        <div id="wymiary">      <!-- #wymiary przeniesiono do wewnątrz kontenera -->
+            <h1>&nbsp;</h1>    
+        </div>    
+        
     </div>	<!-- DIV#witryna -->
 
-<div id="wymiary">
-    <h1>&nbsp;</h1>    
-</div>
+
 
 <div class="kontener">
     <div id="odpluskwiacz_ajaksowy">
@@ -540,7 +553,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 </div>                           	
     <!-- ratunkowe jquery z serwera, ale przeglądarki i edytory nie lubią zagnieżdżonego SCRIPT, a zwłaszcza </SCRIPT> -->
     <script>
-        window.jQuery || document.write('<script src="./lib/jquery-1.12.4.min.js"></script' + '>');
+        window.jQuery || document.write('<script src="./lib/jquery-1.12.4.min.js"></script' + '>');  // nie robi się tego poprzez DOM?!
     </script>
 
     <script src="./lib/fittext/jquery.fittext.js"></script>	

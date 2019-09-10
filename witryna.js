@@ -1294,7 +1294,9 @@ function InicjalizujCSSzAktywnymJS()  // UWAGA! style kierowane pod konkretne el
     // pomocnicza klasa-wskaźnik, dla podległości lub ogólny "włącz/wyłącz" dla zawartości gdy jest/brakuje JS    
 $('#witryna').removeClass('brak_js');   
     // usuń ramkę z komunikatem o braku JS... już niepotrzebne -- powyższe + CSS załatwia sprawę lepiej
-// $('#brak_skryptow').css('display', 'none');    
+// $('#brak_skryptow').css('display', 'none');  
+    // czy kasować element z komunikatem o braku skryptów z DOMu? 
+ $('#brak_skryptow').remove();    // wariant z kasowaniem
     
     // ale NIE POKAZUJ wyzwalacza dla gry, bo to styl INLINE (sprawa dobrze załatwiona poprzez kwerendy)    
 // $('#zagraj').css('display', 'block');   
@@ -1306,7 +1308,7 @@ slonceLogo.removeClass('startowe_przesuniecie');
 // alternatywnie dla loga można po prostu wywalić atrybut klasy w całości (z całą zawartością), nie bacząc na skutki 
 
     // pokazywanie prostokąta z aktualnymi wymiarami okna przeglądarki    
-$('#wymiary').css('visibility', 'visible');  
+//$('#wymiary').css('visibility', 'visible');  // zmienione poprzez klasę rodzica "brak_js"
     
 }   // InicjalizujCSSzAktywnymJS-END
 
@@ -1325,10 +1327,15 @@ $('#naglowek .pasek').each( function() {
     dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / ( 2 + Math.floor( sekundowyCzasAnimacji % 5 ) ); 
     sekundowyCzasAnimacji -= dodatkowe_sekundy;    // tu ewentualna dekrementacja 
     var aktualnyPasek = this;
-    $(this).css({ 'transition-duration' : sekundowyCzasAnimacji + 's', 'width' : 0 });    // tu wymuszona (i niejawna) konwersja liczby na string
+//    $(this).css({ 'transition-duration' : sekundowyCzasAnimacji + 's', 'width' : 0 });    // tu wymuszona (i niejawna) konwersja liczby na string
+    $(this).css('transition-duration', sekundowyCzasAnimacji + 's');
+    var czasozabieracz = $(this).innerHeight; 
+    $(this).css('width', '0' );    // tu wymuszona (i niejawna) konwersja liczby na string
     setTimeout( function() {
         $(aktualnyPasek).parent('div').slideUp(1000, function() {    // dla każdego z elementów powinna być osobna funkcja po ukończnieu animacji
-            $(this).remove();   // najlepiej usuwać dany kontener po animacji zniknięcia - tu zniknie każdy <div.powiadamiacz> z osobna 
+            //$(this).remove();   // najlepiej usuwać dany kontener po animacji zniknięcia - tu zniknie każdy <div.powiadamiacz> z osobna 
+// TU WYŁĄCZONO USUWANIE ELEMENTU
+            
         });   
     }, sekundowyCzasAnimacji * 1010 );  // + minimalny nadkład opóźnienia
     

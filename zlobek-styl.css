@@ -180,7 +180,7 @@ p.blad_odswiez {
 
 div.blad {
     position: relative;
-    width: 90%;
+    width: 94%;     /*  korekta z 90% na małe ekrany */
     background-color: #00b; /* == darkblue */
     border-radius: 5px;
     /*font-size: 16px;*/    /* RESET wielkości czcionki dla podległych elementów!*/
@@ -606,7 +606,14 @@ header#naglowek .ciemne_tlo_spis {
     width: 100%;    
 }
 
+.brak_js div.powiadamiacz {
+    display: none;
+        visibility: hidden; /* przeniesione ze "zwykłej" klasy !! */
+}
+
 div.powiadamiacz {
+    display: block;
+    visibility: visible; /* gdy 'DISPLAY: NONE' to nie pokazuje i nie animuje się pasek wewnątrz tego kontenera */
     width: 90%;
     background-color: cornflowerblue;
     border: 1px solid #00b;
@@ -614,7 +621,6 @@ div.powiadamiacz {
     box-shadow: 1px 1px 3px darkblue;
     padding: 0.5em;
     margin: 0.5em auto;
-    visibility: hidden; /* gdy 'DISPLAY: NONE' to nie pokazuje i nie animuje się pasek wewnątrz tego kontenera */
 }
 
 div.powiadamiacz p {
@@ -635,7 +641,6 @@ header#naglowek .pasek {
     margin: 0 1%;
     transition: width 10s 0.2s linear; 
 }
-
 
 div#spis_tresci div#galeria_spis {
     background-color: cornflowerblue;
@@ -875,22 +880,6 @@ nav#spis_sterowanie h2 {
 
 
 div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
-        /* wcześnijsze style */
-        /*    display: none;	
-        max-width: 16em;
-        background-color: cornflowerblue;
-        color: blue;
-        margin: 1em;	
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 0.3em;
-        padding-bottom: 0.3em;
-        cursor: pointer;	
-        border-radius: 8px;
-        border: 2px solid blue;
-        box-shadow: 1px 1px 3px darkblue;		
-        transition: all 0.5s ease 0.1s;*/
-
     display: none;
     width: 90%;
     background-color: cornflowerblue;
@@ -910,13 +899,6 @@ div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
 div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:hover,
 div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:focus
 {
-        /* wczesniejsze style */
-
-        /* box-shadow: 1px 1px 3px blue, 0px 0px 3px black; */
-            /* box-shadow: 0 0 3px rgba(0,0,0, 0.6); */
-        /* background-color: blue;
-        color: yellow; */
-
     box-shadow: 1px 1px 3px 1px #5d6ad0, 0px 0px 4px 1px black;
     /* box-shadow: 0 0 3px rgba(0,0,0, 0.6); */
     background-color: #5d6ad0;
@@ -940,10 +922,6 @@ div#selektor h2#selektor_naglowek {
     padding-top: 0.3em;
     padding-bottom: 0.3em;    
     border-radius: 14px;
-        /*border-top-left-radius: 14px;    
-        border-top-right-radius: 14px;
-        border-bottom-left-radius: 14px;
-        border-bottom-right-radius: 14px;*/
     border: 2px solid #eee;
     cursor: pointer;
     transition: background-color 0.5s;    
@@ -1164,15 +1142,9 @@ div#spis_tresci div#skladowisko_status_wybranej_galerii {
 
 div#brak_skryptow {
     display: none;
-    background-color: darkred;
-    margin: 3em 2em;
-    padding: 1.5em 2em;
-    border: 2px dotted yellow;
+    padding: 1.2em 0.2em;   /* korekta na małe ekrany */    
 }
 
-div#brak_skryptow h2 {
-    color: white;
-}
 
 /*    --------------------------       GŁÓWNY ZACZYTYWANY BLOK      --------------------------    */
 
@@ -1209,22 +1181,6 @@ div#glowna div#nazwa_galerii {
     margin-bottom: 1em;	
     overflow: hidden;	
 }
-
-/*
-div#glowna div#nazwa_galerii h2 span {
-    padding: 0.5em;
-    color: yellow;
-    background-color: antiquewhite;
-}
-*/
-
-
-/*
-div#glowna div#nazwa_galerii h2 span:after {
-    content: " - ";
-    background-color: transparent;
-}
-*/
 
 
 div#glowna div#nazwa_galerii img {
@@ -1594,6 +1550,11 @@ footer#stopka ul li.tech_nie {
     background: url(grafiki/nie_ikona.png) 4px 1px no-repeat, whitesmoke;    
 }
 
+.brak_js div#wymiary {
+    visibility: hidden; /* do przeniesienia do tego kontenera, wcześniej poza nim; wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
+        /*display: none;*/    
+}
+
 div#wymiary {
     position: fixed;
     z-index: 250;
@@ -1607,7 +1568,7 @@ div#wymiary {
     border: 2px solid yellow;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.7);
     opacity: 0.7;
-    visibility: hidden; /* wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
+    visibility: visible; /* wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
         /*display: none;*/
 }
 
@@ -2201,6 +2162,10 @@ input[type=range]:hover::-ms-fill-upper {
         margin: 0 auto;
     }*/
     
+    div.blad {
+        width: 88%;
+    }
+    
     div.blad .blad_ikona {
         float: left;
         margin-top: 1.5%;
@@ -2211,7 +2176,8 @@ input[type=range]:hover::-ms-fill-upper {
         /* Próby ustalenia znacznego prawego lub/i dolnego marginesu powodują rozjeżdżanie się treści w danym elemencie grupującym
         to powiadomienie, np. przesunięty o 50% w prawo przycisk akcji lub tytuł kolejnego elementu. 
         Sąsiednie elementy powiadomień mogą być rozsunięte lub przesunięte, albo treści za ostatnim z nich, np. ikony tytułów galerii. 
-        Tekstowa zwartość akapitu generowana dynamicznie z różną długością opisu danego błędu. Standardowe problemy z "układem pływającym" :/.*/
+        Tekstowa zwartość akapitu generowana dynamicznie z różną długością opisu danego błędu. 
+        Standardowe problemy z "układem pływającym" :/.*/
         
         /*      margin-left: 12%;
         margin-right: 8%;

@@ -1,3 +1,76 @@
+v0.5.27 - better notification of dispabled JS, uses common style of internal notifications for AJAX errors (from now its width slighty changed both way); initial hiding of dimensions and info notify; removal noJS notify, not removing informational notifications; TODO: 'display: none' vs animated contents; removed old commented CSS
+
+* v0.5.27 -- [2019-08-12]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* created rules to initial hide of displaying the temporary informational notification and another element of displaying the the current size of browser working area
+  - useful when JS is disabled
+  - used with conjunction of main ancestor, of its special class 'brak_js'
+  - selector of notification: 'brak_js div.powiadamiacz'
+  - selector of area notification: 'brak_js div#wymiary'
+  - attribute 'visibility' is used with 'hidden' to not display the elements
+  - but the regular positioned element of info notification always occupy its place, even it's invisible!
+  - added rule 'display: none' to informational notification to complete hide it, but its content can't be properly displayed and animated from now!
+* remove above problems for better solution... ASAP!
+
+[*] MODIFIED
+
+-- index.php
+* redefined error notification of disabled JavaScript
+  - used the defined element structure and styles from defined inner error notification system
+  - comented out the old notification
+  - moved the text elements of notification into new structure of notification
+  - its only a text in better structure element, cannot use any interactivity or any logic of JS, because it disabled!
+  - achieved better UX and overall same style of notification
+* moved 'div' element of id 'wymiary' inside main element of page 'witryna'
+  - to achieve initial hiding that element by CSS, when JS is not functional in browser 
+* added comment inside internal 'script' tag
+* slighty changed the few words in comments or moved it to another line 
+
+-- zlobek-styl.css
+* modified the width of any error notification element of class 'blad' from 90% to 94% inside base style of element
+  - better area usage on very small screens
+  - but altered the width of error notification on media query threshold, when wider than 470px (limits the error notification to 88%)
+* modified 'the standard look and behavior' the element of informational notification
+  - element is visible only when JS is working
+  - removed previously defined rule 'visibility: hidden' 
+  - restored property 'display' to 'block' and 'visibility' to 'visible' value due to newly added initial hiding of ancestor class 'brak_js' 
+  - conflict: added comment notification of not displayed inner belt, which 'width' attribute should be animated after the element started to be visible on the page!
+* the same logic of CSS initial hidding used to restoring visibility for element of id 'wymiary'
+  - value of 'visible' placed into rule of its own selector (no dependency of parent class)
+* removed all stylish rules from main element of notification for disabled JavaScript, id of 'brak_skryptow'
+  - got rid background and border color definition
+  - remains rules only for 'display' and 'padding' property
+  - but the padding values changes from  '1.5em 2em' to '1.2em 0.2em'
+  - correction is needed because padding values are to big on small screens (added an extra comment for that)
+
+-- witryna.js
+* changed expressions inside function 'InicjalizujCSSzAktywnymJS'
+  - now the working JS will remove error notification of disabled Javascript from the DOM, previously hided by CSS rule
+  - added comments inside this function
+  - put into a comment a previously code, which make visible the element with id 'wymiary' (now CSS do it automatically, so commented it also)
+* alterations inside function 'PokazIUkryjPowiadomieniaOOdwiedzinach'
+  - break changing style of element onto two expressions to gain a 'gap' between jQuery changes of selected attributes
+  - also to change the 'width' attribute lastly, after set transition parameter
+  - for test purposes disabled the removal of informational notifications from the page, it's just hided 
+
+[-] REMOVED
+
+-- zlobek-styl.css
+* removed selector 'div#brak_skryptow h2' for previous notification of disabled JS title style
+  - now unnecessary, because new definition uses style for an error notification of AJAX
+* removed unused selector for distinguish current gallery title or number in gallery details
+  - selector: 'div#glowna div#nazwa_galerii h2 span' 
+  - and its dependent pseudoelement: 'div#glowna div#nazwa_galerii h2 span:after'
+* removed commented and not used for a long time group of rules inside few selectors:
+  - 'div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis'
+  - ''div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:focus' (& ':hover' too)
+  - 'div#selektor h2#selektor_naglowek'
+
+---------------------------
+
 v0.5.26 - information notification changed; trying to hide elements but proper empty area and animated content should be displayed later by working JS, by 'PokazIUkryjPowiadomieniaOOdwiedzinach', and finally removed; no meta-robots tag; redefined static texts of footer area
 
 * v0.5.26 -- [2019-07-18]
