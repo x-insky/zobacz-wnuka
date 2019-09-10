@@ -1,3 +1,17 @@
+v0.5.29 - changed the already changed changes
+
+* v0.5.29 -- [2019-08-21]
+
+[*] MODIFIED
+
+-- _changelog.md
+* changed some early changes log to common style of this file of changes ;) 
+  - trying to use the same style as *new* changes
+  - changes were introduced on the earliest versions of log file, i.e. the project surroundings in versions v0.1.X
+  - only this MarkDown like style content changed, which was introduced on first commits
+
+---------------------------
+
 v0.5.28 - showing less of debugging dump; initially hided elements or just hidden inside comments also removed; contents indented; CSS cleanings and removing unnecessary selectors & rules, towards the same code style
 
 * v0.5.28 -- [2019-08-19]
@@ -3630,6 +3644,7 @@ updated project state to v0.1.3
 * v0.1.3 -- [2017-10-08]
 
 [*] MODIFIED 
+
 -- index.php
 * restored auto loading a table of contents
 * renamed few project global variables in php by prefixing them with 'g_'
@@ -3637,29 +3652,31 @@ updated project state to v0.1.3
 
 ---------------------------
 
-# v0.1.2 - updated project state
+updated project state to v0.1.2
 
-# v0.1.2 -- [2017-10-07]
+* v0.1.2 -- [2017-10-07]
 
-## MODIFIED [*]
-### index.php
+[*] MODIFIED
+
+-- index.php
 * small changes in container ids
   - modified contents of selected buttons and text sections
 * testing behavior for successful and unsuccessful communication with nursery server
 
-## REMOVED [-]
-### index.php
+[-] REMOVED
 
+-- index.php
 * **temporary disabled** auto loading a table of contents
 
 ---------------------------
 
-# v0.1.1a - updated project state
+v0.1.1a - updated project state
 
-# v0.1.1a -- [2017-10-05]
+* v0.1.1a -- [2017-10-05]
 
-## ADDED
-### index.php
+[+] ADDED
+
+-- index.php
 * trying to automatic display a table of contents (first page)
   - auto start after each page opening or refreshing
   - opens home page last gallery list from nursery server (first page of table of gallery contents)
@@ -3670,41 +3687,74 @@ updated project state to v0.1.3
   - only if there any subgalleries exists
   - *button or buttons as a link to any other than actual displayed subgallery* (modified)
 
-## MODIFIED
-### index.php
-#### BUG! 
+[*] MODIFIED
+
+-- index.php
+* many changes inside file, mainly inside 'script' section...
+* lot of indentation changes, many new lines and rearranged contents
+  - tab keys vs spaces and vice versa
+  - used some comments in HTML
+
+[!] BUG! 
+
 * cannot view any galleries
    - the target area for uploaded images does not appear
    - thumbnail images are not displayed
    - only descriptions of photos without proper photos visible in the yellow test field
    - reference error in console: "TypeError: nr_galerii is undefined" 
 
-#### FIXED! the above bug (cannot view any galleries)
-  * specified right source container to search in
+[F] FIXED
+
+-- index.php
+* the above bug (cannot view any galleries)
+* specified right source container to search in
 
 ---------------------------
 
-# v0.1b - added project files
+v0.1b - added project files
 
-# v0.1b - [2017-09-25]
+* v0.1b - [2017-09-25]
 
-## ADDED
+[+] ADDED
 
-* PHP: 
-  - main index.php file
-  - interceptor file (przechwytywacz.php)
-* CSS:
-  - added css reset file
-  - many CSS rules in file
-  - added styles with gradients or single color background (polyfills)
-  - added simple media queries
-* JS:
-  - added jQuery lib v3.2.1
-  - added 'lightbox', a jQuery plugin with all needed resources
-* OTHERS:
-  - added log file ('_changelog.md' - this file)
+-- new file 'index.php'
+* main index.php file
+* for now all the HTML content and the overall logic (JavaScript) lands here 
 
-Available funcionalities:
+-- new file 'przechwytywacz.php'
+* interceptor file
+
+-- new file 'index.php'
+* main index.php file
+
+-- new file 'reset.css'
+* added css reset file
+
+-- new file 'styl.css'
+* many CSS rules in file
+* added styles with gradients or single color background (polyfills)
+* added simple media queries
+
+-- new file 'jquery-3.2.1.js' (untracked!)
+* added jQuery lib v3.2.1
+* this file linked from 'index.php'
+
+-- new file 'jquery-3.2.1.min.js' (untracked!)
+* added jQuery lib v3.2.1, as minified file
+
+-- new folder 'lightbox'
+* a place for holding Lightbox jQuery plugin 
+* also with three subfolders inside to hold all needed resources
+  - self explanatory names of resources as subfolders name: 'css', 'images' and 'js'
+* not mentioned here every file, see summary @git!
+  - the most important file to link is 'lightbox/js/lightbox.js' (unminified version)
+
+-- new file '_changelog.md'
+* added log file (this file!)
+
+[@] SUMMARY
+
+-- Available funcionalities:
 * displaying a first page of any gallery provided by form
   - displays subpage referers for current gallery only if any exist
   - not yet possible to browse any subpage even if available
@@ -3713,7 +3763,7 @@ Available funcionalities:
   - incorect value or no value displays error notyfication
   - incorect link referrer may display wrong or no gallery page
 * enables slideshow for any displayed images (thumbnail photos)  
-* sample address hardcoded into form field,
+* sample address hardcoded into form field
   - re-entering default value by nearest button
 * only one time views of a gallery
   - trigger buttons get disabled after use
@@ -3721,5 +3771,5 @@ Available funcionalities:
   - added refresh button in page header
 * yellow box just for checking existency of gallery subpages (only for viewing!)
 * added simple hide / show animation triggered by buttons in footer
-* *added basic loging of actions in console* (modified)
+* added basic loging of actions in console* (modified)
   
