@@ -1,3 +1,61 @@
+v0.5.28 - showing less of debugging dump; initially hided elements or just hidden inside comments also removed; contents indented; CSS cleanings and removing unnecessary selectors & rules, towards the same code style
+
+* v0.5.28 -- [2019-08-19]
+
+[*] MODIFIED
+
+-- index.php
+* removed some old debugging content from php, which are displayed inside 'pre' tag in footer area (container with id 'pomoc')
+  - the rest of the php printed variable values wil be removed soon 
+* changed static text near this temporary content between elements
+  - moved from regular 'strong' element to 'h4' header element
+* removed the commented content of previously defined form fields, where user have to put working URL address to any gallery
+  - input, two buttons and also few connected headers has gone 
+* removed the commented contents of static text of disabled JavaScript notification
+* above removings are here (and not inside 'removed' section) because no working content has been removed
+  - just deletions on prepared to deletion and commented out content
+* decreased indentation of 'div' element with id 'spis_tresci' and its content
+* changed indentations for a lots of form elements, inside 'div' element with id 'selektor'
+
+-- zlobek-styl.css
+* removed that commented content, which no longer looks like it's needed
+  - some old code, that is not used and replaced by new rules
+  - or the long not used elements (see 'removed' section)
+  - removed also commented definitions, especially with no defined rules
+  - removed any comments not related to rules or selector, especially if there are between selectors
+  - also the old commented out rules has gone, which was already replaced or another defined (especially indented rules inside comments)
+  - removed already commented i.g. each repeated definition for '#wymiary' selector inside media queries, because now the first media query threshold defines excellent alignment for the all wider screens 
+* CSS review and cleanings
+  - trying to use the same unified style inside this file
+  - removed unnecessary new lines (doubled or tripled), where are completely unnecessary
+  - used one empty line space between regular next HTML items or CSS selectors
+  - only an another groupings needs extra line space
+  - changed opening curly brace to be in the same line like its selector
+  - this brace goes to new line only at multiple selectors rule
+  - on multiple selectors, each of them is inside a new line, and the opening curly brace is underneath
+* moved up styles for internal debbuging of AJAX state, before definitions of animations and media query
+* added indentations for each unused defined animation
+  - extra comment added with updated name of the animation, which is used now
+* changed some comments texts, added few words for better comprehension
+
+[-] REMOVED
+
+-- index.php
+* removed the two unused elements with the same id of 'form_error'!
+  - yes, two named identically until now 
+  - a hiden content, which previously shown the simple error notification, when the value was out from given range
+  - never used, no connected logic
+  - now the sliders or numeric field is set to min or max by JS, when the input value is wrong (after blur or on submit event) 
+
+-- zlobek-styl.css
+* removed selectors for unused elements of old and simple notifications of errors, based on 'p' elemennts
+  - got rid common style for error notifications: 'p.blad', 'p.blad_dolaczenia', 'p.blad_odswiez'
+* removed selector for 'form_error' while its element is unused
+* removed all defined styles for form elements, which previously was inside form with id 'wyszukaj'
+  - deleted selectors and rules for: fieldset, text input, regular button of submit
+
+---------------------------
+
 v0.5.27 - better notification of dispabled JS, uses common style of internal notifications for AJAX errors (from now its width slighty changed both way); initial hiding of dimensions and info notify; removal noJS notify, not removing informational notifications; TODO: 'display: none' vs animated contents; removed old commented CSS
 
 * v0.5.27 -- [2019-08-12]
