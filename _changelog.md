@@ -1,3 +1,148 @@
+v0.5.29 - changed the already changed changes
+
+* v0.5.29 -- [2019-08-21]
+
+[*] MODIFIED
+
+-- _changelog.md
+* changed some early changes log to common style of this file of changes ;) 
+  - trying to use the same style as *new* changes
+  - changes were introduced on the earliest versions of log file, i.e. the project surroundings in versions v0.1.X
+  - only this MarkDown like style content changed, which was introduced on first commits
+
+---------------------------
+
+v0.5.28 - showing less of debugging dump; initially hided elements or just hidden inside comments also removed; contents indented; CSS cleanings and removing unnecessary selectors & rules, towards the same code style
+
+* v0.5.28 -- [2019-08-19]
+
+[*] MODIFIED
+
+-- index.php
+* removed some old debugging content from php, which are displayed inside 'pre' tag in footer area (container with id 'pomoc')
+  - the rest of the php printed variable values wil be removed soon 
+* changed static text near this temporary content between elements
+  - moved from regular 'strong' element to 'h4' header element
+* removed the commented content of previously defined form fields, where user have to put working URL address to any gallery
+  - input, two buttons and also few connected headers has gone 
+* removed the commented contents of static text of disabled JavaScript notification
+* above removings are here (and not inside 'removed' section) because no working content has been removed
+  - just deletions on prepared to deletion and commented out content
+* decreased indentation of 'div' element with id 'spis_tresci' and its content
+* changed indentations for a lots of form elements, inside 'div' element with id 'selektor'
+
+-- zlobek-styl.css
+* removed that commented content, which no longer looks like it's needed
+  - some old code, that is not used and replaced by new rules
+  - or the long not used elements (see 'removed' section)
+  - removed also commented definitions, especially with no defined rules
+  - removed any comments not related to rules or selector, especially if there are between selectors
+  - also the old commented out rules has gone, which was already replaced or another defined (especially indented rules inside comments)
+  - removed already commented i.g. each repeated definition for '#wymiary' selector inside media queries, because now the first media query threshold defines excellent alignment for the all wider screens 
+* CSS review and cleanings
+  - trying to use the same unified style inside this file
+  - removed unnecessary new lines (doubled or tripled), where are completely unnecessary
+  - used one empty line space between regular next HTML items or CSS selectors
+  - only an another groupings needs extra line space
+  - changed opening curly brace to be in the same line like its selector
+  - this brace goes to new line only at multiple selectors rule
+  - on multiple selectors, each of them is inside a new line, and the opening curly brace is underneath
+* moved up styles for internal debbuging of AJAX state, before definitions of animations and media query
+* added indentations for each unused defined animation
+  - extra comment added with updated name of the animation, which is used now
+* changed some comments texts, added few words for better comprehension
+
+[-] REMOVED
+
+-- index.php
+* removed the two unused elements with the same id of 'form_error'!
+  - yes, two named identically until now 
+  - a hiden content, which previously shown the simple error notification, when the value was out from given range
+  - never used, no connected logic
+  - now the sliders or numeric field is set to min or max by JS, when the input value is wrong (after blur or on submit event) 
+
+-- zlobek-styl.css
+* removed selectors for unused elements of old and simple notifications of errors, based on 'p' elemennts
+  - got rid common style for error notifications: 'p.blad', 'p.blad_dolaczenia', 'p.blad_odswiez'
+* removed selector for 'form_error' while its element is unused
+* removed all defined styles for form elements, which previously was inside form with id 'wyszukaj'
+  - deleted selectors and rules for: fieldset, text input, regular button of submit
+
+---------------------------
+
+v0.5.27 - better notification of dispabled JS, uses common style of internal notifications for AJAX errors (from now its width slighty changed both way); initial hiding of dimensions and info notify; removal noJS notify, not removing informational notifications; TODO: 'display: none' vs animated contents; removed old commented CSS
+
+* v0.5.27 -- [2019-08-12]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* created rules to initial hide of displaying the temporary informational notification and another element of displaying the the current size of browser working area
+  - useful when JS is disabled
+  - used with conjunction of main ancestor, of its special class 'brak_js'
+  - selector of notification: 'brak_js div.powiadamiacz'
+  - selector of area notification: 'brak_js div#wymiary'
+  - attribute 'visibility' is used with 'hidden' to not display the elements
+  - but the regular positioned element of info notification always occupy its place, even it's invisible!
+  - added rule 'display: none' to informational notification to complete hide it, but its content can't be properly displayed and animated from now!
+* remove above problems for better solution... ASAP!
+
+[*] MODIFIED
+
+-- index.php
+* redefined error notification of disabled JavaScript
+  - used the defined element structure and styles from defined inner error notification system
+  - comented out the old notification
+  - moved the text elements of notification into new structure of notification
+  - its only a text in better structure element, cannot use any interactivity or any logic of JS, because it disabled!
+  - achieved better UX and overall same style of notification
+* moved 'div' element of id 'wymiary' inside main element of page 'witryna'
+  - to achieve initial hiding that element by CSS, when JS is not functional in browser 
+* added comment inside internal 'script' tag
+* slighty changed the few words in comments or moved it to another line 
+
+-- zlobek-styl.css
+* modified the width of any error notification element of class 'blad' from 90% to 94% inside base style of element
+  - better area usage on very small screens
+  - but altered the width of error notification on media query threshold, when wider than 470px (limits the error notification to 88%)
+* modified 'the standard look and behavior' the element of informational notification
+  - element is visible only when JS is working
+  - removed previously defined rule 'visibility: hidden' 
+  - restored property 'display' to 'block' and 'visibility' to 'visible' value due to newly added initial hiding of ancestor class 'brak_js' 
+  - conflict: added comment notification of not displayed inner belt, which 'width' attribute should be animated after the element started to be visible on the page!
+* the same logic of CSS initial hidding used to restoring visibility for element of id 'wymiary'
+  - value of 'visible' placed into rule of its own selector (no dependency of parent class)
+* removed all stylish rules from main element of notification for disabled JavaScript, id of 'brak_skryptow'
+  - got rid background and border color definition
+  - remains rules only for 'display' and 'padding' property
+  - but the padding values changes from  '1.5em 2em' to '1.2em 0.2em'
+  - correction is needed because padding values are to big on small screens (added an extra comment for that)
+
+-- witryna.js
+* changed expressions inside function 'InicjalizujCSSzAktywnymJS'
+  - now the working JS will remove error notification of disabled Javascript from the DOM, previously hided by CSS rule
+  - added comments inside this function
+  - put into a comment a previously code, which make visible the element with id 'wymiary' (now CSS do it automatically, so commented it also)
+* alterations inside function 'PokazIUkryjPowiadomieniaOOdwiedzinach'
+  - break changing style of element onto two expressions to gain a 'gap' between jQuery changes of selected attributes
+  - also to change the 'width' attribute lastly, after set transition parameter
+  - for test purposes disabled the removal of informational notifications from the page, it's just hided 
+
+[-] REMOVED
+
+-- zlobek-styl.css
+* removed selector 'div#brak_skryptow h2' for previous notification of disabled JS title style
+  - now unnecessary, because new definition uses style for an error notification of AJAX
+* removed unused selector for distinguish current gallery title or number in gallery details
+  - selector: 'div#glowna div#nazwa_galerii h2 span' 
+  - and its dependent pseudoelement: 'div#glowna div#nazwa_galerii h2 span:after'
+* removed commented and not used for a long time group of rules inside few selectors:
+  - 'div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis'
+  - ''div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:focus' (& ':hover' too)
+  - 'div#selektor h2#selektor_naglowek'
+
+---------------------------
+
 v0.5.26 - information notification changed; trying to hide elements but proper empty area and animated content should be displayed later by working JS, by 'PokazIUkryjPowiadomieniaOOdwiedzinach', and finally removed; no meta-robots tag; redefined static texts of footer area
 
 * v0.5.26 -- [2019-07-18]
@@ -3499,6 +3644,7 @@ updated project state to v0.1.3
 * v0.1.3 -- [2017-10-08]
 
 [*] MODIFIED 
+
 -- index.php
 * restored auto loading a table of contents
 * renamed few project global variables in php by prefixing them with 'g_'
@@ -3506,29 +3652,31 @@ updated project state to v0.1.3
 
 ---------------------------
 
-# v0.1.2 - updated project state
+updated project state to v0.1.2
 
-# v0.1.2 -- [2017-10-07]
+* v0.1.2 -- [2017-10-07]
 
-## MODIFIED [*]
-### index.php
+[*] MODIFIED
+
+-- index.php
 * small changes in container ids
   - modified contents of selected buttons and text sections
 * testing behavior for successful and unsuccessful communication with nursery server
 
-## REMOVED [-]
-### index.php
+[-] REMOVED
 
+-- index.php
 * **temporary disabled** auto loading a table of contents
 
 ---------------------------
 
-# v0.1.1a - updated project state
+v0.1.1a - updated project state
 
-# v0.1.1a -- [2017-10-05]
+* v0.1.1a -- [2017-10-05]
 
-## ADDED
-### index.php
+[+] ADDED
+
+-- index.php
 * trying to automatic display a table of contents (first page)
   - auto start after each page opening or refreshing
   - opens home page last gallery list from nursery server (first page of table of gallery contents)
@@ -3539,41 +3687,74 @@ updated project state to v0.1.3
   - only if there any subgalleries exists
   - *button or buttons as a link to any other than actual displayed subgallery* (modified)
 
-## MODIFIED
-### index.php
-#### BUG! 
+[*] MODIFIED
+
+-- index.php
+* many changes inside file, mainly inside 'script' section...
+* lot of indentation changes, many new lines and rearranged contents
+  - tab keys vs spaces and vice versa
+  - used some comments in HTML
+
+[!] BUG! 
+
 * cannot view any galleries
    - the target area for uploaded images does not appear
    - thumbnail images are not displayed
    - only descriptions of photos without proper photos visible in the yellow test field
    - reference error in console: "TypeError: nr_galerii is undefined" 
 
-#### FIXED! the above bug (cannot view any galleries)
-  * specified right source container to search in
+[F] FIXED
+
+-- index.php
+* the above bug (cannot view any galleries)
+* specified right source container to search in
 
 ---------------------------
 
-# v0.1b - added project files
+v0.1b - added project files
 
-# v0.1b - [2017-09-25]
+* v0.1b - [2017-09-25]
 
-## ADDED
+[+] ADDED
 
-* PHP: 
-  - main index.php file
-  - interceptor file (przechwytywacz.php)
-* CSS:
-  - added css reset file
-  - many CSS rules in file
-  - added styles with gradients or single color background (polyfills)
-  - added simple media queries
-* JS:
-  - added jQuery lib v3.2.1
-  - added 'lightbox', a jQuery plugin with all needed resources
-* OTHERS:
-  - added log file ('_changelog.md' - this file)
+-- new file 'index.php'
+* main index.php file
+* for now all the HTML content and the overall logic (JavaScript) lands here 
 
-Available funcionalities:
+-- new file 'przechwytywacz.php'
+* interceptor file
+
+-- new file 'index.php'
+* main index.php file
+
+-- new file 'reset.css'
+* added css reset file
+
+-- new file 'styl.css'
+* many CSS rules in file
+* added styles with gradients or single color background (polyfills)
+* added simple media queries
+
+-- new file 'jquery-3.2.1.js' (untracked!)
+* added jQuery lib v3.2.1
+* this file linked from 'index.php'
+
+-- new file 'jquery-3.2.1.min.js' (untracked!)
+* added jQuery lib v3.2.1, as minified file
+
+-- new folder 'lightbox'
+* a place for holding Lightbox jQuery plugin 
+* also with three subfolders inside to hold all needed resources
+  - self explanatory names of resources as subfolders name: 'css', 'images' and 'js'
+* not mentioned here every file, see summary @git!
+  - the most important file to link is 'lightbox/js/lightbox.js' (unminified version)
+
+-- new file '_changelog.md'
+* added log file (this file!)
+
+[@] SUMMARY
+
+-- Available funcionalities:
 * displaying a first page of any gallery provided by form
   - displays subpage referers for current gallery only if any exist
   - not yet possible to browse any subpage even if available
@@ -3582,7 +3763,7 @@ Available funcionalities:
   - incorect value or no value displays error notyfication
   - incorect link referrer may display wrong or no gallery page
 * enables slideshow for any displayed images (thumbnail photos)  
-* sample address hardcoded into form field,
+* sample address hardcoded into form field
   - re-entering default value by nearest button
 * only one time views of a gallery
   - trigger buttons get disabled after use
@@ -3590,5 +3771,5 @@ Available funcionalities:
   - added refresh button in page header
 * yellow box just for checking existency of gallery subpages (only for viewing!)
 * added simple hide / show animation triggered by buttons in footer
-* *added basic loging of actions in console* (modified)
+* added basic loging of actions in console* (modified)
   

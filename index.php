@@ -101,7 +101,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
         <header id="naglowek">
         <!-- <div class="kontener">  -->
 
-            <!-- tu </div> - kontener - tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamknąć w tych okowach... choć ideaklnie pasuje to ułatwienie  --> 
+            <!-- tu </div> - kontener - tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamknąć w tych okowach... choć idealnie pasuje to ułatwienie  --> 
 
             <div id="naglowek_kontener">
 
@@ -128,36 +128,18 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     </div>
 
                     <div id="napis_spod">
-                    <h3>Serwis umożliwia łatwiejszy podgląd rozrabiających wnuków przez dziadków... i nie tylko. Treści pochodzą&nbsp;z&nbsp;witryny <a class="odnosnik_kolor" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
+                        <h3>Serwis umożliwia łatwiejszy podgląd rozrabiających wnuków przez dziadków... i nie tylko. Treści pochodzą&nbsp;z&nbsp;witryny <a class="odnosnik_kolor" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
                     </div>
 
                 </div> <!-- div#banner -->
 
             </div>	<!-- div#naglowek_kontener -->    
                 
-                <!-- formularz-antyk
-                <h1 class="zmienny">Do uruchomienia galerii wymagane podanie adresu witryny ze zdjęciami <button id="odswiez" style="margin: 0.05em; padding: 0.1em 0.6em; font-size: 60%;">Odśwież</button></h1>
-                <h3>Wpisz/wklej pełny adres do przeglądania galerii z witryny <a class="odnosnik_czerwony" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a> lub po prostu skorzystaj z poniższej listy galerii</h3>
-                <div id="formularz">
-                    <form action="#" method="post" id="wyszukaj">
-                        <label for="http_adres">Adres galerii</label>
-                        <input type="text" id="http_adres" name="http_adres" placeholder="np. http://zlobek.chojnow.eu/u_tygryskow,a146.html" alt="Podaj adres podstrony konkretnej galerii" />
-                        <input type="button" id="testowy_adres_button" name="testowy_adres_button" value="Testowy adres" />
-                        <input type="submit" id="http_adres_submit" role="submit" value="Zobacz wnuki" />
-                        <div id="form_error">Wymagane uzupełnienie pola tekstowego, wpisz adres podstrony z serwisu zlobek.chojnow.eu</div>				
-                    </form>
-                </div>	 
-                        -->
-
-
                 <div id="spis_tresci">
                     <div id="zaczytany_spis">
                     <!--    <pre><?php /* var_dump( $_SERVER ); */ ?></pre>    -->
                         <?php
-                        // test aktualnego trybu, niejawnie określa to środowisko uruchomieniowe: DEBUGOWANIE / PRODUKCJA   
-                            // DEBUG:
-                        //if ( isset( $serwer_lokalny ) ) echo("<h2>BIEŻĄCY SERWER: <strong>" . $_SERVER['SERVER_NAME'] . "</strong></h2>");
-
+    
                             if ( ( $czy_z_przekierowania === false ) && ( $adres_przekierowania ) || true )  // tworzenie elementu z notyfikacją przekierownia !!!TRUE MA TU NIE BYĆ DOCELOWO!!!
                             {
                             echo '<div id="powiadamiacz_przekierowania" class="powiadamiacz">';    
@@ -228,63 +210,59 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                 <div>
                                     <form action="#" method="post" id="wybierz_galerie" autocomplete="off">
                                         <div id="wybor_galerii">
-                                         <div id="suwak">
+                                            <div id="suwak">
                                                 <div>
-                                                <label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
-                                                <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
+                                                    <label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
+                                                    <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
                                                 </div>
                                                 <div>
-                                                <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" alt="Wybierz numer galerii z zakresu" />
+                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
                                             </div>
                                             <div id="suwak_info">
                                                 <div>
-                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
-                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
+                                                    <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
+                                                    <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
                                                 </div>
                                             </div>
                                             <div>
                                                 <input type="button" id="losuj_zakres" name="losuj_zakres" class="szerszy_guzik" value="Losuj galerię" />
                                                 <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" class="szerszy_guzik" role="submit" value="Zobacz wybrany" />
-                                                <div id="form_error">Wymagany wybór spośród dostępnych numerów galerii</div>			
                                             </div>	
                                         </div>  <!-- div#wybor_galerii -->  
                                         
-                                    <div id="wybor_podstrony_galerii">
-                                         <div id="suwak_podstrony">
+                                        <div id="wybor_podstrony_galerii">
+                                             <div id="suwak_podstrony">
                                                 <div>
-                                                <label for="podstrona_wybrany_nr">Numer podstrony spisu treści:</label>
-                                                <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
+                                                    <label for="podstrona_wybrany_nr">Numer podstrony spisu treści:</label>
+                                                    <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
                                                 </div>
                                                 <div>
-                                                <input type="range" min="1" selectionDirection="backward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
+                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
                                             </div>
                                             <div id="suwak_podstrona_info">
                                                 <div>
-                                                <input type="button" id="wybrany_nr_podstrony_zmniejsz" class="maly_guzik" value="-1" />
-                                                <input type="button" id="wybrany_nr_podstrony_zwieksz" class="maly_guzik" value="+1" />
+                                                    <input type="button" id="wybrany_nr_podstrony_zmniejsz" class="maly_guzik" value="-1" />
+                                                    <input type="button" id="wybrany_nr_podstrony_zwieksz" class="maly_guzik" value="+1" />
                                                 </div>
                                             </div>
                                             <div>
                                                 <input type="button" id="losuj_zakres_podstrony" class="szerszy_guzik" name="losuj_zakres_podstrony" value="Losuj podstronę" />
                                                 <input type="submit" id="suwak_podstrony_submit" class="szerszy_guzik" name="suwak_podstrony_submit" role="submit" value="Zobacz wybrany" />
-                                                <div id="form_error">Wymagany wybór spośród dostępnych numerów podstron w spisie treści</div>			
                                             </div>	
                                         </div>  <!-- div#wybor_podstrony_galerii --> 
-                                        
-                                        
                                     </form>
                                 </div>    
                             </div> <!-- div#selektor -->
                         </div>  <!-- div.kontener -->
+                        
                         <div id="skladowisko_status_wybranej_galerii">
                         </div>
 
                         <div id="status_wybranej_galerii">
                         </div>
                         <!-- tu było #wczytywanie  ... -->
-
 
                         <div id="galeria_spis_podmiana" class="clearfix">
                         </div>
@@ -293,11 +271,17 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
         <!--    </div>	-->  <!-- div#naglowek_kontener -->
             <!-- </div> -->  <!-- div-kontener  (na próbę) -->
             
-            <div id="brak_skryptow">
-                <h2>A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
-                <h3>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Zweryfikuj to i włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.</h3>
+            <div id="brak_skryptow" style="">
+                <div class="blad animacja_zolty_blysk">
+                    <h2 class="blad_tytul">A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
+                    <div class="blad_tresc">
+                        <div class="blad_ikona">!</div>
+                        <p>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Zweryfikuj to i włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.<br />
+                        Nie zapomnij na koniec odświeżyć stronę.</p>
+                    </div>
+                    <!--<div class="krzyzyk_zamykanie" tabindex="0">×</div>-->
+                </div>
             </div>
-            
         </header>
 
         
@@ -366,7 +350,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.26</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.28</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -433,8 +417,6 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                             <li class="tech_tak">komunikaty i obsługa błędów</li>
                             <li class="tech_tak">wbudowane testowanie</li>
                             <li class="tech_tak">obsługa z klawiatury</li>
-
-
                         </ul>
                         <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 
                         <ul>
@@ -497,35 +479,18 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     echo '$czy_z_przekierowania: <strong>' . $czy_z_przekierowania . '</strong><br />';
                     echo 'vs obliczona pozycja powyższego: <strong>' . strpos( $_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST'] ) . '</strong><br />';
                     echo '$roznica_czasu_odwiedzin: ' . ( $roznica_czasu_odwiedzin / ( 60 * 60 * 24 * 7 ) );
-
-                    echo "<pre>";
-                    echo 'strpos(): <strong>' . strpos( "Mala dupa poszła spać", 'dupa') . '</strong><br />';
-                    echo 'isset $_SERVER["HTTP_REFERER"]: ' ;
-                    var_dump( isset( $_SERVER['HTTP_REFERER'] ) );
-                    echo 'isset $_SERVER["NAME"]: ' ;
-                    var_dump( isset( $_SERVER['NAME'] ) );
-                    echo '$czy_z_przekierowania: '; 
-                    var_dump( $czy_z_przekierowania );
-                    echo "<br />";
-                    echo '$adres_przekierowania: ';
-                    var_dump( $adres_przekierowania );
-                    echo "<br />";
-                    echo '$czy_z_przekierowania: <strong>' . $czy_z_przekierowania . "</strong><br />";
-                    echo '$dres_przekierowania: <strong>' . $adres_przekierowania . "</strong><br />";
-                    echo "</pre>";
                     ?>
-                    
-                <strong>Powyższe wkrótce zniknie, gdy tylko zostanie osiągnięty kolejny etap testów.</strong>   
                 </p>        
+                <h4>Powyższe wkrótce zniknie, gdy tylko zostanie osiągnięty kolejny etap testów.</h4>  
                 </div>
             </div>
         </footer>	
 
+        <div id="wymiary">      <!-- #wymiary przeniesiono do wewnątrz kontenera -->
+            <h1>&nbsp;</h1>    
+        </div>    
+        
     </div>	<!-- DIV#witryna -->
-
-<div id="wymiary">
-    <h1>&nbsp;</h1>    
-</div>
 
 <div class="kontener">
     <div id="odpluskwiacz_ajaksowy">
@@ -540,7 +505,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 </div>                           	
     <!-- ratunkowe jquery z serwera, ale przeglądarki i edytory nie lubią zagnieżdżonego SCRIPT, a zwłaszcza </SCRIPT> -->
     <script>
-        window.jQuery || document.write('<script src="./lib/jquery-1.12.4.min.js"></script' + '>');
+        window.jQuery || document.write('<script src="./lib/jquery-1.12.4.min.js"></script' + '>');  // nie robi się tego poprzez DOM?!
     </script>
 
     <script src="./lib/fittext/jquery.fittext.js"></script>	

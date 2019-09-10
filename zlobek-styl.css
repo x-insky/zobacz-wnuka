@@ -31,7 +31,6 @@ button {
     font-size: 125%;
 }
 
-
 h1 {
     /*    color: blueviolet;    */
     color: yellow;
@@ -76,7 +75,6 @@ h2.logo {
 
 h2 > span {
     color: darkblue;
-    
 }
 
 h3 {
@@ -132,7 +130,6 @@ em {
     font-style: italic;    
 }
 
-
 h1 > em,
 h2 > em,
 h3 > em,
@@ -141,8 +138,6 @@ h5 > em,
 h6 > em {
     font-weight: bold;    
 }
-
-
 
 strong {
     font-weight: bold;
@@ -158,29 +153,9 @@ form input {
     font-size: 110%;		
 }
 
-/* p.blad - deklaracjedo wywalenia po wprowadzeniu komunikatu - START */
-p.blad,
-p.blad_dolaczenia,
-p.blad_odswiez {
-    padding: 1.2em;
-    margin: 3px auto;
-    width: 94%;
-    color: yellow;
-    text-align: center;
-    font-size: 1.7em;
-    font-weight: bold;
-    background-color: darkred;
-    border: 3px solid #eee;
-    /*  box-shadow: 0px 0px 10px 2px #333 inset; 
-        transition: all 0.7s;
-        animation: zolty_blysk 2s ease-out;
-        animation-fill-mode: both; */
-}
-/* p.blad - deklaracjedo wywalenia po wprowadzeniu komunikatu - STOP */
-
 div.blad {
     position: relative;
-    width: 90%;
+    width: 94%;     /*  korekta z 90% na małe ekrany */
     background-color: #00b; /* == darkblue */
     border-radius: 5px;
     /*font-size: 16px;*/    /* RESET wielkości czcionki dla podległych elementów!*/
@@ -212,7 +187,6 @@ div.blad .blad_tytul {
     padding: 0.25em;
     padding-top: 0.8em;
     padding-right: 55px;
-
 }
 
 div.blad .blad_tresc {
@@ -222,7 +196,6 @@ div.blad .blad_tresc {
     padding: 0.5em;
     margin-top: 10px;
 }
-
 
 div.blad .blad_ikona {
     /*    float: left;*/
@@ -244,7 +217,6 @@ div.blad .blad_ikona {
 /*    padding: 0.5em 1em;    */
     background-color: yellow;
     border-radius: 50%;
-    
 }
 
 div.blad p {
@@ -252,9 +224,7 @@ div.blad p {
     padding: 0.5em;
 }
 
-
-div.blad .krzyzyk_zamykanie
-{
+div.blad .krzyzyk_zamykanie {
     position: absolute;
     top: 4px;
     right: 4px;
@@ -313,8 +283,7 @@ div.blad p
     
 }
 
-.flex_kontener > div:first-of-type 
-{
+.flex_kontener > div:first-of-type {
     margin-right: 2em;
 }
 
@@ -331,7 +300,6 @@ div#witryna {
     width: 98%;
     position: relative;
     overflow: hidden;
-	
 /* background: radial-gradient( ellipse, center, #222 15%, #333 100%);	*/
 }
 
@@ -402,7 +370,6 @@ div#logo div#slonce_logo {
     transition: all 0.5s ease 0.1s;	 
      /*transform-origin: center center;*/
 }
-
 
 div#banner:hover div#slonce_logo {
     /* transform: scale(1.25, 1.25); */
@@ -526,10 +493,6 @@ div#zagraj:hover div#zagraj_srodek p.gra_odnosnik::after {
     content: ">";
 }
 
-/*                        <h4>Czekasz na załadowanie?</h4>
-                        <h3>Zagraj w grę!</h3>
-                    </div>                      */
-
 header#naglowek a.odnosnik_kolor {
     font-size: 120%;
     font-weight: bold;
@@ -562,38 +525,6 @@ header#naglowek div#naglowek_kontener div#formularz {
     box-shadow: 0 2px 5px rgba(0,0,0, 0.7);
 }
 
-#form_error {
-    display: none;
-    color: white;
-    font-weight: bolder;
-    background: red;
-    border: 1px solid white;
-    padding: 0.2em;	
-}
-
-form#wyszukaj fieldset {
-    text-align: center;	
-    padding-bottom: 0.6em;	
-}
-
-form#wyszukaj input {
-    margin: 0.2em;
-    padding: 0.2em;	
-    font-size: 110%;
-}
-
-form#wyszukaj input[type="text"] {
-    width: 35em;
-}
-	
-form#wyszukaj input[type="submit"] {
-    /*background-color: darkblue; 
-    color: yellow;	*/
-    padding-left: 0.4em;		
-    padding-right: 0.4em;		
-    font-weight: bold;	
-}
-
 header#naglowek div#spis_tresci, 
 header#naglowek div#zaczytany_spis
 {
@@ -606,7 +537,14 @@ header#naglowek .ciemne_tlo_spis {
     width: 100%;    
 }
 
+.brak_js div.powiadamiacz {
+    display: none;
+        visibility: hidden; /* przeniesione ze "zwykłej" klasy !! */
+}
+
 div.powiadamiacz {
+    display: block;
+    visibility: visible; /* gdy 'DISPLAY: NONE' to nie pokazuje i nie animuje się pasek wewnątrz tego kontenera */
     width: 90%;
     background-color: cornflowerblue;
     border: 1px solid #00b;
@@ -614,7 +552,6 @@ div.powiadamiacz {
     box-shadow: 1px 1px 3px darkblue;
     padding: 0.5em;
     margin: 0.5em auto;
-    visibility: hidden; /* gdy 'DISPLAY: NONE' to nie pokazuje i nie animuje się pasek wewnątrz tego kontenera */
 }
 
 div.powiadamiacz p {
@@ -635,7 +572,6 @@ header#naglowek .pasek {
     margin: 0 1%;
     transition: width 10s 0.2s linear; 
 }
-
 
 div#spis_tresci div#galeria_spis {
     background-color: cornflowerblue;
@@ -726,7 +662,6 @@ div#spis_tresci div.zdjecie_odnosnik {
     margin-right: auto;
 }
 
-
 div#spis_tresci div.zdjecie_odnosnik img {
     display: block;
     margin-left: auto;
@@ -777,19 +712,6 @@ div#spis_tresci div.kontener_odnosnik div.szczegoly {
     font-weight: bold;
     overflow: hidden;    
     transition: bottom 0.2s, opacity 0.4s;
-        /* wcześniejsze poniżej, a powyżej aktywne z edycji w przeglądarce     */
-            /*      
-            position: absolute;
-            z-index: 20; 
-            width: 250px;
-            height: 60px;    
-            background: #ccc;
-            color: firebrick;    
-            left: 0px;    
-            bottom: 0px;
-            opacity: 0.5;
-            transition: bottom 0.3s, opacity 0.4s;   
-            */ 
 }
 
 div#spis_tresci div.szczegoly > p
@@ -821,8 +743,7 @@ div#spis_tresci div.szczegoly > p:last-of-type
     line-height: 45px;
 }
 
-div#spis_tresci div.szczegoly > p:last-of-type
-{
+div#spis_tresci div.szczegoly > p:last-of-type {
     color: #5a8ae8;   
 }
     
@@ -858,7 +779,6 @@ div#spis_tresci div#wybrane_galerie_spis {
 
 div#spis_tresci nav#spis_sterowanie {
 		/* background-color: aqua;	*/
-
 }
 
 
@@ -875,22 +795,6 @@ nav#spis_sterowanie h2 {
 
 
 div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
-        /* wcześnijsze style */
-        /*    display: none;	
-        max-width: 16em;
-        background-color: cornflowerblue;
-        color: blue;
-        margin: 1em;	
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 0.3em;
-        padding-bottom: 0.3em;
-        cursor: pointer;	
-        border-radius: 8px;
-        border: 2px solid blue;
-        box-shadow: 1px 1px 3px darkblue;		
-        transition: all 0.5s ease 0.1s;*/
-
     display: none;
     width: 90%;
     background-color: cornflowerblue;
@@ -910,13 +814,6 @@ div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
 div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:hover,
 div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:focus
 {
-        /* wczesniejsze style */
-
-        /* box-shadow: 1px 1px 3px blue, 0px 0px 3px black; */
-            /* box-shadow: 0 0 3px rgba(0,0,0, 0.6); */
-        /* background-color: blue;
-        color: yellow; */
-
     box-shadow: 1px 1px 3px 1px #5d6ad0, 0px 0px 4px 1px black;
     /* box-shadow: 0 0 3px rgba(0,0,0, 0.6); */
     background-color: #5d6ad0;
@@ -940,10 +837,6 @@ div#selektor h2#selektor_naglowek {
     padding-top: 0.3em;
     padding-bottom: 0.3em;    
     border-radius: 14px;
-        /*border-top-left-radius: 14px;    
-        border-top-right-radius: 14px;
-        border-bottom-left-radius: 14px;
-        border-bottom-right-radius: 14px;*/
     border: 2px solid #eee;
     cursor: pointer;
     transition: background-color 0.5s;    
@@ -1164,15 +1057,9 @@ div#spis_tresci div#skladowisko_status_wybranej_galerii {
 
 div#brak_skryptow {
     display: none;
-    background-color: darkred;
-    margin: 3em 2em;
-    padding: 1.5em 2em;
-    border: 2px dotted yellow;
+    padding: 1.2em 0.2em;   /* korekta na małe ekrany */    
 }
 
-div#brak_skryptow h2 {
-    color: white;
-}
 
 /*    --------------------------       GŁÓWNY ZACZYTYWANY BLOK      --------------------------    */
 
@@ -1188,8 +1075,6 @@ div#glowna h2 span {
     color: yellow;
     font-weight: bolder;
 }
-
-
 
 div#glowna div#zawartosc {
     background-color: bisque;
@@ -1209,23 +1094,6 @@ div#glowna div#nazwa_galerii {
     margin-bottom: 1em;	
     overflow: hidden;	
 }
-
-/*
-div#glowna div#nazwa_galerii h2 span {
-    padding: 0.5em;
-    color: yellow;
-    background-color: antiquewhite;
-}
-*/
-
-
-/*
-div#glowna div#nazwa_galerii h2 span:after {
-    content: " - ";
-    background-color: transparent;
-}
-*/
-
 
 div#glowna div#nazwa_galerii img {
 /*    float : left;*/
@@ -1281,7 +1149,10 @@ nav#nawigacja_galeria button {
     /*border-radius: 4px;*/
 }
 
-div#wczytywanie_podstrona, div#wczytywanie_spis, div#wczytywanie_wybrane_galerie_spis {
+div#wczytywanie_podstrona, 
+div#wczytywanie_spis, 
+div#wczytywanie_wybrane_galerie_spis
+{
     display: none;
     padding: 1.5em 2em;
     /* margin: 2em; */
@@ -1289,12 +1160,17 @@ div#wczytywanie_podstrona, div#wczytywanie_spis, div#wczytywanie_wybrane_galerie
     border: 3px dotted yellow;
 }
 
-div#wczytywanie_podstrona h2, div#wczytywanie_spis h2, div#wczytywanie_wybrane_galerie_spis h2 {
+div#wczytywanie_podstrona h2, 
+div#wczytywanie_spis h2, 
+div#wczytywanie_wybrane_galerie_spis h2
+{
     color: yellow;
     text-shadow: 1px 1px 6px #666;
 }
 
-div#wczytywanie_podstrona h2 img, div#wczytywanie_spis h2 img, div#wczytywanie_wybrane_galerie_spis h2 img {
+div#wczytywanie_podstrona h2 img, div#wczytywanie_spis h2 img,
+div#wczytywanie_wybrane_galerie_spis h2 img
+{
     /*animation: obroty360 1.2s infinite ease-in;	*/
     animation: obroty180 1.4s infinite ease-in;	  
 }
@@ -1375,7 +1251,7 @@ div#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   
       /* Required to make elements draggable in old WebKit */
       -khtml-user-drag: element;
       -webkit-user-drag: element;    
-        cursor: move;
+    cursor: move;
     width: auto;
     height: auto;    
 }
@@ -1427,14 +1303,9 @@ div#gra div#zasady p:first {
     transform: rotateZ(-2.1deg);     
 }
 
-
-
-
-div#gra div#sterowanie 
-{
+div#gra div#sterowanie {
     margin-top: 1em;    
 }
-
 
 div#gra div#plansza {
     height: 930px;
@@ -1594,6 +1465,11 @@ footer#stopka ul li.tech_nie {
     background: url(grafiki/nie_ikona.png) 4px 1px no-repeat, whitesmoke;    
 }
 
+.brak_js div#wymiary {
+    visibility: hidden; /* do przeniesienia do tego kontenera, wcześniej poza nim; wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
+        /*display: none;*/    
+}
+
 div#wymiary {
     position: fixed;
     z-index: 250;
@@ -1607,7 +1483,7 @@ div#wymiary {
     border: 2px solid yellow;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.7);
     opacity: 0.7;
-    visibility: hidden; /* wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
+    visibility: visible; /* wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
         /*display: none;*/
 }
 
@@ -1656,7 +1532,8 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 input[type=range]:focus::-webkit-slider-runnable-track,
-input[type=range]:hover::-webkit-slider-runnable-track {
+input[type=range]:hover::-webkit-slider-runnable-track 
+{
         /* stare Chromy nie obsługują ":focus" */
     background-color: #eee;
     height: 11px;
@@ -1681,7 +1558,8 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 input[type=range]:focus::-webkit-slider-thumb,
-input[type=range]:hover::-webkit-slider-thumb {
+input[type=range]:hover::-webkit-slider-thumb 
+{
 /* stare Chromy nie pozwalają powiększyć samego suwaka, jest on umieszczony WEWNĄTRZ paska przewijania, wielkość jak wysokość paska; też nie działa ":focus"    
 /*    -webkit-appearance: none !important; */
 /*    border: 6px solid rgb(255, 255, 0);*/
@@ -1706,7 +1584,8 @@ input[type=range]::-moz-range-track {
 }
 
 input[type=range]:hover::-moz-range-track,
-input[type=range]:focus::-moz-range-track {
+input[type=range]:focus::-moz-range-track 
+{
     background-color: #eee;
 /*    box-shadow: 0 0 2px white; */   
 }
@@ -1778,8 +1657,7 @@ input[type=range]::-ms-thumb {
     margin-bottom: 0; /* ++ */
 }
 
-input[type=range]:hover::-ms-thumb
-{
+input[type=range]:hover::-ms-thumb {
     border: 2px solid yellow;
     margin-top: -2px;     
     margin-bottom: -2px;
@@ -1788,8 +1666,7 @@ input[type=range]:hover::-ms-thumb
     
 }
 
-input[type=range]:focus::-ms-thumb
-{
+input[type=range]:focus::-ms-thumb {
     border: 4px solid yellow;
         height: 20px;
         width: 20px;
@@ -1798,7 +1675,8 @@ input[type=range]:focus::-ms-thumb
 }
 
 input[type=range]:focus::-ms-fill-lower,
-input[type=range]:hover::-ms-fill-lower {
+input[type=range]:hover::-ms-fill-lower 
+{
 /*    background-color: orange; */
 /*    background-color: royalblue; */
     background-color: #54c;     
@@ -1806,19 +1684,97 @@ input[type=range]:hover::-ms-fill-lower {
 }
 
 input[type=range]:focus::-ms-fill-upper,
-input[type=range]:hover::-ms-fill-upper {
+input[type=range]:hover::-ms-fill-upper 
+{
     background-color: #eee;
     box-shadow: 0 0 2px white;    
 }
+
+/*    --------------------------       DEBUGOWANIE WEWNĘTRZNE      --------------------------    */
+
+#odpluskwiacz_ajaksowy {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    /*width: 100%;*/
+    height: auto;
+    opacity: 0.8;
+    background-color: white;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#odpluskwiacz_ajaksowy h4 {
+    color: #eee;
+    text-shadow: 1px 1px 1px darkblue;
+}
+
+#odpluskwiacz_ajaksowy div:first-child {
+    position: relative;
+    padding-right: 55px;
+    width: 100%;
+    height: auto;
+}
+
+#odpluskwiacz_ajaksowy div #debugger_zamykanie {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    padding: 0.2em;
+    padding-bottom: 0.45em;
+    font-weight: bolder;
+    font-size: 48px;
+    line-height: 16px;
+/*  font-size: 3em;
+    line-height: 0.8em;    */
+    color: black;
+    background-color: #ddd;
+    cursor: pointer;
+    border: 1px solid #666;
+    transition: background-color 0.5s;
+}
+
+#odpluskwiacz_ajaksowy div #debugger_zamykanie:hover,
+#odpluskwiacz_ajaksowy div #debugger_zamykanie:focus
+{
+    background-color: yellow;
+    border: 1px solid #660;
+}
+
+
+#odpluskwiacz_ajaksowy label {
+    display: inline-block;
+}
+
+.status_ajaksa {
+    display: inline-block;
+    padding: 0.35em 0.8em;
+    border: 3px solid transparent;
+    background-color: transparent;
+    line-height: 1.6em;
+}
+
+.status_norma {
+    border-color: #0b0;
+    background-color: rgba(0, 200, 0, 0.2);
+}
+
+.status_awaria {
+    border-color: #b00;
+    background-color: rgba(200, 0, 0, 0.2);
+}
+
 
 /*    --------------------------       ANIMACJE     --------------------------    */
 
 .animacja_slonca {
     /* transform-origin: center center;	*/	
-    animation: obroty_delikatne_3 6.5s infinite ease-out;	
+    animation: obroty_delikatne_3 6.5s infinite ease-out;	/* tylko ta animacja z trzech zadeklarownych jest używana */
 }
 
-.animacja_zanikanie {
+.animacja_zanikanie {                   /* pierwowzór dla "animacja_zanikanie2" */
     animation: zanikanie 3s ease-out;
     animation-direction: normal;    
     /*animation-fill-mode: forwards;*/
@@ -1837,7 +1793,7 @@ input[type=range]:hover::-ms-fill-upper {
     animation-fill-mode: forwards;  /* 'both' było*/  
 }
 
-    .animacja_zmiana_kolorow {
+    .animacja_zmiana_kolorow {      /* pierwowzór dla "animacja_pulsowanie_kolorow" */
         animation: zmiana_kolorow 30s ease-out infinite;
         animation-fill-mode: both;      
     }
@@ -1849,20 +1805,20 @@ input[type=range]:hover::-ms-fill-upper {
 
 /*    -----     DEFINICE ANIMACJI     -----     */
 
-@keyframes obroty360 {
-    0% {
-        transform: rotate(0deg);
+    @keyframes obroty360 {              /* pierwsza wersja, teraz używany następca z 180st */
+        0% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(90deg);
+        }
+        75% {
+            transform: rotate(135deg);
+        }
+        100% {              
+            transform: rotate(-135deg);
+        }
     }
-    50% {
-        transform: rotate(90deg);
-    }
-    75% {
-        transform: rotate(135deg);
-    }
-    100% {              
-        transform: rotate(-135deg);
-    }
-}
 
 @keyframes obroty180 {
     0% {
@@ -1877,80 +1833,83 @@ input[type=range]:hover::-ms-fill-upper {
 }
 
 
-@keyframes obroty_delikatne {
-    0% {
-        transform: rotate(0deg);
+    @keyframes obroty_delikatne         /* pierwowzór dla "obroty_delikatne_3" */
+    {
+        0% {
+            transform: rotate(0deg);
+        }
+        10% {
+            transform: rotate(12deg);
+        }
+        20% {
+            transform: rotate(55deg);
+        }
+        30% {
+            transform: rotate(35deg);
+        }
+        40% {
+            transform: rotate(10deg);
+        }
+        50% {
+            transform: rotate(0deg);
+        }
+        60% {
+            transform: rotate(-10deg);
+        }
+        70% {
+            transform: rotate(-50deg);
+        }
+        80% {
+            transform: rotate(-20deg);
+        }
+        90% {
+            transform: rotate(-8deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
     }
-    10% {
-        transform: rotate(12deg);
-    }
-    20% {
-        transform: rotate(55deg);
-    }
-    30% {
-        transform: rotate(35deg);
-    }
-    40% {
-        transform: rotate(10deg);
-    }
-    50% {
-        transform: rotate(0deg);
-    }
-    60% {
-        transform: rotate(-10deg);
-    }
-    70% {
-        transform: rotate(-50deg);
-    }
-    80% {
-        transform: rotate(-20deg);
-    }
-    90% {
-        transform: rotate(-8deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
 
 
-@keyframes obroty_delikatne_2 {
-    0% {
-        transform: rotate(0deg);
+    @keyframes obroty_delikatne_2        /* pierwotny następca dla "obroty_delikatne" */
+    {
+        0% {
+            transform: rotate(0deg);
+        }
+        5% {
+            transform: rotate(12deg);
+        }
+        20% {
+            transform: rotate(75deg);
+        }
+        30% {
+            transform: rotate(40deg);
+        }
+        40% {
+            transform: rotate(15deg);
+        }
+        50% {
+            transform: rotate(0deg);
+        }
+        60% {
+            transform: rotate(-10deg);
+        }
+        70% {
+            transform: rotate(-90deg);
+        }
+        80% {
+            transform: rotate(-20deg);
+        }
+        95% {
+            transform: rotate(-8deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
     }
-    5% {
-        transform: rotate(12deg);
-    }
-    20% {
-        transform: rotate(75deg);
-    }
-    30% {
-        transform: rotate(40deg);
-    }
-    40% {
-        transform: rotate(15deg);
-    }
-    50% {
-        transform: rotate(0deg);
-    }
-    60% {
-        transform: rotate(-10deg);
-    }
-    70% {
-        transform: rotate(-90deg);
-    }
-    80% {
-        transform: rotate(-20deg);
-    }
-    95% {
-        transform: rotate(-8deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
 
-@keyframes obroty_delikatne_3 {
+@keyframes obroty_delikatne_3 
+{
     0% {
         transform: rotate(0deg);
     }
@@ -1979,20 +1938,22 @@ input[type=range]:hover::-ms-fill-upper {
     }
 }
 
-@keyframes zanikanie {
-    0% {
-/*    visibility: visible; */   
-        opacity: 0.7;      
+    @keyframes zanikanie           /* pierwowzór dla "zanikanie2" */
+    {
+        0% {
+    /*    visibility: visible; */   
+            opacity: 0.7;      
+        }
+        50% {
+            opacity: 0.7;     
+        }
+        100% {
+            opacity: 0;
+        }
     }
-    50% {
-        opacity: 0.7;     
-    }
-    100% {
-        opacity: 0;
-    }
-}
 
-@keyframes zanikanie2 {
+@keyframes zanikanie2 
+{
     0% {
 /*    visibility: visible; */
         opacity: 0.2;
@@ -2013,7 +1974,8 @@ input[type=range]:hover::-ms-fill-upper {
     }
 }
 
-@keyframes zolty_blysk {
+@keyframes zolty_blysk 
+{
     0% {
         border-color: white; 
     }
@@ -2040,7 +2002,7 @@ input[type=range]:hover::-ms-fill-upper {
     }
 }
 
-    @keyframes zmiana_kolorow
+    @keyframes zmiana_kolorow   /* pierwowzór dla "zanikanie2" */
     {
         0%  {
             color: black;
@@ -2109,8 +2071,6 @@ input[type=range]:hover::-ms-fill-upper {
     100%   {
         color: #333;
     }
-    
-    
 }
 
 
@@ -2125,10 +2085,6 @@ input[type=range]:hover::-ms-fill-upper {
     header#naglowek div#banner {
         height: 330px;    
     }
-
-    /* header#naglowek div#banner #napisy {
-
-    }*/
 
     div#spis_tresci div.kontener_odnosnik {
         min-height: 375px;			
@@ -2154,20 +2110,13 @@ input[type=range]:hover::-ms-fill-upper {
         padding-left: 0.5em;
     }
 
-    
-    /*    footer#stopka {
-    padding: 1em 0;	
-    }*/
-    
     div#wymiary {
-        /*width: 60%;
-        left: 20%;*/
-        /* right: 75px; */
             /* łatwiejsze i jednorazowe stosowanie proporcjonalnych wymiarów dla rosnących szerokości ekranów */
         width: 17em;
         left: 50%;
-        margin-left: -8.5em;
+        margin-left: -8.5em;    /* zawsze jako 50% ze zdefiniowanej długości, czyli o połowę swej długości w lewo względem poziomego środka */
     }
+
 } 
 
 
@@ -2196,22 +2145,22 @@ input[type=range]:hover::-ms-fill-upper {
         max-width: 75%;
     }
     
-    /*    div.blad .blad_tresc div:first-of-type {
-        max-width: 70%;
-        margin: 0 auto;
-    }*/
+    div.blad {
+        width: 88%;
+    }
     
     div.blad .blad_ikona {
         float: left;
         margin-top: 1.5%;
          margin-right: 3%;  /* próby przeniesionia do lewego-paddingu dla sąsiada <p>' */
-        /* margin-bottom: 5%; */ /* nie więcej niż 6% lub kilkadziesiąt px, bo przesuwa kafelki galerii */
+        /* margin-bottom: 5%; */ /* nie więcej niż 6% lub kilkadziesiąt px, bo przesuwa kafelki galerii (poniżej) */
         margin-left: 10%;
 
         /* Próby ustalenia znacznego prawego lub/i dolnego marginesu powodują rozjeżdżanie się treści w danym elemencie grupującym
         to powiadomienie, np. przesunięty o 50% w prawo przycisk akcji lub tytuł kolejnego elementu. 
         Sąsiednie elementy powiadomień mogą być rozsunięte lub przesunięte, albo treści za ostatnim z nich, np. ikony tytułów galerii. 
-        Tekstowa zwartość akapitu generowana dynamicznie z różną długością opisu danego błędu. Standardowe problemy z "układem pływającym" :/.*/
+        Tekstowa zwartość akapitu generowana dynamicznie z różną długością opisu danego błędu. 
+        Standardowe problemy z "układem pływającym" :/.*/
         
         /*      margin-left: 12%;
         margin-right: 8%;
@@ -2224,7 +2173,6 @@ input[type=range]:hover::-ms-fill-upper {
         padding-bottom: 0.8em;  /* generalenie ten parametr decyduje o dodatkowej pionowej przestrzeni w dole okienka, zamiast marginesu obrazka */
         min-height: 130px;  /* w połączeniu z min-height kontenera pozwala zwiększyć jego wysokość, "odpychając" od dolnej krawędzi obrazka  */
     }
-    
     
     form#wybierz_galerie input.szerszy_guzik {
         min-width: 210px;
@@ -2247,11 +2195,7 @@ input[type=range]:hover::-ms-fill-upper {
     footer#stopka {
         padding: 1em 0.2em;	
     }
-    
-    /* div#wymiary {
-        width: 45%;
-        left: 27.5%;
-    } */
+
 }
 
 
@@ -2286,10 +2230,6 @@ input[type=range]:hover::-ms-fill-upper {
         min-width: 220px;
     }
     
-    /* div#wymiary {
-        width: 35%;
-        left: 32.5%;
-    } */
 }
 
 
@@ -2351,10 +2291,6 @@ input[type=range]:hover::-ms-fill-upper {
         margin-right: 2.5em;
     }
 
-    /* div#wymiary {
-        width: 30%;
-        left: 35%;
-    } */
 }
 
 @media screen and (min-width: 1180px) { 
@@ -2392,14 +2328,6 @@ input[type=range]:hover::-ms-fill-upper {
         /*padding-bottom: 0.55em;*/
     }
     
-   /* div#wymiary {
-        width: 25%;
-        left: 37.5%;
-    } */
-
-    /* div#gra {
-        display: block;    
-    } */
 }
 
 @media screen and (min-width: 1300px) { 
@@ -2440,10 +2368,7 @@ input[type=range]:hover::-ms-fill-upper {
     div.blad {
         max-width: 1200px;   
     }  
-   /* div#wymiary {
-        width: 22%;
-        left: 39%;
-    } */
+
 }
 
 @media screen and ( max-width: 1299px) { /* tylko na rzecz jednego kontenera */
@@ -2452,89 +2377,6 @@ input[type=range]:hover::-ms-fill-upper {
         display: none !important;    /* albo tak, albo bezpośrednie kasowanie stylu w elemencie poprzez JS */ 
         /*    background-color: firebrick !important;    */
     }
-}
-
-
-
-/*    --------------------------       DEBUGOWANIE     --------------------------    */
-
-
-#odpluskwiacz_ajaksowy {
-    display: none;
-    position: fixed;
-    z-index: 100;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    /*width: 100%;*/
-    height: auto;
-    opacity: 0.8;
-    background-color: white;
-    background-color: rgba(0, 0, 0, 0.4);
 
 }
-
-#odpluskwiacz_ajaksowy h4 {
-    color: #eee;
-    text-shadow: 1px 1px 1px darkblue;
-    
-}
-
-
-#odpluskwiacz_ajaksowy div:first-child {
-    position: relative;
-    padding-right: 55px;
-    width: 100%;
-    height: auto;
-}
-
-#odpluskwiacz_ajaksowy div #debugger_zamykanie {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    padding: 0.2em;
-    padding-bottom: 0.45em;
-    font-weight: bolder;
-    font-size: 48px;
-    line-height: 16px;
-/*  font-size: 3em;
-    line-height: 0.8em;    */
-    color: black;
-    background-color: #ddd;
-    cursor: pointer;
-    border: 1px solid #666;
-    transition: background-color 0.5s;
-}
-
-#odpluskwiacz_ajaksowy div #debugger_zamykanie:hover,
-#odpluskwiacz_ajaksowy div #debugger_zamykanie:focus
-{
-    background-color: yellow;
-    border: 1px solid #660;
-}
-
-
-#odpluskwiacz_ajaksowy label {
-    display: inline-block;
-}
-
-.status_ajaksa {
-    display: inline-block;
-    padding: 0.35em 0.8em;
-    border: 3px solid transparent;
-    background-color: transparent;
-    line-height: 1.6em;
-}
-
-.status_norma {
-    border-color: #0b0;
-    background-color: rgba(0, 200, 0, 0.2);
-}
-
-.status_awaria {
-    border-color: #b00;
-    background-color: rgba(200, 0, 0, 0.2);
-}
-
-
 
