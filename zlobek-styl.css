@@ -827,7 +827,7 @@ div#spis_tresci div#selektor {
     margin: 1.5em auto;    
 }
 
-div#spis_tresci div#selektor > div {
+div#selektor > div {
     display: none;
 }
 
@@ -969,23 +969,20 @@ div#wybor_podstrony_galerii div#suwak_podstrony div
     padding-bottom: 1em; */   
 }
 
-form#wybierz_galerie {
 
-}
-
-form#wybierz_galerie input {
+div#selektor input {
     padding-left: 1em;
     padding-right: 1em;
     font-size: 140%;    
 }
 
-form#wybierz_galerie input[type=range] {
+div#selektor input[type=range] {
     padding-left: 0;
     padding-right: 0;
 }
 
-form#wybierz_galerie input#galeria_wybrany_nr,
-form#wybierz_galerie input#podstrona_wybrany_nr
+div#selektor input#galeria_wybrany_nr,
+div#selektor input#podstrona_wybrany_nr
 {
     max-width: 3.8em;
     padding-left: 0.5em;
@@ -993,18 +990,18 @@ form#wybierz_galerie input#podstrona_wybrany_nr
     text-align: center;
 }
 
-form#wybierz_galerie input#suwak_galerii,
-form#wybierz_galerie input#suwak_podstrony
+div#selektor input#suwak_galerii,
+div#selektor input#suwak_podstrony
 {
     margin: 0.5em;
     width: 90%;	
 }
 
-form#wybierz_galerie input[type=text] {
+div#selektor input[type=text] {
     font-size: 140%;
 }
 
-form#wybierz_galerie input[type=submit] {
+div#selektor input[type=submit] {
     font-weight: bold;
 }
 
@@ -2174,7 +2171,7 @@ input[type=range]:hover::-ms-fill-upper
         min-height: 130px;  /* w połączeniu z min-height kontenera pozwala zwiększyć jego wysokość, "odpychając" od dolnej krawędzi obrazka  */
     }
     
-    form#wybierz_galerie input.szerszy_guzik {
+    div#selektor input.szerszy_guzik {
         min-width: 210px;
     }
     
@@ -2188,7 +2185,7 @@ input[type=range]:hover::-ms-fill-upper
         max-height: 220px;
     }
 
-    form#wybierz_galerie input.maly_guzik {
+    div#selektor input.maly_guzik {
         display: block;
     }
 
@@ -2226,7 +2223,7 @@ input[type=range]:hover::-ms-fill-upper
         /*padding-bottom: 0.5em;*/
     }
     
-    form#wybierz_galerie input.szerszy_guzik {
+    div#selektor input.szerszy_guzik {
         min-width: 220px;
     }
     
@@ -2263,7 +2260,11 @@ input[type=range]:hover::-ms-fill-upper
         padding-left: 10.5em;   /* brak zawijania pod obrazkiem z float w komunikacie */
     }
     
-    form#wybierz_galerie input.szerszy_guzik {
+    div#spis_tresci div#selektor {  /* specyficzność głupcze! */
+        width: 97%;
+    }
+    
+    div#selektor input.szerszy_guzik {
         min-width: 255px;
     }
     
