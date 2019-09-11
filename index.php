@@ -6,24 +6,10 @@ include 'funkcje.php';
 
 $czas_teraz = time();
 
-$serwer_lokalny = false;            // identyfikacja lokalnego lub zdalnego uruchamiania jako prosta detekcja DEV/PROD.. 
-    if ( $_SERVER['SERVER_NAME'] == 'localhost' ) $serwer_lokalny = true;    
-        //.. celem dołączania bibliotek/plików nieskompresowanych lub po kompresji
-
-$adres_przekierowania = false;      // wejście na witrynę z konkretnego odnośnika (wewn/zewn) lub z odsyłacza wyszukiwarki
-        // uwaga na parametry $_SERVER - nie wszystkie dostępne w środowiskach różnych (czytaj STARYCH) przeglądarek, np. REFERER
-    if ( isset( $_SERVER['HTTP_REFERER'] ) && isset( $_SERVER['SERVER_NAME'] ) ) 
-    {   
-    $czy_z_przekierowania = strpos( $_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME'] );   // czy z tego samego serwera czy z obcego adresu -- do tworzenia elementu html 
-        if ( $czy_z_przekierowania === false ) // nie jako alternatywa > -1 
-        {
-        $adres_przekierowania = $_SERVER['HTTP_REFERER'];
-        }
-        if ( $czy_z_przekierowania >= 0 ) // STRPOS: false vs [0..inf+] !!! -- ten warunek jest ZBĘDNY - tylko dla testów
-        {
-        $adres_przekierowania = 'DEBUG:TEST_BEZ_PRZEKIEROWANIA ' . $_SERVER['HTTP_REFERER'];
-        }
-    }     
+$serwer_lokalny = Czy_serwer_localhost(); // identyfikacja lokalnego lub zdalnego uruchamiania jako prosta detekcja DEV/PROD.. 
+                                      //.. celem dołączania bibliotek/plików nieskompresowanych lub po kompresji
+   
+$adres_przekierowania = Czy_bylo_przekierowanie();      // wejście na witrynę z konkretnego odnośnika (wewn/zewn) lub z odsyłacza wyszukiwarki
 
 $czy_ciastko_poprzedniej_wizyty = false;   // już wizytowana witryna niegdyś?
     if ( isset( $_COOKIE['zlobek_wizyta'] ) )  // weryfikacja istnienia zapisanego ciastka
@@ -228,11 +214,12 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                             <div>
                                                 <input type="button" id="losuj_zakres" name="losuj_zakres" class="szerszy_guzik" value="Losuj galerię" />
                                                 <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" class="szerszy_guzik" role="submit" value="Zobacz wybrany" />
-                                            </div>	
+                                            </div>
                                         </div>  <!-- div#wybor_galerii -->  
-                                        
+                                    </form>    
+                                    <form action="#" method="post" id="wybierz_podstrone" autocomplete="off">
                                         <div id="wybor_podstrony_galerii">
-                                             <div id="suwak_podstrony">
+                                            <div id="suwak_podstrony">
                                                 <div>
                                                     <label for="podstrona_wybrany_nr">Numer podstrony spisu treści:</label>
                                                     <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
@@ -350,7 +337,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.28</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.30</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -509,6 +496,9 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
     </script>
 
     <script src="./lib/fittext/jquery.fittext.js"></script>	
+
+    <script src="./lib/lightbox/js/lightbox.min.js"></script>
+
     <?php
     // tu minifikację warunkowo odczytywać, gdy dostępna (warunki jednowierszowe, dodać ewentualnie "{}" dla czytelności)   
         if ( $serwer_lokalny ) echo '<script src="./witryna.js"></script>';
@@ -517,11 +507,5 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             else echo '<script src="./witryna.js"></script>';
     ?>
     	
-    <script src="./lib/lightbox/js/lightbox.min.js"></script>
-    <script>
-        lightbox.option({   albumLabel : "Zdjęcie %1 z %2", 
-                            positionFromTop : 10
-        });
-    </script>
 </body>
 </html>
