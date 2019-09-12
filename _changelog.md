@@ -1,3 +1,41 @@
+v0.5.31 - no flaws for inputed values inside numeric form fields, no zero problem, known circumstances of conversions: no octal vs hex vs decimal vs string
+	
+* v0.5.31 -- [2019-09-05]
+
+[+] ADDED
+
+-- witryna.js
+* created function 'KonwertujNaLiczbe', which helps for any numeric convertion to decimal base
+  - conversion for possible input string values (a text)
+  - helps to convert to decimal base, if input is hex or octal notation
+  - returns 1 as a minimal range safe value of if inputed value wasn't number
+
+[*] MODIFIED
+
+-- witryna.js
+* uses a newly created function 'KonwertujNaLiczbe' wherever value is gained from imput fields
+  - modified logic to use that function inside submit actions ('click' precisely) of both form buttons 'suwak_galerii_submit' and 'suwak_podstrony_submit' (cosmetic alteration order of assign expressions)
+  - modified also the two 'blur event' functions to use that function (elements: 'galeria_wybrany_nr' and 'podstrona_wybrany_nr')
+  - also added inside 'change' event of slider if any 'tamperer' tries to change its values (previously verification used not much on unproper values), used in elements: 'suwak_galerii' and 'suwak_podstrony'
+  - this function adds another example of 'DRY' methodology used into the project ;)  
+* fixed the problem of zero inside function 'NormalizujZakresPolaInput'
+  - just small change of not used range, to join '0' value into this range
+  - two times changed, for both serving input fields
+  - connected with 'fixed' section of this update
+* added some comments for changed or new logic
+
+[F] FIXED
+
+-- witryna.js
+* fixed problem of converting numeric values from numeric input fields
+  - using function 'KonwertujNaLiczbe' wherever any conversion from any fields form might place
+  - added explicit decimal base value as a proper second parameter of 'parseInt' function inside function 'KonwertujNaLiczbe' body
+* changed also the problem of converting 'zero value' put inside numeric field
+  - just correction of range inside 'NormalizujZakresPolaInput' (mentioned in 'modified' section)
+  - fixes: #42 - 'Verification of converting values from numeric fields'
+ 
+---------------------------
+
 v0.5.30 - correction of submit buttons of TWO forms, of selection any gallery number or separate SECOND form of selecting subpage number from gallery list; cleaning the 'index.php' file from placed logic of JS and PHP; swithced scripts; slighty thinner forms
 
 * v0.5.30 -- [2019-09-02]

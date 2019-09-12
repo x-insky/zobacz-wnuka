@@ -1447,7 +1447,7 @@ wartoscBiezaca = parseInt( wartoscBiezaca );   // konwersja do typu Number, cał
         $g_suwak_nr_galerii.val( wartoscBiezaca ); 
         }
 
-        if ( wartoscBiezaca < 0 )  
+        if ( wartoscBiezaca <= 0 )  
         {
         wartoscBiezaca = 1;   
         $g_input_nr_galerii.val( wartoscBiezaca );
@@ -1470,7 +1470,7 @@ wartoscBiezaca = parseInt( wartoscBiezaca );   // konwersja do typu Number, cał
         $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca ); 
         }
 
-        if ( wartoscBiezaca < 0 )  
+        if ( wartoscBiezaca <= 0 )  
         {
         wartoscBiezaca = 1;   
         $g_input_nr_podstrony_galerii.val( wartoscBiezaca );
@@ -2039,8 +2039,16 @@ $(elementWyswietlajacy).addClass('animacja_zanikanie2');
 //$(elementWyswietlajacy).addClass('animacja_zanikanie');
 return szerokoscOkna;    
 }   // AktualnyRozmiarOkna-END
-    
-    
+
+
+function KonwertujNaLiczbe ( jakasWartosc )     // zwraca tę samą prawidłową wartośc liczbową lub 1 jeśli nie liczba (minimum używanych dalej zakresów)
+{
+var poKonwersji = parseInt( jakasWartosc, 10 );   // konwersja na liczbę o jawnie podanej podstawie dziesiętnej, a nie domysły JS odnośnie tej podstawy (8 vs 16 v 10)
+    if ( ( poKonwersji === undefined ) || ( isNaN( poKonwersji ) ) ) return 1;  // jako bezpieczna wartość, galeria MUSI mieć tę minimalną wartość 
+    else return poKonwersji;   // gdyby ktoś zmieniał wartości suwaka w locie na www
+}   // KonwertujNaLiczbe-END
+
+
 function UsunPobraneZadanie ( adresZasobu )
 {
 var indeksZnalezionego = false;
@@ -2549,18 +2557,18 @@ $('#losuj_zakres_podstrony').click( function() {
         
 
 $g_suwak_nr_galerii.change( function() {
-var wartoscBiezaca = $(this).val();
 
-g_wybrany_nr_galerii = wartoscBiezaca;
-$g_input_nr_galerii.val( wartoscBiezaca );
+g_wybrany_nr_galerii = KonwertujNaLiczbe ( $(this).val() );  // trzy przypisania!!! PODANA_WARTOŚĆ lub 1 (MINimum) dla błędnych wpisów! 
+                                                             // dodatkowa weryfikacja, nawet gdyby ktoś edytował wartości suwaka 
+$g_input_nr_galerii.val( g_wybrany_nr_galerii );
 });	
 
 
 $g_suwak_nr_podstrony_galerii.change( function() {
-var wartoscBiezaca = $(this).val();
 
-g_wybrany_nr_podstrony_galerii = wartoscBiezaca;
-$g_input_nr_podstrony_galerii.val( wartoscBiezaca );
+g_wybrany_nr_podstrony_galerii = KonwertujNaLiczbe ( $(this).val() );  // też trzy przypisania!!! PODANA_WARTOŚĆ lub 1 (MINimum) dla błędnych wpisów!    
+    
+$g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
 });	
     
     
@@ -2618,20 +2626,22 @@ $('#wybrany_nr_podstrony_zmniejsz').click( function() {
     
 $('#galeria_wybrany_nr').blur( function() {
     
-var wartoscBiezaca = parseInt( $(this).val() );
-wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca );    
-$(this).val( wartoscBiezaca );    // pobierz bieżącą wartośc i dokonaj ewentualnej korekty dla zakresu
-g_wybrany_nr_galerii = wartoscBiezaca;
+var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );     
+wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca );  // dodatkowa weryfikacja zakresu, ale zawsze z 1 jako błędną ewentualnością na WE 
+
+g_wybrany_nr_galerii = wartoscBiezaca;      // przypisania poprawnej wartości zakresu dla numeru wybranej galerii
+$(this).val( wartoscBiezaca );
 $g_suwak_nr_galerii.val( wartoscBiezaca );
 });
     
 
 $('#podstrona_wybrany_nr').blur( function() {
     
-var wartoscBiezaca = parseInt( $(this).val() );
+var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );     // na wzór nr_galerii; dodatkowa weryfikacja zakresów, ale zawsze z 1 jako błędną ewentualnością na WE 
 wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca, 'wybórPodstrony' );    
-$(this).val( wartoscBiezaca );    // pobierz bieżącą wartośc i dokonaj ewentualnej korekty dla zakresu podstron
-g_wybrany_nr_podstrony_galerii = wartoscBiezaca;
+
+g_wybrany_nr_podstrony_galerii = wartoscBiezaca;    // przypisania poprawnej wartości zakresu dla numeru wybranej podstrony galerii
+$(this).val( wartoscBiezaca );
 $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca );
 });
     
@@ -2641,8 +2651,9 @@ $('#suwak_galerii_submit').click( function( evt )
 evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     if ( g_ilosc_wszystkich_galerii > 0 )
     {
-    var tagDocelowyDoZaczytania = 'div#skladowisko_status_wybranej_galerii';	
-    var wybranyNrGalerii = NormalizujZakresPolaInput( $g_input_nr_galerii.val() ); // odczytanie z formularza jak jest + weryfikacja zakresu
+    var tagDocelowyDoZaczytania = 'div#skladowisko_status_wybranej_galerii';
+    var wartoscPolaNumerycznego = KonwertujNaLiczbe( $g_input_nr_galerii.val() );   // weryfikacja wartośći liczbowej, WARTOŚĆ_POLA lub 1 dla nieliczbowych wartości
+    var wybranyNrGalerii = NormalizujZakresPolaInput( wartoscPolaNumerycznego ); // odczytanie z formularza PO_KONWERSJI_NA_10 + weryfikacja zakresu
     // obliczenie pozycji w ramach podstrony galerii oraz pozycji w zadanym obszarze podstrony (przesunięcie w ramach tego spisu)
     var pozycjaWGalerii = KtoraPozycjaWGalerii ( wybranyNrGalerii );
     var podstronaWGalerii = KtoraPodstronaWGalerii ( wybranyNrGalerii ); 
@@ -2690,7 +2701,8 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
     {
     var tagDocelowyDoZaczytania = 'div#skladowisko_wybrane_galerie_spis';	// tu ma byc nowe miejsce w spisie
-    var wybranyNrPaginacji = NormalizujZakresPolaInput( $g_input_nr_podstrony_galerii.val(), 'naRzeczPaginacjiSpisuGalerii' ); // odczytanie z formularza jak jest + weryfikacja zakresu
+    var wartoscPolaNumerycznego = KonwertujNaLiczbe( $g_input_nr_podstrony_galerii.val() );     // weryfikacja wartośći liczbowej, WARTOŚĆ_POLA lub 1 dla nieliczbowych wartości
+    var wybranyNrPaginacji = NormalizujZakresPolaInput( wartoscPolaNumerycznego, 'naRzeczPaginacjiSpisuGalerii' );  // odczytanie z formularza PO_KONWERSJI_NA_10 + weryfikacja zakresu
           // http://zlobek.chojnow.eu/galeria,k0,p38.html	<-- 'k0' == 'kategoria WSZYSTKO', 'pXYZ' to XYZ-ta 'p'-odstrona w danej galerii (zawiera max 5 elem.)
     var adresPodstrony =  '/' + 'galeria,k0,p' + wybranyNrPaginacji + '.html' ;    // po prostu podstawienie do ciagu tekstowego
  
