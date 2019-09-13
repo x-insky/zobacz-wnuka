@@ -62,9 +62,9 @@ h2 {
     text-align: center;	
 }
 
-h2.przycisk {
-    background-color: dodgerblue;
-}
+    /*    h2.przycisk {
+            background-color: dodgerblue;
+    }*/
 
 h2.logo {
     font-size: 225%;	
@@ -360,7 +360,7 @@ header#naglowek div#logo {
 div#logo div#slonce_logo {
     position: absolute;	
     height: 256px;
-    width: 266px;
+    width: 256px;
     background-image: url(grafiki/slonce.png); 
     background-repeat: no-repeat;	
     /* background-position: -112px -112px; */
@@ -928,6 +928,9 @@ div#wybor_podstrony_galerii div#suwak_podstrona_info div
     text-align: center;
 }
 
+/*    div#wybor_galerii > div {
+        padding: 0.5em;
+    }*/
 
 div#wybor_galerii > div:first-of-type {
     /*background-color: dodgerblue;    */
@@ -935,9 +938,14 @@ div#wybor_galerii > div:first-of-type {
 
 div#wybor_galerii > div:last-of-type {
     /*background-color: cadetblue;*/  
-    flex-basis: 250px;
+        /*flex-basis: 250px;*/
     text-align: center;
+        padding: 0 0.5em;
 }
+
+/*    div#wybor_podstrony_galerii > div {
+        padding: 0.5em;
+    }*/
 
 div#wybor_podstrony_galerii > div:first-of-type {
     /*background-color: dodgerblue;*/    
@@ -947,6 +955,7 @@ div#wybor_podstrony_galerii > div:last-of-type {
     /*background-color: cadetblue;  */
     flex-basis: 250px;
     text-align: center;
+        padding: 0 0.5em;
 }
 
 div#wybor_galerii div#suwak,
@@ -976,6 +985,12 @@ div#selektor input {
     font-size: 140%;    
 }
 
+/*div#selektor input[type=button],
+div#selektor input[type=submit]
+{
+    display: block;
+}*/
+
 div#selektor input[type=range] {
     padding-left: 0;
     padding-right: 0;
@@ -997,9 +1012,23 @@ div#selektor input#suwak_podstrony
     width: 90%;	
 }
 
-div#selektor input[type=text] {
+div#selektor input /*[type=text]*/ {
     font-size: 140%;
 }
+
+    div#selektor input[type=button] {
+        width: 100%;
+
+    }
+
+    /*    #suwak_info > div input {
+        width: 48%;
+    }
+
+    #suwak_podstrona_info > div input {
+        width: 48%;
+    }*/
+
 
 div#selektor input[type=submit] {
     font-weight: bold;
@@ -1007,14 +1036,18 @@ div#selektor input[type=submit] {
 
 
 .maly_guzik {
-    min-width: 130px;
-    padding: 0.45em 1em;    
+/*        display: block;
+        width: 100%;*/
+        /*min-width: 130px;*/
+    padding: 0.45em 4em;    /*BYŁO_WZORCOWE padding: 0.45em 1em;*/    
     margin: 0.3em auto;
     font-size: 140%;
 }
 
 .szerszy_guzik {
-    min-width: 200px;
+        display: block;
+        width: 100%;
+        /*min-width: 200px;*/
     padding: 0.5em 1.8em;
     margin: 0.3em auto;
     font-size: 140%;    
@@ -1132,19 +1165,15 @@ nav#nawigacja_galeria {
     display: none;
 }
 
-nav#nawigacja_galeria input[type=button] {
+nav#nawigacja_galeria input[type=button],
+nav#nawigacja_galeria button
+{
     margin: 0.5em;
     padding: 0.2em 0.75em; 
     font-size: 120%;
     /*border-radius: 4px;*/
 }
 
-nav#nawigacja_galeria button {
-    margin: 0.5em;
-    padding: 0.2em 0.75em; 
-    font-size: 120%;
-    /*border-radius: 4px;*/
-}
 
 div#wczytywanie_podstrona, 
 div#wczytywanie_spis, 
@@ -1374,9 +1403,12 @@ footer#stopka {
 
 #przyciski_stopka {
     display: block;
+    padding-right: 1em;     /* najlepiej korygować odstępem raz wewnątrz pojemnika, niż nadawać elementom prawy margines */
 }
 
 footer#stopka button {
+        display: block;
+        width: 100%;
     font-size: 140%;
     margin-left: 0.3em;
     margin-bottom: 0.5em;
@@ -1404,7 +1436,7 @@ div#poco {
     display: block;	
 }
 
-div#poco p:nth-of-type(2) {
+div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klasę ku temu, nie cudować ze stylami! */
     font-style: italic ;	
 }
 
@@ -2106,9 +2138,36 @@ input[type=range]:hover::-ms-fill-upper
     div#glowna div#nazwa_galerii p:last-child {
         padding-left: 0.5em;
     }
+    
+    div#selektor input[type=button],
+    div#selektor input[type=submit]
+    {
+        display: inline;
+        width: auto;
+    }
+    
+    div#wybor_galerii > div:last-of-type {
+        flex-basis: 250px;
+    }
+    
+    .maly_guzik {
+        min-width: 130px;
+            padding: 0.45em 1em;    /* przywrócenie wzorcowych dopełnień */  
+    }
 
-    div#wymiary {
-            /* łatwiejsze i jednorazowe stosowanie proporcjonalnych wymiarów dla rosnących szerokości ekranów */
+    .szerszy_guzik {
+        min-width: 200px;
+        padding: 0.45em 1em;
+            display: initial;
+            width: auto;
+    }
+    
+    footer#stopka button {
+        display: initial;
+        width: auto;
+    }
+
+    div#wymiary {           /* łatwiejsze i jednorazowe stosowanie proporcjonalnych wymiarów dla rosnących szerokości ekranów */
         width: 17em;
         left: 50%;
         margin-left: -8.5em;    /* zawsze jako 50% ze zdefiniowanej długości, czyli o połowę swej długości w lewo względem poziomego środka */

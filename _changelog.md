@@ -1,3 +1,34 @@
+v0.5.32 - not as wide buttons on narrow screens; proportional logo 
+
+* v0.5.32 -- [2019-09-07]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* moved any styles of button elements and inputs of that type with minimum width into media query
+  -trying to achieve basic style of input element, which fills the 100% o the its container on mobile-first look
+  - aded the 'display: block' and 'width: 100%' to any button elements
+  - changed the 'display' property to 'initial' or 'inline' on first media query threreshold of 320px
+  - used main containers as ancestors ids for picking only selected descendant input buttons or regular button elements
+* works fine for the most of buttons inside selecting form and inside footer
+  - the submit buttons and input buttons with more text for future re-check (strange behavior below 190px if possble to narrow browser window for that)
+* added few comments connected with changes (explains or saves previous values of used attribute)
+   
+[F] FIXED
+
+-- zlobek-styl.css
+* fixed the typo inside dimensions of div with id 'slonce_logo', which is a main logo background with animation
+  - not '266px' but '256px' wied as the originasl background file (256x256px wide)  
+* changed the basis rule of buttons inside footer and inside block of selecting any gallery numer of subpage number of gallery list
+  - basic style with 100% width of its container and 'display: block' property
+  - changes of above default attributes are inside first media query, when screen is 320px wide or more
+  - much of testing the form look with proper attibuted and theirs values
+  - probably for future re-testing, because screens narrower than 190px not always shows the butons wih more text context  
+(but it's hard to tight window of popular web browsers below 200px, only some dev tools allows that)
+  - fixes: #45 - 'Buttons on super narrow screens'
+  
+---------------------------
+
 v0.5.31 - no flaws for inputed values inside numeric form fields, no zero problem, known circumstances of conversions: no octal vs hex vs decimal vs string
 	
 * v0.5.31 -- [2019-09-05]
