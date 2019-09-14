@@ -953,7 +953,7 @@ div#wybor_podstrony_galerii > div:first-of-type {
 
 div#wybor_podstrony_galerii > div:last-of-type {
     /*background-color: cadetblue;  */
-    flex-basis: 250px;
+    /*    flex-basis: 250px;*/
     text-align: center;
         padding: 0 0.5em;
 }
@@ -985,11 +985,33 @@ div#selektor input {
     font-size: 140%;    
 }
 
-/*div#selektor input[type=button],
+div#selektor input[type=button],
 div#selektor input[type=submit]
 {
     display: block;
-}*/
+    width: 100%;
+    word-wrap: break-word;
+    word-break: break-word;    
+    white-space: normal;
+}
+
+    /*    div#selektor input[type=button] {
+        width: 100%;
+
+    }*/
+
+    /*    #suwak_info > div input {
+        width: 48%;
+    }
+
+    #suwak_podstrona_info > div input {
+        width: 48%;
+    }*/
+
+
+div#selektor input[type=submit] {
+    font-weight: bold;
+}
 
 div#selektor input[type=range] {
     padding-left: 0;
@@ -1011,29 +1033,6 @@ div#selektor input#suwak_podstrony
     margin: 0.5em;
     width: 90%;	
 }
-
-div#selektor input /*[type=text]*/ {
-    font-size: 140%;
-}
-
-    div#selektor input[type=button] {
-        width: 100%;
-
-    }
-
-    /*    #suwak_info > div input {
-        width: 48%;
-    }
-
-    #suwak_podstrona_info > div input {
-        width: 48%;
-    }*/
-
-
-div#selektor input[type=submit] {
-    font-weight: bold;
-}
-
 
 .maly_guzik {
 /*        display: block;
@@ -1406,13 +1405,16 @@ footer#stopka {
     padding-right: 1em;     /* najlepiej korygować odstępem raz wewnątrz pojemnika, niż nadawać elementom prawy margines */
 }
 
+   /* footer#stopka input[type=button],*/
 footer#stopka button {
         display: block;
         width: 100%;
+        word-wrap: break-word;
+        white-space: normal;
     font-size: 140%;
     margin-left: 0.3em;
     margin-bottom: 0.5em;
-    padding: 0.45em 2em;	
+    padding: 0.45em 1em;	
 }
 
 button#symulancja_button {
@@ -2146,7 +2148,8 @@ input[type=range]:hover::-ms-fill-upper
         width: auto;
     }
     
-    div#wybor_galerii > div:last-of-type {
+    div#wybor_galerii > div:last-of-type,
+    div#wybor_podstrony_galerii > div:last-of-type {
         flex-basis: 250px;
     }
     
@@ -2158,13 +2161,14 @@ input[type=range]:hover::-ms-fill-upper
     .szerszy_guzik {
         min-width: 200px;
         padding: 0.45em 1em;
-            display: initial;
+            display: inline;
             width: auto;
     }
     
     footer#stopka button {
-        display: initial;
+        display: inline;
         width: auto;
+        padding: 0.45em 2em;	
     }
 
     div#wymiary {           /* łatwiejsze i jednorazowe stosowanie proporcjonalnych wymiarów dla rosnących szerokości ekranów */
