@@ -1,3 +1,46 @@
+v0.5.33 - buttons of page improved on narrow screens, on super narrow too; no overlaping of the error notifiactions
+
+* v0.5.33 -- [2019-09-08]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* buttons are 100% width of its container
+  - a wrapping text content if longer text than available width
+  - changed all et
+* changed the rules for attribute 'display'
+  - value of 'initial' is not recognised properly by IE browsers, used the 'inline' context for previously defined 'block' values for any declared element
+  - changed mainly for global class definition 'szerszy_guzik' and buttons of footer area
+* altered the place of define for selector 'div#selektor input'
+  - moved up for connection with another definitions of input form elements in neighborhood
+  - a standard 'input' element for forms
+* defined a basis for styling the button on narrow screens
+  - uses the same rules for both selectors for standard input button and the submit button (mainly for the same width)
+  - used both selectors: 'div#selektor input[type=button]' and 'div#selektor input[type=submit]'
+  - the most important is to allow a line break or even a word break, when text content (correctly: a value of parameter named 'value', exactly!) of the button is larger than a place to display
+  - the text content may break to two or more lines or even break a word!
+  - so three extra CSS attribs are needed ('word-wrap', 'word-break' and 'white-space') and theirs correct values (in this project meanings)
+  - it's possibkle to squish browser window to minimal width to observe strange looking high buttons (below 200px or even 100px width) 
+* moved to comments few selectors ('div#selektor input[type=button]',     '#suwak_info > div input' and '#suwak_podstrona_info > div input') due to rearranged content of flex elements (on wider screens)
+  - not needed declarations when flexbox is working
+* added a compatibility with super thin screens to 'button' elements of footer
+  - new attributes of selector 'footer#stopka button' for breaking the words to another lines
+  - also decremented the default padding to 1em for horizontal space (before was 2em)
+  - the wider padding of footer buttons works fine in defined media query new rule (2em as the value of first threshold, like the previously defined value)
+* redefined the style for the last 'div' container of element 'div#wybor_galerii'
+  - uses also the same rules for selector for last 'div' container of 'div#wybor_podstrony_galerii'
+  - removed the minimal flexbox item width from the basis style (no more 250px of basis width when mobile -first) 
+  - the selected basis works for widths of screen more than 320px, by definition inside first media query threshold
+  - if possible on widths less than 320px the 'incremement/decrement' block might be next to 'randomize/submit' buttons (depend from the browser and operating system, which allows decreasing browser window width below 200px; most of developer tool allow to that as the simulation of displaying content for selected width)
+  - below it's possible because the last group of buttons lost its minimal flexbox width of 250px (as a basis width, added after exceeding 320px by screen size inside media query) 
+* increased the bottom margin of each error notification
+  - changed 12px to 2em for better experience on narrow screens
+  - also more 'breatching room' on wider screens
+  - more units, should work better even if value of a unit is changing
+  - yes, dynamic values based on relative units == current font size matters on each used media query threshold (only if font size is changing)
+
+---------------------------
+
 v0.5.32 - not as wide buttons on narrow screens; proportional logo 
 
 * v0.5.32 -- [2019-09-07]
