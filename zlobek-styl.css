@@ -1751,8 +1751,8 @@ input[type=range]:hover::-ms-fill-upper
 
 #odpluskwiacz_ajaksowy div #debugger_zamykanie {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 6px;
+    right: 5px;
     padding: 0.2em;
     padding-bottom: 0.45em;
     font-weight: bolder;
@@ -1774,17 +1774,25 @@ input[type=range]:hover::-ms-fill-upper
     border: 1px solid #660;
 }
 
+#odpluskwiacz_ajaksowy button {
+    display: inline-block;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
 
 #odpluskwiacz_ajaksowy label {
     display: inline-block;
 }
 
 .status_ajaksa {
-    display: inline-block;
-    padding: 0.35em 0.8em;
+    /*display: inline-block;*/        /* wartość początkowa, OK super wąskie ekrany; pozwala umieścić przycisk zamykania NAD tym elementem */
+        display: block;     /* zamiana na blokowe (tylko mobile-first); treść może wyjść poza ramkę (-), zwęża bardziej ramkę (-), ale jest SAM w swojej linii; tylko przycisk 'X' OBOK może być */
+    padding: 0.6em 0.8em;
     border: 3px solid transparent;
     background-color: transparent;
     line-height: 1.6em;
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
 }
 
 .status_norma {
@@ -2163,6 +2171,11 @@ input[type=range]:hover::-ms-fill-upper
         padding: 0.45em 1em;
             display: inline;
             width: auto;
+    }
+
+   .status_ajaksa {
+        /*display: inline-block;*/  /* to była pierwotna wartość, ale jest lekko wyższa przez marginesy */
+       display: inline;
     }
     
     footer#stopka button {

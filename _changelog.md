@@ -1,3 +1,51 @@
+v0.5.34 - AJAX status bar: content & buttons; one line status on narrow, later the same like it was (because good & simple); closing button moved by ONE px
+
+* v0.5.34 -- [2019-09-10]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added new style for buttons inside AJAX status bar
+  - selector: '#odpluskwiacz_ajaksowy button'
+  - added block-like displaying (important, not to be inline element!) and just a little margins from top and bottom 
+  - used to scale the width of the whole belt by dynamic content holded in one row (because is less high when all the elements are in a row and it's similar to the height of the closing button)
+  - another explanation: the button is the highest of all the elements in a container, when the all elements are in one line, so it sets rthe width of the main element of AJAX status belt 
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* changed the basis of displaying status of AJAX, an element with class 'status_ajaksa'
+  - now it's block element and after first media query threshold at 320px it changes to previously defined 'inline' (correctly: previously defined 'inline-block', but it's too high in comparision to next buttons)
+  - changed vertical paddings from 0.35em to 0.6em
+  - added little margins from top and bottom, only a 0.2em
+* not needed to change place of closing item-like-button on each or on selected screen size
+  - selector: '#debugger_zamykanie'
+  - right top corner good positioned while height of a container is greater 
+  - lowered just by ONE pixel to the left and TWO from the top inside general rule (previously it was 4px on each mentioned side) 
+  - content of the AJAX status belt is always higher by few pixels than before
+  - no very visible fluctuations of the height of the whole AJAX container and its impact on perception of changing position of closing button
+  - very slim bottom gap under the closing button is visible at few dozen pixel, in range 600-800px (depends from browser)
+* added few comments for save previous values of attributes or to explains new values
+
+[F] FIXED
+
+-- zlobek-styl.css
+* AJAX status bar 'doing by trying'
+  - its hard to do anything for super narrow screens, rather a tests of displaying and not for standard use
+  - previously layout was preserved and is rather good by its simplicity
+  - more structures and more CSS for better positioning effects, JS might be good also for building another structure
+  - trying to surround the interactive elements to controlling their position, but on super narrow screens thats another problem  
+  - just a simple change of the width of the proper status bar (with 'status_ajaksa' class) on smallest screen size
+  - not changed the size of the buttons because it will kill the simplicity
+* not changed AJAX status bar closing button into the same style as closing of notification error (if exists with closing button) 
+  - another dimensions, error notification title belt is always bigger and has more height (so the rectangular shape of a button fits better)
+  - here a rectangular button might be floating on belt or even its fragment might be outside of its area (only bottom side)
+  - still used square shape, but slighty increased height of the whole belt container, by few pixels to better fit the closing button always inside its parent (absolute positioning!)
+  - also the closing button won't need the positioning on each media query (just few px changed off its absolute position) for better displaying on almost each size of displays
+* fixes: #48 - 'Displaying the AJAX status bar.'
+
+---------------------------
+
 v0.5.33 - buttons of page improved on narrow screens, on super narrow too; no overlaping of the error notifiactions
 
 * v0.5.33 -- [2019-09-08]
