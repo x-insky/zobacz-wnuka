@@ -1173,6 +1173,14 @@ nav#nawigacja_galeria button
     /*border-radius: 4px;*/
 }
 
+nav#nawigacja_galeria > div {
+    text-align: center;
+}
+
+nav#nawigacja_galeria h6 button {
+    font-size: 140%;
+    padding: 0.45em 2em;
+}
 
 div#wczytywanie_podstrona, 
 div#wczytywanie_spis, 
@@ -1403,6 +1411,7 @@ footer#stopka {
 #przyciski_stopka {
     display: block;
     padding-right: 1em;     /* najlepiej korygować odstępem raz wewnątrz pojemnika, niż nadawać elementom prawy margines */
+    padding-top: 0.75em;
 }
 
    /* footer#stopka input[type=button],*/

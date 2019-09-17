@@ -486,7 +486,8 @@ function GenerujPodstronyGalerii ( kontenerZrodlowy, nrWyswietlanejGalerii )
 { 	     // poniżej wartości domyślne dla parametrów ES5
 nrWyswietlanejGalerii = parseInt( nrWyswietlanejGalerii );    
     if ( ( !kontenerZrodlowy ) || ( kontenerZrodlowy == '') ) kontenerZrodlowy = '#zawartosc_do_podmiany';
-    if ( ( nrWyswietlanejGalerii == undefined ) || ( isNaN( nrWyswietlanejGalerii) ) ) nrWyswietlanejGalerii = 1;    
+    if ( ( nrWyswietlanejGalerii == undefined ) || ( isNaN( nrWyswietlanejGalerii) ) ) nrWyswietlanejGalerii = 1;
+
 var kontenerDocelowyElement = "div#skladowisko";
 var $kontenerDocelowy = $( kontenerDocelowyElement ); 
     
@@ -495,6 +496,22 @@ var wysokoscDivWczytywanie = $('#wczytywanie_podstrona').height();
 var wysokoscDivKomentarz = $('div#komentarz').height();    
 var odlegloscPionowaDocelowego = $kontenerDocelowy.offset().top;
 var wysokoscOknaPrzegladarki = $(window).height();
+
+var przyciskPoprzedni = {
+        nrPodstrony : 0,        // początkowe wartośc dla wskazania numeru wcześniejszego i kolejnego odsyłacza względem danego
+        trescPrzycisku : '',    // treść danego przycisku
+        adresUrl : '',               // adres zasobu na serwerze zewnętrznym (jako względna ścieżka wewnątrz serwera)
+        aktywny : false         // czy operatywny, czy przycisk jest aktywny?
+    },   
+    przyciskNastepny = {
+        nrPodstrony : 0,
+        trescPrzycisku : '',
+        adresUrl : '',
+        aktywny : false
+    };
+    
+var przyciskiDoWstawienia = [];    
+    
 console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOknaPrzegladarki + "px, PozycjaY #skladowiska: " + odlegloscPionowaDocelowego 
             + "px, wysokość DIV#wczytywanie: " + wysokoscDivWczytywanie + "px, wysokość DIV#komentarz: " + wysokoscDivKomentarz );
 //PrzewinEkranDoElementu('div#skladowisko', 200, -8);  // złe miejsce, przed trteścią
@@ -502,7 +519,7 @@ console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOk
 $('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
 //$('#wczytywanie_podstrona').hide(100);	// schowaj informację, skoro wczytano zawartość
     // UkryjRamkeLadowania('podstrona');    // - to nie jest typowa funkcja generowania treści... albo się mylę   
-$('#glowna div#komentarz').hide(100);	//showaj opis-informację o ile była pokazana
+//$('#glowna div#komentarz').hide(100);	//showaj opis-informację o ile była pokazana  // NIE MA JUŻ TEGO ELEMENTU 
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
 $kontenerDocelowy.show( 100 );	// pokaż kontener na zaczytaną zawartość ... + przewiń po wyświetleniu całości?
     
@@ -554,7 +571,17 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
                 numerJeszczeNieokreślony = false;
                 }
             }*/
-            
+                // tu oblicznanie w pętli przejścia do ewentualnego poprzedniego oraz ewentualnego następnego względem bieżącego 
+            if ( ( nrGalerii == ( nrWyswietlanejGalerii - 1 ) ) && ( nrGalerii > 0 ) )  // > "jeden" to źle?
+            {
+            przyciskPoprzedni.nrPodstrony = nrGalerii; // przypisanie numeru galerri, który jest -1 w stosunku do bieżącej (wyświetlanej)
+            przyciskPoprzedni.adresUrl = odnosnikPodstrony; // też jej adres jest potrzebny
+            }
+            if ( ( nrGalerii == ( nrWyswietlanejGalerii + 1 ) ) && ( nrGalerii < ( $listaPodstron.length + 1 ) ) )      // korekta na +1 max
+            {
+            przyciskNastepny.nrPodstrony = nrGalerii;
+            przyciskNastepny.adresUrl = odnosnikPodstrony;    
+            }
         var nowyPrzycisk = $('<button></button>', {
         // var nowyPrzycisk = $('<input></input>', { 
         // type : "button",            
@@ -567,11 +594,67 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
             "data-adres_strony" : g_adres_strony,
             "data-adres_galerii" : odnosnikPodstrony,
             "data-elem_zewn" : g_element_zewnetrzny
-        });	     
+        });	 
 
-        $('nav#nawigacja_galeria > div:first').append( nowyPrzycisk ); // wstawianie przycisku innego niż "poprzednia/następna" podstrona danej galerii
+        przyciskiDoWstawienia.push( nowyPrzycisk ); // zbieranie istniejących przycisków podgalerii do jednej kolekcji (z wyłaczeniem "poprzednia/następna" oraz siebie samego)
+
+        // $('nav#nawigacja_galeria > div:first').append( nowyPrzycisk ); // wstawianie przycisku innego niż "poprzednia/następna" podstrona danej galerii
                 // też brak przycisku dla bieżacej galerii, np. w formie wyłączonego (nieaktywnego), bo brak takiego odnośnika teraz na www
         } // for-END
+    console.log('NOWY: ', przyciskiDoWstawienia );
+        
+            // wstepne dane do tworzenia przycisków DALEJ/WSTECZ  - dobre miejsce na zrobienie funkcji z tej treści (al eza dużo parametrów i sprzecznej logiki w niej)
+        if ( przyciskPoprzedni.nrPodstrony != 0 ) 
+        {
+        przyciskPoprzedni.trescPrzycisku = "<< Poprzednia (nr " + przyciskPoprzedni.nrPodstrony + ")"; // ustaw treść z numerem gdy jest zmieniony pierwowzór
+        przyciskPoprzedni.aktywny = true;   // aktywuj przycisk
+        }
+        else
+        {
+        przyciskPoprzedni.trescPrzycisku = "<< Poprzednia";    // wstaw domyślny tekst (... i tak się nie uda naciśnąc tego przycisku później)
+        }
+        
+        if ( przyciskNastepny.nrPodstrony != 0 ) 
+        {
+        przyciskNastepny.trescPrzycisku = "Następna (nr " + przyciskNastepny.nrPodstrony + ") >>";
+        przyciskNastepny.aktywny = true;
+        }
+        else
+        {
+        przyciskNastepny.trescPrzycisku = "Następna >>";
+        }
+        // tworzenie przycisku WSTECZ w pamięci, bazując na istniejących przyciskach konkretnych podstron danej galerii 
+    var poprzedniButton = $('<button></button>', {
+        id : "galeria_poprzednia",
+        class : "przycisk_galeria",
+        value : przyciskPoprzedni.nrPodstrony, 
+        text : przyciskPoprzedni.trescPrzycisku,
+        disabled : !przyciskPoprzedni.aktywny,      // tu negacja wartości, logika odwrotna względem poprzednich warunków
+        "data-tag" : g_tag_do_podmiany_zdjecia,
+        "data-adres_strony" : g_adres_strony,       // czy to jest nadal potrzebne
+        "data-adres_galerii" : przyciskPoprzedni.adresUrl,
+        "data-elem_zewn" : g_element_zewnetrzny
+    });	   
+        
+    var nastepnyButton = $('<button></button>', {
+        id : "galeria_nastepna",
+        class : "przycisk_galeria",
+        value : przyciskNastepny.nrPodstrony, 
+        text : przyciskNastepny.trescPrzycisku,
+        disabled : !przyciskNastepny.aktywny,      // tu negacja wartości!
+        "data-tag" : g_tag_do_podmiany_zdjecia,
+        "data-adres_strony" : g_adres_strony,
+        "data-adres_galerii" : przyciskNastepny.adresUrl,
+        "data-elem_zewn" : g_element_zewnetrzny
+    });	   
+
+    var elementBlokowy = $('<h6 />').html( poprzedniButton ).append( nastepnyButton );  // dodawanie jako obiekty jQuery (sobno!)
+        
+    $('nav#nawigacja_galeria > div:first').append( elementBlokowy ).append( przyciskiDoWstawienia ); // wstawianie od razu CAŁEJ KOLEKCJI przycisków do każdej z podstron...
+
+            // tu też dać przyciski dalej/wstecz , a poprzedzić to statyczną treścią nagłówka
+        
+        
     } // //if-END $listaPodstron.length >= 1
 
 //przeszukiwanie odnośników dla miniatur w galerii, link z miniatury prowadzi do normalnej (większej) kopii obrazka

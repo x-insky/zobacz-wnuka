@@ -1,3 +1,57 @@
+v0.5.35 - improved browsing of the current gallery and its sub galleries; subgallery buttons centered
+
+* v0.5.35 -- [2019-09-11]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* set the centered text content for the navigating subgallery (a list of buttons inside element with 'container' class)
+  - selector: 'nav#nawigacja_galeria > div'
+* added styles for new PREVIOUS/NEXT buttons to change subpage of current gallery
+  - to purpose of making it big and noticeable for easy click and traverse thru any subpages of this gallery (if there is any)
+  - the same styles as buttons of footer 
+  - selector: 'nav#nawigacja_galeria h6 button'
+* 
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* added some padding to the container for buttons inside footer (element with id 'przyciski_stopka')
+  - only 0.75em of top paddin for visual sepeartion and easy click of footer buttons or the subpage gallery button above
+
+-- witryna.js
+* modefied the logic of funtion 'GenerujPodstronyGalerii' to display PREVIOUS/NEXT buttons for any gallery which has any subpages
+  - PREV/NEXT button displayed before any generated subpage link (button correctly)
+  - create two new variables as objects for holding the state of every two button
+  - the atribute list corresponds to necessary attributes of given button (displayed text, active state) or has extra data attributes like any direct subgallery button (its subpage number and part of URL for that subgallery)
+  - added a code inside the same loop for counted which element should be previous and which next for the current one
+  - using that logic a button-object are changed, so it's can store gallery numer and part of its URL address)
+  - if previously mentioned attributes has changed then rest of the button attributes is conditionally changed (its title and active state) and code creates the buttons inside memory 
+  - buttons elements created as jQuery objects with HTML parameters (look at detailed attributes and their values)
+  - now buttons are inserted into the DOM, just before direct gallery subpage buttons (greater and always above the regular subgallery links)
+  - depending from chosen subpage number or the total number of subgalleries the displayed result might be different
+  - connected with 'fixed' section of this update
+* created also an empty table for collecting any direct subgallery button
+  - only after the loop ends this table is inserted at once with one or several items
+  - much effective than inserting into DOM each button at end of after each loop (now collecting is used instead inserting) ;)
+* the same event logic used as for any subpage button click!
+  - nothing new created for serving 'click' event :)
+  - the same class used and inside the same container (event delegation!)
+
+* commented out an expression for element with selector of '#glowna div#komentarz' because it's no longer exists
+
+[F] FIXED
+
+-- witryna.js
+* modified the code of displaying buttons
+  - added new elements with previously changed logic of function 'GenerujPodstronyGalerii'
+  - uses the same event as any direct subgallery (subpage) button
+  - tested on many subgalleries and corrected any bad logic
+  - just little CSS correction for displayed centered tecxt content
+- fixes: #50 - 'Improved browsing of the current gallery and its sub galleries'
+
+---------------------------
+
 v0.5.34 - AJAX status bar: content & buttons; one line status on narrow, later the same like it was (because good & simple); closing button moved by ONE px
 
 * v0.5.34 -- [2019-09-10]
