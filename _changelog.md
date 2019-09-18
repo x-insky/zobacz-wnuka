@@ -1,3 +1,94 @@
+v0.5.36 - conditionally displayed notification of loading next gallery list subpage inside a button, displays only when selected subpage list is visible; reversed the horizontal direction of slider for selecting gallery number (the same logic of newly/older, inverse display)
+
+* v0.5.36 -- [2019-09-13]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added a new default state for not displaying rotating animation of loading content
+  - selector: 'h2#zaladuj_galerie_spis img'
+  - needed for 'static state' to not showing that element on initial stage
+  - only when something will happen in the background the element will be shown with rotating animation 
+  - differentiator is displaying the selected gallery subpage, which is inserted between area of loading button and the displayed area of notification (some content in the vertical area,so the notification might be scrolled to the invisible upper area of displayed window)
+  - noticeable is a moving the text content to the left for the horizontal centering of the text of button when the extra elemements aren't displayed
+  - the size of the graphic element was also limited by its maximum dimensions (the absolute in pixels and later for relational units, which depends from the current font size of current element of 'button-like') 
+* needed also an extra class 'animacja' for enabing animation
+  - controlled by JS
+  - only if the section of selected gallery subpage is displayed the image inside button is showed and animated
+  - done by functions of updating state 'PokazAnimacjeLadowaniaDlaPrzycisku' and 'UkryjAnimacjeLadowaniaDlaPrzycisku', which shows, hides or just updates the actual state of loading next subpages of gallery list
+* due to more content inside button increased the size of the button-like element
+  - possible displaying counted requests and animation of rotating image of sun into the button, after its pressing
+  - selector: 'nav#spis_sterowanie h2#zaladuj_galerie_spis'
+  - increased 'max-width' from '16' to '18em'
+
+-- witryna.js
+* defined new function 'PokazAnimacjeLadowaniaDlaPrzycisku' for showing the actual state of the loading next subgallery notification
+  - a notification is dislayed inside button-like elements, which initiate the loading by its click  
+  - displays the same image, which will be rotating
+  - if were requested more than one subpages at one time by multiple clicks on that button, then the notification also displays this current number of requests (in 'span' element, just after that rotating sun image)
+  - this function also updates the state if clicked a given button while any request was going on
+  - uses the conditionally logic from function 'PokazRamkeLadowania', where is launched
+  - displays the same number as previously mentioned function, but not above 'button' only inside that button-like-element
+  - added extra condition to only display button-inside-notification if any selected subpage of gallery list is displayed for not displayed the same notification near both elements (and not confused the user by the two moving animations and eventual two number near of it)
+  - so on the start there is no possibility to display inner notification before any displaying of selected subpage from gallery list
+  - new function uses ':visible' pseudoclass and adds a specified class 'animacja' to notify that now new inner content might be presented inside load-button (at first run!) 
+* declared new function 'UkryjAnimacjeLadowaniaDlaPrzycisku' which is the inverse of function 'PokazAnimacjeLadowaniaDlaPrzycisku' previously described
+  - general purpose is to update or remove the notification from the inside of button
+  - it updates the state, when the request is finished, so if the total request number is more than one than will be just decremented (like it parent function 'UkryjRamkeLadowania' works)
+  - but there is no next active request the whole notification disappear
+  - after hiding a notification the attribute 'src' is removed and the additionally class 'animacja' is removed form 'img' element  
+  - it prevents the empty content to be still increased the size of the button-like-element (a problem may be visible in older browsers, which don't remove 'img' element form DOM, when its attribute 'src' is empty or not exists!)
+  - tested the notifications on many situations in many web browsers, works prefectly fine
+
+[*] MODIFIED
+
+-- index.php
+* trying to replace the notification of loading content for next subpage
+  - not good solution when element with selected gallery subpage is displayed in beteen of the all already displayed gallery subpages and the next gallery subpage
+  - the notification of loading for next gallery subpage is irrelevent for the area, where the readed content is plaeced
+* decided to add an extra loading notification inside a button which fires that notification and contents also
+  - on initial state the rotating sun is not displayed or even animated, because it needs a displayed element with content of selected subgallery page of gallery list   
+  - only when something is displayed or even prepared for displaying the  button is animated and has extra content (actual counted requests on each pressing)
+* prepared the structure for above, to display another data inside a button
+  - added empty 'img' element, without 'src' attribute and also an empty 'span' element within 'h2' element of id 'zaladuj_galerie_spis'
+  - 'src' attribute value replaced by later logic of JS, which also changes the numeric content of next 'span' element
+
+-- zlobek-styl.css
+* modified default state for all animating notifications of loading contents
+  - just few attributes of centering image content on vertical and for adding little space when displayed (space between text and rotating graphic) 
+  - added a visibility by default
+  - modified the selector lists, now each on its own line and with new selector 'h2#zaladuj_galerie_spis img.animacja' (mentioned in 'added' section)
+* modified the direction of slider for selecting any gallery number form given range
+  - now value on the left is newer (and higher) than a value from the right side, which is lower and older
+  - some kind of similarity with next slider, which position on the left refers to the newer value than from right side
+  - above is behavioral similarity, no visual (mirror differences)  
+  - selector for top slider: 'div#selektor input#suwak_galerii'
+  - just a 'direction' attribute with 'negative' value 'rtl' for Western people
+  - trying also the vertical transforming for slider but it isn't 100% reliable for older browsers   
+
+-- witryna.js
+* modified the function 'PokazRamkeLadowania' by adding another call for newly created function 'PokazAnimacjeLadowaniaDlaPrzycisku'
+  - the general purpose is to show an extra loading notification inside a button, which fires that notifiaction
+  - fires only when 'spis' variant is active inside interal switch statement
+  - any checkings moved inside that fired function
+  - any actions are taken only when internal condition is met (is displayed another element?)
+* the same reverse logic is used in modified function 'UkryjRamkeLadowania', which fires newly defined function 'UkryjAnimacjeLadowaniaDlaPrzycisku' only when loading action connects with 'spis' variant of internal switch statement
+  - general purspose is to update or delete the displayed notification inside button, which loads next gallery subpage from full list
+  - as a mirror function for showing, with negative consequences
+
+[F] FIXED
+
+-- witryna.js
+* not changed the place of displaying notification of loading next gallery subpage (read the notes of 'modified' section for 'index.php' file)
+  - kept the original place of notification (at the place, where new content will be added)
+  - added new place for the same notification when any selected subpage from galery list is displayed 
+  - the same animation and request number (if exists) is shown when high element between button and current notification is displayed
+  - just to not confuse user of the site by two notifications for the same purpose
+  - tested on many conditions and after updates works fine and displays the same values inside button as in standard notification 
+  - fixes: #52 - 'Location of the notification about loading the next gallery subpage'
+
+---------------------------
+
 v0.5.35 - improved browsing of the current gallery and its sub galleries; subgallery buttons centered
 
 * v0.5.35 -- [2019-09-11]
@@ -11,7 +102,6 @@ v0.5.35 - improved browsing of the current gallery and its sub galleries; subgal
   - to purpose of making it big and noticeable for easy click and traverse thru any subpages of this gallery (if there is any)
   - the same styles as buttons of footer 
   - selector: 'nav#nawigacja_galeria h6 button'
-* 
 
 [*] MODIFIED
 
