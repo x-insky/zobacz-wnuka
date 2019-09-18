@@ -1034,6 +1034,12 @@ div#selektor input#suwak_podstrony
     width: 90%;	
 }
 
+
+div#selektor input#suwak_galerii { 
+   /* transform: rotateY(180deg); */    /* ten sposób jest całkiem dobry, ale co gdy przeglądarka nie obsługuje przekształceń? */
+    direction: rtl;     /* obsługiwany chyba przez wszystkie przeglądarki, też od IE6 */
+}
+
 .maly_guzik {
 /*        display: block;
         width: 100%;*/
@@ -1201,11 +1207,27 @@ div#wczytywanie_wybrane_galerie_spis h2
     text-shadow: 1px 1px 6px #666;
 }
 
-div#wczytywanie_podstrona h2 img, div#wczytywanie_spis h2 img,
-div#wczytywanie_wybrane_galerie_spis h2 img
+div#wczytywanie_podstrona h2 img,
+div#wczytywanie_spis h2 img,
+div#wczytywanie_wybrane_galerie_spis h2 img,
+h2#zaladuj_galerie_spis img.animacja
 {
     /*animation: obroty360 1.2s infinite ease-in;	*/
-    animation: obroty180 1.4s infinite ease-in;	  
+    animation: obroty180 1.4s infinite ease-in;
+    margin-left: 0.5em;
+    visibility: visible;
+    vertical-align: text-bottom;
+}
+
+h2#zaladuj_galerie_spis img
+{
+    animation: none;
+    margin-left: -0.5em;
+    visibility: hidden;
+    max-height: 35px;
+    max-width: 35px;
+    max-height: 1.5em;    /* powtórzone deklaracje, dla przeglądrek które ogarniają EMy */
+    max-width: 1.5em;
 }
 
 div#zawartosc_do_podmiany {
@@ -2144,7 +2166,7 @@ input[type=range]:hover::-ms-fill-upper
     }
 
     nav#spis_sterowanie h2#zaladuj_galerie_spis {
-        max-width: 16em;
+        max-width: 18em;
     }
 
     div#glowna div#nazwa_galerii img {
