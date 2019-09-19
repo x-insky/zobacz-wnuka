@@ -1,3 +1,88 @@
+v0.5.37 - v0.5.37 - better UX when loading next subpage notification is displayed inside button, no wrong centering or altered shape of the button, no empty line also inside button static text
+
+* v0.5.37 -- [2019-09-14]
+
+[+] ADDED
+
+-- index.php
+* added new 'aside' element for 'semantic use' of sliders and also  semantic use for 'div' element, like HTML5 instructs.
+  - this description explains the values of the sliders, why they are reversed for each other
+  - 'float' attributes are used, each sub-span-element uses special class, which defines placement inside parent 'aside' element
+  - changed both the sliders same way, by adding this little explanations 
+
+-- zlobek-styl.css
+* defined new 'lewy' class which only purpose is to arrange element on left side of its conatiner using 'float' attribute
+  - a general purpose class
+* the same idea but reversed logic used inside new class of 'prawy'
+  - places the any element inside right border of its parent container
+  - builded with intentions of multi purpose class 
+* created another and the same selector after multiple existing for loading notification 'h2#zaladuj_galerie_spis.animacja img' for modify specified attributes of inner notification of loading
+  - this is smaller notification, so put there the rules of limitting size of graphics (used pixel and em units respectively)
+* defined also inversed style, when element is not animated and od course not shoved
+  - uses selector 'h2#zaladuj_galerie_spis img' (no 'animacja' class inside 'h2' element)
+  - the most important is hiding the element and total decreasing its size to 0px in each axis 
+  - also for performance reason is very important removing rotating animation (invisible image can rotate all the time without that!)
+
+* created also the style for shoving and hiding the place for eventual displayed current request inside the button (if multiple request were send)
+  - showing uses selector: 'h2#zaladuj_galerie_spis.animacja span' and is just for displaying the element (even if it's empty); another rule also reset the size of text for text size of parent
+  - hiding selector 'h2#zaladuj_galerie_spis span' which hides the content and squeezes the area where text could be displayed (defines also 'text-shadow' and connected 'transition' property, which works fine later, when any content is displayed)
+  - added extra selector 'h2#zaladuj_galerie_spis:hover span' for better UX
+
+[*] MODIFIED
+
+-- index.php
+* removed all the white characters inside loading next gallery subpage loading button
+  - connected with h2-element-button-like with id 'zaladuj_galerie_spis'
+  - removed all spaces between elements because all of them are inline elements!
+  - it's so hard to style this element type when screen size is unknown, and the size of an element is determined by its content
+* altered 'scr' attribute of an image, which is a part of inner notification of loading (mentioned above)
+  - replaced the previously empty value by the same path like has any other loading notification (not hardoced inside JavaScript function but added from of the same beginning) 
+  - the styles will show or hide this image, driven by JavaScript logic
+
+-- zlobek-styl.css
+* altered the 'transition' attribute for element with id 'zaladuj_galerie_spis'
+  - a listing of all four changing attributes instead 'all' value
+  - the same values used each time
+  - a more efficient declaration variant of two step animations
+* created new styles for sliders indicators (interprets their directions)
+  - placed just before sliders and above them 
+  - used another block level container each time for not use class specifity
+  - used 'aside' element as a container and a 'span' tag for text markers with little horizontal padding
+  - each slider marker is connected inside HTML with specified class, which describes floating behavior (left or right side)
+* changed the behavior of the animating notification inside button
+  - used specified parent class as a differentiator, not a class of specified element which is animated
+  - this way at once another element inside button might be styled
+  - selector changed from 'h2#zaladuj_galerie_spis img.animacja' to 
+'h2#zaladuj_galerie_spis.animacja img'
+  - in this multi selector commented out attribute 'vertical-align'
+* used the same style for rules (no space or spaces betweeen value and semicolon)
+
+-- witryna.js
+* modified the expressions inside function 'PokazAnimacjeLadowaniaDlaPrzycisku'
+  - no longer operating directly on image element but its parent
+  - the differentiator class moved up to parent container (a semi-button-element), which controls the behavior of its elements by defined rules of CSS selectors
+  - this way at once is possible to control both image and the text content, by displaying the given element or not (and also something more)
+  - just adding or removing a class for button-like-element to manipulate its visible content (in simplification)
+  - any direct operations on parameters of used 'img' or 'span' element is no longer needed, so the function can simply operate on the parent element by adding/removing given differentiator class (CSS rules do the rest)
+  - the hardcoded path to image is no longer needed, the image is controlled by CSS (and initially not displayed, just JS logic is for that)
+  - so moved for now old code of conditional logic into comments and writed out simplified versions, which operates on given class name (here 'animacja')
+  - no more direct operations on 'img' elements, a much simplified logic by parent class and cooperation with new CSS rules
+* the same idea but opposite logic used inside modified function 'UkryjAnimacjeLadowaniaDlaPrzycisku'
+  - also replaced the manipulations on 'img' element to altering its parent element; replaced all syntax to use the button-like-element and created CSS rules
+  - that way simplified the code and improved the application
+  
+[F] FIXED
+
+-- witryna.js & index.php & zlobek-styl.css
+* fixed the inner notification of loading content for next subpage of gallery list
+  - the image inside button notification was the problem of unwanted restyling of the button
+  - slighty impact the 'span' element and its height of 'font-size' attribute
+  - it added the extra vertical padding, not centered text content due to the negative margins, and with square empty dimensiuons it breaks the shape of the whole loading button, when it was invisible (it occupied the same area no matter is visible or not)
+  - needed the squeezes the all inlin econtent, because they are inline elments (so hard to do by styling, when dynamic content is in use with many screen sizes)
+  - fixes: #54 - Problem centering the content of the next subpage loading button for the gallery list'
+
+---------------------------
+
 v0.5.36 - conditionally displayed notification of loading next gallery list subpage inside a button, displays only when selected subpage list is visible; reversed the horizontal direction of slider for selecting gallery number (the same logic of newly/older, inverse display)
 
 * v0.5.36 -- [2019-09-13]
