@@ -257,6 +257,14 @@ div.blad p
     color: white;
 }
 
+.lewy {
+    float: left;
+}
+
+.prawy {
+    float: right;
+}
+
 .clearfix::after {
     content: "";
     clear: both;
@@ -808,7 +816,11 @@ div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
     border-radius: 8px;
     border: 2px solid #fff;
     box-shadow: 1px 1px 3px #5d6ad0;
-    transition: all 0.5s ease 0.1s;    
+/*    transition: all 0.5s ease 0.1s; */    /* dla lepszej wydajności określono tylko używane, poniżej wylistowane (jednakowe czasy):  */
+    transition: box-shadow 0.5s ease 0.1s,
+        background-color 0.5s ease 0.1s,
+        color 0.5s ease 0.1s,
+        text-shadow 0.5s ease 0.1s;
 }
 
 div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:hover,
@@ -870,7 +882,6 @@ h2#selektor_naglowek.rozwiniety span {
     transform: rotate(180deg);    
 }
 
-
 div#selektor div#wybor_galerii,
 div#selektor div#wybor_podstrony_galerii
 {
@@ -901,6 +912,13 @@ div#wybor_podstrony_galerii div
 {
     flex-grow: 1;
         /*border: 1px solid rgba(200, 200, 200, 0.5);*/
+}
+
+div#wybor_galerii aside > span,
+div#wybor_podstrony_galerii aside > span
+{
+    padding-left: 1.5em;
+    padding-right: 1.5em;
 }
 
 div#wybor_podstrony_galerii input#podstrona_wybrany_nr {
@@ -1136,6 +1154,7 @@ div#glowna div#nazwa_galerii img {
     margin : 0.5em auto;
 /*    margin-right: 1.5em;	*/
     max-height: 320px;
+    max-width: 100%;        /* także ewentualne ograniczenie do szerokości kontenera (skalowanie przy super wąskich ekranach)*/
     border: 4px solid white;
     box-shadow: 1.5px 1.5px 6px #222;
     transition: margin-top 0.3s;
@@ -1210,33 +1229,57 @@ div#wczytywanie_wybrane_galerie_spis h2
 div#wczytywanie_podstrona h2 img,
 div#wczytywanie_spis h2 img,
 div#wczytywanie_wybrane_galerie_spis h2 img,
-h2#zaladuj_galerie_spis img.animacja
+h2#zaladuj_galerie_spis.animacja img
 {
+    visibility: visible;
     /*animation: obroty360 1.2s infinite ease-in;	*/
     animation: obroty180 1.4s infinite ease-in;
     margin-left: 0.5em;
-    visibility: visible;
-    vertical-align: text-bottom;
+    /*vertical-align: text-bottom;*/
 }
 
-h2#zaladuj_galerie_spis img
-{
-    animation: none;
-    margin-left: -0.5em;
-    visibility: hidden;
+h2#zaladuj_galerie_spis.animacja img {  /* jako rozszerzenie tego co powyżej, specyficzne dla powiadomienia wewnątrz przycisku */
     max-height: 35px;
     max-width: 35px;
     max-height: 1.5em;    /* powtórzone deklaracje, dla przeglądrek które ogarniają EMy */
     max-width: 1.5em;
 }
 
+h2#zaladuj_galerie_spis img {
+    visibility: hidden;
+    animation: none;
+    margin-left: 0em;
+    max-height: 0px;
+    max-width: 0px;
+    vertical-align: text-bottom;
+}
+
+h2#zaladuj_galerie_spis.animacja span {
+    visibility: visible;
+    line-height: inherit;
+        /* 'text-shadow' tu czy poniżej to i tak ten sam efekt, klasy się nie blokują wzajemnie */
+}
+    
+h2#zaladuj_galerie_spis span {
+    visibility: hidden;
+    line-height: 0;
+    vertical-align: text-bottom;        /* cień działa, mimo że zawartości nie widać, pojawia się wraz z nią */
+    text-shadow: 2px 2px 6px #666;    /* ten sam cień, który posiada statyczna część przycisku ładowania (wcześniej na :hover nie było widać)*/
+    transition: text-shadow 0.5s ease 0.1s;
+}
+
+h2#zaladuj_galerie_spis:hover span {
+    text-shadow: 0px 0px 10px black;    /* też ten sam cień co h2:hover */
+}
+
+
 div#zawartosc_do_podmiany {
-    position: absolute ;
-    top: -1185px ;
-    left: -2150px ;
-    background-color: yellow ;
-    border: 2px solid red ;	
-    display: none ; 
+    position: absolute;
+    top: -1185px;
+    left: -2150px;
+    background-color: yellow;
+    border: 2px solid red;	
+    display: none; 
 }
 
 div#skladowisko {
@@ -1250,7 +1293,7 @@ div#skladowisko {
 
 div#skladowisko a {
     padding: 0.1em 0.5em;
-    vertical-align: 40%	;	
+    vertical-align: 40%;	
     /* position: relative; */	
     /* line-height: 10px; 
      display: table-cell;	*/

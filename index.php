@@ -185,7 +185,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <div class="kontener">
                         <p id="status_galerii_spis"></p>
                         </div>
-                        <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2" tabindex="0">Załaduj kolejne galerie <img src="" alt="" /> <span></span></h2>
+                        <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2" tabindex="0">Załaduj kolejne galerie<img src="grafiki/slonce_60x60.png" alt="" /><span></span></h2>
 
                         <!-- pierwotne położenie animacji wczytywania --> 
                         <!-- 
@@ -205,6 +205,10 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                                     <label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
                                                     <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
                                                 </div>
+                                                <aside>
+                                                    <span class="lewy">nowsze</span> 
+                                                    <span class="prawy">starsze</span>    
+                                                </aside>
                                                 <div>
                                                     <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
@@ -228,6 +232,10 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                                     <label for="podstrona_wybrany_nr">Numer podstrony spisu treści:</label>
                                                     <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
                                                 </div>
+                                                <aside>
+                                                    <span class="lewy">nowsze</span> 
+                                                    <span class="prawy">starsze</span>    
+                                                </aside>
                                                 <div>
                                                     <input type="range" min="1" selectionDirection="backward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
@@ -341,7 +349,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulancja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-ncja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.36</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.37</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
