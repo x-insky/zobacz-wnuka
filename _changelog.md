@@ -1,3 +1,78 @@
+v0.5.38 - improved status of AJAX belt, display elements in each line on narrow screens; (reopened issue #48 for update 'v0.5.34') 
+
+* v0.5.38 -- [2019-09-15]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added three new selectors for three element, which styles is reset on first media query threshold (on screens wider than 320px)
+  - all of them are placed inside AJAX status notification (AJAX belt)
+  - targeted the inner container and its two internal elements type
+* first element is an inner container with selector: '#odpluskwiacz_ajaksowy div:first-child'
+  - added right padding to be at least 55px from the appropriate notification element (decreases the inner containg size for any inline elements placed inside in such a way that closing button is placed next to that content)
+  - reset the top padding to 0px (previously it was vertical size of closing button-like element  -- now displayed next to)
+  - added also a lower padding bottom just for better visual of the whole notification element (not 1em just 0.2em) 
+* the second selector is connected to the any button element of AJAX state element
+  - selector: '#odpluskwiacz_ajaksowy button'
+  - most important changed for 'inline-block' display, also reduced the width to 'auto'
+  - for visual reception added some padding on top and bottom, so the two buttons lokks almost the same like others on a page
+* third selector is conected with 'label' element, so it changes back it as inline type (uses 'display: inline-block' precisely and negates the 100% width to 'auto' value)
+  - selector: '#odpluskwiacz_ajaksowy label'
+  
+[*] MODIFIED
+
+-- index.php
+* altered the label text inside lower form
+  - current text is 'Numer podstrony listy galerii' instead 'Numer podstrony spisu treści'
+* renamed to 'proper' the text content of button inside footer, which fires 'AJAX Simulation'(R)
+  - no more joke-spelling content
+  - changed also the id of this element for proper spelling 'symulacja_button' from joke name
+* trying to altered the place of div with id 'debugger_zamykanie' inside 'div' element with id 'odpluskwiacz_ajaksowy' to be first element not the last inside its container
+  - the existing place is OK, only on narrow screens there was problems connected with the elment order (not the same order as displayed)
+  - order depends also from the browser vendor, is diferent in IE and e.g. FF
+  - implication on keyboard navigation, leaved the intention of change for better usability!
+  - just altered the closing tag of 'h4' element inside code (not really implication on content)
+
+-- zlobek-styl.css
+* renamed the selector for 'button#symulancja_button' to 'button#symulacja_button'
+  - resigned from the silly name (kind of joke)
+* changed selector for inner container of AJAX state notification
+  - from '#odpluskwiacz_ajaksowy div:first-child' to '#odpluskwiacz_ajaksowy > div:first-child'
+  - also for purpose of easy change the HTML order inside this container, especially for closing element
+  - without the changes the styles refers to closing component not a inner container!
+  - solves the problem of selecting now and any later ideas could help for better usability or just keyboard navigation)
+  - also added basis style, a top-padding of size the absolute positioned button + few px (set 60px, so the button always is in the top of the notification on narrow screens)
+  - also added little padding at the bottom, which is changed by next media query threshold (from 1em to 0.2em, but it's relational, based on font size)
+* changed the block style for displaying buttons and notification inside AJAX belt (with included 100% width) 
+  - used in the most narrow screens only, next media query thereshold changes it for inline as defaults 
+  - added some attributes for breaking the words or wrapping the text to another line (a set: 'word-wrap', 'word-break', 'white-space: normal'
+  - and also added some margins above and beneath the basic style (only for button basis)
+* altered also the label element inside AJAX belt to be 100% wide and block type
+  - only for basic style to be similar to two above buttons
+* altered the behavior of element with class 'status_ajaksa', which shows actual GOOD/BAD simulation state inside AJAX state notification belt
+  - on super narrow screen this element text content is breaked and moved to the next lne (the same as buttons below) 
+* removed few unnecessary white characters (spaces, tabs, indents, etc) 
+
+-- witryna.js
+* renamed the selector for defined event function of click
+  - no more "$('#symulancja_button')" because renamed the id of taht element to 'symulacja_button'
+  - unnafected the logic just simple rename, mentioned inside oter project files
+* altered the minimal value in pixel for 'h3' element of header
+  - now the lower ranged is 9px instead 7px before
+  - just slighty better readability (if reading a few pixel high font could be easy and nice)
+  
+[F] FIXED
+
+-- zlobek-styl.css
+* added a changed basis style, if screen width not exceeds 320px
+  - improved the previously update/commit of status of AJAX displaying in one line (connected with update 'v0.5.34') 
+  - not changed the structure of element belt, done by CSS styling
+  - the same size and similar looking elements inside this AJAX belt (mainly a block level displaying for two buttons and status notification element, which makes them similar)
+  - achieved the same look for all almost every button elements on narrow screens
+  - fixes: #48 - 'Displaying the AJAX status bar.' (reopen!)
+
+---------------------------
+
 v0.5.37 - v0.5.37 - better UX when loading next subpage notification is displayed inside button, no wrong centering or altered shape of the button, no empty line also inside button static text
 
 * v0.5.37 -- [2019-09-14]
@@ -22,7 +97,6 @@ v0.5.37 - v0.5.37 - better UX when loading next subpage notification is displaye
   - uses selector 'h2#zaladuj_galerie_spis img' (no 'animacja' class inside 'h2' element)
   - the most important is hiding the element and total decreasing its size to 0px in each axis 
   - also for performance reason is very important removing rotating animation (invisible image can rotate all the time without that!)
-
 * created also the style for shoving and hiding the place for eventual displayed current request inside the button (if multiple request were send)
   - showing uses selector: 'h2#zaladuj_galerie_spis.animacja span' and is just for displaying the element (even if it's empty); another rule also reset the size of text for text size of parent
   - hiding selector 'h2#zaladuj_galerie_spis span' which hides the content and squeezes the area where text could be displayed (defines also 'text-shadow' and connected 'transition' property, which works fine later, when any content is displayed)
