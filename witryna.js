@@ -2659,7 +2659,7 @@ $('#pomoc_button').click( function() {
 });
 
     
-$('#symulancja_button').click( function() {
+$('#symulacja_button').click( function() {
  $('#odpluskwiacz_ajaksowy').fadeToggle(200);	
 });    
     
@@ -3234,7 +3234,7 @@ OdkryjEmail();
 	//$("#banner h1.logo").fitText();
 $("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '62px' });
 $("#napisy h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
-$("#napis_spod h3").fitText(3, { minFontSize: '7px', maxFontSize: '17px' });    
+$("#napis_spod h3").fitText(3, { minFontSize: '9px', maxFontSize: '17px' });    
 
 
     // parametryzacja pokazu zdjęć (przeniesione z pliku index.php)
@@ -3245,5 +3245,4 @@ AktualnyRozmiarOkna('#wymiary');
 
 	
 }); //document-ready-END
-
 
