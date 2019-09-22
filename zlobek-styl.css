@@ -1202,6 +1202,10 @@ nav#nawigacja_galeria > div {
     text-align: center;
 }
 
+nav#nawigacja_galeria h6 {
+    padding-top: 0;
+}
+
 nav#nawigacja_galeria h6 button {
     font-size: 140%;
     padding: 0.45em 2em;

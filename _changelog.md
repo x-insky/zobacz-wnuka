@@ -1,3 +1,46 @@
+v0.5.39 - PREV/NEXT buttons reenabled after error; none, one or two button groups for subgallery links
+
+* v0.5.39 -- [2019-09-16]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added new style for 'h6', which is a container inside navigation menu of current gallery
+  - selector: 'nav#nawigacja_galeria h6'
+  - just to limit the distance from the top, from the text of subheader
+  - the previously gap was not equal space in above and below of the buttons (upper was bigger)
+
+[*] MODIFIED
+
+-- witryna.js
+* slighty altered the body of main function 'WczytajZewnetrznyHTMLdoTAGU'
+  - all changes conected with 'galeria_podstrona' variant, affected the code only inside this switch block
+  - removed the unnecessary dot inside text notification of error, when any subpage is not loaded correctly (changed text parameter of internal calling a function 'GenerujPowiadomienieOBledzie'
+  - used another call of 'OdblokujPrzycisk' function for possible reenabling of button (activating from deactivate state), which leads to previous or next subgallery from current displayed gallery
+  - in that calling it's imposiible to guess which element with specified id was disabled, so the jQuery selector is based on 'value' attribute of that element
+* slighty changed logic of function 'GenerujPodstronyGalerii'
+  - created new variable to count the subgallery links
+  - if there is any subgallery the displayed is changed text of subheader and two buttons, which lead to PREV/NEXT subgallery 
+  - using new variable as a differentiator, which conditionally shows the all subgallery links only when they was count as two or more occurences
+  - also a short subheader is placed between buttons PREV/NEXT and direct links
+  - removed unused variables and comments which was used only for inform and loging of position of main container for current gallery before and after the notification of loading content was displayed
+  - the idea of sliding the visible fragment of page to the top by little is dead, when the notification is closing and dissapears 
+* used the common style rules to clean of white spaces (no extra spaces, irregular tab keys, aligned assignment statement, etc.)
+  
+[F] FIXED
+
+-- witryna.js
+* fixed the problem of inactive button after unsuccessful request
+  - no difference it was real error or simulated one
+  - added another selector for reenabling disabled button
+  - one of PREV/NEXT buttons might be disabled because of used range, so the 'value' attribute is used to select the other-and-better-one and activate it
+  - the logic looking for both button groups which lead to given requested subgallery (both elements use different selectors, more complicated is used for PREV/NEXT buttons) 
+  - added also a requested fix for dispalying only direct subgallery links (precisely and properly: buttons), when there is more subgalleries than two or three
+  - used two as the optimal value, because there is a possible one-click-way which directly leads to second, third or any listed gallery 
+  - fixes: #57 - 'Problem with repeating the BACK / NEXT button actions for viewing the subgalleries for current gallery.'
+
+---------------------------
+
 v0.5.38 - improved status of AJAX belt, display elements in each line on narrow screens; (reopened issue #48 for update 'v0.5.34') 
 
 * v0.5.38 -- [2019-09-15]

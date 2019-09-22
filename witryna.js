@@ -26,7 +26,6 @@ var g_element_zewnetrzny = "table.galeria",	// wszystko jest w tablicy o klasie 
  g_przechwytywacz_php_zapytanie = "?url_zewn=",			// adres zmiennej GET, zawartość bez weryfikacji !!!
  g_przechwytywacz_php_zapytanie_ok = "?url_zewn=",			// oczekiwana zawartość zmiennej jako poprawna 
     
-
  g_tag_do_podmiany_zdjecia = "div#zawartosc_do_podmiany", //element DOM, do którego load() wstawi zawartość tagu table.galeria z witryny zewnętrznej
  g_miejsce_na_zdjecia = "div#skladowisko", // zamienić na coś sensowniejszego
  // g_wczytywanie_podstrona = "#wczytywanie_podstrona",
@@ -47,14 +46,14 @@ var g_element_zewnetrzny = "table.galeria",	// wszystko jest w tablicy o klasie 
  g_wybrany_nr_galerii = 0,              // zapamiętanie co siedzi w polu od numeru galerii (pozycja suwaka)
  g_wybrany_nr_podstrony_galerii = 0,    // zapamiętanie co siedzi w polu od numeru podstrony galerii (też suwak)
 
- $g_input_nr_galerii	= $('input#galeria_wybrany_nr'), 
- $g_suwak_nr_galerii	= $('input#suwak_galerii'), 
+ $g_input_nr_galerii = $('input#galeria_wybrany_nr'), 
+ $g_suwak_nr_galerii = $('input#suwak_galerii'), 
  $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'), 
  $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),    
  g_niewyslane_podstrony = [],     // wszystkie żądania wyświetlenia ...vs lub tylko te do kolejnych podstron
  g_prezentacja_wczytywania = [],  // niejako kontener na stan wszystkich powiadomień o wczytywaniu  
     
- g_tloSrc = '',   //
+ g_tloSrc = '',
  g_ileCzesci = 0,
  g_nazwaPlanszy = '',
  g_nazwaPlanszySciezka = '',
@@ -64,23 +63,23 @@ var g_element_zewnetrzny = "table.galeria",	// wszystko jest w tablicy o klasie 
  g_przesuniecieTlaY = 0,  // korekta umieszczenia obrazka w tle    
  g_ktoraGrafika = '',
  g_mojX = '',
- g_mojY= '';    
-    
-	
+ g_mojY = '';    
+
+
 // ---------- *** ----------  FUNKCJE PRAWIE GLOBALNE *** ---------- *** ----------		
-	
+
 function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zasobu, element_witryny, rodzaj_dzialania, dane ) 
-{ 
+{
 //debugger; 
     if ( element_witryny.length > 0 ) element_witryny = " " + element_witryny; // dodanie spacji na początku, separator dla TAGU po nazwie pliku     				
-   
+
     if ( !dane ) dane = { ktoraPodstrona : 1, wybranyNrGalerii : 1 }; // aby nie było "TypeError" przy braku tego parametru w auto-wywołaniu bez kliknięcia podstrony (pierwsza podstrona)
         
     //$( g_miejsce_na_spis ).show( 100 ); // zawsze pokaż przestrzeń do załadowania dynamicznego gdyby ukryta (treść zewnętrzna lub błędy...)
     // var zawartoscUTF = unescape(encodeURIComponent( zawartoscOryginalna )); // kodowanie zaczytanych znaków?! // ... już załatwione w php
     
     switch ( rodzaj_dzialania ) {
-				
+
         case "galeria_podstrona" :      // wyświetlenie dowolnej galerii (pierwsza strona albumu lub dowolna podstrona)
             try 
             {	
@@ -117,10 +116,12 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         nrPodstronyGalerii = dane.ktoraPodstrona; 
                         // nrGalerii = adres_zasobu 
                     //console.log('Podstrona - odnośnik niezaładowany: ' + adres_zasobu + ", podstrona " + dane.ktoraPodstrona);    
-                    var komunikatOBledzie = "Nie udało się załadować wskazanej podstrony nr <strong>" + nrPodstronyGalerii + "</strong>. dla galerii o numerze <strong>" + nrGalerii + "</strong>. Spróbuj ponownie.<br />Diagnostyka: kod błędu nr " + xhr.status + " (" + xhr.statusText.toLowerCase() + ") o statusie \"" + status + "\".";    
+                    var komunikatOBledzie = "Nie udało się załadować wskazanej podstrony nr <strong>" + nrPodstronyGalerii + "</strong> dla galerii o numerze <strong>" + nrGalerii + "</strong>. Spróbuj ponownie.<br />Diagnostyka: kod błędu nr " + xhr.status + " (" + xhr.statusText.toLowerCase() + ") o statusie \"" + status + "\".";    
                     GenerujPowiadomienieOBledzie({ tytul : 'Problem z załadowaniem galerii #' + nrGalerii +'!', tresc : komunikatOBledzie });    // działa lepeij niż wcześniejszy standard
                     PrzewinEkranDoElementu('div.blad', 500);
-                    //OdblokujPrzycisk( '.przycisk_galeria:eq(' + ( dane.ktoraPodstrona - 1 ) + ')' );    // korekta na -1 brakującego, bieżący w jego miejscu (też wzpółgra z 0-podstawą dla EQ)
+                        // odblokowywananie przycisku WSTECZ/DALEJ, tylko konkretny jeden przycisk z możliwych dwóch nieaktywnych 
+                    OdblokujPrzycisk( 'nav#nawigacja_galeria h6 button.przycisk_galeria[value="' + dane.ktoraPodstrona + '"]' );    // potrzebna weryfikacja tego co w VALUE siedzi, ID, KLASA ani KROTNOŚC nie określa wprost elementu  
+                        // odblokowywanie przycisku z bezpośrednim numerem galerii (o ile jest na stronie)
                     OdblokujPrzycisk( '#galeria_paginacja_' + dane.ktoraPodstrona );    // łatwiej operować na konkretnym ID, jeśli najpierw prawidłowo tę paginację się wygenerowało (pasujące ID do przycisku) lub w oparciu o atr. VALUE 
                     }
                     if ( status === "complete" )    // test, ale tego stanu nie powinno być nigdy
@@ -488,14 +489,9 @@ nrWyswietlanejGalerii = parseInt( nrWyswietlanejGalerii );
     if ( ( !kontenerZrodlowy ) || ( kontenerZrodlowy == '') ) kontenerZrodlowy = '#zawartosc_do_podmiany';
     if ( ( nrWyswietlanejGalerii == undefined ) || ( isNaN( nrWyswietlanejGalerii) ) ) nrWyswietlanejGalerii = 1;
 
-var kontenerDocelowyElement = "div#skladowisko";
-var $kontenerDocelowy = $( kontenerDocelowyElement ); 
-    
-var wysokoscDokumentu = $(document).height();
-var wysokoscDivWczytywanie = $('#wczytywanie_podstrona').height();    
-var wysokoscDivKomentarz = $('div#komentarz').height();    
-var odlegloscPionowaDocelowego = $kontenerDocelowy.offset().top;
-var wysokoscOknaPrzegladarki = $(window).height();
+var kontenerDocelowyElement = "div#skladowisko",
+    $kontenerDocelowy = $( kontenerDocelowyElement ),
+    ileLinkowDoPodstron = 0;
 
 var przyciskPoprzedni = {
         nrPodstrony : 0,        // początkowe wartośc dla wskazania numeru wcześniejszego i kolejnego odsyłacza względem danego
@@ -512,35 +508,19 @@ var przyciskPoprzedni = {
     
 var przyciskiDoWstawienia = [];    
     
-console.log("PRZED - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOknaPrzegladarki + "px, PozycjaY #skladowiska: " + odlegloscPionowaDocelowego 
-            + "px, wysokość DIV#wczytywanie: " + wysokoscDivWczytywanie + "px, wysokość DIV#komentarz: " + wysokoscDivKomentarz );
-//PrzewinEkranDoElementu('div#skladowisko', 200, -8);  // złe miejsce, przed trteścią
-
 $('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
 //$('#wczytywanie_podstrona').hide(100);	// schowaj informację, skoro wczytano zawartość
     // UkryjRamkeLadowania('podstrona');    // - to nie jest typowa funkcja generowania treści... albo się mylę   
 //$('#glowna div#komentarz').hide(100);	//showaj opis-informację o ile była pokazana  // NIE MA JUŻ TEGO ELEMENTU 
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
 $kontenerDocelowy.show( 100 );	// pokaż kontener na zaczytaną zawartość ... + przewiń po wyświetleniu całości?
-    
-    //weryfikacja położenia w pionie przed dodaniem zawartości - miniatur zdjęć z danej galerii
 
-// UzupełnijNaglowekBiezacejGalerii( g_nazwa_galerii, g_opis_galerii, g_obrazek_galerii_src );
-    // powyższe wywołanie zastąpiono poniższy kod  
-    // (przeniesiono wywołanie bezpośrednio do obsługi kliknięcia, aby nie czekać na juz pobrany wynik (2x tekst, +src ), tylko na ładowane zdjęcia)   
-/*    
-$('#nazwa_galerii').find('h2').html( g_nazwa_galerii ); 	// było.text( ... )
-$('#nazwa_galerii').find('p').html( g_opis_galerii );		// było.text( ... )
-$('#nazwa_galerii').find('img').attr( 'src', g_obrazek_galerii_src );  
-$('#nazwa_galerii').show(100);	
-*/
-	
 var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie wewnątrz danego pojemnika 
 
-    if ( $listaPodstron.length >= 1 )	// czy są jakieś odnośniki do podstron/paginacji galerii?
+    if ( $listaPodstron.length >= 1 )	// czy są jakieś odnośniki do podstron/paginacji galerii? (zlicza wszystkie, też NOWSZE/STARSZE)
     {					// startujemy od kolej strony po pierwszej, ale ostatni zawiera ciąg "starsze"
-
-    $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Pozostałe podstrony w tej galerii</h3></div>');
+    // $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Pozostałe podstrony w tej galerii</h3></div>');    // poprzedni tekst 
+    $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Przeglądaj kolejno pozostałe podstrony tej galerii</h3></div>'); 
         
     var nazwaPodstronyGalerii = '';
 /*    var numerPodstronyDoWyswietlenia = 0;
@@ -552,25 +532,17 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
             {
             // nic nie rób dla takiego odnośnika, najlepiej zakończyć iterację
             continue;  // nie wyświetlaj przyciku/-ów z starsze/nowsze dla danego wykonania pętli - wyjście z kroku pętli
-            }  
+            }
+        ileLinkowDoPodstron++;  // dopiero tu inkrementacja znalezionej ilości "dobrych" przycisków    
 
         var odnosnikPodstrony = $( $listaPodstron[i] ).attr('href'); 	// wyciąga href z nawigacji podstrony/paginacji
         console.log('Natrafiono na odnośnik nr ' + (i+1) + ' o zawartości \'' + odnosnikPodstrony + '\'');
 
         //var nrGalerii = odnosnikPodstrony.split(",")[2]; // to był wystarczający warunek, póki w "tytule" nie zawarto przecinka/ów (",")
         var nrGalerii = parseInt ( odnosnikPodstrony.substr( odnosnikPodstrony.lastIndexOf(",p") + 2, odnosnikPodstrony.length - 5 ) );
-            // http.../u_misiow,a20,p2.html	
-            // usuwanie przecinka i "p", które są o "2 przed" numerem podstrony galerii 
+            // "http.../u_misiow,a20,p2.html"  <-- usuwanie przecinka i "p", które są o "2 przed" numerem podstrony galerii 
             // treść z numerem kończy się ".html" - pomijane te 5 znaków przy krojeniu STRINGU)
 
-            /* if ( numerJeszczeNieokreślony )
-            {
-            numerPodstronyDoWyswietlenia++;
-                if ( ( numerPodstronyDoWyswietlenia < nrGalerii ) || ( numerPodstronyDoWyswietlenia == $listaPodstron.length ) )
-                {
-                numerJeszczeNieokreślony = false;
-                }
-            }*/
                 // tu oblicznanie w pętli przejścia do ewentualnego poprzedniego oraz ewentualnego następnego względem bieżącego 
             if ( ( nrGalerii == ( nrWyswietlanejGalerii - 1 ) ) && ( nrGalerii > 0 ) )  // > "jeden" to źle?
             {
@@ -601,6 +573,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         // $('nav#nawigacja_galeria > div:first').append( nowyPrzycisk ); // wstawianie przycisku innego niż "poprzednia/następna" podstrona danej galerii
                 // też brak przycisku dla bieżacej galerii, np. w formie wyłączonego (nieaktywnego), bo brak takiego odnośnika teraz na www
         } // for-END
+        
     console.log('NOWY: ', przyciskiDoWstawienia );
         
             // wstepne dane do tworzenia przycisków DALEJ/WSTECZ  - dobre miejsce na zrobienie funkcji z tej treści (al eza dużo parametrów i sprzecznej logiki w niej)
@@ -648,13 +621,14 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         "data-elem_zewn" : g_element_zewnetrzny
     });	   
 
-    var elementBlokowy = $('<h6 />').html( poprzedniButton ).append( nastepnyButton );  // dodawanie jako obiekty jQuery (sobno!)
+    var elementBlokowy = $('<h6 />').html( poprzedniButton ).append( nastepnyButton );  // dodawanie jako obiekty jQuery (osobno każdy z elementów!)
         
-    $('nav#nawigacja_galeria > div:first').append( elementBlokowy ).append( przyciskiDoWstawienia ); // wstawianie od razu CAŁEJ KOLEKCJI przycisków do każdej z podstron...
-
-            // tu też dać przyciski dalej/wstecz , a poprzedzić to statyczną treścią nagłówka
-        
-        
+    $('nav#nawigacja_galeria > div:first').append( elementBlokowy );
+        // wyświetlanie warunkowo ewentualnyh bezpośrednich odnośników do podgalerii, gdy tych jest CO NAJMNIEJ DWA (można od razu nawigować do ostatniego/pierwszego bez pośredniego przejścia przed drugi (z niepotrzebnym ładowaniem!)) 
+        if ( ileLinkowDoPodstron > 1 ) // czyli pokaże się z DWOMA przyciskami minimum w zawartości albo w ogóle (może i mniej wydajne, ale prostsze do ogarnięcia)
+        {
+        $('nav#nawigacja_galeria > div:first').append('<h3>... albo wybierz dowolną podstronę od razu.</h3>').append( przyciskiDoWstawienia ); // wstawianie od razu CAŁEJ KOLEKCJI przycisków do każdej z podstron...
+        }
     } // //if-END $listaPodstron.length >= 1
 
 //przeszukiwanie odnośników dla miniatur w galerii, link z miniatury prowadzi do normalnej (większej) kopii obrazka
@@ -702,15 +676,6 @@ $( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietl
     // przeklejenie - wstawienie odnośników do zdjęć w innym, właściwym obszarze
     $kontenerDocelowy.append( $biezacy ); 
     }); //each-function-END
-
-    //weryfikacja położenia w pionie po dodaniu zawartości - miniatur zdjęć z danej galerii    
-wysokoscDokumentu = $(document).height();
-odlegloscPionowaDocelowego = $kontenerDocelowy.offset().top;
-wysokoscOknaPrzegladarki = $(window).height();
-console.log("Wymiary PO - Dokument: " + wysokoscDokumentu + "px, Okno: " + wysokoscOknaPrzegladarki + "px, PozycjaY #skladowiska: " + odlegloscPionowaDocelowego + "px");
-// powinno być warunkowe przesuwanie, gdy dodana zawartość przewinęła nieznacznie pozycję przesuniętego okna, a zniknięcie prostokąta ładowania też nie podwyższyło tego okna
- // if () {}  //gdy większa wysokośc elementu niż wys-DOKUMENTU - wys-OKNA  
-// PrzewinEkranDoElementu('div#skladowisko', 200, -8 );    // druga kopia "wyrównawcza"
 
 //	} //if-END $listaPodstron.length >= 1
 } // GenerujPodstronyGalerii-END    
