@@ -102,6 +102,11 @@ h4 {
     text-align: center;	
 }
 
+h4 > span {
+    color: #eee;
+    text-shadow: 1px 1px 1px #333;
+}
+
 h6 {
     text-align: center;
     padding-top: 0.7em;
@@ -546,13 +551,14 @@ header#naglowek .ciemne_tlo_spis {
 }
 
 .brak_js div.powiadamiacz {
-    display: none;
     visibility: hidden; /* przeniesione ze "zwykłej" klasy !! */
+    height: 0px;
 }
 
 div.powiadamiacz {
-    display: block;
     visibility: visible; /* gdy 'DISPLAY: NONE' to nie pokazuje i nie animuje się pasek wewnątrz tego kontenera */
+    height: auto;
+    position: relative;
     width: 90%;
     background-color: cornflowerblue;
     border: 1px solid #00b;
@@ -560,7 +566,34 @@ div.powiadamiacz {
     box-shadow: 1px 1px 3px darkblue;
     padding: 0.5em;
     margin: 0.5em auto;
+    transition: background-color 0.25s ease-out;
 }
+
+div.powiadamiacz:hover {
+    background-color: #647eed;  /* "#59aede" jako jaśniejszy cornflowerblue */
+    cursor: pointer;
+    
+}
+
+div.powiadamiacz:hover:after {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    content: "\00d7";   /* '&times;' ekwiwalent w unikodzie */
+    font-size: 36px;
+    font-weight: bolder;
+    line-height: 20px;
+    padding: 0.2em;
+    padding-bottom: 0.4em;
+    
+    color: black;
+    background-color: yellow; /* #ddd */
+}
+
+      /*  div.powiadamiacz:hover:after {
+            background-color: white;
+        }*/
+
 
 div.powiadamiacz p {
     text-align: center;
@@ -869,13 +902,13 @@ div#selektor h2#selektor_naglowek:focus
 h2#selektor_naglowek span {
     padding-left: 0.5em;
     padding-right: 0.5em;    
-    display : inline-block; /* na potrzeby odwracania - rotacji  */
+    display: inline-block; /* na potrzeby odwracania - rotacji  */
     transition: transform 0.4s, padding-left 0.3s;
     cursor: pointer;    
 }
 
 h2#selektor_naglowek:hover span:hover {
-    padding-left : 1em ;
+    padding-left: 1em ;
 }
 
 h2#selektor_naglowek.rozwiniety span {

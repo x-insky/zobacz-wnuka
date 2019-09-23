@@ -16,6 +16,7 @@ return false;
 
 function Czy_bylo_przekierowanie()
 {
+$czy_z_przekierowania = -1;
         // uwaga na parametry $_SERVER - nie wszystkie dostępne w środowiskach różnych (czytaj STARYCH) przeglądarek, np. REFERER
     if ( isset( $_SERVER['HTTP_REFERER'] ) && isset( $_SERVER['SERVER_NAME'] ) ) 
     {   
@@ -23,12 +24,20 @@ function Czy_bylo_przekierowanie()
         if ( $czy_z_przekierowania === false ) // nie jako alternatywa > -1 
         {
         return $_SERVER['HTTP_REFERER'];
-        }
-            // usunąc poniższy warunek po fazach DEV !!!
-        if ( $czy_z_przekierowania >= 0 ) // STRPOS: false vs [0..inf+] !!! -- ten warunek jest ZBĘDNY - tylko dla testów
+        }                   // jako, że nie jest zawarty ten adres tu
+
+/*      if ( $czy_z_przekierowania >= 0 ) // STRPOS: false vs [0..inf+] !!! -- ten warunek jest ZBĘDNY - tylko dla testów
         {
         return 'DEBUG:TEST_BEZ_PRZEKIEROWANIA ' . $_SERVER['HTTP_REFERER'];
-        }   // do usunięcia wkrótce
+        }   // IF do usunięcia wkrótce
+*/    
     }
-return false;   
+    
+        // usunąc poniższy warunek po fazach DEV !!!
+    if ( $czy_z_przekierowania == -1 ) // ZBĘDNA WADLIWA LOGIKA TUTAJ - tylko dla testów czy coś się wcześniej podmieniło (celem wyświetlania jakiejś zawartości w powiadomieniu)
+    {
+    return 'DEBUG: TEST_BEZ_PRZEKIEROWANIA ' . $_SERVER['HTTP_REFERER'];
+    }   // do usunięcia szybciej niż wkrótce, gdy tylko przejrzy się działające powiadomienia
+    
+return false;   // nie znaleziono przekierowania, albo brak zmiennych środowiskowych
 }

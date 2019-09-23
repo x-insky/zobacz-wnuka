@@ -126,11 +126,11 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     <!--    <pre><?php /* var_dump( $_SERVER ); */ ?></pre>    -->
                         <?php
     
-                            if ( ( $czy_z_przekierowania === false ) && ( $adres_przekierowania ) || true )  // tworzenie elementu z notyfikacją przekierownia !!!TRUE MA TU NIE BYĆ DOCELOWO!!!
+                            if ( $adres_przekierowania )   // tworzenie elementu z notyfikacją przekierownia !!!TRUE MA TU NIE BYĆ DOCELOWO!!!
                             {
                             echo '<div id="powiadamiacz_przekierowania" class="powiadamiacz">';    
                             echo "<h3>Witamy w skromnych progach Internetowy Wędrowcze! Trafiłeś tu z adresu <span>{$adres_przekierowania}</span></h3>";
-                            echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund.</p>';    
+                            echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund, ale możesz je kliknąć by to przyspieszyć.</p>';    
                             echo '<div class="pasek"></div>';
                             echo '</div>';    
                             }
@@ -138,11 +138,11 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                             if ( $czy_ciastko_poprzedniej_wizyty )  // tworzenie elementu z notyfikacją daty ostatnich odwiedzin (jakiś odległy termin)
                             {
                             echo '<div id="powiadamiacz_ciastka" class="powiadamiacz">';    
-                            echo "<h4>Witamy ponownie po {$ile_dni_temu_odwiedzone}. dniach (/dniu) nieobecności";
-                                if ( $laczna_ilosc_wizyt > 1 ) echo ", jako <span>{$laczna_ilosc_wizyt}</span>. odwiedziny.</h4>";
-                                else echo "!</h4>";
+                            echo "<h3>Witamy ponownie po <span>{$ile_dni_temu_odwiedzone}</span>. dniach (dniu) nieobecności";
+                                if ( $laczna_ilosc_wizyt > 1 ) echo ", jako <span>{$laczna_ilosc_wizyt}</span>. odwiedziny.</h3>";
+                                else echo "!</h3>";
                             echo "<h4>Dobrze pamiętamy, że w dniu <span>{$data_poprzedniej_wizyty_format}</span> konkretnie o godzinie <span>{$godzina_poprzedniej_wizyty_format}</span> ostatnio odwiedzono ten serwis.</h4>";
-                            echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund.</p>';    
+                            echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund, ale możesz je kliknąć by to przyspieszyć.</p>';    
                             echo '<div class="pasek"></div>';
                             echo '</div>';    
                             }
@@ -349,7 +349,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.39</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.40</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">

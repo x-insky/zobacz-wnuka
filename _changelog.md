@@ -1,3 +1,78 @@
+v0.5.40 - restored animated belt inside information notifications, with interactivity now; removed unused code for nonexisting elements
+
+* v0.5.40 -- [2019-09-18]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* defined hover state for element of 'powiadamiacz' class
+  - slighty changes background color for darker hue and interactive cursor
+  - impossible to use the same dark color 'cornflowerblue' as other elements are using because the inner belt uses that color and this belt is barely visible on dark background
+* also defined pseudo element style, when any information notification is in hover
+  - selector: 'div.powiadamiacz:hover:after 
+  - adds a new absolute positioned element, placed in top right corner of current notification
+  - a 'X' is placed on yellow background but about 30% smaller than any of existing on page equivalent
+  - with yellow background closing element looks like on hover, not modified its state (impossible for pseudo emlements?)
+* added new style for any direct child of 'h4' elements which are 'spans'
+  - selector: 'h4 > span'
+  - defined just the same color as 'spans' inside 'h3' elements, but the shadow underneath is set another, much darker and sharper
+* a simple removing unnecessary spaces before colons
+
+-- witryna.js
+* added new click event function which collapses the informational notification on demand by jQuery slideUp() method
+  - uses event delegation: element with '.powiadamiacz' class placed inside 'div#zaczytany_spis'
+  - works only for NOT animated now elements, so click action must be performed before programmed imminent time of dissapearance
+
+[*] MODIFIED
+
+-- funkcje.php
+* heavily changed the logic of function 'Czy_bylo_przekierowanie'
+  - just for gaining any value from redirection while project still in development
+  - commneted out previously test value of debuging text, because the condition can't be met
+  - test value if there is no redirection to simply display 'debug value, no redirection' and always have this notification on each page refresh, just to test displaying content of informational notifcation
+
+-- index.php
+* changed the condition of displaying information notification, which might display first notification about redirection
+  - simplified the condition to be based on content or value of used variable
+  - if there is any value then notification is displayed
+  - changed the static text of notification, that informs about possibility of closing current notification
+* changed the text of second information notification
+  - the same informing static text for possibility of closing current message
+  - also using 'h3' elements instead previously used 'h4' for better reading (for established CSS styles) and 'span' elements for displaying of highlighted dynamic value
+
+-- zlobek-styl.css
+* removed all 'display' property for 'powiadamiacz' class container, because any element inside with transitions was not animated initially
+  - removed from base class definition and participation of ancestor
+  - instead using values 'none' for hiding and 'block' for showing element an attribute of 'visibility' with conjunction of 'height'
+  - attribute equality for not showing element: 'display: none' is equal to 'visibility: hide' and 'heigh: 0px'
+  - attribute equality for showing: 'display: block' is equivalent of 'visibility: visible' and 'height: auto'
+  - added also attribute for positioning new content (as new context) and defined a similar transition like for any element of gallery list
+
+-- witryna.js
+
+* slighty changes inside function body 'PokazIUkryjPowiadomieniaOOdwiedzinach'
+  - removed expression to modify CSS attribute of 'visibility' of any information notification
+  - not needed because is controlled by CSS already (the action had performed earlier buy JS, duality is unnecessary)
+* mentioned in new comments for code which needs change for compatibility
+
+[-] REMOVED
+
+-- witryna.js
+* removed unused events on nonexisting elements
+  - deleted the click event function on element '#testowy_adres_button' with some commented out content
+  - deleted the click event function on button with id 'http_adres_submit'which was used in early times to view any gallery by providing given gallery address (URL) inside form field
+  - deleted old code inside commented content for click event on '.kontener_odnosnik' inside '#galeria_spis' (event delegation), which is already defined and working fine
+
+[F] FIXED
+
+-- zlobek-styl.css
+* restored the animations based on transitions inside any informational notification
+  - removed 'display' attribute, which with its value 'none' cancels any declared animations for inside elements (on initial stage)
+  - replaced 'display' attribute by pair 'visibilty' and 'height' (see 'modified' section of this update, 'zlobek-styl' fragment for details)
+  - fixes: #59 - 'Restores display of "back progress bar" for informational notification.'
+
+---------------------------
+
 v0.5.39 - PREV/NEXT buttons reenabled after error; none, one or two button groups for subgallery links
 
 * v0.5.39 -- [2019-09-16]
@@ -648,7 +723,7 @@ v0.5.28 - showing less of debugging dump; initially hided elements or just hidde
 
 ---------------------------
 
-v0.5.27 - better notification of dispabled JS, uses common style of internal notifications for AJAX errors (from now its width slighty changed both way); initial hiding of dimensions and info notify; removal noJS notify, not removing informational notifications; TODO: 'display: none' vs animated contents; removed old commented CSS
+v0.5.27 - better notification of disabled JS, uses common style of internal notifications for AJAX errors (from now its width slighty changed both way); initial hiding of dimensions and info notify; removal noJS notify, not removing informational notifications; TODO: 'display: none' vs animated contents; removed old commented CSS
 
 * v0.5.27 -- [2019-08-12]
 
@@ -729,7 +804,7 @@ v0.5.26 - information notification changed; trying to hide elements but proper e
 
 -- index.php
 * altered the text of variable to direct show, that local server is used, even if no redirection
-  - value used in displayed inforamation notification
+  - value used in displayed information notification
 * removed 'robots' meta tag, because its value is default, so the whole tag is useless
 * added XML style ending to existing meta tag of description 
 * changed the static texts which are fragments of both information notifications, about redirection and about last visit date

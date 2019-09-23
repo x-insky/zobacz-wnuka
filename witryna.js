@@ -1367,7 +1367,7 @@ sekundowyCzasAnimacji = parseInt( sekundowyCzasAnimacji ) || 5;
     if ( sekundowyCzasAnimacji < 5 ) sekundowyCzasAnimacji = 5; // ogólnie na (+), też by zapobiec dzieleniu przez 0
 
 //$('#naglowek .powiadamiacz').css('display', 'block');   // pokaż każdę z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie    
-$('#naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje    
+//$('#naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje    
     
     // zmniejszanie długości pasków powiadamiania - indywidualne czasy dla każdego z pasków z wspólnego zakesu
 $('#naglowek .pasek').each( function() {
@@ -2263,7 +2263,7 @@ return { dx : g_przesuniecieTlaX, dy: g_przesuniecieTlaY };    // dobrze by był
 }   // WybierzPlansze-END    
 
 
-function RozmiescCzesci ( nrPlanszy ) {
+function RozmiescCzesci ( nrPlanszy ) {         // TODO: refaktoryzacja - utworzyć każdy PNG poprzez jQuery dla wsparcia IE9
 g_nazwaPlanszy = 'Autobus';
 g_nazwaPlanszySciezka = './grafiki/gra/autobus/';
 g_ileCzesci = 10;
@@ -2283,7 +2283,7 @@ var przesuniecieX1 = 1110,
         
 
     nowyObrazek.alt = numerPliku;
-    nowyObrazek.classList.add('przenosny');    
+    nowyObrazek.classList.add('przenosny');    // z .ADD mają problemy IE do 9 włącznie! jQuery?
     
         if ( i % 2 ) przesuniecieX1 += 80;
         else przesuniecieX1 -= 80;
@@ -2841,19 +2841,6 @@ $('h2#selektor_naglowek').on("click keypress", function ( e ) {   // rozszerzone
     }
 });    
 	
-	/*	
-$(function(){
-var contentURI= 'http://zlobek.chojnow.eu/u_tygryskow,a147.html table.galeria';    // URL-do-przechwycenia, " " i #id-elementu-docelowego
-$('#zawartosc_do_podmiany').load('przechwytywacz.php?url_zewn='+ contentURI);
-});
-*/
-$('#testowy_adres_button').click(function() {       // z tego nastąpiła już rezygnacja 
-var testowy_adres_galerii = "http://zlobek.chojnow.eu/30-u_misiow,z1058,p1.html";
-	
-$('#http_adres').val( testowy_adres_galerii ); // przypisanie wartości domyślnej do pola wpisywania 
-	
-});
-	
 
     // uruchomienie
 $('#nawigacja_galeria').on("click", ".przycisk_galeria", function( evt ) { // BUTTON z ewentualną podstroną galerii obiektem zdarzenia
@@ -2917,18 +2904,6 @@ console.info('DEBUG: przycisk naciśnieto już ' + g_suma_klikniec_zaladuj + ' r
 });	// on("click")-$('#spis_sterowanie')-END		
 
 	
-/*	
-$('#galeria_spis').on("click", ".kontener_odnosnik", function(){ 
-var $this = $(this);
-alert('Naciśnięto i wywołano zdjęcia z galerii "' + $this.find('div:first h2').text() + '"' ); 	
-// przewinięcie ekranu do lokalizacji galerii
-	
-// wstawienrianimacji na ładowanie
-	
-// załadowanie odnosnika z 	
-return; // wyjście, aby nie przechodzić do odnosnika	
-});	//  on("click")-$('#nawigacja_galeria')-END		
-*/	
     // DLA KOLEJNYCH GALERII: '$('#galeria_spis').on("click", "a", function(e){'
 $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e ) {    // 
     // włączono KEYPRESSED/KEYDOWN i CLICK -- bez rozbijania na przyciski "warunkowe" - "click auxclick contextmenu"
@@ -2975,78 +2950,15 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
     PrzewinEkranDoElementu('div#glowna', 700, -6);   		// przewinięcie ekranu do lokalizacji galerii
     }   // if-( e.which == 1 )...
 });	//  on("click")-$('#galeria_spis')-END			
-		
-	
-    // JUŻ NIEWYKORZYSTYWANE --- REZYGNACJA z poniższego!!!
-$('#http_adres_submit').click(function() {	// submit ble?
-	
-//wycięte do wyżej !!!
-/*
-$('button.przycisk_galeria').on("click", function(){
 
-alert( 'TAG: ' + this.attr('data-tag') + ' ADRES: ' + this.attr('data-adres_strony') + ' GALERIA: ' + this.attr('data-adres_galerii') + ' ELEMENT: ' + this.attr('data-elem_zewn') );
-//WczytajZewnetrznyHTMLdoTAGU( this.attr('data-tag'), this.attr('data-adres_strony'), this.attr('data-adres_galerii'), this.attr('data-elem_zewn'), true	);
-});	
-*/
-
-var pelny_adres_wpisany = $('#http_adres').val(); // !!! uwaga! dane z formularza... przetrzepać jak poniżej, dodatkowo na usuwanie spacji dodać regexpa...
-	
-String.prototype.stripHTML = function () {			// "przetrzepywacz", wywołanie poniżej
-var tagiUsuwane = /<(?:.|\s)*?>/g;
-return this.replace(tagiUsuwane, "");
-};
-
-pelny_adres_wpisany = pelny_adres_wpisany.stripHTML(); // czyszczenie z formularza niechcianego nadmiaru
-
-	//alert( 'PEŁNY_ADRES_BEZ_TAGÓW: ' + pelny_adres_wpisany ) ; // takie tam test-info
-	
-    if ( pelny_adres_wpisany.indexOf( g_adres_strony ) != -1 )  // albo że .indexOf() != -1 // pelny_adres_wpisany.includes('zlobek.chojnow.eu') TRUE
-	{				// + jeszcze jakieś warunki na poprawność
-	var pelny_adres = g_protokol_www + g_adres_strony + "/";	// przypisanie samego adresu z protokołem
-	//var pelny_adres  = pelny_adres_wpisany;				
-    $('#form_error').slideUp(200); //zwinięcie
-	}
-	else
-	{
-	g_wyszukiwany_serwer = "";	// zerowanie potrzebne?!
-    $('#form_error').slideDown(500); // rozwinięcie
-	return false;	 // !!! i wyjście z przetwarzania !!!
-	}
-	
-var adres_tej_galerii = pelny_adres_wpisany.substr( pelny_adres.lastIndexOf('/') + 1 ); // szukanie podciągu od "/ do adresu_zasobu.html" 
-
-	//alert('pełny_adres: "' + pelny_adres + '", adres_tej_galerii: "' + adres_tej_galerii + '"');
-	//$('#http_adres').val( g_adres_strony + adres_tej_galerii );
-$('#http_adres').val( pelny_adres + adres_tej_galerii );	
-$('#http_adres').prop("disabled", true); 								// wyłączenie, aby nie klikac wielokrotnie || attr() vs prop()
-$('#http_adres_submit').prop("disabled", true);	 // wyłączenie, aby nie klikac wielokrotnie || attr() vs prop()
-$('#testowy_adres_button').prop("disabled", true);	 // wyłączenie, aby nie klikac wielokrotnie || attr() vs prop()
-
-//$( g_wczytywanie_podstrona ).show(100);
-PokazRamkeLadowania('podstrona');
-
-console.log( 'ADRES_STRONY: ' + g_adres_strony + ', ADRES_GALERII: ' + adres_tej_galerii + ', ZNACZNIK_ZEWN: ' + g_element_zewnetrzny + '\nRAZEM: ' + g_adres_strony + adres_tej_galerii + ' | ' + g_element_zewnetrzny	) ;
-
-	
-/* 
-cała galeria siedzi w tabeli o klasie .galeria, w komórkach osadzone miniatury z odnośnikami do galerii zdjęć. Całość dzielona na podstrony po 6 x 3 zdjęcia (18 szt.)  
-*/
-	
-	/*
-  $.get( pelny_adres, function(data) {
-			alert('Coś');
-    $('zawartosc_do_podmiany').html(data);
-  });
-	*/
-	
-// to poniżej powinno działać tylo dla tej samej domeny/lokalizacji co skrypt, wiec porażka 
-
-WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres_strony + '/', adres_tej_galerii, g_element_zewnetrzny, "galeria_podstrona" ); 
-
-return false; // !!! konieczne przy click/submit! || operować na obiekcie klikanym
-}); // click-END-#http_adres_submit
-
-
+    
+$('div#zaczytany_spis').on('click', '.powiadamiacz', function () {
+    if ( $(this).not( $(this).is(':animated') ) )      // pozwól na wcześniejsze "zrolowanie" elementu tylko przed rozpoczęciem nieuniknionej animacji
+    {
+    $(this).slideUp(500);   // szybsza o 50% animacja by było widać różnicę i efekt klinknięcia
+    }
+}); //  on("click")-$('.powiadamiacz')-END	
+    
 
 // ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI  ---------- *** --------------	        
     
