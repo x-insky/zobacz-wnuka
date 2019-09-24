@@ -1,4 +1,54 @@
-v0.5.41 - at least Interent Explorer v9 is required to display galleries and play a game; fixed creating new HTML object by jQuery instead JS (compatibility!)
+v0.5.42 - game content closed on demand, also fixed the rule of displayed paragraph under the main rules of header
+
+* v0.5.42 -- [2019-09-21]
+
+[+] ADDED
+
+-- index.php
+* added new 'div' element with id 'gra_zamykanie' inside container element with id 'zasady', which is located inside game area
+  - closing element added
+  - not inside container class of 'kontener' but before him, so the closing element could be placed in top rigth corner of game area
+  - added with 'tabindex' attibute, so it could be reach by keyboard also (important when without mouse, but the dragging needs mouse or another pointing device)
+
+-- zlobek-styl.css
+* new selector added for styling th enew closing button for the whole game area
+  - selector: 'div#zasady #gra_zamykanie'
+  - rules based on the closing button of the error notification, but some attributes are different from that basis class
+  - a 'float' property is a main difference, here is used another positioning
+* added also changed displaying behavior when displayed in 'hover' or 'focus' state
+  - the same noticeable yellow background color used as on another closing buttons
+* created also a new selector for 'float clearing'
+  - just for safety of CSS, another content in this container is always higher than this button-like-element so everything is all right
+  - selector: 'div#zasady #gra_zamykanie:after'
+
+-- witryna.js
+* added new event function for serving any clicking or keypressing (precisely: 'keydown'!) on new closing button ith id 'gra_zamykanie'
+  - when selected mouse button or keybord button was pressed the action is started
+  - just a simple hiding (sliedUp() actually for better UX) of game area as an action (for now any other action is not caused)
+  - if game area will be shown again, the partial images will be rearanged to its initial position
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* changed the proper pseudo class to activate the selector 
+  - not 'p:first' but 'p:first-of-type' is a right working pseudo class, so replaced selector 'div#gra div#zasady p:first' to 'div#gra div#zasady p:first-of-type'
+  - changed also top margin for that selector to adjust the displayed content to be positioned just before buttons of actions
+* altered the 'top' attribute value from '45px' to '60px' inside selector for 'zasada2' class
+  - adjusted by trial and error for this value so it look much better than under the rotated header text
+
+[F] FIXED
+
+-- witryna.js
+* added the requested solution for new functionality
+  - new closing buttons is placed in top right corenr of game area
+  - it operates on click or by pressing the [Space] or [Enter] like another button-like-elements located in this webapp
+  - tested in few browsers, works fine for now
+  - fixed also the text of paragraph rules to be displayed below the main rules (not under the headers, which covered that paragraphs)
+  - fixes: #62 - 'Game content and closing.'
+
+---------------------------
+
+v0.5.41 - at least Internt Explorer v9 is required to display galleries and play a game; fixed creating new HTML object by jQuery instead JS (compatibility!)
 
 * v0.5.41 -- [2019-09-20]
 

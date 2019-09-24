@@ -3067,12 +3067,22 @@ $('div#zagraj').click( function() {
 });    
     
     
-$('#gra_start').click( function() { // start tylko dla naciśnięcia elementu myszą/dotykiem, bo klawaiturą nie da się przeciągać efektywnie
+$('#gra_start').click( function() { // start tylko dla naciśnięcia elementu myszą/dotykiem, bo klawiaturą nie da się przeciągać efektywnie
     // ...
     RozmiescCzesciWzorcowo();
     // ...
 });    
     
+  
+
+$('#gra_zamykanie').on("click keydown", function( e ) { 
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+    {
+    $('#gra').slideUp(333);        // lepiej dać animację (nie .hide, ale .slideUp jako lepszy efekt) niż proste .css('display', 'none');
+        // ...  // tu reset logiki na zliczanie punktów
+    }
+});      
+
     // nie działa mi w JQ, próba powrotu do JS... te sdame zdarzenie i funkcje użyte w wywołaniu 
 /*
 $('body').on('dragstart', '.przenosny', PoczatekRuchuPrzeciagania ); // $('#gra).on... bez zmian
