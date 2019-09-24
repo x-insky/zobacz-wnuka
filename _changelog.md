@@ -1,3 +1,34 @@
+v0.5.41 - at least Interent Explorer v9 is required to display galleries and play a game; fixed creating new HTML object by jQuery instead JS (compatibility!)
+
+* v0.5.41 -- [2019-09-20]
+
+[*] MODIFIED
+
+-- witryna.js
+* refactored the function body 'RozmiescCzesci' to use jQuery compatible expressions instead straigth JavaScript code
+  - JS syntax used before was not understanded by IE9 and below
+  - replaced code for HTML object creation and placing into DOM by methods of jQuery
+  - previous creation of a HTML object and its parameterization was done by JavaScript, jQuery was only used to place already created HTML object inside DOM
+  - IE9 and previous verions don't understand object 'Element.classList' and its methods (ES5?)
+  - much easier than working with polyfils for 'Element.prototype.className'
+  - almost the same replacing syntax only the 'css' attribute builded differently and once for all style properties
+  - rearanged order of all the computed values of variables, and moved them up at the beggining of the loop body
+  - fixed also the 'class' attribute, which is treated like a keyword and cannot be used in IE8 and below
+  - possible solution is by 'quoting' it (using single or double quotes) or use 'className' as a different name for this attribute inside JS
+* fixed also another uses of 'class' attributes inside the jQuery code for creating elements in any function
+  - replaced three occurences 'class' key attrbute by "class" word (with quote symbols) inside object definitions in function 'GenerujPodstronyGalerii'
+
+[F] FIXED
+
+-- witryna.js
+* the web applications works fine from now on IE9
+  - changed general JavaScript to jQuery notation, which is more compatible with older browsers
+  - function 'RozmiescCzesci' runs normally and finally all the picture parts are initially placed and prepared for dragging
+  - info: IE9 as the first MS browser with HTML5 standard and enchanced parsing speed of JS scripts, so previous versions might go away (sorry native WinXP users)
+  - fixes: #61 - 'Problem with starting the website on IE9.'
+
+---------------------------
+
 v0.5.40 - restored animated belt inside information notifications, with interactivity now; removed unused code for nonexisting elements
 
 * v0.5.40 -- [2019-09-18]
@@ -49,7 +80,6 @@ v0.5.40 - restored animated belt inside information notifications, with interact
   - added also attribute for positioning new content (as new context) and defined a similar transition like for any element of gallery list
 
 -- witryna.js
-
 * slighty changes inside function body 'PokazIUkryjPowiadomieniaOOdwiedzinach'
   - removed expression to modify CSS attribute of 'visibility' of any information notification
   - not needed because is controlled by CSS already (the action had performed earlier buy JS, duality is unnecessary)

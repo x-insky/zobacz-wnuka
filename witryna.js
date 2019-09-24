@@ -559,7 +559,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         // type : "button",            
             //id : "galeria_paginacja_" + ( i+1 ),  // tu generowane po kolei
             id : "galeria_paginacja_" + nrGalerii,  // a tu użycie obliczonego numeru do konkretnej podstrony danej galerii (też po kolei, ale z wyłączeniem aktualnie wyswietlanej podstrony)
-            class : "przycisk_galeria",
+            "class" : "przycisk_galeria",
             value : nrGalerii, 
             text : "Podstrona nr " + nrGalerii, // etykieta z konkretnym numerem do nawigowania
             "data-tag" : g_tag_do_podmiany_zdjecia,
@@ -599,7 +599,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         // tworzenie przycisku WSTECZ w pamięci, bazując na istniejących przyciskach konkretnych podstron danej galerii 
     var poprzedniButton = $('<button></button>', {
         id : "galeria_poprzednia",
-        class : "przycisk_galeria",
+        "class" : "przycisk_galeria",   // jako sygnalizacja, że to nie jest słowo kluczowe, "className" też dobrze działa dla IE8 
         value : przyciskPoprzedni.nrPodstrony, 
         text : przyciskPoprzedni.trescPrzycisku,
         disabled : !przyciskPoprzedni.aktywny,      // tu negacja wartości, logika odwrotna względem poprzednich warunków
@@ -611,7 +611,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         
     var nastepnyButton = $('<button></button>', {
         id : "galeria_nastepna",
-        class : "przycisk_galeria",
+        "class" : "przycisk_galeria",
         value : przyciskNastepny.nrPodstrony, 
         text : przyciskNastepny.trescPrzycisku,
         disabled : !przyciskNastepny.aktywny,      // tu negacja wartości!
@@ -2278,27 +2278,29 @@ var przesuniecieX1 = 1110,
     {
         if ( i < 10 ) numerPliku = String( '0' + i );
         else numerPliku = String( i );
-    var nowyObrazek = new Image();
-    nowyObrazek.src = g_nazwaPlanszySciezka + g_nazwaElementu + numerPliku + '.png';
         
-
-    nowyObrazek.alt = numerPliku;
-    nowyObrazek.classList.add('przenosny');    // z .ADD mają problemy IE do 9 włącznie! jQuery?
-    
         if ( i % 2 ) przesuniecieX1 += 80;
         else przesuniecieX1 -= 80;
-    nowyObrazek.style.left = String( przesuniecieX1 ) + 'px';
-    przesuniecieY1 += 50;
-    nowyObrazek.style.top = String( przesuniecieY1 ) + 'px';
-    nowyObrazek.style.zIndex = 100 + i;    
-    nowyObrazek.setAttribute('data-zindex', nowyObrazek.style.zIndex);    
-    nowyObrazek.setAttribute('draggable', true);  
-    //nowyObrazek.draggable = true;    // tak też działa, ale ustawianym atrybutem chyba lepiej niż po omacku, próbując z bezpośrednią nazwą atrybutu
-    $('#plansza').append( nowyObrazek );    
-    //$('#plansza img:last').css({ top : przesuniecieY1, left : przesuniecieX1, zIndex : 100 + i })
-    //                    .attr({ 'draggable' : true });
+    
+        przesuniecieY1 += 50;
+        przesuniecieY1 += 50;
         
-    }
+    var nowyObrazek = $('<img />', {
+        src: g_nazwaPlanszySciezka + g_nazwaElementu + numerPliku + '.png',
+        alt: numerPliku,
+        'class': 'przenosny',    // z "classList.add()" mają problemy IE do 9 włącznie! jQuery?        
+        css: {      // tu zdefiniowane wzorcowo wszystkie style w jednym miejscu (inline)
+            left: String( przesuniecieX1 ) + 'px',
+            top: String( przesuniecieY1 ) + 'px',
+            zIndex: 100 + i,    // "z-index"?!
+        },
+        'data-zindex': 100 + i, // DRY! duplikat przy inicjalizowaniu
+        'draggable': true
+    });     //było "new Image();", teraz jQ tworzy i parametryzuje od razu
+
+    $('#plansza').append( nowyObrazek );    
+
+    }   // for-END
 }   // RozmiescCzesci-END    
 
     
