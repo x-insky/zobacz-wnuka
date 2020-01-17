@@ -66,7 +66,6 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             else echo '<link rel="stylesheet" href="zlobek-styl.css" />';
     ?>
     
-    <link rel="stylesheet" href="zlobek-styl.css" />
     <link rel="stylesheet" href="./lib/lightbox/css/lightbox.css" />
 
     <script src="./lib/html5shiv.3.7.3.js"></script>
@@ -350,7 +349,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.42</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.43</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -473,12 +472,25 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     Wyswietl_zmienna_serwera( 'REQUEST_TIME' );
                     Wyswietl_zmienna_serwera( 'HTTP_USER_AGENT' );
                     Wyswietl_zmienna_serwera( "REDIRECT_STATUS" );
-                    echo '$_COOKIES[\'zlobek_wizyta\']: <strong>' . $_COOKIE['zlobek_wizyta'] . '</strong><br />';
+                    echo '$_COOKIE[\'zlobek_wizyta\']: <strong>' . $_COOKIE['zlobek_wizyta'] . '</strong><br />';
                     echo '$data_poprzedniej_wizyty: <strong>' . $data_poprzedniej_wizyty . '</strong><br />';
                     echo '$data_poprzedniej_wizyty_format: <strong>' . $data_poprzedniej_wizyty_format . '</strong><br />';
                     echo '$czy_z_przekierowania: <strong>' . $czy_z_przekierowania . '</strong><br />';
                     echo 'vs obliczona pozycja powyższego: <strong>' . strpos( $_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST'] ) . '</strong><br />';
                     echo '$roznica_czasu_odwiedzin: ' . ( $roznica_czasu_odwiedzin / ( 60 * 60 * 24 * 7 ) );
+                        if ( isset( $_COOKIE ) )
+                        {
+                        echo '<hr />';
+                        echo '<h5>Lista wszystkich danych, które są pamiętane w ciastkach przeglądarki (zawiera też dane z hostingu, wstawiane poprzez JS!)</h5>';
+                        $tresc = '<p>';
+                            foreach ( $_COOKIE as $klucz => $wartosc )
+                            {
+                            $tresc .= '$_COOKIE[\'<strong>' . $klucz . '</strong>\'] = <strong>' . $wartosc .'</strong><br />';
+                            }
+                        $tresc .= '</p>';
+                        echo $tresc;
+                        }
+
                     ?>
                 </p>        
                 <h4>Powyższe wkrótce zniknie, gdy tylko zostanie osiągnięty kolejny etap testów.</h4>  
