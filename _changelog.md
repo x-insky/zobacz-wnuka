@@ -1,6 +1,33 @@
+v0.5.44 - removed annoying advertisement, less invasive moved down
+
+* v0.5.44 -- [2020-01-18]
+
+[F] FIXED
+
+-- witryna.js
+* a new filter against ads has been added inside 'UbijReklamy' function
+  - now **almost** every added content from the hosting is removed
+  - applies to any invasive advertising content added at the beginning of the website (immediately after the <body> tag and at the end, just behind the visible footer
+  - This applies especially to banners that come to the fore (first plan)
+  - removed the harmful effect of breaking the graphics system on a narrow screen, which was triggered by the appearance of cryptocurrency advertising
+  - of course, the effect was eliminated, i.e. the immediate removal of the banner (also and its hiding ;) ) after its appearance on the page (it is rather imperceptible to be observed)
+  - some unfinished structure of the contact form, hidden at the end of the website (behind the footer area) has also been removed
+* decided to move advertising content (stuck to cba.pl) from the very beginning of the site, to its end, just behind the static footer
+  - such an exception for less invasive advertising
+  - let the hosting service still have the impression that it goes with content to the beginning of the content (not to the end or none)
+* a more defensive approach was considered, consisting in blocking the loading of external scripts, especially from materials added by the hosting
+  - this would eliminate the cause, not just the effect (here the advertising effect)
+  - it would be a much more efficient approach, because JavaScript would not have to dynamically create new elements in the DOM tree, after a while to remove these new elements from the HTML structure
+  - it would require earlier loading scripts responsible for blocking ads and separating them from the JS logic in general, which could simplify or complicate the project (discussion issue)
+  - a case open for later, although this is not the goal of killing free hosting ;)
+* added or changed some of the content in the comments inside this function
+* fixes: #66 - 'Annoying advertising banner on mobile screens'
+
+---------------------------
+
 v0.5.43 - removed the duplicate link to an external CSS file; displayed list of website cookies
 
-* v0.5.43 - [2020-01-17]
+* v0.5.43 -- [2020-01-17]
 
 [+] ADDED
 

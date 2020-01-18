@@ -2186,10 +2186,10 @@ return false;
     
     
 function UbijReklamy ()
-{   // 000webhost.com || 000webhostapp.com
+{   // 000webhost.com || 000webhostapp.com -- bezwarunkwe ubijanie (o ile jQuery przypasuje coś)
 $('a[href*=000webhost]').parent('div').remove();
     
-    // cba.pl
+    // cba.pl -- tu wstępnie warunkowo, ale i tak na jedno wychodzi poprzez jQuery (nieznalezionych nie usunie/zmieni/odczyta)
 var $cbaReklamaBig = $('center');
     if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tę wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
     {
@@ -2197,13 +2197,62 @@ var $cbaReklamaBig = $('center');
     $cbaReklamaBig.parent().remove();           // ale to wielgachne bezwzględnie wylatuje (sorry cba)
         // console.log('Ubijam_CBA #1 - <center>'); 
     }
-        // kolejna ewentualna reklama na CBA, co rozwala układ telefonu
+
+// PRZENIESIENIE małoinwazyjnej reklamy tekstowej z początku, na koniec witryny - lepsze to niż wywalenie tej treści hostingu (a regulamin ;) ) 
+/*
+ - tuż za <body> zaczynają się doklejone treści z hostingu
+ - docelowo ma się znaleźć tuż przed </body>, ale ~PRZED~ ZA doklejanymi treściami na spodzie strony (ZA mniej się rzuca niż PRZED)
+ - "troskliwie" zmieniono kolejnośc, by inny selektor nie usunął tych treści
+ - UX: górna belka jest zbyt cenna dla głupot spoza serwisu!!!
+*/
+var $reklamaDoPrzeniesieniaZGory = $('div[style]:first-child');
+var $reklamaDoklejonaNaDole = $('.cbalink');
+
+    if ( $reklamaDoPrzeniesieniaZGory && $reklamaDoklejonaNaDole )  // jeśli dopasowały się oba elementy do operowania... to przenieś ZA, czyli jako ostatni wyświetlany element 
+    {
+        $reklamaDoklejonaNaDole.after( $reklamaDoPrzeniesieniaZGory );  // lepiej gdy jest ZA, niż PRZED; czarne tło lepiej wygląda na końcu, niż pomiędzy białymi
+        console.log('zlokalizowana doklejona reklama, do przeniesienia z góry za stopkę strony:', $reklamaDoPrzeniesieniaZGory);
+    }
+
+        // kolejna ewentualna reklama na CBA, co rozwala układ telefonu -- z uwagi na szerszy banner obrazkowy niż używaną rozdzielczość
 $cbaReklamaBig = $('img[usemap]');    
     if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tą wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
     {
     // $cbaReklamaBig.sibling('map').remove();    // wywal opis odnośników do dużego bannera na górze, później właściwy obrazek
     $cbaReklamaBig.parent().remove();           // albo po prostu pogoń kontener nadrzędny z DOMu (div#top_10)
         // console.log('Ubijam_CBA #2 - <img usemap>');     
+    }
+
+    /*
+    UWAGA: poniższe jest BARDZO restrykcyjne, gdyż wywala JEDANĄ lub DWIE reklamy:
+      - pierwsza z nich jest statycznym tekstem, stanowiącym początek widocznych treści witryny (małę literki i opis)... PRZENIESIONO NA SPÓD STRONY
+      - druga z nich to wyskakujacy banner z kłopotliwym zamykaniem 'x' na starych przeglądarkach bez flexboksa!-- co rozszrza stronę poza ekran!!
+        (do tgo kłopotliwe zamykanie, "X" w prawym górnym rogu, pod suwakiem przewijania pionowego) 
+      - czasem ten banner łapie poprzednia definicja "usuwacza", ale często zostaje on nieusunięty (ALBO: usuwa go mechanim antyreklamowy przeglądarki!)
+      - ale obie są równożędnymi <div>ami, czyli RODZEŃSTWO, ale uciążliwy banner może być już usunięty wewnątrznie (przeglądarka lub plugin antyreklamowy)
+        lub poprzednimi instrukcjami, przez co dopasowanie może przejąć "małoinwazyjnego tekstu reklamowaego" i go wywalić (dlatego go PRZENIESIONO, zamiast kasować)    
+    */
+        // "aktualizacja antyreklamowna" na ostatni kwartał 2019 roku i później
+$cbaReklamaBig = $('#witryna').prev();  // jakiś poprzednik istniejącego kontenera dla całej witryny, który jest doklejany z automatu przez hosting cba.pl
+    if ( $cbaReklamaBig )   // ..., zaraz za początkiem <body>, o ile coś tam jeszcze istnieje
+    {   // po prostu wywal całą zawartość dla danego kontenera (teraz często id="top_10", ale większość przeglądarek "same" kasują jakoś ten element
+        $cbaReklamaBig.remove();   // ... do tego TO JEST PODLEGŁY ELEMENT, należy pozbyć się jego rodzica, jako właściwego niepotrzebnego kontenera!
+        console.log("Usunięto ostatni wariant WIEGACHNEJ reklamy 'mintme'!");
+    }
+
+/*  to jest odpowiedź na dynamicznie tworzone elementy... może prostsze byłoby blokowanie tworzenia nowych elementów przez określone skrypty, 
+    ładowane z konkretnych adresów danego hostingu... ale wtedy należało by wydzielić blokowanie zawartości reklamowej i uruchamiać ją ZARAZ NA POCZĄTKU
+     działania witryny (utworzyć nowe zdarzenia), by przechwycić i zablokować tworzenie nowych elementów, zwłaszcza doklejanych zewnętrznych <script> z określonego adresu;
+    ...(+): takie działanie byłoby skuteczniejsze, też zapewaniałoby większą wydajność (nie trzeba kasować od razu czegoś, co przed chwilą utworzył skrypt),
+     ten warunek reakcji na konkretne działanie spowalnijące by nie musiał być wykonywany...
+    ... (-): ale wymaga to lepszego podejścia do działania pod specyficzny hosting (a jego regulamin?!), ale (+) przy tym zyskujemy brak aktualizacji na reakcję na
+        nowe/zmienione podejście do generowania treści reklamowych... TERMAT ZAPEWNE WRÓCI!   
+*/
+    var $jakasDoklejonaZawartosc = $('.contact_us_mail_feedback'); // jakaś niedopracowana zawartość doklejana na samym końcu witryny...
+    if ( $jakasDoklejonaZawartosc )  // ..., poniżej odnośników reklamowych w stopce; domyślnie ukryte; zawiera jakiś nieostylowany formularz do kontaktu
+    {
+    $jakasDoklejonaZawartosc.remove();
+    console.log('Wywalono niepotrzebną doklejoną zawartość poniżej stopki ("dzikie formularze, czy inne węże").');
     }
 
 }   // UbijReklamy-END
