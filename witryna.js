@@ -100,7 +100,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         CzyscNiepotrzebneElementy();	
                         //GenerujPodstronyGalerii( element_witryny, dane.ktoraPodstrona );
                             if ( $('#nazwa_galerii').hasClass('szara_zawartosc') ) $('#nazwa_galerii').removeClass('szara_zawartosc');  // w przypadku wystąpienia błędu z pobraniem wybranej galerii - aby przywrócić żywe kolory tego kontenera 
-                        GenerujPodstronyGalerii( tag_podmieniany, dane.ktoraPodstrona ); 
+                        GenerujPodstronyGalerii( tag_podmieniany, dane.ktoraPodstrona );
+                        DostawPrzyciskZamykaniaDoBiezacejGalerii(); // wstaw przycisk zamykania bieżącej galerii, gdy zaczytano treści danej podstrony galerii 
                         }
                         else
                         {
@@ -358,6 +359,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
                         NaprawBrakujaceSRCwKontenerze ( '#skladowisko_status_wybranej_galerii', 'przetwarzaj galerię, nie spis treści' ); // taki teścik
                         GenerujPodstronyGalerii ( '#skladowisko_status_wybranej_galerii' );
+                        DostawPrzyciskZamykaniaDoBiezacejGalerii();  // dodatkowa akcja, wstawi 'X" dla nagłówka bieżącej galerii, dla już wyświetlonego kompnentu
                         }
                         else
                         {
@@ -629,7 +631,12 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         {
         $('nav#nawigacja_galeria > div:first').append('<h3>... albo wybierz dowolną podstronę od razu.</h3>').append( przyciskiDoWstawienia ); // wstawianie od razu CAŁEJ KOLEKCJI przycisków do każdej z podstron...
         }
-    } // //if-END $listaPodstron.length >= 1
+    }   // if-END $listaPodstron.length >= 1
+    else 
+    {   // jakiś odzew w przypadku, gdy nic więcej nie ma poza beżącą podstroną w danej galerii (tekst dla braku podstrony)
+        // zawsze to lepsze, niż brak tego komunikatu (+: rozwiewa niepewność, że nic więcej nie ma) 
+    $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Brak innych podstron dla tej galerii</h3></div>'); 
+    }   // if-else-END $listaPodstron.length >= 1
 
 //przeszukiwanie odnośników dla miniatur w galerii, link z miniatury prowadzi do normalnej (większej) kopii obrazka
 // do galerii prowadzą odnośniki z tą klasą, do paginacji niestety też ;) | same zdjęcia i miniatury bez przypisanej klasy dla <a>
@@ -1551,16 +1558,19 @@ var trescDaty = galeria.data;   // przykładowa: "z dnia: 2016-02-25 18:45"
 trescDaty = trescDaty.slice( trescDaty.indexOf(":")+2, trescDaty.lastIndexOf(":")-3 ); 
 trescDaty = '(' + trescDaty.replace(/-/g, '.') + ')'; // zamiana WSZYSTKICH DWÓCH łączników na kropki
     
-var trescHtml = '<div class="kontener"><h2>Galeria nr <span>' + galeria.nrGalerii + '</span> &ndash; <span>' + galeria.tytul + '</span></h2>'; // najpierw <h2>, aby go ewentualny <img> z float nie wyprzedzał na wąskim ekranie
+var trescHtml = ''; // <div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>';   // doklej przycisk na początku ;)
+trescHtml += '<div class="kontener"><h2>Galeria nr <span>' + galeria.nrGalerii + '</span> &ndash; <span>' + galeria.tytul + '</span></h2>'; // najpierw <h2>, aby go ewentualny <img> z float nie wyprzedzał na wąskim ekranie
 trescHtml += '<img src="' + galeria.srcObrazka +'" alt="' + galeria.tytul + '" />';
 // trescHtml += '<h2>' + galeria.tytul + ' <span class="data">' + trescDaty + '</span></h2>';
 trescHtml += '<p class="data">' + trescDaty + '</p>';    
 trescHtml += '<p>';
     if ( diagnostyka ) trescHtml += diagnostyka + '<br />' ;
 trescHtml += galeria.opis + '</p></div>';    
-    
+
+
 $('#nazwa_galerii').html( trescHtml );
-$('#nazwa_galerii').show(100);	    
+PokazBiezacaGalerie(200);
+// $('#nazwa_galerii').show(100);	    
 } // UzupełnijNaglowekBiezacejGalerii-END  
     
     
@@ -2007,8 +2017,24 @@ function UkryjDebuggowanie () {
     $('#odpluskwiacz_ajaksowy').fadeOut(200);
 }    
 
+function PokazBiezacaGalerie ( czasAnimacji ) {
+czasAnimacji = czasAnimacji || 200;    
+$('#nazwa_galerii').fadeIn( czasAnimacji );
+$('#skladowisko').fadeIn( czasAnimacji );
+$('#nawigacja_galeria').fadeIn( czasAnimacji );
+}    
     
-	
+function UkryjBiezacaGalerie ( czasAnimacji ) {
+czasAnimacji = czasAnimacji || 200;    
+$('#nazwa_galerii').fadeOut( czasAnimacji );
+$('#skladowisko').fadeOut( czasAnimacji );
+$('#nawigacja_galeria').fadeOut( czasAnimacji );
+}    
+
+function DostawPrzyciskZamykaniaDoBiezacejGalerii () {
+$('#nazwa_galerii').prepend( '<div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>' );
+}
+
 function ZaczytajSpisGalerii () 
 {
 //http://zlobek.chojnow.eu/galeria,k0,p1.html	- adres ostatniej galerii, wg. daty
@@ -2211,7 +2237,7 @@ var $reklamaDoklejonaNaDole = $('.cbalink');
     if ( $reklamaDoPrzeniesieniaZGory && $reklamaDoklejonaNaDole )  // jeśli dopasowały się oba elementy do operowania... to przenieś ZA, czyli jako ostatni wyświetlany element 
     {
         $reklamaDoklejonaNaDole.after( $reklamaDoPrzeniesieniaZGory );  // lepiej gdy jest ZA, niż PRZED; czarne tło lepiej wygląda na końcu, niż pomiędzy białymi
-        console.log('zlokalizowana doklejona reklama, do przeniesienia z góry za stopkę strony:', $reklamaDoPrzeniesieniaZGory);
+        // console.log('zlokalizowana doklejona reklama, do przeniesienia z góry za stopkę strony:', $reklamaDoPrzeniesieniaZGory);
     }
 
         // kolejna ewentualna reklama na CBA, co rozwala układ telefonu -- z uwagi na szerszy banner obrazkowy niż używaną rozdzielczość
@@ -2237,7 +2263,7 @@ $cbaReklamaBig = $('#witryna').prev();  // jakiś poprzednik istniejącego konte
     if ( $cbaReklamaBig )   // ..., zaraz za początkiem <body>, o ile coś tam jeszcze istnieje
     {   // po prostu wywal całą zawartość dla danego kontenera (teraz często id="top_10", ale większość przeglądarek "same" kasują jakoś ten element
         $cbaReklamaBig.remove();   // ... do tego TO JEST PODLEGŁY ELEMENT, należy pozbyć się jego rodzica, jako właściwego niepotrzebnego kontenera!
-        console.log("Usunięto ostatni wariant WIEGACHNEJ reklamy 'mintme'!");
+        // console.log("Usunięto ostatni wariant WIEGACHNEJ reklamy 'mintme'!");
     }
 
 /*  to jest odpowiedź na dynamicznie tworzone elementy... może prostsze byłoby blokowanie tworzenia nowych elementów przez określone skrypty, 
@@ -2245,14 +2271,14 @@ $cbaReklamaBig = $('#witryna').prev();  // jakiś poprzednik istniejącego konte
      działania witryny (utworzyć nowe zdarzenia), by przechwycić i zablokować tworzenie nowych elementów, zwłaszcza doklejanych zewnętrznych <script> z określonego adresu;
     ...(+): takie działanie byłoby skuteczniejsze, też zapewaniałoby większą wydajność (nie trzeba kasować od razu czegoś, co przed chwilą utworzył skrypt),
      ten warunek reakcji na konkretne działanie spowalnijące by nie musiał być wykonywany...
-    ... (-): ale wymaga to lepszego podejścia do działania pod specyficzny hosting (a jego regulamin?!), ale (+) przy tym zyskujemy brak aktualizacji na reakcję na
+    ...(-): ale wymaga to lepszego podejścia do działania pod specyficzny hosting (a jego regulamin?!), ale (+) przy tym zyskujemy brak aktualizacji na reakcję na
         nowe/zmienione podejście do generowania treści reklamowych... TERMAT ZAPEWNE WRÓCI!   
 */
     var $jakasDoklejonaZawartosc = $('.contact_us_mail_feedback'); // jakaś niedopracowana zawartość doklejana na samym końcu witryny...
     if ( $jakasDoklejonaZawartosc )  // ..., poniżej odnośników reklamowych w stopce; domyślnie ukryte; zawiera jakiś nieostylowany formularz do kontaktu
     {
     $jakasDoklejonaZawartosc.remove();
-    console.log('Wywalono niepotrzebną doklejoną zawartość poniżej stopki ("dzikie formularze, czy inne węże").');
+    // console.log('Wywalono niepotrzebną doklejoną zawartość poniżej stopki ("dzikie formularze, czy inne węże").');
     }
 
 }   // UbijReklamy-END
@@ -3104,8 +3130,16 @@ $('#debugger_zamykanie').on("click keydown", function( e ) {
     UkryjDebuggowanie();
     }
 });    
-    
-    
+
+
+$('#glowna').on("click keydown", "#biezaca_galeria_zamykanie", function( e ) {  // zadziała z delegacją zdarzeń
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+    {
+    UkryjBiezacaGalerie();
+    }
+});    
+
+
 $('div#zagraj').click( function() {
     $('div#gra').show(300);
     PrzewinEkranDoElementu( 'div#gra', 500, 10 ); // + korekta marginesu górnego elementu
