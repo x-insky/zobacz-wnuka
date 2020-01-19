@@ -1171,13 +1171,14 @@ div#glowna article{
 }
 
 div#glowna div#nazwa_galerii {
+    position: relative;
     background-color: deepskyblue;
     background: radial-gradient(circle at bottom, deepskyblue 10%, #c3d5e2); 	
     display: none;
     padding: 0.5em;
     padding-right: 1em;
     padding-bottom: 1em;
-    margin-bottom: 1em;	
+    margin-bottom: 0.3em;	
     overflow: hidden;	
 }
 
@@ -1325,11 +1326,12 @@ div#skladowisko {
     padding: 0.5em 0.6em;
     overflow: hidden;
     display: none;
+    text-align: center;
     /* display: table;	*/
 }
 
-div#skladowisko a {
-    padding: 0.1em 0.5em;
+div#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie służy, nic nie robi */
+    /* padding: 0.1em 0.5em; */
     vertical-align: 40%;	
     /* position: relative; */	
     /* line-height: 10px; 
@@ -1337,10 +1339,10 @@ div#skladowisko a {
 }
 
 div#skladowisko a img {
-    margin: 0.5em;
+    margin: 0.75em 0.5em;
     border: 3px solid white;
     box-shadow: 2px 2px 4px black;	
-    max-height: 130px;
+    max-height: 150px;
     /* align-self: baseline; */
     align-self: center;
     transition: box-shadow 0.3s ease-out, transform 0.3s ease-out;	
@@ -1350,6 +1352,7 @@ div#skladowisko a img {
     /* display: table-row-group;		
      float: left;	
     transform: translateY(-10px); */
+    vertical-align: middle;
 }
 
 div#skladowisko a img:hover {
@@ -1401,7 +1404,9 @@ div#gra div#zasady p:first-of-type {
     margin-top: 9.5em;
 }
 
-div#zasady #gra_zamykanie {
+div#zasady #gra_zamykanie,
+div#nazwa_galerii #biezaca_galeria_zamykanie
+{
 /*    position: absolute;*/
     float:right;
 /*    margin-top: 5px;
@@ -1415,17 +1420,22 @@ div#zasady #gra_zamykanie {
     font-size: 48px;
     line-height: 26px;
     background-color: #ddd;
+    border: 1px solid #666;
     cursor: pointer;
     transition: background-color 0.5s;
 }
 
 div#zasady #gra_zamykanie:hover,
-div#zasady #gra_zamykanie:focus
+div#zasady #gra_zamykanie:focus,
+div#nazwa_galerii #biezaca_galeria_zamykanie:hover,
+div#nazwa_galerii #biezaca_galeria_zamykanie:focus
 {
     background-color: yellow;
 }
 
-div#zasady #gra_zamykanie:after {
+div#zasady #gra_zamykanie:after, 
+div#nazwa_galerii #biezaca_galeria_zamykanie:after
+{
     clear: both;
 }
 

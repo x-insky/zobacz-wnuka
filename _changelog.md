@@ -1,6 +1,99 @@
+v0.5.45 - added improvements for the displayed current gallery
+
+* v0.5.45 -- [2020-01-19]
+
+[+] ADDED
+
+-- index.php
+* added placeholder for the <div> with id of 'biezaca_galeria_zamykanie' just for informative purpose
+  - the whole parent element is overwritten in each remote reading of any gallery
+
+-- witryna.js
+* JS logic changed for the subpoint of command # 1 - explained in the fixed section for the current file, see update notes in section 'fixed'
+* added new event support for pressing the button with the id 'biezaca_galeria_zamykanie' (closing by mouse and keyboard)
+  - as a delegation of events on the parent element (with id of "glowna")
+  - calls the newly defined function "UkryjBiezacaGalerie"
+
+-- zlobek-styl.css
+* the new closing element of the current gallery with the id "current gallery" is dynamically created via JS
+  - styles were used, as for the previously defined element "#game_closing" (a selector has been added to existing rules)
+  - the behavior for the "focus" and "hover" states was also copied
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* styles changed - see bullets 2 - 5 for the file "zlobek-styl.css" in section [FIXED] (requested inside issue #67)
+* the border styles of the close button have been changed to make it more visible on a light background (especially in the header area of ​​the current gallery)
+
+-- witryna.js
+* removed test logins in the console to perform actions on ads inside the 'UbijReklamy' function
+  - forgotten to comment after the previous auction (v0.5.44)
+
+[F] FIXED
+
+-- witryna.js
+* added a button to close the preview of the current displayed gallery (item #1 from the order list of issue #67)
+  - a specific function 'DeliverClosing Button ForBiezacejGallery' has been created, which injects the code to display the closing element to the header of the current gallery
+  - the closing element is only shown * AFTER * the list of thumbnails from the gallery is displayed
+  - it is important because by default you could close the current gallery component before displaying the gallery subpage from the navigation menu (a list of thumbnails or menu would be displayed, but previous elements would be hidden!)
+  - the 'DeliverClosing To Current Gallery' function is activated inside the Load External HTML function into the TAG (variant 'gallery_page' and 'selected gallery')
+* the newly defined function 'ShowBiezacaGalleries' is also used to display the entire container again on the current gallery (after being hidden by a button, but it is also started dynamically inside the function updating content for the current gallery or its subpage)
+  - it does not directly show the entire container again, but its individual elements are shown (the container with the "#global" id does not disappear, it is visible throughout the program)
+* created function "UkryjBiezacaGallery", which serves to hide individual parts of the current gallery
+  - called as a reaction to the operation of pressing the button from id "current gallery_closing"
+  - works the other way around in relation to "HideBiezacaGalerie"
+
+-- zlobek-styl.css
+* recommendations were used to modify the appearance of the current gallery (original numbering from the command of issue #67 is used):
+
+2. reduced the bottom margin between the descriptive content of the gallery and the list of thumbnail images
+3. the thumbnails of the current gallery images are aligned centered, without being aligned to the left of the screen
+  - padding was removed from <a> tags, but margin for <img> tags added by the value of the padding removed
+  - efforts were made to keep the previous dimensions of margins / padding
+  - the maximum height of the photo thumbnail has been changed from 130px to 150px, which means that portrait photos become taller and larger than the panoramic ones (depending on the dimensions of the thumbnails in a specific gallery, which means that sometimes the vertical thumbnails are larger and the horizontal ones are over 50% smaller - - side effect!)
+  - the appearance of the thumbnails depends on the images used in the specific subpage (their size ratio), which makes it difficult to determine the possible arrangement of a maximum of eighteen elements (or any smaller number in a given sub-gallery) in different screen / window width
+  - an attempt was made to set a gap from the left of 1em (0.5 for parent padding and 0.5em for element margin), but the minimum indentation from the left is difficult to achieve when centering the content (the gap is always greater or rarely equal for this "guaranteed" access from parent's edge)
+  - it is influenced by centering a different number of elements of variable (unsteady!) width, their wrapping to the next row and an indefinite value of the width of the parent element, for a smooth width of the screen / window
+4. content with information about no subpage has been added, for galleries containing only photos on the first subpage
+  - since there is no other subpage, an appropriate message is displayed under the thumbnail preview
+  - for other subpages, the subpage's navigation menu is displayed (as before)
+5. the padding for <a>, which is the parent of the <img> element, has been removed so that the frame surrounding the thumbnail is shaped like a given image
+  - the problem concerned mainly IE browsers, in other web browsers this shape was still consistent
+
+* closes: #67 - 'Current gallery improvements'
+
+---------------------------
+
+v0.5.44 - removed annoying advertisement, less invasive moved down
+
+* v0.5.44 -- [2020-01-18]
+
+[F] FIXED
+
+-- witryna.js
+* a new filter against ads has been added inside 'UbijReklamy' function
+  - now **almost** every added content from the hosting is removed
+  - applies to any invasive advertising content added at the beginning of the website (immediately after the <body> tag and at the end, just behind the visible footer
+  - This applies especially to banners that come to the fore (first plan)
+  - removed the harmful effect of breaking the graphics system on a narrow screen, which was triggered by the appearance of cryptocurrency advertising
+  - of course, the effect was eliminated, i.e. the immediate removal of the banner (also and its hiding ;) ) after its appearance on the page (it is rather imperceptible to be observed)
+  - some unfinished structure of the contact form, hidden at the end of the website (behind the footer area) has also been removed
+* decided to move advertising content (stuck to cba.pl) from the very beginning of the site, to its end, just behind the static footer
+  - such an exception for less invasive advertising
+  - let the hosting service still have the impression that it goes with content to the beginning of the content (not to the end or none)
+* a more defensive approach was considered, consisting in blocking the loading of external scripts, especially from materials added by the hosting
+  - this would eliminate the cause, not just the effect (here the advertising effect)
+  - it would be a much more efficient approach, because JavaScript would not have to dynamically create new elements in the DOM tree, after a while to remove these new elements from the HTML structure
+  - it would require earlier loading scripts responsible for blocking ads and separating them from the JS logic in general, which could simplify or complicate the project (discussion issue)
+  - a case open for later, although this is not the goal of killing free hosting ;)
+* added or changed some of the content in the comments inside this function
+* fixes: #66 - 'Annoying advertising banner on mobile screens'
+
+---------------------------
+
 v0.5.43 - removed the duplicate link to an external CSS file; displayed list of website cookies
 
-* v0.5.43 - [2020-01-17]
+* v0.5.43 -- [2020-01-17]
 
 [+] ADDED
 
