@@ -1,3 +1,78 @@
+v0.5.46 - quick fix for the closing button of the current gallery 
+
+* v0.5.46 -- [2020-01-21]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added "exclusive" styles for the gallery close button (item with id "current_closing_gallery")
+  - this element is based on previously set styles that another close button has
+  - here only the differences in cascading are defined (but by default the style with the entire line, like a block element - this is how the left margin was defined)
+  - but a modification was also made for the "MINIMUM 320px screen" query, which changes the behavior to flowing around on the right, but with no margin to occupy the entire horizontal line!
+
+-- witryna.js
+* defined new function "Delete Button Close for Current Gallery"
+  - it blocks pressing the 'X' button by dropping it
+  - the reaction on pressing the 'X' button inside the currently displayed gallery is difficult
+  - simply removes the "this button", but also shifts focus to the nearest element element (here the button for selecting any gallery or selecting a subpage number with a table of contents)
+  - such a two-step operation in terms of operating the clavirer (so that the "focus" status is not lost)
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* changed the margin value around the thumbnail element, for the photos from the current gallery subpage
+  - applies to the horizontal margin change from 0.5 to 0.75 [em]
+  - this unification introduces harmony in the display of elements, i.e. the same vertical and horizontal spacing relative to all elements
+  - this does not introduce any order, only that the elements will be at the same distance between them
+  - not all photos within the gallery subpage have the same dimensions, they differ not only in layout (horizontal / vertical)
+  - that's why sometimes little chaos are noticeable with different ratios, however, we have no influence on this - thumbnail images are downloaded from the server and can come from different devices (cellphone, camera ... of different configurations and ratio)
+* added "random gibberish" inside the commented content of selected CSS rules so that browsers do not directly interpret the commented attribute as DISABLED RULE! (these comments should already disappear or be replaced so far !; or it is also an error in FF)
+  - such interpretation was encountered during tests, and the commented content blocked access to updating the value of a given rule
+* slightly changed the attributes for the close button of the current gallery - item with id "#biezaca_galeria_zamykanie"
+  - moved evenly to the right and top edges of the parent, almost regardless of the screen resolution used
+
+-- witryna.js
+* the function "DostawPrzyciskZamykaniaDoBiezacejGalerii" behaves more conditionally
+  - it creates the closing item for the current gallery only if that component does not have a closing button
+  - therefore it will not create two or more adjacent buttons next to each other
+* event handling modified after pressing the close button of the currently displayed gallery subpage
+  - a new call has been added for the function "UsunPrzyciskZamykaniaDlaBiezacejGalerii" 
+  - only the order of calling functions within this event has been changed
+  - the call to the "Lock" button and "Delete" button for Closing Gallery are moved to the beginning of the operation
+* also changed the displaying of the selected gallery number
+  - modified the handling of the event of pressing the submit button with id "slider_gallery_submit"
+  - little changes inside only by modifying the order of called functions, moved the call of the "ZablokujPrzycisk" and "UsunPrzyciskZamykaniaDlaBiezacejGalerii" functions to the beginning of the request service
+* in a similar tone was changed the navigation event, which is fired inside the navigation on the subpages of the currently displayed gallery - "click" event on "elements" gallery button "inside the container "#nawigacja_galeria" (event delegation!)
+  - also moved earlier calls to certain functions inside this event have, which are responsible for additional actions (such as blocking the currently pressed button or deleting / hiding another element) 
+  - ... so moved the "ZablokujPrzycisk" and "UsunPrzyciskZamykaniaDlaBiezacejGalerii" function fires at the beginning of the event handling operations
+  - adeed function "UsunPrzyciskZamykaniaDlaBiezacejGalerii" here, so that the currently displayed button does not perform the closing action, i.e. hiding the entire detail component of the current gallery
+  - this function also removes the mentioned button, so that after having refreshed the view for the current subpage this button would be generated again
+  - if the button were hidden with an animation (introducing a delay!), there is a chance to press it before it was hidden; this showuld hide the entire component of the current gallery before updating its selected subpage ...
+  - ... this may lead to the display paradox of this component, e.g., only the subpage will be updated and it will only be displayed, after waiting for it to be read (the gallery header will be permanently hidden until the display of any gallery is called [... by pressing any item from the list / table of contents displayed above or selecting any number from the given range on request]); choosing gallery subpages would not display a description of the gallery;
+
+[F] FIXED
+
+-- witryna.js
+* see descriptions of changed functions in the "CHANGED" section of this update, it applies to functions:
+  - "DostawPrzyciskZamykaniaDoBiezacejGalerii"
+  - "submit" events on the element with the id "suwak_galerii_submit" - loading any gallery number
+  - "click" events on an element with the class "przycisk_galeria" inside the element with the id "nawigacja_galeria" - navigating the subpages of the currently displayed gallery
+* the above functions protect against calling the closing of the current gallery during other activities, i.e. loading another subpage of the gallery or updating the content of the current gallery by the selected gallery number
+  - as it turned out, there is a small chance for simultaneous or almost simultaneous calling by pressing the closing button 'X' after calling another of these actions,
+  - unfortunately in a possible scenario it is likely to hide the header of the current gallery or the entire component (element) from reading the updated content
+  - it is difficult, but nevertheless feasible, and adding animations or delays for the "'X' closing element" only increases the chance of this variant occurring
+  - that's why its fading animation was abandoned and its immediate removal from DOM structures was used
+* immediate removal of the closing element during navigation activities helps maintain the continuity of displaying the current gallery, because it is difficult to press this close button (it is impossible, for some reason there is a slight delay, but simply used old test equipment introduces this delay;))
+* the quickly disappearing button of closing the current gallery does not introduce chaos in hiding this element, which could hinder the operation of the function displaying any selected gallery number (events on the element "#suwak_galerii_submit")
+* downside are possible costly operations on the close button of the current gallery
+  - it must be deleted and recreated for each gallery or subpage displayed
+  - but we gain simplicity of use, you do not need to test the tri-state (exist | not_exist | show / hide), which would require complex verification before displaying the button
+  - verification of the element existence would be necessary before carrying out any action on this button, in each case of displaying current gallery or an operation on its subpages (or selecting any gallery number also!)  
+
+* closes: #69 - 'Duplication of the button to close the current gallery or / and parallel loading of another subpage when closing the current gallery.'
+
+---------------------------
+
 v0.5.45 - added improvements for the displayed current gallery
 
 * v0.5.45 -- [2020-01-19]

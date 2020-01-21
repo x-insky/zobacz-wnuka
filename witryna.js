@@ -1567,7 +1567,6 @@ trescHtml += '<p>';
     if ( diagnostyka ) trescHtml += diagnostyka + '<br />' ;
 trescHtml += galeria.opis + '</p></div>';    
 
-
 $('#nazwa_galerii').html( trescHtml );
 PokazBiezacaGalerie(200);
 // $('#nazwa_galerii').show(100);	    
@@ -2032,7 +2031,14 @@ $('#nawigacja_galeria').fadeOut( czasAnimacji );
 }    
 
 function DostawPrzyciskZamykaniaDoBiezacejGalerii () {
-$('#nazwa_galerii').prepend( '<div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>' );
+var $przyciskZamykania = $('#biezaca_galeria_zamykanie');
+    // wstaw element tylko gdy nie ma go jeszcze na stronie 
+    if ( $przyciskZamykania.length == 0 ) $('#nazwa_galerii').prepend( '<div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>' );
+}
+
+function UsunPrzyciskZamykaniaDlaBiezacejGalerii () {
+$('#biezaca_galeria_zamykanie').remove();   // usuń element (jeśli znaleziono)
+$('#selektor_naglowek').focus();    // IU/UX: też przenies focus na jakiś aktywny element PRZED lub ZA tym guzikiem (wybrano wariant PRZED)
 }
 
 function ZaczytajSpisGalerii () 
@@ -2845,7 +2851,13 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
             trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
             $('#status_wybranej_galerii').html( trescWygenerowana );*/
         
-  //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii
+    ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania w trakcie oczekiwnia na obsługę   
+ 
+    // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X'" JAK NAJBLIŻEJ KODU OBSŁUGI ŻĄDANIA WYŚWIETLENIA WYBRANEJ GALERII 
+    UsunPrzyciskZamykaniaDlaBiezacejGalerii(); // bez tej definicji można w czasie ładowania ZAMKNĄĆ podgląd galerii, przez co nie pojawi się treść, 
+    // ..., ale widać aktywne powiadomenie o ładowaniu treści!!!
+
+    //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii
     var zawartoscH2 = $('#nazwa_galerii').find('h2').text();    
         if ( zawartoscH2 != '' )
         {
@@ -2853,12 +2865,10 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
         $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii ...NIE DZIAŁA w IE
         }
 
-    ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania w trakcie oczekiwnia na obsługę   
-        
     $( g_miejsce_na_zdjecia ).empty();
     $('nav#nawigacja_galeria').empty(); 
     // $('#wczytywanie_podstrona').show(100);  
-    PokazRamkeLadowania('podstrona');   // pokazanie ramki ładowania -- najbliższy obszar to podstrona galerii 
+    PokazRamkeLadowania('podstrona');   // pokazanie ramki ładowania -- najbliższy obszar to podstrona galerii
 
     PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania           
         
@@ -2925,7 +2935,14 @@ var $this = $(this);
 var serwer = g_protokol_www + $this.attr('data-adres_strony') + '/';
 var ktoraPodstrona = $this.attr('value');    
 
-//$( g_wczytywanie_podstrona ).show(100); 
+ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nowno z pominięciem "aktualnego" przycisku == zawartość aktulanej podstrony galerii    
+
+    // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X' "JAK NAJBLIŻEJ KODU OBSŁUGI NACISNIĘCIA DOWOLNEGO PRZYCISKU NAWIGACJI W PODGALERII
+    // ustawić jako początkową czynność blokowanie przycisku lub ukrywanie innego od zamykania (zależy na czasie!), a przetestowano możliwość wciśnięcia
+    // ...przycisku podgalerii klawiaturą, gdy kurosor myszy był nad zamykaniem podglądu bieżącej galerii!     
+UsunPrzyciskZamykaniaDlaBiezacejGalerii();   // zamiast jednokrotnie tworzyć (kiedy?), pokazywać i ukrywać, to prostsze jest kasowanie OD RAZU elementu i jego tworzenie nowo
+
+    //$( g_wczytywanie_podstrona ).show(100); 
 PokazRamkeLadowania('podstrona');   // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
 
 //alert("kliknięto '.przycisk_galeria'... albo kontener: " + this.tagName );
@@ -2939,8 +2956,6 @@ console.log('Naciśnięto wywołanie ' + ktoraPodstrona + '. podstrony danej gal
 //WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona"	);
 WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), serwer, $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona", 
                             { 'ktoraPodstrona' : ktoraPodstrona } );    // ES5, nie ES6
-
-ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nowno z pominięciem "aktualnego" przycisku == zawartość aktulanej podstrony galerii    
 
 });	//  on("click")-$('#nawigacja_galeria')-END	
 	

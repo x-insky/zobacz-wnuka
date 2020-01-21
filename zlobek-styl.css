@@ -1339,7 +1339,7 @@ div#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie słu�
 }
 
 div#skladowisko a img {
-    margin: 0.75em 0.5em;
+    margin: 0.75em;
     border: 3px solid white;
     box-shadow: 2px 2px 4px black;	
     max-height: 150px;
@@ -1407,13 +1407,13 @@ div#gra div#zasady p:first-of-type {
 div#zasady #gra_zamykanie,
 div#nazwa_galerii #biezaca_galeria_zamykanie
 {
-/*    position: absolute;*/
+/*      xqfc cposition: absolute;
+        xdf  margin-top: 5px;
+        dfdf margin-right: 5px;
+        ddssfd top: 4px;
+        dqsdf right: 4px; */
     float:right;
-/*    margin-top: 5px;
-    margin-right: 5px;*/
     margin-left: 0.5em;     /* to zostaje, ale powyższe można wywalić, dzięki czemu prawie te same wymiary i położenie jak inne zamykania */
-    top: 4px;
-    right: 4px;
     padding: 0.2em;
     padding-bottom: 0.4em;
     font-weight: bolder;
@@ -1423,6 +1423,12 @@ div#nazwa_galerii #biezaca_galeria_zamykanie
     border: 1px solid #666;
     cursor: pointer;
     transition: background-color 0.5s;
+}
+
+div#nazwa_galerii #biezaca_galeria_zamykanie {
+    margin-right: -0.125em;
+    margin-left: 100%;
+    margin-bottom: 0.5em;
 }
 
 div#zasady #gra_zamykanie:hover,
@@ -2322,6 +2328,11 @@ input[type=range]:hover::-ms-fill-upper
         flex-basis: 250px;
     }
     
+    div#nazwa_galerii #biezaca_galeria_zamykanie {
+        margin-left: 0.5em;     /*  to likwiduje pełną linię dla przyciku, przec co tyy uł galerii standardowo opływa ten przycisk */
+        margin-bottom: 0;
+    }
+
     .maly_guzik {
         min-width: 130px;
             padding: 0.45em 1em;    /* przywrócenie wzorcowych dopełnień */  
