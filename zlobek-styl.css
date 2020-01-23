@@ -1160,6 +1160,7 @@ div#glowna {
 div#glowna h2 span {
     color: yellow;
     font-weight: bolder;
+    text-shadow: 0 0 4px #666;  /* na wąskim ekranie głównie jasne tło pod tekstem, zatem ciemniej pod nim; cień skopiowany z elementu h2/span powyżej   */
 }
 
 div#glowna div#zawartosc {
@@ -2329,8 +2330,9 @@ input[type=range]:hover::-ms-fill-upper
     }
     
     div#nazwa_galerii #biezaca_galeria_zamykanie {
-        margin-left: 0.5em;     /*  to likwiduje pełną linię dla przyciku, przec co tyy uł galerii standardowo opływa ten przycisk */
+        margin-left: 0.5em;     /*  to likwiduje pełną linię dla przyciku, przez co tytuł galerii standardowo opływa ten przycisk */
         margin-bottom: 0;
+        display: none;      /* domyślny stan w CSS, pokazywany poprzez JS jako reakcja na zdarzenie wyświetlenia podstrony galerii */
     }
 
     .maly_guzik {

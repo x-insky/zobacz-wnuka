@@ -1,3 +1,84 @@
+v0.5.47 - fixed the redisplaying of current gallery
+
+* v0.5.47 -- [2020-01-23]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added default hidden state for closing button for current gallery
+  - connected with element 'div#nazwa_galerii #biezaca_galeria_zamykanie'
+  - reenabled  later by JS logic, when current gallery container is shown or its any subpage (showned as inline CSS)
+
+-- witryna.js
+* created new function "PokazPrzyciskZamykaniaDlaBiezacejGalerii" for the purpose of showing the current gallery closing button
+  - closing button now appears with fading animation
+  - possible tuning with time of fading in miliseconds or just use of default time
+* next new function "UkryjPrzyciskZamykaniaDlaBiezacejGalerii" works as an opposite to "PokazPrzyciskZamykaniaDlaBiezacejGalerii"
+  - it hides the button with fading animation of given time (uses miliseconds)
+* added invocations of previously mentioned functions inside JS logic:
+  - "PokazPrzyciskZamykaniaDlaBiezacejGalerii" starts when any gallery subpage is displayed - inside function "WczytajZewnetrznyHTMLdoTAGU", when is loaded any gallery (or its subpage -- started by gallery index) or *selected gallery number from the form* is activated (or also any it's subpage)   
+* built new function "AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii" as a new event listener
+  - the purpose is to enable firing of the closing action (for the whole conatiner) only when this button is displayed or its showing up
+  - another function should block this action when button is not displayed or it starts fading (the opposite function "DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii()" should play then) 
+  - copied function body from the event delegation from ancestor element with id of "glowna"  
+  - listens for the "click" or "keydown" event directly on closing button element of current displayed gallery...
+  - ... the same events and logic as defined inside an ancestor element (a whole container)
+  - it replaces the event delegation for closing button, which delegation was previoulsy defined
+  - it allows the use of animations for showing and hiding this button (actually the fading animations are used) while event listening and respond only when the closing button is visible (or it is appearing)!!!
+  - newly built function "DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii" is an opposite for previously defined "AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii"
+* newly built function "DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii" is an opposite for just defined "AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii"
+  - it removes event listeners for the "click" or "keydown" events
+  - it allows to use any animations of disappearing on the event item and RESPONDS ONLY WHEN THE CLOSING BUTTON IS VISIBLE OR SHOWS UP
+  - it should cancel all defined interactions on it, when starts to disappear (that was impossible on previously dual state: only SHOWN/HIDED)
+  - logic copied from the previously defined event delegation on closing button, which is inside of element with id of "glowna" (NOT used "ON" state but currently it UNREGISTERS specified events with "OFF" function) while the event element is not visible or it starts to fade
+  - fires when any current gallery element is changed or its subgallery is loading (with conjunction of firing "DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii" and "UkryjPrzyciskZamykaniaDlaBiezacejGalerii" 
+
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* modified light text shadow to medium gray for each span elment inside h2 (selector: "div#glowna h2 span")
+  - a light yellow text color looks better on bright background, when has some kind dark border
+  - ligth glow it's nice but ... it's too bright for easy read, and on mobile screen the backrtound is even brigter (bacground gradient differ from desktop resolution)    
+  - connected with current gallery title and it's number inside current gallery header
+  - refers also to subgallery page number just before loaded thumbnails
+
+-- witryna.js
+* changed the way of adding the event listeners to the closing button for the currently dispalyed gallery
+  - no more event delegation for "click" and "keydown" actions (previouly defined on ancestor "#glowna" for capturing the events on element with id of  "#biezaca_galeria_zamykanie"
+  - separate events for closing action are added, when this button stays visible - by invocation of "AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii" function
+  - also while hiding or fading the closing button the event for "click" or "keydown" are unregistered, so the action of closing the whole current gallery container is rather impossible to run (somehow it's still possible to perform, but the logic seems to set correctly!!! )  
+* added extra invocation of "PokazBiezacaGalerie" function as the rescue for immidiately displaying the container for the currently displayed gallery
+  - added in each place, when any gallery is displayed first time or its active subpage changes 
+  - works fine, even the closing button was used AFTER the pressing any subgallery button (this precedence teoritecally is impossible in logic, but there is some kind of timeout or just the outdated hardware)!!!
+  - rescue action saves a lot, instead of big effort of blocking the asynchronic actions!
+ - a huge impact of this improvement on the proper working of displaying current gallery or its subpage
+ 
+[-] REMOVED
+
+-- witryna.js
+* commented out previously actions on button of current gallery closing with conjunction to event delegation on its ancestor
+  - just to remeber the place in code: '$('#glowna').on("click keydown", "#biezaca_galeria_zamykanie", function( e ) {...}'
+
+[F] FIXED
+
+-- witryna.js
+* it is now posible to show and hide button for closing current gallery with fading animation of that button (or use any animation with this element)
+  - the purpose is to disable the event listener while this button is dissapearing and reenable listening, when the button starts to showing up
+  - the event listner is temporaty removed and later reenabled
+  - also removed the previously defined event delegation for this events 
+  - (+): a beetter user experience with animations, not just "suddenly variant" ("I'm here/I'm absent now"); nobody likes things showing up from out of nowhere and super-ultra-fast disappearing that things
+  - (-): jQuery event delegation works fine, but it doesn't work with fast changes (or my laptop is so old, that this ugly trick with closing the whole current gallery container still works... :/ ); not directly resolved the problem of closing the current gallery description (a whole conatiner)midiately after the any subpage was started to download requested content :(
+  -... but the whole container is redisplayed immediately, when any content is loaded - when any subpage of current gallery is loaded 
+  - see "MODIFIED" section of this update for more information
+* added an extra call to "PokazBiezacaGalerie" function, which prevents from hidden current gallery conatiner
+  - invocation is added to each functions, where the the current gallery is displayed by forst time or it's redisaplyed (e.g. changing current gallery subpage)
+  - mentioned this just before (see more at "MODIFIED" section)
+
+* closes: #71 - 'You can still close the current gallery JUST AFTER reading another page!'
+
+---------------------------
+
 v0.5.46 - quick fix for the closing button of the current gallery 
 
 * v0.5.46 -- [2020-01-21]
@@ -53,7 +134,7 @@ v0.5.46 - quick fix for the closing button of the current gallery
 [F] FIXED
 
 -- witryna.js
-* see descriptions of changed functions in the "CHANGED" section of this update, it applies to functions:
+* see descriptions of changed functions in the "MODIFIED" section of this update, it applies to functions:
   - "DostawPrzyciskZamykaniaDoBiezacejGalerii"
   - "submit" events on the element with the id "suwak_galerii_submit" - loading any gallery number
   - "click" events on an element with the class "przycisk_galeria" inside the element with the id "nawigacja_galeria" - navigating the subpages of the currently displayed gallery
@@ -62,7 +143,7 @@ v0.5.46 - quick fix for the closing button of the current gallery
   - unfortunately in a possible scenario it is likely to hide the header of the current gallery or the entire component (element) from reading the updated content
   - it is difficult, but nevertheless feasible, and adding animations or delays for the "'X' closing element" only increases the chance of this variant occurring
   - that's why its fading animation was abandoned and its immediate removal from DOM structures was used
-* immediate removal of the closing element during navigation activities helps maintain the continuity of displaying the current gallery, because it is difficult to press this close button (it is impossible, for some reason there is a slight delay, but simply used old test equipment introduces this delay;))
+* immediate removal of the closing element during navigation activities helps maintain the continuity of displaying the current gallery, because it is difficult to press this close button (it is impossible, for some reason there is a slight delay, but simply used old test equipment introduces this delay ;) )
 * the quickly disappearing button of closing the current gallery does not introduce chaos in hiding this element, which could hinder the operation of the function displaying any selected gallery number (events on the element "#suwak_galerii_submit")
 * downside are possible costly operations on the close button of the current gallery
   - it must be deleted and recreated for each gallery or subpage displayed
