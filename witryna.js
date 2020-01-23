@@ -101,7 +101,10 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         //GenerujPodstronyGalerii( element_witryny, dane.ktoraPodstrona );
                             if ( $('#nazwa_galerii').hasClass('szara_zawartosc') ) $('#nazwa_galerii').removeClass('szara_zawartosc');  // w przypadku wystąpienia błędu z pobraniem wybranej galerii - aby przywrócić żywe kolory tego kontenera 
                         GenerujPodstronyGalerii( tag_podmieniany, dane.ktoraPodstrona );
+                        PokazBiezacaGalerie(); // wymuszone dodanie - PONOWNE pokazywanie aktualnej galerii (...gdyby była ukryta)   
                         DostawPrzyciskZamykaniaDoBiezacejGalerii(); // wstaw przycisk zamykania bieżącej galerii, gdy zaczytano treści danej podstrony galerii 
+                        PokazPrzyciskZamykaniaDlaBiezacejGalerii();
+                        AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii();
                         }
                         else
                         {
@@ -286,6 +289,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
 
                         var namiaryWybranejGalerii = OdczytajTresciOdnosnikaWybranejGalerii ( tag_podmieniany, dane.pozycjaWGalerii );
 
+                        PokazBiezacaGalerie();  // dodanie wyświetlnia bieżącej galerii, gdyby została uprzednio ukryta ukryta 
                         UzupełnijNaglowekBiezacejGalerii ( namiaryWybranejGalerii );
 
                             // poniżej wywołanie ponownego ładowania po określeniu adresu docelowej galerii
@@ -360,6 +364,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         NaprawBrakujaceSRCwKontenerze ( '#skladowisko_status_wybranej_galerii', 'przetwarzaj galerię, nie spis treści' ); // taki teścik
                         GenerujPodstronyGalerii ( '#skladowisko_status_wybranej_galerii' );
                         DostawPrzyciskZamykaniaDoBiezacejGalerii();  // dodatkowa akcja, wstawi 'X" dla nagłówka bieżącej galerii, dla już wyświetlonego kompnentu
+                        PokazPrzyciskZamykaniaDlaBiezacejGalerii();
+                        AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii();
                         }
                         else
                         {
@@ -2041,6 +2047,37 @@ $('#biezaca_galeria_zamykanie').remove();   // usuń element (jeśli znaleziono)
 $('#selektor_naglowek').focus();    // IU/UX: też przenies focus na jakiś aktywny element PRZED lub ZA tym guzikiem (wybrano wariant PRZED)
 }
 
+function PokazPrzyciskZamykaniaDlaBiezacejGalerii ( czasAnimacji ) {
+czasAnimacji = czasAnimacji || 300;
+$('#biezaca_galeria_zamykanie').fadeIn( czasAnimacji );
+}
+
+function UkryjPrzyciskZamykaniaDlaBiezacejGalerii ( czasAnimacji ) {
+czasAnimacji = czasAnimacji || 300;
+$('#biezaca_galeria_zamykanie').fadeOut( czasAnimacji );
+}
+
+function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( ) {
+
+    $('#biezaca_galeria_zamykanie').on("click keydown", function( e ) {  // działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
+        if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+        {
+        UkryjBiezacaGalerie();
+        }
+    });   
+}
+
+function DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( ) {
+
+    $('#biezaca_galeria_zamykanie').off("click keydown", function( e ) {  // "OFF", nie "ON"!!! -- też działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
+        if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+        {
+        PokazBiezacaGalerie();
+        }
+    }); 
+}
+
+
 function ZaczytajSpisGalerii () 
 {
 //http://zlobek.chojnow.eu/galeria,k0,p1.html	- adres ostatniej galerii, wg. daty
@@ -2854,7 +2891,10 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania w trakcie oczekiwnia na obsługę   
  
     // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X'" JAK NAJBLIŻEJ KODU OBSŁUGI ŻĄDANIA WYŚWIETLENIA WYBRANEJ GALERII 
-    UsunPrzyciskZamykaniaDlaBiezacejGalerii(); // bez tej definicji można w czasie ładowania ZAMKNĄĆ podgląd galerii, przez co nie pojawi się treść, 
+    // UsunPrzyciskZamykaniaDlaBiezacejGalerii(); // bez tej definicji można w czasie ładowania ZAMKNĄĆ podgląd galerii, przez co nie pojawi się treść, 
+    DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii();   // najpierw wyłączenie funkcjonalności (.off), później animacja zanikania
+    UkryjPrzyciskZamykaniaDlaBiezacejGalerii();
+
     // ..., ale widać aktywne powiadomenie o ładowaniu treści!!!
 
     //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii
@@ -2940,8 +2980,11 @@ ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycis
     // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X' "JAK NAJBLIŻEJ KODU OBSŁUGI NACISNIĘCIA DOWOLNEGO PRZYCISKU NAWIGACJI W PODGALERII
     // ustawić jako początkową czynność blokowanie przycisku lub ukrywanie innego od zamykania (zależy na czasie!), a przetestowano możliwość wciśnięcia
     // ...przycisku podgalerii klawiaturą, gdy kurosor myszy był nad zamykaniem podglądu bieżącej galerii!     
-UsunPrzyciskZamykaniaDlaBiezacejGalerii();   // zamiast jednokrotnie tworzyć (kiedy?), pokazywać i ukrywać, to prostsze jest kasowanie OD RAZU elementu i jego tworzenie nowo
-
+//UsunPrzyciskZamykaniaDlaBiezacejGalerii();   // zamiast jednokrotnie tworzyć (kiedy?), pokazywać i ukrywać, to prostsze jest kasowanie OD RAZU elementu i jego tworzenie nowo
+DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii();
+UkryjPrzyciskZamykaniaDlaBiezacejGalerii();     // najpierw wyłaczenie (.off), teraz animacja zanikania elementu 'X' 
+PokazBiezacaGalerie();  // ratunkowe pokazanie zawartości bieżącej galerii, nawet gdy WCZEŚNIEJ naciśnieto przycisk 'X" (co standardowo nie powinno się udać, ale w wyniku opóźnienia lub wolnego sprzętu TO SIĘ JEDNAK ZDARZA DLA "CHCĄCEGO MAGIKA"!)
+            // coś jednak nie działa tak, jakbym chciał.. nie pojawi się komponent aktualnej galerii :/ 
     //$( g_wczytywanie_podstrona ).show(100); 
 PokazRamkeLadowania('podstrona');   // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
 
@@ -3146,13 +3189,14 @@ $('#debugger_zamykanie').on("click keydown", function( e ) {
     }
 });    
 
-
-$('#glowna').on("click keydown", "#biezaca_galeria_zamykanie", function( e ) {  // zadziała z delegacją zdarzeń
+    // uwtorzono nowe zdarzenia dla naciśniecia przyciku 'X" bezpośrenio dla tego elementu, BEZ DELAGACJI ZDARZEŃ 
+    // nowa logika zapewnia OBSŁUGĘ ZDARZENIA NA ŻĄDANIE, tzn. jego aktywowanie lub blokowanie, zależnie czy przycisk 'X' jest wyświetlany (powinno współpracować też z animacją pojawiania/ukrywania się tego przycisku)
+/* $('#glowna').on("click keydown", "#biezaca_galeria_zamykanie", function( e ) {  // zadziała z delegacją zdarzeń
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
     {
     UkryjBiezacaGalerie();
     }
-});    
+});     */
 
 
 $('div#zagraj').click( function() {
