@@ -1,3 +1,49 @@
+v0.5.48 - better a11y for keyboard navigation via [Tab]
+
+* v0.5.48 -- [2020-07-31]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* unification of styles to highlight interactivity of interactive elements
+  - all active interactive elements accessible via the keyboard have a red dotted border
+  - not only fields and form buttons or only selected interface buttons
+  - the appearance of the elements changed and visible in the :focus state
+* better visual presentation of the keyboard navigation
+  1. the background of each item in the gallery list changes after selecting the "anchor", which is the title of a given gallery
+  2. the list of thumbnails in the preview of a given gallery subpage is scaled when viewed from the keyboard via [Tab]
+    - navigation through thumbnail images shows the current item
+    - you can see successively selecting with the cursor on each thumbnail from the list
+    - behavior :focus as with :hover state (scaling + 10%)
+* some test styles for new states
+
+-- witryna.js
+* generating "artificial focus state" by dynamically assigning classes to the ancestor, as a reaction to events on the child element
+  - ancestor/container behavior change, depending on child's hover/focus state
+  - assigning and taking back a class as reacting on "focus" and "blur" events
+* new content, which is just shown after loading, get the status :focus
+  - provides improved element navigation through the keyboard
+  - :focus on new content that is within close range of the trigger element
+* minor corrections in the comments
+
+-- index.php
+* added "tabindex" attribute to both *notifier* components
+  - the entire area of ​​the element signals interaction
+  - the ability to immediately hide the selected element by clicking it or confirming the action with the keyboard ([Space] or [Enter]) 
+
+[F] FIXED
+
+-- witryna.js
+* minor corrections inside comments
+
+-- zlobek-styl.css
+* improved few typos inside comments
+
+-- _changelog.md
+* minor typo corrections of few last text log
+
+---------------------------
+
 v0.5.47 - fixed the redisplaying of current gallery
 
 * v0.5.47 -- [2020-01-23]
@@ -19,7 +65,7 @@ v0.5.47 - fixed the redisplaying of current gallery
   - "PokazPrzyciskZamykaniaDlaBiezacejGalerii" starts when any gallery subpage is displayed - inside function "WczytajZewnetrznyHTMLdoTAGU", when is loaded any gallery (or its subpage -- started by gallery index) or *selected gallery number from the form* is activated (or also any it's subpage)   
 * built new function "AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii" as a new event listener
   - the purpose is to enable firing of the closing action (for the whole conatiner) only when this button is displayed or its showing up
-  - another function should block this action when button is not displayed or it starts fading (the opposite function "DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii()" should play then) 
+  - another function should block this action when button is not displayed or it starts fading (the opposite function "DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii" should play then) 
   - copied function body from the event delegation from ancestor element with id of "glowna"  
   - listens for the "click" or "keydown" event directly on closing button element of current displayed gallery...
   - ... the same events and logic as defined inside an ancestor element (a whole container)
@@ -32,7 +78,6 @@ v0.5.47 - fixed the redisplaying of current gallery
   - it should cancel all defined interactions on it, when starts to disappear (that was impossible on previously dual state: only SHOWN/HIDED)
   - logic copied from the previously defined event delegation on closing button, which is inside of element with id of "glowna" (NOT used "ON" state but currently it UNREGISTERS specified events with "OFF" function) while the event element is not visible or it starts to fade
   - fires when any current gallery element is changed or its subgallery is loading (with conjunction of firing "DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii" and "UkryjPrzyciskZamykaniaDlaBiezacejGalerii" 
-
 
 [*] MODIFIED
 
@@ -52,7 +97,7 @@ v0.5.47 - fixed the redisplaying of current gallery
   - added in each place, when any gallery is displayed first time or its active subpage changes 
   - works fine, even the closing button was used AFTER the pressing any subgallery button (this precedence teoritecally is impossible in logic, but there is some kind of timeout or just the outdated hardware)!!!
   - rescue action saves a lot, instead of big effort of blocking the asynchronic actions!
- - a huge impact of this improvement on the proper working of displaying current gallery or its subpage
+  - a huge impact of this improvement on the proper working of displaying current gallery or its any subpage
  
 [-] REMOVED
 
@@ -75,7 +120,7 @@ v0.5.47 - fixed the redisplaying of current gallery
   - invocation is added to each functions, where the the current gallery is displayed by forst time or it's redisaplyed (e.g. changing current gallery subpage)
   - mentioned this just before (see more at "MODIFIED" section)
 
-* closes: #71 - 'You can still close the current gallery JUST AFTER reading another page!'
+* closes: #71 - 'You can still close the current gallery IMMEDIATELY AFTER you start loading any of its subpages!' ~'You can still close the current gallery JUST AFTER reading another page!'~
 
 ---------------------------
 
@@ -189,13 +234,13 @@ v0.5.45 - added improvements for the displayed current gallery
 
 -- witryna.js
 * added a button to close the preview of the current displayed gallery (item #1 from the order list of issue #67)
-  - a specific function 'DeliverClosing Button ForBiezacejGallery' has been created, which injects the code to display the closing element to the header of the current gallery
-  - the closing element is only shown * AFTER * the list of thumbnails from the gallery is displayed
+  - a specific function 'DostawPrzyciskZamykaniaDoBiezacejGalerii' has been created, which injects the code to display the closing element to the header of the current gallery
+  - the closing element is only shown *AFTER* the list of thumbnails from the gallery is displayed
   - it is important because by default you could close the current gallery component before displaying the gallery subpage from the navigation menu (a list of thumbnails or menu would be displayed, but previous elements would be hidden!)
-  - the 'DeliverClosing To Current Gallery' function is activated inside the Load External HTML function into the TAG (variant 'gallery_page' and 'selected gallery')
-* the newly defined function 'ShowBiezacaGalleries' is also used to display the entire container again on the current gallery (after being hidden by a button, but it is also started dynamically inside the function updating content for the current gallery or its subpage)
+  - the 'DostawPrzyciskZamykaniaDoBiezacejGalerii' function is activated inside the Load External HTML function into the TAG (variant 'gallery_page' and 'selected gallery')
+* the newly defined function 'ShowBiezacaGalerie' is also used to display the entire container again on the current gallery (after being hidden by a button, but it is also started dynamically inside the function updating content for the current gallery or its subpage)
   - it does not directly show the entire container again, but its individual elements are shown (the container with the "#global" id does not disappear, it is visible throughout the program)
-* created function "UkryjBiezacaGallery", which serves to hide individual parts of the current gallery
+* created function "UkryjBiezacaGalerie", which serves to hide individual parts of the current gallery
   - called as a reaction to the operation of pressing the button from id "current gallery_closing"
   - works the other way around in relation to "HideBiezacaGalerie"
 

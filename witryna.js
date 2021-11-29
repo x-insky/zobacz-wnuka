@@ -105,6 +105,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         DostawPrzyciskZamykaniaDoBiezacejGalerii(); // wstaw przycisk zamykania bieżącej galerii, gdy zaczytano treści danej podstrony galerii 
                         PokazPrzyciskZamykaniaDlaBiezacejGalerii();
                         AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii();
+                        // $('#skladowisko a:first').focus();
+                        $('#biezaca_galeria_zamykanie').focus();    // przeniesienie focusu po przewinięciu strony do bieżącej galerii, by być bliżej elementów, które właśnie zostały wyświetlone
                         }
                         else
                         {
@@ -366,6 +368,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         DostawPrzyciskZamykaniaDoBiezacejGalerii();  // dodatkowa akcja, wstawi 'X" dla nagłówka bieżącej galerii, dla już wyświetlonego kompnentu
                         PokazPrzyciskZamykaniaDlaBiezacejGalerii();
                         AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii();
+                        $('#biezaca_galeria_zamykanie').focus();    // przeniesienie focusu po przewinięciu strony do bieżącej galerii, by być bliżej elementów, które się właśnie pojawiły
                         }
                         else
                         {
@@ -1522,7 +1525,7 @@ wartoscBiezaca = parseInt( wartoscBiezaca );   // konwersja do typu Number, cał
         $g_suwak_nr_galerii.val( g_ilosc_wszystkich_galerii ); 
         } 
     } 
-    else    // tryb dla pola wyboru podstrony galerii, gdy mzienna == ('cokolwiek' / 2 && TRUE)
+    else    // tryb dla pola wyboru podstrony galerii, gdy zmienna == ('cokolwiek' / 2 && TRUE)
     {           // te same warunki, tylko zakresy i elementy formularza inne
         if ( ( wartoscBiezaca === undefined ) || ( isNaN( wartoscBiezaca ) ) ) 
         {
@@ -2060,7 +2063,7 @@ $('#biezaca_galeria_zamykanie').fadeOut( czasAnimacji );
 function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( ) {
 
     $('#biezaca_galeria_zamykanie').on("click keydown", function( e ) {  // działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
-        if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+        if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
         {
         UkryjBiezacaGalerie();
         }
@@ -2070,7 +2073,7 @@ function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( ) {
 function DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( ) {
 
     $('#biezaca_galeria_zamykanie').off("click keydown", function( e ) {  // "OFF", nie "ON"!!! -- też działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
-        if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+        if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
         {
         PokazBiezacaGalerie();
         }
@@ -2528,7 +2531,7 @@ function InicjalizujGre ()
 {
 var nrPlanszy = LosujPlansze(); // póki co na pusto
 console.log('Wylosowano nr planszy: ', nrPlanszy);    
-var przesuniecie = WybierzPlansze( nrPlanszy );     // od arzu zwrot, choć on już wstawiony do zmiennych globalnych
+var przesuniecie = WybierzPlansze( nrPlanszy );     // od razu zwrot, choć on już wstawiony do zmiennych globalnych
   
 RozmiescCzesci( nrPlanszy );
     
@@ -2713,7 +2716,7 @@ var nawigacjaKlawiaturowa = evt.originalEvent ? evt.originalEvent.keyCode : evt.
 
 $('#glowna').on("click keypress", "a", function ( e ) {  // kasowanie FOCUSU przy kliknięciu w obrazek dla LIGHTBOXa oraz aktywacji spacją
     
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]    
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]    
     {
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po ewentualnym kliknięciu
 
@@ -2958,7 +2961,7 @@ return false;  // konieczny warunek pomimo .preventDefault na "niewysyłanie for
 	
     
 $('h2#selektor_naglowek').on("click keypress", function ( e ) {   // rozszerzone operowanie o klawiaturę; zamiennie "keypress" z .which działa identycznie 
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]    
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]    
     {
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po ewentualnym kliknięciu
         if ( e.which == 32 ) e.preventDefault(); // blokowanie przewijania ekranu spacją
@@ -3006,7 +3009,7 @@ WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), serwer, $this.attr('data-ad
 $('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function(e) { 
     
 console.info('DEBUG: przycisk naciśnieto już ' + g_suma_klikniec_zaladuj + ' razy, a paginacji odczytano wcześniej ' + g_zaczytana_ilosc_paginacji_galerii );
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {   
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po kliknięciu
         if ( e.which == 32 ) e.preventDefault();  // blokowanie przewijania zawartości spacją
@@ -3042,7 +3045,7 @@ console.info('DEBUG: przycisk naciśnieto już ' + g_suma_klikniec_zaladuj + ' r
     // DLA KOLEJNYCH GALERII: '$('#galeria_spis').on("click", "a", function(e){'
 $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e ) {    // 
     // włączono KEYPRESSED/KEYDOWN i CLICK -- bez rozbijania na przyciski "warunkowe" - "click auxclick contextmenu"
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
         if ( e.which == 1 ) $(this).blur(); // usunęcie focusu z elementu po jego kliknięciu
     e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku && nieprzewijanie ekranu spacją   
@@ -3086,11 +3089,32 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
     }   // if-( e.which == 1 )...
 });	//  on("click")-$('#galeria_spis')-END			
 
-    
-$('div#zaczytany_spis').on('click', '.powiadamiacz', function () {
-    if ( $(this).not( $(this).is(':animated') ) )      // pozwól na wcześniejsze "zrolowanie" elementu tylko przed rozpoczęciem nieuniknionej animacji
+        // tylko te <a> mają sztucznie dodany TABINDEX (bo nie mają zabrany HREF!), zatem warianty: a || a[data-href] || a[tabindex]
+$('#galeria_spis, #wybrane_galerie_spis').on("focus", "a[data-href]", function ( e ) {
+        // dla NIEKOMPLETNEGO <a> NIE DZIAŁA nawet przypisanie obrysu poprzez klasę (ani szczątkowe :focus w CSS - działa tylko w FF, bez JS!)
+        // pozostawiono z nadzieją istnienia zmiany w przyszłych wersjach przeglądarek (przyszłe aktualizacje to obejmą?!)
+        // skopiowano ten styl też dla rodzica, aby ujednolicić stan focus na kontenerze 
+    $(this).addClass('sztuczny-focus').parent().parent().addClass('sztuczny-hover sztuczny-focus');    // "dwa kontenery wyżej" to cały pojemnik dla tego odnośnika - do wyświetlenia galerii
+}); //  on("focus")-$('a')-END 
+
+
+$('#galeria_spis, #wybrane_galerie_spis').on("blur", "a[data-href]", function ( e ) {  
+        // istnienie klasa "sztuczny-focus" dla <a> i tak nic nie zmienia w stanie i wyglądzie odnośnika, brak tej ramki; 
+        // bardziej istotne póki co to warunkowanie JEST/BRAK dla skopiowanego stylu w rodzicu rodzica (czyli cały kontener elementu)
+    $(this).removeClass('sztuczny-focus').parent().parent().removeClass('sztuczny-hover sztuczny-focus');    // "dwa kontenery wyżej" jako pojemnik dla bieżącego odnośnika;
+}); //  on("blur")-$('a')-END 
+
+
+$('div#zaczytany_spis').on('click keydown', '.powiadamiacz', function ( e ) {  // też na klawiaturę ma reagować ... powstał Mały Warunkowy Potworek  
+
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
-    $(this).slideUp(500);   // szybsza o 50% animacja by było widać różnicę i efekt klinknięcia
+        if ( e.which == 32 ) e.preventDefault(); // tylko zamknie, bez ewentualnego przewijania    
+
+        if ( $(this).not( $(this).is(':animated') ) )      // pozwól na wcześniejsze "zrolowanie" elementu tylko przed rozpoczęciem nieuniknionej animacji
+        {
+        $(this).slideUp(500);   // szybsza o 50% animacja by było widać różnicę i efekt kliknięcia
+        }
     }
 }); //  on("click")-$('.powiadamiacz')-END	
     
@@ -3169,7 +3193,7 @@ $('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt ) { // te
 $('#galeria_spis').on("click keydown", ".krzyzyk_zamykanie", function( e ) {    // zakykanie "okienek" i pasków
 var $this = $(this);
     // jakoby warunkowe wykonanie, mimo że na CLICK wstępnie reagowało 
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
         if ( e.which == 32 ) e.preventDefault(); // tylko zamknie, bez ewentualnego przewijania      
     $(this).blur(); // bezwarunkowe usunięcie focusu z elementu zamykającego
@@ -3183,8 +3207,9 @@ var $this = $(this);
 
     
 $('#debugger_zamykanie').on("click keydown", function( e ) { 
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
+        if ( e.which == 32 ) e.preventDefault(); // nie przewijaj ekranu spacją, skoro naciśnięto nią to zamykane w TYM naciśnięciu    
     UkryjDebuggowanie();
     }
 });    
@@ -3192,7 +3217,7 @@ $('#debugger_zamykanie').on("click keydown", function( e ) {
     // uwtorzono nowe zdarzenia dla naciśniecia przyciku 'X" bezpośrenio dla tego elementu, BEZ DELAGACJI ZDARZEŃ 
     // nowa logika zapewnia OBSŁUGĘ ZDARZENIA NA ŻĄDANIE, tzn. jego aktywowanie lub blokowanie, zależnie czy przycisk 'X' jest wyświetlany (powinno współpracować też z animacją pojawiania/ukrywania się tego przycisku)
 /* $('#glowna').on("click keydown", "#biezaca_galeria_zamykanie", function( e ) {  // zadziała z delegacją zdarzeń
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
     UkryjBiezacaGalerie();
     }
@@ -3218,7 +3243,7 @@ $('#gra_start').click( function() { // start tylko dla naciśnięcia elementu my
   
 
 $('#gra_zamykanie').on("click keydown", function( e ) { 
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // LEWY || [ENTER] || [spacja]
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
     $('#gra').slideUp(333);        // lepiej dać animację (nie .hide, ale .slideUp jako lepszy efekt) niż proste .css('display', 'none');
         // ...  // tu reset logiki na zliczanie punktów
