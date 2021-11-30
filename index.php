@@ -75,8 +75,6 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
         else echo '<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>';    // pobieranie pliku z serwera zewnętrznego w wariancie skompresowanym: *.MIN.js
     ?>  <!-- testy uruchamiania nawet na kalkulatorach --> 
 
-    
-    <!--<script src="./jquery-3.2.1.js"></script>-->
 </head>
 
 <body>
@@ -350,7 +348,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.48</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.49</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">

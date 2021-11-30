@@ -1,3 +1,20 @@
+v0.5.49 - removed annoying advertisements on a new hosting (v3)
+
+* v0.5.49 -- [2021-10-09]
+
+[*] MODIFIED
+
+-- witryna.js
+* updated a filter against ads, inside 'UbijReklamy' function
+  - caused by annoying advertisements on a new hosting (site launches a new tab or a new window of a web browser full of ads)
+  - few aggresive and wide ads on a top of the page destroys mobile layout
+
+-- zlobek-styl.css
+* decreased footer's margin bottom
+  - there is no text ads below footer on a new hosting
+
+---------------------------
+
 v0.5.48 - better a11y for keyboard navigation via [Tab]
 
 * v0.5.48 -- [2020-07-31]

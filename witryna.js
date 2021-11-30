@@ -2258,9 +2258,13 @@ return false;
     
     
 function UbijReklamy ()
-{   // 000webhost.com || 000webhostapp.com -- bezwarunkwe ubijanie (o ile jQuery przypasuje coś)
+{   
+    // *** HOSTING webhost.com *** 
+    // 000webhost.com || 000webhostapp.com -- bezwarunkwe ubijanie (o ile jQuery przypasuje coś)
 $('a[href*=000webhost]').parent('div').remove();
-    
+  
+
+    // *** HOSTING cba.pl *** 
     // cba.pl -- tu wstępnie warunkowo, ale i tak na jedno wychodzi poprzez jQuery (nieznalezionych nie usunie/zmieni/odczyta)
 var $cbaReklamaBig = $('center');
     if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tę wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
@@ -2285,7 +2289,6 @@ var $reklamaDoklejonaNaDole = $('.cbalink');
         $reklamaDoklejonaNaDole.after( $reklamaDoPrzeniesieniaZGory );  // lepiej gdy jest ZA, niż PRZED; czarne tło lepiej wygląda na końcu, niż pomiędzy białymi
         // console.log('zlokalizowana doklejona reklama, do przeniesienia z góry za stopkę strony:', $reklamaDoPrzeniesieniaZGory);
     }
-
         // kolejna ewentualna reklama na CBA, co rozwala układ telefonu -- z uwagi na szerszy banner obrazkowy niż używaną rozdzielczość
 $cbaReklamaBig = $('img[usemap]');    
     if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tą wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
@@ -2296,8 +2299,8 @@ $cbaReklamaBig = $('img[usemap]');
     }
 
     /*
-    UWAGA: poniższe jest BARDZO restrykcyjne, gdyż wywala JEDANĄ lub DWIE reklamy:
-      - pierwsza z nich jest statycznym tekstem, stanowiącym początek widocznych treści witryny (małę literki i opis)... PRZENIESIONO NA SPÓD STRONY
+    UWAGA: poniższe jest BARDZO restrykcyjne, gdyż wywala JEDNĄ lub DWIE reklamy:
+      - pierwsza z nich jest statycznym tekstem, stanowiącym początek widocznych treści witryny (małe literki i opis)... PRZENIESIONO NA SPÓD STRONY
       - druga z nich to wyskakujacy banner z kłopotliwym zamykaniem 'x' na starych przeglądarkach bez flexboksa!-- co rozszrza stronę poza ekran!!
         (do tgo kłopotliwe zamykanie, "X" w prawym górnym rogu, pod suwakiem przewijania pionowego) 
       - czasem ten banner łapie poprzednia definicja "usuwacza", ale często zostaje on nieusunięty (ALBO: usuwa go mechanim antyreklamowy przeglądarki!)
@@ -2326,6 +2329,20 @@ $cbaReklamaBig = $('#witryna').prev();  // jakiś poprzednik istniejącego konte
     $jakasDoklejonaZawartosc.remove();
     // console.log('Wywalono niepotrzebną doklejoną zawartość poniżej stopki ("dzikie formularze, czy inne węże").');
     }
+
+
+    // *** HOSTING 5v.pl *** 
+$('iframe').remove();	// obce i doklejone dodatki od hostingu na stronie
+
+$('#ads').remove();	// reklamy na górze, przed początkiem witryny 
+
+$('#ads_bottom_static').remove();	// reklamy z dołu, za treściami
+
+$('[class^=app_gdpr--]').remove();	// "menu konfiguracyjne dla reklam" przy pierwszej wizycie
+
+$('style').remove(); 	// !!! *OSTROŻNIE, OBOSIECZNE* !!! wlepione do heada - uruchomione na wstepie od razu wywala też wszystkie reklamy, ale nie da się przewjać w pionie witryny!
+
+$('body').removeAttr('style'); // przywrócenie możliwosci przewijania, zablokowanego przez wstawiane reklamy 
 
 }   // UbijReklamy-END
     
