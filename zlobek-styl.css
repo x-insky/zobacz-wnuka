@@ -123,8 +123,12 @@ a:active {                  /* kasowanie ramek wokół naciskanego odnośnika  *
     outline-style: none;
 }
 
-a:focus {                   /* przywracanie ramek dla odnośników, aby było widać */
-    outline-style: dotted;
+a:focus,            /* przywracanie ramek dla odnośników, aby było widać... ale TE style są odrzucane w większości przeglądarek */
+a[tabindex]:focus,      /* FF akceptuje ogólny i szczegółowe selektory dla ":focus", ale inne nie trawią ZMODYFIKOWANYCH <a> bez HREF! */ 
+a[data-href]:focus,
+.sztuczny-focus
+{                   
+    outline: 2px dotted red !important;    /* TAK UŻYTO "!IMPORTANT"!!! Dopisane do ogólnej definicji ":focus" */
 }
 
 p {
@@ -514,7 +518,9 @@ header#naglowek a.odnosnik_kolor {
     transition: color 0.3s 0.05s, text-shadow 0.3s 0.05s;   
 }
 
-header#naglowek a.odnosnik_kolor:hover {
+header#naglowek a.odnosnik_kolor:hover,
+header#naglowek a.odnosnik_kolor:focus
+{
     color: #222;
     text-shadow: 0px 0px 4px #eee;
 }
@@ -569,13 +575,16 @@ div.powiadamiacz {
     transition: background-color 0.25s ease-out;
 }
 
-div.powiadamiacz:hover {
+div.powiadamiacz:hover,
+div.powiadamiacz:focus
+{
     background-color: #647eed;  /* "#59aede" jako jaśniejszy cornflowerblue */
     cursor: pointer;
-    
 }
 
-div.powiadamiacz:hover:after {
+div.powiadamiacz:hover:after,
+div.powiadamiacz:focus:after
+{
     position: absolute;
     top: 5px;
     right: 5px;
@@ -628,7 +637,7 @@ div#spis_tresci div.kontener_odnosnik {
     min-height: 330px;	     /* było po 575px w obu wysokościach, zabrano 75px */ 		
     max-height: 330px;
     max-width: 97.6%;	
-    width : 100%;
+    width: 100%;
     overflow: hidden;
     position: relative;
     float: left;
@@ -640,7 +649,9 @@ div#spis_tresci div.kontener_odnosnik {
     transition: all 0.25s ease-out;	
 }
 
-div#spis_tresci div.kontener_odnosnik:hover {
+div#spis_tresci div.kontener_odnosnik:hover,
+div#spis_tresci div.kontener_odnosnik.sztuczny-hover     /* po prostu przydzialana jakaś klasa, mająca kolor tła jak ":hover" */
+{
     /* rodzic_background-color: cornflowerblue == #6495ed ; */
     /* background-color: cornflowerblue;	*/ 
     /* background-color: #5a8ae8;  */  /* <--- może lepiej zostawić ten, subtelny kolor tła, bliski oryginałowi */
@@ -648,14 +659,18 @@ div#spis_tresci div.kontener_odnosnik:hover {
     border-color: #00b;
 }
 
-div#spis_tresci div.kontener_odnosnik:hover div.szczegoly {
+div#spis_tresci div.kontener_odnosnik:hover div.szczegoly,
+div#spis_tresci div.kontener_odnosnik.sztuczny-hover div.szczegoly
+{
     left: 0px;
     bottom: 0px;
     opacity: 0.85;
     width: 100%;
 }
 
-div#spis_tresci div.kontener_odnosnik:hover div.dolna_zaslonka {
+div#spis_tresci div.kontener_odnosnik:hover div.dolna_zaslonka,
+div#spis_tresci div.kontener_odnosnik.sztuczny-hover div.dolna_zaslonka
+{
     background-color: #5d6ad0;  /* #5d6ad0 == rgb(93,106,208) */
     background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(93,106,208,1) 50%, rgba(93,106,208,1) 100%); 
 }
@@ -1332,20 +1347,47 @@ div#skladowisko {
 }
 
 div#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie służy, nic nie robi */
+    vertical-align: middle;     /* wyśrodkowanie - wyrównanie elementów w pionie w danej linii;  w stary przeglądarkach nie przenosi się ta reguła z potomnego <img> */
     /* padding: 0.1em 0.5em; */
-    vertical-align: 40%;	
     /* position: relative; */	
     /* line-height: 10px; 
      display: table-cell;	*/
+    display: inline-table;  /* !!! TA REGUŁA (lub podobna) ROZWIĄZAUJE PROBLEM OBRYSU WOKÓŁ PUSTEGO <a>, KTÓRY ZAWIERA TYLKO PROSTOKĄTNY <img>... 
+        (+): UJEDNOLICENIE we wszystkich testowanych przeglądarkach
+             - OUTLINE przyjmuje kształt obrazka i znajduje suę POZA <img> i jego cieniem! (może to dzięki przeliczniu od razu do SCALE (+10%) */
+
+        /* padding: 0; */
+        /* margin: -0.3em; */
+        /* width: 0;
+        height: 0; */
+}
+    /*  -webkit ma dobrze, dzięki użyciu   */
+    /* a:-webkit-any-link:focus {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 0;
+        height: 0;
+    } */
+
+div#skladowisko a:focus {
+    /* outline: none;
+    padding: 0; */
+        /* width: 0;
+        height: 0; */
 }
 
+    /* div#skladowisko a:-webkit-any-link:focus {
+        padding: 0 !important;
+        margin: 0 !important;
+    } */
+
 div#skladowisko a img {
-    margin: 0.75em;
+    display: inline-block;
+    margin: 0.8em;      /* nieznaczne powiększenie odstępu z 0.75em */
     border: 3px solid white;
     box-shadow: 2px 2px 4px black;	
     max-height: 150px;
-    /* align-self: baseline; */
-    align-self: center;
+    vertical-align: middle;
     transition: box-shadow 0.3s ease-out, transform 0.3s ease-out;	
     /* position: absolute;
     top: 5px;
@@ -1353,10 +1395,12 @@ div#skladowisko a img {
     /* display: table-row-group;		
      float: left;	
     transform: translateY(-10px); */
-    vertical-align: middle;
+
 }
 
-div#skladowisko a img:hover {
+div#skladowisko a img:hover,
+div#skladowisko a:focus img     /* IMG bez TABINDEX nie może mieć tego statusu, zatem dla <a> jest standardowe odwołanie */
+{
     box-shadow: 2px 2px 4px black, 4px 4px 8px 2px rgba(0, 0, 0, 0.6);	
     transform: scale(1.1);
 }
@@ -1543,7 +1587,7 @@ footer#stopka {
     /* background-color: #aad; */
     background-color: cornflowerblue;		
     margin-top: 0.7em;
-    margin-bottom: 32px;	
+    margin-bottom: 0.5em;	
     padding: 1em 0.2em;	
     text-align: center;
     border-radius: 10px;
