@@ -285,7 +285,7 @@ div.blad p
 }
 
 .kontener {
-    width : 100%;
+    width: 100%;
     max-width: 1400px;    
     align-items: center;
     margin: 0 auto;
@@ -303,6 +303,20 @@ div.blad p
 .flex_kontener > div:first-of-type {
     margin-right: 2em;
 }
+
+.ramka {
+    /* margin: 0.5em 1em; */
+    padding: 0.5em;
+    padding-bottom: 0;
+    align-items: center;
+    border: 2px solid #6495ed;
+}
+
+.ramka li {
+    padding: 0.5em 0.5em;
+    font-weight: bold;
+}
+
 
 
 .szara_zawartosc {
@@ -1683,17 +1697,35 @@ footer#stopka ul li {
     text-align: center; 
     border: 1px solid #333;
     background: url(grafiki/tak_nie_ikona.png) 4px 1px no-repeat, whitesmoke;
+    background: url(grafiki/tak_nie_ikona.png) 4px 50% no-repeat, whitesmoke;
 }
 
 footer#stopka ul li.tech_tak {
     border: 1px solid green;
-    background: url(grafiki/tak2_ikona.png) 4px 1px no-repeat, whitesmoke;    
+    background: url(grafiki/tak2_ikona.png) 4px 1px no-repeat, whitesmoke;
+    background: url(grafiki/tak2_ikona.png) 4px 50% no-repeat, whitesmoke;   
 }
 
 footer#stopka ul li.tech_nie {
     border: 1px solid darkred;
-    background: url(grafiki/nie_ikona.png) 4px 1px no-repeat, whitesmoke;    
+    background: url(grafiki/nie_ikona.png) 4px 1px no-repeat, whitesmoke;
+    background: url(grafiki/nie_ikona.png) 4px 50% no-repeat, whitesmoke;
 }
+
+footer#stopka ul.ramka {
+    /* margin: 0.5em 1em;
+    padding: 0.5em 2em; */
+    padding-bottom: 0.2em;
+    background-color: #6495ed;;
+    /* border: 2px solid white; */
+    border-radius: 5px;
+}
+
+footer#stopka .ramka li {
+    padding: 0.1em 2em;
+    padding-left: 2.5em;
+}
+
 
 .brak_js div#wymiary {
     visibility: hidden; /* do przeniesienia do tego kontenera, wcześniej poza nim; wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
@@ -2420,6 +2452,10 @@ input[type=range]:hover::-ms-fill-upper
         padding: 0.45em 2em;	
     }
 
+    footer#stopka ul li:first-child {
+        margin-left: 0;
+    }
+
     div#wymiary {           /* łatwiejsze i jednorazowe stosowanie proporcjonalnych wymiarów dla rosnących szerokości ekranów */
         width: 17em;
         left: 50%;
@@ -2602,6 +2638,11 @@ input[type=range]:hover::-ms-fill-upper
     div#pomoc > div > div:first-of-type,
     div#poco > div > div:first-of-type {
         margin-right: 2.5em;
+    }
+
+    div#pomoc .kontener .ramka,
+    div#poco .kontener .ramka {
+        margin-right: 0;
     }
 
 }

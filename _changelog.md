@@ -1,3 +1,32 @@
+v0.5.50 - summary of software requirements and dynamic data inside footer area
+
+* v0.5.50 -- [2021-11-13]
+
+[+] ADDED
+
+-- index.php
+* added a frame informing about the minimum software requirements
+  - displayed on request in the footer area (*Help* button)
+  - quite visible due to the contrasting background
+  - application version requirements are from https://caniuse.com/
+  - it concerns the correct use of ES5 and UX at the level of acceptable *progressive enchancement* of this website
+  - jQuery takes care of most of the compatibility issues, but the UX part is not fulfilled in lower versions of browsers or browsers shows  errors
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* corrected the way of displaying the bitmap background in the list item, displayed in the footer area
+  - background image appears always at 50% of the element height
+  - mainly applies to narrow screens, where the content of the element does not fit 100% on one line on the screen
+  - surprisingly, the modification without adversely affecting wider screens
+  - uses CSS motto: "the last CSS attribute declaration is used, which is understood by browsers"
+  - also better alignment of a first item
+* added a border for the presentation of dynamically generated content in PHP variables on the server
+  - better view of the summary, improved display without the right margin
+  - the frame includes all existing server variables
+
+---------------------------
+
 v0.5.49 - removed annoying advertisements on a new hosting (v3)
 
 * v0.5.49 -- [2021-10-09]

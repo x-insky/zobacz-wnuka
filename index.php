@@ -444,11 +444,22 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     </div>    
                 </div> <!-- .kontener -->
                 <div class="kontener">
+                <h3>Minimalne wymagania programowe</h3>                    
+                    <ul class="ramka">
+                        <li class="tech_tak">Chrome 8+</li>
+                        <li class="tech_tak">Firefox 3.6+</li>
+                        <li class="tech_tak">Opera 11.5+</li>
+                        <li class="tech_tak">Interet Explorer 9+</li>
+                        <li class="tech_tak">Safari 5.1+</li>
+                    </ul>
+                </div>
+                <div class="kontener">
                 <h3>DEBUG_MODE: Info o przeglądarce i serwerze</h3>
                 <p>Poniżej zmienne środowiskowe, które zapewnia konkretny serwer oraz używana przeglądarka. Znaczne różnice dla starszych środowisk, zwłaszcza przeglądarkowych. Generalnie co nowsze to lepsze, gdyż zasobniejsze w wybrane parametry.</p>    
-                <p>
-                    <?php
+                <div class="ramka">
 
+                    <?php
+                    echo '<p>';
                     Wyswietl_zmienna_serwera( "PHP_SELF" );
                     Wyswietl_zmienna_serwera( "SCRIPT_FILENAME" );
                     Wyswietl_zmienna_serwera( "DOCUMENT_ROOT" );
@@ -477,6 +488,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     echo '$czy_z_przekierowania: <strong>' . $czy_z_przekierowania . '</strong><br />';
                     echo 'vs obliczona pozycja powyższego: <strong>' . strpos( $_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST'] ) . '</strong><br />';
                     echo '$roznica_czasu_odwiedzin: ' . ( $roznica_czasu_odwiedzin / ( 60 * 60 * 24 * 7 ) );
+                    echo '</p>';
                         if ( isset( $_COOKIE ) )
                         {
                         echo '<hr />';
@@ -489,12 +501,11 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         $tresc .= '</p>';
                         echo $tresc;
                         }
-
                     ?>
-                </p>        
+
+                </div>  <!-- .ramka -->
                 <h4>Powyższe wkrótce zniknie, gdy tylko zostanie osiągnięty kolejny etap testów.</h4>  
-                </div>
-            </div>
+            </div> <!-- #pomoc -->
         </footer>	
 
         <div id="wymiary">      <!-- #wymiary przeniesiono do wewnątrz kontenera -->
