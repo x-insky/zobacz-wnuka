@@ -7,7 +7,7 @@
 }
 
 body {
-    font-size: 65%;	
+    font-size: 70%; /* podniesienie bazowego mnożnika; "mobile first" */
 }
 
 /* LoVe (/F) HAte */
@@ -317,7 +317,15 @@ div.blad p
     font-weight: bold;
 }
 
+.zalety {
+    margin-left: 5%;
+}
 
+.zalety img {
+    vertical-align: middle;
+    padding: 0.2em 0.75em;
+    padding-left: 0;
+}
 
 .szara_zawartosc {
     /*    -ms-filter: grayscale(80%);    */
@@ -620,7 +628,7 @@ div.powiadamiacz:focus:after
 
 div.powiadamiacz p {
     text-align: center;
-    margin-top: 0.5em;
+    margin: 0.5em 0;
 }
 
 header#naglowek .pasek {
@@ -1635,13 +1643,14 @@ button#symulacja_button {
 }
     
 footer#stopka p {
+    font-size: 110%;    
     text-align: justify;
     padding: 0.5em;
 }
 
 div#poco {
     display: none;	
-    padding: .5em 1em;
+    padding: 0.5em 1em;
     margin: 0.5em 0;
     background-color: deepskyblue;
     background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue); 	
@@ -1657,7 +1666,7 @@ div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klas�
 
 div#pomoc {
     display: none;	
-    padding: .5em 1em;
+    padding: 0.5em 1em;
     margin: 0.5em 0;	
     /* background-color: dodgerblue;	*/
     background-color: #c3d5e2;	
@@ -1672,19 +1681,11 @@ footer#stopka h3 {
     padding: 0.6em;
 }
 
-footer#stopka p {
-    font-size: 110%;    
-}
-
-footer#stopka p:last-child {
-    padding-bottom: 1em;    
-}
-
 footer#stopka ul {
     text-align: center;        
 }
 
-footer#stopka ul li {
+footer#stopka ul li.tech {
     display: inline-block;    /* inline było */
     background-color: whitesmoke;       /*  #c3d5e2 */
     padding: 0.1em 0.5em;
@@ -2362,7 +2363,7 @@ input[type=range]:hover::-ms-fill-upper
 @media screen and (min-width: 320px) {
     
     body {
-        font-size: 70%;	
+        font-size: 75%;	
     }     
 
     header#naglowek div#banner {
@@ -2421,6 +2422,14 @@ input[type=range]:hover::-ms-fill-upper
         padding: 0.45em 1em;
             display: inline;
             width: auto;
+    }
+
+    .opis_odnosnik {
+        font-size: 1.25em;   /* powiększenie o względne % dla pionowej listy na 320...470px (tu jest najszerszy opis tekstowy galerii, i miał zbyt małą czcionkę w stosunku do szerokości) */
+    }
+
+    .zalety {
+        margin-left: 10%;
     }
 
     #odpluskwiacz_ajaksowy div:first-child {
@@ -2492,6 +2501,10 @@ input[type=range]:hover::-ms-fill-upper
     
     div.blad {
         width: 88%;
+    }
+
+    .opis_odnosnik {
+        font-size: 1em; /* redukcja na względne 100% */
     }
     
     div.blad .blad_ikona {
