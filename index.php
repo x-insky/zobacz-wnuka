@@ -348,7 +348,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.49</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.51</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -360,20 +360,39 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <h3>Jeszcze raz po polskiemu</h3>
                         <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie Żłobka Miejskiego w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> .</p>
                         <h3>Wygoda i lepsza nawigacja</h3>
-                        <p>Przede wszystkim wygoda i ułatwienie nawigowania pomiędzy obrazkami lub/i grupami obrazków. Umożliwienie poprawnego wyświetlania i nawigowania na małych ekranach telefonów oraz ergonomia interfesu dotykowego na różnych urządzeniach jako kolejny motor zmian.</p>
+                        <p>Przede wszystkim wygoda, polepszenie skalowania zdjęć i ułatwienie nawigowania pomiędzy kolejnym obrazkami lub grupami miniatur, zorganizowanych w ramach danej galerii. </p>
+                        <p>Zwiększona ergonomia nawigowania, zwłaszcza dotykowego na małych ekranach telefonów.</p>
+                        <p>Zapewnienie intuicyjnej nawigacji po witrynie, bez cofania się po każdym zdjęciu oraz trudności w trafieniu odnośnika do kolejnej podstrony galerii (następnej grupy zdjęć).</p>
                         <h3>Inne cele</h3>
-                        <p>Pośrednio pojawiła się też chęć przedłużenia życia zabieganym i przyciśnętym myszom, wytartym powierzchniom dotykowych w laptopach oraz przetwornikom w wyświetlaczach mobilnych (że nie wspomnę przy tym nadmiernie zmęczonego przycisku <em>Powrót</em> w przeglądarce lub telefonie, udręczonego przez ciągły nacisk by przejśc do kolejnego obrazka/galerii w macierzystej witrynie Żłobka).<br />
-                        Nie jest to też antyreklama pewnego sklepu komputerowego, gdzie można zakupić sprzęt komputerowy lub w funkcjonującym serwisie naprawić niedomagania posiadanego sprzętu.</p>
+                        <p>Projekt realizowany w zupełności dla frajdy.</p>
+                        <p>Nie jest to antyreklama pewnego sklepu komputerowego, w którego funkcjonującym serwisie można też naprawić niedomagania posiadanego sprzętu.</p>
+                        <p>Próba zawarcia w aplikacji wielu udogodnień, a także niespotykanych rozwiązań w stosunku do <em>standardowej strony internetowej</em>.</p>
+                        <p>Celowo nie zastosowano najnowszej składni i atrybutów dla aplikacji przeglądarkowej, by ta witryna mogła być użytkowana na największej możliwej liczbie urządzeń. Użyto maksymalnej zgodności z wcześniejszymi standardami, stopniowo ulepszając wrażenia użytkownika, jeśli jest to tylko możliwe.</p>  
                     </div>
                     <div>       
-                        <h3>Ogólne superlatywy</h3>    
-                        <p><em>Zobacz Wnuka</em> zapewnia użytkownikowi łatwość przeglądania konkretnych zdjęć oraz ułatwia nawigowanie pomiędzy galeriami zdjęć, ale też oszczędza czas użytkownika podczas tego przeglądania. Do tego zużywa mniej <em>pakietów mobilnego internetu*</em>.</p>
+                        <h3>Superlatywy</h3>
+                        <ul class="zalety">
+                            <li>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />łatwość przeglądania zdjęć
+                            </li>
+                            <li>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />proste nawigowanie pomiędzy galeriami zdjęć
+                            </li>
+                            <li>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />oszczędza czas użytkownika
+                            </li>
+                            <li>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />maksymalna kompatybilność ze starszymi przeglądarkami
+                            </li>
+                            <li>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />zużywa mniej <em>pakietów mobilnego internetu*</em>
+                            </li>
+                        </ul>
                         <h3>Pojedyncze pobieranie i dynamiczne tworzenie treści</h3>    
-                        <p>Zyskujemy przy przeglądaniu kolejnych zdjęć z danej galerii, nie potrzeba pobierać, przetwarzać i wyświetlać od nowa tej samej struktury witryny z podmienionym zdjęciem. U nas zmieniają się tylko miniatury lub podgląd dużych zdjęć, jako elementy bieżącej galerii - tworzone są one dynamicznie, podczas przeglądu konkretnej galerii.</p> 
-                        <h3>Zmienianie obrazków</h3>    
-                        <p>Przy braku limitów na transfer też zyskujemy, bo przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania miniatur obrazków (funkcji &quot;cache&quot; nie liczę). Pośrednim efektem jest mniejsze &quot;katowanie&quot; serwera macierzystego, które normalnie odbywa się przy każdym podglądzie kolejnego (dużego) obrazka.</p>
-                        <h3>Pojedyncze pobieranie #2</h3>    
-                        <p>Same plusy wynikają z korzystania z tej <em>nakładki</em>, prawda? Zachęcam do dalszego użytkowania i testowania.</p>    
+                        <p>Zyskujemy przy przeglądaniu kolejnych zdjęć z danej galerii. Przeglądarka www nie musi pobierać, przetwarzać i wyświetlać od nowa tej samej struktury strony. Tu na żywo zmieniają się tylko treści do bieżącego zaprezentowania. Do przeglądarki użytkownika transferowane są tylko niewielkie fragmenty witryny, zawierające oczekiwaną treść.</p>
+                        <h3>Zamienianie obrazków</h3>    
+                        <p>Przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania miniatur obrazków i struktury danej strony.</p>
+                        <p>Aktualizacja jako reakcja tylko dla zmian w konkretnych elementach witryny, bez niepotrzebego budowania od nowa tej samej struktury.</p>
                         <h3>Informacje i zastrzeżenia</h3>
                         <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka Miejskiego w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
                         <h3>Kontakt</h3>
@@ -386,69 +405,84 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <div class="kontener">
                     <div>            
                         <h3>To tylko przeglądarka</h3>
-                        <p>Niniejszy serwis służy do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Bezwzględnie jest wymagane istnienie i funkcjonowanie macierzystego serwisu www, bez niego po prostu nie pojawiają się żadne treści tutaj &colon;P.</p>
+                        <p>Niniejszy serwis służy do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Wymagane bezwzględnie jest istnienie i funkcjonowanie macierzystego serwisu www: <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a>.</p>
                         <h3>Podstrony</h3>
-                        <p>Wygodne przeglądanie w galeriach, ograniczających nadmiarowe klikanie działa prawidłowo dla maksymalnie osiemnastu obrazków w galerii. Serwis umożliwia łatwą nawigację pomiędzy kolejnymi obrazkami i ewentualnymi podstronami danej galerii (kolejnymi grupami obrazków). <br />
+                        <p>Wygodne przeglądanie zdjęć w grupach, ograniczających nadmiarowe klikanie - funkcjonuje na raz dla maksymalnie osiemnastu obrazków w danej galerii (założenia pierwotnej witryny żłobka). Serwis umożliwia łatwą nawigację pomiędzy kolejnymi obrazkami i ewentualnymi podstronami danej galerii (kolejnymi grupami obrazków). <br />
                         <em>Zobacz Wnuka</em> pozwala na przeglądania tylko zawartości tego Żłobka, nie wyświetlą się pokazy zdjęć z innych adresów.</p>
                         <h3>Pożegnanie <em>kopiuj-wklej</em></h3>
-                        <p>Pierwotna funkcjonalność <em>Zobacz Wnuka</em> zmuszała do podania konkretnego (i działającego!) odnośnika z serwisu <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a>, jako &quot;namiar&quot; na daną grupy zdjęć (tę konkretną galerię lub adres jednego ze zdjęć). Mechanizm <em>kopiuj-wklej</em> nie był zbyt wygodny ani intuicyjny, co przeczyło zasadzie łatwej obsługi. Szybko wprowadzono udogodnienia w interfejsie, aby przegląd wszystkich dostępnych galerii odbywał się prosto i przyjemnie.</p>
+                        <p>Pierwotna funkcjonalność <em>Zobacz Wnuka</em> zmuszała do podania odnośnika do wskazanej galerii zdjęć z serwisu <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a>, by uruchomić pokaz zdjęć. Udoskonalono mechanizm automatycznego pozyskiwania tytułów galerii, by wyświetlić kolejno miniatury i przeglądać wskazane zdjęcia.</p>
                         <h3>Reklamy z hostingu? Panie, jakie reklamy?!</h3>
-                        <p>Rzeczywistość darmowego hostingu nie rozpieszcza, zatem ewentualne, możliwe i narzucane przez firmy hostingowe treści (reklamy!) mogą psuć ogólne odczucia, a przede wszystkim mogą diametralnie zmieniać wygląd i zachowanie witryny na małych ekranach. Mogą się pojawiać, jeżeli tylko posiadają wysoką odporność na magię znikania.</p>
+                        <p>Większość darmowych hostingów wstawia reklamy w treść witryny, nie zważając na wymiar reklamy w stosunku do szerokości ekranu, na którym jest wyświetlana. Może to spowodować dezorganizację wyglądu witryny, psuć ogólne wrażenia, a przede wszystkim mogą diametralnie zmieniać wygląd i zachowanie witryny na małych ekranach. Ciągle trwają prace, by niechciane treści nie pojawiały się w ogóle lub w niewielkich ilościach w nieagresywnej formie.</p>
                     </div>
                     <div>
                         <h3>Użyte technologie - co tutaj zawarto (oczywistości i nie~)</h3> 
                         <ul>
-                            <li class="tech_tak">HTML5</li>
-                            <li class="tech_tak">CSS3</li>
-                            <li class="tech_tak">RWD&nbsp;+&nbsp;<em>mobile&nbsp;first</em></li>
-                            <li class="tech_tak">Flexbox</li>                        
-                            <li class="tech_tak">JavaScript</li>
-                            <li class="tech_tak">jQuery</li>
-                            <li class="tech_tak">AJAX</li>
-                            <li class="tech_tak">PHP</li>
-                            <li class="tech_tak">SPA</li>                        
-                            <li class="tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
-                            <li class="tech_tak">kompatybilność</li>
-                            <li class="tech_tak">asynchroniczność</li>                              
-                            <li class="tech_tak">bezpośrednia manipulacja DOM</li>
-                            <li class="tech_tak">Web Storage (local)</li>  
-                            <li class="tech_tak">komunikaty i obsługa błędów</li>
-                            <li class="tech_tak">wbudowane testowanie</li>
-                            <li class="tech_tak">obsługa z klawiatury</li>
+                            <li class="tech tech_tak">HTML5</li>
+                            <li class="tech tech_tak">CSS3</li>
+                            <li class="tech tech_tak">RWD&nbsp;+&nbsp;<em>mobile&nbsp;first</em></li>
+                            <li class="tech tech_tak">Flexbox</li>                        
+                            <li class="tech tech_tak">JavaScript (ES5.1)</li>
+                            <li class="tech tech_tak">jQuery</li>
+                            <li class="tech tech_tak">AJAX</li>
+                            <li class="tech tech_tak">PHP</li>
+                            <li class="tech tech_tak">SPA</li>                        
+                            <li class="tech tech_tak"><em>progressive&nbsp;enhancement</em></li>                        
+                            <li class="tech tech_tak">kompatybilność</li>
+                            <li class="tech tech_tak">asynchroniczność</li>                              
+                            <li class="tech tech_tak">bezpośrednia manipulacja DOM</li>
+                            <li class="tech tech_tak">Web Storage (local)</li>  
+                            <li class="tech tech_tak">komunikaty i obsługa błędów</li>
+                            <li class="tech tech_tak">wbudowane testowanie</li>
+                            <li class="tech tech_tak">blokady standardowych zdarzeń</li>
+                            <li class="tech tech_tak">obsługa z klawiatury</li>
                         </ul>
                         <h3>Zgodność źródeł z konwencjami JS na poziomie 98,666667% &semi;P</h3> 
                         <ul>
-                            <li>WielBłąd(&nbsp;),&nbsp;a&nbsp;camelCamel()</li>
-                            <li>no(n)Tacja&nbsp;{...}</li>
-                            <li>INDENT&rarr;acja&nbsp;{...}</li>
-                            <li>luźny&nbsp;MVC</li>
+                            <li class="tech">WielBłąd(&nbsp;),&nbsp;a&nbsp;camelCamel()</li>
+                            <li class="tech">no(n)Tacja&nbsp;{...}</li>
+                            <li class="tech">INDENT&rarr;acja&nbsp;{...}</li>
+                            <li class="tech">luźny&nbsp;MVC</li>
                         </ul>
                         <h3>Czego tutaj nie ma</h3> 
                         <ul>
-                            <li class="tech_nie">Angular</li>
-                            <li class="tech_nie">React</li>
-                            <li class="tech_nie">Web Components</li>
-                            <li class="tech_nie">Bootstrap</li>
-                            <li class="tech_nie">Foundation</li>
-                            <li class="tech_nie">ES >= v6 || ES >= 2015</li>
-                            <li class="tech_nie">promise / observable / async</li>                    
-                            <li class="tech_nie">Node.js</li>
-                            <li class="tech_nie">SASS / LESS / PostCSS</li>
-                            <li class="tech_nie">CSS&nbsp;grid</li>
-                            <li class="tech_nie">SVG?</li>
+                            <li class="tech tech_nie">Angular</li>
+                            <li class="tech tech_nie">React</li>
+                            <li class="tech tech_nie">Web Components</li>
+                            <li class="tech tech_nie">Bootstrap</li>
+                            <li class="tech tech_nie">Foundation</li>
+                            <li class="tech tech_nie">ES >= v6 || ES >= 2015</li>
+                            <li class="tech tech_nie">promise / observable / async</li>                    
+                            <li class="tech tech_nie">Node.js</li>
+                            <li class="tech tech_nie">SASS / LESS / PostCSS</li>
+                            <li class="tech tech_nie">CSS&nbsp;grid</li>
+                            <li class="tech tech_nie">SVG</li>
                         </ul>
                         <h3>Zabawy z RWD</h3>
-                        <p>Próby zachowania podobnego wyglądu dla prawie każdego z urządzeń, które potrafią wyświetlać zawartość w trybie graficznym. Element rozrywkowo-interaktywny odstępny póki co tylko dla ekranów niedotykowych i to w ograniczonym trybie funkcjonalności.</p>
+                        <p>Próby zachowania podobnego wyglądu dla prawie każdego z urządzeń, które potrafią wyświetlać zawartość w trybie graficznym. Element rozrywkowo-interaktywny dostępny póki co tylko dla ekranów niedotykowych i to w ograniczonym trybie funkcjonalności.</p>
                         <h3>Status projektu</h3>
                         <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla zamknięcia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>w produkcji</em>...</p>
                     </div>    
                 </div> <!-- .kontener -->
                 <div class="kontener">
+                    <h3>Wymagania programowe</h3>
+                    <ul class="ramka">
+                        <li class="tech tech_tak">Chrome 8+</li>
+                        <li class="tech tech_tak">Firefox 3.6+</li>
+                        <li class="tech tech_tak">Opera 11.5+</li>
+                        <li class="tech tech_tak">Interet Explorer 9+</li>
+                        <li class="tech tech_tak">Safari 5.1+</li>
+                    </ul>
+                    <p>W niższych wersjach przeglądarek prawdowodobnie aplikacja nie uruchomi się właściwie. Funkcjonowanie programu zależy od wsparcia JavaScriptu w poszczególnych wersjach przeglądarek. Uruchomienie może także powieść się. <br />
+                    Wygląd witryny i efekty mogą się znacząco różnić pomiędzy wersjami przeglądarek, rzadziej samych przeglądarek (choć bardzo nieznacznie). Wrażenia wizualne i stopień spełnienia wymagań HTML5 oraz CSS3 przez przeglądarkę, często tożsamy w obsługiwanej wersji języka JavaScript. </p>
+                    <p class="ramka">Zalecamy korzystać z aktualnych i aktualizowanych wersji przeglądarek z uwagi na bezpieczeństwo uzytkowania zasobów Internetu!</p>
+                </div>
+                <div class="kontener">
                 <h3>DEBUG_MODE: Info o przeglądarce i serwerze</h3>
                 <p>Poniżej zmienne środowiskowe, które zapewnia konkretny serwer oraz używana przeglądarka. Znaczne różnice dla starszych środowisk, zwłaszcza przeglądarkowych. Generalnie co nowsze to lepsze, gdyż zasobniejsze w wybrane parametry.</p>    
-                <p>
-                    <?php
+                <div class="ramka">
 
+                    <?php
+                    echo '<p>';
                     Wyswietl_zmienna_serwera( "PHP_SELF" );
                     Wyswietl_zmienna_serwera( "SCRIPT_FILENAME" );
                     Wyswietl_zmienna_serwera( "DOCUMENT_ROOT" );
@@ -477,6 +511,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     echo '$czy_z_przekierowania: <strong>' . $czy_z_przekierowania . '</strong><br />';
                     echo 'vs obliczona pozycja powyższego: <strong>' . strpos( $_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST'] ) . '</strong><br />';
                     echo '$roznica_czasu_odwiedzin: ' . ( $roznica_czasu_odwiedzin / ( 60 * 60 * 24 * 7 ) );
+                    echo '</p>';
                         if ( isset( $_COOKIE ) )
                         {
                         echo '<hr />';
@@ -489,12 +524,11 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         $tresc .= '</p>';
                         echo $tresc;
                         }
-
                     ?>
-                </p>        
+
+                </div>  <!-- .ramka -->
                 <h4>Powyższe wkrótce zniknie, gdy tylko zostanie osiągnięty kolejny etap testów.</h4>  
-                </div>
-            </div>
+            </div> <!-- #pomoc -->
         </footer>	
 
         <div id="wymiary">      <!-- #wymiary przeniesiono do wewnątrz kontenera -->

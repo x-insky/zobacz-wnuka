@@ -1290,12 +1290,12 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
         // niepotrzebna treść wyleciała    
         } // if-end opis
 
-        // czyszczenie kontenera źródłowego
-    $( kontenerZrodlowy + ' tr' ).not(':last').remove();    // po wycięciu prawie całej zawartośc tabelki pozostaje tylko z niej spis podstron 
+        // czyszczenie kontenera źródłowego, teraz już jasne, proste i EFEKTYWNE!
+    $( kontenerZrodlowy ).empty();    // po wycięciu prawie całej zawartośc tabelki pozostaje tylko z niej spis podstron... który przejmował :focus !!! .empty() zeruje z elementów
 
     } // if-END ( ileGaleriiNaPodstronie > 0 )
 
-    // obowiązakowe czyszczenie nadmiaru, warunek na element szablonu vs na ilość załadowanych
+    // obowiązkowe czyszczenie nadmiaru, warunek na element szablonu vs na ilość załadowanych
 var $nadmiarPojemnikow = $( kontenerDocelowy + " div.kontener_odnosnik:has(h3)");
     
     if ( $nadmiarPojemnikow.length > 0 ) 

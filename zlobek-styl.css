@@ -7,7 +7,7 @@
 }
 
 body {
-    font-size: 65%;	
+    font-size: 70%; /* podniesienie bazowego mnożnika; "mobile first" */
 }
 
 /* LoVe (/F) HAte */
@@ -285,7 +285,7 @@ div.blad p
 }
 
 .kontener {
-    width : 100%;
+    width: 100%;
     max-width: 1400px;    
     align-items: center;
     margin: 0 auto;
@@ -304,6 +304,28 @@ div.blad p
     margin-right: 2em;
 }
 
+.ramka {
+    /* margin: 0.5em 1em; */
+    padding: 0.5em;
+    padding-bottom: 0;
+    align-items: center;
+    border: 2px solid #6495ed;
+}
+
+.ramka li {
+    padding: 0.5em 0.5em;
+    font-weight: bold;
+}
+
+.zalety {
+    margin-left: 5%;
+}
+
+.zalety img {
+    vertical-align: middle;
+    padding: 0.2em 0.75em;
+    padding-left: 0;
+}
 
 .szara_zawartosc {
     /*    -ms-filter: grayscale(80%);    */
@@ -606,7 +628,7 @@ div.powiadamiacz:focus:after
 
 div.powiadamiacz p {
     text-align: center;
-    margin-top: 0.5em;
+    margin: 0.5em 0;
 }
 
 header#naglowek .pasek {
@@ -1621,13 +1643,14 @@ button#symulacja_button {
 }
     
 footer#stopka p {
+    font-size: 110%;    
     text-align: justify;
     padding: 0.5em;
 }
 
 div#poco {
     display: none;	
-    padding: .5em 1em;
+    padding: 0.5em 1em;
     margin: 0.5em 0;
     background-color: deepskyblue;
     background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue); 	
@@ -1643,7 +1666,7 @@ div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klas�
 
 div#pomoc {
     display: none;	
-    padding: .5em 1em;
+    padding: 0.5em 1em;
     margin: 0.5em 0;	
     /* background-color: dodgerblue;	*/
     background-color: #c3d5e2;	
@@ -1658,19 +1681,11 @@ footer#stopka h3 {
     padding: 0.6em;
 }
 
-footer#stopka p {
-    font-size: 110%;    
-}
-
-footer#stopka p:last-child {
-    padding-bottom: 1em;    
-}
-
 footer#stopka ul {
     text-align: center;        
 }
 
-footer#stopka ul li {
+footer#stopka ul li.tech {
     display: inline-block;    /* inline było */
     background-color: whitesmoke;       /*  #c3d5e2 */
     padding: 0.1em 0.5em;
@@ -1683,17 +1698,35 @@ footer#stopka ul li {
     text-align: center; 
     border: 1px solid #333;
     background: url(grafiki/tak_nie_ikona.png) 4px 1px no-repeat, whitesmoke;
+    background: url(grafiki/tak_nie_ikona.png) 4px 50% no-repeat, whitesmoke;
 }
 
 footer#stopka ul li.tech_tak {
     border: 1px solid green;
-    background: url(grafiki/tak2_ikona.png) 4px 1px no-repeat, whitesmoke;    
+    background: url(grafiki/tak2_ikona.png) 4px 1px no-repeat, whitesmoke;
+    background: url(grafiki/tak2_ikona.png) 4px 50% no-repeat, whitesmoke;   
 }
 
 footer#stopka ul li.tech_nie {
     border: 1px solid darkred;
-    background: url(grafiki/nie_ikona.png) 4px 1px no-repeat, whitesmoke;    
+    background: url(grafiki/nie_ikona.png) 4px 1px no-repeat, whitesmoke;
+    background: url(grafiki/nie_ikona.png) 4px 50% no-repeat, whitesmoke;
 }
+
+footer#stopka ul.ramka {
+    /* margin: 0.5em 1em;
+    padding: 0.5em 2em; */
+    padding-bottom: 0.2em;
+    background-color: #6495ed;;
+    /* border: 2px solid white; */
+    border-radius: 5px;
+}
+
+footer#stopka .ramka li {
+    padding: 0.1em 2em;
+    padding-left: 2.5em;
+}
+
 
 .brak_js div#wymiary {
     visibility: hidden; /* do przeniesienia do tego kontenera, wcześniej poza nim; wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
@@ -2330,7 +2363,7 @@ input[type=range]:hover::-ms-fill-upper
 @media screen and (min-width: 320px) {
     
     body {
-        font-size: 70%;	
+        font-size: 75%;	
     }     
 
     header#naglowek div#banner {
@@ -2391,6 +2424,14 @@ input[type=range]:hover::-ms-fill-upper
             width: auto;
     }
 
+    .opis_odnosnik {
+        font-size: 1.25em;   /* powiększenie o względne % dla pionowej listy na 320...470px (tu jest najszerszy opis tekstowy galerii, i miał zbyt małą czcionkę w stosunku do szerokości) */
+    }
+
+    .zalety {
+        margin-left: 10%;
+    }
+
     #odpluskwiacz_ajaksowy div:first-child {
         padding-right: 55px;
         padding-top: 0px;
@@ -2418,6 +2459,10 @@ input[type=range]:hover::-ms-fill-upper
         display: inline;
         width: auto;
         padding: 0.45em 2em;	
+    }
+
+    footer#stopka ul li:first-child {
+        margin-left: 0;
     }
 
     div#wymiary {           /* łatwiejsze i jednorazowe stosowanie proporcjonalnych wymiarów dla rosnących szerokości ekranów */
@@ -2456,6 +2501,10 @@ input[type=range]:hover::-ms-fill-upper
     
     div.blad {
         width: 88%;
+    }
+
+    .opis_odnosnik {
+        font-size: 1em; /* redukcja na względne 100% */
     }
     
     div.blad .blad_ikona {
@@ -2602,6 +2651,11 @@ input[type=range]:hover::-ms-fill-upper
     div#pomoc > div > div:first-of-type,
     div#poco > div > div:first-of-type {
         margin-right: 2.5em;
+    }
+
+    div#pomoc .kontener .ramka,
+    div#poco .kontener .ramka {
+        margin-right: 0;
     }
 
 }

@@ -1,3 +1,94 @@
+v0.5.51 - fixes of 'resource unavailable message, small font, lots of text'
+
+* v0.5.51 -- [2021-11-16]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* created a new class for an enumerated list
+
+-- new file 'grafiki/slonce_plus_36x36.png'
+* a background file for enumeration
+  - has a plus sign inside
+
+[*] MODIFIED
+
+-- index.php
+* few attempts to make the text slimmer and to increase its readability - applies to [fix_3]
+  - measures to shorten existing texts or to get rid of them at all
+  - introduced shorter and clearer sentences
+  - elimination of some of the complexities
+  - replaced the text block in one of the paragraphs with one unordered list (for visual learners)
+  - breakdown of subsequent sentences unrelated to the context one after another (in a given group, only if it's possible) into separate paragraphs or at least separated them with newline markers
+  - as at the beginning long texts are displayed on demand, inside hidden containers at startup, so the site is not so covered with text
+* used new "tech" class to describe all techlnologies used and not used in this project
+
+-- witryna.js
+* corrected the source container cleaning mechanism - applies to [fix_1]
+  - removed remnants of unnecessary links
+  - instead of a complicated condition, used a simple zeroing of the contents of this container
+
+-- zlobek-styl.css
+* slightly increased start level for the global font size on the site - applies to [fix_2]
+  - applies to the narrowest screens ("mobile first")
+  - a slight jump from 65% to 70%
+  - a significant increase could cause the existing elements of the site to overlap or be repulsed!
+  - slightly increased text size for the second width threshold (threshold above 320px, from 70% to 75%)
+  - next screen width thresholds unchanged, existing text scaling kept
+* increased by 25% font size for the text description of a given gallery in the gallery list item component
+  - applies only to the second threshold of the screen width (in the range of 320..469 pixels)
+  - then the gallery list items are placed one above the other, takes up the entire available screen width
+  - in the second threshold, the gallery element is the widest among all screen size variants (later, above 470px the screen width, two to five gallery elements can be displayed in each row)
+* moved in places some definitions inside the main stylesheet
+* used notation with leading zero before fractional value for encountered CSS attributes
+* called explicitly class "tech" as the definition of list items
+  - required to be able to display a different set of list items with differently defined styles inside footer area
+
+[F] FIXED
+
+* fixes: #74 - 'resource unavailable message, small font, lots of text'
+
+1. fixed the text cursor to jump off the screen
+
+2. the small font has been slightly enlarged on narrow screens
+
+3. Attempts to reduce text overload
+
+(4. fixed the progress bar overlapping text in the notifier component)
+  - previously unnoticed problem
+  - used a larger gap
+
+---------------------------
+
+v0.5.50 - summary of software requirements and dynamic data inside footer area
+
+* v0.5.50 -- [2021-11-13]
+
+[+] ADDED
+
+-- index.php
+* added a frame informing about the minimum software requirements
+  - displayed on request in the footer area (*Help* button)
+  - quite visible due to the contrasting background
+  - application version requirements are from https://caniuse.com/
+  - it concerns the correct use of ES5 and UX at the level of acceptable *progressive enchancement* of this website
+  - jQuery takes care of most of the compatibility issues, but the UX part is not fulfilled in lower versions of browsers or browsers shows  errors
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* corrected the way of displaying the bitmap background in the list item, displayed in the footer area
+  - background image appears always at 50% of the element height
+  - mainly applies to narrow screens, where the content of the element does not fit 100% on one line on the screen
+  - surprisingly, the modification without adversely affecting wider screens
+  - uses CSS motto: "the last CSS attribute declaration is used, which is understood by browsers"
+  - also better alignment of a first item
+* added a border for the presentation of dynamically generated content in PHP variables on the server
+  - better view of the summary, improved display without the right margin
+  - the frame includes all existing server variables
+
+---------------------------
+
 v0.5.49 - removed annoying advertisements on a new hosting (v3)
 
 * v0.5.49 -- [2021-10-09]
