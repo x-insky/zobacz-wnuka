@@ -196,6 +196,7 @@ div.blad .blad_tytul {
     padding: 0.25em;
     padding-top: 0.8em;
     padding-right: 55px;
+    user-select: none;
 }
 
 div.blad .blad_tresc {
@@ -226,6 +227,7 @@ div.blad .blad_ikona {
 /*    padding: 0.5em 1em;    */
     background-color: yellow;
     border-radius: 50%;
+    user-select: none;
 }
 
 div.blad p {
@@ -247,6 +249,7 @@ div.blad .krzyzyk_zamykanie {
     background-color: #ddd;
     cursor: pointer;
     transition: background-color 0.5s;
+    user-select: none;
 }
 
 div.blad .krzyzyk_zamykanie:hover,
@@ -595,6 +598,7 @@ div.powiadamiacz {
     padding: 0.5em;
     margin: 0.5em auto;
     transition: background-color 0.25s ease-out;
+    user-select: none;
 }
 
 div.powiadamiacz:hover,
@@ -668,7 +672,8 @@ div#spis_tresci div.kontener_odnosnik {
     border: 1px solid blue;
     box-shadow: 1px 1px 3px darkblue;	
     border-radius: 5px;
-    transition: all 0.25s ease-out;	
+    transition: all 0.25s ease-out;
+    user-select: none;   /* można zanzaczyć tekst tylko w obrębie tego elmentu */
 }
 
 div#spis_tresci div.kontener_odnosnik:hover,
@@ -891,6 +896,7 @@ div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
         background-color 0.5s ease 0.1s,
         color 0.5s ease 0.1s,
         text-shadow 0.5s ease 0.1s;
+    user-select: none;
 }
 
 div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:hover,
@@ -921,7 +927,8 @@ div#selektor h2#selektor_naglowek {
     border-radius: 14px;
     border: 2px solid #eee;
     cursor: pointer;
-    transition: background-color 0.5s;    
+    transition: background-color 0.5s;
+    user-select: none;
 }
 
 div#selektor h2#selektor_naglowek.rozwiniety {
@@ -1292,6 +1299,7 @@ div#wczytywanie_wybrane_galerie_spis
     /* margin: 2em; */
     background-color: cornflowerblue;	
     border: 3px dotted yellow;
+    user-select: none;
 }
 
 div#wczytywanie_podstrona h2, 
@@ -1362,6 +1370,7 @@ div#skladowisko {
     /* background-color: coral; */
     /* background-color: #c3d5e2; */
     padding: 0.5em 0.6em;
+    padding-bottom: 1em;
     overflow: hidden;
     display: none;
     text-align: center;
@@ -1436,7 +1445,7 @@ div#gra {
     padding: 0.5em;    
 
     border-radius: 10px;
-    box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	    
+    box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);
 } 
 
 div#gra h2 {
@@ -1490,6 +1499,7 @@ div#nazwa_galerii #biezaca_galeria_zamykanie
     border: 1px solid #666;
     cursor: pointer;
     transition: background-color 0.5s;
+    user-select: none;
 }
 
 div#nazwa_galerii #biezaca_galeria_zamykanie {
@@ -1967,6 +1977,7 @@ input[type=range]:hover::-ms-fill-upper
     opacity: 0.8;
     background-color: white;
     background-color: rgba(0, 0, 0, 0.4);
+    user-select: none;
 }
 
 #odpluskwiacz_ajaksowy h4 {
@@ -2410,6 +2421,7 @@ input[type=range]:hover::-ms-fill-upper
         margin-left: 0.5em;     /*  to likwiduje pełną linię dla przyciku, przez co tytuł galerii standardowo opływa ten przycisk */
         margin-bottom: 0;
         display: none;      /* domyślny stan w CSS, pokazywany poprzez JS jako reakcja na zdarzenie wyświetlenia podstrony galerii */
+        user-select: none;
     }
 
     .maly_guzik {
@@ -2714,18 +2726,19 @@ input[type=range]:hover::-ms-fill-upper
     
     header#naglowek div#banner {
         margin-left: auto;
-        margin-right: auto;    
+        margin-right: auto;
         border: 2px solid white;
-        border-top: none;    
+        border-top: none;
         border-top-left-radius: 0;
-        border-top-right-radius: 0;    
+        border-top-right-radius: 0;
         border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;  
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);     
+        border-bottom-right-radius: 10px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
     }    
 
     div#zagraj {
         display: block;
+        user-select: none;
     }   
     
     .brak_js div#zagraj {
@@ -2733,7 +2746,7 @@ input[type=range]:hover::-ms-fill-upper
     }
     
     div.blad {
-        max-width: 1200px;   
+        max-width: 1200px;
     }  
 
 }

@@ -505,7 +505,7 @@ var kontenerDocelowyElement = "div#skladowisko",
     ileLinkowDoPodstron = 0;
 
 var przyciskPoprzedni = {
-        nrPodstrony : 0,        // początkowe wartośc dla wskazania numeru wcześniejszego i kolejnego odsyłacza względem danego
+        nrPodstrony : 0,        // początkowe wartości dla wskazania numeru wcześniejszego i kolejnego odsyłacza względem danego
         trescPrzycisku : '',    // treść danego przycisku
         adresUrl : '',               // adres zasobu na serwerze zewnętrznym (jako względna ścieżka wewnątrz serwera)
         aktywny : false         // czy operatywny, czy przycisk jest aktywny?
@@ -673,14 +673,16 @@ $( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietl
         // tu końcówka napisu z numerem podstrony już do niczego niepotrzebna 
     var odnosnikNrZdjecia = parseInt( odnosnikZdjecia.substr( odnosnikZdjecia.lastIndexOf( ",z") + 2, odnosnikZdjecia.length - 8 ) );
 
-    var opisObrazka = $biezacy.find('img').removeAttr('border').attr('alt'); // pozyskanie ALT wraz z usunięciem głupiego atrybutu danego obrazka
+    var opisObrazkaALT = $biezacy.find('img').removeAttr('border').attr('alt'); // pozyskanie atrybutu ALT ze źródła wraz z usunięciem głupiego atrybutu BORDER danego obrazka/miniatury (pozyskujemy wprost numer zdjęcia w danej galerii)
+    opisObrazkaALT = "zdjęcie nr " + opisObrazkaALT + " w tej galerii";   // wcześniej `opisObrazkaALT = opisObrazka + " (" + odnosnikNrZdjecia + g_rozszerzenie_obrazka + ")";`
+    var opisObrazkaALTDuzaLitera = opisObrazkaALT.charAt(0).toUpperCase() + opisObrazkaALT.slice(1) + " (" + odnosnikNrZdjecia + g_rozszerzenie_obrazka + ")"; // nowa lepsza nazwa na tytuł  po kliknięciu
 
-    console.log("Dla elementu <a> o HREF '" + odnosnikZdjecia + "' NR_ZDJĘCIA to '" + odnosnikNrZdjecia + "', a ALT miniatury IMG to '" + opisObrazka + "'" );	
+    console.log("Dla elementu <a> o HREF '" + odnosnikZdjecia + "' NR_ZDJĘCIA to '" + odnosnikNrZdjecia + "', a ALT miniatury IMG to '" + opisObrazkaALT + "'" );	
 
     // sklejanie adresu docelowego obrazka z ustalonych fragmentów i ścieżki względnej (numeru zdjęcia w zasadzie)   
     var pelnyAdresOdnosnika = g_protokol_www + g_adres_strony + "/" + g_folder_serwera + "/" + g_matryca_nazwy_pliku + odnosnikNrZdjecia + g_rozszerzenie_obrazka ;	
-    $biezacy.attr( { "href" : pelnyAdresOdnosnika, "data-lightbox" : "Galeria", "data-title" : opisObrazka + " (" + odnosnikNrZdjecia + g_rozszerzenie_obrazka + ")", 
-                    alt : opisObrazka, title : opisObrazka } ); // zmienia href na bezpośrednie odnośniki do serwera zewnętrznego
+    $biezacy.attr( { "href": pelnyAdresOdnosnika, "data-lightbox": "Galeria", "data-title": opisObrazkaALTDuzaLitera, 
+                    alt: opisObrazkaALTDuzaLitera, title: opisObrazkaALT } ); // zmienia href na bezpośrednie odnośniki do serwera zewnętrznego
             // PLUS Lightbox w atrybutach data!!!
     // pełnyAdresOdnosnika.replace( g_matryca_nazwy_pliku, g_matryca_nazwy_pliku_miniatury );
     // po refaktoryzacji tu powinna byc już podana przetworzona galeria miniatur z "dobrymi" adresami bezwzględnymi dla SRC, więc POMIJAM poniższe   
@@ -992,7 +994,7 @@ var $odnosnikiZdjecia = $( g_tag_do_podmiany_spis + " td.galeria_kolor a.link_tr
             // usuwanie niepotrzebnej klasy, najprostsze/najszybsze bezpośrednio poprzez JS
         $( $odnosnikiZdjecia[i] ).removeAttr('class').attr('data-href', $( $odnosnikiZdjecia[i] ).attr('href') ).removeAttr('href');   
             // lepiej wywalić cały atrybut 'class', bo i tak zostaje pusty gdy się tylko usunie z niego klasę "link_tresc" ;
-            // podobnie wylatuje 'href', aby nie komplikować z przyciskami myszy ;) -- wm jego miejsce tworzony zastępca 'data-href'
+            // podobnie wylatuje 'href', aby nie komplikować z przyciskami myszy ;) -- w jego miejsce tworzony zastępca 'data-href'
             
         var miejsceDocelowe = $( g_miejsce_na_spis + " .zdjecie_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
             // ta zmienna będzie używana w dalszych iteracjach, na rzecz każdego z fragmentów/atrybutów składowych docelowego odnośnika spisu treści galerii     
@@ -1052,6 +1054,9 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" 
             $( $odnosnikiTytuly[i] ).find('h2').addClass('najmniejszy'); // kolejne zmniejszenie czcionki tytułu  dla <h2>    
             }
         $( miejsceDocelowe ).html( $odnosnikiTytuly[i] );  // podmiana oryginalnej zawartości tytułu
+     
+        var tekstAlternatywny = trescTytulu + ' (' + ktoraToGaleria + ')';
+        $( miejsceDocelowe ).parent().find('img').attr('alt', tekstAlternatywny);    // dopisanie ALT do skopiowanego <img> (nie zawierał ALT w źródle)
         }
     }
 
@@ -1060,7 +1065,7 @@ var $odnosnikiData = $( g_tag_do_podmiany_spis + " td.galeria_kolor font" );
 	
     if ( $odnosnikiData.length > 0 )
     {
-        for( var i=0 ; i < $odnosnikiData.length ; i++ ){
+        for( var i = 0 ; i < $odnosnikiData.length ; i++ ) {
         miejsceDocelowe = $( g_miejsce_na_spis + " .data_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
 
          // zmiana treści wyświetlanej, lekka modyfikacja tekstu przy dacie i godzienie 
@@ -1202,7 +1207,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
 
         if ( $szukaneElementy.length > 0 )
         {
-            for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ){
+            for( var i = 0 ; i < ileGaleriiNaPodstronie ; i++ ) {
                 // najpierw wylatuje atrybut klasy, bo nie ma przewidzianego osobnego stylu w css, a 'link_tresc' też nie wnosi żadnej logiki
                 // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' + usuwanie pierwotnego atrybutu
             $( $szukaneElementy[i] ).removeAttr('class').attr('data-href', $( $szukaneElementy[i] ).attr('href') ).removeAttr('href') ;      
@@ -1222,7 +1227,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
         var ktoraToGaleria = '';
         var trescSzczegolow = '';    
             
-            for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ){
+            for( var i = 0 ; i < ileGaleriiNaPodstronie ; i++ ) {
             // dodatkowo odczytanie numeru galerii, aby od razu to wyświetlić wraz z numerem podstrony    
             ktoraToGaleria = $( $szukaneElementy[i] ).removeAttr('class').attr('href'); // pobranie 'href" + wcześniejsze wywalenie pustego 'class' z tego odnośnika    
             ktoraToGaleria = parseInt( ktoraToGaleria.substr( ktoraToGaleria.lastIndexOf(",a") + 2 ) ); // w jednym przypisaniu wiele instrukcji, bez rozbijania na pojedyncze
@@ -1253,6 +1258,9 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
                 $( $szukaneElementy[i] ).find('h2').addClass('najmniejszy'); // kolejne zmniejszenie czcionki tytułu  dla <h2>    
                 }
             $( miejsceDocelowe ).html( $szukaneElementy[i] );  // podmiana oryginalnej zawartości szablonu + ewentualna modyfikacja wielkości napisów
+
+            var tekstAlternatywny = tekstDocelowy + ' (' + ktoraToGaleria + ')';
+            $( miejsceDocelowe ).parent().find('img').attr('alt', tekstAlternatywny);    // dopisanie ALT do skopiowanego <img> (nie zawierał ALT w źródle)
             }
         }
 
@@ -1569,7 +1577,7 @@ trescDaty = '(' + trescDaty.replace(/-/g, '.') + ')'; // zamiana WSZYSTKICH DWÓ
     
 var trescHtml = ''; // <div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>';   // doklej przycisk na początku ;)
 trescHtml += '<div class="kontener"><h2>Galeria nr <span>' + galeria.nrGalerii + '</span> &ndash; <span>' + galeria.tytul + '</span></h2>'; // najpierw <h2>, aby go ewentualny <img> z float nie wyprzedzał na wąskim ekranie
-trescHtml += '<img src="' + galeria.srcObrazka +'" alt="' + galeria.tytul + '" />';
+trescHtml += '<img src="' + galeria.srcObrazka + '" alt="' + galeria.tytul + '" title="' + galeria.tytul + '" />';
 // trescHtml += '<h2>' + galeria.tytul + ' <span class="data">' + trescDaty + '</span></h2>';
 trescHtml += '<p class="data">' + trescDaty + '</p>';    
 trescHtml += '<p>';
@@ -1578,7 +1586,6 @@ trescHtml += galeria.opis + '</p></div>';
 
 $('#nazwa_galerii').html( trescHtml );
 PokazBiezacaGalerie(200);
-// $('#nazwa_galerii').show(100);	    
 } // UzupełnijNaglowekBiezacejGalerii-END  
     
     

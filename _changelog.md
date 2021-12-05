@@ -1,3 +1,48 @@
+v0.5.52 - fixes of 'active text selections, missing alt inside imgs, small bottom gap'
+
+* v0.5.52 -- [2021-12-05]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* created a new class for an enumerated list
+
+[*] MODIFIED
+
+-- index.php
+* fixed slider's "selectionDirection" attribute from "backward" to "forward"
+  - slider have operated and operates normally (LTR), value grows to with slider moves the right side
+
+-- witryna.js
+* verified and updated almost all of the site images to have to an 'alt' attribute - applies to [fix_2]
+  - introduced the missing 'alt' attribute for the list of generated lists (both lists: subsequent subpages and gallery subpages on request)
+  - title pictures for individual galleries on the external souce server do not have the 'alt' attribute!!!
+  - for both generated lists, this attribute was introduced based on the gallery title
+* changed minimally the content structure of the 'alt', 'title' and 'data' attributes for thumbnails in the gallery details preview (gallery subpages)
+  - better presented photo titles when hovering over them with the cursor and when viewing full-size via Lightbox
+* corrected some typos inside comments and some brace syntax
+
+-- zlobek-styl.css
+* added "user-select" attribute with value "none" to many site components - applies to [fix_1]
+  - this change eliminates the possibility of selecting text in elements that should be part of the navigation
+  - added, among others to: the game launch component, the loading button for the next gallery, notifications about loading (all three occurences) and info about the previous site visit
+  - also included close buttons inside error messages and for closing out parent components
+  - introduced twelve changes in total for the above-mentioned elements
+  - interesting funcionaliy: in the error message component it is not possible to copy the error title, but the detailed content from inside is accessible
+* simply added more space into container for current gallery thumbnails - applies to [fix_3]
+
+[F] FIXED
+
+**fixes: #76 - 'Possible mistakes: active text selections, missing alt inside imgs, small bottom gap'**:
+
+1. should it be possible to select texts inside, for example buttons' or components'?
+
+2. verifying the existence of the 'alt' attribute for all `<img>` elements, displayed on the page
+
+3. too small space between the displayed elements of any gallery and the bottom of its container
+
+---------------------------
+
 v0.5.51 - fixes of 'resource unavailable message, small font, lots of text'
 
 * v0.5.51 -- [2021-11-16]
