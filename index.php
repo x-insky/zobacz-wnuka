@@ -234,7 +234,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                                     <span class="prawy">starsze</span>    
                                                 </aside>
                                                 <div>
-                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
+                                                    <input type="range" min="1" selectionDirection="forward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
                                                 </div>
                                             </div>
                                             <div id="suwak_podstrona_info">
@@ -348,7 +348,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.51</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.52</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
