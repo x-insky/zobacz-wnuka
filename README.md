@@ -1,10 +1,25 @@
-# *Zobacz wnuka* in strict translation from Polish: *See Grandson* as the name or *Look At Grandson* with *LAG* abbreviation for easy remember.
+# *Zobacz wnuka* in strict translation from Polish means *See a Grandson* (or also *Look At Grandson* with *LAG* abbreviation for easy remember).
+
+Allowing easier viewing of photo galleries with grandsons, granddaughters, grandchildren in general or with just small children for anyone who is interested. 
+
 ---
 
 ## Project goal
-Allowing easier viewing of photo galleries with granddaughters or with children with a different family relationship (son / daughter, brother / sister, godson / goddaughter, cousin / cousin, etc.). Or just for anyone interested.\
 
-The site reads groups of photos from the original nursery website and allows them to be presented as a slideshow (for each photo gallery or its subgroup). It uses a responsiveness for the displayed content, presenting it in a similar layout, almost regardless of the screen size of the device with a web browser.
+### This project allows to view a photo slideshows and navigate between groups of photos from external webserver.
+  
+[TRY IT OUT NOW](http://zobacz-wnuka.5v.pl/)
+  
+The site reads groups of photos from the original nursery website and allows them to be presented as a slideshow (for each photo gallery or its subgroup). It uses a responsiveness for the displayed content, presenting it in a similar layout, almost regardless of the screen size of the device with a web browser. 
+
+### Brief Summary 
++ SPA App driven by JavaScript
++ uses AJAX and PHP magic
++ easy navigation
++ RWD & mobile friendly
++ accessibility with keyboard navigation
++ runs on most everything
++ and much more
 
 ### Statement
 > The project is not intended to deter, ridicule, harm or in any way impede the activities of the original nursery website. Nor is it intended to reduce trust for the author's original site or his commercial activities.
