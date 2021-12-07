@@ -662,37 +662,31 @@ $( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietl
     
     $odnosnikiMiniatur.each(function(){
 
-    var $biezacy = $(this);	
-    var odnosnikZdjecia = $biezacy.attr('href'); 
+    var $biezacyOdnosnik = $(this);
+    var biezacyOdnosnikHREF = $biezacyOdnosnik.attr('href');
+    var $obrazekWOdnosniku = $biezacyOdnosnik.find('img');
 
-    /* var atrybut_href_pozycja = atrybut_href.lastIndexOf(",");		
-        atrybut_href = atrybut_href.substr( atrybut_href_pozycja + 2 ); // +2 znaki za pozycją ',' i 'a'
-        g_ilosc_wszystkich_galerii = parseInt( atrybut_href );
-    */
         // podobnie określany numer, jako konwersja wybranego wycinka z części odnośnika
         // tu końcówka napisu z numerem podstrony już do niczego niepotrzebna 
-    var odnosnikNrZdjecia = parseInt( odnosnikZdjecia.substr( odnosnikZdjecia.lastIndexOf( ",z") + 2, odnosnikZdjecia.length - 8 ) );
+    var odnosnikNrZdjecia = parseInt( biezacyOdnosnikHREF.substr( biezacyOdnosnikHREF.lastIndexOf( ",z") + 2, biezacyOdnosnikHREF.length - 8 ) );
 
-    var opisObrazkaALT = $biezacy.find('img').removeAttr('border').attr('alt'); // pozyskanie atrybutu ALT ze źródła wraz z usunięciem głupiego atrybutu BORDER danego obrazka/miniatury (pozyskujemy wprost numer zdjęcia w danej galerii)
-    opisObrazkaALT = "zdjęcie nr " + opisObrazkaALT + " w tej galerii";   // wcześniej `opisObrazkaALT = opisObrazka + " (" + odnosnikNrZdjecia + g_rozszerzenie_obrazka + ")";`
-    var opisObrazkaALTDuzaLitera = opisObrazkaALT.charAt(0).toUpperCase() + opisObrazkaALT.slice(1) + " (" + odnosnikNrZdjecia + g_rozszerzenie_obrazka + ")"; // nowa lepsza nazwa na tytuł  po kliknięciu
+    var serwerowyOpisObrazkaALT = $obrazekWOdnosniku.removeAttr('border').attr('alt') || "Obrazek galerii"; // pozyskanie atrybutu ALT ze źródła wraz z usunięciem głupiego atrybutu BORDER danego obrazka/miniatury (pozyskujemy wprost numer zdjęcia w danej galerii)
+    var opisObrazkaALT = 'zdjęcie ' + serwerowyOpisObrazkaALT
+    $obrazekWOdnosniku.attr('alt', opisObrazkaALT);     // wydłużenie treści oryginalnego atrybutu
+    var opisObrazkaALTDuzaLitera = "Zdjęcie nr "  + serwerowyOpisObrazkaALT + " w tej galerii (" + odnosnikNrZdjecia + g_rozszerzenie_obrazka + ")"; // nowa lepsza nazwa na tytuł  po kliknięciu
 
-    console.log("Dla elementu <a> o HREF '" + odnosnikZdjecia + "' NR_ZDJĘCIA to '" + odnosnikNrZdjecia + "', a ALT miniatury IMG to '" + opisObrazkaALT + "'" );	
+    // console.log("Dla elementu <a> o HREF '" + biezacyOdnosnikHREF + "' NR_ZDJĘCIA to '" + odnosnikNrZdjecia + "', a ALT miniatury IMG to '" + opisObrazkaALT + "'" );	// DEBUG
 
     // sklejanie adresu docelowego obrazka z ustalonych fragmentów i ścieżki względnej (numeru zdjęcia w zasadzie)   
     var pelnyAdresOdnosnika = g_protokol_www + g_adres_strony + "/" + g_folder_serwera + "/" + g_matryca_nazwy_pliku + odnosnikNrZdjecia + g_rozszerzenie_obrazka ;	
-    $biezacy.attr( { "href": pelnyAdresOdnosnika, "data-lightbox": "Galeria", "data-title": opisObrazkaALTDuzaLitera, 
-                    alt: opisObrazkaALTDuzaLitera, title: opisObrazkaALT } ); // zmienia href na bezpośrednie odnośniki do serwera zewnętrznego
+    $biezacyOdnosnik.attr( { href: pelnyAdresOdnosnika, "data-lightbox": "Galeria",
+                            "data-title": opisObrazkaALTDuzaLitera, title: opisObrazkaALT } ); // zmienia href na bezpośrednie odnośniki do serwera zewnętrznego
             // PLUS Lightbox w atrybutach data!!!
-    // pełnyAdresOdnosnika.replace( g_matryca_nazwy_pliku, g_matryca_nazwy_pliku_miniatury );
-    // po refaktoryzacji tu powinna byc już podana przetworzona galeria miniatur z "dobrymi" adresami bezwzględnymi dla SRC, więc POMIJAM poniższe   
-    // $biezacy.find('img').attr( "src", pelnyAdresOdnosnika.replace( g_matryca_nazwy_pliku, g_matryca_nazwy_pliku_miniatury ) ); 
-        // kosmetyka żródła - pozbywanie się zawartości "sąsiedniej" w danym mikrokontenerze (wylatuje <br> i <font> - wszystko poza <a>) 
-    $biezacy.siblings().remove();
+    $biezacyOdnosnik.siblings().remove();
 
     // sklejanie adresu dla miniatury, owiniętej odnośnikiem   -  
     // przeklejenie - wstawienie odnośników do zdjęć w innym, właściwym obszarze
-    $kontenerDocelowy.append( $biezacy ); 
+    $kontenerDocelowy.append( $biezacyOdnosnik ); 
     }); //each-function-END
 
 //	} //if-END $listaPodstron.length >= 1

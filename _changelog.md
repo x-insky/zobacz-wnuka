@@ -1,3 +1,22 @@
+---------------------------
+
+v0.5.53 - ALT is an IMG attribute, not an A elem's
+
+* v0.5.53 - [2021-12-07]
+
+[*] MODIFIED
+
+- witryna.js
+* shifted 'alt' attribute generation from `a` element to `img`
+   - slightly changed content in relation to the source server
+* slighty modified the content of the 'title' attribute in the element `a` 
+* modification of the descriptive content for displayed an enlarged photo size
+* other changes to the 'GenerujPodstronyGalerii' function code:
+   - commented out the logging for found thumbnails in the gallery
+   - deleted some old comments
+
+---------------------------
+
 v0.5.52 - fixes of 'active text selections, missing alt inside imgs, small bottom gap'
 
 * v0.5.52 -- [2021-12-05]
