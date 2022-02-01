@@ -336,7 +336,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.54</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.55</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -365,28 +365,31 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <h3>Superlatywy</h3>
                         <ul class="zalety">
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />łatwość przeglądania kolejnych zdjęć
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>łatwość przeglądania kolejnych zdjęć</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />proste nawigowanie pomiędzy galeriami zdjęć
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>skalowalny podgląd zdjęcia, dopasowany do wielkości ekranu</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />maksymalna kompatybilność ze starszymi przeglądarkami
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>proste nawigowanie pomiędzy galeriami zdjęć</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />transfer małych fragmentów do podmiany w wyświetlanym szablonie
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>maksymalna kompatybilność ze starszymi przeglądarkami</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />wsparcie ekranów mobilnych - większe powierzchnie dotykowe
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>transfer małych fragmentów do podmiany w wyświetlanym szablonie</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />oszczędza czas użytkownika
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>wsparcie ekranów mobilnych - większe powierzchnie dotykowe interakcji</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />dynamika prezentowanych treści i większa interaktywność
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>oszczędność czasu użytkownika</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />zużywa mniej <em>pakietów mobilnego internetu*</em>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>dynamika prezentowanych treści i większa interaktywność</span>
+                            </li>
+                            <li>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>zużywa mniej <em>pakietów mobilnego internetu*</em></span>
                             </li>
                         </ul>
 
