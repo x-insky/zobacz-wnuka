@@ -1,12 +1,65 @@
 ---------------------------
 
+v0.5.55 - interactivity in developing the advantages of the site
+
+* v0.5.55 - [2022-02-01]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* added rotation and scaling animation
+  - also a filter property for brightness and contrast
+  - assigned the animation to the images of the bullet list of superlatives
+  - animation activated with the :hover state
+
+[*] MODIFIED
+
+-- index.php
+* list of superlatives
+  - all the texts of a list surrounded by a <span> elements 
+  - added additional sub-item for the list
+  - the content of another sub-item was slightly modified to match the tone of the entire list
+
+-- zlobek-style.css
+* improved the form of presenting the advantages for the website
+  - every second line is distinguished from the light background
+  - finally, the background distinguishing feature for odd enumeration elements has been introduced, i.e. the list begins and ends with highlighting the background
+* modified existing styles for list bullet
+  - rotation animation was improper for a non-square image (no centering due to unbalanced padding; image is square)
+
+---------------------------
+
+v0.5.54 - shortened a bit texts, removed remnants of HTML comments and typos
+
+* v0.5.54 - [2022-01-31]
+
+[*] MODIFIED
+
+-- index.php
+* removed backlogged HTML comments
+  - old content, no longer contributing to the state of the site
+  - but still visible in the  HTML code view in the browser
+* changed the order and slightly slimmed down the content in the '#poco' section 
+  - changed the order of content in individual columns 
+  - merged the content of two similar headers into one (logically on plus)
+  - redefined some long sentences in the merged descriptive section
+  - the list of superlatives is more complete
+  - but in total not too many letters in the text blocks were removed
+* two typos were corrected
+
+-- zlobek-style.css
+* added bottom padding for the list of superlatives
+  - the next header is pushed more from the last element of the list 
+
+---------------------------
+
 v0.5.53 - ALT is an IMG attribute, not an A elem's
 
 * v0.5.53 - [2021-12-07]
 
 [*] MODIFIED
 
-- witryna.js
+-- witryna.js
 * shifted 'alt' attribute generation from `a` element to `img`
    - slightly changed content in relation to the source server
 * slighty modified the content of the 'title' attribute in the element `a` 

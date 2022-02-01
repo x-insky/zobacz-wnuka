@@ -174,22 +174,11 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     </div>
                     
                     
-<!--                    <div id="wczytywanie_spis">
-                        <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
-                    </div>-->
-                    
                     <nav id="spis_sterowanie">
                         <div class="kontener">
                         <p id="status_galerii_spis"></p>
                         </div>
                         <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2" tabindex="0">Załaduj kolejne galerie<img src="grafiki/slonce_60x60.png" alt="" /><span></span></h2>
-
-                        <!-- pierwotne położenie animacji wczytywania --> 
-                        <!-- 
-                        <div id="wczytywanie_spis">
-                        <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" /></h2>
-                        </div>
-                        -->
 
                         <div class="kontener">
                             <div id="selektor">     
@@ -264,8 +253,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         </div>
                     </nav>	
                 </div>  <!-- div#spis_tresci -->
-        <!--    </div>	-->  <!-- div#naglowek_kontener -->
-            <!-- </div> -->  <!-- div-kontener  (na próbę) -->
+
             
             <div id="brak_skryptow" style="">
                 <div class="blad animacja_zolty_blysk">
@@ -348,53 +336,72 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.53</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.55</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
                     <div>
                         <h3>Dla Hani</h3>
                         <p>Bo tak! Z mniejszą dedykacją dla Szymonka i Ninki też. Niech za jakiś czas maluchy zobaczą siebie, jak wyglądały kiedyś (czyli teraz).</p>
+
                         <h3>Jaki jest cel?</h3>
                         <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
+
                         <h3>Jeszcze raz po polskiemu</h3>
                         <p>Poniższa witryna ma za zadanie ułatwić korzytanie z materiałów zawartych w oryginalnym serwisie Żłobka Miejskiego w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> .</p>
+
                         <h3>Wygoda i lepsza nawigacja</h3>
                         <p>Przede wszystkim wygoda, polepszenie skalowania zdjęć i ułatwienie nawigowania pomiędzy kolejnym obrazkami lub grupami miniatur, zorganizowanych w ramach danej galerii. </p>
                         <p>Zwiększona ergonomia nawigowania, zwłaszcza dotykowego na małych ekranach telefonów.</p>
                         <p>Zapewnienie intuicyjnej nawigacji po witrynie, bez cofania się po każdym zdjęciu oraz trudności w trafieniu odnośnika do kolejnej podstrony galerii (następnej grupy zdjęć).</p>
-                        <h3>Inne cele</h3>
-                        <p>Projekt realizowany w zupełności dla frajdy.</p>
-                        <p>Nie jest to antyreklama pewnego sklepu komputerowego, w którego funkcjonującym serwisie można też naprawić niedomagania posiadanego sprzętu.</p>
-                        <p>Próba zawarcia w aplikacji wielu udogodnień, a także niespotykanych rozwiązań w stosunku do <em>standardowej strony internetowej</em>.</p>
-                        <p>Celowo nie zastosowano najnowszej składni i atrybutów dla aplikacji przeglądarkowej, by ta witryna mogła być użytkowana na największej możliwej liczbie urządzeń. Użyto maksymalnej zgodności z wcześniejszymi standardami, stopniowo ulepszając wrażenia użytkownika, jeśli jest to tylko możliwe.</p>  
+
+                        <h3>Pojedyncze pobieranie, dynamiczne tworzenie treści i zamienianie zdjęć</h3>
+                        <p>Zastosowano rodzaj szablonu na treść, dzięki czemu przeglądarka www nie musi pobierać, przetwarzać i generować od nowa tej samej struktury strony z nowymi treściami do wyświetlenia.</p>
+                        <p>Przeglądarka szybciej pobiera tylko oczekiwane treści, jako transferowane fragmenty z witryny źródłowej.</p>
+                        <p>Brak ciągłego budowania, burzenia i odbudowaywania układu witryny, po każdorazowym wyświetleniu powiększonego zdjęcia.</p>
+                        <p>Aktualizacja jako reakcja tylko dla zmian w konkretnych elementach witryny, bez niepotrzebego budowania od nowa tej samej struktury.</p>
                     </div>
                     <div>       
                         <h3>Superlatywy</h3>
                         <ul class="zalety">
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />łatwość przeglądania zdjęć
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>łatwość przeglądania kolejnych zdjęć</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />proste nawigowanie pomiędzy galeriami zdjęć
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>skalowalny podgląd zdjęcia, dopasowany do wielkości ekranu</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />oszczędza czas użytkownika
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>proste nawigowanie pomiędzy galeriami zdjęć</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />maksymalna kompatybilność ze starszymi przeglądarkami
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>maksymalna kompatybilność ze starszymi przeglądarkami</span>
                             </li>
                             <li>
-                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" />zużywa mniej <em>pakietów mobilnego internetu*</em>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>transfer małych fragmentów do podmiany w wyświetlanym szablonie</span>
+                            </li>
+                            <li>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>wsparcie ekranów mobilnych - większe powierzchnie dotykowe interakcji</span>
+                            </li>
+                            <li>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>oszczędność czasu użytkownika</span>
+                            </li>
+                            <li>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>dynamika prezentowanych treści i większa interaktywność</span>
+                            </li>
+                            <li>
+                                <img src="grafiki/slonce_plus_36x36.png" alt="zaleta" /><span>zużywa mniej <em>pakietów mobilnego internetu*</em></span>
                             </li>
                         </ul>
-                        <h3>Pojedyncze pobieranie i dynamiczne tworzenie treści</h3>    
-                        <p>Zyskujemy przy przeglądaniu kolejnych zdjęć z danej galerii. Przeglądarka www nie musi pobierać, przetwarzać i wyświetlać od nowa tej samej struktury strony. Tu na żywo zmieniają się tylko treści do bieżącego zaprezentowania. Do przeglądarki użytkownika transferowane są tylko niewielkie fragmenty witryny, zawierające oczekiwaną treść.</p>
-                        <h3>Zamienianie obrazków</h3>    
-                        <p>Przeglądarka szybciej pobiera tylko istotne treści (wskazane zdjęcia lub ich grupę), bez każdorazowego doczytywania miniatur obrazków i struktury danej strony.</p>
-                        <p>Aktualizacja jako reakcja tylko dla zmian w konkretnych elementach witryny, bez niepotrzebego budowania od nowa tej samej struktury.</p>
+
+                        <h3>Inne cele</h3>
+                        <p>Projekt realizowany w zupełności dla frajdy.</p>
+                        <p>Nie jest to antyreklama pewnego sklepu komputerowego, w którego funkcjonującym serwisie można też naprawić niedomagania posiadanego sprzętu.</p>
+                        <p>Próba zawarcia w aplikacji wielu udogodnień, a także niespotykanych rozwiązań w stosunku do <em>standardowej strony internetowej</em>.</p>
+                        <p>Celowo nie zastosowano najnowszej składni i atrybutów dla aplikacji przeglądarkowej, by ta witryna mogła być użytkowana na największej możliwej liczbie urządzeń. Użyto maksymalnej zgodności z wcześniejszymi standardami, stopniowo ulepszając wrażenia użytkownika, jeśli jest to tylko możliwe.</p>  
+
                         <h3>Informacje i zastrzeżenia</h3>
                         <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka Miejskiego w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
+
                         <h3>Kontakt</h3>
                         <p>Wszelkie uwagi, skargi, wnioski i propozycje funkcjonalności lub zaobserwowane błędy w działaniu serwisu można słać na poniższy adres email <a href="#" id="adres_email">nieodbieram@gdzieś.w.internecie.com</a></p>
                     </div>
@@ -469,12 +476,12 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <li class="tech tech_tak">Chrome 8+</li>
                         <li class="tech tech_tak">Firefox 3.6+</li>
                         <li class="tech tech_tak">Opera 11.5+</li>
-                        <li class="tech tech_tak">Interet Explorer 9+</li>
+                        <li class="tech tech_tak">Internet Explorer 9+</li>
                         <li class="tech tech_tak">Safari 5.1+</li>
                     </ul>
                     <p>W niższych wersjach przeglądarek prawdowodobnie aplikacja nie uruchomi się właściwie. Funkcjonowanie programu zależy od wsparcia JavaScriptu w poszczególnych wersjach przeglądarek. Uruchomienie może także powieść się. <br />
                     Wygląd witryny i efekty mogą się znacząco różnić pomiędzy wersjami przeglądarek, rzadziej samych przeglądarek (choć bardzo nieznacznie). Wrażenia wizualne i stopień spełnienia wymagań HTML5 oraz CSS3 przez przeglądarkę, często tożsamy w obsługiwanej wersji języka JavaScript. </p>
-                    <p class="ramka">Zalecamy korzystać z aktualnych i aktualizowanych wersji przeglądarek z uwagi na bezpieczeństwo uzytkowania zasobów Internetu!</p>
+                    <p class="ramka">Zalecamy korzystać z popularnych i aktualizowanych na bieżąco wersji przeglądarek, z uwagi na bezpieczeństwo użytkowania zasobów Internetu!</p>
                 </div>
                 <div class="kontener">
                 <h3>DEBUG_MODE: Info o przeglądarce i serwerze</h3>
@@ -531,7 +538,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             </div> <!-- #pomoc -->
         </footer>	
 
-        <div id="wymiary">      <!-- #wymiary przeniesiono do wewnątrz kontenera -->
+        <div id="wymiary">
             <h1>&nbsp;</h1>    
         </div>    
         
@@ -549,9 +556,9 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
         </div>
     </div>
 </div>                           	
-    <!-- ratunkowe jquery z serwera, ale przeglądarki i edytory nie lubią zagnieżdżonego SCRIPT, a zwłaszcza </SCRIPT> -->
+
     <script>
-        window.jQuery || document.write('<script src="./lib/jquery-1.12.4.min.js"></script' + '>');  // nie robi się tego poprzez DOM?!
+        window.jQuery || document.write('<script src="./lib/jquery-1.12.4.min.js"></script' + '>');
     </script>
 
     <script src="./lib/fittext/jquery.fittext.js"></script>	
@@ -559,7 +566,6 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
     <script src="./lib/lightbox/js/lightbox.min.js"></script>
 
     <?php
-    // tu minifikację warunkowo odczytywać, gdy dostępna (warunki jednowierszowe, dodać ewentualnie "{}" dla czytelności)   
         if ( $serwer_lokalny ) echo '<script src="./witryna.js"></script>';
         else 
             if ( file_exists('witryna.min.js') ) echo '<script src="./witryna.min.js"></script>';
