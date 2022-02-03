@@ -325,14 +325,21 @@ div.blad p
 }
 
 .zalety li {
-    padding: 0.3em 0;
+    padding: 0.35em 0;
     padding-left: 0.5rem;
+    margin-left: 1.5em;
     margin-right: 1em;
+    transition: background-color 0.3s;
 } 
 
 .zalety li:nth-child(2n+1) {
+    margin-left: 0;
     background-color: rgba(255, 255, 255, 0.2);
 }
+
+.zalety li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+} 
 
 .zalety img {
     position: relative;
@@ -342,11 +349,11 @@ div.blad p
     animation: none;    /* ruchome cuda w IE bez tego */
 }
 
-.zalety img:hover {
+.zalety li:hover img {
     animation: obroty-90-180 4s ease-in-out infinite normal;
 }
 
-.zalety img+span {
+.zalety img + span {
     margin-left: 0.5em;
 }
 

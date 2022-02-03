@@ -1,8 +1,26 @@
 ---------------------------
 
+v0.5.56 - polished superlatives section
+
+* v0.5.56 -- [2022-02-02]
+
+[*] MODIFIED
+
+-- zlobek-style.css
+* as a variety, every second element in the superlative list is shifted to the right
+* slightly increased padding to contain the image of the sun when its zooming in
+* modified selector for :hover state with consideration of the element instead of the picture itself for the sake of animation
+  - the image inside an element rotates as long as the cursor is on that element
+  - you don't need to hit the picture with the cursor
+* better interactivity indication for :hover state on element
+  - darker background under the element like most interactive elements of this site
+  - no response to clicking, it's not the goal
+
+---------------------------
+
 v0.5.55 - interactivity in developing the advantages of the site
 
-* v0.5.55 - [2022-02-01]
+* v0.5.55 -- [2022-02-01]
 
 [+] ADDED
 
@@ -31,7 +49,7 @@ v0.5.55 - interactivity in developing the advantages of the site
 
 v0.5.54 - shortened a bit texts, removed remnants of HTML comments and typos
 
-* v0.5.54 - [2022-01-31]
+* v0.5.54 -- [2022-01-31]
 
 [*] MODIFIED
 
@@ -55,7 +73,7 @@ v0.5.54 - shortened a bit texts, removed remnants of HTML comments and typos
 
 v0.5.53 - ALT is an IMG attribute, not an A elem's
 
-* v0.5.53 - [2021-12-07]
+* v0.5.53 -- [2021-12-07]
 
 [*] MODIFIED
 
@@ -65,8 +83,8 @@ v0.5.53 - ALT is an IMG attribute, not an A elem's
 * slighty modified the content of the 'title' attribute in the element `a` 
 * modification of the descriptive content for displayed an enlarged photo size
 * other changes to the 'GenerujPodstronyGalerii' function code:
-   - commented out the logging for found thumbnails in the gallery
-   - deleted some old comments
+  - commented out the logging for found thumbnails in the gallery
+  - deleted some old comments
 
 ---------------------------
 
