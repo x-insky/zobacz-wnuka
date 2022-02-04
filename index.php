@@ -294,7 +294,6 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             </nav>
 
             <div id="zawartosc_do_podmiany">
-                <!-- a tu miniaturki z adresu zewnętrznego oraz klikane przejście do galerii -->
             </div>
             
         </div> <!-- <div id="glowna"> -->
@@ -313,9 +312,8 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             </div>
             <div id="sterowanie">
                 <div class="kontener">
-                <button id="gra_start">Start/Od nowa</button> <button>Losuj planszę</button> <button>Pokaż podpowiedź</button> <button>Moje wyniki</button>                
+                    <button id="gra_start">Start/Od nowa</button> <button>Losuj planszę</button> <button>Pokaż podpowiedź</button> <button>Moje wyniki</button>                
                 </div>
-
             </div>
             <div class="kontener">
                 <div id="plansza" droppable="true" ondrop="" ondragover=""> <!-- '"ON"!? to je gupie' -->
@@ -336,7 +334,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.56</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.57</h6>
             <div id="poco">
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
@@ -399,12 +397,13 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <p>Próba zawarcia w aplikacji wielu udogodnień, a także niespotykanych rozwiązań w stosunku do <em>standardowej strony internetowej</em>.</p>
                         <p>Celowo nie zastosowano najnowszej składni i atrybutów dla aplikacji przeglądarkowej, by ta witryna mogła być użytkowana na największej możliwej liczbie urządzeń. Użyto maksymalnej zgodności z wcześniejszymi standardami, stopniowo ulepszając wrażenia użytkownika, jeśli jest to tylko możliwe.</p>  
 
-                        <h3>Informacje i zastrzeżenia</h3>
-                        <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka Miejskiego w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
-
                         <h3>Kontakt</h3>
-                        <p>Wszelkie uwagi, skargi, wnioski i propozycje funkcjonalności lub zaobserwowane błędy w działaniu serwisu można słać na poniższy adres email <a href="#" id="adres_email">nieodbieram@gdzieś.w.internecie.com</a></p>
+                        <p>Uwagi, skargi, wnioski i propozycje funkcjonalności lub zaobserwowane błędy w działaniu serwisu można słać na poniższy adres email <a href="#" id="adres_email">nieodbieram@gdzieś.w.internecie.com</a></p>
                     </div>
+                </div>
+                <div class="kontener ramka">
+                    <h3>Informacje i zastrzeżenia</h3>
+                    <p>Wszelkie prawa do materiałów (treści tekstowych i zdjęć) należą do ich właścicieli, tj. instytucji Żłobka Miejskiego w Chojnowie - <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a> oraz serwisu e-informator - <a href="http://e-informator.pl/" target="_blank">e-informator.pl</a>.</p>
                 </div>
             </div>
             <div id="pomoc">

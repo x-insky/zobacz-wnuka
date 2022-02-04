@@ -1,5 +1,28 @@
 ---------------------------
 
+v0.5.57 - goodbye to unused CSS references, 'poco' columns & frame
+
+* v0.5.57 -- [2022-02-04]
+
+[*] MODIFIED
+
+-- zlobek-style.css
+* removed empty selectors without definition
+  - unused declarations (current or past testing)
+  - identical to the wrong ones, because they introduce an unnecessary burden on the browser
+* modified presentation of the new frame in the 'poco' section  
+* removed CSS selectors without reference in the project
+* combined identical definitions of similar items
+* removed unnecessary and commented content
+ 
+-- index.php
+* modified 'poco' section
+  - balanced the content of the height of the left and right columns
+  - added info in frame at the end of section (content cut from right column)
+* removed unnecessary and commented content
+
+---------------------------
+
 v0.5.56 - polished superlatives section
 
 * v0.5.56 -- [2022-02-02]
@@ -34,7 +57,7 @@ v0.5.55 - interactivity in developing the advantages of the site
 
 -- index.php
 * list of superlatives
-  - all the texts of a list surrounded by a <span> elements 
+  - all the texts of a list surrounded by a <span> elements
   - added additional sub-item for the list
   - the content of another sub-item was slightly modified to match the tone of the entire list
 
@@ -57,7 +80,7 @@ v0.5.54 - shortened a bit texts, removed remnants of HTML comments and typos
 * removed backlogged HTML comments
   - old content, no longer contributing to the state of the site
   - but still visible in the  HTML code view in the browser
-* changed the order and slightly slimmed down the content in the '#poco' section 
+* changed the order and slightly slimmed down the content in the '#poco' section
   - changed the order of content in individual columns 
   - merged the content of two similar headers into one (logically on plus)
   - redefined some long sentences in the merged descriptive section

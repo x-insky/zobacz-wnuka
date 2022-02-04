@@ -293,19 +293,6 @@ div.blad p
     margin: 0 auto;
 }
 
-.flex_kontener {
-    display: flex;
-}
-
-.flex_element 
-{
-    
-}
-
-.flex_kontener > div:first-of-type {
-    margin-right: 2em;
-}
-
 .ramka {
     /* margin: 0.5em 1em; */
     padding: 0.5em;
@@ -317,6 +304,12 @@ div.blad p
 .ramka li {
     padding: 0.5em 0.5em;
     font-weight: bold;
+}
+
+footer#stopka .kontener.ramka {
+    padding: 0;
+    padding-bottom: 0.5em;
+    margin: 0.75em 0;
 }
 
 .zalety {
@@ -379,7 +372,6 @@ header#naglowek {
     background-color: #c3d5e2;    
     overflow: hidden;  
 }
-
 
 header#naglowek h1 span {
     color: yellow;
@@ -759,13 +751,7 @@ div#spis_tresci div.tytul_odnosnik h2.najmniejszy {
     font-size: 116%;  /* a nie 175% jak h2 std. */
 }
 
-div#spis_tresci div.zdjecie_odnosnik {
-     /* float: left; */
-/*    background-color: #5a8ae8;
-    width: 200px;	
-    margin : 0.5em;*/
-}
- div#spis_tresci div.zdjecie_odnosnik a {
+div#spis_tresci div.zdjecie_odnosnik a {
     display: block;
     text-align: center;
     margin-left: auto;
@@ -886,12 +872,6 @@ div#spis_tresci div#wybrane_galerie_spis {
     width: 100%;	
 }
 
-
-div#spis_tresci nav#spis_sterowanie {
-		/* background-color: aqua;	*/
-}
-
-
 nav#spis_sterowanie p#status_galerii_spis {
     padding: 0.6em 1em;
     border: 2px dashed blue;
@@ -902,7 +882,6 @@ nav#spis_sterowanie p#status_galerii_spis {
 nav#spis_sterowanie h2 {
     text-shadow: 2px 2px 6px #666;
 }
-
 
 div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
     display: none;
@@ -1050,32 +1029,9 @@ div#wybor_podstrony_galerii div#suwak_podstrona_info div
     text-align: center;
 }
 
-/*    div#wybor_galerii > div {
-        padding: 0.5em;
-    }*/
-
-div#wybor_galerii > div:first-of-type {
-    /*background-color: dodgerblue;    */
-}
-
-div#wybor_galerii > div:last-of-type {
-    /*background-color: cadetblue;*/  
-        /*flex-basis: 250px;*/
-    text-align: center;
-        padding: 0 0.5em;
-}
-
-/*    div#wybor_podstrony_galerii > div {
-        padding: 0.5em;
-    }*/
-
-div#wybor_podstrony_galerii > div:first-of-type {
-    /*background-color: dodgerblue;*/    
-}
-
-div#wybor_podstrony_galerii > div:last-of-type {
-    /*background-color: cadetblue;  */
-    /*    flex-basis: 250px;*/
+div#wybor_galerii > div:last-of-type,
+div#wybor_podstrony_galerii > div:last-of-type
+{
     text-align: center;
         padding: 0 0.5em;
 }
@@ -1088,18 +1044,6 @@ div#wybor_podstrony_galerii div#suwak_podstrony
     flex-grow: 6;
     /*background-color: lightseagreen;*/
 }
-
-div#wybor_podstrony_galerii div#suwak_podstrony {
-    /*background-color: lightslategray;*/
-}
-
-div#wybor_galerii div#suwak div,
-div#wybor_podstrony_galerii div#suwak_podstrony div
-{
-    /*padding-top: 1.5em;
-    padding-bottom: 1em; */   
-}
-
 
 div#selektor input {
     padding-left: 1em;
@@ -1116,20 +1060,6 @@ div#selektor input[type=submit]
     word-break: break-word;    
     white-space: normal;
 }
-
-    /*    div#selektor input[type=button] {
-        width: 100%;
-
-    }*/
-
-    /*    #suwak_info > div input {
-        width: 48%;
-    }
-
-    #suwak_podstrona_info > div input {
-        width: 48%;
-    }*/
-
 
 div#selektor input[type=submit] {
     font-weight: bold;
@@ -1404,6 +1334,8 @@ div#skladowisko {
     /* display: table;	*/
 }
 
+                    /* ------ DO WERYFIKACJI ISTNIENIE SELEKTORA I JEGO STANU ------ */
+
 div#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie służy, nic nie robi */
     vertical-align: middle;     /* wyśrodkowanie - wyrównanie elementów w pionie w danej linii;  w stary przeglądarkach nie przenosi się ta reguła z potomnego <img> */
     /* padding: 0.1em 0.5em; */
@@ -1412,7 +1344,7 @@ div#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie słu�
      display: table-cell;	*/
     display: inline-table;  /* !!! TA REGUŁA (lub podobna) ROZWIĄZAUJE PROBLEM OBRYSU WOKÓŁ PUSTEGO <a>, KTÓRY ZAWIERA TYLKO PROSTOKĄTNY <img>... 
         (+): UJEDNOLICENIE we wszystkich testowanych przeglądarkach
-             - OUTLINE przyjmuje kształt obrazka i znajduje suę POZA <img> i jego cieniem! (może to dzięki przeliczniu od razu do SCALE (+10%) */
+             - OUTLINE przyjmuje kształt obrazka i znajduje suę POZA <img> i jego cieniem! (może to dzięki przeliczeniu od razu do SCALE (+10%) */
 
         /* padding: 0; */
         /* margin: -0.3em; */
@@ -1427,7 +1359,7 @@ div#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie słu�
         height: 0;
     } */
 
-div#skladowisko a:focus {
+div#skladowisko a:focus {   
     /* outline: none;
     padding: 0; */
         /* width: 0;
@@ -1478,10 +1410,6 @@ div#gra {
 div#gra h2 {
     color: gold;
     font-size: 160%;
-}
-
-div#gra h3 {
-    
 }
 
 div#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   */
