@@ -309,7 +309,7 @@ div.blad p
 footer#stopka .kontener.ramka {
     padding: 0;
     padding-bottom: 0.5em;
-    margin: 0.75em 0;
+    margin: 0.75em auto;
 }
 
 .zalety {
@@ -322,6 +322,7 @@ footer#stopka .kontener.ramka {
     padding-left: 0.5rem;
     margin-left: 1.5em;
     margin-right: 1em;
+    border-radius: 0.5rem;
     transition: background-color 0.3s;
 } 
 
@@ -735,7 +736,7 @@ div#spis_tresci div.tytul_odnosnik h2 {
         /*    vertical-align: bottom;   */
     color: white;
     text-shadow: 2px 2px 6px black;
-    word-wrap: break-word;	
+    word-wrap: break-word;
 }
 
 div#spis_tresci div.tytul_odnosnik h2.wyzszy {
@@ -1085,7 +1086,6 @@ div#selektor input#suwak_podstrony
     margin: 0.5em;
     width: 90%;	
 }
-
 
 div#selektor input#suwak_galerii { 
    /* transform: rotateY(180deg); */    /* ten sposób jest całkiem dobry, ale co gdy przeglądarka nie obsługuje przekształceń? */
@@ -2043,10 +2043,10 @@ input[type=range]:hover::-ms-fill-upper
     animation-fill-mode: forwards;  /* 'both' było*/  
 }
 
-    .animacja_zmiana_kolorow {      /* pierwowzór dla "animacja_pulsowanie_kolorow" */
-        animation: zmiana_kolorow 30s ease-out infinite;
-        animation-fill-mode: both;      
-    }
+.animacja_zmiana_kolorow {      /* pierwowzór dla "animacja_pulsowanie_kolorow" */
+    animation: zmiana_kolorow 30s ease-out infinite;
+    animation-fill-mode: both;      
+}
 
 .animacja_pulsowanie_kolorow {
     animation: pulsowanie_kolorow 10s ease-out infinite;
@@ -2099,7 +2099,7 @@ input[type=range]:hover::-ms-fill-upper
     }
 }
 
-@keyframes obroty_delikatne         /* pierwowzór dla "obroty_delikatne_3" */
+@keyframes obroty_delikatne
 {
     0% {
         transform: rotate(0deg);
@@ -2136,7 +2136,7 @@ input[type=range]:hover::-ms-fill-upper
     }
 }
 
-@keyframes obroty_delikatne_2        /* pierwotny następca dla "obroty_delikatne" */
+@keyframes obroty_delikatne_2
 {
     0% {
         transform: rotate(0deg);
@@ -2203,7 +2203,7 @@ input[type=range]:hover::-ms-fill-upper
     }
 }
 
-@keyframes zanikanie           /* pierwowzór dla "zanikanie2" */
+@keyframes zanikanie
 {
     0% {
 /*    visibility: visible; */   
@@ -2267,7 +2267,7 @@ input[type=range]:hover::-ms-fill-upper
     }
 }
 
-@keyframes zmiana_kolorow   /* pierwowzór dla "zanikanie2" */
+@keyframes zmiana_kolorow
 {
     0%  {
         color: black;

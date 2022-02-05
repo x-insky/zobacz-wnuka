@@ -1,5 +1,22 @@
 ---------------------------
 
+v0.5.58 - quick fixes in the '#poco' section
+
+* v0.5.58 -- [2022-02-05]
+
+[*] MODIFIED
+
+-- index.php
+* some corrections in the text of sentences in sections '#poco' and '#help'
+
+-- zlobek-style.css
+* the bordered element '.ramka/frame' in the '#poco' section is already centered on wider screens than 1400px
+  - increased slightly margins above and below this element 
+* added slight rounding of corners for elements in the 'superlatives' section
+* cleaning in the code (unequal indentations, unnecessary comments, etc.)
+
+---------------------------
+
 v0.5.57 - goodbye to unused CSS references, 'poco' columns & frame
 
 * v0.5.57 -- [2022-02-04]
@@ -10,7 +27,7 @@ v0.5.57 - goodbye to unused CSS references, 'poco' columns & frame
 * removed empty selectors without definition
   - unused declarations (current or past testing)
   - identical to the wrong ones, because they introduce an unnecessary burden on the browser
-* modified presentation of the new frame in the 'poco' section  
+* modified presentation of the new frame in the '#poco' section  
 * removed CSS selectors without reference in the project
 * combined identical definitions of similar items
 * removed unnecessary and commented content
