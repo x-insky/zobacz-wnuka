@@ -1,5 +1,50 @@
 ---------------------------
 
+v0.5.59 - close buttons for the 'help' and 'poco' sections
+
+* v0.5.59 -- [2022-02-06]
+
+[+] ADDED
+
+-- index.php
+* aded two close buttons
+  - one each for the '#help' and '#poco' sections
+
+-- witryna.js
+* added event handling for pressing new closing buttons
+  - events similar to those already existing for the closing buttons
+  - operation by clicking the mouse or pressing a button on the keyboard
+
+[*] MODIFIED
+ 
+-- zlobek-style.css
+* styles were copied, using selectors on existing closing elements
+  - also in the upper right corner of its parent, absolutely positioned
+* merged already existing selectors to avoid duplicate definitions
+
+-- witryna.js
+* code cleaning
+  - unnecessary spaces, indents and redundant new lines
+
+---------------------------
+
+v0.5.58 - quick fixes in the '#poco' section
+
+* v0.5.58 -- [2022-02-05]
+
+[*] MODIFIED
+
+-- index.php
+* some corrections in the text of sentences in sections '#poco' and '#help'
+
+-- zlobek-style.css
+* the bordered element '.ramka/frame' in the '#poco' section is already centered on wider screens than 1400px
+  - increased slightly margins above and below this element 
+* added slight rounding of corners for elements in the 'superlatives' section
+* cleaning in the code (unequal indentations, unnecessary comments, etc.)
+
+---------------------------
+
 v0.5.57 - goodbye to unused CSS references, 'poco' columns & frame
 
 * v0.5.57 -- [2022-02-04]
@@ -10,7 +55,7 @@ v0.5.57 - goodbye to unused CSS references, 'poco' columns & frame
 * removed empty selectors without definition
   - unused declarations (current or past testing)
   - identical to the wrong ones, because they introduce an unnecessary burden on the browser
-* modified presentation of the new frame in the 'poco' section  
+* modified presentation of the new frame in the '#poco' section  
 * removed CSS selectors without reference in the project
 * combined identical definitions of similar items
 * removed unnecessary and commented content

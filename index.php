@@ -334,13 +334,14 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.57</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.59</h6>
             <div id="poco">
+            <div id="poco_zamykanie" tabindex="0">&times;</div>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
                     <div>
                         <h3>Dla Hani</h3>
-                        <p>Bo tak! Z mniejszą dedykacją dla Szymonka i Ninki też. Niech za jakiś czas maluchy zobaczą siebie, jak wyglądały kiedyś (czyli teraz).</p>
+                        <p>Bo tak! Z mniejszą dedykacją dla Szymonka i Ninki też. Niech za jakiś czas maluchy zobaczą siebie, jak wyglądały kiedyś.</p>
 
                         <h3>Jaki jest cel?</h3>
                         <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
@@ -407,6 +408,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 </div>
             </div>
             <div id="pomoc">
+                <div id="pomoc_zamykanie" tabindex="0">&times;</div>
                 <h2>Pomoc &ndash; jak to działa</h2>
                 <div class="kontener">
                     <div>            
@@ -466,7 +468,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <h3>Zabawy z RWD</h3>
                         <p>Próby zachowania podobnego wyglądu dla prawie każdego z urządzeń, które potrafią wyświetlać zawartość w trybie graficznym. Element rozrywkowo-interaktywny dostępny póki co tylko dla ekranów niedotykowych i to w ograniczonym trybie funkcjonalności.</p>
                         <h3>Status projektu</h3>
-                        <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla zamknięcia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>w produkcji</em>...</p>
+                        <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla zamknięcia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>ukończony</em>...</p>
                     </div>    
                 </div> <!-- .kontener -->
                 <div class="kontener">
