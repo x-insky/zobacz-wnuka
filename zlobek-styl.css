@@ -1438,12 +1438,7 @@ div#gra div#zasady p:first-of-type {
 div#zasady #gra_zamykanie,
 div#nazwa_galerii #biezaca_galeria_zamykanie
 {
-/*      xqfc cposition: absolute;
-        xdf  margin-top: 5px;
-        dfdf margin-right: 5px;
-        ddssfd top: 4px;
-        dqsdf right: 4px; */
-    float:right;
+    float: right;
     margin-left: 0.5em;     /* to zostaje, ale powyższe można wywalić, dzięki czemu prawie te same wymiary i położenie jak inne zamykania */
     padding: 0.2em;
     padding-bottom: 0.4em;
@@ -1613,33 +1608,29 @@ footer#stopka p {
     padding: 0.5em;
 }
 
-div#poco {
-    display: none;	
+div#poco,
+div#pomoc 
+{
+    display: none;
+    position: relative;
     padding: 0.5em 1em;
     margin: 0.5em 0;
     background-color: deepskyblue;
     background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue); 	
 }
 
-.brak_js div#poco {
+div#pomoc {
+    background-color: #c3d5e2;	
+    background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue ); 	
+}
+
+.brak_js div#poco,
+.brak_js div#pomoc {
     display: block;	
 }
 
 div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klasę ku temu, nie cudować ze stylami! */
     font-style: italic ;	
-}
-
-div#pomoc {
-    display: none;	
-    padding: 0.5em 1em;
-    margin: 0.5em 0;	
-    /* background-color: dodgerblue;	*/
-    background-color: #c3d5e2;	
-    background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue ); 	
-}
-
-.brak_js div#pomoc {
-    display: block;
 }
 
 footer#stopka h3 {
@@ -1950,7 +1941,10 @@ input[type=range]:hover::-ms-fill-upper
     height: auto;
 }
 
-#odpluskwiacz_ajaksowy div #debugger_zamykanie {
+#odpluskwiacz_ajaksowy div #debugger_zamykanie,
+#poco_zamykanie,
+#pomoc_zamykanie
+{
     position: absolute;
     top: 6px;
     right: 5px;
@@ -1959,8 +1953,6 @@ input[type=range]:hover::-ms-fill-upper
     font-weight: bolder;
     font-size: 48px;
     line-height: 16px;
-/*  font-size: 3em;
-    line-height: 0.8em;    */
     color: black;
     background-color: #ddd;
     cursor: pointer;
@@ -1969,7 +1961,11 @@ input[type=range]:hover::-ms-fill-upper
 }
 
 #odpluskwiacz_ajaksowy div #debugger_zamykanie:hover,
-#odpluskwiacz_ajaksowy div #debugger_zamykanie:focus
+#odpluskwiacz_ajaksowy div #debugger_zamykanie:focus,
+#poco_zamykanie:hover,
+#poco_zamykanie:focus,
+#pomoc_zamykanie:hover,
+#pomoc_zamykanie:focus
 {
     background-color: yellow;
     border: 1px solid #660;

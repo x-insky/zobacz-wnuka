@@ -1,5 +1,33 @@
 ---------------------------
 
+v0.5.59 - close buttons for the 'help' and 'poco' sections
+
+* v0.5.59 -- [2022-02-06]
+
+[+] ADDED
+
+-- index.php
+* aded two close buttons
+  - one each for the '#help' and '#poco' sections
+
+-- witryna.js
+* added event handling for pressing new closing buttons
+  - events similar to those already existing for the closing buttons
+  - operation by clicking the mouse or pressing a button on the keyboard
+
+[*] MODIFIED
+ 
+-- zlobek-style.css
+* styles were copied, using selectors on existing closing elements
+  - also in the upper right corner of its parent, absolutely positioned
+* merged already existing selectors to avoid duplicate definitions
+
+-- witryna.js
+* code cleaning
+  - unnecessary spaces, indents and redundant new lines
+
+---------------------------
+
 v0.5.58 - quick fixes in the '#poco' section
 
 * v0.5.58 -- [2022-02-05]

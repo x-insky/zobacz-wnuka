@@ -3248,17 +3248,15 @@ $('div#zagraj').click( function() {
 //    InicjalizujGre();
     RozmiescCzesciWzorcowo();
     // ...
+});
     
-});    
-    
-    
+
 $('#gra_start').click( function() { // start tylko dla naciśnięcia elementu myszą/dotykiem, bo klawiaturą nie da się przeciągać efektywnie
     // ...
     RozmiescCzesciWzorcowo();
     // ...
-});    
-    
-  
+});
+
 
 $('#gra_zamykanie').on("click keydown", function( e ) { 
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
@@ -3266,9 +3264,23 @@ $('#gra_zamykanie').on("click keydown", function( e ) {
     $('#gra').slideUp(333);        // lepiej dać animację (nie .hide, ale .slideUp jako lepszy efekt) niż proste .css('display', 'none');
         // ...  // tu reset logiki na zliczanie punktów
     }
-});      
+});
 
-    // nie działa mi w JQ, próba powrotu do JS... te sdame zdarzenie i funkcje użyte w wywołaniu 
+$('#poco_zamykanie').on("click keydown", function( e ) { 
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
+    {
+    $('#poco').slideUp(333);
+    }
+});
+
+$('#pomoc_zamykanie').on("click keydown", function( e ) { 
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
+    {
+    $('#pomoc').slideUp(333);
+    }
+});
+
+    // nie działa mi w JQ, próba powrotu do JS... te same zdarzenie i funkcje użyte w wywołaniu 
 /*
 $('body').on('dragstart', '.przenosny', PoczatekRuchuPrzeciagania ); // $('#gra).on... bez zmian
     
@@ -3277,7 +3289,6 @@ $('body').on('drop', '.przenosny', RuchUpuszczania );   // RuchUpuszczania
 $('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania   
     
     */
-
     
 	
 // ***************************************************************************	
@@ -3319,4 +3330,3 @@ AktualnyRozmiarOkna('#wymiary');
 
 	
 }); //document-ready-END
-

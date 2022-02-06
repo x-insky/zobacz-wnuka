@@ -334,8 +334,9 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.58</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.59</h6>
             <div id="poco">
+            <div id="poco_zamykanie" tabindex="0">&times;</div>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
                     <div>
@@ -407,6 +408,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 </div>
             </div>
             <div id="pomoc">
+                <div id="pomoc_zamykanie" tabindex="0">&times;</div>
                 <h2>Pomoc &ndash; jak to działa</h2>
                 <div class="kontener">
                     <div>            
