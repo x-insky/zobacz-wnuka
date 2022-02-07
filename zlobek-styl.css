@@ -1633,6 +1633,10 @@ div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klas�
     font-style: italic ;	
 }
 
+footer#stopka h2 {
+    padding-top: 3em;
+}
+
 footer#stopka h3 {
     padding: 0.6em;
 }
@@ -1941,10 +1945,7 @@ input[type=range]:hover::-ms-fill-upper
     height: auto;
 }
 
-#odpluskwiacz_ajaksowy div #debugger_zamykanie,
-#poco_zamykanie,
-#pomoc_zamykanie
-{
+#odpluskwiacz_ajaksowy div #debugger_zamykanie {    /* docelowo zamienić na słabszy selektor, jak ".zamykanie"; ale dodać poniżej niewielkie różnice w pozycjonowaniu */ 
     position: absolute;
     top: 6px;
     right: 5px;
@@ -1960,12 +1961,30 @@ input[type=range]:hover::-ms-fill-upper
     transition: background-color 0.5s;
 }
 
+.zamykanie {
+    position: absolute;
+    z-index: 11;
+    width: 50px;
+    height: 50px;
+    top: 6px;
+    right: 5px;
+    overflow: hidden;
+    color: black;
+    background-color: #ddd;
+    border: 1px solid #666;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bolder;
+    font-size: 48px;
+    line-height: 40px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+
 #odpluskwiacz_ajaksowy div #debugger_zamykanie:hover,
 #odpluskwiacz_ajaksowy div #debugger_zamykanie:focus,
-#poco_zamykanie:hover,
-#poco_zamykanie:focus,
-#pomoc_zamykanie:hover,
-#pomoc_zamykanie:focus
+.zamykanie:hover,
+.zamykanie:focus
 {
     background-color: yellow;
     border: 1px solid #660;
@@ -2432,6 +2451,11 @@ input[type=range]:hover::-ms-fill-upper
         /*display: inline-block;*/  /* to była pierwotna wartość, ale jest lekko wyższa przez marginesy */
        display: inline;
     }
+
+    footer#stopka h2 {
+        padding-top: 0.5em;
+        padding-right: 2.5em;
+    }
     
     footer#stopka button {
         display: inline;
@@ -2566,6 +2590,9 @@ input[type=range]:hover::-ms-fill-upper
         min-width: 220px;
     }
     
+    footer#stopka h2 {
+        padding-right: 0.5em;
+    }
 }
 
 

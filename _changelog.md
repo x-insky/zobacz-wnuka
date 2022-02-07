@@ -1,5 +1,33 @@
 ---------------------------
 
+v0.5.60 - minor fixes for positioning buttons for closing sections '#poco' and '#pomoc'
+
+* v0.5.60 -- [2022-02-07]
+
+[+] ADDED
+
+-- zlobek-style.css
+* created a generic class ".zamykanie/closing" for the close buttons
+  - same visual style with :hover and :focus
+  - a square not a rectangle
+  - improved vertical centering for 'X'
+  - no empty outline above top edge of selected element when state :focus
+  - used as a test for the close buttons in the '#poco' and '#help' sections
+  - uses :focus and :hover states in the same manner
+
+[*] MODIFIED
+ 
+-- index.php
+* changed element type for close buttons from <div> to <aside>
+  - added a new class ".zamykanie/closing" to them right away
+  - no conflict with the already defined styles - no disturbed hierarchy of items in the footer, in existing queries with increasing screen width (the button should be one of the first item in the container to quickly switch to it with the [Tab] key)
+
+-- zlobek-style.css
+* increased top or side padding in <h2> subheads of '#poco' and '#help' sections
+  - for the purpose of not being covered by the closing button for this section
+
+---------------------------
+
 v0.5.59 - close buttons for the 'help' and 'poco' sections
 
 * v0.5.59 -- [2022-02-06]
@@ -39,7 +67,7 @@ v0.5.58 - quick fixes in the '#poco' section
 
 -- zlobek-style.css
 * the bordered element '.ramka/frame' in the '#poco' section is already centered on wider screens than 1400px
-  - increased slightly margins above and below this element 
+  - increased slightly margins above and below this element
 * added slight rounding of corners for elements in the 'superlatives' section
 * cleaning in the code (unequal indentations, unnecessary comments, etc.)
 

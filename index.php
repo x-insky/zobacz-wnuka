@@ -84,8 +84,6 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
         <header id="naglowek">
         <!-- <div class="kontener">  -->
 
-            <!-- tu </div> - kontener - tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamknąć w tych okowach... choć idealnie pasuje to ułatwienie  --> 
-
             <div id="naglowek_kontener">
 
                 <div id="banner">
@@ -334,9 +332,9 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.59</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.60</h6>
             <div id="poco">
-            <div id="poco_zamykanie" tabindex="0">&times;</div>
+                <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
                     <div>
@@ -408,7 +406,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 </div>
             </div>
             <div id="pomoc">
-                <div id="pomoc_zamykanie" tabindex="0">&times;</div>
+                <aside id="pomoc_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2>Pomoc &ndash; jak to działa</h2>
                 <div class="kontener">
                     <div>            
