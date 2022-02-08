@@ -629,7 +629,9 @@ div.powiadamiacz:focus
 }
 
 div.powiadamiacz:hover:after,
-div.powiadamiacz:focus:after
+div.powiadamiacz:hover::after,
+div.powiadamiacz:focus:after,
+div.powiadamiacz:focus::after
 {
     position: absolute;
     top: 5px;
@@ -640,15 +642,9 @@ div.powiadamiacz:focus:after
     line-height: 20px;
     padding: 0.2em;
     padding-bottom: 0.4em;
-    
     color: black;
     background-color: yellow; /* #ddd */
 }
-
-      /*  div.powiadamiacz:hover:after {
-            background-color: white;
-        }*/
-
 
 div.powiadamiacz p {
     text-align: center;
@@ -1184,6 +1180,10 @@ div#glowna div#nazwa_galerii {
     overflow: hidden;	
 }
 
+div#nazwa_galerii h2 {
+    padding-top: 3em;
+}
+
 div#glowna div#nazwa_galerii img {
 /*    float : left;*/
     display: block;
@@ -1433,43 +1433,6 @@ div#gra div#zasady {
 
 div#gra div#zasady p:first-of-type {
     margin-top: 9.5em;
-}
-
-div#zasady #gra_zamykanie,
-div#nazwa_galerii #biezaca_galeria_zamykanie
-{
-    float: right;
-    margin-left: 0.5em;     /* to zostaje, ale powyższe można wywalić, dzięki czemu prawie te same wymiary i położenie jak inne zamykania */
-    padding: 0.2em;
-    padding-bottom: 0.4em;
-    font-weight: bolder;
-    font-size: 48px;
-    line-height: 26px;
-    background-color: #ddd;
-    border: 1px solid #666;
-    cursor: pointer;
-    transition: background-color 0.5s;
-    user-select: none;
-}
-
-div#nazwa_galerii #biezaca_galeria_zamykanie {
-    margin-right: -0.125em;
-    margin-left: 100%;
-    margin-bottom: 0.5em;
-}
-
-div#zasady #gra_zamykanie:hover,
-div#zasady #gra_zamykanie:focus,
-div#nazwa_galerii #biezaca_galeria_zamykanie:hover,
-div#nazwa_galerii #biezaca_galeria_zamykanie:focus
-{
-    background-color: yellow;
-}
-
-div#zasady #gra_zamykanie:after, 
-div#nazwa_galerii #biezaca_galeria_zamykanie:after
-{
-    clear: both;
 }
 
 .zasada1 {
@@ -1945,64 +1908,47 @@ input[type=range]:hover::-ms-fill-upper
     height: auto;
 }
 
-#odpluskwiacz_ajaksowy div #debugger_zamykanie {    /* docelowo zamienić na słabszy selektor, jak ".zamykanie"; ale dodać poniżej niewielkie różnice w pozycjonowaniu */ 
-    position: absolute;
-    top: 6px;
-    right: 5px;
-    padding: 0.2em;
-    padding-bottom: 0.45em;
-    font-weight: bolder;
-    font-size: 48px;
-    line-height: 16px;
-    color: black;
-    background-color: #ddd;
-    cursor: pointer;
-    border: 1px solid #666;
-    transition: background-color 0.5s;
-}
-
 .zamykanie {
     position: absolute;
     z-index: 11;
     width: 50px;
     height: 50px;
     top: 6px;
-    right: 5px;
+    right: 6px;
     overflow: hidden;
     color: black;
     background-color: #ddd;
     border: 1px solid #666;
+        /* box-shadow: 0 0 2px 1px white; */
     text-align: center;
     vertical-align: middle;
     font-weight: bolder;
     font-size: 48px;
     line-height: 40px;
     cursor: pointer;
-    transition: background-color 0.5s;
+    user-select: none;
+    transition: background-color 0.5s,
+                top 0.3s, right 0.3s;
 }
 
-#odpluskwiacz_ajaksowy div #debugger_zamykanie:hover,
-#odpluskwiacz_ajaksowy div #debugger_zamykanie:focus,
 .zamykanie:hover,
 .zamykanie:focus
 {
     background-color: yellow;
-    border: 1px solid #660;
+        /* box-shadow: 0 0 4px 2px white; */
 }
 
 #odpluskwiacz_ajaksowy button {
-        /*display: inline-block;*/
-        display: block;
-        width: 100%;
-        word-wrap: break-word;
-        word-break: break-word;    
-        white-space: normal;
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+    word-break: break-word;    
+    white-space: normal;
     margin-top: 0.4em;
     margin-bottom: 0.3em;
 }
 
 #odpluskwiacz_ajaksowy label {
-        /*display: inline-block;*/
         display: block;
         width: 100%;
 }
@@ -2402,11 +2348,11 @@ input[type=range]:hover::-ms-fill-upper
         flex-basis: 250px;
     }
     
-    div#nazwa_galerii #biezaca_galeria_zamykanie {
-        margin-left: 0.5em;     /*  to likwiduje pełną linię dla przyciku, przez co tytuł galerii standardowo opływa ten przycisk */
-        margin-bottom: 0;
-        display: none;      /* domyślny stan w CSS, pokazywany poprzez JS jako reakcja na zdarzenie wyświetlenia podstrony galerii */
-        user-select: none;
+    div#nazwa_galerii h2,
+    footer#stopka h2
+    {
+        padding-top: 0.5em;
+        padding-right: 2.5em;
     }
 
     .maly_guzik {
@@ -2452,11 +2398,6 @@ input[type=range]:hover::-ms-fill-upper
        display: inline;
     }
 
-    footer#stopka h2 {
-        padding-top: 0.5em;
-        padding-right: 2.5em;
-    }
-    
     footer#stopka button {
         display: inline;
         width: auto;
@@ -2593,6 +2534,11 @@ input[type=range]:hover::-ms-fill-upper
     footer#stopka h2 {
         padding-right: 0.5em;
     }
+
+    .zamykanie {
+        top: 8px;
+        right: 8px;
+    }
 }
 
 
@@ -2638,8 +2584,9 @@ input[type=range]:hover::-ms-fill-upper
         margin-top: -2em;
     }
 
-    div#glowna div#nazwa_galerii h2 {
-        padding-left: 6.5em;    /* 208px szerokośc obrazxka / 16px == 6.5 */
+    div#nazwa_galerii h2 {
+        padding-left: 9em;    /* 208px szerokośc obrazka / 16px == 6.5 ... ale 1em to nie 16px, tylko 12.6px !!! */
+        padding-right: 2.5em;   /* na lewo wchodzi obrazek, który zabiera miejsce i długie treści mogą zachodzić znów pod przycisk zamykania * 
     }
     
     div#pomoc > div:first-of-type,
@@ -2699,6 +2646,11 @@ input[type=range]:hover::-ms-fill-upper
         right: 10px;
         /*padding-bottom: 0.55em;*/
     }
+
+    .zamykanie {
+        top: 10px;
+        right: 10px;
+    }
     
 }
 
@@ -2740,7 +2692,7 @@ input[type=range]:hover::-ms-fill-upper
     
     div.blad {
         max-width: 1200px;
-    }  
+    }
 
 }
 
