@@ -2043,7 +2043,7 @@ $('#nawigacja_galeria').fadeOut( czasAnimacji );
 function DostawPrzyciskZamykaniaDoBiezacejGalerii () {
 var $przyciskZamykania = $('#biezaca_galeria_zamykanie');
     // wstaw element tylko gdy nie ma go jeszcze na stronie 
-    if ( $przyciskZamykania.length == 0 ) $('#nazwa_galerii').prepend( '<div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>' );
+    if ( $przyciskZamykania.length == 0 ) $('#nazwa_galerii').prepend( '<div id="biezaca_galeria_zamykanie" class="zamykanie" tabindex="0">&times;</div>' );
 }
 
 function UsunPrzyciskZamykaniaDlaBiezacejGalerii () {
@@ -2303,7 +2303,7 @@ $cbaReklamaBig = $('img[usemap]');
     UWAGA: poniższe jest BARDZO restrykcyjne, gdyż wywala JEDNĄ lub DWIE reklamy:
       - pierwsza z nich jest statycznym tekstem, stanowiącym początek widocznych treści witryny (małe literki i opis)... PRZENIESIONO NA SPÓD STRONY
       - druga z nich to wyskakujacy banner z kłopotliwym zamykaniem 'x' na starych przeglądarkach bez flexboksa!-- co rozszrza stronę poza ekran!!
-        (do tgo kłopotliwe zamykanie, "X" w prawym górnym rogu, pod suwakiem przewijania pionowego) 
+        (do tego kłopotliwe zamykanie, "X" w prawym górnym rogu, pod suwakiem przewijania pionowego) 
       - czasem ten banner łapie poprzednia definicja "usuwacza", ale często zostaje on nieusunięty (ALBO: usuwa go mechanim antyreklamowy przeglądarki!)
       - ale obie są równożędnymi <div>ami, czyli RODZEŃSTWO, ale uciążliwy banner może być już usunięty wewnątrznie (przeglądarka lub plugin antyreklamowy)
         lub poprzednimi instrukcjami, przez co dopasowanie może przejąć "małoinwazyjnego tekstu reklamowaego" i go wywalić (dlatego go PRZENIESIONO, zamiast kasować)    

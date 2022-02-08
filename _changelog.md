@@ -1,5 +1,66 @@
 ---------------------------
 
+v0.5.61 - unification of closing buttons: shape, location and behavior
+
+* v0.5.61 -- [2022-02-08]
+
+[*] MODIFIED
+ 
+-- index.php
+* added '.zamykanie/closing' class to the close buttons for the '#gra/game' and '#biezaca_galeria/current_gallery' sections
+  - all to standardize the size, shape, location and behavior with other close buttons of the website
+* changed the order of the layout for the section '#odpluskwiacz_ajaksowy/ajax_debugger' 
+  - displacement from the end of the site to the beginning
+  - logical with going from top to bottom and selecting from the keyboard
+  - this section if displayed is always on top
+* cleaning: removed old comments and unnecessary newlines
+  - fixed indentation for block '#spis_tresci/table_of_contens'
+
+-- zlobek-style.css
+* adopted a common class for closing buttons
+  - removed button wrap around adjacent button elements, based on float styles
+  - minimal offsets from the right corner, depending on the width of the screen
+  - added inability to select the text content of the button (symbol of 'X')
+* corrected the impact of close buttons on the title of the currently displayed gallery or the main title in the footer
+  - padding ranges for different screen widths were tested for encountered some of the longest titles 
+  - tests probably eliminated minor distortions of the structure of the selected gallery, in the case of long titles with short words at certain screen widths
+* added the original syntax for the encountered pseudo-element selectors
+  - generally it's redundant operations, because browsers interpret pseudo-class syntax for pseudo-elements anyway
+
+-- witryna.js
+* corrected the generating of the closing button inside the 'DostawPrzyciskZamykaniaDoBiezacejGalerii/DeliveryCloseButtonToCurrentGallery' function
+  - includes a unified class for close buttons when building HTML
+
+---------------------------
+
+v0.5.60 - minor fixes for positioning buttons for closing sections '#poco' and '#pomoc'
+
+* v0.5.60 -- [2022-02-07]
+
+[+] ADDED
+
+-- zlobek-style.css
+* created a generic class ".zamykanie/closing" for the close buttons
+  - same visual style with :hover and :focus
+  - a square not a rectangle
+  - improved vertical centering for 'X'
+  - no empty outline above top edge of selected element when state :focus
+  - used as a test for the close buttons in the '#poco' and '#help' sections
+  - uses :focus and :hover states in the same manner
+
+[*] MODIFIED
+ 
+-- index.php
+* changed element type for close buttons from <div> to <aside>
+  - added a new class ".zamykanie/closing" to them right away
+  - no conflict with the already defined styles - no disturbed hierarchy of items in the footer, in existing queries with increasing screen width (the button should be one of the first item in the container to quickly switch to it with the [Tab] key)
+
+-- zlobek-style.css
+* increased top or side padding in <h2> subheads of '#poco' and '#help' sections
+  - for the purpose of not being covered by the closing button for this section
+
+---------------------------
+
 v0.5.59 - close buttons for the 'help' and 'poco' sections
 
 * v0.5.59 -- [2022-02-06]
@@ -39,7 +100,7 @@ v0.5.58 - quick fixes in the '#poco' section
 
 -- zlobek-style.css
 * the bordered element '.ramka/frame' in the '#poco' section is already centered on wider screens than 1400px
-  - increased slightly margins above and below this element 
+  - increased slightly margins above and below this element
 * added slight rounding of corners for elements in the 'superlatives' section
 * cleaning in the code (unequal indentations, unnecessary comments, etc.)
 

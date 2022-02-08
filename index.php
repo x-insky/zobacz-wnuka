@@ -81,10 +81,20 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 
 	<div id="witryna" class="brak_js">
 
-        <header id="naglowek">
-        <!-- <div class="kontener">  -->
+        <div class="kontener">
+            <div id="odpluskwiacz_ajaksowy">
+                <div>
+                    <h4><span class="status_ajaksa" title="Aktualny stan komunikowania się z serwerem. UWAGA: ma wpływ na PRZYSZE żądania i odpowiedzi, sporadycznie reaguje na teraźniejszą komunikację!">Stan Komunikacji</span>
+                        <button class="zepsuj" title="Tworzy błędy w zapytaniach serwera, które uniemożliwiają pobranie i wyświetlenie oczekiwanych treści. Blokuje to nawigowanie po zawartości (wymuszenie powstania błędu, jako symulacja jego ewentualnego wystąpienia).">Zepsuj</button> 
+                        <button class="napraw" title="Wznawia prawidłową komunikację.">Napraw</button> 
+                        <label for="awaria_na_stale" title="Zaznacz/odznacz to pole przed wybraniem [Zepsuj]/[Napraw], aby ustalić trwałą zmianę. Opcja zostanie zapamiętana także po odświeżeniu strony. Usuwanie decyzji przez odznaczenie pola i zatwierdzeniu przyciskiem akcji."> <input type="checkbox" name="awaria_na_stale" id="awaria_na_stale" style="transform: scale(1.5);"> Ustawić na stałe?</label>
+                    </h4>
+                    <div id="debugger_zamykanie" class="zamykanie" tabindex="0">&times;</div>
+                </div>
+            </div>
+        </div>       
 
-            <!-- tu </div> - kontener - tylko na nagłówek, tj. logo z animacjami (a nie całą zawartość zamknąć w tych okowach... choć idealnie pasuje to ułatwienie  --> 
+        <header id="naglowek">
 
             <div id="naglowek_kontener">
 
@@ -118,143 +128,142 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 
             </div>	<!-- div#naglowek_kontener -->    
                 
-                <div id="spis_tresci">
-                    <div id="zaczytany_spis">
-                    <!--    <pre><?php /* var_dump( $_SERVER ); */ ?></pre>    -->
-                        <?php
-    
-                            if ( $adres_przekierowania )   // tworzenie elementu z notyfikacją przekierownia !!!TRUE MA TU NIE BYĆ DOCELOWO!!!
-                            {
-                            echo '<div id="powiadamiacz_przekierowania" class="powiadamiacz" tabindex="0">';    
-                            echo "<h3>Witamy w skromnych progach Internetowy Wędrowcze! Trafiłeś tu z adresu <span>{$adres_przekierowania}</span></h3>";
-                            echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund, ale możesz je kliknąć by to przyspieszyć.</p>';    
-                            echo '<div class="pasek"></div>';
-                            echo '</div>';    
-                            }
-                        
-                            if ( $czy_ciastko_poprzedniej_wizyty )  // tworzenie elementu z notyfikacją daty ostatnich odwiedzin (jakiś odległy termin)
-                            {
-                            echo '<div id="powiadamiacz_ciastka" class="powiadamiacz" tabindex="0">';    
-                            echo "<h3>Witamy ponownie po <span>{$ile_dni_temu_odwiedzone}</span>. dniach (dniu) nieobecności";
-                                if ( $laczna_ilosc_wizyt > 1 ) echo ", jako <span>{$laczna_ilosc_wizyt}</span>. odwiedziny.</h3>";
-                                else echo "!</h3>";
-                            echo "<h4>Dobrze pamiętamy, że w dniu <span>{$data_poprzedniej_wizyty_format}</span> konkretnie o godzinie <span>{$godzina_poprzedniej_wizyty_format}</span> ostatnio odwiedzono ten serwis.</h4>";
-                            echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund, ale możesz je kliknąć by to przyspieszyć.</p>';    
-                            echo '<div class="pasek"></div>';
-                            echo '</div>';    
-                            }
-                        ?>
-                        <h2>Lista galerii ze Żłobka</h2>
-                        <div class="ciemne_tlo_spis">
-                            <div class="kontener">
-                                <div id="galeria_spis">
-                                </div>
-                            </div>    
-                        </div>
-                        
-                        <div id="wczytywanie_spis">
-                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
-                        </div>
-                        
+            <div id="spis_tresci">
+                <div id="zaczytany_spis">
+                <!--    <pre><?php /* var_dump( $_SERVER ); */ ?></pre>    -->
+                    <?php
+
+                        if ( $adres_przekierowania )   // tworzenie elementu z notyfikacją przekierownia !!!TRUE MA TU NIE BYĆ DOCELOWO!!!
+                        {
+                        echo '<div id="powiadamiacz_przekierowania" class="powiadamiacz" tabindex="0">';    
+                        echo "<h3>Witamy w skromnych progach Internetowy Wędrowcze! Trafiłeś tu z adresu <span>{$adres_przekierowania}</span></h3>";
+                        echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund, ale możesz je kliknąć by to przyspieszyć.</p>';    
+                        echo '<div class="pasek"></div>';
+                        echo '</div>';    
+                        }
+                    
+                        if ( $czy_ciastko_poprzedniej_wizyty )  // tworzenie elementu z notyfikacją daty ostatnich odwiedzin (jakiś odległy termin)
+                        {
+                        echo '<div id="powiadamiacz_ciastka" class="powiadamiacz" tabindex="0">';    
+                        echo "<h3>Witamy ponownie po <span>{$ile_dni_temu_odwiedzone}</span>. dniach (dniu) nieobecności";
+                            if ( $laczna_ilosc_wizyt > 1 ) echo ", jako <span>{$laczna_ilosc_wizyt}</span>. odwiedziny.</h3>";
+                            else echo "!</h3>";
+                        echo "<h4>Dobrze pamiętamy, że w dniu <span>{$data_poprzedniej_wizyty_format}</span> konkretnie o godzinie <span>{$godzina_poprzedniej_wizyty_format}</span> ostatnio odwiedzono ten serwis.</h4>";
+                        echo '<p>Bieżące powiadomienie zniknie samoistnie w przeciągu kilkunastu sekund, ale możesz je kliknąć by to przyspieszyć.</p>';    
+                        echo '<div class="pasek"></div>';
+                        echo '</div>';    
+                        }
+                    ?>
+                    <h2>Lista galerii ze Żłobka</h2>
+                    <div class="ciemne_tlo_spis">
+                        <div class="kontener">
+                            <div id="galeria_spis">
+                            </div>
+                        </div>    
                     </div>
-                
-                    <div id="wybrany_zaczytany_spis">
-                        <h2>Lista galerii z wybranej <span></span> podstrony</h2>
-                        <div id="wczytywanie_wybrane_galerie_spis">
-                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
-                        </div>
-                        <div class="ciemne_tlo_spis">                        
-                            <div class="kontener">
-                                <div id="wybrane_galerie_spis">
-                                </div>
+                    
+                    <div id="wczytywanie_spis">
+                        <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
+                    </div>
+                    
+                </div>
+            
+                <div id="wybrany_zaczytany_spis">
+                    <h2>Lista galerii z wybranej <span></span> podstrony</h2>
+                    <div id="wczytywanie_wybrane_galerie_spis">
+                        <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
+                    </div>
+                    <div class="ciemne_tlo_spis">                        
+                        <div class="kontener">
+                            <div id="wybrane_galerie_spis">
                             </div>
                         </div>
-                        <div id="skladowisko_wybrane_galerie_spis">
-                        </div>
                     </div>
-                    
-                    
-                    <nav id="spis_sterowanie">
-                        <div class="kontener">
-                        <p id="status_galerii_spis"></p>
-                        </div>
-                        <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2" tabindex="0">Załaduj kolejne galerie<img src="grafiki/slonce_60x60.png" alt="" /><span></span></h2>
+                    <div id="skladowisko_wybrane_galerie_spis">
+                    </div>
+                </div>
+                
+                
+                <nav id="spis_sterowanie">
+                    <div class="kontener">
+                    <p id="status_galerii_spis"></p>
+                    </div>
+                    <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2" tabindex="0">Załaduj kolejne galerie<img src="grafiki/slonce_60x60.png" alt="" /><span></span></h2>
 
-                        <div class="kontener">
-                            <div id="selektor">     
-                                <h2 id="selektor_naglowek" tabindex="0">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
-                                <div>
-                                    <form action="#" method="post" id="wybierz_galerie" autocomplete="off">
-                                        <div id="wybor_galerii">
-                                            <div id="suwak">
-                                                <div>
-                                                    <label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
-                                                    <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
-                                                </div>
-                                                <aside>
-                                                    <span class="lewy">nowsze</span> 
-                                                    <span class="prawy">starsze</span>    
-                                                </aside>
-                                                <div>
-                                                    <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" alt="Wybierz numer galerii z zakresu" />
-                                                </div>
-                                            </div>
-                                            <div id="suwak_info">
-                                                <div>
-                                                    <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
-                                                    <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
-                                                </div>
-                                            </div>
+                    <div class="kontener">
+                        <div id="selektor">     
+                            <h2 id="selektor_naglowek" tabindex="0">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
+                            <div>
+                                <form action="#" method="post" id="wybierz_galerie" autocomplete="off">
+                                    <div id="wybor_galerii">
+                                        <div id="suwak">
                                             <div>
-                                                <input type="button" id="losuj_zakres" name="losuj_zakres" class="szerszy_guzik" value="Losuj galerię" />
-                                                <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" class="szerszy_guzik" role="submit" value="Zobacz wybrany" />
+                                                <label for="galeria_wybrany_nr">Wybrany numer galerii:</label>
+                                                <input type="text" id="galeria_wybrany_nr" name="galeria_wybrany_nr" maxLength="4" />
                                             </div>
-                                        </div>  <!-- div#wybor_galerii -->  
-                                    </form>    
-                                    <form action="#" method="post" id="wybierz_podstrone" autocomplete="off">
-                                        <div id="wybor_podstrony_galerii">
-                                            <div id="suwak_podstrony">
-                                                <div>
-                                                    <label for="podstrona_wybrany_nr">Numer podstrony listy galerii:</label>
-                                                    <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
-                                                </div>
-                                                <aside>
-                                                    <span class="lewy">nowsze</span> 
-                                                    <span class="prawy">starsze</span>    
-                                                </aside>
-                                                <div>
-                                                    <input type="range" min="1" selectionDirection="forward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
-                                                </div>
-                                            </div>
-                                            <div id="suwak_podstrona_info">
-                                                <div>
-                                                    <input type="button" id="wybrany_nr_podstrony_zmniejsz" class="maly_guzik" value="-1" />
-                                                    <input type="button" id="wybrany_nr_podstrony_zwieksz" class="maly_guzik" value="+1" />
-                                                </div>
-                                            </div>
+                                            <aside>
+                                                <span class="lewy">nowsze</span> 
+                                                <span class="prawy">starsze</span>    
+                                            </aside>
                                             <div>
-                                                <input type="button" id="losuj_zakres_podstrony" class="szerszy_guzik" name="losuj_zakres_podstrony" value="Losuj podstronę" />
-                                                <input type="submit" id="suwak_podstrony_submit" class="szerszy_guzik" name="suwak_podstrony_submit" role="submit" value="Zobacz wybrany" />
-                                            </div>	
-                                        </div>  <!-- div#wybor_podstrony_galerii --> 
-                                    </form>
-                                </div>    
-                            </div> <!-- div#selektor -->
-                        </div>  <!-- div.kontener -->
-                        
-                        <div id="skladowisko_status_wybranej_galerii">
-                        </div>
+                                                <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" alt="Wybierz numer galerii z zakresu" />
+                                            </div>
+                                        </div>
+                                        <div id="suwak_info">
+                                            <div>
+                                                <input type="button" id="wybrany_nr_zmniejsz" class="maly_guzik" value="-1" />
+                                                <input type="button" id="wybrany_nr_zwieksz" class="maly_guzik" value="+1" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <input type="button" id="losuj_zakres" name="losuj_zakres" class="szerszy_guzik" value="Losuj galerię" />
+                                            <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" class="szerszy_guzik" role="submit" value="Zobacz wybrany" />
+                                        </div>
+                                    </div>  <!-- div#wybor_galerii -->  
+                                </form>    
+                                <form action="#" method="post" id="wybierz_podstrone" autocomplete="off">
+                                    <div id="wybor_podstrony_galerii">
+                                        <div id="suwak_podstrony">
+                                            <div>
+                                                <label for="podstrona_wybrany_nr">Numer podstrony listy galerii:</label>
+                                                <input type="text" id="podstrona_wybrany_nr" name="podstrona_wybrany_nr" maxLength="4" />
+                                            </div>
+                                            <aside>
+                                                <span class="lewy">nowsze</span> 
+                                                <span class="prawy">starsze</span>    
+                                            </aside>
+                                            <div>
+                                                <input type="range" min="1" selectionDirection="forward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
+                                            </div>
+                                        </div>
+                                        <div id="suwak_podstrona_info">
+                                            <div>
+                                                <input type="button" id="wybrany_nr_podstrony_zmniejsz" class="maly_guzik" value="-1" />
+                                                <input type="button" id="wybrany_nr_podstrony_zwieksz" class="maly_guzik" value="+1" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <input type="button" id="losuj_zakres_podstrony" class="szerszy_guzik" name="losuj_zakres_podstrony" value="Losuj podstronę" />
+                                            <input type="submit" id="suwak_podstrony_submit" class="szerszy_guzik" name="suwak_podstrony_submit" role="submit" value="Zobacz wybrany" />
+                                        </div>	
+                                    </div>  <!-- div#wybor_podstrony_galerii --> 
+                                </form>
+                            </div>    
+                        </div> <!-- div#selektor -->
+                    </div>  <!-- div.kontener -->
+                    
+                    <div id="skladowisko_status_wybranej_galerii">
+                    </div>
 
-                        <div id="status_wybranej_galerii">
-                        </div>
-                        <!-- tu było #wczytywanie  ... -->
+                    <div id="status_wybranej_galerii">
+                    </div>
+                    <!-- tu było #wczytywanie  ... -->
 
-                        <div id="galeria_spis_podmiana" class="clearfix">
-                        </div>
-                    </nav>	
-                </div>  <!-- div#spis_tresci -->
+                    <div id="galeria_spis_podmiana" class="clearfix">
+                    </div>
+                </nav>	
+            </div>  <!-- div#spis_tresci -->
 
-            
             <div id="brak_skryptow" style="">
                 <div class="blad animacja_zolty_blysk">
                     <h2 class="blad_tytul">A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
@@ -266,13 +275,14 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     <!--<div class="krzyzyk_zamykanie" tabindex="0">×</div>-->
                 </div>
             </div>
+
         </header>
 
         
         <div id="glowna">
 
             <div id="nazwa_galerii">
-                <div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>
+                <div id="biezaca_galeria_zamykanie" class="zamykanie" tabindex="0">&times;</div>
                 <div class="kontener">
                 <h2></h2>
                 <img />
@@ -301,7 +311,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
         
         <div id="gra">
             <div id="zasady">
-                <div id="gra_zamykanie" tabindex="0">&times;</div>
+                <div id="gra_zamykanie" class="zamykanie" tabindex="0">&times;</div>
                 <div class="kontener">    
                     <h2 class="zasada1"><input type="checkbox"> Pokoloruj duży obrazek poprzez ułożenie jego małych fragmentów we właściwych miejscach.</h2>
                     <h2 class="zasada2"><input type="checkbox"> Użyj myszy lub gładzika komputera, <br />bo małe ekrany dotykowe są &quot;be&quot; (póki co jest dramat)!</h2>
@@ -334,9 +344,9 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.59</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.61</h6>
             <div id="poco">
-            <div id="poco_zamykanie" tabindex="0">&times;</div>
+                <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
                     <div>
@@ -408,7 +418,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 </div>
             </div>
             <div id="pomoc">
-                <div id="pomoc_zamykanie" tabindex="0">&times;</div>
+                <aside id="pomoc_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2>Pomoc &ndash; jak to działa</h2>
                 <div class="kontener">
                     <div>            
@@ -545,18 +555,6 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
         
     </div>	<!-- DIV#witryna -->
 
-<div class="kontener">
-    <div id="odpluskwiacz_ajaksowy">
-        <div>
-            <h4><span class="status_ajaksa" title="Aktualny stan komunikowania się z serwerem. UWAGA: ma wpływ na PRZYSZE żądania i odpowiedzi, sporadycznie reaguje na teraźniejszą komunikację!">Stan Komunikacji</span>
-                <button class="zepsuj" title="Tworzy błędy w zapytaniach serwera, które uniemożliwiają pobranie i wyświetlenie oczekiwanych treści. Blokuje to nawigowanie po zawartości (wymuszenie powstania błędu, jako symulacja jego ewentualnego wystąpienia).">Zepsuj</button> 
-                <button class="napraw" title="Wznawia prawidłową komunikację.">Napraw</button> 
-                <label for="awaria_na_stale" title="Zaznacz/odznacz to pole przed wybraniem [Zepsuj]/[Napraw], aby ustalić trwałą zmianę. Opcja zostanie zapamiętana także po odświeżeniu strony. Usuwanie decyzji przez odznaczenie pola i zatwierdzeniu przyciskiem akcji."> <input type="checkbox" name="awaria_na_stale" id="awaria_na_stale" style="transform: scale(1.5);"> Ustawić na stałe?</label>
-            </h4>
-            <div id="debugger_zamykanie" tabindex="0">&times;</div>
-        </div>
-    </div>
-</div>                           	
 
     <script>
         window.jQuery || document.write('<script src="./lib/jquery-1.12.4.min.js"></script' + '>');
