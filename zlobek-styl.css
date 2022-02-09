@@ -184,18 +184,15 @@ div.blad {
 }
 
 div.blad:hover {
-
     box-shadow: 2px 2px 6px #111;
     transform: scale(1.05);
-    
     /*    animation: zolty_blysk 2s ease-out;
         animation-fill-mode: both; */
 }
 
 div.blad .blad_tytul {
     padding: 0.25em;
-    padding-top: 0.8em;
-    padding-right: 55px;
+    padding-top: 2.8em;
     user-select: none;
 }
 
@@ -218,7 +215,6 @@ div.blad .blad_ikona {
     color: darkred;
     font-size: 104px;    /* wartośc bezwzględna */
     /*    font-size: 6.5em;*/
-
     line-height: 98px;
     /*line-height: 0.95em;*/
     font-weight: bolder;
@@ -233,29 +229,6 @@ div.blad .blad_ikona {
 div.blad p {
     font-size: 1.5em;
     padding: 0.5em;
-}
-
-div.blad .krzyzyk_zamykanie {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    padding: 0.2em;
-    padding-bottom: 0.4em;
-    font-weight: bolder;
-    font-size: 48px;
-    line-height: 26px;
-/*  font-size: 3em;
-    line-height: 0.8em;    */
-    background-color: #ddd;
-    cursor: pointer;
-    transition: background-color 0.5s;
-    user-select: none;
-}
-
-div.blad .krzyzyk_zamykanie:hover,
-div.blad .krzyzyk_zamykanie:focus
-{
-    background-color: yellow;
 }
 
 div.blad h2
@@ -310,6 +283,41 @@ footer#stopka .kontener.ramka {
     padding: 0;
     padding-bottom: 0.5em;
     margin: 0.75em auto;
+}
+
+.zamykanie {
+    position: absolute;
+    z-index: 11;
+    width: 50px;
+    height: 50px;
+    top: 6px;
+    right: 6px;
+    overflow: hidden;
+    color: black;
+    background-color: #ddd;
+    border: 1px solid #666;
+        /* box-shadow: 0 0 2px 1px white; */
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bolder;
+    font-size: 48px;
+    line-height: 40px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.5s,
+                top 0.3s, right 0.3s;
+}
+
+.zamykanie:hover,
+.zamykanie:focus
+{
+    background-color: yellow;
+        /* box-shadow: 0 0 4px 2px white; */
+}
+
+div.blad .zamykanie {
+    top: 4px;
+    right: 4px;
 }
 
 .zalety {
@@ -1908,36 +1916,6 @@ input[type=range]:hover::-ms-fill-upper
     height: auto;
 }
 
-.zamykanie {
-    position: absolute;
-    z-index: 11;
-    width: 50px;
-    height: 50px;
-    top: 6px;
-    right: 6px;
-    overflow: hidden;
-    color: black;
-    background-color: #ddd;
-    border: 1px solid #666;
-        /* box-shadow: 0 0 2px 1px white; */
-    text-align: center;
-    vertical-align: middle;
-    font-weight: bolder;
-    font-size: 48px;
-    line-height: 40px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.5s,
-                top 0.3s, right 0.3s;
-}
-
-.zamykanie:hover,
-.zamykanie:focus
-{
-    background-color: yellow;
-        /* box-shadow: 0 0 4px 2px white; */
-}
-
 #odpluskwiacz_ajaksowy button {
     display: block;
     width: 100%;
@@ -2312,6 +2290,11 @@ input[type=range]:hover::-ms-fill-upper
         height: 330px;    
     }
 
+    div.blad .blad_tytul {
+        padding-top: 0.8em;
+        padding-right: 55px;    /* szerokośc guzika zamykania 50px + minimalne odstę[y od krawędzi i guzika */
+    }
+
     div#spis_tresci div.kontener_odnosnik {
         min-height: 375px;			
         max-height: 375px;
@@ -2327,8 +2310,8 @@ input[type=range]:hover::-ms-fill-upper
 
     div#glowna div#nazwa_galerii img {
         display: inline;
-        float : left;
-        margin : 0.5em;
+        float: left;
+        margin: 0.5em;
         margin-right: 1.5em;	
     }
 
@@ -2357,14 +2340,14 @@ input[type=range]:hover::-ms-fill-upper
 
     .maly_guzik {
         min-width: 130px;
-            padding: 0.45em 1em;    /* przywrócenie wzorcowych dopełnień */  
+        padding: 0.45em 1em;    /* przywrócenie wzorcowych dopełnień */  
     }
 
     .szerszy_guzik {
         min-width: 200px;
         padding: 0.45em 1em;
-            display: inline;
-            width: auto;
+        display: inline;
+        width: auto;
     }
 
     .opis_odnosnik {
@@ -2521,10 +2504,9 @@ input[type=range]:hover::-ms-fill-upper
         max-height: 230px;
     }
     
-    div.blad .krzyzyk_zamykanie {
+    div.blad .zamykanie {
         top: 6px;
         right: 6px;
-        /*padding-bottom: 0.5em;*/
     }
     
     div#selektor input.szerszy_guzik {
@@ -2563,7 +2545,7 @@ input[type=range]:hover::-ms-fill-upper
         max-height: 240px;
     }
     
-    div.blad .krzyzyk_zamykanie {
+    div.blad .zamykanie {
         top: 8px;
         right: 8px;
     }
@@ -2586,13 +2568,12 @@ input[type=range]:hover::-ms-fill-upper
 
     div#nazwa_galerii h2 {
         padding-left: 9em;    /* 208px szerokośc obrazka / 16px == 6.5 ... ale 1em to nie 16px, tylko 12.6px !!! */
-        padding-right: 2.5em;   /* na lewo wchodzi obrazek, który zabiera miejsce i długie treści mogą zachodzić znów pod przycisk zamykania * 
+        padding-right: 2.5em;   /* na lewo wchodzi obrazek, który zabiera miejsce i długie treści mogą zachodzić znów pod przycisk zamykania */ 
     }
     
-    div#pomoc > div:first-of-type,
+    div#pomoc > div:first-of-type,  /* pierwsze kontenery w kontenerze stają się fleks-kontenerami i grupują dwie kolumny */
     div#poco > div:first-of-type {
         display: flex;
-        /*    max-width: 49%;*/
     }
       
     div#pomoc > div > div,
@@ -2641,13 +2622,9 @@ input[type=range]:hover::-ms-fill-upper
         max-width: 1100px;
     }   
     
-    div.blad .krzyzyk_zamykanie {
-        top: 10px;
-        right: 10px;
-        /*padding-bottom: 0.55em;*/
-    }
-
-    .zamykanie {
+    .zamykanie,
+    div.blad .zamykanie
+    {
         top: 10px;
         right: 10px;
     }

@@ -1,3 +1,25 @@
+v0.5.62 - all site close buttons are now standardized
+
+* v0.5.62 -- [2022-02-09]
+
+[*] MODIFIED
+
+-- zlobek-style.css
+* changed the style of the close button for the error notification to the already proven theme by class '.zamykanie/closing'
+  - tested display and behavior of the general button class along with style changes in this notification
+  - uniform appearance, behavior and interaction with adjacent elements in the notification for different screen widths
+  - complete resignation from the previous class of '.krzyzyk_zamykania/cross_of_closing'
+* moved the definition of the general class of the '.zamykanie/closing' button to the beginning of the CSS sheet
+  - easier reference between elements of the website structure, which are using the functionality of closing or hiding content
+* cleaning in styles: unnecessary indents, spaces, new lines and clearly redundant definitions (often out of date and commented out)
+
+-- witryna.js
+* modified the function 'GenerujPowiadomienieOBledzie'
+  - function produces an element with a description of the error with the class '.zamykanie/closing'
+* modified the handling of the delegated event in the '#galeria_spis' area to the changed closing class name
+  - there is a namespace/event space
+  - explicitly referring to this class as an event object, there is no dedicated other class for closing the error notification (the class is used throughout the site for styling the close buttons)
+
 ---------------------------
 
 v0.5.61 - unification of closing buttons: shape, location and behavior

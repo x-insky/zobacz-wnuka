@@ -1830,10 +1830,10 @@ budowanyElement += '</div>'; // zamykacz dla div.blad_tresc
 
     if ( opcje.ikonaZamykania )    // standardowy tryb i działanie
     {
-    budowanyElement = budowanyElement + '<div class="krzyzyk_zamykanie" tabindex="0">&times;</div>' ;
-        // +++  "krzyżyk" do zamykania do treści
+    budowanyElement = budowanyElement + '<div class="zamykanie" tabindex="0">&times;</div>' ;
+        // +++  "krzyżyk/iksior" do zamykania obszaru z treścią w rodzicu lub przodku 
     }
-budowanyElement = budowanyElement + '</div>' ;  // znacznik zamykający cały tag 
+budowanyElement = budowanyElement + '</div>' ;  // znacznik kończący strukturę powiadomienia o błędzie
 //...
 
     
@@ -3208,7 +3208,7 @@ $('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt ) { // te
 }); //  on("click")-$('#przywroc_niewczytane')-END	   
     
     
-$('#galeria_spis').on("click keydown", ".krzyzyk_zamykanie", function( e ) {    // zakykanie "okienek" i pasków
+$('#galeria_spis').on("click keydown", ".zamykanie", function( e ) {    // ewentualenie tworzyć elementy z jakąś sztuczna klasą, by ją tylko tu bezpośrednio obsługiwać dla jasności obsługi zdarzeń; zamykanie "okienek" i pasków w obszarze "#galeria_spis", czyli w "okienkach z błędami" nad spisem galerii
 var $this = $(this);
     // jakoby warunkowe wykonanie, mimo że na CLICK wstępnie reagowało 
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
@@ -3216,7 +3216,7 @@ var $this = $(this);
         if ( e.which == 32 ) e.preventDefault(); // tylko zamknie, bez ewentualnego przewijania      
     $(this).blur(); // bezwarunkowe usunięcie focusu z elementu zamykającego
     var kontenerBledu = $this.parent('.blad');  // wystarczający krok o jeden poziom w górę
-//    kontenerBledu.hide(300, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
+//    kontenerBledu.hide(300, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie wymagają innych działań niż zamknięcie ramki komunikatu
     kontenerBledu.slideUp(1000, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie eymagaja innych działań niż zamknięcie ramki komunikatu
         // TODO: z jakiejś racji dowolny typ animacji chowającej rodzica elementu z focusem się zacina... ale na starych przeglądarkach śmiga dobrze?!
         // problem w CSS: transition: ALL ...; "ALL" jest zbyt zasobożerne, a stare www nie ogarniają "przejść"
