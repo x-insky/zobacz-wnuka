@@ -1,3 +1,29 @@
+v0.5.63 - new class for handling button shutdown events for error notifications
+
+* v0.5.63 -- [2022-02-10]
+
+[+] ADDED
+
+-- zlobek-style.css
+* added a general '.wysrodkowane/centered' class to center elements horizontally (for inline elems)
+  - after the selector s strengthened, it was used for the element in the footer of the site
+
+
+[*] MODIFIED
+
+-- witryna.js
+* initial use in the footer of a new class for centering elements in the frame (together with the '.ramka/frame' class), e.g. a text message
+
+-- witryna.js
+* added for clarity, an additional class to the button to close error messages
+  - site logic adds a new class to the close button for the message being built
+  - modified the crash handling code - greater readability of event handling (easy knowing what is the event object)
+  - the namespace for event delegation still matters, but it is easier to manipulate the repeating element type
+  - the event is handled on one or more displayed messages (and not with the 'id' attribute like the other buttons)
+* minor purges in the encountered code: spaces, indentations, spotted typos in the comments
+
+---------------------------
+
 v0.5.62 - all site close buttons are now standardized
 
 * v0.5.62 -- [2022-02-09]

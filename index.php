@@ -272,7 +272,6 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <p>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Zweryfikuj to i włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.<br />
                         Nie zapomnij na koniec odświeżyć stronę.</p>
                     </div>
-                    <!--<div class="krzyzyk_zamykanie" tabindex="0">×</div>-->
                 </div>
             </div>
 
@@ -344,7 +343,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.62</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.63</h6>
             <div id="poco">
                 <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
@@ -492,7 +491,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     </ul>
                     <p>W niższych wersjach przeglądarek prawdowodobnie aplikacja nie uruchomi się właściwie. Funkcjonowanie programu zależy od wsparcia JavaScriptu w poszczególnych wersjach przeglądarek. Uruchomienie może także powieść się. <br />
                     Wygląd witryny i efekty mogą się znacząco różnić pomiędzy wersjami przeglądarek, rzadziej samych przeglądarek (choć bardzo nieznacznie). Wrażenia wizualne i stopień spełnienia wymagań HTML5 oraz CSS3 przez przeglądarkę, często tożsamy w obsługiwanej wersji języka JavaScript. </p>
-                    <p class="ramka">Zalecamy korzystać z popularnych i aktualizowanych na bieżąco wersji przeglądarek, z uwagi na bezpieczeństwo użytkowania zasobów Internetu!</p>
+                    <p class="ramka wysrodkowane">Zalecamy korzystać z popularnych i aktualizowanych na bieżąco wersji przeglądarek, z uwagi na bezpieczeństwo użytkowania zasobów Internetu!</p>
                 </div>
                 <div class="kontener">
                 <h3>DEBUG_MODE: Info o przeglądarce i serwerze</h3>

@@ -1828,10 +1828,9 @@ budowanyElement += '</div>'; // zamykacz dla div.blad_tresc
     // +++  wstawienie przycisku do oświeżenia witryny
     }  */  
 
-    if ( opcje.ikonaZamykania )    // standardowy tryb i działanie
+    if ( opcje.ikonaZamykania )    // doklejenie standardowego trybu działania: "krzyżyk/iksior" do zamykania całego powiadomienia (obszaru z treścią w rodzicu lub przodku) 
     {
-    budowanyElement = budowanyElement + '<div class="zamykanie" tabindex="0">&times;</div>' ;
-        // +++  "krzyżyk/iksior" do zamykania obszaru z treścią w rodzicu lub przodku 
+    budowanyElement = budowanyElement + '<div class="zamykanie zamykanie-komunikatu-bledu" tabindex="0">&times;</div>'; // dodatkowa klasa, aby wyróżnić i reagować na tego typu przyciski (i kategorię komunikatów!)
     }
 budowanyElement = budowanyElement + '</div>' ;  // znacznik kończący strukturę powiadomienia o błędzie
 //...
@@ -1983,20 +1982,20 @@ NaprawAjaksa();
 function OdczytajLocalStorage ()
 {
 var zawartoscDebuggowaniaLocalStorage = localStorage.getItem('awariaNaStale');    
-    if ( ( zawartoscDebuggowaniaLocalStorage == '<AWARIA!>' ) || ( zawartoscDebuggowaniaLocalStorage == '<BRAK AWARII>' ) )
+    if ( ( zawartoscDebuggowaniaLocalStorage == '<AWARIA!>' ) || ( zawartoscDebuggowaniaLocalStorage == '<BRAK AWARII>' ) ) // czy to sa prawidłowe wartości stałych?
     {    
     return zawartoscDebuggowaniaLocalStorage;       
     }
 return false;
 }
     
-function InicjalizujLocalStorage () {
-var CoWStorage = OdczytajLocalStorage;
-    if ( CoWStorage == '<AWARIA!>' || CoWStorage == '<BRAK AWARII>')    // "zaptaszenie" checkboksa tylko, gdy jedna z tych wartość jako zawartość 
+function InicjalizujLocalStorage () {   // jaki jest cel tej funkcji, skoro nie jest używana?
+var coWStorage = OdczytajLocalStorage;
+    if ( coWStorage == '<AWARIA!>' || coWStorage == '<BRAK AWARII>')    // "zaptaszenie" checkboksa tylko, gdy jedna z tych wartość jako zawartość 
     {
     $( '#awaria_na_stale').prop('checked', true);    
     PokazDebuggowanie();    // bardzo dobre miejsce - gdy ustawione jest coś w pamięci przeglądarki to na starcie pokaż pasek debugowania (+)  
-    return zawartoscDebuggowaniaLocalStorage;    
+    return COS; // co ma zwrócić? poprzednio było "return zawartoscDebuggowaniaLocalStorage;"
     }
 
     // ...   ?  
@@ -2084,7 +2083,7 @@ function DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( ) {
 
 function ZaczytajSpisGalerii () 
 {
-//http://zlobek.chojnow.eu/galeria,k0,p1.html	- adres ostatniej galerii, wg. daty
+//http://zlobek.chojnow.eu/galeria,k0,p1.html - adres ostatniej galerii, wg. daty
 var adres_ostatniej_galerii = "/galeria,k0,p1.html";	
 var adres_zasobu_galerii = g_protokol_www + g_adres_strony;
 
@@ -2092,13 +2091,13 @@ var adres_zasobu_galerii = g_protokol_www + g_adres_strony;
     if ( g_suma_klikniec_zaladuj > 0 )    
     //if ( g_biezaca_pozycja_galerii > 0 )
     {
-    //var nowa_podstrona_spisu_galerii = g_biezaca_pozycja_galerii + 1;				
+    // var nowa_podstrona_spisu_galerii = g_biezaca_pozycja_galerii + 1;				
     // adres_ostatniej_galerii = "/galeria,k0,p" + String( g_biezaca_pozycja_galerii + 1 ) + ".html";
         
         // powyższe warunkowe działania pomijają ładowanie DRUGIEJ PODSTRONY przy PIERWSZYM naciśnięciu przycisku 'Załaduj kolejne galerie'  
     // adres_ostatniej_galerii = "/galeria,k0,p" + String( g_biezaca_pozycja_galerii ) + ".html";
         
-        adres_ostatniej_galerii = "/galeria,k0,p" + String( g_suma_klikniec_zaladuj ) + ".html";	
+    adres_ostatniej_galerii = "/galeria,k0,p" + String( g_suma_klikniec_zaladuj ) + ".html";	
     }
 
 //$( g_wczytywanie_spis ).show(100); //
@@ -3207,8 +3206,8 @@ $('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt ) { // te
     
 }); //  on("click")-$('#przywroc_niewczytane')-END	   
     
-    
-$('#galeria_spis').on("click keydown", ".zamykanie", function( e ) {    // ewentualenie tworzyć elementy z jakąś sztuczna klasą, by ją tylko tu bezpośrednio obsługiwać dla jasności obsługi zdarzeń; zamykanie "okienek" i pasków w obszarze "#galeria_spis", czyli w "okienkach z błędami" nad spisem galerii
+                                            //zamykanie "okienek" i pasków w obszarze "#galeria_spis", czyli w "okienkach z błędami" nad spisem galerii
+$('#galeria_spis').on("click keydown", ".zamykanie-komunikatu-bledu", function( e ) {    // dodano sztuczna klasę wprost dla jasności obsługi zdarzeń;
 var $this = $(this);
     // jakoby warunkowe wykonanie, mimo że na CLICK wstępnie reagowało 
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
@@ -3280,7 +3279,7 @@ $('#pomoc_zamykanie').on("click keydown", function( e ) {
     }
 });
 
-    // nie działa mi w JQ, próba powrotu do JS... te same zdarzenie i funkcje użyte w wywołaniu 
+    // nie działa mi w JQ, mimo delegacji zdarzeń - próba powrotu do JS... te same zdarzenie i funkcje użyte w wywołaniu 
 /*
 $('body').on('dragstart', '.przenosny', PoczatekRuchuPrzeciagania ); // $('#gra).on... bez zmian
     

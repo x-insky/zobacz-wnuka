@@ -279,6 +279,10 @@ div.blad p
     font-weight: bold;
 }
 
+.wysrodkowane {
+    text-align: center;
+}
+
 footer#stopka .kontener.ramka {
     padding: 0;
     padding-bottom: 0.5em;
@@ -1577,6 +1581,10 @@ footer#stopka p {
     font-size: 110%;    
     text-align: justify;
     padding: 0.5em;
+}
+
+footer#stopka .wysrodkowane {
+    text-align: center;
 }
 
 div#poco,
