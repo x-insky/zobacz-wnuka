@@ -123,7 +123,7 @@ a:active {                  /* kasowanie ramek wokół naciskanego odnośnika  *
     outline-style: none;
 }
 
-a:focus,            /* przywracanie ramek dla odnośników, aby było widać... ale TE style są odrzucane w większości przeglądarek */
+.witryna a:focus,       /* przywracanie ramek dla odnośników, aby było widać... ale TE style są odrzucane w większości przeglądarek; ramki tylko w obszarze budownej strony (nie w lighboksie, który jest "na końcu" <body>) */
 a[tabindex]:focus,      /* FF akceptuje ogólny i szczegółowe selektory dla ":focus", ale inne nie trawią ZMODYFIKOWANYCH <a> bez HREF! */ 
 a[data-href]:focus,
 .sztuczny-focus
@@ -628,7 +628,8 @@ div.powiadamiacz {
     border-radius: 5px;
     box-shadow: 1px 1px 3px darkblue;
     padding: 0.5em;
-    margin: 0.5em auto;
+    margin: 1em auto;
+    margin-bottom: 0.5em;
     transition: background-color 0.25s ease-out;
     user-select: none;
 }
@@ -679,22 +680,22 @@ header#naglowek .pasek {
 
 div#spis_tresci div#galeria_spis {
     background-color: cornflowerblue;
-    overflow: hidden;
-    width: 100%;	      
+    width: 100%;
     padding-top: 1em;
-    padding-bottom: 1em;    
+    padding-bottom: 1em;
+    text-align: center;
     /*margin-bottom: 1em;	*/
     /*display: none;*/
 }
 
 div#spis_tresci div.kontener_odnosnik {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
     min-height: 330px;	     /* było po 575px w obu wysokościach, zabrano 75px */ 		
     max-height: 330px;
     max-width: 97.6%;	
     width: 100%;
-    overflow: hidden;
-    position: relative;
-    float: left;
     margin: 0.4em 0.3em;
     padding: 0.5em;	    
     border: 1px solid blue;
@@ -870,15 +871,12 @@ div#spis_tresci div#wybrany_zaczytany_spis {
 }
 
 div#spis_tresci div#wybrane_galerie_spis {
-    background-color: cornflowerblue;
-    /* float: left;	*/
+    width: 100%;
+    text-align: center;
     padding-top: 1em;
     padding-bottom: 1em;    
-    /*margin-left: 1em;
-    margin-right: 1em;	*/
     margin-bottom: 1em;	
-    overflow: hidden;
-    width: 100%;	
+    background-color: cornflowerblue;
 }
 
 nav#spis_sterowanie p#status_galerii_spis {
