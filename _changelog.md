@@ -1,3 +1,45 @@
+v0.5.65 - quick correction of displaying the list of read galleries (old browsers only)
+
+* v0.5.65 -- [2022-02-13]
+
+[*] MODIFIED
+
+-- zlobek-style.css
+* previously used "display: inline-block" attribute on most browsers to ensure correct display of items
+  - known attribute, recognizable even in IE8 and similar age browsers (renewed FF, CH and old OP version numbering when introducing HTML v5)
+  - standard and correct interpretation, even for medium-up-to-date web browsers
+  - error present temporarily even for CH versions around 20 (and approximately also FF)
+* for old browsers the content is displayed incorrectly in the layout of adjacent elements positioned in this way
+  - list of read gallery titles in a disarray, each of the elements of the list is displayed at a different height
+  - the problem grows with more elements in the container
+  - the same for displaying a selected gallery subpage, also "levitation" of list items
+  - solved by specifying an additional attribute for an item displayed as 'inline-block'
+  - an explicit specification of some value for the attribute 'vertical-align' is required
+
+---------------------------
+
+v0.5.64 - CSS: centering of the gallery titles read, no border on the photo preview in the lightbox, increased top margin of the visit notification
+
+* v0.5.64 -- [2022-02-12]
+
+[*] MODIFIED
+
+-- zlobek-style.css
+* elements of subsequent galleries or their subpages are centered horizontally
+  - the list of gallery titles for the next loaded gallery subpages is evenly displayed horizontally
+  - equal arrangement of gallery list items
+  - there are no unevenness in the layout - more free space on the right side of the screen (visible before passing the next defined thresholds of the screen width)
+  - obtained a slightly different arrangement of elements, which is interesting for a small number of elements on a narrower screen
+  - resignation from the attribute 'float: left' in favor of 'display: inline-block'
+  - also resignation from the 'overflow: hidden' attribute in the parent container (the attribute is important for the correct display of elements from 'float')
+  - also possible horizontal centering using 'float', but configuration of the layout required for each of the five screen width modes (from one to five elements per line can be displayed; more work is required for the same effect as it's now)
+* the same element centering correction was used to display the list of titles of galleries for a specific subpage of the gallery list
+* lightbox: removed the red border when viewing consecutive photos in browse mode
+  - used a more specific selector taking into account its display area
+* last visit notification gets more space (more top margin)
+
+---------------------------
+
 v0.5.63 - new class for handling button shutdown events for error notifications
 
 * v0.5.63 -- [2022-02-10]
@@ -8,10 +50,9 @@ v0.5.63 - new class for handling button shutdown events for error notifications
 * added a general '.wysrodkowane/centered' class to center elements horizontally (for inline elems)
   - after the selector s strengthened, it was used for the element in the footer of the site
 
-
 [*] MODIFIED
 
--- witryna.js
+-- index.php
 * initial use in the footer of a new class for centering elements in the frame (together with the '.ramka/frame' class), e.g. a text message
 
 -- witryna.js
