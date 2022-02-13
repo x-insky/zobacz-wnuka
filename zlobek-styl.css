@@ -702,6 +702,7 @@ div#spis_tresci div.kontener_odnosnik {
     box-shadow: 1px 1px 3px darkblue;	
     border-radius: 5px;
     transition: all 0.25s ease-out;
+    vertical-align: middle;     /* dodatkowo wymagany w naprawdę starych przeglądarkach przy rezygnacji z 'float' i użyciu 'display: inline-block' (niedziedziczony) */
     user-select: none;   /* można zanzaczyć tekst tylko w obrębie tego elmentu */
 }
 

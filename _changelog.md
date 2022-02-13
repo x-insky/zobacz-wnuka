@@ -1,3 +1,23 @@
+v0.5.65 - quick correction of displaying the list of read galleries (old browsers only)
+
+* v0.5.65 -- [2022-02-13]
+
+[*] MODIFIED
+
+-- zlobek-style.css
+* previously used "display: inline-block" attribute on most browsers to ensure correct display of items
+  - known attribute, recognizable even in IE8 and similar age browsers (renewed FF, CH and old OP version numbering when introducing HTML v5)
+  - standard and correct interpretation, even for medium-up-to-date web browsers
+  - error present temporarily even for CH versions around 20 (and approximately also FF)
+* for old browsers the content is displayed incorrectly in the layout of adjacent elements positioned in this way
+  - list of read gallery titles in a disarray, each of the elements of the list is displayed at a different height
+  - the problem grows with more elements in the container
+  - the same for displaying a selected gallery subpage, also "levitation" of list items
+  - solved by specifying an additional attribute for an item displayed as 'inline-block'
+  - an explicit specification of some value for the attribute 'vertical-align' is required
+
+---------------------------
+
 v0.5.64 - CSS: centering of the gallery titles read, no border on the photo preview in the lightbox, increased top margin of the visit notification
 
 * v0.5.64 -- [2022-02-12]
