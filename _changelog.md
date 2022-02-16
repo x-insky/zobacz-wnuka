@@ -1,3 +1,24 @@
+v0.5.66 - fight against 'advertising windmills', the next part & not the last
+
+* v0.5.66 -- [2022-02-16]
+
+[+] ADDED
+
+-- zlobek-style.css
+* defined styles to not showing of advertising content for the current hosting
+  - partial success, less unwanted content in the browser
+  - remotely loaded ad containers are attached to the page content anyway, they come with in-line styles & '!important' values :/
+  - 'bare' mobile browsers are not quite good at blocking ads (this is not the fault of current modifications!)
+  - example hosting problems: in mobile CH v98 pop-ups looped and 'overflow' blocked for the top container, so you cannot scroll the screen (AD-killer required :/ )
+
+[*] MODIFIED
+
+-- zlobek-style.css
+* correction of the arrangement of selectors inside sheet for the same target elements
+  - increased right padding for even vertical alignment for text form fields between two forms
+
+---------------------------
+
 v0.5.65 - quick correction of displaying the list of read galleries (old browsers only)
 
 * v0.5.65 -- [2022-02-13]

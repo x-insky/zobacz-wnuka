@@ -1012,10 +1012,6 @@ div#wybor_podstrony_galerii aside > span
     padding-right: 1.5em;
 }
 
-div#wybor_podstrony_galerii input#podstrona_wybrany_nr {
-    margin-right: 1.45em;    /* celem wyrównania obu pól wpisywania */
-}
-
 div#wybor_galerii div#suwak_info,
 div#wybor_podstrony_galerii div#suwak_podstrona_info
 {
@@ -1085,6 +1081,10 @@ div#selektor input#podstrona_wybrany_nr
     padding-left: 0.5em;
     padding-right: 0.5em;
     text-align: center;
+}
+
+div#selektor input#podstrona_wybrany_nr {
+    margin-right: 2em;    /* celem wyrównania w pionie obu pól wpisywania (lub wrażenia, że są jeden nad drugim, kiedy etykety są różnej długości) */
 }
 
 div#selektor input#suwak_galerii,
@@ -1962,6 +1962,15 @@ input[type=range]:hover::-ms-fill-upper
     background-color: rgba(200, 0, 0, 0.2);
 }
 
+/*    --------------------------       ANTYREKLAMOWE     --------------------------    */
+
+[class^="app_gdpr"],    /* 5v: div.app_gdpr--SPx19r */
+ins[class^="ad"],   /* 5v: ins.adsbygoogle.adsbygoogle-noablate */
+iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
+{
+    display: none !important;
+        /* ewentualnie rozszerzyć o zerowy lub 1-pikselowy rozmiar, o ile wbudowane style w doklajanym z zewnątrz kontenerze i tak nie przykryją tych zmian :/ */
+}
 
 /*    --------------------------       ANIMACJE     --------------------------    */
 
@@ -2331,7 +2340,7 @@ input[type=range]:hover::-ms-fill-upper
     {
         display: inline;
         width: auto;
-    }
+     }
     
     div#wybor_galerii > div:last-of-type,
     div#wybor_podstrony_galerii > div:last-of-type {
