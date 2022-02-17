@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-/*    --------------------------       OGÓLNE      --------------------------     */
+/*    --------------------------      WSZYSTKIE ELEMENTY       --------------------------     */
 
 * {
     box-sizing: border-box;	
@@ -19,9 +19,20 @@ body {
     outline-style: none;
 }
 
+/*    --------------------------      GŁÓWNE ELEMENTY, ICH ATRYBUTY LUB PSEUDOKLASY      --------------------------     */
+
+a {
+    font-weight: bold;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    color: indigo;
+}
+
+a:active {                  /* kasowanie ramek wokół naciskanego odnośnika  */
+    outline-style: none;
+}
+
 input[type="button"] {
-    /*background-color: darkblue; 
-    color: yellow;	*/
     padding: 0.45em 1em;
     font-size: 125%;
 }
@@ -32,20 +43,12 @@ button {
 }
 
 h1 {
-    /*    color: blueviolet;    */
     color: yellow;
     font-size: 220%;
     font-weight: bold;
     text-align: center;
     padding: 0.1em 0.1em;
-    /*    text-shadow: 1px 1px 1px #eee, 3px 3px 10px #666;	    */
     text-shadow: 1px 1px 1px #222, 3px 3px 10px #666;
-}
-
-h1.logo {
-    color: yellow;
-    font-size: 300%;
-    padding-bottom: 0.05em;	
 }
 
 h1 > span {
@@ -55,22 +58,10 @@ h1 > span {
 h2 {
     font-size: 175%;
     font-weight: bold;
-    /* color: darkred; */
     color: #54c;
     padding: 0.5em;	
     text-shadow: 0px 0px 4px #ddd;
     text-align: center;	
-}
-
-    /*    h2.przycisk {
-            background-color: dodgerblue;
-    }*/
-
-h2.logo {
-    font-size: 225%;	
-    padding-top: 0;
-    line-height: 20px;	
-    text-shadow: 0px 0px 3px #ccc;
 }
 
 h2 > span {
@@ -80,9 +71,6 @@ h2 > span {
 h3 {
     font-size: 135%;
     font-weight: bold;
-    /*  color: darkmagenta;    */
-    /*  color: #54c;
-        text-shadow: 0px 0px 6px #d6d6d6;    */
     color: yellow;
     text-shadow:0px 0px 4px #555;
     padding: 0.2em 0.5em;	
@@ -112,25 +100,6 @@ h6 {
     padding-top: 0.7em;
 }
 
-a {
-    font-weight: bold;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    color: indigo;
-}
-
-a:active {                  /* kasowanie ramek wokół naciskanego odnośnika  */
-    outline-style: none;
-}
-
-.witryna a:focus,       /* przywracanie ramek dla odnośników, aby było widać... ale TE style są odrzucane w większości przeglądarek; ramki tylko w obszarze budownej strony (nie w lighboksie, który jest "na końcu" <body>) */
-a[tabindex]:focus,      /* FF akceptuje ogólny i szczegółowe selektory dla ":focus", ale inne nie trawią ZMODYFIKOWANYCH <a> bez HREF! */ 
-a[data-href]:focus,
-.sztuczny-focus
-{                   
-    outline: 2px dotted red !important;    /* TAK UŻYTO "!IMPORTANT"!!! Dopisane do ogólnej definicji ":focus" */
-}
-
 p {
     text-align: justify;	
 }
@@ -139,17 +108,18 @@ em {
     font-style: italic;    
 }
 
-h1 > em,
+strong {
+    font-weight: bold;
+}
+
+h1 > em,    /* wymusza pogrubienie już pochylonego napisu, jeśli jest wewnątrz nagłówka (standardowo tylko pochylenie) */
 h2 > em,
 h3 > em,
 h4 > em,
 h5 > em,
-h6 > em {
+h6 > em
+{
     font-weight: bold;    
-}
-
-strong {
-    font-weight: bold;
 }
 
 form {
@@ -162,83 +132,21 @@ form input {
     font-size: 110%;		
 }
 
-div.blad {
-    position: relative;
-    width: 94%;     /*  korekta z 90% na małe ekrany */
-    background-color: #00b; /* == darkblue */
-    border-radius: 5px;
-    /*font-size: 16px;*/    /* RESET wielkości czcionki dla podległych elementów!*/
-/*    color: yellow;
-    text-align: center;
-    font-size: 1.7em;
-    font-weight: bold;*/
-  /*  padding: 1.2em;*/
-    margin: 3px auto;
-    border: 3px solid #eee;
-    box-shadow: 2px 2px 4px #333;
-    transition: box-shadow 0.3s 0.1s, transform 0.3s 0.1s;
-    margin-bottom: 12px;    /* 0.8em; - czasem się mści przy za dużym/małym ekranie - nieproporcjonalność nachodzenia przy 'transform: scale' */
-    
-    /*    animation: zolty_blysk 2s ease-out;
-        animation-fill-mode: both; */
+/*    --------------------------       OGÓLNE KLASY      --------------------------     */
+
+.witryna a:focus,       /* przywracanie ramek dla odnośników, aby było widać... ale TE style są odrzucane w większości przeglądarek; ramki tylko w obszarze budownej strony (nie w lighboksie, który jest "na końcu" <body>) */
+a[tabindex]:focus,      /* FF akceptuje ogólny i szczegółowe selektory dla ":focus", ale inne nie trawią ZMODYFIKOWANYCH <a> bez HREF! */ 
+a[data-href]:focus,
+.sztuczny-focus
+{                   
+    outline: 2px dotted red !important;    /* TAK UŻYTO "!IMPORTANT"!!! Dopisane do ogólnej definicji ":focus" */
 }
 
-div.blad:hover {
-    box-shadow: 2px 2px 6px #111;
-    transform: scale(1.05);
-    /*    animation: zolty_blysk 2s ease-out;
-        animation-fill-mode: both; */
-}
-
-div.blad .blad_tytul {
-    padding: 0.25em;
-    padding-top: 2.8em;
-    user-select: none;
-}
-
-div.blad .blad_tresc {
-    background-color: darkred;
-    box-shadow: 0px 0px 10px 2px #333 inset; 
-    min-height: 140px;
-    padding: 0.5em;
-    margin-top: 10px;
-}
-
-div.blad .blad_ikona {
-    /*    float: left;*/
+.kontener {
+    width: 100%;
+    max-width: 1400px;    
+    align-items: center;
     margin: 0 auto;
-   /* margin-top: 15px;*/
-    width: 100px;
-    height: 100px;
-/*  margin: 0.5em;*/
-    text-align: center;
-    color: darkred;
-    font-size: 104px;    /* wartośc bezwzględna */
-    /*    font-size: 6.5em;*/
-    line-height: 98px;
-    /*line-height: 0.95em;*/
-    font-weight: bolder;
-    text-shadow: 0 0 2.5px white;
-/*    width: 1.3em;    */
-/*    padding: 0.5em 1em;    */
-    background-color: yellow;
-    border-radius: 50%;
-    user-select: none;
-}
-
-div.blad p {
-    font-size: 1.5em;
-    padding: 0.5em;
-}
-
-div.blad h2
-{
-    color: yellow;
-}
-
-div.blad p
-{
-    color: white;
 }
 
 .lewy {
@@ -259,34 +167,15 @@ div.blad p
     clear: both;
 }
 
-.kontener {
-    width: 100%;
-    max-width: 1400px;    
-    align-items: center;
-    margin: 0 auto;
-}
-
 .ramka {
-    /* margin: 0.5em 1em; */
     padding: 0.5em;
     padding-bottom: 0;
     align-items: center;
     border: 2px solid #6495ed;
 }
 
-.ramka li {
-    padding: 0.5em 0.5em;
-    font-weight: bold;
-}
-
 .wysrodkowane {
     text-align: center;
-}
-
-footer#stopka .kontener.ramka {
-    padding: 0;
-    padding-bottom: 0.5em;
-    margin: 0.75em auto;
 }
 
 .zamykanie {
@@ -319,10 +208,108 @@ footer#stopka .kontener.ramka {
         /* box-shadow: 0 0 4px 2px white; */
 }
 
+.szara_zawartosc {
+    /*    -ms-filter: grayscale(80%);    */
+    filter: gray;    /* 100% szarości działać ma w IE [6..9]  */
+    filter: grayscale(80%);
+}
+
+/*    --------------------------       NAGŁOWEK - KLASY      --------------------------     */
+
+h1.logo {
+    color: yellow;
+    font-size: 300%;
+    padding-bottom: 0.05em;	
+}
+
+h2.logo {
+    font-size: 225%;	
+    padding-top: 0;
+    line-height: 20px;	
+    text-shadow: 0px 0px 3px #ccc;
+}
+
+    /*    ------    div.blad      ------     */
+div.blad {
+    position: relative;
+    width: 94%;     /*  korekta z 90% na małe ekrany */
+    background-color: #00b; /* == darkblue */
+    border-radius: 5px;
+    margin: 3px auto;
+    border: 3px solid #eee;
+    box-shadow: 2px 2px 4px #333;
+    transition: box-shadow 0.3s 0.1s, transform 0.3s 0.1s;
+    margin-bottom: 12px;    /* 0.8em; - czasem się mści przy za dużym/małym ekranie - nieproporcjonalność nachodzenia przy 'transform: scale' */
+}
+
+div.blad:hover {
+    box-shadow: 2px 2px 6px #111;
+    transform: scale(1.05);
+    /*    animation: zolty_blysk 2s ease-out;
+        animation-fill-mode: both; */
+}
+
+div.blad .blad_tytul {
+    padding: 0.25em;
+    padding-top: 2.8em;
+    user-select: none;
+}
+
+div.blad .blad_tresc {
+    background-color: darkred;
+    box-shadow: 0px 0px 10px 2px #333 inset; 
+    min-height: 140px;
+    padding: 0.5em;
+    margin-top: 10px;
+}
+
+div.blad .blad_ikona {
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    color: darkred;
+    font-size: 104px;    /* wymiarowane wartościami bezwzględnymi */
+    line-height: 98px;
+    font-weight: bolder;
+    text-shadow: 0 0 2.5px white;
+    background-color: yellow;
+    border-radius: 50%;
+    user-select: none;
+}
+
+div.blad p {
+    font-size: 1.5em;
+    padding: 0.5em;
+}
+
+div.blad h2
+{
+    color: yellow;
+}
+
+div.blad p
+{
+    color: white;
+}
+
 div.blad .zamykanie {
     top: 4px;
     right: 4px;
 }
+
+
+.ramka li {
+    padding: 0.5em 0.5em;
+    font-weight: bold;
+}
+
+footer#stopka .kontener.ramka {
+    padding: 0;
+    padding-bottom: 0.5em;
+    margin: 0.75em auto;
+}
+
 
 .zalety {
     margin-left: 3%;
@@ -363,12 +350,8 @@ div.blad .zamykanie {
     margin-left: 0.5em;
 }
 
-.szara_zawartosc {
-    /*    -ms-filter: grayscale(80%);    */
-    filter: gray;    /* 100% szarości działać ma w IE [6..9]  */
-    filter: grayscale(80%);
-}
 
+    /*    ------    div#witryna      ------     */
 
 div#witryna {
     margin: 0.3em auto;
@@ -1976,7 +1959,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 
 .animacja_slonca {
     /* transform-origin: center center;	*/	
-    animation: obroty_delikatne_3 6.5s infinite ease-out;	/* tylko ta animacja z trzech zadeklarownych jest używana */
+    animation: obroty_delikatne_3 6.5s infinite ease-out;	/* tylko ta animacja z trzech zadeklarowanych jest używana */
 }
 
 .animacja_zanikanie {                   /* pierwowzór dla "animacja_zanikanie2" */
@@ -2470,7 +2453,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     div.blad p {
         padding-left: 1em;
         padding-right: 1em;
-        padding-bottom: 0.8em;  /* generalenie ten parametr decyduje o dodatkowej pionowej przestrzeni w dole okienka, zamiast marginesu obrazka */
+        padding-bottom: 0.8em;  /* generalnie ten parametr decyduje o dodatkowej pionowej przestrzeni w dole okienka, zamiast marginesu obrazka */
         min-height: 130px;  /* w połączeniu z min-height kontenera pozwala zwiększyć jego wysokość, "odpychając" od dolnej krawędzi obrazka  */
     }
     

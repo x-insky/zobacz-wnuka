@@ -1,3 +1,24 @@
+v0.5.67 - cleaning CSS, approach number one
+
+* v0.5.67 -- [2022-02-17]
+
+[*] MODIFIED
+
+-- zlobek-style.css
+* verification of the hierarchy and order of defined styles for design elements
+  - a lot of changes in the ordering, not in the definition structure itself
+  - attempts to better group the definitions of elements according to their function or location in the HTML document
+  - made or modified descriptive changes for the structure (definition comments for the main blocks of the site or significant elements) that do not modify the existing CSS
+  - the purpose of changes is readability and/or better logical connections between defined components/blocks/groups of website elements
+* overview of the styles used
+  - getting rid of unused/stale/commented attributes or their previous definitions
+  - removed obviously outdated and unnecessary attribute definitions
+  - some commented out "proposals", "holdings" or "ideas" were left for further consideration
+  - if there are still any attribute definitions that do not contribute to the system, they have also been removed
+  - new or corrected existing comments (mainly typos or explanations of the purposefulness of a given attribute or attributes)
+
+---------------------------
+
 v0.5.66 - fight against 'advertising windmills', the next part & not the last
 
 * v0.5.66 -- [2022-02-16]
