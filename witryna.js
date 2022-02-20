@@ -1358,7 +1358,7 @@ return odczytaneNamiary;    // zwróć obiekt
 function InicjalizujCSSzAktywnymJS()  // UWAGA! style kierowane pod konkretne elementy oraz mozliwy hardkod 
 {
     // pomocnicza klasa-wskaźnik, dla podległości lub ogólny "włącz/wyłącz" dla zawartości gdy jest/brakuje JS    
-$('#witryna').removeClass('brak_js');   
+$('.glowny-kontener').removeClass('brak_js');   
     // usuń ramkę z komunikatem o braku JS... już niepotrzebne -- powyższe + CSS załatwia sprawę lepiej
 // $('#brak_skryptow').css('display', 'none');  
     // czy kasować element z komunikatem o braku skryptów z DOMu? 
@@ -2308,7 +2308,7 @@ $cbaReklamaBig = $('img[usemap]');
         lub poprzednimi instrukcjami, przez co dopasowanie może przejąć "małoinwazyjnego tekstu reklamowaego" i go wywalić (dlatego go PRZENIESIONO, zamiast kasować)    
     */
         // "aktualizacja antyreklamowna" na ostatni kwartał 2019 roku i później
-$cbaReklamaBig = $('#witryna').prev();  // jakiś poprzednik istniejącego kontenera dla całej witryny, który jest doklejany z automatu przez hosting cba.pl
+$cbaReklamaBig = $('.glowny-kontener').prev();  // jakiś poprzednik istniejącego kontenera dla całej witryny, który jest doklejany z automatu przez hosting cba.pl
     if ( $cbaReklamaBig )   // ..., zaraz za początkiem <body>, o ile coś tam jeszcze istnieje
     {   // po prostu wywal całą zawartość dla danego kontenera (teraz często id="top_10", ale większość przeglądarek "same" kasują jakoś ten element
         $cbaReklamaBig.remove();   // ... do tego TO JEST PODLEGŁY ELEMENT, należy pozbyć się jego rodzica, jako właściwego niepotrzebnego kontenera!

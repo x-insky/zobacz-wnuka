@@ -1,10 +1,94 @@
+v0.5.68 - CSS cleaning, approach #2 - general content
+
+* v0.5.68 -- [2022-02-20]
+
+[*] MODIFIED
+
+-- index.php
+* changed attribute 'id=site' to class 'glowny-kontener/main-container'
+
+-- witryna.js
+* updated changed '#id' for '.class' selectors
+
+-- zlobek-styl.css
+* cleaning the stylesheet from unnecessary, outdated or inappropriate content
+  - general selectors stage and in the vicinity of the website header
+* lowering the power (specificity) of the selector from id to the class 'glowny-kontener/main-container'
+  - the class provides the same uniqueness, a strong selector unnecessary for a container
+  - better name that specifies the function of the element
+  - fixed references to existing items with tests
+* reduced specificity of selectors for components of error notifications (class 'error')
+  - unnecessary selectors of parent element class also with type of this element
+  - renaming all further references, e.g. in screen width queries
+* shifted in sequence for defined selectors for consistent declaration order
+  - taking into account the order of selectors at key elements/page containers and/or taking into account the vicinity of elements
+  - grouping of selectors evidently present only in certain elements/containers
+
+[-] REMOVED
+
+-- zlobek-styl.css
+* removed evidently old and unused styles or their original attribute definitions
+  - content saved as old comments, inside a given selector
+  - often several proposed values ​​for a given attribute or group of attributes with values ​​were commented on
+
+[F] FIXED
+
+-- zlobek-styl.css
+* FIXES #85 - 'Focus status issue inside gallery item title (Firefox only)'
+  - an additional and explicit declaration that removes the outline around a link inside another link element
+  - correct display in FF, without side effects in other browsers
+
+---------------------------
+
+v0.5.67 - cleaning CSS, approach number one
+
+* v0.5.67 -- [2022-02-17]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* verification of the hierarchy and order of defined styles for design elements
+  - a lot of changes in the ordering, not in the definition structure itself
+  - attempts to better group the definitions of elements according to their function or location in the HTML document
+  - made or modified descriptive changes for the structure (definition comments for the main blocks of the site or significant elements) that do not modify the existing CSS
+  - the purpose of changes is readability and/or better logical connections between defined components/blocks/groups of website elements
+* overview of the styles used
+  - getting rid of unused/stale/commented attributes or their previous definitions
+  - removed obviously outdated and unnecessary attribute definitions
+  - some commented out "proposals", "holdings" or "ideas" were left for further consideration
+  - if there are still any attribute definitions that do not contribute to the system, they have also been removed
+  - new or corrected existing comments (mainly typos or explanations of the purposefulness of a given attribute or attributes)
+
+---------------------------
+
+v0.5.66 - fight against 'advertising windmills', the next part & not the last
+
+* v0.5.66 -- [2022-02-16]
+
+[+] ADDED
+
+-- zlobek-styl.css
+* defined styles to not showing of advertising content for the current hosting
+  - partial success, less unwanted content in the browser
+  - remotely loaded ad containers are attached to the page content anyway, they come with in-line styles & '!important' values :/
+  - 'bare' mobile browsers are not quite good at blocking ads (this is not the fault of current modifications!)
+  - example hosting problems: in mobile CH v98 pop-ups looped and 'overflow' blocked for the top container, so you cannot scroll the screen (AD-killer required :/ )
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* correction of the arrangement of selectors inside sheet for the same target elements
+  - increased right padding for even vertical alignment for text form fields between two forms
+
+---------------------------
+
 v0.5.65 - quick correction of displaying the list of read galleries (old browsers only)
 
 * v0.5.65 -- [2022-02-13]
 
 [*] MODIFIED
 
--- zlobek-style.css
+-- zlobek-styl.css
 * previously used "display: inline-block" attribute on most browsers to ensure correct display of items
   - known attribute, recognizable even in IE8 and similar age browsers (renewed FF, CH and old OP version numbering when introducing HTML v5)
   - standard and correct interpretation, even for medium-up-to-date web browsers
@@ -24,7 +108,7 @@ v0.5.64 - CSS: centering of the gallery titles read, no border on the photo prev
 
 [*] MODIFIED
 
--- zlobek-style.css
+-- zlobek-styl.css
 * elements of subsequent galleries or their subpages are centered horizontally
   - the list of gallery titles for the next loaded gallery subpages is evenly displayed horizontally
   - equal arrangement of gallery list items
@@ -46,7 +130,7 @@ v0.5.63 - new class for handling button shutdown events for error notifications
 
 [+] ADDED
 
--- zlobek-style.css
+-- zlobek-styl.css
 * added a general '.wysrodkowane/centered' class to center elements horizontally (for inline elems)
   - after the selector s strengthened, it was used for the element in the footer of the site
 
@@ -71,7 +155,7 @@ v0.5.62 - all site close buttons are now standardized
 
 [*] MODIFIED
 
--- zlobek-style.css
+-- zlobek-styl.css
 * changed the style of the close button for the error notification to the already proven theme by class '.zamykanie/closing'
   - tested display and behavior of the general button class along with style changes in this notification
   - uniform appearance, behavior and interaction with adjacent elements in the notification for different screen widths
@@ -105,7 +189,7 @@ v0.5.61 - unification of closing buttons: shape, location and behavior
 * cleaning: removed old comments and unnecessary newlines
   - fixed indentation for block '#spis_tresci/table_of_contens'
 
--- zlobek-style.css
+-- zlobek-styl.css
 * adopted a common class for closing buttons
   - removed button wrap around adjacent button elements, based on float styles
   - minimal offsets from the right corner, depending on the width of the screen
@@ -128,7 +212,7 @@ v0.5.60 - minor fixes for positioning buttons for closing sections '#poco' and '
 
 [+] ADDED
 
--- zlobek-style.css
+-- zlobek-styl.css
 * created a generic class ".zamykanie/closing" for the close buttons
   - same visual style with :hover and :focus
   - a square not a rectangle
@@ -144,7 +228,7 @@ v0.5.60 - minor fixes for positioning buttons for closing sections '#poco' and '
   - added a new class ".zamykanie/closing" to them right away
   - no conflict with the already defined styles - no disturbed hierarchy of items in the footer, in existing queries with increasing screen width (the button should be one of the first item in the container to quickly switch to it with the [Tab] key)
 
--- zlobek-style.css
+-- zlobek-styl.css
 * increased top or side padding in <h2> subheads of '#poco' and '#help' sections
   - for the purpose of not being covered by the closing button for this section
 
@@ -167,7 +251,7 @@ v0.5.59 - close buttons for the 'help' and 'poco' sections
 
 [*] MODIFIED
  
--- zlobek-style.css
+-- zlobek-styl.css
 * styles were copied, using selectors on existing closing elements
   - also in the upper right corner of its parent, absolutely positioned
 * merged already existing selectors to avoid duplicate definitions
@@ -187,7 +271,7 @@ v0.5.58 - quick fixes in the '#poco' section
 -- index.php
 * some corrections in the text of sentences in sections '#poco' and '#help'
 
--- zlobek-style.css
+-- zlobek-styl.css
 * the bordered element '.ramka/frame' in the '#poco' section is already centered on wider screens than 1400px
   - increased slightly margins above and below this element
 * added slight rounding of corners for elements in the 'superlatives' section
@@ -201,7 +285,7 @@ v0.5.57 - goodbye to unused CSS references, 'poco' columns & frame
 
 [*] MODIFIED
 
--- zlobek-style.css
+-- zlobek-styl.css
 * removed empty selectors without definition
   - unused declarations (current or past testing)
   - identical to the wrong ones, because they introduce an unnecessary burden on the browser
@@ -224,7 +308,7 @@ v0.5.56 - polished superlatives section
 
 [*] MODIFIED
 
--- zlobek-style.css
+-- zlobek-styl.css
 * as a variety, every second element in the superlative list is shifted to the right
 * slightly increased padding to contain the image of the sun when its zooming in
 * modified selector for :hover state with consideration of the element instead of the picture itself for the sake of animation
@@ -256,7 +340,7 @@ v0.5.55 - interactivity in developing the advantages of the site
   - added additional sub-item for the list
   - the content of another sub-item was slightly modified to match the tone of the entire list
 
--- zlobek-style.css
+-- zlobek-styl.css
 * improved the form of presenting the advantages for the website
   - every second line is distinguished from the light background
   - finally, the background distinguishing feature for odd enumeration elements has been introduced, i.e. the list begins and ends with highlighting the background
@@ -283,7 +367,7 @@ v0.5.54 - shortened a bit texts, removed remnants of HTML comments and typos
   - but in total not too many letters in the text blocks were removed
 * two typos were corrected
 
--- zlobek-style.css
+-- zlobek-styl.css
 * added bottom padding for the list of superlatives
   - the next header is pushed more from the last element of the list 
 
@@ -3528,7 +3612,7 @@ v0.4.19 - loading notification moved up, text before subgallery nav, buttons lab
 
 [F] FIXED
 
--- zlobek-style.css
+-- zlobek-styl.css
 * removed white border  around the slider, which is in a focus state
   - changed color of used outline to transparent inside vendor specified selector ':-moz-focusring '
   - still in use 3px thin border around slider but it's invisible now
@@ -4170,7 +4254,7 @@ v0.4.5 - mobile-first CSS; flexible elements of list gallery; parent container o
 
 [-] REMOVED
 
--- zlobek-style.css
+-- zlobek-styl.css
 * moved old media queries into comments
 * removed outside visible area the loaded source of the selected gallery
 

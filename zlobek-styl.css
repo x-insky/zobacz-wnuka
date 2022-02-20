@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-/*    --------------------------       OGÓLNE      --------------------------     */
+/*    --------------------------      WSZYSTKIE ELEMENTY       --------------------------     */
 
 * {
     box-sizing: border-box;	
@@ -19,9 +19,20 @@ body {
     outline-style: none;
 }
 
+/*    --------------------------      ELEMENTY, ICH ATRYBUTY LUB PSEUDOKLASY      --------------------------     */
+
+a {
+    font-weight: bold;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    color: indigo;
+}
+
+a:active {                  /* kasowanie ramek wokół naciskanego odnośnika  */
+    outline-style: none;
+}
+
 input[type="button"] {
-    /*background-color: darkblue; 
-    color: yellow;	*/
     padding: 0.45em 1em;
     font-size: 125%;
 }
@@ -32,20 +43,12 @@ button {
 }
 
 h1 {
-    /*    color: blueviolet;    */
     color: yellow;
     font-size: 220%;
     font-weight: bold;
     text-align: center;
     padding: 0.1em 0.1em;
-    /*    text-shadow: 1px 1px 1px #eee, 3px 3px 10px #666;	    */
     text-shadow: 1px 1px 1px #222, 3px 3px 10px #666;
-}
-
-h1.logo {
-    color: yellow;
-    font-size: 300%;
-    padding-bottom: 0.05em;	
 }
 
 h1 > span {
@@ -55,22 +58,10 @@ h1 > span {
 h2 {
     font-size: 175%;
     font-weight: bold;
-    /* color: darkred; */
     color: #54c;
     padding: 0.5em;	
     text-shadow: 0px 0px 4px #ddd;
     text-align: center;	
-}
-
-    /*    h2.przycisk {
-            background-color: dodgerblue;
-    }*/
-
-h2.logo {
-    font-size: 225%;	
-    padding-top: 0;
-    line-height: 20px;	
-    text-shadow: 0px 0px 3px #ccc;
 }
 
 h2 > span {
@@ -80,9 +71,6 @@ h2 > span {
 h3 {
     font-size: 135%;
     font-weight: bold;
-    /*  color: darkmagenta;    */
-    /*  color: #54c;
-        text-shadow: 0px 0px 6px #d6d6d6;    */
     color: yellow;
     text-shadow:0px 0px 4px #555;
     padding: 0.2em 0.5em;	
@@ -112,25 +100,6 @@ h6 {
     padding-top: 0.7em;
 }
 
-a {
-    font-weight: bold;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    color: indigo;
-}
-
-a:active {                  /* kasowanie ramek wokół naciskanego odnośnika  */
-    outline-style: none;
-}
-
-.witryna a:focus,       /* przywracanie ramek dla odnośników, aby było widać... ale TE style są odrzucane w większości przeglądarek; ramki tylko w obszarze budownej strony (nie w lighboksie, który jest "na końcu" <body>) */
-a[tabindex]:focus,      /* FF akceptuje ogólny i szczegółowe selektory dla ":focus", ale inne nie trawią ZMODYFIKOWANYCH <a> bez HREF! */ 
-a[data-href]:focus,
-.sztuczny-focus
-{                   
-    outline: 2px dotted red !important;    /* TAK UŻYTO "!IMPORTANT"!!! Dopisane do ogólnej definicji ":focus" */
-}
-
 p {
     text-align: justify;	
 }
@@ -139,17 +108,18 @@ em {
     font-style: italic;    
 }
 
-h1 > em,
+strong {
+    font-weight: bold;
+}
+
+h1 > em,    /* wymusza pogrubienie już pochylonego napisu, jeśli jest wewnątrz nagłówka (standardowo tylko pochylenie) */
 h2 > em,
 h3 > em,
 h4 > em,
 h5 > em,
-h6 > em {
+h6 > em
+{
     font-weight: bold;    
-}
-
-strong {
-    font-weight: bold;
 }
 
 form {
@@ -162,83 +132,28 @@ form input {
     font-size: 110%;		
 }
 
-div.blad {
+/*    --------------------------       OGÓLNE KLASY      --------------------------     */
+
+.glowny-kontener {
+    margin: 0.3em auto;
+    width: 98%;
     position: relative;
-    width: 94%;     /*  korekta z 90% na małe ekrany */
-    background-color: #00b; /* == darkblue */
-    border-radius: 5px;
-    /*font-size: 16px;*/    /* RESET wielkości czcionki dla podległych elementów!*/
-/*    color: yellow;
-    text-align: center;
-    font-size: 1.7em;
-    font-weight: bold;*/
-  /*  padding: 1.2em;*/
-    margin: 3px auto;
-    border: 3px solid #eee;
-    box-shadow: 2px 2px 4px #333;
-    transition: box-shadow 0.3s 0.1s, transform 0.3s 0.1s;
-    margin-bottom: 12px;    /* 0.8em; - czasem się mści przy za dużym/małym ekranie - nieproporcjonalność nachodzenia przy 'transform: scale' */
-    
-    /*    animation: zolty_blysk 2s ease-out;
-        animation-fill-mode: both; */
+    overflow: hidden;
 }
 
-div.blad:hover {
-    box-shadow: 2px 2px 6px #111;
-    transform: scale(1.05);
-    /*    animation: zolty_blysk 2s ease-out;
-        animation-fill-mode: both; */
+.glowny-kontener a:focus,       /* przywracanie ramek dla odnośników, aby było widać... ale TE style są odrzucane w większości przeglądarek; ramki tylko w obszarze budownej strony (nie w lighboksie, który jest "na końcu" <body>) */
+a[tabindex]:focus,      /* FF akceptuje ogólny i szczegółowe selektory dla ":focus", ale inne nie trawią ZMODYFIKOWANYCH <a> bez HREF! */ 
+a[data-href]:focus,
+.sztuczny-focus
+{                   
+    outline: 2px dotted red !important;    /* TAK UŻYTO "!IMPORTANT"!!! Dopisane do ogólnej definicji ":focus" */
 }
 
-div.blad .blad_tytul {
-    padding: 0.25em;
-    padding-top: 2.8em;
-    user-select: none;
-}
-
-div.blad .blad_tresc {
-    background-color: darkred;
-    box-shadow: 0px 0px 10px 2px #333 inset; 
-    min-height: 140px;
-    padding: 0.5em;
-    margin-top: 10px;
-}
-
-div.blad .blad_ikona {
-    /*    float: left;*/
+.kontener {
+    width: 100%;
+    max-width: 1400px;    
+    align-items: center;
     margin: 0 auto;
-   /* margin-top: 15px;*/
-    width: 100px;
-    height: 100px;
-/*  margin: 0.5em;*/
-    text-align: center;
-    color: darkred;
-    font-size: 104px;    /* wartośc bezwzględna */
-    /*    font-size: 6.5em;*/
-    line-height: 98px;
-    /*line-height: 0.95em;*/
-    font-weight: bolder;
-    text-shadow: 0 0 2.5px white;
-/*    width: 1.3em;    */
-/*    padding: 0.5em 1em;    */
-    background-color: yellow;
-    border-radius: 50%;
-    user-select: none;
-}
-
-div.blad p {
-    font-size: 1.5em;
-    padding: 0.5em;
-}
-
-div.blad h2
-{
-    color: yellow;
-}
-
-div.blad p
-{
-    color: white;
 }
 
 .lewy {
@@ -259,15 +174,7 @@ div.blad p
     clear: both;
 }
 
-.kontener {
-    width: 100%;
-    max-width: 1400px;    
-    align-items: center;
-    margin: 0 auto;
-}
-
 .ramka {
-    /* margin: 0.5em 1em; */
     padding: 0.5em;
     padding-bottom: 0;
     align-items: center;
@@ -281,12 +188,6 @@ div.blad p
 
 .wysrodkowane {
     text-align: center;
-}
-
-footer#stopka .kontener.ramka {
-    padding: 0;
-    padding-bottom: 0.5em;
-    margin: 0.75em auto;
 }
 
 .zamykanie {
@@ -319,66 +220,97 @@ footer#stopka .kontener.ramka {
         /* box-shadow: 0 0 4px 2px white; */
 }
 
-div.blad .zamykanie {
-    top: 4px;
-    right: 4px;
-}
-
-.zalety {
-    margin-left: 3%;
-    padding-bottom: 1em;
-}
-
-.zalety li {
-    padding: 0.35em 0;
-    padding-left: 0.5rem;
-    margin-left: 1.5em;
-    margin-right: 1em;
-    border-radius: 0.5rem;
-    transition: background-color 0.3s;
-} 
-
-.zalety li:nth-child(2n+1) {
-    margin-left: 0;
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.zalety li:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-} 
-
-.zalety img {
-    position: relative;
-    vertical-align: middle;
-    transform-origin: 50%;
-    transition: transform 0.3s ease-in;
-    animation: none;    /* ruchome cuda w IE bez tego */
-}
-
-.zalety li:hover img {
-    animation: obroty-90-180 4s ease-in-out infinite normal;
-}
-
-.zalety img + span {
-    margin-left: 0.5em;
-}
-
 .szara_zawartosc {
     /*    -ms-filter: grayscale(80%);    */
     filter: gray;    /* 100% szarości działać ma w IE [6..9]  */
     filter: grayscale(80%);
 }
 
+/*    --------------------------       NAGŁOWEK - KLASY      --------------------------     */
 
-div#witryna {
-    margin: 0.3em auto;
-    width: 98%;
+h1.logo {
+    color: yellow;
+    font-size: 300%;
+    padding-bottom: 0.05em;	
+}
+
+h2.logo {
+    font-size: 225%;	
+    padding-top: 0;
+    line-height: 20px;	
+    text-shadow: 0px 0px 3px #ccc;
+}
+
+    /*    ------    DIV.blad      ------     */
+div.blad {
     position: relative;
-    overflow: hidden;
-/* background: radial-gradient( ellipse, center, #222 15%, #333 100%);	*/
+    width: 94%;     /*  korekta z 90% na małe ekrany */
+    background-color: #00b; /* == darkblue */
+    border-radius: 5px;
+    margin: 3px auto;
+    border: 3px solid #eee;
+    box-shadow: 2px 2px 4px #333;
+    transition: box-shadow 0.3s 0.1s, transform 0.3s 0.1s;
+    margin-bottom: 12px;    /* 0.8em; - czasem się mści przy za dużym/małym ekranie - nieproporcjonalność nachodzenia przy 'transform: scale' */
+}
+
+div.blad:hover {
+    box-shadow: 2px 2px 6px #111;
+    transform: scale(1.05);
+}
+
+.blad p {
+    font-size: 1.5em;
+    padding: 0.5em;
+}
+
+.blad h2
+{
+    color: yellow;
+}
+
+.blad p
+{
+    color: white;
+}
+
+.blad .zamykanie {
+    top: 4px;
+    right: 4px;
+}
+
+.blad_tytul {
+    padding: 0.25em;
+    padding-top: 2.8em;
+    user-select: none;
+}
+
+.blad_tresc {
+    background-color: darkred;
+    box-shadow: 0px 0px 10px 2px #333 inset; 
+    min-height: 140px;
+    padding: 0.5em;
+    margin-top: 10px;
+}
+
+.blad_ikona {
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    color: darkred;
+    font-size: 104px;    /* wymiarowane wartościami bezwzględnymi */
+    line-height: 98px;
+    font-weight: bolder;
+    text-shadow: 0 0 2.5px white;
+    background-color: yellow;
+    border-radius: 50%;
+    user-select: none;
 }
 
 /*    --------------------------       HEADER      --------------------------    */
+
+    /*    ------    HEADER#naglowek      ------     */
 
 header#naglowek {
     border-radius: 10px;    
@@ -742,6 +674,10 @@ div#spis_tresci div.kontener_odnosnik a {
     text-decoration: none;        
 }
 
+.sztuczny-focus .tytul_odnosnik > a:focus {     /* usuwanie obrysu bezpośrednio na odnośniku w spise treści, skoro element ze spisu treści (przodek) dostaje sztuczną klase ze zdarzenia */
+    outline: none !important;   /* jako reakacja na pierwotne użycie "!important" */
+}
+
 div#spis_tresci div.tytul_odnosnik h2 {
         /*    vertical-align: bottom;   */
     color: white;
@@ -1012,10 +948,6 @@ div#wybor_podstrony_galerii aside > span
     padding-right: 1.5em;
 }
 
-div#wybor_podstrony_galerii input#podstrona_wybrany_nr {
-    margin-right: 1.45em;    /* celem wyrównania obu pól wpisywania */
-}
-
 div#wybor_galerii div#suwak_info,
 div#wybor_podstrony_galerii div#suwak_podstrona_info
 {
@@ -1085,6 +1017,10 @@ div#selektor input#podstrona_wybrany_nr
     padding-left: 0.5em;
     padding-right: 0.5em;
     text-align: center;
+}
+
+div#selektor input#podstrona_wybrany_nr {
+    margin-right: 2em;    /* celem wyrównania w pionie obu pól wpisywania (lub wrażenia, że są jeden nad drugim, kiedy etykety są różnej długości) */
 }
 
 div#selektor input#suwak_galerii,
@@ -1665,6 +1601,51 @@ footer#stopka .ramka li {
     padding-left: 2.5em;
 }
 
+footer#stopka .kontener.ramka {
+    padding: 0;
+    padding-bottom: 0.5em;
+    margin: 0.75em auto;
+}
+
+
+.zalety {
+    margin-left: 3%;
+    padding-bottom: 1em;
+}
+
+.zalety li {
+    padding: 0.35em 0;
+    padding-left: 0.5rem;
+    margin-left: 1.5em;
+    margin-right: 1em;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+} 
+
+.zalety li:nth-child(2n+1) {
+    margin-left: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.zalety li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+} 
+
+.zalety img {
+    position: relative;
+    vertical-align: middle;
+    transform-origin: 50%;
+    transition: transform 0.3s ease-in;
+    animation: none;    /* ruchome cuda w IE bez tego */
+}
+
+.zalety li:hover img {
+    animation: obroty-90-180 4s ease-in-out infinite normal;
+}
+
+.zalety img + span {
+    margin-left: 0.5em;
+}
 
 .brak_js div#wymiary {
     visibility: hidden; /* do przeniesienia do tego kontenera, wcześniej poza nim; wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
@@ -1962,12 +1943,21 @@ input[type=range]:hover::-ms-fill-upper
     background-color: rgba(200, 0, 0, 0.2);
 }
 
+/*    --------------------------       ANTYREKLAMOWE     --------------------------    */
+
+[class^="app_gdpr"],    /* 5v: div.app_gdpr--SPx19r */
+ins[class^="ad"],   /* 5v: ins.adsbygoogle.adsbygoogle-noablate */
+iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
+{
+    display: none !important;
+        /* ewentualnie rozszerzyć o zerowy lub 1-pikselowy rozmiar, o ile wbudowane style w doklajanym z zewnątrz kontenerze i tak nie przykryją tych zmian :/ */
+}
 
 /*    --------------------------       ANIMACJE     --------------------------    */
 
 .animacja_slonca {
     /* transform-origin: center center;	*/	
-    animation: obroty_delikatne_3 6.5s infinite ease-out;	/* tylko ta animacja z trzech zadeklarownych jest używana */
+    animation: obroty_delikatne_3 6.5s infinite ease-out;	/* tylko ta animacja z trzech zadeklarowanych jest używana */
 }
 
 .animacja_zanikanie {                   /* pierwowzór dla "animacja_zanikanie2" */
@@ -2297,7 +2287,7 @@ input[type=range]:hover::-ms-fill-upper
         height: 330px;    
     }
 
-    div.blad .blad_tytul {
+    .blad_tytul {
         padding-top: 0.8em;
         padding-right: 55px;    /* szerokośc guzika zamykania 50px + minimalne odstę[y od krawędzi i guzika */
     }
@@ -2331,7 +2321,7 @@ input[type=range]:hover::-ms-fill-upper
     {
         display: inline;
         width: auto;
-    }
+     }
     
     div#wybor_galerii > div:last-of-type,
     div#wybor_podstrony_galerii > div:last-of-type {
@@ -2413,7 +2403,7 @@ input[type=range]:hover::-ms-fill-upper
         font-size: 80%;	
     }
 
-    div#witryna {
+    .glowny-kontener {
         /*	margin: 0.4em auto;*/
         width: 98.5%;    
     }
@@ -2440,7 +2430,7 @@ input[type=range]:hover::-ms-fill-upper
         font-size: 1em; /* redukcja na względne 100% */
     }
     
-    div.blad .blad_ikona {
+    .blad_ikona {
         float: left;
         margin-top: 1.5%;
          margin-right: 3%;  /* próby przeniesionia do lewego-paddingu dla sąsiada <p>' */
@@ -2458,10 +2448,10 @@ input[type=range]:hover::-ms-fill-upper
         margin-bottom: 7%;  */
     }
     
-    div.blad p {
+    .blad p {
         padding-left: 1em;
         padding-right: 1em;
-        padding-bottom: 0.8em;  /* generalenie ten parametr decyduje o dodatkowej pionowej przestrzeni w dole okienka, zamiast marginesu obrazka */
+        padding-bottom: 0.8em;  /* generalnie ten parametr decyduje o dodatkowej pionowej przestrzeni w dole okienka, zamiast marginesu obrazka */
         min-height: 130px;  /* w połączeniu z min-height kontenera pozwala zwiększyć jego wysokość, "odpychając" od dolnej krawędzi obrazka  */
     }
     
@@ -2496,7 +2486,7 @@ input[type=range]:hover::-ms-fill-upper
         font-size: 85%;	
     }
 
-    div#witryna {
+    .glowny-kontener {
     /*	margin: 0.4em auto;*/
         width: 99%;    
     } 
@@ -2511,7 +2501,7 @@ input[type=range]:hover::-ms-fill-upper
         max-height: 230px;
     }
     
-    div.blad .zamykanie {
+    .blad .zamykanie {
         top: 6px;
         right: 6px;
     }
@@ -2537,7 +2527,7 @@ input[type=range]:hover::-ms-fill-upper
         font-size: 90%;	
     }
 
-    div#witryna {
+    .glowny-kontener {
         /*	margin: 0.3em auto;*/
         width: 99.25%;      
     }
@@ -2552,12 +2542,12 @@ input[type=range]:hover::-ms-fill-upper
         max-height: 240px;
     }
     
-    div.blad .zamykanie {
+    .blad .zamykanie {
         top: 8px;
         right: 8px;
     }
     
-    div.blad p {
+    .blad p {
         padding-left: 10.5em;   /* brak zawijania pod obrazkiem z float w komunikacie */
     }
     
@@ -2606,7 +2596,7 @@ input[type=range]:hover::-ms-fill-upper
         font-size: 100%;	
     }
 
-    div#witryna {
+    .glowny-kontener {
         /*	margin: 0.2em auto;*/
         width: 99.5%;    
     }
@@ -2630,7 +2620,7 @@ input[type=range]:hover::-ms-fill-upper
     }   
     
     .zamykanie,
-    div.blad .zamykanie
+    .blad .zamykanie
     {
         top: 10px;
         right: 10px;
