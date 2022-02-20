@@ -79,7 +79,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 
 <body>
 
-	<div id="witryna" class="brak_js">
+	<div class="glowny-kontener brak_js">
 
         <div class="kontener">
             <div id="odpluskwiacz_ajaksowy">
@@ -343,7 +343,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.67</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.68</h6>
             <div id="poco">
                 <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
@@ -552,7 +552,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             <h1>&nbsp;</h1>    
         </div>    
         
-    </div>	<!-- DIV#witryna -->
+    </div>	<!-- DIV.witryna -->
 
 
     <script>

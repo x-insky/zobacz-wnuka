@@ -19,7 +19,7 @@ body {
     outline-style: none;
 }
 
-/*    --------------------------      GŁÓWNE ELEMENTY, ICH ATRYBUTY LUB PSEUDOKLASY      --------------------------     */
+/*    --------------------------      ELEMENTY, ICH ATRYBUTY LUB PSEUDOKLASY      --------------------------     */
 
 a {
     font-weight: bold;
@@ -134,7 +134,14 @@ form input {
 
 /*    --------------------------       OGÓLNE KLASY      --------------------------     */
 
-.witryna a:focus,       /* przywracanie ramek dla odnośników, aby było widać... ale TE style są odrzucane w większości przeglądarek; ramki tylko w obszarze budownej strony (nie w lighboksie, który jest "na końcu" <body>) */
+.glowny-kontener {
+    margin: 0.3em auto;
+    width: 98%;
+    position: relative;
+    overflow: hidden;
+}
+
+.glowny-kontener a:focus,       /* przywracanie ramek dla odnośników, aby było widać... ale TE style są odrzucane w większości przeglądarek; ramki tylko w obszarze budownej strony (nie w lighboksie, który jest "na końcu" <body>) */
 a[tabindex]:focus,      /* FF akceptuje ogólny i szczegółowe selektory dla ":focus", ale inne nie trawią ZMODYFIKOWANYCH <a> bez HREF! */ 
 a[data-href]:focus,
 .sztuczny-focus
@@ -172,6 +179,11 @@ a[data-href]:focus,
     padding-bottom: 0;
     align-items: center;
     border: 2px solid #6495ed;
+}
+
+.ramka li {
+    padding: 0.5em 0.5em;
+    font-weight: bold;
 }
 
 .wysrodkowane {
@@ -229,7 +241,7 @@ h2.logo {
     text-shadow: 0px 0px 3px #ccc;
 }
 
-    /*    ------    div.blad      ------     */
+    /*    ------    DIV.blad      ------     */
 div.blad {
     position: relative;
     width: 94%;     /*  korekta z 90% na małe ekrany */
@@ -245,17 +257,35 @@ div.blad {
 div.blad:hover {
     box-shadow: 2px 2px 6px #111;
     transform: scale(1.05);
-    /*    animation: zolty_blysk 2s ease-out;
-        animation-fill-mode: both; */
 }
 
-div.blad .blad_tytul {
+.blad p {
+    font-size: 1.5em;
+    padding: 0.5em;
+}
+
+.blad h2
+{
+    color: yellow;
+}
+
+.blad p
+{
+    color: white;
+}
+
+.blad .zamykanie {
+    top: 4px;
+    right: 4px;
+}
+
+.blad_tytul {
     padding: 0.25em;
     padding-top: 2.8em;
     user-select: none;
 }
 
-div.blad .blad_tresc {
+.blad_tresc {
     background-color: darkred;
     box-shadow: 0px 0px 10px 2px #333 inset; 
     min-height: 140px;
@@ -263,7 +293,7 @@ div.blad .blad_tresc {
     margin-top: 10px;
 }
 
-div.blad .blad_ikona {
+.blad_ikona {
     margin: 0 auto;
     width: 100px;
     height: 100px;
@@ -278,90 +308,9 @@ div.blad .blad_ikona {
     user-select: none;
 }
 
-div.blad p {
-    font-size: 1.5em;
-    padding: 0.5em;
-}
-
-div.blad h2
-{
-    color: yellow;
-}
-
-div.blad p
-{
-    color: white;
-}
-
-div.blad .zamykanie {
-    top: 4px;
-    right: 4px;
-}
-
-
-.ramka li {
-    padding: 0.5em 0.5em;
-    font-weight: bold;
-}
-
-footer#stopka .kontener.ramka {
-    padding: 0;
-    padding-bottom: 0.5em;
-    margin: 0.75em auto;
-}
-
-
-.zalety {
-    margin-left: 3%;
-    padding-bottom: 1em;
-}
-
-.zalety li {
-    padding: 0.35em 0;
-    padding-left: 0.5rem;
-    margin-left: 1.5em;
-    margin-right: 1em;
-    border-radius: 0.5rem;
-    transition: background-color 0.3s;
-} 
-
-.zalety li:nth-child(2n+1) {
-    margin-left: 0;
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.zalety li:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-} 
-
-.zalety img {
-    position: relative;
-    vertical-align: middle;
-    transform-origin: 50%;
-    transition: transform 0.3s ease-in;
-    animation: none;    /* ruchome cuda w IE bez tego */
-}
-
-.zalety li:hover img {
-    animation: obroty-90-180 4s ease-in-out infinite normal;
-}
-
-.zalety img + span {
-    margin-left: 0.5em;
-}
-
-
-    /*    ------    div#witryna      ------     */
-
-div#witryna {
-    margin: 0.3em auto;
-    width: 98%;
-    position: relative;
-    overflow: hidden;
-/* background: radial-gradient( ellipse, center, #222 15%, #333 100%);	*/
-}
-
 /*    --------------------------       HEADER      --------------------------    */
+
+    /*    ------    HEADER#naglowek      ------     */
 
 header#naglowek {
     border-radius: 10px;    
@@ -723,6 +672,10 @@ div#spis_tresci div.tytul_odnosnik {
 div#spis_tresci div.kontener_odnosnik a {
     cursor: pointer;    /* sztucznie, na usunięty 'href' */
     text-decoration: none;        
+}
+
+.sztuczny-focus .tytul_odnosnik > a:focus {     /* usuwanie obrysu bezpośrednio na odnośniku w spise treści, skoro element ze spisu treści (przodek) dostaje sztuczną klase ze zdarzenia */
+    outline: none !important;   /* jako reakacja na pierwotne użycie "!important" */
 }
 
 div#spis_tresci div.tytul_odnosnik h2 {
@@ -1648,6 +1601,51 @@ footer#stopka .ramka li {
     padding-left: 2.5em;
 }
 
+footer#stopka .kontener.ramka {
+    padding: 0;
+    padding-bottom: 0.5em;
+    margin: 0.75em auto;
+}
+
+
+.zalety {
+    margin-left: 3%;
+    padding-bottom: 1em;
+}
+
+.zalety li {
+    padding: 0.35em 0;
+    padding-left: 0.5rem;
+    margin-left: 1.5em;
+    margin-right: 1em;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+} 
+
+.zalety li:nth-child(2n+1) {
+    margin-left: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.zalety li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+} 
+
+.zalety img {
+    position: relative;
+    vertical-align: middle;
+    transform-origin: 50%;
+    transition: transform 0.3s ease-in;
+    animation: none;    /* ruchome cuda w IE bez tego */
+}
+
+.zalety li:hover img {
+    animation: obroty-90-180 4s ease-in-out infinite normal;
+}
+
+.zalety img + span {
+    margin-left: 0.5em;
+}
 
 .brak_js div#wymiary {
     visibility: hidden; /* do przeniesienia do tego kontenera, wcześniej poza nim; wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
@@ -2289,7 +2287,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         height: 330px;    
     }
 
-    div.blad .blad_tytul {
+    .blad_tytul {
         padding-top: 0.8em;
         padding-right: 55px;    /* szerokośc guzika zamykania 50px + minimalne odstę[y od krawędzi i guzika */
     }
@@ -2405,7 +2403,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         font-size: 80%;	
     }
 
-    div#witryna {
+    .glowny-kontener {
         /*	margin: 0.4em auto;*/
         width: 98.5%;    
     }
@@ -2432,7 +2430,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         font-size: 1em; /* redukcja na względne 100% */
     }
     
-    div.blad .blad_ikona {
+    .blad_ikona {
         float: left;
         margin-top: 1.5%;
          margin-right: 3%;  /* próby przeniesionia do lewego-paddingu dla sąsiada <p>' */
@@ -2450,7 +2448,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         margin-bottom: 7%;  */
     }
     
-    div.blad p {
+    .blad p {
         padding-left: 1em;
         padding-right: 1em;
         padding-bottom: 0.8em;  /* generalnie ten parametr decyduje o dodatkowej pionowej przestrzeni w dole okienka, zamiast marginesu obrazka */
@@ -2488,7 +2486,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         font-size: 85%;	
     }
 
-    div#witryna {
+    .glowny-kontener {
     /*	margin: 0.4em auto;*/
         width: 99%;    
     } 
@@ -2503,7 +2501,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         max-height: 230px;
     }
     
-    div.blad .zamykanie {
+    .blad .zamykanie {
         top: 6px;
         right: 6px;
     }
@@ -2529,7 +2527,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         font-size: 90%;	
     }
 
-    div#witryna {
+    .glowny-kontener {
         /*	margin: 0.3em auto;*/
         width: 99.25%;      
     }
@@ -2544,12 +2542,12 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         max-height: 240px;
     }
     
-    div.blad .zamykanie {
+    .blad .zamykanie {
         top: 8px;
         right: 8px;
     }
     
-    div.blad p {
+    .blad p {
         padding-left: 10.5em;   /* brak zawijania pod obrazkiem z float w komunikacie */
     }
     
@@ -2598,7 +2596,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         font-size: 100%;	
     }
 
-    div#witryna {
+    .glowny-kontener {
         /*	margin: 0.2em auto;*/
         width: 99.5%;    
     }
@@ -2622,7 +2620,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }   
     
     .zamykanie,
-    div.blad .zamykanie
+    .blad .zamykanie
     {
         top: 10px;
         right: 10px;
