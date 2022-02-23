@@ -310,104 +310,82 @@ div.blad:hover {
 
 /*    --------------------------       HEADER      --------------------------    */
 
-    /*    ------    HEADER#naglowek      ------     */
+    /*    ------    HEADER.naglowek      ------     */
 
-header#naglowek {
-    border-radius: 10px;    
-    background-color: #c3d5e2;    
-    overflow: hidden;  
+header.naglowek {
+    border-radius: 10px;
+    background-color: #c3d5e2;
+    overflow: hidden;
 }
 
-header#naglowek h1 span {
+.naglowek h1 span {
     color: yellow;
     font-weight: bolder;
 }
 
-header#naglowek h2 span {
+.naglowek h2 span {
     color: yellow;
     font-weight: bolder;
     text-shadow: 0px 0px 6px #666;
 }
 
-header#naglowek div#napis_spod {
-    position:absolute;
+.naglowek div.napis-spod {
+    position: absolute;
     left: 0;
     bottom: 0;
+    width: 100%;
     background-color: rgba(100,100, 200, 0.7);
-    width: 100%;	
 }
 
-div#napis_spod h3 {
-    width: 100%;	
+.napis-spod > h3 {
+    width: 100%;
     max-height: 60px;
     color: yellow;
     text-shadow: 0px 0px 3px #333;
 }
 
-header#naglowek div#banner {
-    position: relative;    
+.naglowek div.banner-kontener {
+    position: relative;
     border-radius: 10px;
-    background-color: cornflowerblue;	
+    background-color: cornflowerblue;
     overflow: hidden;
     width: auto;
     height: 290px;
-    max-width: 1400px;  /* tyle co kontener ograniczający winien mieć w innych miejscach - ".kontener" */      
+    max-width: 1400px;  /* tyle co pojemnik ograniczający winien mieć w innych miejscach - ".kontener" */
 }
 
-header#naglowek div#logo {
+.naglowek div.logo-witryny {
     position: relative;
     height: 200px;
-    width: 200px;	
-    /*float: left;	*/
-    background-color: cornflowerblue;	
-    /*background-color: rgba(85, 85, 185, 0.3); */
+    width: 200px;
+    background-color: cornflowerblue;
 }
 
-div#logo div#slonce_logo {
-    position: absolute;	
+.logo-witryny div#slonce_logo {
+    position: absolute;
+    left: -115px;
+    top: -115px;
     height: 256px;
     width: 256px;
-    background-image: url(grafiki/slonce.png); 
-    background-repeat: no-repeat;	
-    /* background-position: -112px -112px; */
-    left: -115px;
-    top: -115px;	
+    background-image: url(grafiki/slonce.png);
+    background-repeat: no-repeat;
     transform-origin: 50% 50%;
-    transition: all 0.5s ease 0.1s;	 
-     /*transform-origin: center center;*/
+    transition: all 0.5s ease 0.1s;
 }
 
-div#banner:hover div#slonce_logo {
-    /* transform: scale(1.25, 1.25); */
-        /*transform-origin: 50% 50%;*/
+.banner-kontener:hover div#slonce_logo,  /* JAKI JEST CEL PONIŻSZYCH DWÓCH DOPISANYCH SELEKTORÓW, zwłaszcza drugiego ?! */ 
+    .logo-witryny div#slonce_logo.startowe_przesuniecie,  /* DRY: niby jest małe powielenie, ale to na potrzeby braku aktywnego JS (+ siła dwóch ID po sobie) */
+    .banner-kontener:hover div#slonce_logo.startowe_przesuniecie   /* DRY #2: znów powielenie, ale efekt nieosiągniety...  */
+{
     left: -85px;
     top: -85px;		
 }
 
-div#logo div#slonce_logo.startowe_przesuniecie {
-        /* DRY: niby jest małe powielenie, ale to na potrzeby braku aktywnego JS (+ siła dwóch ID po sobie) */
-    left: -85px;
-    top: -85px;		
-}
-
-div#banner:hover div#slonce_logo.startowe_przesuniecie {
-        /* DRY #2: znów powielenie, ale efekt nieosiągniety...  */
-    left: -85px;
-    top: -85px;		
-}
-
-header#naglowek div#napisy {
-    /*float: left;*/
+.naglowek div.napisy-banner {
     position: absolute;
     left: 0px;
-    top: 160px;	
+    top: 160px;
     width: 100%;
-}
-
-header#naglowek div#napisy p {
-    height: 0;
-    width: 0;
-    clear: both;	
 }
 
 div#zagraj {
@@ -424,22 +402,21 @@ div#zagraj {
     transition: all 0.5s 0.1s;
 }
 
-div#zagraj:hover {
+#zagraj:hover {
     border-color: yellow;    
     box-shadow: 0px 0px 4px 1px yellow;
 }
 
-div#zagraj div#zagraj_srodek {
+#zagraj div.zagraj-kontener {
     position: relative;
-    align-content: center;
     width: 100%;
     height: 100%;
     background-color: #5d6ad0;
-    border-radius: 2px;
+    border-radius: 3px;
     overflow: hidden;    
 }
 
-div#zagraj div#zagraj_srodek h4.gra_odnosnik {
+#zagraj .zagraj-kontener h4 {
     font-size: 22px;
     font-weight: bold;
     padding: 0.33em 0.2em;
@@ -450,13 +427,13 @@ div#zagraj div#zagraj_srodek h4.gra_odnosnik {
     transition: all 0.5s 0.1s;    
 }
 
-div#zagraj:hover div#zagraj_srodek h4.gra_odnosnik {
+#zagraj:hover .zagraj-kontener h4 {
     color: #54c;
     background-color: #f6f6f6;
     text-shadow: 1px 1px 1px #ccc;    
 }
 
-div#zagraj div#zagraj_srodek h3.gra_odnosnik {
+#zagraj .zagraj-kontener h3 {
     font-size: 27px;
     font-weight: bold;
     padding: 0.3em 1.1em;
@@ -467,80 +444,71 @@ div#zagraj div#zagraj_srodek h3.gra_odnosnik {
     transition: all 0.5s 0.1s;       
 }
 
-div#zagraj:hover div#zagraj_srodek h3.gra_odnosnik {
+#zagraj:hover .zagraj-kontener h3 {
     padding: 0.3em 0.4em;    
     text-shadow: 1px 1px 3px #ccc;
     background-color: cornflowerblue;    
 }
 
-div#zagraj div#zagraj_srodek p.gra_odnosnik {
+#zagraj .zagraj-kontener p {
     position: absolute;
     width: 70px;
     height: 53px;
     right: 0px;
     top: 41px;
+    z-index: 0;
+    padding-left: 0.1em;
+    background-color: #eff506;
     color: white;
     font-size: 72px;
-    font-weight: bolder;
-    background-color: #eff506;
-    z-index: 0;
     line-height: 41px;
-    padding-left: 0.1em;
+    font-weight: bolder;
     text-shadow: 1px 1px 3px #666;
-    transition: all 0.25s 0.05s;      
+    transition: all 0.25s 0.05s;
 }
 
-div#zagraj:hover div#zagraj_srodek p.gra_odnosnik {
+#zagraj:hover .zagraj-kontener p {
     width: 102px;
-    background-color: yellow;    
+    background-color: yellow;
 }
 
-div#zagraj:hover div#zagraj_srodek p.gra_odnosnik::after {
+#zagraj:hover .zagraj-kontener p:after,
+#zagraj:hover .zagraj-kontener p::after {
     content: ">";
 }
 
-header#naglowek a.odnosnik_kolor {
+.naglowek a.odnosnik_kolor {
     font-size: 120%;
     font-weight: bold;
     color: #eee;
     text-decoration: underline;
-    transition: color 0.3s 0.05s, text-shadow 0.3s 0.05s;   
+    transition: color 0.3s 0.05s, text-shadow 0.3s 0.05s;
 }
 
-header#naglowek a.odnosnik_kolor:hover,
-header#naglowek a.odnosnik_kolor:focus
+.naglowek a.odnosnik_kolor:hover,
+.naglowek a.odnosnik_kolor:focus
 {
-    color: #222;
+    color: #222; 
     text-shadow: 0px 0px 4px #eee;
 }
 
-header#naglowek div#naglowek_kontener {
+/* .naglowek div.naglowek-kontener {
     background-color: #c3d5e2;
-    /*border-radius: 10px;*/
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	
-}
+    box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);
+} */
 
-header#naglowek div#naglowek_kontener div#formularz {
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 1em;	
-    /*background-color: #66c; */
-    background-color: cornflowerblue;	
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0, 0.7);
-}
+    /*    ------     DIV#spis_tresci      ------     */
 
-header#naglowek div#spis_tresci, 
-header#naglowek div#zaczytany_spis
+.naglowek div#spis_tresci, 
+.naglowek div#zaczytany_spis
 {
     overflow: hidden; 
     width: 100%;	
 }
 
-header#naglowek .ciemne_tlo_spis {
+.naglowek .ciemne_tlo_spis {
     background-color: cornflowerblue;
     width: 100%;    
 }
@@ -551,17 +519,17 @@ header#naglowek .ciemne_tlo_spis {
 }
 
 div.powiadamiacz {
+    position: relative;
     visibility: visible; /* gdy 'DISPLAY: NONE' to nie pokazuje i nie animuje się pasek wewnątrz tego kontenera */
     height: auto;
-    position: relative;
     width: 90%;
+    padding: 0.5em;
+    margin: 1em auto;
+    margin-bottom: 0.5em;
     background-color: cornflowerblue;
     border: 1px solid #00b;
     border-radius: 5px;
     box-shadow: 1px 1px 3px darkblue;
-    padding: 0.5em;
-    margin: 1em auto;
-    margin-bottom: 0.5em;
     transition: background-color 0.25s ease-out;
     user-select: none;
 }
@@ -588,7 +556,7 @@ div.powiadamiacz:focus::after
     padding: 0.2em;
     padding-bottom: 0.4em;
     color: black;
-    background-color: yellow; /* #ddd */
+    background-color: yellow;
 }
 
 div.powiadamiacz p {
@@ -596,7 +564,7 @@ div.powiadamiacz p {
     margin: 0.5em 0;
 }
 
-header#naglowek .pasek {
+.naglowek .pasek {
     display: block;
     width: 100%;
     max-width: 98%;
@@ -2283,7 +2251,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         font-size: 75%;	
     }     
 
-    header#naglowek div#banner {
+    .naglowek div.banner-kontener {
         height: 330px;    
     }
 
@@ -2408,15 +2376,15 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: 98.5%;    
     }
 
-    header#naglowek div#banner {
+    .naglowek div.banner-kontener {
         height: 190px;    
     }
     
-    header#naglowek div#banner div#napis_spod h3 {
+    .napis-spod > h3 {
         max-height: 75px;	
     }
     
-    header#naglowek div#napisy {
+    .naglowek div.napisy-banner {
         left: 140px;
         top: 5px;	
         max-width: 75%;
@@ -2601,7 +2569,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: 99.5%;    
     }
 
-    header#naglowek div#banner {
+    .naglowek div.banner-kontener {
         height: 170px;    
     }
 
@@ -2630,7 +2598,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 
 @media screen and (min-width: 1300px) { 
 
-    header#naglowek div#naglowek_kontener {
+    .naglowek .naglowek_kontener {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         box-shadow: none;
@@ -2643,7 +2611,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
             radial-gradient( ellipse at bottom center, rgba(195, 213, 226, 0.8) 20%, rgba(100, 149, 237, 0.7));
     }
     
-    header#naglowek div#banner {
+    .naglowek div.banner-kontener {
         margin-left: auto;
         margin-right: auto;
         border: 2px solid white;
@@ -2660,7 +2628,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         user-select: none;
     }   
     
-    .brak_js div#zagraj {
+    .brak_js #zagraj {
         display: none;
     }
     

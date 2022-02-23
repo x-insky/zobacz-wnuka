@@ -1384,11 +1384,11 @@ function PokazIUkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
 sekundowyCzasAnimacji = parseInt( sekundowyCzasAnimacji ) || 5;
     if ( sekundowyCzasAnimacji < 5 ) sekundowyCzasAnimacji = 5; // ogólnie na (+), też by zapobiec dzieleniu przez 0
 
-//$('#naglowek .powiadamiacz').css('display', 'block');   // pokaż każdę z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie    
-//$('#naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje    
+//$('.naglowek .powiadamiacz').css('display', 'block');   // pokaż każdę z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie    
+//$('.naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje    
     
     // zmniejszanie długości pasków powiadamiania - indywidualne czasy dla każdego z pasków z wspólnego zakesu
-$('#naglowek .pasek').each( function() {
+$('.naglowek .pasek').each( function() {
 //    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / 2 ; // maksymalnie -49% parametru (też częsci całości)
     dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / ( 2 + Math.floor( sekundowyCzasAnimacji % 5 ) ); 
     sekundowyCzasAnimacji -= dodatkowe_sekundy;    // tu ewentualna dekrementacja 
@@ -1405,7 +1405,7 @@ $('#naglowek .pasek').each( function() {
         });   
     }, sekundowyCzasAnimacji * 1010 );  // + minimalny nadkład opóźnienia
     
-}); // each-$('#naglowek .pasek')-END
+}); // each-$('.naglowek .pasek')-END
     
 }   // PokazIUkryjPowiadomieniaOOdwiedzinach-END
     
@@ -3139,13 +3139,13 @@ $('div#zaczytany_spis').on('click keydown', '.powiadamiacz', function ( e ) {  /
 // ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI  ---------- *** --------------	        
     
     
-$('#banner').hover( function() {    // animacje z "wychodzeniem" obrotowego słoneczka
+$('.banner-kontener').hover( function() {    // animacje z "wychodzeniem" obrotowego słoneczka
     $(this).find('#slonce_logo').addClass('animacja_slonca');
     },
     function() {
     $(this).find('#slonce_logo').removeClass('animacja_slonca');	
     }
-); // #banner hover-END    
+); // .banner-kontener hover-END    
     
     
 $('#galeria_spis').on('click', '.odswiez_strone', function () {   // globalnie obsługa zdarzenia z delegacją dla odświeżenia strony -- niezależnie od kolejności wygenerowania komunikatu o błędzie
@@ -3315,14 +3315,13 @@ OdkryjEmail();
 	
 	// sterowanie wielkością czcionki nagłówka
 	
-	//$("#banner h1.logo").fitText();
-$("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '62px' });
-$("#napisy h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
-$("#napis_spod h3").fitText(3, { minFontSize: '9px', maxFontSize: '17px' });    
+$(".napisy-banner > h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '62px' });
+$(".napisy-banner > h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
+$(".napis-spod > h3").fitText(3, { minFontSize: '9px', maxFontSize: '17px' });    
 
 
     // parametryzacja pokazu zdjęć (przeniesione z pliku index.php)
-lightbox.option({ albumLabel : "Zdjęcie %1 z %2", positionFromTop : 10 });    
+lightbox.option({ albumLabel: "Zdjęcie %1 z %2", positionFromTop: 10 });    
     
 //$('#wymiary').addClass('animacja_zanikanie2');  // dynamiczne przypisanie klasy    
 AktualnyRozmiarOkna('#wymiary');

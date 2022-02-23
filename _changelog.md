@@ -1,3 +1,31 @@
+v0.5.69 - CSS cleaning, approach # 3 - header section (banner)
+
+* v0.5.69 -- [2022-02-23]
+
+[*] MODIFIED
+
+-- index.php
+* renaming some ID attributes into classes for elements inside the '#naglowek_kontener' section
+  - a slight reorganization of the container structure, after merging it is a section with the '.banner-kontener/banner-container' class
+  - attempts were made to keep the existing names or given similar names for the created class attributes
+  - renamed the misleading ID names to functional class names
+
+-- zlobek-styl.css
+* cleaning the style sheet from redundant selectors
+  - attempts to lower the specificity of selectors while maintaining the developed system
+  - reduction of unnecessary or unused attributes with their values
+  - evidently standing and commented out content has been removed
+  - possible changes in the order of the attributes
+* customization of existing ID selectors per class
+  - matching according to the current changes in the names of elements and containers in HTML
+  - testing the correctness of displaying the website after the changes
+
+-- witryna.js
+* tracking changes made for HTML and CSS
+  - changes for events or references 
+
+---------------------------
+
 v0.5.68 - CSS cleaning, approach #2 - general content
 
 * v0.5.68 -- [2022-02-20]
@@ -5,7 +33,7 @@ v0.5.68 - CSS cleaning, approach #2 - general content
 [*] MODIFIED
 
 -- index.php
-* changed attribute 'id=site' to class 'glowny-kontener/main-container'
+* changed attribute 'id=witryna/site' to class 'glowny-kontener/main-container'
 
 -- witryna.js
 * updated changed '#id' for '.class' selectors

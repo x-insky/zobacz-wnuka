@@ -94,39 +94,35 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             </div>
         </div>       
 
-        <header id="naglowek">
+        <header class="naglowek">
 
-            <div id="naglowek_kontener">
+            <div class="banner-kontener">
 
-                <div id="banner">
+                <div class="logo-witryny"> 
+                    <div id="slonce_logo" class="startowe_przesuniecie animacja_slonca"></div>
+                </div>
 
-                    <div id="logo"> 
-                        <div id="slonce_logo" class="startowe_przesuniecie animacja_slonca"><!-- <img src="grafiki/slonce.png"> --></div>  <!-- jawnie nadane klasy, na rzecz nieaktywnego JS -->
-                    </div>
-
-                    <a href=".">
-                        <div id="napisy">
+                <a href=".">
+                    <div class="napisy-banner">
                         <h1 class="logo">Zobacz Wnuka!</h1>
                         <h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w&nbsp;Chojnowie</h2>
-                        <p class="clearfix2" ></p>
-                        </div>
-                    </a>
-
-                    <div id="zagraj">
-                        <div id="zagraj_srodek">
-                        <h4 class="gra_odnosnik">Czekasz na załadowanie?</h4>
-                        <h3 class="gra_odnosnik">Zagraj w grę!</h3>
-                        <p class="gra_odnosnik">&gt;</p>
-                        </div>
+                        <div class="clearfix2"></div>
                     </div>
+                </a>
 
-                    <div id="napis_spod">
-                        <h3>Serwis umożliwia łatwiejszy podgląd rozrabiających wnuków przez dziadków... i nie tylko. Treści pochodzą&nbsp;z&nbsp;witryny <a class="odnosnik_kolor" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
+                <div id="zagraj">
+                    <div class="zagraj-kontener">
+                        <h4>Czekasz na załadowanie?</h4>
+                        <h3>Zagraj w grę!</h3>
+                        <p>&gt;</p>
                     </div>
+                </div>
 
-                </div> <!-- div#banner -->
+                <div class="napis-spod">
+                    <h3>Serwis umożliwia łatwiejszy podgląd rozrabiających wnuków przez dziadków... i nie tylko. Treści pochodzą&nbsp;z&nbsp;witryny <a class="odnosnik_kolor" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
+                </div>
 
-            </div>	<!-- div#naglowek_kontener -->    
+            </div>	<!-- div.banner-kontener -->    
                 
             <div id="spis_tresci">
                 <div id="zaczytany_spis">
@@ -343,7 +339,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.68</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.69</h6>
             <div id="poco">
                 <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
