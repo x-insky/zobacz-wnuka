@@ -492,31 +492,21 @@ div#zagraj {
     text-shadow: 0px 0px 4px #eee;
 }
 
-/* .naglowek div.naglowek-kontener {
-    background-color: #c3d5e2;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);
-} */
+    /*    --------------------------       DIV#spis_tresci   --------------------------    */
 
-    /*    ------     DIV#spis_tresci      ------     */
-
-.naglowek div#spis_tresci, 
-.naglowek div#zaczytany_spis
+div#spis_tresci,
+div#zaczytany_spis
 {
     overflow: hidden; 
-    width: 100%;	
+    width: 100%;
 }
 
-.naglowek .ciemne_tlo_spis {
+.ciemne-tlo-spis {
     background-color: cornflowerblue;
     width: 100%;    
 }
 
-.brak_js div.powiadamiacz {
-    visibility: hidden; /* przeniesione ze "zwykłej" klasy !! */
-    height: 0px;
-}
+        /*    ------     DIV.powiadamiacz      ------     */
 
 div.powiadamiacz {
     position: relative;
@@ -534,17 +524,22 @@ div.powiadamiacz {
     user-select: none;
 }
 
-div.powiadamiacz:hover,
-div.powiadamiacz:focus
+.brak_js div.powiadamiacz {
+    visibility: hidden; /* przeniesione ze "zwykłej" klasy !! */
+    height: 0px;
+}
+
+.powiadamiacz:hover,
+.powiadamiacz:focus
 {
     background-color: #647eed;  /* "#59aede" jako jaśniejszy cornflowerblue */
     cursor: pointer;
 }
 
-div.powiadamiacz:hover:after,
-div.powiadamiacz:hover::after,
-div.powiadamiacz:focus:after,
-div.powiadamiacz:focus::after
+.powiadamiacz:hover:after,
+.powiadamiacz:hover::after,
+.powiadamiacz:focus:after,
+.powiadamiacz:focus::after
 {
     position: absolute;
     top: 5px;
@@ -559,36 +554,38 @@ div.powiadamiacz:focus::after
     background-color: yellow;
 }
 
-div.powiadamiacz p {
+.powiadamiacz p {
     text-align: center;
     margin: 0.5em 0;
 }
 
-.naglowek .pasek {
+.powiadamiacz .pasek {
     display: block;
     width: 100%;
     max-width: 98%;
     height: 10px;
+    margin: 0 1%;
     background-color: mediumblue;
     background: linear-gradient(to right, #54c 0%, #5d6ad0 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5544cc', endColorstr='#5d6ad0',GradientType=1 ); /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5544cc', endColorstr='#5d6ad0',GradientType=1 ); /* gradient w IE 6-9 */
     box-shadow: 1px 1px darkblue; 
     border-radius: 2px;
-    margin: 0 1%;
     transition: width 10s 0.2s linear; 
 }
 
-div#spis_tresci div#galeria_spis {
+        /*    ------     DIV#galeria_spis     ------     */
+
+div#galeria_spis {
     background-color: cornflowerblue;
     width: 100%;
     padding-top: 1em;
     padding-bottom: 1em;
     text-align: center;
-    /*margin-bottom: 1em;	*/
-    /*display: none;*/
 }
 
-div#spis_tresci div.kontener_odnosnik {
+        /*    ------     DIV.kontener-odnosnik    ------     */
+
+div.kontener-odnosnik {
     position: relative;
     display: inline-block;
     overflow: hidden;
@@ -603,21 +600,18 @@ div#spis_tresci div.kontener_odnosnik {
     border-radius: 5px;
     transition: all 0.25s ease-out;
     vertical-align: middle;     /* dodatkowo wymagany w naprawdę starych przeglądarkach przy rezygnacji z 'float' i użyciu 'display: inline-block' (niedziedziczony) */
-    user-select: none;   /* można zanzaczyć tekst tylko w obrębie tego elmentu */
+    user-select: none;
 }
 
-div#spis_tresci div.kontener_odnosnik:hover,
-div#spis_tresci div.kontener_odnosnik.sztuczny-hover     /* po prostu przydzialana jakaś klasa, mająca kolor tła jak ":hover" */
+.kontener-odnosnik:hover,
+.kontener-odnosnik.sztuczny-hover     /* po prostu przydzialana jakaś klasa, mająca kolor tła jak ":hover" */
 {
-    /* rodzic_background-color: cornflowerblue == #6495ed ; */
-    /* background-color: cornflowerblue;	*/ 
-    /* background-color: #5a8ae8;  */  /* <--- może lepiej zostawić ten, subtelny kolor tła, bliski oryginałowi */
     background-color: #5d6ad0;     /* <-- ciemniejsze tło */
     border-color: #00b;
 }
 
-div#spis_tresci div.kontener_odnosnik:hover div.szczegoly,
-div#spis_tresci div.kontener_odnosnik.sztuczny-hover div.szczegoly
+.kontener-odnosnik:hover .szczegoly,
+.kontener-odnosnik.sztuczny-hover .szczegoly
 {
     left: 0px;
     bottom: 0px;
@@ -625,124 +619,112 @@ div#spis_tresci div.kontener_odnosnik.sztuczny-hover div.szczegoly
     width: 100%;
 }
 
-div#spis_tresci div.kontener_odnosnik:hover div.dolna_zaslonka,
-div#spis_tresci div.kontener_odnosnik.sztuczny-hover div.dolna_zaslonka
+.kontener-odnosnik:hover .dolna-zaslonka,
+.kontener-odnosnik.sztuczny-hover .dolna-zaslonka
 {
     background-color: #5d6ad0;  /* #5d6ad0 == rgb(93,106,208) */
     background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(93,106,208,1) 50%, rgba(93,106,208,1) 100%); 
 }
 
-div#spis_tresci div.tytul_odnosnik {
+div.tytul-odnosnik {
     height: 6em;
-        /*    vertical-align: bottom;	*/
 }
 
-div#spis_tresci div.kontener_odnosnik a {
+.kontener-odnosnik a {
     cursor: pointer;    /* sztucznie, na usunięty 'href' */
-    text-decoration: none;        
+    text-decoration: none;
 }
 
-.sztuczny-focus .tytul_odnosnik > a:focus {     /* usuwanie obrysu bezpośrednio na odnośniku w spise treści, skoro element ze spisu treści (przodek) dostaje sztuczną klase ze zdarzenia */
+.sztuczny-focus .tytul-odnosnik > a:focus {     /* usuwanie obrysu bezpośrednio na odnośniku w spise treści, skoro element ze spisu treści (przodek) dostaje sztuczną klase ze zdarzenia */
     outline: none !important;   /* jako reakacja na pierwotne użycie "!important" */
 }
 
-div#spis_tresci div.tytul_odnosnik h2 {
-        /*    vertical-align: bottom;   */
+.tytul-odnosnik h2 {
     color: white;
     text-shadow: 2px 2px 6px black;
     word-wrap: break-word;
 }
 
-div#spis_tresci div.tytul_odnosnik h2.wyzszy {
-        /* line-height: 2.5em; */
-    padding-top: 0.8em;    
+.tytul-odnosnik h2.wyzszy {
+    padding-top: 0.8em;
 }
 
-div#spis_tresci div.tytul_odnosnik h2.mniejszy {
+.tytul-odnosnik h2.mniejszy {
     font-size: 135%;  /* a nie 175% jak h2 standardowo */
 }
 
-div#spis_tresci div.tytul_odnosnik h2.najmniejszy {
+.tytul-odnosnik h2.najmniejszy {
     font-size: 116%;  /* a nie 175% jak h2 std. */
 }
 
-div#spis_tresci div.zdjecie_odnosnik a {
+.zdjecie-odnosnik a {
     display: block;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
 
-div#spis_tresci div.zdjecie_odnosnik img {
+.zdjecie-odnosnik img {
     display: block;
     margin-left: auto;
+    margin-right: auto;
     max-height: 200px;
     max-width: 96%;
     border: 4px solid white;	
     box-shadow: 2px 2px 6px darkblue;
-    margin-left: auto;
-    margin-right: auto;	
 }
 
-div#spis_tresci div.kontener_tekstowy_odnosnik {
-    /*float: left; */
-    /*margin: 0 1em;	*/
-    /*background-color: #c3d5e2; */
+div.kontener-tekstowy-odnosnik {
     padding: 0.3em;
     overflow: hidden;
 }
 
-div#spis_tresci div.data_odnosnik {
+div.data-odnosnik {
     text-align: center;
     font-size: 80%;
     font-weight: bold;
     padding-top: 0.4em;
     padding-bottom: 0.4em;
-    /*background-color: #c3d5e2; */
 }
 
-div#spis_tresci div.opis_odnosnik {
-    overflow: hidden;	
-    max-height: 304px;	/* jak wielokrotność 16px fontu */
-    text-align: justify;	
+div.opis-odnosnik {
+    overflow: hidden;
+    max-height: 304px;	/* jak wielokrotność 16px fontu, zakładając że to 1em */
+    text-align: justify;
     padding-bottom: 0.5em;
 }
 
-div#spis_tresci div.kontener_odnosnik div.szczegoly {
+.kontener-odnosnik div.szczegoly {
     position: absolute;
     z-index: 20;    
     width: 100%;
-    height: 50px;  
-        /*height: 60px;*/    
-    background-color: #ddd;
-    color: firebrick;
+    height: 50px;  /* maksymalnie można dać do 60px (ewentualnie emy, ale uważać na przepełnienie) */
     left: 0;
     bottom: -70px;
+    overflow: hidden;
     opacity: 0.1;
+    color: firebrick;
     font-size: 120%;
     font-weight: bold;
-    overflow: hidden;    
+    background-color: #ddd;
     transition: bottom 0.2s, opacity 0.4s;
 }
 
-div#spis_tresci div.szczegoly > p
-{
-    width: 40%;    
+.szczegoly > p {
+    width: 40%;
     height: 45px;
     float: left;
     text-align: center;
-    color: #5a8ae8;    
-        /*line-height: 26px;*/
+    color: #5a8ae8;
     line-height: 22px;
 }
 
-div#spis_tresci div.szczegoly > p > span
-{
-    color: #54c;    
+.szczegoly > p > span {
+    color: #54c;
 }
 
-div#spis_tresci div.szczegoly > p:first-of-type,
-div#spis_tresci div.szczegoly > p:last-of-type
+.szczegoly > p:first-of-type,
+.szczegoly > p:last-of-type
 {
     width: 30%;
     height: 100%;
@@ -750,20 +732,19 @@ div#spis_tresci div.szczegoly > p:last-of-type
     color: #54c;
     font-size: 125%;
     font-weight: bolder;
-        /*line-height: 60px;    */
     line-height: 45px;
 }
 
-div#spis_tresci div.szczegoly > p:last-of-type {
-    color: #5a8ae8;   
+.szczegoly > p:last-of-type {
+    color: #5a8ae8;
 }
     
-div#spis_tresci div.kontener_odnosnik div.dolna_zaslonka {
+.kontener-odnosnik div.dolna-zaslonka {
         /* użyć CSS-clip, gdy będzie funkcjonował we wszystkich przeglądarkach (to bedzie raj;), póki co gradient, albo ostatecznie jednolite tło */
     position: absolute;
-    z-index: 1;    
-    width: 100%; 
-    height: 18px;    
+    z-index: 1;
+    width: 100%;
+    height: 18px;
     left: 0px;
     bottom: 0px;
     background-color: cornflowerblue;       /* tło dokładnie jak kontener główny */
@@ -771,31 +752,33 @@ div#spis_tresci div.kontener_odnosnik div.dolna_zaslonka {
     transition: background-color 0.25s ease-out;	    /* też ten sam styl "podatności" na zmianę */
 }
 
-div#spis_tresci div#wybrany_zaczytany_spis {
+        /*    ------     DIV#wybrany_zaczytany_spis    ------     */
+
+div#wybrany_zaczytany_spis {
     display: none;
 }
 
-div#spis_tresci div#wybrane_galerie_spis {
+div#wybrane_galerie_spis {
     width: 100%;
     text-align: center;
     padding-top: 1em;
-    padding-bottom: 1em;    
-    margin-bottom: 1em;	
+    padding-bottom: 1em;
+    margin-bottom: 1em;
     background-color: cornflowerblue;
 }
 
 nav#spis_sterowanie p#status_galerii_spis {
+    display: none;
     padding: 0.6em 1em;
     border: 2px dashed blue;
     background-color: rgba(50, 60, 200, 0.7);
-    display: none;
 }
 
 nav#spis_sterowanie h2 {
     text-shadow: 2px 2px 6px #666;
 }
 
-div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
+nav#spis_sterowanie h2#zaladuj_galerie_spis {
     display: none;
     width: 90%;
     background-color: cornflowerblue;
@@ -817,20 +800,20 @@ div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
     user-select: none;
 }
 
-div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:hover,
-div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:focus
+nav#spis_sterowanie h2#zaladuj_galerie_spis:hover,
+nav#spis_sterowanie h2#zaladuj_galerie_spis:focus
 {
     box-shadow: 1px 1px 3px 1px #5d6ad0, 0px 0px 4px 1px black;
-    /* box-shadow: 0 0 3px rgba(0,0,0, 0.6); */
     background-color: #5d6ad0;
     color: yellow;
     text-shadow: 0px 0px 10px black;
 }
 
-div#spis_tresci div#selektor {
-    display: none;    
+
+div#selektor {
+    display: none;
     width: 99%;
-    margin: 1.5em auto;    
+    margin: 1.5em auto;
 }
 
 div#selektor > div {
@@ -1024,7 +1007,7 @@ div#selektor input#suwak_galerii {
 }
 
 
-div#spis_tresci div#galeria_spis_podmiana {
+div#galeria_spis_podmiana {
     background-color: #ddd ;
     float: right ;	
     padding: 1em ;	
@@ -1033,7 +1016,7 @@ div#spis_tresci div#galeria_spis_podmiana {
         display: none;
 }
 
-div#spis_tresci div#skladowisko_wybrane_galerie_spis {
+div#skladowisko_wybrane_galerie_spis {
     position: absolute;
     background-color: dimgray;
     left: -1110px;
@@ -1041,7 +1024,7 @@ div#spis_tresci div#skladowisko_wybrane_galerie_spis {
 /*    display: none;*/
 }
 
-div#spis_tresci div#skladowisko_status_wybranej_galerii {
+div#skladowisko_status_wybranej_galerii {
     position: absolute;
     background-color: cadetblue;
     left: -1090px;
@@ -2260,12 +2243,12 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         padding-right: 55px;    /* szerokośc guzika zamykania 50px + minimalne odstę[y od krawędzi i guzika */
     }
 
-    div#spis_tresci div.kontener_odnosnik {
+    div.kontener-odnosnik {
         min-height: 375px;			
         max-height: 375px;
     }
 
-    div#spis_tresci div.kontener_odnosnik img {
+    .kontener-odnosnik img {
         max-height: 210px;
     }
 
@@ -2315,7 +2298,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: auto;
     }
 
-    .opis_odnosnik {
+    .opis-odnosnik {
         font-size: 1.25em;   /* powiększenie o względne % dla pionowej listy na 320...470px (tu jest najszerszy opis tekstowy galerii, i miał zbyt małą czcionkę w stosunku do szerokości) */
     }
 
@@ -2394,7 +2377,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: 88%;
     }
 
-    .opis_odnosnik {
+    .opis-odnosnik {
         font-size: 1em; /* redukcja na względne 100% */
     }
     
@@ -2427,13 +2410,13 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         min-width: 210px;
     }
     
-    div#spis_tresci div.kontener_odnosnik {
+    div.kontener-odnosnik {
         min-height: 415px;			
         max-height: 415px;
         width: 48.2%;    
     }
 
-    div#spis_tresci div.kontener_odnosnik img {
+    .kontener-odnosnik img {
         max-height: 220px;
     }
 
@@ -2459,13 +2442,13 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: 99%;    
     } 
 
-    div#spis_tresci div.kontener_odnosnik {
+    div.kontener-odnosnik {
         min-height: 425px;			
         max-height: 425px;
         width: 32%;    
     }
 
-    div#spis_tresci div.kontener_odnosnik img {
+    .kontener-odnosnik img {
         max-height: 230px;
     }
     
@@ -2500,13 +2483,13 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: 99.25%;      
     }
 
-    div#spis_tresci div.kontener_odnosnik {
+    div.kontener-odnosnik {
         min-height: 465px;			
         max-height: 465px;
         width: 24%;     
     }
 
-    div#spis_tresci div.kontener_odnosnik img {
+    .kontener-odnosnik img {
         max-height: 240px;
     }
     
@@ -2519,7 +2502,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         padding-left: 10.5em;   /* brak zawijania pod obrazkiem z float w komunikacie */
     }
     
-    div#spis_tresci div#selektor {  /* specyficzność głupcze! */
+    div#selektor {  /* specyficzność głupcze! */
         width: 97%;
     }
     
@@ -2573,13 +2556,13 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         height: 170px;    
     }
 
-    div#spis_tresci div.kontener_odnosnik {
+    div.kontener-odnosnik {
         min-height: 490px;			
         max-height: 490px;
         width: 19.1%;       
     }
 
-    div#spis_tresci div.kontener_odnosnik img {
+    .kontener-odnosnik img {
         max-height: 250px;
     }
 

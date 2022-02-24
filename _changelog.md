@@ -1,4 +1,35 @@
-v0.5.69 - CSS cleaning, approach # 3 - header section (banner)
+v0.5.70 - CSS cleaning, approach #4 - dynamically loading table of contents
+
+* v0.5.70 -- [2022-02-24]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* refactoring selectors in the area of ​​a dynamically loaded table of contents
+* getting rid of the excess force of selectors
+  - removed redundant 'id' attributes pointing to an ancestor container
+  - removed unnecessary ancestor classes
+  - removed redundant ancestor/parent element type
+  - left the element type in the basic element selector (only for a complicated structure and many pseudo-classes/states of the container and/or sub-elements)
+* changing class names to a character with dashes instead of underscores between words
+* sorting of CSS attributes
+  - unified according to the used hierarchy of importance of the attributes
+  - deleting commented content
+  - fixes for duplicate attributes
+
+-- witryna.js
+* class names changed in CSS were used for dynamically generated content
+  - a lot of name changes in dynamically built structures
+  - the lack of use of class names changed in CSS in several functions building the dynamic structure of HTML did not generate any content
+  - possible lack of synchronization in class names or only partial renaming created incorrect content
+  - correctness tests in generating content
+
+-- index.php
+* one class name updated (only one static change)
+
+---------------------------
+
+v0.5.69 - CSS cleaning, approach #3 - header section (banner)
 
 * v0.5.69 -- [2022-02-23]
 
@@ -22,7 +53,7 @@ v0.5.69 - CSS cleaning, approach # 3 - header section (banner)
 
 -- witryna.js
 * tracking changes made for HTML and CSS
-  - changes for events or references 
+  - changes for events or references
 
 ---------------------------
 

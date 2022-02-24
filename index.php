@@ -151,7 +151,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         }
                     ?>
                     <h2>Lista galerii ze Żłobka</h2>
-                    <div class="ciemne_tlo_spis">
+                    <div class="ciemne-tlo-spis">
                         <div class="kontener">
                             <div id="galeria_spis">
                             </div>
@@ -339,7 +339,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.69</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.70</h6>
             <div id="poco">
                 <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
