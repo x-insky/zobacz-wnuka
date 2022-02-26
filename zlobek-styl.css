@@ -3,7 +3,7 @@
 /*    --------------------------      WSZYSTKIE ELEMENTY       --------------------------     */
 
 * {
-    box-sizing: border-box;	
+    box-sizing: border-box;
 }
 
 body {
@@ -59,9 +59,9 @@ h2 {
     font-size: 175%;
     font-weight: bold;
     color: #54c;
-    padding: 0.5em;	
+    padding: 0.5em;
     text-shadow: 0px 0px 4px #ddd;
-    text-align: center;	
+    text-align: center;
 }
 
 h2 > span {
@@ -73,8 +73,8 @@ h3 {
     font-weight: bold;
     color: yellow;
     text-shadow:0px 0px 4px #555;
-    padding: 0.2em 0.5em;	
-    text-align: center;	
+    padding: 0.2em 0.5em;
+    text-align: center;
 }
 
 h3 > span {
@@ -86,8 +86,8 @@ h4 {
     font-weight: bold;
     color: darkblue;
     text-shadow: 1px 1px 1px #ccc;
-    padding: 0.2em 0.5em;	
-    text-align: center;	
+    padding: 0.2em 0.5em;
+    text-align: center;
 }
 
 h4 > span {
@@ -101,11 +101,11 @@ h6 {
 }
 
 p {
-    text-align: justify;	
+    text-align: justify;
 }
 
 em {
-    font-style: italic;    
+    font-style: italic;
 }
 
 strong {
@@ -129,7 +129,7 @@ form {
 form input {
     margin: 0.2em;
     padding: 0.2em;
-    font-size: 110%;		
+    font-size: 110%;
 }
 
 /*    --------------------------       OGÓLNE KLASY      --------------------------     */
@@ -151,7 +151,7 @@ a[data-href]:focus,
 
 .kontener {
     width: 100%;
-    max-width: 1400px;    
+    max-width: 1400px;
     align-items: center;
     margin: 0 auto;
 }
@@ -231,13 +231,13 @@ a[data-href]:focus,
 h1.logo {
     color: yellow;
     font-size: 300%;
-    padding-bottom: 0.05em;	
+    padding-bottom: 0.05em;
 }
 
 h2.logo {
-    font-size: 225%;	
+    font-size: 225%;
     padding-top: 0;
-    line-height: 20px;	
+    line-height: 20px;
     text-shadow: 0px 0px 3px #ccc;
 }
 
@@ -378,7 +378,7 @@ header.naglowek {
     .banner-kontener:hover div#slonce_logo.startowe_przesuniecie   /* DRY #2: znów powielenie, ale efekt nieosiągniety...  */
 {
     left: -85px;
-    top: -85px;		
+    top: -85px;
 }
 
 .naglowek div.napisy-banner {
@@ -397,13 +397,13 @@ div#zagraj {
     top: 20px;
     cursor: pointer;
     border: 2px solid #ccc;
-    border-radius: 5px;    
+    border-radius: 5px;
     background-color: #5d6ad0;
     transition: all 0.5s 0.1s;
 }
 
 #zagraj:hover {
-    border-color: yellow;    
+    border-color: yellow;
     box-shadow: 0px 0px 4px 1px yellow;
 }
 
@@ -413,7 +413,7 @@ div#zagraj {
     height: 100%;
     background-color: #5d6ad0;
     border-radius: 3px;
-    overflow: hidden;    
+    overflow: hidden;
 }
 
 #zagraj .zagraj-kontener h4 {
@@ -421,10 +421,10 @@ div#zagraj {
     font-weight: bold;
     padding: 0.33em 0.2em;
     text-align: center;
-    text-shadow: none;    
-    color: #5d6ad0;    
+    text-shadow: none;
+    color: #5d6ad0;
     background-color: #eee;
-    transition: all 0.5s 0.1s;    
+    transition: all 0.5s 0.1s;
 }
 
 #zagraj:hover .zagraj-kontener h4 {
@@ -440,14 +440,14 @@ div#zagraj {
     text-align: left;
     color: yellow;
     background-color: #5d6ad0;
-    text-shadow: none;    
-    transition: all 0.5s 0.1s;       
+    text-shadow: none;
+    transition: all 0.5s 0.1s;
 }
 
 #zagraj:hover .zagraj-kontener h3 {
     padding: 0.3em 0.4em;    
     text-shadow: 1px 1px 3px #ccc;
-    background-color: cornflowerblue;    
+    background-color: cornflowerblue;
 }
 
 #zagraj .zagraj-kontener p {
@@ -473,7 +473,8 @@ div#zagraj {
 }
 
 #zagraj:hover .zagraj-kontener p:after,
-#zagraj:hover .zagraj-kontener p::after {
+#zagraj:hover .zagraj-kontener p::after
+{
     content: ">";
 }
 
@@ -497,7 +498,7 @@ div#zagraj {
 div#spis_tresci,
 div#zaczytany_spis
 {
-    overflow: hidden; 
+    overflow: hidden;
     width: 100%;
 }
 
@@ -570,7 +571,7 @@ div.powiadamiacz {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5544cc', endColorstr='#5d6ad0',GradientType=1 ); /* gradient w IE 6-9 */
     box-shadow: 1px 1px darkblue; 
     border-radius: 2px;
-    transition: width 10s 0.2s linear; 
+    transition: width 10s 0.2s linear;
 }
 
         /*    ------     DIV#galeria_spis     ------     */
@@ -588,13 +589,13 @@ div#galeria_spis {
 div.kontener-odnosnik {
     position: relative;
     display: inline-block;
-    overflow: hidden;
+    width: 100%;
     min-height: 330px;	     /* było po 575px w obu wysokościach, zabrano 75px */ 		
     max-height: 330px;
-    max-width: 97.6%;	
-    width: 100%;
+    max-width: 97.6%;
+    overflow: hidden;
     margin: 0.4em 0.3em;
-    padding: 0.5em;	    
+    padding: 0.5em;
     border: 1px solid blue;
     box-shadow: 1px 1px 3px darkblue;	
     border-radius: 5px;
@@ -728,11 +729,11 @@ div.opis-odnosnik {
 {
     width: 30%;
     height: 100%;
-    background-color: #eee;
     color: #54c;
     font-size: 125%;
     font-weight: bolder;
     line-height: 45px;
+    background-color: #eee;
 }
 
 .szczegoly > p:last-of-type {
@@ -748,7 +749,7 @@ div.opis-odnosnik {
     left: 0px;
     bottom: 0px;
     background-color: cornflowerblue;       /* tło dokładnie jak kontener główny */
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, cornflowerblue 50%, cornflowerblue 100%);      
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, cornflowerblue 50%, cornflowerblue 100%);
     transition: background-color 0.25s ease-out;	    /* też ten sam styl "podatności" na zmianę */
 }
 
@@ -783,13 +784,14 @@ nav#spis_sterowanie h2 {
 h2#zaladuj_galerie_spis {
     display: none;
     width: 90%;
-    background-color: cornflowerblue;
-    color: white;
+
     margin: 1.5em;
     margin-left: auto;
     margin-right: auto;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
+    color: white;
+    background-color: cornflowerblue;
     cursor: pointer;
     border-radius: 8px;
     border: 2px solid #fff;
@@ -855,7 +857,7 @@ h2#selektor_naglowek span {
 }
 
 h2#selektor_naglowek:hover span:hover {
-    padding-left: 1em ;
+    padding-left: 1em;
 }
 
 h2#selektor_naglowek.rozwiniety span {
@@ -875,12 +877,12 @@ div#wybor_podstrony_galerii
 
 div#wybor_galerii {
     background-color: deepskyblue;
-    background: radial-gradient(circle at bottom, cornflowerblue 10%, deepskyblue);    
+    background: radial-gradient(circle at bottom, cornflowerblue 10%, deepskyblue);
 }
 
 div#wybor_podstrony_galerii {
     background-color: cornflowerblue;
-    background: radial-gradient(circle at top, cornflowerblue 10%, deepskyblue);    
+    background: radial-gradient(circle at top, cornflowerblue 10%, deepskyblue);
     border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
 }
@@ -898,23 +900,23 @@ div#wybor_podstrony_galerii aside > span
     padding-right: 1.5em;
 }
 
-div#wybor_galerii div#suwak_info,
-div#wybor_podstrony_galerii div#suwak_podstrona_info
+div#suwak_info,
+div#suwak_podstrona_info
 {
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
 }
 
 div#suwak_podstrony > div label {
     text-indent: -1em;
 }
 
-div#wybor_galerii div#suwak_info div,
-div#wybor_podstrony_galerii div#suwak_podstrona_info div
+div#suwak_info div,
+div#suwak_podstrona_info div
 {
     flex-basis: 130px;
-    padding: 0.5em 0.5em; 
+    padding: 0.5em 0.5em;
     text-align: center;
 }
 
@@ -925,19 +927,19 @@ div#wybor_podstrony_galerii > div:last-of-type
         padding: 0 0.5em;
 }
 
-div#wybor_galerii div#suwak,
-div#wybor_podstrony_galerii div#suwak_podstrony
-{  
-    flex-basis: 305px;  
+div#suwak,
+div#suwak_podstrony
+{
+    flex-basis: 305px;
     text-align: center;
     flex-grow: 6;
-    /*background-color: lightseagreen;*/
+
 }
 
 div#selektor input {
     padding-left: 1em;
     padding-right: 1em;
-    font-size: 140%;    
+    font-size: 140%;
 }
 
 div#selektor input[type=button],
@@ -985,58 +987,52 @@ input#suwak_galerii {
 }
 
 .maly_guzik {
-/*        display: block;
-        width: 100%;*/
-        /*min-width: 130px;*/
-    padding: 0.45em 4em;    /*BYŁO_WZORCOWE padding: 0.45em 1em;*/    
+    padding: 0.45em 4em;    /*BYŁO_WZORCOWE padding: 0.45em 1em;*/
     margin: 0.3em auto;
     font-size: 140%;
 }
 
 .szerszy_guzik {
-        display: block;
-        width: 100%;
-        /*min-width: 200px;*/
+    display: block;
+    width: 100%;
     padding: 0.5em 1.8em;
     margin: 0.3em auto;
     font-size: 140%;    
-    /*  margin: 0.3em auto;
-        font-size: 140%;    */
 }
 
 
 div#galeria_spis_podmiana {
-    background-color: #ddd ;
-    float: right ;	
-    padding: 1em ;	
-    margin: 1em ;
-    border: 2px solid red ;	
-        display: none;
+    display: none;
+    float: right;
+    padding: 1em;
+    margin: 1em;
+    background-color: #ddd;
+    border: 2px solid red;
 }
 
 div#skladowisko_wybrane_galerie_spis {
     position: absolute;
+    left: -2220px;
+    top: -1560px;
     background-color: dimgray;
-    left: -1110px;
-    top: 560px;
-/*    display: none;*/
+        /* display: none; */
 }
 
 div#skladowisko_status_wybranej_galerii {
     position: absolute;
-    background-color: cadetblue;
-    left: -1090px;
+    display: none;
+    left: -1990px;
     top: -2180px;
-    display: none;  
-}
-
-.brak_js div#brak_skryptow {
-    display: block;      /* bieżące powinno mieć wyższą specyficzność, niż standardowe poniżej -- gdy brak JS */
+    background-color: cadetblue;
 }
 
 div#brak_skryptow {
     display: none;
     padding: 1.2em 0.2em;   /* korekta na małe ekrany */    
+}
+
+.brak_js div#brak_skryptow {
+    display: block;      /* bieżące powinno mieć wyższą specyficzność, niż standardowe poniżej -- gdy brak JS */
 }
 
 
