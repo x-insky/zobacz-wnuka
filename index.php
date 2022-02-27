@@ -288,7 +288,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             <div id="wczytywanie_podstrona"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
             </div>
             
-            <div class="jasne_tlo_galeria">
+            <div class="jasne-tlo-galeria">
                 <div class="kontener">
                     <div id="skladowisko"></div>
                 </div>
