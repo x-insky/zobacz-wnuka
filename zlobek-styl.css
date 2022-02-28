@@ -1265,42 +1265,42 @@ div#skladowisko a:focus img     /* IMG bez TABINDEX nie może mieć tego statusu
     transform: scale(1.1);
 }
 
-/*    --------------------------       GRA      --------------------------    */
+/*    --------------------------       DIV#gra      --------------------------    */
 
 div#gra {
     display: none;
     background-color: cornflowerblue;
     margin: 1em auto;
-    padding: 0.5em;    
+    padding: 0.5em;
     border-radius: 10px;
     box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);
 } 
 
-div#gra h2 {
+#gra h2 {
     color: gold;
     font-size: 160%;
 }
 
-div#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   */
+#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   */
       -moz-user-select: none;
       -khtml-user-select: none;
       -webkit-user-select: none;
       user-select: none;
       /* Required to make elements draggable in old WebKit */
       -khtml-user-drag: element;
-      -webkit-user-drag: element;    
+      -webkit-user-drag: element;
     cursor: move;
     width: auto;
-    height: auto;    
+    height: auto;
 }
 
-div#gra div#zasady {
+div#zasady {
     position: relative;
     overflow: hidden;
     height: 260px;
 }
 
-div#gra div#zasady p:first-of-type {
+#zasady p:first-of-type {
     margin-top: 9.5em;
 }
 
@@ -1326,7 +1326,7 @@ div#gra div#zasady p:first-of-type {
     color: goldenrod;
 /*    background-color: lightslategray;*/
     border: 1px dotted #ccc;
-    transform: rotateZ(1.66deg);    
+    transform: rotateZ(1.66deg);
 }
 
 .zasada3 {
@@ -1337,72 +1337,71 @@ div#gra div#zasady p:first-of-type {
     z-index: 6;
     color: darkgoldenrod;
     background-color: lightskyblue;
-    transform: rotateZ(-2.1deg);     
+    transform: rotateZ(-2.1deg);
 }
 
-div#gra div#sterowanie {
-    margin-top: 1em;    
+div#sterowanie {
+    margin-top: 1em;
 }
 
-div#gra div#plansza {
+div#plansza {
     height: 930px;
-    width: 1400px;    
-    position: relative; 
+    width: 1400px;
+    position: relative;
     overflow: hidden;
     background-color: #ddd;
     margin-top: 2em;
     margin-bottom: 1em;
 }
 
-div#gra div#plansza img.przenosny {
+#plansza img.przenosny {
     position: absolute;
-    width: 200px; /* jakieś wymiary początkowe muszą być określone przy ustawianiu absolutnym */
+    width: 200px;
     height: 200px;
     outline: 2px dotted #333;
     z-index: 100;
 }
 
-div#plansza div#rysunek { 
-    position: absolute;       
+div#rysunek {
+    position: absolute;
     background-color: white;
-    left: 0;    /* "trza" na sztywno określić, albowiem po kontenerze lata po wprowadzniu dalszych elementów */ 
+    left: 0;
     top: 0;    
-    width: 1090px;       
-    height: 700px;   
+    width: 1090px;
+    height: 700px;
     z-index: 2;
     border: 1px solid #888;
-    box-shadow: 2px 2px 3px rgba(100, 149, 237, 0.8);    
+    box-shadow: 2px 2px 3px rgba(100, 149, 237, 0.8);
 }
 
-div#plansza div#prawy_zasobnik {
-    position: absolute;    
+div#prawy_zasobnik {
+    position: absolute;
     left: 1100px;
-    width: 300px;    
+    width: 300px;
     height: 700px;
-    z-index: 1;    
+    z-index: 1;
     background-color: #eee;
     border-left: 2px dotted #666;
 }
 
-div#plansza div#dolny_zasobnik {
+div#dolny_zasobnik {
     position: absolute;
     top: 710px;
-    width: 1400px;    
-    height: 200px; 
-    z-index: 1;       
+    width: 1400px;
+    height: 200px;
+    z-index: 1;
     background-color: #f6f6f6;
-    border-top: 2px dotted #666;    
+    border-top: 2px dotted #666;
 }
 
 /*    --------------------------       FOOTER      --------------------------    */
 
 footer#stopka {
     clear: both;
-    /* background-color: #aad; */
     background-color: cornflowerblue;		
     margin-top: 0.7em;
-    margin-bottom: 0.5em;	
-    padding: 1em 0.2em;	
+    margin-bottom: 0.5em;
+    padding: 1em 0.2em;
     text-align: center;
     border-radius: 10px;
     box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);		
@@ -1418,70 +1417,70 @@ footer#stopka {
     padding-top: 0.75em;
 }
 
-   /* footer#stopka input[type=button],*/
-footer#stopka button {
-        display: block;
-        width: 100%;
-        word-wrap: break-word;
-        white-space: normal;
+   /* #stopka input[type=button],*/
+#stopka button {
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+    white-space: normal;
     font-size: 140%;
     margin-left: 0.3em;
     margin-bottom: 0.5em;
-    padding: 0.45em 1em;	
+    padding: 0.45em 1em;
 }
 
 button#symulacja_button {
     font-weight: bold;
 }
     
-footer#stopka p {
-    font-size: 110%;    
+#stopka p {
+    font-size: 110%;
     text-align: justify;
     padding: 0.5em;
 }
 
-footer#stopka .wysrodkowane {
+#stopka .wysrodkowane {
     text-align: center;
 }
 
 div#poco,
-div#pomoc 
+div#pomoc
 {
     display: none;
     position: relative;
     padding: 0.5em 1em;
     margin: 0.5em 0;
     background-color: deepskyblue;
-    background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue); 	
+    background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue); 
 }
 
 div#pomoc {
-    background-color: #c3d5e2;	
-    background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue ); 	
+    background-color: #c3d5e2;
+    background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue);
 }
 
 .brak_js div#poco,
 .brak_js div#pomoc {
-    display: block;	
+    display: block;
 }
 
 div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klasę ku temu, nie cudować ze stylami! */
-    font-style: italic ;	
+    font-style: italic;
 }
 
-footer#stopka h2 {
+#stopka h2 {
     padding-top: 3em;
 }
 
-footer#stopka h3 {
+#stopka h3 {
     padding: 0.6em;
 }
 
-footer#stopka ul {
-    text-align: center;        
+#stopka ul {
+    text-align: center;
 }
 
-footer#stopka ul li.tech {
+#stopka ul li.tech {
     display: inline-block;    /* inline było */
     background-color: whitesmoke;       /*  #c3d5e2 */
     padding: 0.1em 0.5em;
@@ -1489,46 +1488,42 @@ footer#stopka ul li.tech {
     margin-bottom: 0.4em;
     margin-left: 0.25em;
     font-size: 13px;
-    line-height: 18px; 
+    line-height: 18px;
     /*line-height: 28px;*/        /* 28px dla inline, kilkanaście px dla inline-block */
-    text-align: center; 
+    text-align: center;
     border: 1px solid #333;
     background: url(grafiki/tak_nie_ikona.png) 4px 1px no-repeat, whitesmoke;
     background: url(grafiki/tak_nie_ikona.png) 4px 50% no-repeat, whitesmoke;
 }
 
-footer#stopka ul li.tech_tak {
+#stopka ul li.tech_tak {
     border: 1px solid green;
     background: url(grafiki/tak2_ikona.png) 4px 1px no-repeat, whitesmoke;
-    background: url(grafiki/tak2_ikona.png) 4px 50% no-repeat, whitesmoke;   
+    background: url(grafiki/tak2_ikona.png) 4px 50% no-repeat, whitesmoke;
 }
 
-footer#stopka ul li.tech_nie {
+#stopka ul li.tech_nie {
     border: 1px solid darkred;
     background: url(grafiki/nie_ikona.png) 4px 1px no-repeat, whitesmoke;
     background: url(grafiki/nie_ikona.png) 4px 50% no-repeat, whitesmoke;
 }
 
-footer#stopka ul.ramka {
-    /* margin: 0.5em 1em;
-    padding: 0.5em 2em; */
+#stopka ul.ramka {
     padding-bottom: 0.2em;
     background-color: #6495ed;;
-    /* border: 2px solid white; */
     border-radius: 5px;
 }
 
-footer#stopka .ramka li {
+#stopka .ramka li {
     padding: 0.1em 2em;
     padding-left: 2.5em;
 }
 
-footer#stopka .kontener.ramka {
+#stopka .kontener.ramka {
     padding: 0;
     padding-bottom: 0.5em;
     margin: 0.75em auto;
 }
-
 
 .zalety {
     margin-left: 3%;
@@ -1569,9 +1564,11 @@ footer#stopka .kontener.ramka {
     margin-left: 0.5em;
 }
 
+        /*    ------     DIV#wymiary     ------     */
+
 .brak_js div#wymiary {
     visibility: hidden; /* do przeniesienia do tego kontenera, wcześniej poza nim; wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
-        /*display: none;*/    
+        /*display: none;*/
 }
 
 div#wymiary {
@@ -2251,7 +2248,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
     
     div#nazwa_galerii h2,
-    footer#stopka h2
+    #stopka h2
     {
         padding-top: 0.5em;
         padding-right: 2.5em;
@@ -2300,13 +2297,13 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
        display: inline;
     }
 
-    footer#stopka button {
+    #stopka button {
         display: inline;
         width: auto;
         padding: 0.45em 2em;	
     }
 
-    footer#stopka ul li:first-child {
+    #stopka ul li:first-child {
         margin-left: 0;
     }
 
@@ -2432,7 +2429,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         min-width: 220px;
     }
     
-    footer#stopka h2 {
+    #stopka h2 {
         padding-right: 0.5em;
     }
 
