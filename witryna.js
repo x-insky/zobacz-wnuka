@@ -1925,16 +1925,16 @@ function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie )
     g_przechwytywacz_php = "./przechwytywacz.php";    // ewentualnie użyć "stałych", aby nie powodować błędu i hardkodu w kilku miejscach
     g_przechwytywacz_php_zapytanie = "?url_zewn=";
         // + wizualizacja zmian  
-    $('.status_ajaksa').removeClass('status_awaria').addClass('status_norma');
+    $('.status-ajaksa').removeClass('status-awaria').addClass('status-norma');
     }
 
     function ZepsujAjaksa ()
     {
-    g_przechwytywacz_php = "./przepuszczacz.php";  // dodatkowo zepsuto zapytanie    
-    //g_przechwytywacz_php = "./przechwytywacz.php";  // powrót do prawidłowgo oryginału z "przepuszczacza"  
+    g_przechwytywacz_php = "./przepuszczacz.php";  // dodatkowo zepsuto zapytanie
+    //g_przechwytywacz_php = "./przechwytywacz.php";  // powrót do prawidłowgo oryginału z "przepuszczacza"
     g_przechwytywacz_php_zapytanie = "?url_dupa=";
         // wizulizacja zmian  
-    $('.status_ajaksa').removeClass('status_norma').addClass('status_awaria');    
+    $('.status-ajaksa').removeClass('status-norma').addClass('status-awaria');    
     }
 
     // zarejestruj operacje zdarzeń - dwa przeciwstawne przyciski
@@ -2187,8 +2187,8 @@ $(elementWyswietlajacy + '> h1').text( szerokoscOkna + ' x ' + wysokoscOkna );  
 
     // taka parodia, ale chodzi o przerwanie aktualnie zanikającej animacji i uruchomienie jej od nowa
     // $(elementWyswietlajacy).hasClass('animacja_zanikanie').removeClass('animacja_zanikanie').addClass('animacja_zanikanie');
-    // istotny jest odstęp czasu pomiędzy zabranie, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)    
-$(elementWyswietlajacy).removeClass('animacja_zanikanie2').height(); 
+    // istotny jest odstęp czasu pomiędzy zabraniem, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)    
+$(elementWyswietlajacy).removeClass('animacja_zanikanie2').height();    // pobierana jest na próżno wysokość, jako mechanizm nowego odwołania się do DOM
 
 $(elementWyswietlajacy).addClass('animacja_zanikanie2');    
 
@@ -3159,8 +3159,8 @@ $('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt ) { // te
     
     if ( ileNaLiscieNieotrzymanych > 0 )    // jeżeli istnieje nadal lista niepobranych/nieotrzymanych...    
     {
-        if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status_ajaksa').hasClass('status_norma') ) ) 
-            || ( $('.status_ajaksa').hasClass('status_norma') ) )  // wstępna weryfikacja po wyglądzie/zachowaniu
+        if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status-ajaksa').hasClass('status-norma') ) ) 
+            || ( $('.status-ajaksa').hasClass('status-norma') ) )  // wstępna weryfikacja po wyglądzie/zachowaniu
                     //tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
         {
             // dodatkowa weryfikacja, ewentualnie zrobić hardkoda

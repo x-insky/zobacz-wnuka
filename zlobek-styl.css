@@ -1574,8 +1574,6 @@ div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klas�
 div#wymiary {
     position: fixed;
     z-index: 250;
-    /*    left: 20px;
-        right: 20px;    */
     width: 80%;
     left: 10%;
     bottom: 15px;
@@ -1584,11 +1582,10 @@ div#wymiary {
     border: 2px solid yellow;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.7);
     opacity: 0.7;
-    visibility: visible; /* wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
-        /*display: none;*/
+    visibility: visible; /* kontener na wymiary od razu pokazany, ale zmiejszającą się widoczność modyfukuje animacja, nadawana poprzez JS podczas pierwszego odczytu wielkości okna/ekranu i kazdej kolejnej zmiany jego rozmiaru */
 }
 
-div#wymiary > h1 {
+#wymiary > h1 {
     color: whitesmoke;
     font-weight: bolder;
     opacity: 1;
@@ -1598,30 +1595,30 @@ div#wymiary > h1 {
 
 /*    --------------------------       SUWAKI z INPUT[type=RANGE] i różnice     --------------------------    */
 
-/*    -----     OGÓLNY     -----     */
+    /*    -----     OGÓLNY     -----     */
 
 input[type=range] {
-    /*removes default webkit styles*/
-    -webkit-appearance: none !important ;   /* !KONIECZNE dla WEB-kitów, bo stosują NADRZĘDNE style przeglądarki - "slider-horizontal" */
-            /*    appearance: none;  */
+        /* removes default webkit styles */
+    -webkit-appearance: none !important ;   /* ! KONIECZNE dla WEB-kitów, bo stosują NADRZĘDNE style przeglądarki - "slider-horizontal" */
+            /*    appearance: none;  */ /* ?!?! */
     padding-left: 0;
     padding-right: 0;
     background-color: transparent;      /* WEBKIT: puste wypełenie, bo mimo wszystko kolor domyślny ze stylu przeglądarki!  */
-    /*fix for FF unable to apply focus style bug */
-/*    border: 1px solid white;*/
+        /* fix for FF unable to apply focus style bug */
+    /*    border: 1px solid white;*/
     border: none;
     transition: all 0.3s;
-    /*required for proper track sizing in FF*/
-/*    width: 300px;*/
-/*        height: auto;*/
+        /* required for proper track sizing in FF */
+/*    width: 300px; */
+/*    height: auto; */
 }
 
 input[type=range]:focus {
     outline: none;
 }
 
-/* style przeglądarkowe dla elementów formularzy nie są ujednolicone, dlatego trzeba operować na prefiksowanych pseudoklasach :(  */
-/*    -----     WEBKIT     -----     */
+/*  przeglądarkowe stylowania dla elementów formularzy nie są ujednolicone, dlatego trzeba operować na prefiksowanych pseudoklasach :(  i to często w zadanej kolejności */
+    /*    -----     WEBKIT     -----     */
 
 input[type=range]::-webkit-slider-runnable-track {
     height: 8px;
@@ -1659,17 +1656,17 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 input[type=range]:focus::-webkit-slider-thumb,
-input[type=range]:hover::-webkit-slider-thumb 
+input[type=range]:hover::-webkit-slider-thumb
 {
-/* stare Chromy nie pozwalają powiększyć samego suwaka, jest on umieszczony WEWNĄTRZ paska przewijania, wielkość jak wysokość paska; też nie działa ":focus"    
-/*    -webkit-appearance: none !important; */
-/*    border: 6px solid rgb(255, 255, 0);*/
+/* stare Chromy nie pozwalają powiększyć samego suwaka, jest on umieszczony WEWNĄTRZ paska przewijania, wielkość jak wysokość paska; też nie działa ":focus" */
+    /*    -webkit-appearance: none !important; */
+    /*    border: 6px solid rgb(255, 255, 0); */
     border: 1px solid #888;
     height: 20px;
     width: 20px;
-/*       margin-top: -8.5px; */
+    /*  margin-top: -8.5px; */
         margin-bottom: -4px;
-   /* background-color: orange;*/
+   /*   background-color: orange;*/
 }
 
 /*    -----     MOZILLA     -----     */
@@ -1688,7 +1685,7 @@ input[type=range]:hover::-moz-range-track,
 input[type=range]:focus::-moz-range-track 
 {
     background-color: #eee;
-/*    box-shadow: 0 0 2px white; */   
+    /*    box-shadow: 0 0 2px white; */
 }
 
 input[type=range]::-moz-range-thumb {
@@ -1705,29 +1702,26 @@ input[type=range]:focus::-moz-range-thumb {
     border: 2px solid yellow;
 }
 
-/*hide the outline behind the border*/
+    /* hide the outline behind the border */
 input[type=range]:-moz-focusring {
     outline: 3px solid transparent;
-    outline-offset: 1px;        /* musi być jakis odstep, tylko dla :focus narzuca ramkę przeglądarka */
-      /*outline: 3px solid white;*/
+    outline-offset: 1px;        /* musi być jakis odstęp, tylko dla :focus przeglądarka narzuca ramkę */
+      /* outline: 3px solid white; */
 /*    outline-offset: 1px;*/
 }
 
 /*    -----     MICROSOFT/IE/EDGE     -----     */
-    /* UWAGA: EDGE "rozumie" i przejmuje style z prefiksem "-WEBKIT" mimo, że są okreśłone później dla niego z "-MS-" (ale inne atrybuty)  */    
+    /* UWAGA: STARY EDGE "rozumie" selektory i atrybuty z prefiksem "-WEBKIT" mimo, że są określone dla niego w dalszej części z "-MS-" (dla innych atrybutów)  */    
 
 input[type=range]::-ms-track {
-/*    width: 300px;*/
+    /*    width: 300px; */
     height: 6px;
-    
-    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+        /* remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
     background-color: transparent;
-    
-    /*leave room for the larger thumb to overflow with a transparent border */
+        /* leave room for the larger thumb to overflow with a transparent border */
     border-color: transparent;
     border-width: 8px 0;
-
-    /*remove default tick marks*/
+        /* remove default tick marks */
     color: transparent;
     cursor: pointer;
         margin-top: 4px;
@@ -1735,14 +1729,11 @@ input[type=range]::-ms-track {
 }
 
 input[type=range]::-ms-fill-lower {
-/*    background-color: darkorange;*/
-    background-color: #54c; 
-/*    background-color: royalblue;     */
+    background-color: #54c;
     border-radius: 10px;
 }
 
 input[type=range]::-ms-fill-upper {
-/*    background: #ddd;*/
     background-color: #c3d5e2;
     border-radius: 10px;
 }
@@ -1760,38 +1751,35 @@ input[type=range]::-ms-thumb {
 
 input[type=range]:hover::-ms-thumb {
     border: 2px solid yellow;
-    margin-top: -2px;     
+    margin-top: -2px;
     margin-bottom: -2px;
         height: 18px;
         width: 18px;
-    
 }
 
 input[type=range]:focus::-ms-thumb {
     border: 4px solid yellow;
         height: 20px;
         width: 20px;
-        margin-top: -2px;   
-         margin-bottom: -2px;    
+        margin-top: -2px;
+        margin-bottom: -2px;
 }
 
 input[type=range]:focus::-ms-fill-lower,
-input[type=range]:hover::-ms-fill-lower 
+input[type=range]:hover::-ms-fill-lower
 {
-/*    background-color: orange; */
-/*    background-color: royalblue; */
-    background-color: #54c;     
-    box-shadow: 0 0 4px white;    
+    background-color: #54c;
+    box-shadow: 0 0 4px white;
 }
 
 input[type=range]:focus::-ms-fill-upper,
-input[type=range]:hover::-ms-fill-upper 
+input[type=range]:hover::-ms-fill-upper
 {
     background-color: #eee;
-    box-shadow: 0 0 2px white;    
+    box-shadow: 0 0 2px white;
 }
 
-/*    --------------------------       DEBUGOWANIE WEWNĘTRZNE      --------------------------    */
+/*    --------------------------       #odpluskwiacz_akasowy - DEBUGOWANIE WEWNĘTRZNE      --------------------------    */
 
 #odpluskwiacz_ajaksowy {
     display: none;
@@ -1800,7 +1788,6 @@ input[type=range]:hover::-ms-fill-upper
     top: 5px;
     left: 5px;
     right: 5px;
-    /*width: 100%;*/
     height: auto;
     opacity: 0.8;
     background-color: white;
@@ -1815,10 +1802,8 @@ input[type=range]:hover::-ms-fill-upper
 
 #odpluskwiacz_ajaksowy > div:first-child {
     position: relative;
-    /*    padding-right: 55px;*/
-        padding-top: 58px;
-        padding-bottom: 1em;
-        /*background-color: #bbb;*/
+    padding-top: 58px;
+    padding-bottom: 1em;
     width: 100%;
     height: auto;
 }
@@ -1827,20 +1812,20 @@ input[type=range]:hover::-ms-fill-upper
     display: block;
     width: 100%;
     word-wrap: break-word;
-    word-break: break-word;    
+    word-break: break-word;
     white-space: normal;
     margin-top: 0.4em;
     margin-bottom: 0.3em;
 }
 
 #odpluskwiacz_ajaksowy label {
-        display: block;
-        width: 100%;
+    display: block;
+    width: 100%;
 }
 
-.status_ajaksa {
-    /*display: inline-block;*/        /* wartość początkowa, OK super wąskie ekrany; pozwala umieścić przycisk zamykania NAD tym elementem */
-        display: block;     /* zamiana na blokowe (tylko mobile-first); treść może wyjść poza ramkę (-), zwęża bardziej ramkę (-), ale jest SAM w swojej linii; tylko przycisk 'X' OBOK może być */
+.status-ajaksa {
+    /* display: inline-block; */        /* wartość początkowa, OK super wąskie ekrany; pozwala umieścić przycisk zamykania NAD tym elementem */
+    display: block;     /* zamiana na blokowe (tylko mobile-first); treść może wyjść poza ramkę (-), zwęża bardziej ramkę (-), ale jest SAM w swojej linii; tylko przycisk 'X' OBOK może być */
     padding: 0.6em 0.8em;
     border: 3px solid transparent;
     background-color: transparent;
@@ -1852,12 +1837,12 @@ input[type=range]:hover::-ms-fill-upper
         white-space: normal;
 }
 
-.status_norma {
+.status-norma {
     border-color: #0b0;
     background-color: rgba(0, 200, 0, 0.2);
 }
 
-.status_awaria {
+.status-awaria {
     border-color: #b00;
     background-color: rgba(200, 0, 0, 0.2);
 }
@@ -2292,8 +2277,8 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: auto;
     }
     
-   .status_ajaksa {
-        /*display: inline-block;*/  /* to była pierwotna wartość, ale jest lekko wyższa przez marginesy */
+   .status-ajaksa {
+        /* display: inline-block; */  /* to była pierwotna wartość, ale jest lekko wyższa przez marginesy */
        display: inline;
     }
 
