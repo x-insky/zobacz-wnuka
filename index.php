@@ -99,7 +99,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             <div class="banner-kontener">
 
                 <div class="logo-witryny"> 
-                    <div id="slonce_logo" class="startowe_przesuniecie animacja_slonca"></div>
+                    <div id="slonce_logo" class="startowe-przesuniecie animacja-interaktywnego-slonca"></div>
                 </div>
 
                 <a href=".">

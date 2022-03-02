@@ -374,8 +374,8 @@ header.naglowek {
 }
 
 .banner-kontener:hover div#slonce_logo,  /* JAKI JEST CEL PONIŻSZYCH DWÓCH DOPISANYCH SELEKTORÓW, zwłaszcza drugiego ?! */ 
-    .logo-witryny div#slonce_logo.startowe_przesuniecie,  /* DRY: niby jest małe powielenie, ale to na potrzeby braku aktywnego JS (+ siła dwóch ID po sobie) */
-    .banner-kontener:hover div#slonce_logo.startowe_przesuniecie   /* DRY #2: znów powielenie, ale efekt nieosiągniety...  */
+    .logo-witryny div#slonce_logo.startowe-przesuniecie,  /* DRY: niby jest małe powielenie, ale to na potrzeby braku aktywnego JS (+ siła dwóch ID po sobie) */
+    .banner-kontener:hover div#slonce_logo.startowe-przesuniecie   /* DRY #2: znów powielenie, ale efekt nieosiągniety...  */
 {
     left: -85px;
     top: -85px;
@@ -1166,7 +1166,7 @@ div#wczytywanie_wybrane_galerie_spis h2 img,
 h2#zaladuj_galerie_spis.animacja img
 {
     visibility: visible;
-    animation: obroty180 1.4s infinite ease-in;
+    animation: obroty_180st 1.4s infinite ease-in;
     margin-left: 0.5em;
 }
 
@@ -1557,7 +1557,7 @@ div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klas�
 }
 
 .zalety li:hover img {
-    animation: obroty-90-180 4s ease-in-out infinite normal;
+    animation: obroty_90-180st 4s ease-in-out infinite normal;
 }
 
 .zalety img + span {
@@ -1669,7 +1669,7 @@ input[type=range]:hover::-webkit-slider-thumb
    /*   background-color: orange;*/
 }
 
-/*    -----     MOZILLA     -----     */
+    /*    -----     MOZILLA     -----     */
 
 input[type=range]::-moz-range-track {
 /*    width: 300px;*/
@@ -1706,12 +1706,12 @@ input[type=range]:focus::-moz-range-thumb {
 input[type=range]:-moz-focusring {
     outline: 3px solid transparent;
     outline-offset: 1px;        /* musi być jakis odstęp, tylko dla :focus przeglądarka narzuca ramkę */
-      /* outline: 3px solid white; */
-/*    outline-offset: 1px;*/
+    /* outline: 3px solid white; */
+    /*    outline-offset: 1px; */
 }
 
-/*    -----     MICROSOFT/IE/EDGE     -----     */
-    /* UWAGA: STARY EDGE "rozumie" selektory i atrybuty z prefiksem "-WEBKIT" mimo, że są określone dla niego w dalszej części z "-MS-" (dla innych atrybutów)  */    
+    /*    -----     MICROSOFT/IE/EDGE     -----     */
+        /* UWAGA: STARY EDGE "rozumie" selektory i atrybuty z prefiksem "-WEBKIT" mimo, że są określone dla niego w dalszej części z "-MS-" (dla innych atrybutów)  */    
 
 input[type=range]::-ms-track {
     /*    width: 300px; */
@@ -1857,72 +1857,70 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         /* ewentualnie rozszerzyć o zerowy lub 1-pikselowy rozmiar, o ile wbudowane style w doklajanym z zewnątrz kontenerze i tak nie przykryją tych zmian :/ */
 }
 
-/*    --------------------------       ANIMACJE     --------------------------    */
+/*    --------------------------       KLASY Z PODPIĘTYMI ANIMACJAMI     --------------------------    */
 
-.animacja_slonca {
-    /* transform-origin: center center;	*/	
+.animacja-interaktywnego-slonca {
+        /* transform-origin: center center;	*/	
     animation: obroty_delikatne_3 6.5s infinite ease-out;	/* tylko ta animacja z trzech zadeklarowanych jest używana */
 }
 
-.animacja_zanikanie {                   /* pierwowzór dla "animacja_zanikanie2" */
-    animation: zanikanie 3s ease-out;
-    animation-direction: normal;    
-    /*animation-fill-mode: forwards;*/
+    .animacja-zanikanie {                   /* POTRZEBNA?! pierwowzór dla "animacja-zanikanie-2" */
+        animation: zanikanie 3s ease-out;
+        animation-direction: normal;
+        animation-fill-mode: both;
+    }
+
+.animacja-zanikanie-2 {
+    animation: zanikanie_2 2s ease-out;
+    animation-direction: normal;
     animation-fill-mode: both;
 }
 
-.animacja_zanikanie2 {
-    animation: zanikanie2 2s ease-out;
-    animation-direction: normal;    
-    /*animation-fill-mode: forwards;*/
-    animation-fill-mode: both;
-}
-
-.animacja_zolty_blysk {
+.animacja-zolty-blysk {
     animation: zolty_blysk 2s ease-out;
     animation-fill-mode: forwards;  /* 'both' było*/  
 }
 
-.animacja_zmiana_kolorow {      /* pierwowzór dla "animacja_pulsowanie_kolorow" */
-    animation: zmiana_kolorow 30s ease-out infinite;
-    animation-fill-mode: both;      
-}
+    .animacja-zmiana-kolorow {      /* POTRZEBNA? pierwowzór dla "animacja-pulsowanie-kolorow" */
+        animation: zmiana_kolorow 30s ease-out infinite;
+        animation-fill-mode: both;
+    }
 
-.animacja_pulsowanie_kolorow {
+.animacja-pulsowanie-kolorow {
     animation: pulsowanie_kolorow 10s ease-out infinite;
-    animation-fill-mode: both;      
+    animation-fill-mode: both;
 }
 
 /*    -----     DEFINICE ANIMACJI     -----     */
 
-@keyframes obroty360 {              /* pierwsza wersja, teraz używany następca z 180st */
-    0% {
-        transform: rotate(0deg);
+    @keyframes obroty_360st {              /* pierwsza wersja, teraz używany następca z 180st */
+        0% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(90deg);
+        }
+        75% {
+            transform: rotate(135deg);
+        }
+        100% {
+            transform: rotate(-135deg);
+        }
     }
-    50% {
-        transform: rotate(90deg);
-    }
-    75% {
-        transform: rotate(135deg);
-    }
-    100% {              
-        transform: rotate(-135deg);
-    }
-}
 
-@keyframes obroty180 {
-    0% {
-        transform: rotate(0deg);
+    @keyframes obroty_180st {
+        0% {
+            transform: rotate(0deg);
+        }
+        80% {
+            transform: rotate(180deg);
+        }
+        100% {
+            transform: rotate(-90deg);
+        }
     }
-    80% {
-        transform: rotate(180deg);
-    }
-    100% {
-        transform: rotate(-90deg);
-    }
-}
 
-@keyframes obroty-90-180 {
+@keyframes obroty_90-180st {
     0%, 2% {
         transform: rotate(0deg);
     }
@@ -1939,42 +1937,42 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 }
 
-@keyframes obroty_delikatne
-{
-    0% {
-        transform: rotate(0deg);
+    @keyframes obroty_delikatne
+    {
+        0% {
+            transform: rotate(0deg);
+        }
+        10% {
+            transform: rotate(12deg);
+        }
+        20% {
+            transform: rotate(55deg);
+        }
+        30% {
+            transform: rotate(35deg);
+        }
+        40% {
+            transform: rotate(10deg);
+        }
+        50% {
+            transform: rotate(0deg);
+        }
+        60% {
+            transform: rotate(-10deg);
+        }
+        70% {
+            transform: rotate(-50deg);
+        }
+        80% {
+            transform: rotate(-20deg);
+        }
+        90% {
+            transform: rotate(-8deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
     }
-    10% {
-        transform: rotate(12deg);
-    }
-    20% {
-        transform: rotate(55deg);
-    }
-    30% {
-        transform: rotate(35deg);
-    }
-    40% {
-        transform: rotate(10deg);
-    }
-    50% {
-        transform: rotate(0deg);
-    }
-    60% {
-        transform: rotate(-10deg);
-    }
-    70% {
-        transform: rotate(-50deg);
-    }
-    80% {
-        transform: rotate(-20deg);
-    }
-    90% {
-        transform: rotate(-8deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
 
 @keyframes obroty_delikatne_2
 {
@@ -2013,24 +2011,22 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 }
 
-@keyframes obroty_delikatne_3 
+@keyframes obroty_delikatne_3
 {
     0% {
         transform: rotate(0deg);
     }
     20% {
         transform: rotate(75deg);
-        /* transform: scale(1.1, 1.1);	*/
     }
     45% {
         transform: rotate(5deg) scale(0.95, 0.95);
-        /* transform: scale(1.0, 1.0);	*/
     }
     50% {
-        transform: scale(1.05, 1.05); /* rotate(-90deg);	*/
+        transform: scale(1.05, 1.05);
     }
     57% {
-        transform: scale(1.0, 1.0) rotate(-10deg);	
+        transform: scale(1.0, 1.0) rotate(-10deg);
     }
     65% {
         transform: rotate(-40deg);
@@ -2043,51 +2039,46 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 }
 
-@keyframes zanikanie
-{
-    0% {
-/*    visibility: visible; */   
-        opacity: 0.7;      
+    @keyframes zanikanie
+    {
+        0% {
+            opacity: 0.7;
+        }
+        50% {
+            opacity: 0.7;
+        }
+        100% {
+            opacity: 0;
+        }
     }
-    50% {
-        opacity: 0.7;     
-    }
-    100% {
-        opacity: 0;
-    }
-}
 
-@keyframes zanikanie2 
+@keyframes zanikanie_2
 {
     0% {
-/*    visibility: visible; */
         opacity: 0.2;
-/*    transform: translateY(-40px);    */
     }
     20% {
-/*    transform: translateY(50px);*/
-        opacity: 0.7;     
+        opacity: 0.7;
     }
     70% {
         transform: translateY(0);
-        opacity: 0.7;     
+        opacity: 0.7;
     }
     100% {
-        transform: translateY(40px);      
+        transform: translateY(40px);
         opacity: 0;
-
     }
 }
 
 @keyframes zolty_blysk 
 {
     0% {
-        border-color: white; 
+        border-color: white;
     }
     40% {
-        /* wymuszenie użycia narzuconego koloru elementu, aby animacja tła się nie zmieniała przed tą klatką      */
+            /* wymuszenie użycia narzuconego koloru elementu, aby animacja tła się nie zmieniała przed tą klatką */
         background-color: darkblue;
-        border-color: yellow;    
+        border-color: yellow;
     }
     60% {
         border-color: yellow;
@@ -2103,7 +2094,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         /* background-color: darkblue;   */ 
     }
     100% {
-
+        /* bez zmian */
     }
 }
 
@@ -2133,7 +2124,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     85% {
         color: darkgreen;
     }
-    100%    {
+    100% {
         color: black;
     }
 }

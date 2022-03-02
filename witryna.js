@@ -1370,7 +1370,7 @@ $('.glowny-kontener').removeClass('brak_js');
     // ale aktywuj animację dla loga witryny, niech choć tu będzie nieco ruchu
 var slonceLogo = $('#slonce_logo'); 
 slonceLogo.removeClass('startowe_przesuniecie');
-    if ( slonceLogo.not(':hover') ) slonceLogo.removeClass('animacja_slonca');  // zabierz trwałą animację oraz przemieszczenie, nadawane poprzez JS dla loga w stanie hover (uwaga, "mysza" może być nad elemenetem w tym czasie!)
+    if ( slonceLogo.not(':hover') ) slonceLogo.removeClass('animacja-interaktywnego-slonca');  // zabierz trwałą animację oraz przemieszczenie, nadawane poprzez JS dla loga w stanie hover (uwaga, "mysza" może być nad elemenetem w tym czasie!)
 // alternatywnie dla loga można po prostu wywalić atrybut klasy w całości (z całą zawartością), nie bacząc na skutki 
 
     // pokazywanie prostokąta z aktualnymi wymiarami okna przeglądarki    
@@ -2183,28 +2183,28 @@ poziomWidocznosci = poziomWidocznosci || '0.7';
 
 $(elementWyswietlajacy + '> h1').text( szerokoscOkna + ' x ' + wysokoscOkna );  // najpierw nadanie aktualnej treści (rozmiaru X x Y)
     
-    if ( !$(elementWyswietlajacy).hasClass('animacja_zanikanie2') ) $(elementWyswietlajacy).addClass('animacja_zanikanie2');    // ewentualne nadanie klasy z konretną animacją
+    if ( !$(elementWyswietlajacy).hasClass('animacja-zanikanie-2') ) $(elementWyswietlajacy).addClass('animacja-zanikanie-2');    // ewentualne nadanie klasy z konretną animacją
 
     // taka parodia, ale chodzi o przerwanie aktualnie zanikającej animacji i uruchomienie jej od nowa
-    // $(elementWyswietlajacy).hasClass('animacja_zanikanie').removeClass('animacja_zanikanie').addClass('animacja_zanikanie');
+    // $(elementWyswietlajacy).hasClass('animacja-zanikanie').removeClass('animacja-zanikanie').addClass('animacja-zanikanie');
     // istotny jest odstęp czasu pomiędzy zabraniem, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)    
-$(elementWyswietlajacy).removeClass('animacja_zanikanie2').height();    // pobierana jest na próżno wysokość, jako mechanizm nowego odwołania się do DOM
+$(elementWyswietlajacy).removeClass('animacja-zanikanie-2').height();    // pobierana jest na próżno wysokość, jako mechanizm nowego odwołania się do DOM
 
-$(elementWyswietlajacy).addClass('animacja_zanikanie2');    
+$(elementWyswietlajacy).addClass('animacja-zanikanie-2');    
 
 /*
-    if ( $( elementWyswietlajacy ).hasClass('animacja_zanikanie2') ) 
+    if ( $( elementWyswietlajacy ).hasClass('animacja-zanikanie-2') ) 
     {
     //$(elementWyswietlajacy).css({ animationName : '', animationDuration : '', animationTimingFunction : '' }); 
         //  $(elementWyswietlajacy).css({ animationPlayState : 'paused' }).width();
         //  $(elementWyswietlajacy).css({ animationPlayState : 'running' });    
-    //$(elementWyswietlajacy).stop().removeClass('animacja_zanikanie').css({ animationName : '', animationDuration : '', animationTimingFunction : '', animationIterationCount : '0' }); 
+    //$(elementWyswietlajacy).stop().removeClass('animacja-zanikanie').css({ animationName : '', animationDuration : '', animationTimingFunction : '', animationIterationCount : '0' }); 
         //alert('W trakcie animacji');    
     }  
-    //if ( $(elementWyswietlajacy + ':animated') ) $(elementWyswietlajacy).stop().removeClass('animacja_zanikanie');
+    //if ( $(elementWyswietlajacy + ':animated') ) $(elementWyswietlajacy).stop().removeClass('animacja-zanikanie');
 */
 
-//$(elementWyswietlajacy).addClass('animacja_zanikanie');
+//$(elementWyswietlajacy).addClass('animacja-zanikanie');
 return szerokoscOkna;    
 }   // AktualnyRozmiarOkna-END
 
@@ -3140,10 +3140,10 @@ $('div#zaczytany_spis').on('click keydown', '.powiadamiacz', function ( e ) {  /
     
     
 $('.banner-kontener').hover( function() {    // animacje z "wychodzeniem" obrotowego słoneczka
-    $(this).find('#slonce_logo').addClass('animacja_slonca');
+    $(this).find('#slonce_logo').addClass('animacja-interaktywnego-slonca');
     },
     function() {
-    $(this).find('#slonce_logo').removeClass('animacja_slonca');	
+    $(this).find('#slonce_logo').removeClass('animacja-interaktywnego-slonca');	
     }
 ); // .banner-kontener hover-END    
     
@@ -3323,7 +3323,7 @@ $(".napis-spod > h3").fitText(3, { minFontSize: '9px', maxFontSize: '17px' });
     // parametryzacja pokazu zdjęć (przeniesione z pliku index.php)
 lightbox.option({ albumLabel: "Zdjęcie %1 z %2", positionFromTop: 10 });    
     
-//$('#wymiary').addClass('animacja_zanikanie2');  // dynamiczne przypisanie klasy    
+//$('#wymiary').addClass('animacja-zanikanie-2');  // dynamiczne przypisanie klasy    
 AktualnyRozmiarOkna('#wymiary');
 
 	
