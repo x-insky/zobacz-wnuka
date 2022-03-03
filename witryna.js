@@ -1369,7 +1369,7 @@ $('.glowny-kontener').removeClass('brak_js');
     
     // ale aktywuj animację dla loga witryny, niech choć tu będzie nieco ruchu
 var slonceLogo = $('#slonce_logo'); 
-slonceLogo.removeClass('startowe_przesuniecie');
+slonceLogo.removeClass('startowe-przesuniecie');
     if ( slonceLogo.not(':hover') ) slonceLogo.removeClass('animacja-interaktywnego-slonca');  // zabierz trwałą animację oraz przemieszczenie, nadawane poprzez JS dla loga w stanie hover (uwaga, "mysza" może być nad elemenetem w tym czasie!)
 // alternatywnie dla loga można po prostu wywalić atrybut klasy w całości (z całą zawartością), nie bacząc na skutki 
 

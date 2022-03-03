@@ -261,7 +261,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             </div>  <!-- div#spis_tresci -->
 
             <div id="brak_skryptow" style="">
-                <div class="blad animacja_zolty_blysk">
+                <div class="blad animacja-zolty-blysk">
                     <h2 class="blad_tytul">A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
                     <div class="blad_tresc">
                         <div class="blad_ikona">!</div>

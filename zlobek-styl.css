@@ -361,7 +361,7 @@ header.naglowek {
     background-color: cornflowerblue;
 }
 
-.logo-witryny div#slonce_logo {
+.logo-witryny #slonce_logo {
     position: absolute;
     left: -115px;
     top: -115px;
@@ -373,9 +373,9 @@ header.naglowek {
     transition: all 0.5s ease 0.1s;
 }
 
-.banner-kontener:hover div#slonce_logo,  /* JAKI JEST CEL PONIŻSZYCH DWÓCH DOPISANYCH SELEKTORÓW, zwłaszcza drugiego ?! */ 
-    .logo-witryny div#slonce_logo.startowe-przesuniecie,  /* DRY: niby jest małe powielenie, ale to na potrzeby braku aktywnego JS (+ siła dwóch ID po sobie) */
-    .banner-kontener:hover div#slonce_logo.startowe-przesuniecie   /* DRY #2: znów powielenie, ale efekt nieosiągniety...  */
+.banner-kontener:hover #slonce_logo,  /* JAKI JEST CEL PONIŻSZYCH DWÓCH DOPISANYCH SELEKTORÓW, zwłaszcza drugiego ?! */ 
+    .logo-witryny #slonce_logo.startowe-przesuniecie,  /* DRY: niby jest małe powielenie, ale to na potrzeby braku aktywnego JS (+ siła dwóch ID po sobie) */
+    .banner-kontener:hover #slonce_logo.startowe-przesuniecie   /* DRY #2: znów powielenie, ale efekt nieosiągniety...  */
 {
     left: -85px;
     top: -85px;
@@ -804,8 +804,8 @@ h2#zaladuj_galerie_spis {
     user-select: none;
 }
 
-nav#spis_sterowanie h2#zaladuj_galerie_spis:hover,
-nav#spis_sterowanie h2#zaladuj_galerie_spis:focus
+#zaladuj_galerie_spis:hover,
+#zaladuj_galerie_spis:focus
 {
     box-shadow: 1px 1px 3px 1px #5d6ad0, 0px 0px 4px 1px black;
     background-color: #5d6ad0;
@@ -887,14 +887,14 @@ div#wybor_podstrony_galerii {
     border-bottom-right-radius: 14px;
 }
 
-div#wybor_galerii div,
-div#wybor_podstrony_galerii div
+#wybor_galerii div,     /* nie chodzi tylko o bezpośredniego potomka! osiągnięto "przypadkiem" ulepszenie układu, przy stopniowych zmianach szerokości ekranu */
+#wybor_podstrony_galerii div
 {
     flex-grow: 1;
 }
 
-div#wybor_galerii aside > span,
-div#wybor_podstrony_galerii aside > span
+#wybor_galerii aside > span,
+#wybor_podstrony_galerii aside > span
 {
     padding-left: 1.5em;
     padding-right: 1.5em;
@@ -920,8 +920,8 @@ div#suwak_podstrona_info div
     text-align: center;
 }
 
-div#wybor_galerii > div:last-of-type,
-div#wybor_podstrony_galerii > div:last-of-type
+#wybor_galerii > div:last-of-type,
+#wybor_podstrony_galerii > div:last-of-type
 {
     text-align: center;
         padding: 0 0.5em;
@@ -1088,11 +1088,11 @@ div#nazwa_galerii img {
     transition: margin-top 0.3s;
 }
 
-div#nazwa_galerii p:last-child {
+#nazwa_galerii p:last-child {
     font-size: 120%;
 }
 
-div#nazwa_galerii p.data {
+#nazwa_galerii p.data {
     font-size: 100%;
     text-align: center;
     padding-bottom: 1em;
@@ -2196,7 +2196,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         max-height: 210px;
     }
 
-    nav#spis_sterowanie h2#zaladuj_galerie_spis {
+    h2#zaladuj_galerie_spis {
         max-width: 18em;
     }
 
@@ -2207,7 +2207,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         margin-right: 1.5em;	
     }
 
-    div#nazwa_galerii p:last-child {
+    #nazwa_galerii p:last-child {
         padding-left: 0.5em;
     }
     
@@ -2218,8 +2218,8 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: auto;
      }
     
-    div#wybor_galerii > div:last-of-type,
-    div#wybor_podstrony_galerii > div:last-of-type {
+    #wybor_galerii > div:last-of-type,
+    #wybor_podstrony_galerii > div:last-of-type {
         flex-basis: 250px;
     }
     
