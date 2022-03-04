@@ -240,9 +240,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                                 // zmiana wybranych fragmentów w istniejących treściach dla drugiego (nowego) elementu... później z tego zrobić funkcję
                             ZmienTrescKomunikatu( $('.blad_dolaczania'), tytulBledu, komunikatOBledzie );
                         /*  var nowyKomunikatBledu = $('.blad_dolaczania');
-                            nowyKomunikatBledu.removeClass('animacja_zolty_blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
+                            nowyKomunikatBledu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
                             nowyKomunikatBledu.find('strong:first-of-type > span').text( g_suma_bledow_dolaczania );
-                            nowyKomunikatBledu.addClass('animacja_zolty_blysk').find('strong:last-of-type > span').text( nrPodstronyNiewczytanejGalerii );    */
+                            nowyKomunikatBledu.addClass('animacja-zolty-blysk').find('strong:last-of-type > span').text( nrPodstronyNiewczytanejGalerii );    */
                                 // rozbicie powyższego na dwa/trzy, aby zabrać i nadać tę samą klasę dla ponownego wyswietlenia animacji (.end() nie daje rady w jednym łańcuchu)      
                                 
                             }
@@ -256,8 +256,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                             console.log('Generuję błąd dołączania po raz #' + g_suma_bledow_dolaczania + ' dla ' + nrPodstronyNiewczytanejGalerii 
                                         + ' niewczytanej podstrony spisu teści: ' + komunikatOBledzie );    
                             }
-                        $('.blad_dolaczenia').removeClass('animacja_zolty_blysk').height(); // usunięcie i bzdurny odczyt z DOM...
-                        $('.blad_dolaczenia').addClass('animacja_zolty_blysk');  // aby zmienić stan animacji -- od nowa      
+                        $('.blad_dolaczenia').removeClass('animacja-zolty-blysk').height(); // usunięcie i bzdurny odczyt z DOM...
+                        $('.blad_dolaczenia').addClass('animacja-zolty-blysk');  // aby zmienić stan animacji -- od nowa      
                         PrzewinEkranDoElementu('.blad_dolaczania', 500);    // przewijanie już do nowego (później dodanego) komunikatu 
                         }   // if-END ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ...
                     }   // if-END ( status === "success" )
@@ -1761,7 +1761,7 @@ var wybranyElementWczytywania = g_prezentacja_wczytywania[0].element,  // wyświ
 function GenerujPowiadomienieOBledzie ( opcjePrzekazane )
 {
 var elementRodzica = '#galeria_spis',
-    klasaAnimacji = 'animacja_zolty_blysk', // określony na sztywno 
+    klasaAnimacji = 'animacja-zolty-blysk', // określony na sztywno 
     budowanyElement = '';
 var opcjeDomyslne = {
     tytul : 'Wystapił błąd ogólny!',
@@ -1813,7 +1813,7 @@ budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik
             }
         budowanyElement += '</h4>'; 
         }     
-budowanyElement += '</div>'; // zamykacz dla div.blad_tresc
+budowanyElement += '</div>'; // zamykacz dla div.blad-tresc
     
     /* if ( ( opcje.nadanaKlasa == 'blad_dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
     {
@@ -1857,11 +1857,11 @@ function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTres
     {
         if ( $( elementKomunikatu ).length > 1 ) elementKomunikatu = $( elementKomunikatu )[0];    // w razie gdyby to jednak jakaś kolekcja była
         else elementKomunikatu = $( elementKomunikatu );    // poprawka na element jQuery
-    elementKomunikatu.removeClass('animacja_zolty_blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
-    elementKomunikatu.addClass('animacja_zolty_blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
+    elementKomunikatu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
+    elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
         
-    elementKomunikatu.find('h2.blad_tytul').html( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
-    elementKomunikatu.find('div.blad_tresc p').html( komunikatTresc ); 
+    elementKomunikatu.find('h2.blad-tytul').html( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
+    elementKomunikatu.find('div.blad-tresc p').html( komunikatTresc ); 
     }
 }   // ZmienTrescKomunikatu-END
     
@@ -1892,21 +1892,21 @@ function UsunKomunikatLubZmienNumeracjeWTresci ( elementKomunikatu )    // usuwa
         poprzedniBladPodstrony = PobierzOstatnieNieodebrane().adresZasobu;
         poprzedniBladPodstrony = parseInt( poprzedniBladPodstrony.substr( poprzedniBladPodstrony.lastIndexOf(",p") + 2 ) ); // numer podstrony niewczytanej
         elementKomunikatu.find('strong:last-of-type > span').text( poprzedniBladPodstrony );
-        tekstTytulu = elementKomunikatu.find('.blad_tytul').text(); // odczytanie tytułu komunkatu (choć niemal zawsze stała, inny postfiks)
+        tekstTytulu = elementKomunikatu.find('.blad-tytul').text(); // odczytanie tytułu komunkatu (choć niemal zawsze stała, inny postfiks)
             
             if ( g_suma_bledow_dolaczania == 1 )   // usuń "x" i krotność w tytule
             {    
             tekstTytulu = tekstTytulu.substr(0, tekstTytulu.lastIndexOf(' x') );    // do ostatniej spacji włącznie?
-            elementKomunikatu.find('.blad_tytul').text( tekstTytulu );  // obcięcie treści z numeracją    
+            elementKomunikatu.find('.blad-tytul').text( tekstTytulu );  // obcięcie treści z numeracją    
             }
             else    // po prostu zmień krotność w tytule 
             {
             tekstTytulu = tekstTytulu.substr(0, tekstTytulu.lastIndexOf(' x')+2 );    // tresc do ostatniego "x" włącznie
-            elementKomunikatu.find('.blad_tytul').text( tekstTytulu + g_suma_bledow_dolaczania );  // dodanie nowej numeracji  
+            elementKomunikatu.find('.blad-tytul').text( tekstTytulu + g_suma_bledow_dolaczania );  // dodanie nowej numeracji  
             }
         // zawsze też odśwież treść istniejącego komunikatu i zwróc uwagę obserwatora na to 
-        elementKomunikatu.removeClass('animacja_zolty_blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
-        elementKomunikatu.addClass('animacja_zolty_blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
+        elementKomunikatu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
+        elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
         }
     }   // if-( g_suma_bledow_dolaczania > 1 )-END
 }   // UsunKomunikatLubZmienNumeracjeWTresci

@@ -262,9 +262,9 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 
             <div id="brak_skryptow" style="">
                 <div class="blad animacja-zolty-blysk">
-                    <h2 class="blad_tytul">A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
-                    <div class="blad_tresc">
-                        <div class="blad_ikona">!</div>
+                    <h2 class="blad-tytul">A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
+                    <div class="blad-tresc">
+                        <div class="blad-ikona">!</div>
                         <p>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Zweryfikuj to i włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.<br />
                         Nie zapomnij na koniec odświeżyć stronę.</p>
                     </div>
@@ -337,7 +337,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             <div id="przyciski_stopka">
                 <button id="poco_button">Ale po co? &darr;</button>
                 <button id="pomoc_button">Pomoc &darr;</button>
-                <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
+                <button id="symulacja_button" class="animacja-pulsowanie-kolorow">Symul-A(JAX)-cja</button>
             </div>
             <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.70</h6>
             <div id="poco">

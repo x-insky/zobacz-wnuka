@@ -279,13 +279,13 @@ div.blad:hover {
     right: 4px;
 }
 
-.blad_tytul {
+.blad-tytul {
     padding: 0.25em;
     padding-top: 2.8em;
     user-select: none;
 }
 
-.blad_tresc {
+.blad-tresc {
     background-color: darkred;
     box-shadow: 0px 0px 10px 2px #333 inset; 
     min-height: 140px;
@@ -293,7 +293,7 @@ div.blad:hover {
     margin-top: 10px;
 }
 
-.blad_ikona {
+.blad-ikona {
     margin: 0 auto;
     width: 100px;
     height: 100px;
@@ -821,7 +821,7 @@ div#selektor {
     margin: 1.5em auto;
 }
 
-div#selektor > div {
+#selektor > div {
     display: none;
 }
 
@@ -837,18 +837,18 @@ h2#selektor_naglowek {
     user-select: none;
 }
 
-h2#selektor_naglowek.rozwiniety {
+#selektor_naglowek.rozwiniety {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-h2#selektor_naglowek:hover,
-h2#selektor_naglowek:focus
+#selektor_naglowek:hover,
+#selektor_naglowek:focus
 {
     background-color: #5d6ad0;
 }
 
-h2#selektor_naglowek span {
+#selektor_naglowek span {
     padding-left: 0.5em;
     padding-right: 0.5em;
     display: inline-block;  /* na potrzeby odwracania - rotacji  */
@@ -856,11 +856,11 @@ h2#selektor_naglowek span {
     cursor: pointer;    
 }
 
-h2#selektor_naglowek:hover span:hover {
+#selektor_naglowek:hover span:hover {
     padding-left: 1em;
 }
 
-h2#selektor_naglowek.rozwiniety span {
+#selektor_naglowek.rozwiniety span {
     transform: rotate(180deg);
 }
 
@@ -908,12 +908,8 @@ div#suwak_podstrona_info
     align-items: center;
 }
 
-div#suwak_podstrony > div label {
-    text-indent: -1em;
-}
-
-div#suwak_info div,
-div#suwak_podstrona_info div
+#suwak_info div,
+#suwak_podstrona_info div
 {
     flex-basis: 130px;
     padding: 0.5em 0.5em;
@@ -933,17 +929,20 @@ div#suwak_podstrony
     flex-basis: 305px;
     text-align: center;
     flex-grow: 6;
-
 }
 
-div#selektor input {
+#suwak_podstrony > div label {
+    text-indent: -1em;
+}
+
+#selektor input {
     padding-left: 1em;
     padding-right: 1em;
     font-size: 140%;
 }
 
-div#selektor input[type=button],
-div#selektor input[type=submit]
+#selektor input[type=button],
+#selektor input[type=submit]
 {
     display: block;
     width: 100%;
@@ -952,11 +951,11 @@ div#selektor input[type=submit]
     white-space: normal;
 }
 
-div#selektor input[type=submit] {
+#selektor input[type=submit] {
     font-weight: bold;
 }
 
-div#selektor input[type=range] {
+#selektor input[type=range] {
     padding-left: 0;
     padding-right: 0;
 }
@@ -1046,17 +1045,17 @@ div#glowna {
     border-radius: 10px;
 }
 
-div#nazwa_galerii h2 {
+#nazwa_galerii h2 {
     padding-top: 3em;
 }
 
-div#glowna h2 span {
+#glowna h2 span {
     color: yellow;
     font-weight: bolder;
     text-shadow: 0 0 4px #666;  /* na wąskim ekranie głównie jasne tło pod tekstem, zatem ciemniej pod nim; cień skopiowany z elementu h2/span powyżej   */
 }
 
-div#glowna article{
+#glowna article{
     padding: 0.8em 1.2em;
 }
 
@@ -1078,7 +1077,7 @@ div#nazwa_galerii {
     overflow: hidden;
 }
 
-div#nazwa_galerii img {
+#nazwa_galerii img {
     display: block;
     margin : 0.5em auto;
     max-height: 320px;
@@ -1098,12 +1097,12 @@ div#nazwa_galerii img {
     padding-bottom: 1em;
 }
 
-div#nazwa_galerii span.data {
+#nazwa_galerii span.data {
     font-size: 50%;
     color: #333;
 }
 
-div#glowna .jasne-tlo-galeria {
+#glowna .jasne-tlo-galeria {
     background-color: #c3d5e2; 
     background: radial-gradient(circle at top, deepskyblue 10%, #c3d5e2); 	
 }
@@ -1152,32 +1151,32 @@ div#wczytywanie_wybrane_galerie_spis
     user-select: none;
 }
 
-div#wczytywanie_podstrona h2, 
-div#wczytywanie_spis h2, 
-div#wczytywanie_wybrane_galerie_spis h2
+#wczytywanie_podstrona h2, 
+#wczytywanie_spis h2, 
+#wczytywanie_wybrane_galerie_spis h2
 {
     color: yellow;
     text-shadow: 1px 1px 6px #666;
 }
 
-div#wczytywanie_podstrona h2 img,
-div#wczytywanie_spis h2 img,
-div#wczytywanie_wybrane_galerie_spis h2 img,
-h2#zaladuj_galerie_spis.animacja img
+#wczytywanie_podstrona h2 img,
+#wczytywanie_spis h2 img,
+#wczytywanie_wybrane_galerie_spis h2 img,
+#zaladuj_galerie_spis.animacja img
 {
     visibility: visible;
     animation: obroty_180st 1.4s infinite ease-in;
     margin-left: 0.5em;
 }
 
-h2#zaladuj_galerie_spis.animacja img {  /* jako rozszerzenie tego co powyżej, specyficzne dla powiadomienia wewnątrz przycisku */
+#zaladuj_galerie_spis.animacja img {  /* jako rozszerzenie tego co powyżej, specyficzne dla powiadomienia wewnątrz przycisku */
     max-height: 35px;
     max-width: 35px;
     max-height: 1.5em;    /* powtórzone deklaracje, dla przeglądrek które ogarniają EMy */
     max-width: 1.5em;
 }
 
-h2#zaladuj_galerie_spis img {
+#zaladuj_galerie_spis img {
     visibility: hidden;
     animation: none;
     margin-left: 0em;
@@ -1186,13 +1185,13 @@ h2#zaladuj_galerie_spis img {
     vertical-align: text-bottom;
 }
 
-h2#zaladuj_galerie_spis.animacja span {
+#zaladuj_galerie_spis.animacja span {
     visibility: visible;
     line-height: inherit;
         /* 'text-shadow' tu czy poniżej to i tak ten sam efekt, klasy się nie blokują wzajemnie */
 }
     
-h2#zaladuj_galerie_spis span {
+#zaladuj_galerie_spis span {
     visibility: hidden;
     line-height: 0;
     vertical-align: text-bottom;        /* cień działa, mimo że zawartości nie widać, pojawia się wraz z nią */
@@ -1200,7 +1199,7 @@ h2#zaladuj_galerie_spis span {
     transition: text-shadow 0.5s ease 0.1s;
 }
 
-h2#zaladuj_galerie_spis:hover span {
+#zaladuj_galerie_spis:hover span {
     text-shadow: 0px 0px 10px black;    /* też ten sam cień co h2:hover */
 }
 
@@ -1225,7 +1224,7 @@ div#skladowisko {
 
                     /* ------ DO WERYFIKACJI ISTNIENIE SELEKTORA I JEGO STANU ------ */
 
-div#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie służy, nic nie robi */
+#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie służy, nic nie robi */
     vertical-align: middle;     /* wyśrodkowanie - wyrównanie elementów w pionie w danej linii;  w stary przeglądarkach nie przenosi się ta reguła z potomnego <img> */
     /* padding: 0.1em 0.5em; */
     /* position: relative; */	
@@ -1241,14 +1240,14 @@ div#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie słu�
         height: 0; */
 }
 
-div#skladowisko a:focus {   
+#skladowisko a:focus {   
     /* outline: none;
     padding: 0; */
         /* width: 0;
         height: 0; */
 }
 
-div#skladowisko a img {
+#skladowisko a img {
     display: inline-block;
     margin: 0.8em;      /* nieznaczne powiększenie odstępu z 0.75em */
     border: 3px solid white;
@@ -1258,8 +1257,8 @@ div#skladowisko a img {
     transition: box-shadow 0.3s ease-out, transform 0.3s ease-out;
 }
 
-div#skladowisko a img:hover,
-div#skladowisko a:focus img     /* IMG bez TABINDEX nie może mieć tego statusu, zatem dla <a> jest standardowe odwołanie */
+#skladowisko a img:hover,
+#skladowisko a:focus img     /* IMG bez TABINDEX nie może mieć tego statusu, zatem dla <a> jest standardowe odwołanie */
 {
     box-shadow: 2px 2px 4px black, 4px 4px 8px 2px rgba(0, 0, 0, 0.6);
     transform: scale(1.1);
@@ -1459,12 +1458,12 @@ div#pomoc {
     background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue);
 }
 
-.brak_js div#poco,
-.brak_js div#pomoc {
+.brak_js #poco,
+.brak_js #pomoc {
     display: block;
 }
 
-div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klasę ku temu, nie cudować ze stylami! */
+#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klasę ku temu, nie cudować z selektorem?! */
     font-style: italic;
 }
 
@@ -1566,7 +1565,7 @@ div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klas�
 
         /*    ------     DIV#wymiary     ------     */
 
-.brak_js div#wymiary {
+.brak_js #wymiary {
     visibility: hidden; /* do przeniesienia do tego kontenera, wcześniej poza nim; wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
         /*display: none;*/
 }
@@ -2182,7 +2181,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         height: 330px;    
     }
 
-    .blad_tytul {
+    .blad-tytul {
         padding-top: 0.8em;
         padding-right: 55px;    /* szerokośc guzika zamykania 50px + minimalne odstę[y od krawędzi i guzika */
     }
@@ -2200,7 +2199,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         max-width: 18em;
     }
 
-    div#nazwa_galerii img {
+    #nazwa_galerii img {
         display: inline;
         float: left;
         margin: 0.5em;
@@ -2211,8 +2210,8 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         padding-left: 0.5em;
     }
     
-    div#selektor input[type=button],
-    div#selektor input[type=submit]
+    #selektor input[type=button],
+    #selektor input[type=submit]
     {
         display: inline;
         width: auto;
@@ -2223,7 +2222,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         flex-basis: 250px;
     }
     
-    div#nazwa_galerii h2,
+    #nazwa_galerii h2,
     #stopka h2
     {
         padding-top: 0.5em;
@@ -2325,7 +2324,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         font-size: 1em; /* redukcja na względne 100% */
     }
     
-    .blad_ikona {
+    .blad-ikona {
         float: left;
         margin-top: 1.5%;
          margin-right: 3%;  /* próby przeniesionia do lewego-paddingu dla sąsiada <p>' */
@@ -2350,7 +2349,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         min-height: 130px;  /* w połączeniu z min-height kontenera pozwala zwiększyć jego wysokość, "odpychając" od dolnej krawędzi obrazka  */
     }
     
-    div#selektor input.szerszy_guzik {
+    #selektor input.szerszy_guzik {
         min-width: 210px;
     }
     
@@ -2364,7 +2363,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         max-height: 220px;
     }
 
-    div#selektor input.maly_guzik {
+    #selektor input.maly_guzik {
         display: block;
     }
 
@@ -2401,7 +2400,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         right: 6px;
     }
     
-    div#selektor input.szerszy_guzik {
+    #selektor input.szerszy_guzik {
         min-width: 220px;
     }
     
@@ -2419,7 +2418,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 @media screen and (min-width: 940px) { 
 
     body {
-        font-size: 90%;	
+        font-size: 90%;
     }
 
     .glowny-kontener {
@@ -2428,9 +2427,9 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 
     div.kontener-odnosnik {
-        min-height: 465px;			
+        min-height: 465px;
         max-height: 465px;
-        width: 24%;     
+        width: 24%;
     }
 
     .kontener-odnosnik img {
@@ -2450,36 +2449,36 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: 97%;
     }
     
-    div#selektor input.szerszy_guzik {
+    #selektor input.szerszy_guzik {
         min-width: 255px;
     }
     
-    div#nazwa_galerii img {
+    #nazwa_galerii img {
         margin-top: -2em;
     }
 
-    div#nazwa_galerii h2 {
+    #nazwa_galerii h2 {
         padding-left: 9em;    /* 208px szerokośc obrazka / 16px == 6.5 ... ale 1em to nie 16px, tylko 12.6px !!! */
         padding-right: 2.5em;   /* na lewo wchodzi obrazek, który zabiera miejsce i długie treści mogą zachodzić znów pod przycisk zamykania */ 
     }
     
-    div#pomoc > div:first-of-type,  /* pierwsze kontenery w kontenerze stają się fleks-kontenerami i grupują dwie kolumny */
-    div#poco > div:first-of-type {
+    #pomoc > div:first-of-type,  /* pierwsze kontenery w kontenerze stają się fleks-kontenerami i grupują dwie kolumny */
+    #poco > div:first-of-type {
         display: flex;
     }
       
-    div#pomoc > div > div,
-    div#poco > div > div {
+    #pomoc > div > div,
+    #poco > div > div {
         flex-basis: 50%;
     }
     
-    div#pomoc > div > div:first-of-type,
-    div#poco > div > div:first-of-type {
+    #pomoc > div > div:first-of-type,
+    #poco > div > div:first-of-type {
         margin-right: 2.5em;
     }
 
-    div#pomoc .kontener .ramka,
-    div#poco .kontener .ramka {
+    #pomoc .kontener .ramka,
+    #poco .kontener .ramka {
         margin-right: 0;
     }
 
