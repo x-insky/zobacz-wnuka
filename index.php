@@ -79,7 +79,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 
 <body>
 
-	<div class="glowny-kontener brak_js">
+	<div class="glowny-kontener brak-js">
 
         <div class="kontener">
             <div id="odpluskwiacz_ajaksowy">

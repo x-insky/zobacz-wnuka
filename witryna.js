@@ -99,7 +99,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         NaprawBrakujaceSRCwKontenerze ( tag_podmieniany, true );
                         CzyscNiepotrzebneElementy();	
                         //GenerujPodstronyGalerii( element_witryny, dane.ktoraPodstrona );
-                            if ( $('#nazwa_galerii').hasClass('szara_zawartosc') ) $('#nazwa_galerii').removeClass('szara_zawartosc');  // w przypadku wystąpienia błędu z pobraniem wybranej galerii - aby przywrócić żywe kolory tego kontenera 
+                            if ( $('#nazwa_galerii').hasClass('szara-zawartosc') ) $('#nazwa_galerii').removeClass('szara-zawartosc');  // w przypadku wystąpienia błędu z pobraniem wybranej galerii - aby przywrócić żywe kolory tego kontenera 
                         GenerujPodstronyGalerii( tag_podmieniany, dane.ktoraPodstrona );
                         PokazBiezacaGalerie(); // wymuszone dodanie - PONOWNE pokazywanie aktualnej galerii (...gdyby była ukryta)   
                         DostawPrzyciskZamykaniaDoBiezacejGalerii(); // wstaw przycisk zamykania bieżącej galerii, gdy zaczytano treści danej podstrony galerii 
@@ -287,7 +287,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         UsunBrakujaceSRCwIMGPozaPrzekazanym ( tag_podmieniany, dane.pozycjaWGalerii );    
                         console.log( "Ładowanie przed rekurencją (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
 
-                            if ( $('#nazwa_galerii').hasClass('szara_zawartosc') ) $('#nazwa_galerii').removeClass('szara_zawartosc'); 
+                            if ( $('#nazwa_galerii').hasClass('szara-zawartosc') ) $('#nazwa_galerii').removeClass('szara-zawartosc'); 
 
                         var namiaryWybranejGalerii = OdczytajTresciOdnosnikaWybranejGalerii ( tag_podmieniany, dane.pozycjaWGalerii );
 
@@ -418,7 +418,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                             // dane.wybranaPaginacja
                         console.log( "Ładowanie (" + rodzaj_dzialania + ") dla wybranego " + dane.wybranaPaginacja + " elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
                         //PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -200);
-                        $('div#wybrane_galerie_spis').removeClass('szara_zawartosc');    
+                        $('div#wybrane_galerie_spis').removeClass('szara-zawartosc');    
                         // Generuj spis wybranej galerii (podstrony spisu treści)
                         //$('div#wybrany_zaczytany_spis').show();    
                         // $('div#wczytywanie_wybrane_galerie_spis').hide(100);
@@ -1344,37 +1344,37 @@ odczytaneNamiary.data = roboczaWartosc.replace("data publikacji: ", "z dnia: ");
     
 console.log('Przeszukując "' + przeszukiwanyKontener + '" natrafiono na datę publikacji "' + roboczaWartosc + '" dla tytułu o indeksie +' + pozycjaElementuWSpisiePodstrony +
             '. ADRES_pełny: ', odczytaneNamiary.adres, ', NR_galerii: ', odczytaneNamiary.nrGalerii, 'NR_podstronyGalerii:  ', odczytaneNamiary.nrPodstronyGalerii);
-    // kasowanie SRC z IMG dla wskazanego tytułu galerii, aby nie było problemu z GET dla otrzymanego wycinka witryny macierzystej 
+    // kasowanie SRC z IMG dla wskazanego tytułu galerii, aby nie było problemu z GET dla otrzymanego wycinka witryny macierzystej
 $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).removeAttr('src');
 return odczytaneNamiary;    // zwróć obiekt 
 } // OdczytajTresciOdnosnikaWybranejGalerii-END
     
 
-	
 
+
+  
+// ---------- *** ----------  PRACA NA RZECZ APLIKACJI  ---------- *** ----------
     
-// ---------- *** ----------  PRACA NA RZECZ APLIKACJI  ---------- *** ----------	    
-    
-function InicjalizujCSSzAktywnymJS()  // UWAGA! style kierowane pod konkretne elementy oraz mozliwy hardkod 
+function InicjalizujCSSzAktywnymJS()  // UWAGA! style kierowane pod konkretne elementy oraz mozliwy hardkod
 {
-    // pomocnicza klasa-wskaźnik, dla podległości lub ogólny "włącz/wyłącz" dla zawartości gdy jest/brakuje JS    
-$('.glowny-kontener').removeClass('brak_js');   
+    // pomocnicza klasa-wskaźnik, dla podległości lub ogólny "włącz/wyłącz" dla zawartości gdy jest/brakuje JS
+$('.glowny-kontener').removeClass('brak-js');   
     // usuń ramkę z komunikatem o braku JS... już niepotrzebne -- powyższe + CSS załatwia sprawę lepiej
 // $('#brak_skryptow').css('display', 'none');  
     // czy kasować element z komunikatem o braku skryptów z DOMu? 
  $('#brak_skryptow').remove();    // wariant z kasowaniem
     
-    // ale NIE POKAZUJ wyzwalacza dla gry, bo to styl INLINE (sprawa dobrze załatwiona poprzez kwerendy)    
+    // ale NIE POKAZUJ wyzwalacza dla gry, bo to styl INLINE (sprawa dobrze załatwiona poprzez kwerendy)
 // $('#zagraj').css('display', 'block');   
     
     // ale aktywuj animację dla loga witryny, niech choć tu będzie nieco ruchu
-var slonceLogo = $('#slonce_logo'); 
+var slonceLogo = $('#slonce_logo');
 slonceLogo.removeClass('startowe-przesuniecie');
     if ( slonceLogo.not(':hover') ) slonceLogo.removeClass('animacja-interaktywnego-slonca');  // zabierz trwałą animację oraz przemieszczenie, nadawane poprzez JS dla loga w stanie hover (uwaga, "mysza" może być nad elemenetem w tym czasie!)
 // alternatywnie dla loga można po prostu wywalić atrybut klasy w całości (z całą zawartością), nie bacząc na skutki 
 
     // pokazywanie prostokąta z aktualnymi wymiarami okna przeglądarki    
-//$('#wymiary').css('visibility', 'visible');  // zmienione poprzez klasę rodzica "brak_js"
+//$('#wymiary').css('visibility', 'visible');  // zmienione poprzez klasę rodzica "brak-js"
     
 }   // InicjalizujCSSzAktywnymJS-END
 
@@ -2917,12 +2917,12 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
 
     // ..., ale widać aktywne powiadomenie o ładowaniu treści!!!
 
-    //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii
+    //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii
     var zawartoscH2 = $('#nazwa_galerii').find('h2').text();    
         if ( zawartoscH2 != '' )
         {
         console.info('W <h2> do zabarwienia na szaro siedzi treść "' + zawartoscH2 + '" i nie chce zmienić koloru w IE/Edge.');    
-        $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii ...NIE DZIAŁA w IE
+        $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii ...NIE DZIAŁA w IE
         }
 
     $( g_miejsce_na_zdjecia ).empty();
@@ -2956,8 +2956,8 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
 
     $('#status_wybranej_galerii').html( trescWygenerowana );	*/        
-    //$('div#wybrane_galerie_spis').addClass('szara_zawartosc');      
-        if ( $('#wybrane_galerie_spis').find('span:first').text() != '' ) $('#wybrane_galerie_spis').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu
+    //$('div#wybrane_galerie_spis').addClass('szara-zawartosc');      
+        if ( $('#wybrane_galerie_spis').find('span:first').text() != '' ) $('#wybrane_galerie_spis').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu
         
     ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania, gdyby wymusić kolejno w trakcie tej obsługi zdarzenia           
         

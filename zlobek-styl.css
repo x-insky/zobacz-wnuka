@@ -220,7 +220,7 @@ a[data-href]:focus,
         /* box-shadow: 0 0 4px 2px white; */
 }
 
-.szara_zawartosc {
+.szara-zawartosc {
     /*    -ms-filter: grayscale(80%);    */
     filter: gray;    /* 100% szarości działać ma w IE [6..9]  */
     filter: grayscale(80%);
@@ -407,7 +407,7 @@ div#zagraj {
     box-shadow: 0px 0px 4px 1px yellow;
 }
 
-#zagraj div.zagraj-kontener {
+div.zagraj-kontener {
     position: relative;
     width: 100%;
     height: 100%;
@@ -416,7 +416,7 @@ div#zagraj {
     overflow: hidden;
 }
 
-#zagraj .zagraj-kontener h4 {
+.zagraj-kontener h4 {
     font-size: 22px;
     font-weight: bold;
     padding: 0.33em 0.2em;
@@ -427,13 +427,13 @@ div#zagraj {
     transition: all 0.5s 0.1s;
 }
 
-#zagraj:hover .zagraj-kontener h4 {
+#zagraj:hover h4 {
     color: #54c;
     background-color: #f6f6f6;
     text-shadow: 1px 1px 1px #ccc;    
 }
 
-#zagraj .zagraj-kontener h3 {
+#zagraj h3 {
     font-size: 27px;
     font-weight: bold;
     padding: 0.3em 1.1em;
@@ -444,13 +444,13 @@ div#zagraj {
     transition: all 0.5s 0.1s;
 }
 
-#zagraj:hover .zagraj-kontener h3 {
+#zagraj:hover h3 {
     padding: 0.3em 0.4em;    
     text-shadow: 1px 1px 3px #ccc;
     background-color: cornflowerblue;
 }
 
-#zagraj .zagraj-kontener p {
+#zagraj p {
     position: absolute;
     width: 70px;
     height: 53px;
@@ -467,13 +467,13 @@ div#zagraj {
     transition: all 0.25s 0.05s;
 }
 
-#zagraj:hover .zagraj-kontener p {
+#zagraj:hover p {
     width: 102px;
     background-color: yellow;
 }
 
-#zagraj:hover .zagraj-kontener p:after,
-#zagraj:hover .zagraj-kontener p::after
+#zagraj:hover p:after,
+#zagraj:hover p::after
 {
     content: ">";
 }
@@ -525,7 +525,7 @@ div.powiadamiacz {
     user-select: none;
 }
 
-.brak_js div.powiadamiacz {
+.brak-js div.powiadamiacz {
     visibility: hidden; /* przeniesione ze "zwykłej" klasy !! */
     height: 0px;
 }
@@ -1030,7 +1030,7 @@ div#brak_skryptow {
     padding: 1.2em 0.2em;   /* korekta na małe ekrany */    
 }
 
-.brak_js div#brak_skryptow {
+.brak-js div#brak_skryptow {
     display: block;      /* bieżące powinno mieć wyższą specyficzność, niż standardowe poniżej -- gdy brak JS */
 }
 
@@ -1232,7 +1232,7 @@ div#skladowisko {
      display: table-cell;	*/
     display: inline-table;  /* !!! TA REGUŁA (lub podobna) ROZWIĄZAUJE PROBLEM OBRYSU WOKÓŁ PUSTEGO <a>, KTÓRY ZAWIERA TYLKO PROSTOKĄTNY <img>... 
         (+): UJEDNOLICENIE we wszystkich testowanych przeglądarkach
-             - OUTLINE przyjmuje kształt obrazka i znajduje suę POZA <img> i jego cieniem! (może to dzięki przeliczeniu od razu do SCALE (+10%) */
+             - OUTLINE przyjmuje kształt obrazka i znajduje się POZA <img> i jego cieniem! (może to dzięki przeliczeniu od razu do SCALE (+10%) */
 
         /* padding: 0; */
         /* margin: -0.3em; */
@@ -1406,7 +1406,7 @@ footer#stopka {
     box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);		
 }
 
-.brak_js #przyciski_stopka {
+.brak-js #przyciski_stopka {
     display: none;
 }
 
@@ -1458,8 +1458,8 @@ div#pomoc {
     background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue);
 }
 
-.brak_js #poco,
-.brak_js #pomoc {
+.brak-js #poco,
+.brak-js #pomoc {
     display: block;
 }
 
@@ -1565,7 +1565,7 @@ div#pomoc {
 
         /*    ------     DIV#wymiary     ------     */
 
-.brak_js #wymiary {
+.brak-js #wymiary {
     visibility: hidden; /* do przeniesienia do tego kontenera, wcześniej poza nim; wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
         /*display: none;*/
 }
@@ -1832,7 +1832,7 @@ input[type=range]:hover::-ms-fill-upper
         margin-top: 0.2em;
         margin-bottom: 0.2em;
         word-wrap: break-word;
-        word-break: break-word;    
+        word-break: break-word;
         white-space: normal;
 }
 
@@ -2178,7 +2178,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }     
 
     .naglowek div.banner-kontener {
-        height: 330px;    
+        height: 330px;
     }
 
     .blad-tytul {
@@ -2187,7 +2187,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 
     div.kontener-odnosnik {
-        min-height: 375px;			
+        min-height: 375px;
         max-height: 375px;
     }
 
@@ -2203,7 +2203,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         display: inline;
         float: left;
         margin: 0.5em;
-        margin-right: 1.5em;	
+        margin-right: 1.5em;
     }
 
     #nazwa_galerii p:last-child {
@@ -2275,7 +2275,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     #stopka button {
         display: inline;
         width: auto;
-        padding: 0.45em 2em;	
+        padding: 0.45em 2em;
     }
 
     #stopka ul li:first-child {
@@ -2288,13 +2288,13 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         margin-left: -8.5em;    /* zawsze jako 50% ze zdefiniowanej długości, czyli o połowę swej długości w lewo względem poziomego środka */
     }
 
-} 
+}
 
 
-@media screen and (min-width: 470px) { 
+@media screen and (min-width: 470px) {
 
     body {
-        font-size: 80%;	
+        font-size: 80%;
     }
 
     .glowny-kontener {
@@ -2307,7 +2307,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
     
     .napis-spod > h3 {
-        max-height: 75px;	
+        max-height: 75px;
     }
     
     .naglowek div.napisy-banner {
@@ -2354,9 +2354,9 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
     
     div.kontener-odnosnik {
-        min-height: 415px;			
+        min-height: 415px;
         max-height: 415px;
-        width: 48.2%;    
+        width: 48.2%;
     }
 
     .kontener-odnosnik img {
@@ -2368,16 +2368,16 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 
     footer#stopka {
-        padding: 1em 0.2em;	
+        padding: 1em 0.2em;
     }
 
 }
 
 
-@media screen and (min-width: 700px) { 
+@media screen and (min-width: 700px) {
 
     body {
-        font-size: 85%;	
+        font-size: 85%;
     }
 
     .glowny-kontener {
@@ -2386,9 +2386,9 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     } 
 
     div.kontener-odnosnik {
-        min-height: 425px;			
+        min-height: 425px;
         max-height: 425px;
-        width: 32%;    
+        width: 32%;
     }
 
     .kontener-odnosnik img {
@@ -2484,10 +2484,10 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 
 }
 
-@media screen and (min-width: 1180px) { 
+@media screen and (min-width: 1180px) {
 
     body {
-        font-size: 100%;	
+        font-size: 100%;
     }
 
     .glowny-kontener {
@@ -2500,7 +2500,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 
     div.kontener-odnosnik {
-        min-height: 490px;			
+        min-height: 490px;
         max-height: 490px;
         width: 19.1%;       
     }
@@ -2522,7 +2522,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     
 }
 
-@media screen and (min-width: 1300px) { 
+@media screen and (min-width: 1300px) {
 
     .naglowek .naglowek_kontener {
         border-bottom-left-radius: 0;
@@ -2554,7 +2554,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         user-select: none;
     }   
     
-    .brak_js #zagraj {
+    .brak-js #zagraj {
         display: none;
     }
     
