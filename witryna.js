@@ -2183,17 +2183,17 @@ poziomWidocznosci = poziomWidocznosci || '0.7';
 
 $(elementWyswietlajacy + '> h1').text( szerokoscOkna + ' x ' + wysokoscOkna );  // najpierw nadanie aktualnej treści (rozmiaru X x Y)
     
-    if ( !$(elementWyswietlajacy).hasClass('animacja-zanikanie-2') ) $(elementWyswietlajacy).addClass('animacja-zanikanie-2');    // ewentualne nadanie klasy z konretną animacją
+    if ( !$(elementWyswietlajacy).hasClass('animacja-zanikanie') ) $(elementWyswietlajacy).addClass('animacja-zanikanie');    // ewentualne nadanie klasy z konretną animacją
 
     // taka parodia, ale chodzi o przerwanie aktualnie zanikającej animacji i uruchomienie jej od nowa
     // $(elementWyswietlajacy).hasClass('animacja-zanikanie').removeClass('animacja-zanikanie').addClass('animacja-zanikanie');
     // istotny jest odstęp czasu pomiędzy zabraniem, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)    
-$(elementWyswietlajacy).removeClass('animacja-zanikanie-2').height();    // pobierana jest na próżno wysokość, jako mechanizm nowego odwołania się do DOM
+$(elementWyswietlajacy).removeClass('animacja-zanikanie').height();    // pobierana jest na próżno wysokość, jako mechanizm nowego odwołania się do DOM
 
-$(elementWyswietlajacy).addClass('animacja-zanikanie-2');    
+$(elementWyswietlajacy).addClass('animacja-zanikanie');    
 
 /*
-    if ( $( elementWyswietlajacy ).hasClass('animacja-zanikanie-2') ) 
+    if ( $( elementWyswietlajacy ).hasClass('animacja-zanikanie') ) 
     {
     //$(elementWyswietlajacy).css({ animationName : '', animationDuration : '', animationTimingFunction : '' }); 
         //  $(elementWyswietlajacy).css({ animationPlayState : 'paused' }).width();
@@ -3302,16 +3302,16 @@ WystartujDebuggerLokalny();
 // GenerujPowiadomienieOBledzie(); // TEST wymuszony po raz pierwszy    
 // GenerujPowiadomienieOBledzie({ tytul : 'TEST! Problem z odczytem zawartości zdalnej! TEST!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny (1). TO JEST TYLKO PRÓBNE WYWOŁANIE POWIADOMIENIA, BŁĘDU NIE MA... ale przycisk reaguje. I jeszcze nieco więcej tekstu, dla wzorcowego wypełnienia. <br />Jestę nowo linio?!', przyciskAkcjiOdswiez : true, ikonaZamykania : true });
     
-UbijReklamy();    
+UbijReklamy();
 InicjalizujPrzyciskiWyboruGalerii();
-InicjalizujPrzyciskiWyboruPodstronyGalerii();    
+InicjalizujPrzyciskiWyboruPodstronyGalerii();
 	
 ZaczytajSpisGalerii();
 	
 // testowo też do autouruchamiania gry - pierwsza plansza
 InicjalizujGre();
-OdkryjEmail();     
-    
+OdkryjEmail();
+
 	
 	// sterowanie wielkością czcionki nagłówka
 	
@@ -3322,9 +3322,9 @@ $(".napis-spod > h3").fitText(3, { minFontSize: '9px', maxFontSize: '17px' });
 
     // parametryzacja pokazu zdjęć (przeniesione z pliku index.php)
 lightbox.option({ albumLabel: "Zdjęcie %1 z %2", positionFromTop: 10 });    
-    
-//$('#wymiary').addClass('animacja-zanikanie-2');  // dynamiczne przypisanie klasy    
+
+//$('#wymiary').addClass('animacja-zanikanie');  // dynamiczne przypisanie klasy    
 AktualnyRozmiarOkna('#wymiary');
 
-	
+
 }); //document-ready-END

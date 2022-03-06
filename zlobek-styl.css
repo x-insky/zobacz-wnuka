@@ -1860,17 +1860,11 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 
 .animacja-interaktywnego-slonca {
         /* transform-origin: center center;	*/	
-    animation: obroty_delikatne_3 6.5s infinite ease-out;	/* tylko ta animacja z trzech zadeklarowanych jest używana */
+    animation: obroty_delikatne 6.5s infinite ease-out;	/* tylko ta animacja z trzech zadeklarowanych jest używana */
 }
 
-    .animacja-zanikanie {                   /* POTRZEBNA?! pierwowzór dla "animacja-zanikanie-2" */
-        animation: zanikanie 3s ease-out;
-        animation-direction: normal;
-        animation-fill-mode: both;
-    }
-
-.animacja-zanikanie-2 {
-    animation: zanikanie_2 2s ease-out;
+.animacja-zanikanie {
+    animation: zanikanie 2s ease-out;
     animation-direction: normal;
     animation-fill-mode: both;
 }
@@ -1880,11 +1874,6 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     animation-fill-mode: forwards;  /* 'both' było*/  
 }
 
-    .animacja-zmiana-kolorow {      /* POTRZEBNA? pierwowzór dla "animacja-pulsowanie-kolorow" */
-        animation: zmiana_kolorow 30s ease-out infinite;
-        animation-fill-mode: both;
-    }
-
 .animacja-pulsowanie-kolorow {
     animation: pulsowanie_kolorow 10s ease-out infinite;
     animation-fill-mode: both;
@@ -1892,32 +1881,18 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 
 /*    -----     DEFINICE ANIMACJI     -----     */
 
-    @keyframes obroty_360st {              /* pierwsza wersja, teraz używany następca z 180st */
-        0% {
-            transform: rotate(0deg);
-        }
-        50% {
-            transform: rotate(90deg);
-        }
-        75% {
-            transform: rotate(135deg);
-        }
-        100% {
-            transform: rotate(-135deg);
-        }
-    }
 
-    @keyframes obroty_180st {
-        0% {
-            transform: rotate(0deg);
-        }
-        80% {
-            transform: rotate(180deg);
-        }
-        100% {
-            transform: rotate(-90deg);
-        }
+@keyframes obroty_180st {
+    0% {
+        transform: rotate(0deg);
     }
+    80% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(-90deg);
+    }
+}
 
 @keyframes obroty_90-180st {
     0%, 2% {
@@ -1936,81 +1911,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 }
 
-    @keyframes obroty_delikatne
-    {
-        0% {
-            transform: rotate(0deg);
-        }
-        10% {
-            transform: rotate(12deg);
-        }
-        20% {
-            transform: rotate(55deg);
-        }
-        30% {
-            transform: rotate(35deg);
-        }
-        40% {
-            transform: rotate(10deg);
-        }
-        50% {
-            transform: rotate(0deg);
-        }
-        60% {
-            transform: rotate(-10deg);
-        }
-        70% {
-            transform: rotate(-50deg);
-        }
-        80% {
-            transform: rotate(-20deg);
-        }
-        90% {
-            transform: rotate(-8deg);
-        }
-        100% {
-            transform: rotate(0deg);
-        }
-    }
-
-@keyframes obroty_delikatne_2
-{
-    0% {
-        transform: rotate(0deg);
-    }
-    5% {
-        transform: rotate(12deg);
-    }
-    20% {
-        transform: rotate(75deg);
-    }
-    30% {
-        transform: rotate(40deg);
-    }
-    40% {
-        transform: rotate(15deg);
-    }
-    50% {
-        transform: rotate(0deg);
-    }
-    60% {
-        transform: rotate(-10deg);
-    }
-    70% {
-        transform: rotate(-90deg);
-    }
-    80% {
-        transform: rotate(-20deg);
-    }
-    95% {
-        transform: rotate(-8deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes obroty_delikatne_3
+@keyframes obroty_delikatne
 {
     0% {
         transform: rotate(0deg);
@@ -2038,20 +1939,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 }
 
-    @keyframes zanikanie
-    {
-        0% {
-            opacity: 0.7;
-        }
-        50% {
-            opacity: 0.7;
-        }
-        100% {
-            opacity: 0;
-        }
-    }
-
-@keyframes zanikanie_2
+@keyframes zanikanie
 {
     0% {
         opacity: 0.2;
@@ -2094,37 +1982,6 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
     100% {
         /* bez zmian */
-    }
-}
-
-@keyframes zmiana_kolorow
-{
-    0%  {
-        color: black;
-    }
-    15% {
-        color: darkblue;
-    }    
-    30% {
-        color: #5d6ad0; /* mediumslateblue */
-    }
-    40% {
-        color: red;
-    }    
-    50% {
-        color: magenta;
-    }    
-    60% {
-        color: darkviolet;
-    }
-    70% {
-        color: blue;
-    }
-    85% {
-        color: darkgreen;
-    }
-    100% {
-        color: black;
     }
 }
 
@@ -2299,11 +2156,11 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 
     .glowny-kontener {
         /*	margin: 0.4em auto;*/
-        width: 98.5%;    
+        width: 98.5%;
     }
 
     .naglowek div.banner-kontener {
-        height: 190px;    
+        height: 190px;
     }
     
     .napis-spod > h3 {
@@ -2382,8 +2239,8 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 
     .glowny-kontener {
     /*	margin: 0.4em auto;*/
-        width: 99%;    
-    } 
+        width: 99%;
+    }
 
     div.kontener-odnosnik {
         min-height: 425px;
@@ -2423,7 +2280,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 
     .glowny-kontener {
         /*	margin: 0.3em auto;*/
-        width: 99.25%;      
+        width: 99.25%;
     }
 
     div.kontener-odnosnik {
@@ -2502,7 +2359,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     div.kontener-odnosnik {
         min-height: 490px;
         max-height: 490px;
-        width: 19.1%;       
+        width: 19.1%;
     }
 
     .kontener-odnosnik img {
@@ -2568,7 +2425,6 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     
     div#gra {
         display: none !important;    /* albo tak, albo bezpośrednie kasowanie stylu w elemencie poprzez JS */ 
-        /*    background-color: firebrick !important;    */
     }
 
 }
