@@ -79,12 +79,12 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 
 <body>
 
-	<div class="glowny-kontener brak_js">
+	<div class="glowny-kontener brak-js">
 
         <div class="kontener">
             <div id="odpluskwiacz_ajaksowy">
                 <div>
-                    <h4><span class="status_ajaksa" title="Aktualny stan komunikowania się z serwerem. UWAGA: ma wpływ na PRZYSZE żądania i odpowiedzi, sporadycznie reaguje na teraźniejszą komunikację!">Stan Komunikacji</span>
+                    <h4><span class="status-ajaksa" title="Aktualny stan komunikowania się z serwerem. UWAGA: ma wpływ na PRZYSZE żądania i odpowiedzi, sporadycznie reaguje na teraźniejszą komunikację!">Stan Komunikacji</span>
                         <button class="zepsuj" title="Tworzy błędy w zapytaniach serwera, które uniemożliwiają pobranie i wyświetlenie oczekiwanych treści. Blokuje to nawigowanie po zawartości (wymuszenie powstania błędu, jako symulacja jego ewentualnego wystąpienia).">Zepsuj</button> 
                         <button class="napraw" title="Wznawia prawidłową komunikację.">Napraw</button> 
                         <label for="awaria_na_stale" title="Zaznacz/odznacz to pole przed wybraniem [Zepsuj]/[Napraw], aby ustalić trwałą zmianę. Opcja zostanie zapamiętana także po odświeżeniu strony. Usuwanie decyzji przez odznaczenie pola i zatwierdzeniu przyciskiem akcji."> <input type="checkbox" name="awaria_na_stale" id="awaria_na_stale" style="transform: scale(1.5);"> Ustawić na stałe?</label>
@@ -94,39 +94,35 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             </div>
         </div>       
 
-        <header id="naglowek">
+        <header class="naglowek">
 
-            <div id="naglowek_kontener">
+            <div class="banner-kontener">
 
-                <div id="banner">
+                <div class="logo-witryny"> 
+                    <div id="slonce_logo" class="startowe-przesuniecie animacja-interaktywnego-slonca"></div>
+                </div>
 
-                    <div id="logo"> 
-                        <div id="slonce_logo" class="startowe_przesuniecie animacja_slonca"><!-- <img src="grafiki/slonce.png"> --></div>  <!-- jawnie nadane klasy, na rzecz nieaktywnego JS -->
-                    </div>
-
-                    <a href=".">
-                        <div id="napisy">
+                <a href=".">
+                    <div class="napisy-banner">
                         <h1 class="logo">Zobacz Wnuka!</h1>
                         <h2 class="logo">Galeria ze <span>Żłobka Słoneczko</span> w&nbsp;Chojnowie</h2>
-                        <p class="clearfix2" ></p>
-                        </div>
-                    </a>
-
-                    <div id="zagraj">
-                        <div id="zagraj_srodek">
-                        <h4 class="gra_odnosnik">Czekasz na załadowanie?</h4>
-                        <h3 class="gra_odnosnik">Zagraj w grę!</h3>
-                        <p class="gra_odnosnik">&gt;</p>
-                        </div>
+                        <div class="clearfix2"></div>
                     </div>
+                </a>
 
-                    <div id="napis_spod">
-                        <h3>Serwis umożliwia łatwiejszy podgląd rozrabiających wnuków przez dziadków... i nie tylko. Treści pochodzą&nbsp;z&nbsp;witryny <a class="odnosnik_kolor" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
+                <div id="zagraj">
+                    <div class="zagraj-kontener">
+                        <h4>Czekasz na załadowanie?</h4>
+                        <h3>Zagraj w grę!</h3>
+                        <p>&gt;</p>
                     </div>
+                </div>
 
-                </div> <!-- div#banner -->
+                <div class="napis-spod">
+                    <h3>Serwis umożliwia łatwiejszy podgląd rozrabiających wnuków przez dziadków... i nie tylko. Treści pochodzą&nbsp;z&nbsp;witryny <a class="odnosnik_kolor" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
+                </div>
 
-            </div>	<!-- div#naglowek_kontener -->    
+            </div>	<!-- div.banner-kontener -->    
                 
             <div id="spis_tresci">
                 <div id="zaczytany_spis">
@@ -155,7 +151,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         }
                     ?>
                     <h2>Lista galerii ze Żłobka</h2>
-                    <div class="ciemne_tlo_spis">
+                    <div class="ciemne-tlo-spis">
                         <div class="kontener">
                             <div id="galeria_spis">
                             </div>
@@ -265,10 +261,10 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             </div>  <!-- div#spis_tresci -->
 
             <div id="brak_skryptow" style="">
-                <div class="blad animacja_zolty_blysk">
-                    <h2 class="blad_tytul">A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
-                    <div class="blad_tresc">
-                        <div class="blad_ikona">!</div>
+                <div class="blad animacja-zolty-blysk">
+                    <h2 class="blad-tytul">A niech to! Nie udało się pobrać zawartości z witryny Żłobka.</h2>
+                    <div class="blad-tresc">
+                        <div class="blad-ikona">!</div>
                         <p>Czyżby w Twojej przeglądarce brakowało włączonej obsługi skryptów?! Zweryfikuj to i włącz proszę JavaScript, aby załadować i wyświetlić tutaj nieco zawartości.<br />
                         Nie zapomnij na koniec odświeżyć stronę.</p>
                     </div>
@@ -292,7 +288,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             <div id="wczytywanie_podstrona"><h2>Trwa wczytywanie...  <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
             </div>
             
-            <div class="jasne_tlo_galeria">
+            <div class="jasne-tlo-galeria">
                 <div class="kontener">
                     <div id="skladowisko"></div>
                 </div>
@@ -341,9 +337,9 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             <div id="przyciski_stopka">
                 <button id="poco_button">Ale po co? &darr;</button>
                 <button id="pomoc_button">Pomoc &darr;</button>
-                <button id="symulacja_button" class="animacja_pulsowanie_kolorow">Symul-A(JAX)-cja</button>
+                <button id="symulacja_button" class="animacja-pulsowanie-kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.68</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.70</h6>
             <div id="poco">
                 <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>

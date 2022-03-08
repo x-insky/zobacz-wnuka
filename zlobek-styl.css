@@ -3,7 +3,7 @@
 /*    --------------------------      WSZYSTKIE ELEMENTY       --------------------------     */
 
 * {
-    box-sizing: border-box;	
+    box-sizing: border-box;
 }
 
 body {
@@ -59,9 +59,9 @@ h2 {
     font-size: 175%;
     font-weight: bold;
     color: #54c;
-    padding: 0.5em;	
+    padding: 0.5em;
     text-shadow: 0px 0px 4px #ddd;
-    text-align: center;	
+    text-align: center;
 }
 
 h2 > span {
@@ -73,8 +73,8 @@ h3 {
     font-weight: bold;
     color: yellow;
     text-shadow:0px 0px 4px #555;
-    padding: 0.2em 0.5em;	
-    text-align: center;	
+    padding: 0.2em 0.5em;
+    text-align: center;
 }
 
 h3 > span {
@@ -86,8 +86,8 @@ h4 {
     font-weight: bold;
     color: darkblue;
     text-shadow: 1px 1px 1px #ccc;
-    padding: 0.2em 0.5em;	
-    text-align: center;	
+    padding: 0.2em 0.5em;
+    text-align: center;
 }
 
 h4 > span {
@@ -101,11 +101,11 @@ h6 {
 }
 
 p {
-    text-align: justify;	
+    text-align: justify;
 }
 
 em {
-    font-style: italic;    
+    font-style: italic;
 }
 
 strong {
@@ -129,7 +129,7 @@ form {
 form input {
     margin: 0.2em;
     padding: 0.2em;
-    font-size: 110%;		
+    font-size: 110%;
 }
 
 /*    --------------------------       OGÓLNE KLASY      --------------------------     */
@@ -151,7 +151,7 @@ a[data-href]:focus,
 
 .kontener {
     width: 100%;
-    max-width: 1400px;    
+    max-width: 1400px;
     align-items: center;
     margin: 0 auto;
 }
@@ -220,7 +220,7 @@ a[data-href]:focus,
         /* box-shadow: 0 0 4px 2px white; */
 }
 
-.szara_zawartosc {
+.szara-zawartosc {
     /*    -ms-filter: grayscale(80%);    */
     filter: gray;    /* 100% szarości działać ma w IE [6..9]  */
     filter: grayscale(80%);
@@ -231,13 +231,13 @@ a[data-href]:focus,
 h1.logo {
     color: yellow;
     font-size: 300%;
-    padding-bottom: 0.05em;	
+    padding-bottom: 0.05em;
 }
 
 h2.logo {
-    font-size: 225%;	
+    font-size: 225%;
     padding-top: 0;
-    line-height: 20px;	
+    line-height: 20px;
     text-shadow: 0px 0px 3px #ccc;
 }
 
@@ -279,13 +279,13 @@ div.blad:hover {
     right: 4px;
 }
 
-.blad_tytul {
+.blad-tytul {
     padding: 0.25em;
     padding-top: 2.8em;
     user-select: none;
 }
 
-.blad_tresc {
+.blad-tresc {
     background-color: darkred;
     box-shadow: 0px 0px 10px 2px #333 inset; 
     min-height: 140px;
@@ -293,7 +293,7 @@ div.blad:hover {
     margin-top: 10px;
 }
 
-.blad_ikona {
+.blad-ikona {
     margin: 0 auto;
     width: 100px;
     height: 100px;
@@ -310,104 +310,82 @@ div.blad:hover {
 
 /*    --------------------------       HEADER      --------------------------    */
 
-    /*    ------    HEADER#naglowek      ------     */
+    /*    ------    HEADER.naglowek      ------     */
 
-header#naglowek {
-    border-radius: 10px;    
-    background-color: #c3d5e2;    
-    overflow: hidden;  
+header.naglowek {
+    border-radius: 10px;
+    background-color: #c3d5e2;
+    overflow: hidden;
 }
 
-header#naglowek h1 span {
+.naglowek h1 span {
     color: yellow;
     font-weight: bolder;
 }
 
-header#naglowek h2 span {
+.naglowek h2 span {
     color: yellow;
     font-weight: bolder;
     text-shadow: 0px 0px 6px #666;
 }
 
-header#naglowek div#napis_spod {
-    position:absolute;
+.naglowek div.napis-spod {
+    position: absolute;
     left: 0;
     bottom: 0;
+    width: 100%;
     background-color: rgba(100,100, 200, 0.7);
-    width: 100%;	
 }
 
-div#napis_spod h3 {
-    width: 100%;	
+.napis-spod > h3 {
+    width: 100%;
     max-height: 60px;
     color: yellow;
     text-shadow: 0px 0px 3px #333;
 }
 
-header#naglowek div#banner {
-    position: relative;    
+.naglowek div.banner-kontener {
+    position: relative;
     border-radius: 10px;
-    background-color: cornflowerblue;	
+    background-color: cornflowerblue;
     overflow: hidden;
     width: auto;
     height: 290px;
-    max-width: 1400px;  /* tyle co kontener ograniczający winien mieć w innych miejscach - ".kontener" */      
+    max-width: 1400px;  /* tyle co pojemnik ograniczający winien mieć w innych miejscach - ".kontener" */
 }
 
-header#naglowek div#logo {
+.naglowek div.logo-witryny {
     position: relative;
     height: 200px;
-    width: 200px;	
-    /*float: left;	*/
-    background-color: cornflowerblue;	
-    /*background-color: rgba(85, 85, 185, 0.3); */
+    width: 200px;
+    background-color: cornflowerblue;
 }
 
-div#logo div#slonce_logo {
-    position: absolute;	
+.logo-witryny #slonce_logo {
+    position: absolute;
+    left: -115px;
+    top: -115px;
     height: 256px;
     width: 256px;
-    background-image: url(grafiki/slonce.png); 
-    background-repeat: no-repeat;	
-    /* background-position: -112px -112px; */
-    left: -115px;
-    top: -115px;	
+    background-image: url(grafiki/slonce.png);
+    background-repeat: no-repeat;
     transform-origin: 50% 50%;
-    transition: all 0.5s ease 0.1s;	 
-     /*transform-origin: center center;*/
+    transition: all 0.5s ease 0.1s;
 }
 
-div#banner:hover div#slonce_logo {
-    /* transform: scale(1.25, 1.25); */
-        /*transform-origin: 50% 50%;*/
+.banner-kontener:hover #slonce_logo,  /* JAKI JEST CEL PONIŻSZYCH DWÓCH DOPISANYCH SELEKTORÓW, zwłaszcza drugiego ?! */ 
+    .logo-witryny #slonce_logo.startowe-przesuniecie,  /* DRY: niby jest małe powielenie, ale to na potrzeby braku aktywnego JS (+ siła dwóch ID po sobie) */
+    .banner-kontener:hover #slonce_logo.startowe-przesuniecie   /* DRY #2: znów powielenie, ale efekt nieosiągniety...  */
+{
     left: -85px;
-    top: -85px;		
+    top: -85px;
 }
 
-div#logo div#slonce_logo.startowe_przesuniecie {
-        /* DRY: niby jest małe powielenie, ale to na potrzeby braku aktywnego JS (+ siła dwóch ID po sobie) */
-    left: -85px;
-    top: -85px;		
-}
-
-div#banner:hover div#slonce_logo.startowe_przesuniecie {
-        /* DRY #2: znów powielenie, ale efekt nieosiągniety...  */
-    left: -85px;
-    top: -85px;		
-}
-
-header#naglowek div#napisy {
-    /*float: left;*/
+.naglowek div.napisy-banner {
     position: absolute;
     left: 0px;
-    top: 160px;	
+    top: 160px;
     width: 100%;
-}
-
-header#naglowek div#napisy p {
-    height: 0;
-    width: 0;
-    clear: both;	
 }
 
 div#zagraj {
@@ -419,164 +397,150 @@ div#zagraj {
     top: 20px;
     cursor: pointer;
     border: 2px solid #ccc;
-    border-radius: 5px;    
+    border-radius: 5px;
     background-color: #5d6ad0;
     transition: all 0.5s 0.1s;
 }
 
-div#zagraj:hover {
-    border-color: yellow;    
+#zagraj:hover {
+    border-color: yellow;
     box-shadow: 0px 0px 4px 1px yellow;
 }
 
-div#zagraj div#zagraj_srodek {
+div.zagraj-kontener {
     position: relative;
-    align-content: center;
     width: 100%;
     height: 100%;
     background-color: #5d6ad0;
-    border-radius: 2px;
-    overflow: hidden;    
+    border-radius: 3px;
+    overflow: hidden;
 }
 
-div#zagraj div#zagraj_srodek h4.gra_odnosnik {
+.zagraj-kontener h4 {
     font-size: 22px;
     font-weight: bold;
     padding: 0.33em 0.2em;
     text-align: center;
-    text-shadow: none;    
-    color: #5d6ad0;    
+    text-shadow: none;
+    color: #5d6ad0;
     background-color: #eee;
-    transition: all 0.5s 0.1s;    
+    transition: all 0.5s 0.1s;
 }
 
-div#zagraj:hover div#zagraj_srodek h4.gra_odnosnik {
+#zagraj:hover h4 {
     color: #54c;
     background-color: #f6f6f6;
     text-shadow: 1px 1px 1px #ccc;    
 }
 
-div#zagraj div#zagraj_srodek h3.gra_odnosnik {
+#zagraj h3 {
     font-size: 27px;
     font-weight: bold;
     padding: 0.3em 1.1em;
     text-align: left;
     color: yellow;
     background-color: #5d6ad0;
-    text-shadow: none;    
-    transition: all 0.5s 0.1s;       
+    text-shadow: none;
+    transition: all 0.5s 0.1s;
 }
 
-div#zagraj:hover div#zagraj_srodek h3.gra_odnosnik {
+#zagraj:hover h3 {
     padding: 0.3em 0.4em;    
     text-shadow: 1px 1px 3px #ccc;
-    background-color: cornflowerblue;    
+    background-color: cornflowerblue;
 }
 
-div#zagraj div#zagraj_srodek p.gra_odnosnik {
+#zagraj p {
     position: absolute;
     width: 70px;
     height: 53px;
     right: 0px;
     top: 41px;
+    z-index: 0;
+    padding-left: 0.1em;
+    background-color: #eff506;
     color: white;
     font-size: 72px;
-    font-weight: bolder;
-    background-color: #eff506;
-    z-index: 0;
     line-height: 41px;
-    padding-left: 0.1em;
+    font-weight: bolder;
     text-shadow: 1px 1px 3px #666;
-    transition: all 0.25s 0.05s;      
+    transition: all 0.25s 0.05s;
 }
 
-div#zagraj:hover div#zagraj_srodek p.gra_odnosnik {
+#zagraj:hover p {
     width: 102px;
-    background-color: yellow;    
+    background-color: yellow;
 }
 
-div#zagraj:hover div#zagraj_srodek p.gra_odnosnik::after {
+#zagraj:hover p:after,
+#zagraj:hover p::after
+{
     content: ">";
 }
 
-header#naglowek a.odnosnik_kolor {
+.naglowek a.odnosnik_kolor {
     font-size: 120%;
     font-weight: bold;
     color: #eee;
     text-decoration: underline;
-    transition: color 0.3s 0.05s, text-shadow 0.3s 0.05s;   
+    transition: color 0.3s 0.05s, text-shadow 0.3s 0.05s;
 }
 
-header#naglowek a.odnosnik_kolor:hover,
-header#naglowek a.odnosnik_kolor:focus
+.naglowek a.odnosnik_kolor:hover,
+.naglowek a.odnosnik_kolor:focus
 {
-    color: #222;
+    color: #222; 
     text-shadow: 0px 0px 4px #eee;
 }
 
-header#naglowek div#naglowek_kontener {
-    background-color: #c3d5e2;
-    /*border-radius: 10px;*/
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	
-}
+    /*    --------------------------       DIV#spis_tresci   --------------------------    */
 
-header#naglowek div#naglowek_kontener div#formularz {
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 1em;	
-    /*background-color: #66c; */
-    background-color: cornflowerblue;	
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0, 0.7);
-}
-
-header#naglowek div#spis_tresci, 
-header#naglowek div#zaczytany_spis
+div#spis_tresci,
+div#zaczytany_spis
 {
-    overflow: hidden; 
-    width: 100%;	
+    overflow: hidden;
+    width: 100%;
 }
 
-header#naglowek .ciemne_tlo_spis {
+.ciemne-tlo-spis {
     background-color: cornflowerblue;
     width: 100%;    
 }
 
-.brak_js div.powiadamiacz {
-    visibility: hidden; /* przeniesione ze "zwykłej" klasy !! */
-    height: 0px;
-}
+        /*    ------     DIV.powiadamiacz      ------     */
 
 div.powiadamiacz {
+    position: relative;
     visibility: visible; /* gdy 'DISPLAY: NONE' to nie pokazuje i nie animuje się pasek wewnątrz tego kontenera */
     height: auto;
-    position: relative;
     width: 90%;
+    padding: 0.5em;
+    margin: 1em auto;
+    margin-bottom: 0.5em;
     background-color: cornflowerblue;
     border: 1px solid #00b;
     border-radius: 5px;
     box-shadow: 1px 1px 3px darkblue;
-    padding: 0.5em;
-    margin: 1em auto;
-    margin-bottom: 0.5em;
     transition: background-color 0.25s ease-out;
     user-select: none;
 }
 
-div.powiadamiacz:hover,
-div.powiadamiacz:focus
+.brak-js div.powiadamiacz {
+    visibility: hidden; /* przeniesione ze "zwykłej" klasy !! */
+    height: 0px;
+}
+
+.powiadamiacz:hover,
+.powiadamiacz:focus
 {
     background-color: #647eed;  /* "#59aede" jako jaśniejszy cornflowerblue */
     cursor: pointer;
 }
 
-div.powiadamiacz:hover:after,
-div.powiadamiacz:hover::after,
-div.powiadamiacz:focus:after,
-div.powiadamiacz:focus::after
+.powiadamiacz:hover:after,
+.powiadamiacz:hover::after,
+.powiadamiacz:focus:after,
+.powiadamiacz:focus::after
 {
     position: absolute;
     top: 5px;
@@ -588,68 +552,67 @@ div.powiadamiacz:focus::after
     padding: 0.2em;
     padding-bottom: 0.4em;
     color: black;
-    background-color: yellow; /* #ddd */
+    background-color: yellow;
 }
 
-div.powiadamiacz p {
+.powiadamiacz p {
     text-align: center;
     margin: 0.5em 0;
 }
 
-header#naglowek .pasek {
+.powiadamiacz .pasek {
     display: block;
     width: 100%;
     max-width: 98%;
     height: 10px;
+    margin: 0 1%;
     background-color: mediumblue;
     background: linear-gradient(to right, #54c 0%, #5d6ad0 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5544cc', endColorstr='#5d6ad0',GradientType=1 ); /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5544cc', endColorstr='#5d6ad0',GradientType=1 ); /* gradient w IE 6-9 */
     box-shadow: 1px 1px darkblue; 
     border-radius: 2px;
-    margin: 0 1%;
-    transition: width 10s 0.2s linear; 
+    transition: width 10s 0.2s linear;
 }
 
-div#spis_tresci div#galeria_spis {
+        /*    ------     DIV#galeria_spis     ------     */
+
+div#galeria_spis {
     background-color: cornflowerblue;
     width: 100%;
     padding-top: 1em;
     padding-bottom: 1em;
     text-align: center;
-    /*margin-bottom: 1em;	*/
-    /*display: none;*/
 }
 
-div#spis_tresci div.kontener_odnosnik {
+        /*    ------     DIV.kontener-odnosnik    ------     */
+
+div.kontener-odnosnik {
     position: relative;
     display: inline-block;
-    overflow: hidden;
+    width: 100%;
     min-height: 330px;	     /* było po 575px w obu wysokościach, zabrano 75px */ 		
     max-height: 330px;
-    max-width: 97.6%;	
-    width: 100%;
+    max-width: 97.6%;
+    overflow: hidden;
     margin: 0.4em 0.3em;
-    padding: 0.5em;	    
+    padding: 0.5em;
     border: 1px solid blue;
     box-shadow: 1px 1px 3px darkblue;	
     border-radius: 5px;
     transition: all 0.25s ease-out;
     vertical-align: middle;     /* dodatkowo wymagany w naprawdę starych przeglądarkach przy rezygnacji z 'float' i użyciu 'display: inline-block' (niedziedziczony) */
-    user-select: none;   /* można zanzaczyć tekst tylko w obrębie tego elmentu */
+    user-select: none;
 }
 
-div#spis_tresci div.kontener_odnosnik:hover,
-div#spis_tresci div.kontener_odnosnik.sztuczny-hover     /* po prostu przydzialana jakaś klasa, mająca kolor tła jak ":hover" */
+.kontener-odnosnik:hover,
+.kontener-odnosnik.sztuczny-hover     /* po prostu przydzialana jakaś klasa, mająca kolor tła jak ":hover" */
 {
-    /* rodzic_background-color: cornflowerblue == #6495ed ; */
-    /* background-color: cornflowerblue;	*/ 
-    /* background-color: #5a8ae8;  */  /* <--- może lepiej zostawić ten, subtelny kolor tła, bliski oryginałowi */
     background-color: #5d6ad0;     /* <-- ciemniejsze tło */
     border-color: #00b;
 }
 
-div#spis_tresci div.kontener_odnosnik:hover div.szczegoly,
-div#spis_tresci div.kontener_odnosnik.sztuczny-hover div.szczegoly
+.kontener-odnosnik:hover .szczegoly,
+.kontener-odnosnik.sztuczny-hover .szczegoly
 {
     left: 0px;
     bottom: 0px;
@@ -657,186 +620,178 @@ div#spis_tresci div.kontener_odnosnik.sztuczny-hover div.szczegoly
     width: 100%;
 }
 
-div#spis_tresci div.kontener_odnosnik:hover div.dolna_zaslonka,
-div#spis_tresci div.kontener_odnosnik.sztuczny-hover div.dolna_zaslonka
+.kontener-odnosnik:hover .dolna-zaslonka,
+.kontener-odnosnik.sztuczny-hover .dolna-zaslonka
 {
     background-color: #5d6ad0;  /* #5d6ad0 == rgb(93,106,208) */
     background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(93,106,208,1) 50%, rgba(93,106,208,1) 100%); 
 }
 
-div#spis_tresci div.tytul_odnosnik {
+div.tytul-odnosnik {
     height: 6em;
-        /*    vertical-align: bottom;	*/
 }
 
-div#spis_tresci div.kontener_odnosnik a {
+.kontener-odnosnik a {
     cursor: pointer;    /* sztucznie, na usunięty 'href' */
-    text-decoration: none;        
+    text-decoration: none;
 }
 
-.sztuczny-focus .tytul_odnosnik > a:focus {     /* usuwanie obrysu bezpośrednio na odnośniku w spise treści, skoro element ze spisu treści (przodek) dostaje sztuczną klase ze zdarzenia */
+.sztuczny-focus .tytul-odnosnik > a:focus {     /* usuwanie obrysu bezpośrednio na odnośniku w spise treści, skoro element ze spisu treści (przodek) dostaje sztuczną klase ze zdarzenia */
     outline: none !important;   /* jako reakacja na pierwotne użycie "!important" */
 }
 
-div#spis_tresci div.tytul_odnosnik h2 {
-        /*    vertical-align: bottom;   */
+.tytul-odnosnik h2 {
     color: white;
     text-shadow: 2px 2px 6px black;
     word-wrap: break-word;
 }
 
-div#spis_tresci div.tytul_odnosnik h2.wyzszy {
-        /* line-height: 2.5em; */
-    padding-top: 0.8em;    
+.tytul-odnosnik h2.wyzszy {
+    padding-top: 0.8em;
 }
 
-div#spis_tresci div.tytul_odnosnik h2.mniejszy {
+.tytul-odnosnik h2.mniejszy {
     font-size: 135%;  /* a nie 175% jak h2 standardowo */
 }
 
-div#spis_tresci div.tytul_odnosnik h2.najmniejszy {
+.tytul-odnosnik h2.najmniejszy {
     font-size: 116%;  /* a nie 175% jak h2 std. */
 }
 
-div#spis_tresci div.zdjecie_odnosnik a {
+.zdjecie-odnosnik a {
     display: block;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
 
-div#spis_tresci div.zdjecie_odnosnik img {
+.zdjecie-odnosnik img {
     display: block;
     margin-left: auto;
+    margin-right: auto;
     max-height: 200px;
     max-width: 96%;
     border: 4px solid white;	
     box-shadow: 2px 2px 6px darkblue;
-    margin-left: auto;
-    margin-right: auto;	
 }
 
-div#spis_tresci div.kontener_tekstowy_odnosnik {
-    /*float: left; */
-    /*margin: 0 1em;	*/
-    /*background-color: #c3d5e2; */
+div.kontener-tekstowy-odnosnik {
     padding: 0.3em;
     overflow: hidden;
 }
 
-div#spis_tresci div.data_odnosnik {
+div.data-odnosnik {
     text-align: center;
     font-size: 80%;
     font-weight: bold;
     padding-top: 0.4em;
     padding-bottom: 0.4em;
-    /*background-color: #c3d5e2; */
 }
 
-div#spis_tresci div.opis_odnosnik {
-    overflow: hidden;	
-    max-height: 304px;	/* jak wielokrotność 16px fontu */
-    text-align: justify;	
+div.opis-odnosnik {
+    overflow: hidden;
+    max-height: 304px;	/* jak wielokrotność 16px fontu, zakładając że to 1em */
+    text-align: justify;
     padding-bottom: 0.5em;
 }
 
-div#spis_tresci div.kontener_odnosnik div.szczegoly {
+.kontener-odnosnik div.szczegoly {
     position: absolute;
     z-index: 20;    
     width: 100%;
-    height: 50px;  
-        /*height: 60px;*/    
-    background-color: #ddd;
-    color: firebrick;
+    height: 50px;  /* maksymalnie można dać do 60px (ewentualnie emy, ale uważać na przepełnienie) */
     left: 0;
     bottom: -70px;
+    overflow: hidden;
     opacity: 0.1;
+    color: firebrick;
     font-size: 120%;
     font-weight: bold;
-    overflow: hidden;    
+    background-color: #ddd;
     transition: bottom 0.2s, opacity 0.4s;
 }
 
-div#spis_tresci div.szczegoly > p
-{
-    width: 40%;    
+.szczegoly > p {
+    width: 40%;
     height: 45px;
     float: left;
     text-align: center;
-    color: #5a8ae8;    
-        /*line-height: 26px;*/
+    color: #5a8ae8;
     line-height: 22px;
 }
 
-div#spis_tresci div.szczegoly > p > span
-{
-    color: #54c;    
+.szczegoly > p > span {
+    color: #54c;
 }
 
-div#spis_tresci div.szczegoly > p:first-of-type,
-div#spis_tresci div.szczegoly > p:last-of-type
+.szczegoly > p:first-of-type,
+.szczegoly > p:last-of-type
 {
     width: 30%;
     height: 100%;
-    background-color: #eee;
     color: #54c;
     font-size: 125%;
     font-weight: bolder;
-        /*line-height: 60px;    */
     line-height: 45px;
+    background-color: #eee;
 }
 
-div#spis_tresci div.szczegoly > p:last-of-type {
-    color: #5a8ae8;   
+.szczegoly > p:last-of-type {
+    color: #5a8ae8;
 }
     
-div#spis_tresci div.kontener_odnosnik div.dolna_zaslonka {
+.kontener-odnosnik div.dolna-zaslonka {
         /* użyć CSS-clip, gdy będzie funkcjonował we wszystkich przeglądarkach (to bedzie raj;), póki co gradient, albo ostatecznie jednolite tło */
     position: absolute;
-    z-index: 1;    
-    width: 100%; 
-    height: 18px;    
+    z-index: 1;
+    width: 100%;
+    height: 18px;
     left: 0px;
     bottom: 0px;
     background-color: cornflowerblue;       /* tło dokładnie jak kontener główny */
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, cornflowerblue 50%, cornflowerblue 100%);      
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, cornflowerblue 50%, cornflowerblue 100%);
     transition: background-color 0.25s ease-out;	    /* też ten sam styl "podatności" na zmianę */
 }
 
-div#spis_tresci div#wybrany_zaczytany_spis {
+        /*    ------     DIV#wybrany_zaczytany_spis    ------     */
+
+div#wybrany_zaczytany_spis {
     display: none;
 }
 
-div#spis_tresci div#wybrane_galerie_spis {
+div#wybrane_galerie_spis {
     width: 100%;
     text-align: center;
     padding-top: 1em;
-    padding-bottom: 1em;    
-    margin-bottom: 1em;	
+    padding-bottom: 1em;
+    margin-bottom: 1em;
     background-color: cornflowerblue;
 }
 
-nav#spis_sterowanie p#status_galerii_spis {
+        /*    ------     NAV#spis_sterowanie    ------     */
+
+p#status_galerii_spis {
+    display: none;
     padding: 0.6em 1em;
     border: 2px dashed blue;
     background-color: rgba(50, 60, 200, 0.7);
-    display: none;
 }
 
 nav#spis_sterowanie h2 {
     text-shadow: 2px 2px 6px #666;
 }
 
-div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
+h2#zaladuj_galerie_spis {
     display: none;
     width: 90%;
-    background-color: cornflowerblue;
-    color: white;
+
     margin: 1.5em;
     margin-left: auto;
     margin-right: auto;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
+    color: white;
+    background-color: cornflowerblue;
     cursor: pointer;
     border-radius: 8px;
     border: 2px solid #fff;
@@ -849,31 +804,32 @@ div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis {
     user-select: none;
 }
 
-div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:hover,
-div#spis_tresci nav#spis_sterowanie h2#zaladuj_galerie_spis:focus
+#zaladuj_galerie_spis:hover,
+#zaladuj_galerie_spis:focus
 {
     box-shadow: 1px 1px 3px 1px #5d6ad0, 0px 0px 4px 1px black;
-    /* box-shadow: 0 0 3px rgba(0,0,0, 0.6); */
     background-color: #5d6ad0;
     color: yellow;
     text-shadow: 0px 0px 10px black;
 }
 
-div#spis_tresci div#selektor {
-    display: none;    
+        /*    ------     DIV#selektor    ------     */
+
+div#selektor {
+    display: none;
     width: 99%;
-    margin: 1.5em auto;    
+    margin: 1.5em auto;
 }
 
-div#selektor > div {
+#selektor > div {
     display: none;
 }
 
-div#selektor h2#selektor_naglowek {
+h2#selektor_naglowek {
     background-color: cornflowerblue;
     color: #eee;
     padding-top: 0.3em;
-    padding-bottom: 0.3em;    
+    padding-bottom: 0.3em;
     border-radius: 14px;
     border: 2px solid #eee;
     cursor: pointer;
@@ -881,118 +837,112 @@ div#selektor h2#selektor_naglowek {
     user-select: none;
 }
 
-div#selektor h2#selektor_naglowek.rozwiniety {
+#selektor_naglowek.rozwiniety {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-div#selektor h2#selektor_naglowek:hover,
-div#selektor h2#selektor_naglowek:focus
+#selektor_naglowek:hover,
+#selektor_naglowek:focus
 {
     background-color: #5d6ad0;
-/*    box-shadow: 0px 0px 5px 0px black;*/
 }
 
-h2#selektor_naglowek span {
+#selektor_naglowek span {
     padding-left: 0.5em;
-    padding-right: 0.5em;    
-    display: inline-block; /* na potrzeby odwracania - rotacji  */
+    padding-right: 0.5em;
+    display: inline-block;  /* na potrzeby odwracania - rotacji  */
     transition: transform 0.4s, padding-left 0.3s;
     cursor: pointer;    
 }
 
-h2#selektor_naglowek:hover span:hover {
-    padding-left: 1em ;
+#selektor_naglowek:hover span:hover {
+    padding-left: 1em;
 }
 
-h2#selektor_naglowek.rozwiniety span {
-    transform: rotate(180deg);    
+#selektor_naglowek.rozwiniety span {
+    transform: rotate(180deg);
 }
 
-div#selektor div#wybor_galerii,
-div#selektor div#wybor_podstrony_galerii
+div#wybor_galerii,
+div#wybor_podstrony_galerii
 {
     display: flex; 
-    flex-wrap: wrap;    
+    flex-wrap: wrap;
     align-items: center;
     border: 2px solid #eee;
     padding-top: 0.8em;
     padding-bottom: 0.8em;
 }
 
-div#selektor div#wybor_galerii {
+div#wybor_galerii {
     background-color: deepskyblue;
-    /*background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue);*/
-    background: radial-gradient(circle at bottom, cornflowerblue 10%, deepskyblue);    
+    background: radial-gradient(circle at bottom, cornflowerblue 10%, deepskyblue);
 }
 
-div#selektor div#wybor_podstrony_galerii {
+div#wybor_podstrony_galerii {
     background-color: cornflowerblue;
-    /*background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue);*/
-    background: radial-gradient(circle at top, cornflowerblue 10%, deepskyblue);    
+    background: radial-gradient(circle at top, cornflowerblue 10%, deepskyblue);
     border-bottom-left-radius: 14px;
-    border-bottom-right-radius: 14px;        
+    border-bottom-right-radius: 14px;
 }
 
-div#wybor_galerii div,
-div#wybor_podstrony_galerii div
+#wybor_galerii div,     /* nie chodzi tylko o bezpośredniego potomka! osiągnięto "przypadkiem" ulepszenie układu, przy stopniowych zmianach szerokości ekranu */
+#wybor_podstrony_galerii div
 {
     flex-grow: 1;
-        /*border: 1px solid rgba(200, 200, 200, 0.5);*/
 }
 
-div#wybor_galerii aside > span,
-div#wybor_podstrony_galerii aside > span
+#wybor_galerii aside > span,
+#wybor_podstrony_galerii aside > span
 {
     padding-left: 1.5em;
     padding-right: 1.5em;
 }
 
-div#wybor_galerii div#suwak_info,
-div#wybor_podstrony_galerii div#suwak_podstrona_info
+div#suwak_info,
+div#suwak_podstrona_info
 {
     display: flex;
     justify-content: space-between;
-    align-items: center; 
-    /*flex-basis: 200px;*/    
+    align-items: center;
 }
 
-div#suwak_podstrony > div label {
-    text-indent: -1em;
-}
-
-div#wybor_galerii div#suwak_info div,
-div#wybor_podstrony_galerii div#suwak_podstrona_info div
+#suwak_info div,
+#suwak_podstrona_info div
 {
     flex-basis: 130px;
-    padding: 0.5em 0.5em; 
+    padding: 0.5em 0.5em;
     text-align: center;
 }
 
-div#wybor_galerii > div:last-of-type,
-div#wybor_podstrony_galerii > div:last-of-type
+#wybor_galerii > div:last-of-type,
+#wybor_podstrony_galerii > div:last-of-type
 {
     text-align: center;
         padding: 0 0.5em;
 }
 
-div#wybor_galerii div#suwak,
-div#wybor_podstrony_galerii div#suwak_podstrony
-{  
-    flex-basis: 305px;  
+div#suwak,
+div#suwak_podstrony
+{
+    flex-basis: 305px;
     text-align: center;
     flex-grow: 6;
-    /*background-color: lightseagreen;*/
 }
 
-div#selektor input {
+#suwak_podstrony > div label {
+    text-indent: -1em;
+}
+
+#selektor input {
     padding-left: 1em;
     padding-right: 1em;
-    font-size: 140%;    
+    font-size: 140%;
 }
 
-div#selektor input[type=button],
-div#selektor input[type=submit]
+#selektor input[type=button],
+#selektor input[type=submit]
 {
     display: block;
     width: 100%;
@@ -1001,17 +951,17 @@ div#selektor input[type=submit]
     white-space: normal;
 }
 
-div#selektor input[type=submit] {
+#selektor input[type=submit] {
     font-weight: bold;
 }
 
-div#selektor input[type=range] {
+#selektor input[type=range] {
     padding-left: 0;
     padding-right: 0;
 }
 
-div#selektor input#galeria_wybrany_nr,
-div#selektor input#podstrona_wybrany_nr
+input#galeria_wybrany_nr,
+input#podstrona_wybrany_nr
 {
     max-width: 3.8em;
     padding-left: 0.5em;
@@ -1019,70 +969,60 @@ div#selektor input#podstrona_wybrany_nr
     text-align: center;
 }
 
-div#selektor input#podstrona_wybrany_nr {
+input#podstrona_wybrany_nr {
     margin-right: 2em;    /* celem wyrównania w pionie obu pól wpisywania (lub wrażenia, że są jeden nad drugim, kiedy etykety są różnej długości) */
 }
 
-div#selektor input#suwak_galerii,
-div#selektor input#suwak_podstrony
+input#suwak_galerii,
+input#suwak_podstrony
 {
     margin: 0.5em;
     width: 90%;	
 }
 
-div#selektor input#suwak_galerii { 
+input#suwak_galerii { 
    /* transform: rotateY(180deg); */    /* ten sposób jest całkiem dobry, ale co gdy przeglądarka nie obsługuje przekształceń? */
     direction: rtl;     /* obsługiwany chyba przez wszystkie przeglądarki, też od IE6 */
 }
 
 .maly_guzik {
-/*        display: block;
-        width: 100%;*/
-        /*min-width: 130px;*/
-    padding: 0.45em 4em;    /*BYŁO_WZORCOWE padding: 0.45em 1em;*/    
+    padding: 0.45em 4em;    /*BYŁO_WZORCOWE padding: 0.45em 1em;*/
     margin: 0.3em auto;
     font-size: 140%;
 }
 
 .szerszy_guzik {
-        display: block;
-        width: 100%;
-        /*min-width: 200px;*/
+    display: block;
+    width: 100%;
     padding: 0.5em 1.8em;
     margin: 0.3em auto;
     font-size: 140%;    
-    /*  margin: 0.3em auto;
-        font-size: 140%;    */
 }
 
 
-div#spis_tresci div#galeria_spis_podmiana {
-    background-color: #ddd ;
-    float: right ;	
-    padding: 1em ;	
-    margin: 1em ;
-    border: 2px solid red ;	
-        display: none;
+div#galeria_spis_podmiana {
+    display: none;
+    float: right;
+    padding: 1em;
+    margin: 1em;
+    background-color: #ddd;
+    border: 2px solid red;
 }
 
-div#spis_tresci div#skladowisko_wybrane_galerie_spis {
+div#skladowisko_wybrane_galerie_spis {
     position: absolute;
+    left: -2220px;
+    top: -1560px;
     background-color: dimgray;
-    left: -1110px;
-    top: 560px;
-/*    display: none;*/
+        /* display: none; */
 }
 
-div#spis_tresci div#skladowisko_status_wybranej_galerii {
+div#skladowisko_status_wybranej_galerii {
     position: absolute;
-    background-color: cadetblue;
-    left: -1090px;
+    display: none;
+    left: -1990px;
     top: -2180px;
-    display: none;  
-}
-
-.brak_js div#brak_skryptow {
-    display: block;      /* bieżące powinno mieć wyższą specyficzność, niż standardowe poniżej -- gdy brak JS */
+    background-color: cadetblue;
 }
 
 div#brak_skryptow {
@@ -1090,52 +1030,56 @@ div#brak_skryptow {
     padding: 1.2em 0.2em;   /* korekta na małe ekrany */    
 }
 
-
-/*    --------------------------       GŁÓWNY ZACZYTYWANY BLOK      --------------------------    */
-
-div#glowna {
-    margin-top: 0.7em;	
-    overflow: hidden;
-    background-color: white;
-    box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);	
-    border-radius: 10px;	
+.brak-js div#brak_skryptow {
+    display: block;      /* bieżące powinno mieć wyższą specyficzność, niż standardowe poniżej -- gdy brak JS */
 }
 
-div#glowna h2 span {
+
+/*    --------------------------       DIV#glowna - GŁÓWNY ZACZYTYWANY BLOK      --------------------------    */
+
+div#glowna {
+    margin-top: 0.7em;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);
+    border-radius: 10px;
+}
+
+#nazwa_galerii h2 {
+    padding-top: 3em;
+}
+
+#glowna h2 span {
     color: yellow;
     font-weight: bolder;
     text-shadow: 0 0 4px #666;  /* na wąskim ekranie głównie jasne tło pod tekstem, zatem ciemniej pod nim; cień skopiowany z elementu h2/span powyżej   */
 }
 
-div#glowna div#zawartosc {
-    background-color: bisque;
-}
-
-div#glowna article{
+#glowna article{
     padding: 0.8em 1.2em;
 }
 
-div#glowna div#nazwa_galerii {
+div#zawartosc {
+    background-color: bisque;
+}
+
+        /*    ------     DIV#nazwa_galerii    ------     */
+
+div#nazwa_galerii {
     position: relative;
-    background-color: deepskyblue;
-    background: radial-gradient(circle at bottom, deepskyblue 10%, #c3d5e2); 	
     display: none;
     padding: 0.5em;
     padding-right: 1em;
     padding-bottom: 1em;
-    margin-bottom: 0.3em;	
-    overflow: hidden;	
+    margin-bottom: 0.3em;
+    background-color: deepskyblue;
+    background: radial-gradient(circle at bottom, deepskyblue 10%, #c3d5e2);
+    overflow: hidden;
 }
 
-div#nazwa_galerii h2 {
-    padding-top: 3em;
-}
-
-div#glowna div#nazwa_galerii img {
-/*    float : left;*/
+#nazwa_galerii img {
     display: block;
     margin : 0.5em auto;
-/*    margin-right: 1.5em;	*/
     max-height: 320px;
     max-width: 100%;        /* także ewentualne ograniczenie do szerokości kontenera (skalowanie przy super wąskich ekranach)*/
     border: 4px solid white;
@@ -1143,26 +1087,27 @@ div#glowna div#nazwa_galerii img {
     transition: margin-top 0.3s;
 }
 
-div#glowna div#nazwa_galerii p:last-child {
+#nazwa_galerii p:last-child {
     font-size: 120%;
-/*    padding-left: 0.5em;*/
 }
 
-div#glowna div#nazwa_galerii p.data {
+#nazwa_galerii p.data {
     font-size: 100%;
-    text-align: center;  
+    text-align: center;
     padding-bottom: 1em;
 }
 
-div#glowna div#nazwa_galerii span.data {
+#nazwa_galerii span.data {
     font-size: 50%;
-    color: #333;    
+    color: #333;
 }
 
-div#glowna .jasne_tlo_galeria {
+#glowna .jasne-tlo-galeria {
     background-color: #c3d5e2; 
     background: radial-gradient(circle at top, deepskyblue 10%, #c3d5e2); 	
 }
+
+        /*    ------     DIV#nawigacja_galeria     ------     */
 
 nav#nawigacja_galeria {
     background-color: cornflowerblue;
@@ -1176,9 +1121,8 @@ nav#nawigacja_galeria input[type=button],
 nav#nawigacja_galeria button
 {
     margin: 0.5em;
-    padding: 0.2em 0.75em; 
+    padding: 0.2em 0.75em;
     font-size: 120%;
-    /*border-radius: 4px;*/
 }
 
 nav#nawigacja_galeria > div {
@@ -1194,46 +1138,45 @@ nav#nawigacja_galeria h6 button {
     padding: 0.45em 2em;
 }
 
-div#wczytywanie_podstrona, 
-div#wczytywanie_spis, 
+        /*    ------     DIV#wczytywanie_podstrona , DIV#wczytywanie_spis , DIV#wczytywanie_wybrane_galerie_spis , H2#zaladuj_galerie_spis  ------     */
+
+div#wczytywanie_podstrona,
+div#wczytywanie_spis,
 div#wczytywanie_wybrane_galerie_spis
 {
     display: none;
     padding: 1.5em 2em;
-    /* margin: 2em; */
     background-color: cornflowerblue;	
     border: 3px dotted yellow;
     user-select: none;
 }
 
-div#wczytywanie_podstrona h2, 
-div#wczytywanie_spis h2, 
-div#wczytywanie_wybrane_galerie_spis h2
+#wczytywanie_podstrona h2, 
+#wczytywanie_spis h2, 
+#wczytywanie_wybrane_galerie_spis h2
 {
     color: yellow;
     text-shadow: 1px 1px 6px #666;
 }
 
-div#wczytywanie_podstrona h2 img,
-div#wczytywanie_spis h2 img,
-div#wczytywanie_wybrane_galerie_spis h2 img,
-h2#zaladuj_galerie_spis.animacja img
+#wczytywanie_podstrona h2 img,
+#wczytywanie_spis h2 img,
+#wczytywanie_wybrane_galerie_spis h2 img,
+#zaladuj_galerie_spis.animacja img
 {
     visibility: visible;
-    /*animation: obroty360 1.2s infinite ease-in;	*/
-    animation: obroty180 1.4s infinite ease-in;
+    animation: obroty_180st 1.4s infinite ease-in;
     margin-left: 0.5em;
-    /*vertical-align: text-bottom;*/
 }
 
-h2#zaladuj_galerie_spis.animacja img {  /* jako rozszerzenie tego co powyżej, specyficzne dla powiadomienia wewnątrz przycisku */
+#zaladuj_galerie_spis.animacja img {  /* jako rozszerzenie tego co powyżej, specyficzne dla powiadomienia wewnątrz przycisku */
     max-height: 35px;
     max-width: 35px;
     max-height: 1.5em;    /* powtórzone deklaracje, dla przeglądrek które ogarniają EMy */
     max-width: 1.5em;
 }
 
-h2#zaladuj_galerie_spis img {
+#zaladuj_galerie_spis img {
     visibility: hidden;
     animation: none;
     margin-left: 0em;
@@ -1242,13 +1185,13 @@ h2#zaladuj_galerie_spis img {
     vertical-align: text-bottom;
 }
 
-h2#zaladuj_galerie_spis.animacja span {
+#zaladuj_galerie_spis.animacja span {
     visibility: visible;
     line-height: inherit;
         /* 'text-shadow' tu czy poniżej to i tak ten sam efekt, klasy się nie blokują wzajemnie */
 }
     
-h2#zaladuj_galerie_spis span {
+#zaladuj_galerie_spis span {
     visibility: hidden;
     line-height: 0;
     vertical-align: text-bottom;        /* cień działa, mimo że zawartości nie widać, pojawia się wraz z nią */
@@ -1256,34 +1199,32 @@ h2#zaladuj_galerie_spis span {
     transition: text-shadow 0.5s ease 0.1s;
 }
 
-h2#zaladuj_galerie_spis:hover span {
+#zaladuj_galerie_spis:hover span {
     text-shadow: 0px 0px 10px black;    /* też ten sam cień co h2:hover */
 }
-
 
 div#zawartosc_do_podmiany {
     position: absolute;
     top: -1185px;
     left: -2150px;
     background-color: yellow;
-    border: 2px solid red;	
+    border: 2px solid red;
     display: none; 
 }
 
+        /*    ------     DIV#skladowisko     ------     */
+
 div#skladowisko {
-    /* background-color: coral; */
-    /* background-color: #c3d5e2; */
+    display: none;
     padding: 0.5em 0.6em;
     padding-bottom: 1em;
     overflow: hidden;
-    display: none;
     text-align: center;
-    /* display: table;	*/
 }
 
                     /* ------ DO WERYFIKACJI ISTNIENIE SELEKTORA I JEGO STANU ------ */
 
-div#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie służy, nic nie robi */
+#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie służy, nic nie robi */
     vertical-align: middle;     /* wyśrodkowanie - wyrównanie elementów w pionie w danej linii;  w stary przeglądarkach nie przenosi się ta reguła z potomnego <img> */
     /* padding: 0.1em 0.5em; */
     /* position: relative; */	
@@ -1291,94 +1232,74 @@ div#skladowisko a { /* po usunięciu dopełnienia ten selektor niczemu nie słu�
      display: table-cell;	*/
     display: inline-table;  /* !!! TA REGUŁA (lub podobna) ROZWIĄZAUJE PROBLEM OBRYSU WOKÓŁ PUSTEGO <a>, KTÓRY ZAWIERA TYLKO PROSTOKĄTNY <img>... 
         (+): UJEDNOLICENIE we wszystkich testowanych przeglądarkach
-             - OUTLINE przyjmuje kształt obrazka i znajduje suę POZA <img> i jego cieniem! (może to dzięki przeliczeniu od razu do SCALE (+10%) */
+             - OUTLINE przyjmuje kształt obrazka i znajduje się POZA <img> i jego cieniem! (może to dzięki przeliczeniu od razu do SCALE (+10%) */
 
         /* padding: 0; */
         /* margin: -0.3em; */
         /* width: 0;
         height: 0; */
 }
-    /*  -webkit ma dobrze, dzięki użyciu   */
-    /* a:-webkit-any-link:focus {
-        padding: 0 !important;
-        margin: 0 !important;
-        width: 0;
-        height: 0;
-    } */
 
-div#skladowisko a:focus {   
+#skladowisko a:focus {   
     /* outline: none;
     padding: 0; */
         /* width: 0;
         height: 0; */
 }
 
-    /* div#skladowisko a:-webkit-any-link:focus {
-        padding: 0 !important;
-        margin: 0 !important;
-    } */
-
-div#skladowisko a img {
+#skladowisko a img {
     display: inline-block;
     margin: 0.8em;      /* nieznaczne powiększenie odstępu z 0.75em */
     border: 3px solid white;
-    box-shadow: 2px 2px 4px black;	
+    box-shadow: 2px 2px 4px black;
     max-height: 150px;
     vertical-align: middle;
-    transition: box-shadow 0.3s ease-out, transform 0.3s ease-out;	
-    /* position: absolute;
-    top: 5px;
-    left: 70px;	*/
-    /* display: table-row-group;		
-     float: left;	
-    transform: translateY(-10px); */
-
+    transition: box-shadow 0.3s ease-out, transform 0.3s ease-out;
 }
 
-div#skladowisko a img:hover,
-div#skladowisko a:focus img     /* IMG bez TABINDEX nie może mieć tego statusu, zatem dla <a> jest standardowe odwołanie */
+#skladowisko a img:hover,
+#skladowisko a:focus img     /* IMG bez TABINDEX nie może mieć tego statusu, zatem dla <a> jest standardowe odwołanie */
 {
-    box-shadow: 2px 2px 4px black, 4px 4px 8px 2px rgba(0, 0, 0, 0.6);	
+    box-shadow: 2px 2px 4px black, 4px 4px 8px 2px rgba(0, 0, 0, 0.6);
     transform: scale(1.1);
 }
 
-/*    --------------------------       GRA      --------------------------    */
+/*    --------------------------       DIV#gra      --------------------------    */
 
 div#gra {
     display: none;
     background-color: cornflowerblue;
     margin: 1em auto;
-    padding: 0.5em;    
-
+    padding: 0.5em;
     border-radius: 10px;
     box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);
 } 
 
-div#gra h2 {
+#gra h2 {
     color: gold;
     font-size: 160%;
 }
 
-div#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   */
+#gra img[draggable] {   /* jak zachowuje się dowolny przeciągany element   */
       -moz-user-select: none;
       -khtml-user-select: none;
       -webkit-user-select: none;
       user-select: none;
       /* Required to make elements draggable in old WebKit */
       -khtml-user-drag: element;
-      -webkit-user-drag: element;    
+      -webkit-user-drag: element;
     cursor: move;
     width: auto;
-    height: auto;    
+    height: auto;
 }
 
-div#gra div#zasady {
+div#zasady {
     position: relative;
     overflow: hidden;
     height: 260px;
 }
 
-div#gra div#zasady p:first-of-type {
+#zasady p:first-of-type {
     margin-top: 9.5em;
 }
 
@@ -1404,7 +1325,7 @@ div#gra div#zasady p:first-of-type {
     color: goldenrod;
 /*    background-color: lightslategray;*/
     border: 1px dotted #ccc;
-    transform: rotateZ(1.66deg);    
+    transform: rotateZ(1.66deg);
 }
 
 .zasada3 {
@@ -1415,78 +1336,77 @@ div#gra div#zasady p:first-of-type {
     z-index: 6;
     color: darkgoldenrod;
     background-color: lightskyblue;
-    transform: rotateZ(-2.1deg);     
+    transform: rotateZ(-2.1deg);
 }
 
-div#gra div#sterowanie {
-    margin-top: 1em;    
+div#sterowanie {
+    margin-top: 1em;
 }
 
-div#gra div#plansza {
+div#plansza {
     height: 930px;
-    width: 1400px;    
-    position: relative; 
+    width: 1400px;
+    position: relative;
     overflow: hidden;
     background-color: #ddd;
     margin-top: 2em;
     margin-bottom: 1em;
 }
 
-div#gra div#plansza img.przenosny {
+#plansza img.przenosny {
     position: absolute;
-    width: 200px; /* jakieś wymiary początkowe muszą być określone przy ustawianiu absolutnym */
+    width: 200px;
     height: 200px;
     outline: 2px dotted #333;
     z-index: 100;
 }
 
-div#plansza div#rysunek { 
-    position: absolute;       
+div#rysunek {
+    position: absolute;
     background-color: white;
-    left: 0;    /* "trza" na sztywno określić, albowiem po kontenerze lata po wprowadzniu dalszych elementów */ 
+    left: 0;
     top: 0;    
-    width: 1090px;       
-    height: 700px;   
+    width: 1090px;
+    height: 700px;
     z-index: 2;
     border: 1px solid #888;
-    box-shadow: 2px 2px 3px rgba(100, 149, 237, 0.8);    
+    box-shadow: 2px 2px 3px rgba(100, 149, 237, 0.8);
 }
 
-div#plansza div#prawy_zasobnik {
-    position: absolute;    
+div#prawy_zasobnik {
+    position: absolute;
     left: 1100px;
-    width: 300px;    
+    width: 300px;
     height: 700px;
-    z-index: 1;    
+    z-index: 1;
     background-color: #eee;
     border-left: 2px dotted #666;
 }
 
-div#plansza div#dolny_zasobnik {
+div#dolny_zasobnik {
     position: absolute;
     top: 710px;
-    width: 1400px;    
-    height: 200px; 
-    z-index: 1;       
+    width: 1400px;
+    height: 200px;
+    z-index: 1;
     background-color: #f6f6f6;
-    border-top: 2px dotted #666;    
+    border-top: 2px dotted #666;
 }
 
 /*    --------------------------       FOOTER      --------------------------    */
 
 footer#stopka {
     clear: both;
-    /* background-color: #aad; */
     background-color: cornflowerblue;		
     margin-top: 0.7em;
-    margin-bottom: 0.5em;	
-    padding: 1em 0.2em;	
+    margin-bottom: 0.5em;
+    padding: 1em 0.2em;
     text-align: center;
     border-radius: 10px;
     box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);		
 }
 
-.brak_js #przyciski_stopka {
+.brak-js #przyciski_stopka {
     display: none;
 }
 
@@ -1496,70 +1416,70 @@ footer#stopka {
     padding-top: 0.75em;
 }
 
-   /* footer#stopka input[type=button],*/
-footer#stopka button {
-        display: block;
-        width: 100%;
-        word-wrap: break-word;
-        white-space: normal;
+   /* #stopka input[type=button],*/
+#stopka button {
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+    white-space: normal;
     font-size: 140%;
     margin-left: 0.3em;
     margin-bottom: 0.5em;
-    padding: 0.45em 1em;	
+    padding: 0.45em 1em;
 }
 
 button#symulacja_button {
     font-weight: bold;
 }
     
-footer#stopka p {
-    font-size: 110%;    
+#stopka p {
+    font-size: 110%;
     text-align: justify;
     padding: 0.5em;
 }
 
-footer#stopka .wysrodkowane {
+#stopka .wysrodkowane {
     text-align: center;
 }
 
 div#poco,
-div#pomoc 
+div#pomoc
 {
     display: none;
     position: relative;
     padding: 0.5em 1em;
     margin: 0.5em 0;
     background-color: deepskyblue;
-    background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue); 	
+    background: radial-gradient(circle at bottom, #c3d5e2 10%, deepskyblue); 
 }
 
 div#pomoc {
-    background-color: #c3d5e2;	
-    background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue ); 	
+    background-color: #c3d5e2;
+    background: radial-gradient(circle at top, #c3d5e2 10%, deepskyblue);
 }
 
-.brak_js div#poco,
-.brak_js div#pomoc {
-    display: block;	
+.brak-js #poco,
+.brak-js #pomoc {
+    display: block;
 }
 
-div#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klasę ku temu, nie cudować ze stylami! */
-    font-style: italic ;	
+#poco div:nth-of-type(1) > p:nth-of-type(2) {    /* nadać specyficzną klasę ku temu, nie cudować z selektorem?! */
+    font-style: italic;
 }
 
-footer#stopka h2 {
+#stopka h2 {
     padding-top: 3em;
 }
 
-footer#stopka h3 {
+#stopka h3 {
     padding: 0.6em;
 }
 
-footer#stopka ul {
-    text-align: center;        
+#stopka ul {
+    text-align: center;
 }
 
-footer#stopka ul li.tech {
+#stopka ul li.tech {
     display: inline-block;    /* inline było */
     background-color: whitesmoke;       /*  #c3d5e2 */
     padding: 0.1em 0.5em;
@@ -1567,46 +1487,42 @@ footer#stopka ul li.tech {
     margin-bottom: 0.4em;
     margin-left: 0.25em;
     font-size: 13px;
-    line-height: 18px; 
+    line-height: 18px;
     /*line-height: 28px;*/        /* 28px dla inline, kilkanaście px dla inline-block */
-    text-align: center; 
+    text-align: center;
     border: 1px solid #333;
     background: url(grafiki/tak_nie_ikona.png) 4px 1px no-repeat, whitesmoke;
     background: url(grafiki/tak_nie_ikona.png) 4px 50% no-repeat, whitesmoke;
 }
 
-footer#stopka ul li.tech_tak {
+#stopka ul li.tech_tak {
     border: 1px solid green;
     background: url(grafiki/tak2_ikona.png) 4px 1px no-repeat, whitesmoke;
-    background: url(grafiki/tak2_ikona.png) 4px 50% no-repeat, whitesmoke;   
+    background: url(grafiki/tak2_ikona.png) 4px 50% no-repeat, whitesmoke;
 }
 
-footer#stopka ul li.tech_nie {
+#stopka ul li.tech_nie {
     border: 1px solid darkred;
     background: url(grafiki/nie_ikona.png) 4px 1px no-repeat, whitesmoke;
     background: url(grafiki/nie_ikona.png) 4px 50% no-repeat, whitesmoke;
 }
 
-footer#stopka ul.ramka {
-    /* margin: 0.5em 1em;
-    padding: 0.5em 2em; */
+#stopka ul.ramka {
     padding-bottom: 0.2em;
     background-color: #6495ed;;
-    /* border: 2px solid white; */
     border-radius: 5px;
 }
 
-footer#stopka .ramka li {
+#stopka .ramka li {
     padding: 0.1em 2em;
     padding-left: 2.5em;
 }
 
-footer#stopka .kontener.ramka {
+#stopka .kontener.ramka {
     padding: 0;
     padding-bottom: 0.5em;
     margin: 0.75em auto;
 }
-
 
 .zalety {
     margin-left: 3%;
@@ -1640,23 +1556,23 @@ footer#stopka .kontener.ramka {
 }
 
 .zalety li:hover img {
-    animation: obroty-90-180 4s ease-in-out infinite normal;
+    animation: obroty_90-180st 4s ease-in-out infinite normal;
 }
 
 .zalety img + span {
     margin-left: 0.5em;
 }
 
-.brak_js div#wymiary {
+        /*    ------     DIV#wymiary     ------     */
+
+.brak-js #wymiary {
     visibility: hidden; /* do przeniesienia do tego kontenera, wcześniej poza nim; wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
-        /*display: none;*/    
+        /*display: none;*/
 }
 
 div#wymiary {
     position: fixed;
     z-index: 250;
-    /*    left: 20px;
-        right: 20px;    */
     width: 80%;
     left: 10%;
     bottom: 15px;
@@ -1665,11 +1581,10 @@ div#wymiary {
     border: 2px solid yellow;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.7);
     opacity: 0.7;
-    visibility: visible; /* wstępnie ukryte wymiary, aktywowana widoczność raz poprzez JS */
-        /*display: none;*/
+    visibility: visible; /* kontener na wymiary od razu pokazany, ale zmiejszającą się widoczność modyfukuje animacja, nadawana poprzez JS podczas pierwszego odczytu wielkości okna/ekranu i kazdej kolejnej zmiany jego rozmiaru */
 }
 
-div#wymiary > h1 {
+#wymiary > h1 {
     color: whitesmoke;
     font-weight: bolder;
     opacity: 1;
@@ -1679,30 +1594,30 @@ div#wymiary > h1 {
 
 /*    --------------------------       SUWAKI z INPUT[type=RANGE] i różnice     --------------------------    */
 
-/*    -----     OGÓLNY     -----     */
+    /*    -----     OGÓLNY     -----     */
 
 input[type=range] {
-    /*removes default webkit styles*/
-    -webkit-appearance: none !important ;   /* !KONIECZNE dla WEB-kitów, bo stosują NADRZĘDNE style przeglądarki - "slider-horizontal" */
-            /*    appearance: none;  */
+        /* removes default webkit styles */
+    -webkit-appearance: none !important ;   /* ! KONIECZNE dla WEB-kitów, bo stosują NADRZĘDNE style przeglądarki - "slider-horizontal" */
+            /*    appearance: none;  */ /* ?!?! */
     padding-left: 0;
     padding-right: 0;
     background-color: transparent;      /* WEBKIT: puste wypełenie, bo mimo wszystko kolor domyślny ze stylu przeglądarki!  */
-    /*fix for FF unable to apply focus style bug */
-/*    border: 1px solid white;*/
+        /* fix for FF unable to apply focus style bug */
+    /*    border: 1px solid white;*/
     border: none;
     transition: all 0.3s;
-    /*required for proper track sizing in FF*/
-/*    width: 300px;*/
-/*        height: auto;*/
+        /* required for proper track sizing in FF */
+/*    width: 300px; */
+/*    height: auto; */
 }
 
 input[type=range]:focus {
     outline: none;
 }
 
-/* style przeglądarkowe dla elementów formularzy nie są ujednolicone, dlatego trzeba operować na prefiksowanych pseudoklasach :(  */
-/*    -----     WEBKIT     -----     */
+/*  przeglądarkowe stylowania dla elementów formularzy nie są ujednolicone, dlatego trzeba operować na prefiksowanych pseudoklasach :(  i to często w zadanej kolejności */
+    /*    -----     WEBKIT     -----     */
 
 input[type=range]::-webkit-slider-runnable-track {
     height: 8px;
@@ -1740,20 +1655,20 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 input[type=range]:focus::-webkit-slider-thumb,
-input[type=range]:hover::-webkit-slider-thumb 
+input[type=range]:hover::-webkit-slider-thumb
 {
-/* stare Chromy nie pozwalają powiększyć samego suwaka, jest on umieszczony WEWNĄTRZ paska przewijania, wielkość jak wysokość paska; też nie działa ":focus"    
-/*    -webkit-appearance: none !important; */
-/*    border: 6px solid rgb(255, 255, 0);*/
+/* stare Chromy nie pozwalają powiększyć samego suwaka, jest on umieszczony WEWNĄTRZ paska przewijania, wielkość jak wysokość paska; też nie działa ":focus" */
+    /*    -webkit-appearance: none !important; */
+    /*    border: 6px solid rgb(255, 255, 0); */
     border: 1px solid #888;
     height: 20px;
     width: 20px;
-/*       margin-top: -8.5px; */
+    /*  margin-top: -8.5px; */
         margin-bottom: -4px;
-   /* background-color: orange;*/
+   /*   background-color: orange;*/
 }
 
-/*    -----     MOZILLA     -----     */
+    /*    -----     MOZILLA     -----     */
 
 input[type=range]::-moz-range-track {
 /*    width: 300px;*/
@@ -1769,7 +1684,7 @@ input[type=range]:hover::-moz-range-track,
 input[type=range]:focus::-moz-range-track 
 {
     background-color: #eee;
-/*    box-shadow: 0 0 2px white; */   
+    /*    box-shadow: 0 0 2px white; */
 }
 
 input[type=range]::-moz-range-thumb {
@@ -1786,29 +1701,26 @@ input[type=range]:focus::-moz-range-thumb {
     border: 2px solid yellow;
 }
 
-/*hide the outline behind the border*/
+    /* hide the outline behind the border */
 input[type=range]:-moz-focusring {
     outline: 3px solid transparent;
-    outline-offset: 1px;        /* musi być jakis odstep, tylko dla :focus narzuca ramkę przeglądarka */
-      /*outline: 3px solid white;*/
-/*    outline-offset: 1px;*/
+    outline-offset: 1px;        /* musi być jakis odstęp, tylko dla :focus przeglądarka narzuca ramkę */
+    /* outline: 3px solid white; */
+    /*    outline-offset: 1px; */
 }
 
-/*    -----     MICROSOFT/IE/EDGE     -----     */
-    /* UWAGA: EDGE "rozumie" i przejmuje style z prefiksem "-WEBKIT" mimo, że są okreśłone później dla niego z "-MS-" (ale inne atrybuty)  */    
+    /*    -----     MICROSOFT/IE/EDGE     -----     */
+        /* UWAGA: STARY EDGE "rozumie" selektory i atrybuty z prefiksem "-WEBKIT" mimo, że są określone dla niego w dalszej części z "-MS-" (dla innych atrybutów)  */    
 
 input[type=range]::-ms-track {
-/*    width: 300px;*/
+    /*    width: 300px; */
     height: 6px;
-    
-    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+        /* remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
     background-color: transparent;
-    
-    /*leave room for the larger thumb to overflow with a transparent border */
+        /* leave room for the larger thumb to overflow with a transparent border */
     border-color: transparent;
     border-width: 8px 0;
-
-    /*remove default tick marks*/
+        /* remove default tick marks */
     color: transparent;
     cursor: pointer;
         margin-top: 4px;
@@ -1816,14 +1728,11 @@ input[type=range]::-ms-track {
 }
 
 input[type=range]::-ms-fill-lower {
-/*    background-color: darkorange;*/
-    background-color: #54c; 
-/*    background-color: royalblue;     */
+    background-color: #54c;
     border-radius: 10px;
 }
 
 input[type=range]::-ms-fill-upper {
-/*    background: #ddd;*/
     background-color: #c3d5e2;
     border-radius: 10px;
 }
@@ -1841,38 +1750,35 @@ input[type=range]::-ms-thumb {
 
 input[type=range]:hover::-ms-thumb {
     border: 2px solid yellow;
-    margin-top: -2px;     
+    margin-top: -2px;
     margin-bottom: -2px;
         height: 18px;
         width: 18px;
-    
 }
 
 input[type=range]:focus::-ms-thumb {
     border: 4px solid yellow;
         height: 20px;
         width: 20px;
-        margin-top: -2px;   
-         margin-bottom: -2px;    
+        margin-top: -2px;
+        margin-bottom: -2px;
 }
 
 input[type=range]:focus::-ms-fill-lower,
-input[type=range]:hover::-ms-fill-lower 
+input[type=range]:hover::-ms-fill-lower
 {
-/*    background-color: orange; */
-/*    background-color: royalblue; */
-    background-color: #54c;     
-    box-shadow: 0 0 4px white;    
+    background-color: #54c;
+    box-shadow: 0 0 4px white;
 }
 
 input[type=range]:focus::-ms-fill-upper,
-input[type=range]:hover::-ms-fill-upper 
+input[type=range]:hover::-ms-fill-upper
 {
     background-color: #eee;
-    box-shadow: 0 0 2px white;    
+    box-shadow: 0 0 2px white;
 }
 
-/*    --------------------------       DEBUGOWANIE WEWNĘTRZNE      --------------------------    */
+/*    --------------------------       #odpluskwiacz_akasowy - DEBUGOWANIE WEWNĘTRZNE      --------------------------    */
 
 #odpluskwiacz_ajaksowy {
     display: none;
@@ -1881,7 +1787,6 @@ input[type=range]:hover::-ms-fill-upper
     top: 5px;
     left: 5px;
     right: 5px;
-    /*width: 100%;*/
     height: auto;
     opacity: 0.8;
     background-color: white;
@@ -1896,10 +1801,8 @@ input[type=range]:hover::-ms-fill-upper
 
 #odpluskwiacz_ajaksowy > div:first-child {
     position: relative;
-    /*    padding-right: 55px;*/
-        padding-top: 58px;
-        padding-bottom: 1em;
-        /*background-color: #bbb;*/
+    padding-top: 58px;
+    padding-bottom: 1em;
     width: 100%;
     height: auto;
 }
@@ -1908,20 +1811,20 @@ input[type=range]:hover::-ms-fill-upper
     display: block;
     width: 100%;
     word-wrap: break-word;
-    word-break: break-word;    
+    word-break: break-word;
     white-space: normal;
     margin-top: 0.4em;
     margin-bottom: 0.3em;
 }
 
 #odpluskwiacz_ajaksowy label {
-        display: block;
-        width: 100%;
+    display: block;
+    width: 100%;
 }
 
-.status_ajaksa {
-    /*display: inline-block;*/        /* wartość początkowa, OK super wąskie ekrany; pozwala umieścić przycisk zamykania NAD tym elementem */
-        display: block;     /* zamiana na blokowe (tylko mobile-first); treść może wyjść poza ramkę (-), zwęża bardziej ramkę (-), ale jest SAM w swojej linii; tylko przycisk 'X' OBOK może być */
+.status-ajaksa {
+    /* display: inline-block; */        /* wartość początkowa, OK super wąskie ekrany; pozwala umieścić przycisk zamykania NAD tym elementem */
+    display: block;     /* zamiana na blokowe (tylko mobile-first); treść może wyjść poza ramkę (-), zwęża bardziej ramkę (-), ale jest SAM w swojej linii; tylko przycisk 'X' OBOK może być */
     padding: 0.6em 0.8em;
     border: 3px solid transparent;
     background-color: transparent;
@@ -1929,16 +1832,16 @@ input[type=range]:hover::-ms-fill-upper
         margin-top: 0.2em;
         margin-bottom: 0.2em;
         word-wrap: break-word;
-        word-break: break-word;    
+        word-break: break-word;
         white-space: normal;
 }
 
-.status_norma {
+.status-norma {
     border-color: #0b0;
     background-color: rgba(0, 200, 0, 0.2);
 }
 
-.status_awaria {
+.status-awaria {
     border-color: #b00;
     background-color: rgba(200, 0, 0, 0.2);
 }
@@ -1953,60 +1856,33 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         /* ewentualnie rozszerzyć o zerowy lub 1-pikselowy rozmiar, o ile wbudowane style w doklajanym z zewnątrz kontenerze i tak nie przykryją tych zmian :/ */
 }
 
-/*    --------------------------       ANIMACJE     --------------------------    */
+/*    --------------------------       KLASY Z PODPIĘTYMI ANIMACJAMI     --------------------------    */
 
-.animacja_slonca {
-    /* transform-origin: center center;	*/	
-    animation: obroty_delikatne_3 6.5s infinite ease-out;	/* tylko ta animacja z trzech zadeklarowanych jest używana */
+.animacja-interaktywnego-slonca {
+        /* transform-origin: center center;	*/	
+    animation: obroty_delikatne 6.5s infinite ease-out;	/* tylko ta animacja z trzech zadeklarowanych jest używana */
 }
 
-.animacja_zanikanie {                   /* pierwowzór dla "animacja_zanikanie2" */
-    animation: zanikanie 3s ease-out;
-    animation-direction: normal;    
-    /*animation-fill-mode: forwards;*/
+.animacja-zanikanie {
+    animation: zanikanie 2s ease-out;
+    animation-direction: normal;
     animation-fill-mode: both;
 }
 
-.animacja_zanikanie2 {
-    animation: zanikanie2 2s ease-out;
-    animation-direction: normal;    
-    /*animation-fill-mode: forwards;*/
-    animation-fill-mode: both;
-}
-
-.animacja_zolty_blysk {
+.animacja-zolty-blysk {
     animation: zolty_blysk 2s ease-out;
     animation-fill-mode: forwards;  /* 'both' było*/  
 }
 
-.animacja_zmiana_kolorow {      /* pierwowzór dla "animacja_pulsowanie_kolorow" */
-    animation: zmiana_kolorow 30s ease-out infinite;
-    animation-fill-mode: both;      
-}
-
-.animacja_pulsowanie_kolorow {
+.animacja-pulsowanie-kolorow {
     animation: pulsowanie_kolorow 10s ease-out infinite;
-    animation-fill-mode: both;      
+    animation-fill-mode: both;
 }
 
 /*    -----     DEFINICE ANIMACJI     -----     */
 
-@keyframes obroty360 {              /* pierwsza wersja, teraz używany następca z 180st */
-    0% {
-        transform: rotate(0deg);
-    }
-    50% {
-        transform: rotate(90deg);
-    }
-    75% {
-        transform: rotate(135deg);
-    }
-    100% {              
-        transform: rotate(-135deg);
-    }
-}
 
-@keyframes obroty180 {
+@keyframes obroty_180st {
     0% {
         transform: rotate(0deg);
     }
@@ -2018,7 +1894,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 }
 
-@keyframes obroty-90-180 {
+@keyframes obroty_90-180st {
     0%, 2% {
         transform: rotate(0deg);
     }
@@ -2040,93 +1916,17 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     0% {
         transform: rotate(0deg);
     }
-    10% {
-        transform: rotate(12deg);
-    }
-    20% {
-        transform: rotate(55deg);
-    }
-    30% {
-        transform: rotate(35deg);
-    }
-    40% {
-        transform: rotate(10deg);
-    }
-    50% {
-        transform: rotate(0deg);
-    }
-    60% {
-        transform: rotate(-10deg);
-    }
-    70% {
-        transform: rotate(-50deg);
-    }
-    80% {
-        transform: rotate(-20deg);
-    }
-    90% {
-        transform: rotate(-8deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes obroty_delikatne_2
-{
-    0% {
-        transform: rotate(0deg);
-    }
-    5% {
-        transform: rotate(12deg);
-    }
     20% {
         transform: rotate(75deg);
-    }
-    30% {
-        transform: rotate(40deg);
-    }
-    40% {
-        transform: rotate(15deg);
-    }
-    50% {
-        transform: rotate(0deg);
-    }
-    60% {
-        transform: rotate(-10deg);
-    }
-    70% {
-        transform: rotate(-90deg);
-    }
-    80% {
-        transform: rotate(-20deg);
-    }
-    95% {
-        transform: rotate(-8deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes obroty_delikatne_3 
-{
-    0% {
-        transform: rotate(0deg);
-    }
-    20% {
-        transform: rotate(75deg);
-        /* transform: scale(1.1, 1.1);	*/
     }
     45% {
         transform: rotate(5deg) scale(0.95, 0.95);
-        /* transform: scale(1.0, 1.0);	*/
     }
     50% {
-        transform: scale(1.05, 1.05); /* rotate(-90deg);	*/
+        transform: scale(1.05, 1.05);
     }
     57% {
-        transform: scale(1.0, 1.0) rotate(-10deg);	
+        transform: scale(1.0, 1.0) rotate(-10deg);
     }
     65% {
         transform: rotate(-40deg);
@@ -2142,48 +1942,30 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 @keyframes zanikanie
 {
     0% {
-/*    visibility: visible; */   
-        opacity: 0.7;      
-    }
-    50% {
-        opacity: 0.7;     
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-@keyframes zanikanie2 
-{
-    0% {
-/*    visibility: visible; */
         opacity: 0.2;
-/*    transform: translateY(-40px);    */
     }
     20% {
-/*    transform: translateY(50px);*/
-        opacity: 0.7;     
+        opacity: 0.7;
     }
     70% {
         transform: translateY(0);
-        opacity: 0.7;     
+        opacity: 0.7;
     }
     100% {
-        transform: translateY(40px);      
+        transform: translateY(40px);
         opacity: 0;
-
     }
 }
 
 @keyframes zolty_blysk 
 {
     0% {
-        border-color: white; 
+        border-color: white;
     }
     40% {
-        /* wymuszenie użycia narzuconego koloru elementu, aby animacja tła się nie zmieniała przed tą klatką      */
+            /* wymuszenie użycia narzuconego koloru elementu, aby animacja tła się nie zmieniała przed tą klatką */
         background-color: darkblue;
-        border-color: yellow;    
+        border-color: yellow;
     }
     60% {
         border-color: yellow;
@@ -2199,38 +1981,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         /* background-color: darkblue;   */ 
     }
     100% {
-
-    }
-}
-
-@keyframes zmiana_kolorow
-{
-    0%  {
-        color: black;
-    }
-    15% {
-        color: darkblue;
-    }    
-    30% {
-        color: #5d6ad0; /* mediumslateblue */
-    }
-    40% {
-        color: red;
-    }    
-    50% {
-        color: magenta;
-    }    
-    60% {
-        color: darkviolet;
-    }
-    70% {
-        color: blue;
-    }
-    85% {
-        color: darkgreen;
-    }
-    100%    {
-        color: black;
+        /* bez zmian */
     }
 }
 
@@ -2283,53 +2034,53 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         font-size: 75%;	
     }     
 
-    header#naglowek div#banner {
-        height: 330px;    
+    .naglowek div.banner-kontener {
+        height: 330px;
     }
 
-    .blad_tytul {
+    .blad-tytul {
         padding-top: 0.8em;
         padding-right: 55px;    /* szerokośc guzika zamykania 50px + minimalne odstę[y od krawędzi i guzika */
     }
 
-    div#spis_tresci div.kontener_odnosnik {
-        min-height: 375px;			
+    div.kontener-odnosnik {
+        min-height: 375px;
         max-height: 375px;
     }
 
-    div#spis_tresci div.kontener_odnosnik img {
+    .kontener-odnosnik img {
         max-height: 210px;
     }
 
-    nav#spis_sterowanie h2#zaladuj_galerie_spis {
+    h2#zaladuj_galerie_spis {
         max-width: 18em;
     }
 
-    div#glowna div#nazwa_galerii img {
+    #nazwa_galerii img {
         display: inline;
         float: left;
         margin: 0.5em;
-        margin-right: 1.5em;	
+        margin-right: 1.5em;
     }
 
-    div#glowna div#nazwa_galerii p:last-child {
+    #nazwa_galerii p:last-child {
         padding-left: 0.5em;
     }
     
-    div#selektor input[type=button],
-    div#selektor input[type=submit]
+    #selektor input[type=button],
+    #selektor input[type=submit]
     {
         display: inline;
         width: auto;
      }
     
-    div#wybor_galerii > div:last-of-type,
-    div#wybor_podstrony_galerii > div:last-of-type {
+    #wybor_galerii > div:last-of-type,
+    #wybor_podstrony_galerii > div:last-of-type {
         flex-basis: 250px;
     }
     
-    div#nazwa_galerii h2,
-    footer#stopka h2
+    #nazwa_galerii h2,
+    #stopka h2
     {
         padding-top: 0.5em;
         padding-right: 2.5em;
@@ -2347,7 +2098,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: auto;
     }
 
-    .opis_odnosnik {
+    .opis-odnosnik {
         font-size: 1.25em;   /* powiększenie o względne % dla pionowej listy na 320...470px (tu jest najszerszy opis tekstowy galerii, i miał zbyt małą czcionkę w stosunku do szerokości) */
     }
 
@@ -2373,18 +2124,18 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: auto;
     }
     
-   .status_ajaksa {
-        /*display: inline-block;*/  /* to była pierwotna wartość, ale jest lekko wyższa przez marginesy */
+   .status-ajaksa {
+        /* display: inline-block; */  /* to była pierwotna wartość, ale jest lekko wyższa przez marginesy */
        display: inline;
     }
 
-    footer#stopka button {
+    #stopka button {
         display: inline;
         width: auto;
-        padding: 0.45em 2em;	
+        padding: 0.45em 2em;
     }
 
-    footer#stopka ul li:first-child {
+    #stopka ul li:first-child {
         margin-left: 0;
     }
 
@@ -2394,29 +2145,29 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         margin-left: -8.5em;    /* zawsze jako 50% ze zdefiniowanej długości, czyli o połowę swej długości w lewo względem poziomego środka */
     }
 
-} 
+}
 
 
-@media screen and (min-width: 470px) { 
+@media screen and (min-width: 470px) {
 
     body {
-        font-size: 80%;	
+        font-size: 80%;
     }
 
     .glowny-kontener {
         /*	margin: 0.4em auto;*/
-        width: 98.5%;    
+        width: 98.5%;
     }
 
-    header#naglowek div#banner {
-        height: 190px;    
+    .naglowek div.banner-kontener {
+        height: 190px;
     }
     
-    header#naglowek div#banner div#napis_spod h3 {
-        max-height: 75px;	
+    .napis-spod > h3 {
+        max-height: 75px;
     }
     
-    header#naglowek div#napisy {
+    .naglowek div.napisy-banner {
         left: 140px;
         top: 5px;	
         max-width: 75%;
@@ -2426,11 +2177,11 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: 88%;
     }
 
-    .opis_odnosnik {
+    .opis-odnosnik {
         font-size: 1em; /* redukcja na względne 100% */
     }
     
-    .blad_ikona {
+    .blad-ikona {
         float: left;
         margin-top: 1.5%;
          margin-right: 3%;  /* próby przeniesionia do lewego-paddingu dla sąsiada <p>' */
@@ -2455,49 +2206,49 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         min-height: 130px;  /* w połączeniu z min-height kontenera pozwala zwiększyć jego wysokość, "odpychając" od dolnej krawędzi obrazka  */
     }
     
-    div#selektor input.szerszy_guzik {
+    #selektor input.szerszy_guzik {
         min-width: 210px;
     }
     
-    div#spis_tresci div.kontener_odnosnik {
-        min-height: 415px;			
+    div.kontener-odnosnik {
+        min-height: 415px;
         max-height: 415px;
-        width: 48.2%;    
+        width: 48.2%;
     }
 
-    div#spis_tresci div.kontener_odnosnik img {
+    .kontener-odnosnik img {
         max-height: 220px;
     }
 
-    div#selektor input.maly_guzik {
+    #selektor input.maly_guzik {
         display: block;
     }
 
     footer#stopka {
-        padding: 1em 0.2em;	
+        padding: 1em 0.2em;
     }
 
 }
 
 
-@media screen and (min-width: 700px) { 
+@media screen and (min-width: 700px) {
 
     body {
-        font-size: 85%;	
+        font-size: 85%;
     }
 
     .glowny-kontener {
     /*	margin: 0.4em auto;*/
-        width: 99%;    
-    } 
-
-    div#spis_tresci div.kontener_odnosnik {
-        min-height: 425px;			
-        max-height: 425px;
-        width: 32%;    
+        width: 99%;
     }
 
-    div#spis_tresci div.kontener_odnosnik img {
+    div.kontener-odnosnik {
+        min-height: 425px;
+        max-height: 425px;
+        width: 32%;
+    }
+
+    .kontener-odnosnik img {
         max-height: 230px;
     }
     
@@ -2506,11 +2257,11 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         right: 6px;
     }
     
-    div#selektor input.szerszy_guzik {
+    #selektor input.szerszy_guzik {
         min-width: 220px;
     }
     
-    footer#stopka h2 {
+    #stopka h2 {
         padding-right: 0.5em;
     }
 
@@ -2524,21 +2275,21 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 @media screen and (min-width: 940px) { 
 
     body {
-        font-size: 90%;	
+        font-size: 90%;
     }
 
     .glowny-kontener {
         /*	margin: 0.3em auto;*/
-        width: 99.25%;      
+        width: 99.25%;
     }
 
-    div#spis_tresci div.kontener_odnosnik {
-        min-height: 465px;			
+    div.kontener-odnosnik {
+        min-height: 465px;
         max-height: 465px;
-        width: 24%;     
+        width: 24%;
     }
 
-    div#spis_tresci div.kontener_odnosnik img {
+    .kontener-odnosnik img {
         max-height: 240px;
     }
     
@@ -2551,49 +2302,49 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         padding-left: 10.5em;   /* brak zawijania pod obrazkiem z float w komunikacie */
     }
     
-    div#spis_tresci div#selektor {  /* specyficzność głupcze! */
+    div#selektor {  /* specyficzność głupcze! */
         width: 97%;
     }
     
-    div#selektor input.szerszy_guzik {
+    #selektor input.szerszy_guzik {
         min-width: 255px;
     }
     
-    div#glowna div#nazwa_galerii img {
+    #nazwa_galerii img {
         margin-top: -2em;
     }
 
-    div#nazwa_galerii h2 {
+    #nazwa_galerii h2 {
         padding-left: 9em;    /* 208px szerokośc obrazka / 16px == 6.5 ... ale 1em to nie 16px, tylko 12.6px !!! */
         padding-right: 2.5em;   /* na lewo wchodzi obrazek, który zabiera miejsce i długie treści mogą zachodzić znów pod przycisk zamykania */ 
     }
     
-    div#pomoc > div:first-of-type,  /* pierwsze kontenery w kontenerze stają się fleks-kontenerami i grupują dwie kolumny */
-    div#poco > div:first-of-type {
+    #pomoc > div:first-of-type,  /* pierwsze kontenery w kontenerze stają się fleks-kontenerami i grupują dwie kolumny */
+    #poco > div:first-of-type {
         display: flex;
     }
       
-    div#pomoc > div > div,
-    div#poco > div > div {
+    #pomoc > div > div,
+    #poco > div > div {
         flex-basis: 50%;
     }
     
-    div#pomoc > div > div:first-of-type,
-    div#poco > div > div:first-of-type {
+    #pomoc > div > div:first-of-type,
+    #poco > div > div:first-of-type {
         margin-right: 2.5em;
     }
 
-    div#pomoc .kontener .ramka,
-    div#poco .kontener .ramka {
+    #pomoc .kontener .ramka,
+    #poco .kontener .ramka {
         margin-right: 0;
     }
 
 }
 
-@media screen and (min-width: 1180px) { 
+@media screen and (min-width: 1180px) {
 
     body {
-        font-size: 100%;	
+        font-size: 100%;
     }
 
     .glowny-kontener {
@@ -2601,17 +2352,17 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         width: 99.5%;    
     }
 
-    header#naglowek div#banner {
+    .naglowek div.banner-kontener {
         height: 170px;    
     }
 
-    div#spis_tresci div.kontener_odnosnik {
-        min-height: 490px;			
+    div.kontener-odnosnik {
+        min-height: 490px;
         max-height: 490px;
-        width: 19.1%;       
+        width: 19.1%;
     }
 
-    div#spis_tresci div.kontener_odnosnik img {
+    .kontener-odnosnik img {
         max-height: 250px;
     }
 
@@ -2628,9 +2379,9 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     
 }
 
-@media screen and (min-width: 1300px) { 
+@media screen and (min-width: 1300px) {
 
-    header#naglowek div#naglowek_kontener {
+    .naglowek .naglowek_kontener {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         box-shadow: none;
@@ -2643,7 +2394,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
             radial-gradient( ellipse at bottom center, rgba(195, 213, 226, 0.8) 20%, rgba(100, 149, 237, 0.7));
     }
     
-    header#naglowek div#banner {
+    .naglowek div.banner-kontener {
         margin-left: auto;
         margin-right: auto;
         border: 2px solid white;
@@ -2660,7 +2411,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
         user-select: none;
     }   
     
-    .brak_js div#zagraj {
+    .brak-js #zagraj {
         display: none;
     }
     
@@ -2674,7 +2425,6 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     
     div#gra {
         display: none !important;    /* albo tak, albo bezpośrednie kasowanie stylu w elemencie poprzez JS */ 
-        /*    background-color: firebrick !important;    */
     }
 
 }

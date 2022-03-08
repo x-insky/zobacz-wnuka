@@ -1,3 +1,62 @@
+v0.5.70 - CSS cleaning, approach #4 - dynamically loading table of contents
+
+* v0.5.70 -- [2022-02-24]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* refactoring selectors in the area of ​​a dynamically loaded table of contents
+* getting rid of the excess force of selectors
+  - removed redundant 'id' attributes pointing to an ancestor container
+  - removed unnecessary ancestor classes
+  - removed redundant ancestor/parent element type
+  - left the element type in the basic element selector (only for a complicated structure and many pseudo-classes/states of the container and/or sub-elements)
+* changing class names to a character with dashes instead of underscores between words
+* sorting of CSS attributes
+  - unified according to the used hierarchy of importance of the attributes
+  - deleting commented content
+  - fixes for duplicate attributes
+
+-- witryna.js
+* class names changed in CSS were used for dynamically generated content
+  - a lot of name changes in dynamically built structures
+  - the lack of use of class names changed in CSS in several functions building the dynamic structure of HTML did not generate any content
+  - possible lack of synchronization in class names or only partial renaming created incorrect content
+  - correctness tests in generating content
+
+-- index.php
+* one class name updated (only one static change)
+
+---------------------------
+
+v0.5.69 - CSS cleaning, approach #3 - header section (banner)
+
+* v0.5.69 -- [2022-02-23]
+
+[*] MODIFIED
+
+-- index.php
+* renaming some ID attributes into classes for elements inside the '#naglowek_kontener' section
+  - a slight reorganization of the container structure, after merging it is a section with the '.banner-kontener/banner-container' class
+  - attempts were made to keep the existing names or given similar names for the created class attributes
+  - renamed the misleading ID names to functional class names
+
+-- zlobek-styl.css
+* cleaning the style sheet from redundant selectors
+  - attempts to lower the specificity of selectors while maintaining the developed system
+  - reduction of unnecessary or unused attributes with their values
+  - evidently standing and commented out content has been removed
+  - possible changes in the order of the attributes
+* customization of existing ID selectors per class
+  - matching according to the current changes in the names of elements and containers in HTML
+  - testing the correctness of displaying the website after the changes
+
+-- witryna.js
+* tracking changes made for HTML and CSS
+  - changes for events or references
+
+---------------------------
+
 v0.5.68 - CSS cleaning, approach #2 - general content
 
 * v0.5.68 -- [2022-02-20]
@@ -5,7 +64,7 @@ v0.5.68 - CSS cleaning, approach #2 - general content
 [*] MODIFIED
 
 -- index.php
-* changed attribute 'id=site' to class 'glowny-kontener/main-container'
+* changed attribute 'id=witryna/site' to class 'glowny-kontener/main-container'
 
 -- witryna.js
 * updated changed '#id' for '.class' selectors

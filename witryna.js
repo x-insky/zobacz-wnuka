@@ -99,7 +99,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         NaprawBrakujaceSRCwKontenerze ( tag_podmieniany, true );
                         CzyscNiepotrzebneElementy();	
                         //GenerujPodstronyGalerii( element_witryny, dane.ktoraPodstrona );
-                            if ( $('#nazwa_galerii').hasClass('szara_zawartosc') ) $('#nazwa_galerii').removeClass('szara_zawartosc');  // w przypadku wystąpienia błędu z pobraniem wybranej galerii - aby przywrócić żywe kolory tego kontenera 
+                            if ( $('#nazwa_galerii').hasClass('szara-zawartosc') ) $('#nazwa_galerii').removeClass('szara-zawartosc');  // w przypadku wystąpienia błędu z pobraniem wybranej galerii - aby przywrócić żywe kolory tego kontenera 
                         GenerujPodstronyGalerii( tag_podmieniany, dane.ktoraPodstrona );
                         PokazBiezacaGalerie(); // wymuszone dodanie - PONOWNE pokazywanie aktualnej galerii (...gdyby była ukryta)   
                         DostawPrzyciskZamykaniaDoBiezacejGalerii(); // wstaw przycisk zamykania bieżącej galerii, gdy zaczytano treści danej podstrony galerii 
@@ -240,9 +240,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                                 // zmiana wybranych fragmentów w istniejących treściach dla drugiego (nowego) elementu... później z tego zrobić funkcję
                             ZmienTrescKomunikatu( $('.blad_dolaczania'), tytulBledu, komunikatOBledzie );
                         /*  var nowyKomunikatBledu = $('.blad_dolaczania');
-                            nowyKomunikatBledu.removeClass('animacja_zolty_blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
+                            nowyKomunikatBledu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
                             nowyKomunikatBledu.find('strong:first-of-type > span').text( g_suma_bledow_dolaczania );
-                            nowyKomunikatBledu.addClass('animacja_zolty_blysk').find('strong:last-of-type > span').text( nrPodstronyNiewczytanejGalerii );    */
+                            nowyKomunikatBledu.addClass('animacja-zolty-blysk').find('strong:last-of-type > span').text( nrPodstronyNiewczytanejGalerii );    */
                                 // rozbicie powyższego na dwa/trzy, aby zabrać i nadać tę samą klasę dla ponownego wyswietlenia animacji (.end() nie daje rady w jednym łańcuchu)      
                                 
                             }
@@ -256,8 +256,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                             console.log('Generuję błąd dołączania po raz #' + g_suma_bledow_dolaczania + ' dla ' + nrPodstronyNiewczytanejGalerii 
                                         + ' niewczytanej podstrony spisu teści: ' + komunikatOBledzie );    
                             }
-                        $('.blad_dolaczenia').removeClass('animacja_zolty_blysk').height(); // usunięcie i bzdurny odczyt z DOM...
-                        $('.blad_dolaczenia').addClass('animacja_zolty_blysk');  // aby zmienić stan animacji -- od nowa      
+                        $('.blad_dolaczenia').removeClass('animacja-zolty-blysk').height(); // usunięcie i bzdurny odczyt z DOM...
+                        $('.blad_dolaczenia').addClass('animacja-zolty-blysk');  // aby zmienić stan animacji -- od nowa      
                         PrzewinEkranDoElementu('.blad_dolaczania', 500);    // przewijanie już do nowego (później dodanego) komunikatu 
                         }   // if-END ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ...
                     }   // if-END ( status === "success" )
@@ -287,7 +287,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         UsunBrakujaceSRCwIMGPozaPrzekazanym ( tag_podmieniany, dane.pozycjaWGalerii );    
                         console.log( "Ładowanie przed rekurencją (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
 
-                            if ( $('#nazwa_galerii').hasClass('szara_zawartosc') ) $('#nazwa_galerii').removeClass('szara_zawartosc'); 
+                            if ( $('#nazwa_galerii').hasClass('szara-zawartosc') ) $('#nazwa_galerii').removeClass('szara-zawartosc'); 
 
                         var namiaryWybranejGalerii = OdczytajTresciOdnosnikaWybranejGalerii ( tag_podmieniany, dane.pozycjaWGalerii );
 
@@ -418,7 +418,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                             // dane.wybranaPaginacja
                         console.log( "Ładowanie (" + rodzaj_dzialania + ") dla wybranego " + dane.wybranaPaginacja + " elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
                         //PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -200);
-                        $('div#wybrane_galerie_spis').removeClass('szara_zawartosc');    
+                        $('div#wybrane_galerie_spis').removeClass('szara-zawartosc');    
                         // Generuj spis wybranej galerii (podstrony spisu treści)
                         //$('div#wybrany_zaczytany_spis').show();    
                         // $('div#wczytywanie_wybrane_galerie_spis').hide(100);
@@ -710,7 +710,7 @@ $( g_miejsce_na_spis ).show(100);
 //debugger;	
 
 // tworzenie szablonu spisu
- //g_zaczytana_ilosc_paginacji_galerii = $( g_miejsce_na_spis + " div.kontener_odnosnik" ).length; // ma być o 5 więcej niż na stronie (szablon do wstawienia), co to robi???
+ //g_zaczytana_ilosc_paginacji_galerii = $( g_miejsce_na_spis + " div.kontener-odnosnik" ).length; // ma być o 5 więcej niż na stronie (szablon do wstawienia), co to robi???
 g_zaczytana_ilosc_paginacji_galerii = 0; // zmiana NIEISTOTNA, i tak późniejsza pętla działa zawsze na +5 elementów na stronie, nie oblicza warunku na podstawie 
 	
     if ( g_biezaca_pozycja_galerii === 0 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
@@ -835,20 +835,20 @@ var ileSpisowGalerii = grupaGalerii.length,
         
     // tworzenie zbitej "kupki" htmlowej - NiechTenKtóryNaToPatrzy odwróci swój wzrok    
     // UWAGA! zmieniona struktura "komponentu"
-	html += '<div id="kontener_odnosnik_' + grupaGalerii[i].nrGalerii + '" class="kontener_odnosnik">'
+	html += '<div id="kontener_odnosnik_' + grupaGalerii[i].nrGalerii + '" class="kontener-odnosnik">'
             +  '<a data-href="' + adresZasobu + '" tabindex="0">'
                 + '<div>'
-                    + '<div class="tytul_odnosnik"><h2' + dodatkowaKlasaTytulu +'>' + grupaGalerii[i].tytul + ' </h2></div>'
-                    + '<div id="zdjecie_odnosnik_' + grupaGalerii[i].nrGalerii + '" class="zdjecie_odnosnik">' 
+                    + '<div class="tytul-odnosnik"><h2' + dodatkowaKlasaTytulu +'>' + grupaGalerii[i].tytul + ' </h2></div>'
+                    + '<div id="zdjecie-odnosnik_' + grupaGalerii[i].nrGalerii + '" class="zdjecie-odnosnik">' 
                         + '<img src="' + grupaGalerii[i].srcObrazka + '" alt="' + grupaGalerii[i].tytul + '"/>'
                     + '</div>'
                 + '</div>'
             + '</a>'
-            + '<div class="kontener_tekstowy_odnosnik">' 
-                + '<div class="data_odnosnik">' + grupaGalerii[i].data + '</div>'
-                + '<div class="opis_odnosnik">' + grupaGalerii[i].opis + '</div>'
+            + '<div class="kontener-tekstowy-odnosnik">' 
+                + '<div class="data-odnosnik">' + grupaGalerii[i].data + '</div>'
+                + '<div class="opis-odnosnik">' + grupaGalerii[i].opis + '</div>'
             + '</div>'
-            + '<div class="dolna_zaslonka"></div>'
+            + '<div class="dolna-zaslonka"></div>'
             + '<div class="szczegoly">' 
                 + '<p>' + grupaGalerii[i].nrGalerii + '</p>'
                 + '<p><span>galeria</span><br />podstrona</p>'
@@ -872,7 +872,7 @@ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
         // obowiązakowe czyszczenie nadmiaru, warunek na szablon vs na ilość załadowanych
     //debugger;
 
-    var $nadmiar = $( g_miejsce_na_spis + " div.kontener_odnosnik:has(h3)");
+    var $nadmiar = $( g_miejsce_na_spis + " .kontener-odnosnik:has(h3)");
         if ( $nadmiar.length > 0 ) 
         {       // FOR lepszy, czy zostawić '$nadmiar.each( function() { ... }'? -- wydajność vs lepszy dostęp do elementów w jQ  
             for (var i=0; i < $nadmiar.length ; i++) {
@@ -885,9 +885,9 @@ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
 
         if ( g_ilosc_zaczytanych_galerii >= g_ilosc_wszystkich_galerii ) // warunkowo drugie czyszczenie, póki co tylko w formie wizualnego ostrzeżenia
         {
-        //$( g_miejsce_na_spis + " div.kontener_odnosnik:gt(" + ( g_ilosc_wszystkich_galerii - 1 )+ ")" ).css({ "backgroundColor" : "#666" });	
-        $( g_miejsce_na_spis + " div.kontener_odnosnik:has(h3)").css({ "backgroundColor" : "#666" });  // masz <h3> to "wypad"	
-        // $( g_miejsce_na_spis + " div.kontener_odnosnik:has(h3)").remove();  // docelowo zamienić linię powyższą na tę linie, choć nie powinno mieć to miejsca	    
+        //$( g_miejsce_na_spis + " .kontener-odnosnik:gt(" + ( g_ilosc_wszystkich_galerii - 1 )+ ")" ).css({ "backgroundColor" : "#666" });	
+        $( g_miejsce_na_spis + " .kontener-odnosnik:has(h3)").css({ "backgroundColor" : "#666" });  // masz <h3> to "wypad"	
+        // $( g_miejsce_na_spis + " .kontener-odnosnik:has(h3)").remove();  // docelowo zamienić linię powyższą na tę linie, choć nie powinno mieć to miejsca	    
         }
 
         // już niepotrzebne, tylko diagnostyka -- poniższe wybierało nagłówki oraz jako ostatnie paginacje dla wszystkich podstron galerii  
@@ -973,9 +973,9 @@ var odnosnikPojemnik = '';  // do przechowywania spisu galerii, będzie budowana
     
 	for( var i=1 ; i <= 5  ; i++ )	// zawsze +5 elementów DIV, po co je wcześniej zliczać?
 	{ 
-	/* var odnosnikPojemnik = '<div id="kontener_odnosnik_' + String(i) + '" class="kontener_odnosnik"><div id="zdjecie_odnosnik_' + String(i) + '" class="zdjecie_odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener_tekstowy_odnosnik"><div class="tytul_odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div class="data_odnosnik">Data galerii</div><div class="opis_odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div></div>'; 	*/
+	/* var odnosnikPojemnik = '<div id="kontener_odnosnik_' + String(i) + '" class="kontener-odnosnik"><div id="zdjecie_odnosnik_' + String(i) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener-tekstowy-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div></div>'; 	*/
 	
-	odnosnikPojemnik += '<div id="kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener_odnosnik"><div class="tytul_odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie_odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener_tekstowy_odnosnik"><div class="data_odnosnik">Data galerii</div><div class="opis_odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div><div class="dolna_zaslonka"></div><div class="szczegoly"><p>XXXX</p><p><span>galeria</span><br />podstrona</p><p>YYY</p></div></div>'; 	
+	odnosnikPojemnik += '<div id="kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener-tekstowy-odnosnik"><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div><div class="dolna-zaslonka"></div><div class="szczegoly"><p>XXXX</p><p><span>galeria</span><br />podstrona</p><p>YYY</p></div></div>'; 	
 	}	
 $( g_miejsce_na_spis ).append( odnosnikPojemnik );		// tworzenie naraz pięciu elementów -- odnośników dla spisu galerii
 		
@@ -990,7 +990,7 @@ var $odnosnikiZdjecia = $( g_tag_do_podmiany_spis + " td.galeria_kolor a.link_tr
             // lepiej wywalić cały atrybut 'class', bo i tak zostaje pusty gdy się tylko usunie z niego klasę "link_tresc" ;
             // podobnie wylatuje 'href', aby nie komplikować z przyciskami myszy ;) -- w jego miejsce tworzony zastępca 'data-href'
             
-        var miejsceDocelowe = $( g_miejsce_na_spis + " .zdjecie_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
+        var miejsceDocelowe = $( g_miejsce_na_spis + " .zdjecie-odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
             // ta zmienna będzie używana w dalszych iteracjach, na rzecz każdego z fragmentów/atrybutów składowych docelowego odnośnika spisu treści galerii     
  
             // po wprowadzniu funkcji naprawiającej globalnie SRC juz nie poptrzebne sklejanie odnośnika
@@ -1030,7 +1030,7 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" 
         trescTytulu = '<p>' + ktoraToGaleria + '</p><p><span>galeria</span><br />podstrona</p><p>' + ktoraToPodstrona + '</p>';
         $( miejsceDocelowe ).html( trescTytulu ); // KONIEC UŻYCIA jako zmiennej tymczasowej innej zmiennej!   
             
-        miejsceDocelowe = $( g_miejsce_na_spis + " .tytul_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
+        miejsceDocelowe = $( g_miejsce_na_spis + " .tytul-odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
 
         	// nadawanie zmienionej formy wyświetlania odnośnika tekstowego	(tytuł galerii)
         trescTytulu = $( $odnosnikiTytuly[i] ).text();
@@ -1060,7 +1060,7 @@ var $odnosnikiData = $( g_tag_do_podmiany_spis + " td.galeria_kolor font" );
     if ( $odnosnikiData.length > 0 )
     {
         for( var i = 0 ; i < $odnosnikiData.length ; i++ ) {
-        miejsceDocelowe = $( g_miejsce_na_spis + " .data_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
+        miejsceDocelowe = $( g_miejsce_na_spis + " .data-odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
 
          // zmiana treści wyświetlanej, lekka modyfikacja tekstu przy dacie i godzienie 
         var tekstDocelowy = $( $odnosnikiData[i] ).text();
@@ -1081,7 +1081,7 @@ var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " td blockquote div[align=justi
     if ( $odnosnikiOpis.length > 0 )
     {
         for( var i=0 ; i < $odnosnikiOpis.length ; i++ ) {
-        miejsceDocelowe = $( g_miejsce_na_spis + " .opis_odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
+        miejsceDocelowe = $( g_miejsce_na_spis + " .opis-odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
 
         var trescOpisu = $( $odnosnikiOpis[i] ).text() ;	
         $( miejsceDocelowe ).html( trescOpisu );			
@@ -1142,7 +1142,7 @@ $( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie ca
     // efektywniej wywalić całość, oczywiście po odczytaniu wszelkich grup elementów i paginacji!  
     
     // obowiązakowe czyszczenie nadmiaru, warunek na szablon vs na ilość załadowanych
-var $nadmiar = $( g_miejsce_na_spis + " div.kontener_odnosnik:has(h3)");
+var $nadmiar = $( g_miejsce_na_spis + " .kontener-odnosnik:has(h3)");
     if ( $nadmiar.length > 0 )  // jeśli sa jakieś nieuzupełnione szablony...
     {       // FOR lepszy, czy zostawić '$nadmiar.each( function() { ... }'? -- wydajność vs lepszy dostęp do elementów w jQ  
         for (var i=0; i < $nadmiar.length ; i++) {
@@ -1155,9 +1155,9 @@ var $nadmiar = $( g_miejsce_na_spis + " div.kontener_odnosnik:has(h3)");
 	
 	if ( g_ilosc_zaczytanych_galerii >= g_ilosc_wszystkich_galerii ) // warunkowo drugie czyszczenie, póki co tylko w formie wizualnego ostrzeżenia
 	{
-	//$( g_miejsce_na_spis + " div.kontener_odnosnik:gt(" + ( g_ilosc_wszystkich_galerii - 1 )+ ")" ).css({ "backgroundColor" : "#666" });	
-    $( g_miejsce_na_spis + " div.kontener_odnosnik:has(h3)").css({ "backgroundColor" : "#666" });  // masz <h3> to "wypad"	
-    // $( g_miejsce_na_spis + " div.kontener_odnosnik:has(h3)").remove();  // docelowo zamienić linię powyższą na tę linie, choć nie powinno mieć to miejsca	    
+	//$( g_miejsce_na_spis + " .kontener-odnosnik:gt(" + ( g_ilosc_wszystkich_galerii - 1 )+ ")" ).css({ "backgroundColor" : "#666" });	
+    $( g_miejsce_na_spis + " .kontener-odnosnik:has(h3)").css({ "backgroundColor" : "#666" });  // masz <h3> to "wypad"	
+    // $( g_miejsce_na_spis + " .kontener-odnosnik:has(h3)").remove();  // docelowo zamienić linię powyższą na tę linie, choć nie powinno mieć to miejsca	    
 	}	
 
 /*  // wyświetlanie wyzwalaczy do ładowania spisu galerii już wykonane w pierwszym przebiegu
@@ -1187,9 +1187,9 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
             // tworzenie pustej struktury, do zapełnienia zaczytaną zawartością
         for( var i=1 ; i <= 5  ; i++ ) {	// maksymalnie pięc elementów się zaczyta, ewentalny nadmiar zostanie usunięty
             // budowanie długiego zestawu pojemników
-            // '<div id="kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener_odnosnik"><div class="tytul_odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie_odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener_tekstowy_odnosnik"><div class="data_odnosnik">Data galerii</div><div class="opis_odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div><div class="dolna_zaslonka"></div><div class="szczegoly"><p>XXXX</p><p>galeria<br />podstrona</p><p>YYY</p></div></div>'
-        //nowyPojemnik += '<div id="wybrany_kontener_odnosnik_' + String(i) + '" class="kontener_odnosnik"><div class="tytul_odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_wybrany_odnosnik_' + String(i) + '" class="zdjecie_odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener_tekstowy_odnosnik"><div class="data_odnosnik">Data galerii</div><div class="opis_odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum... nie będzie</div></div><div class="szczegoly">testowa zawartość</div></div>'; 	
-        nowyPojemnik += '<div id="wybrany_kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener_odnosnik"><div class="tytul_odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie_odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener_tekstowy_odnosnik"><div class="data_odnosnik">Data galerii</div><div class="opis_odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div><div class="dolna_zaslonka"></div><div class="szczegoly"><p>XXXX</p><p><span>galeria</span><br />podstrona</p><p>YYY</p></div></div>'; 	
+            // '<div id="kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener-tekstowy-odnosnik"><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div><div class="dolna-zaslonka"></div><div class="szczegoly"><p>XXXX</p><p>galeria<br />podstrona</p><p>YYY</p></div></div>'
+        //nowyPojemnik += '<div id="wybrany_kontener_odnosnik_' + String(i) + '" class="kontener-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_wybrany_odnosnik_' + String(i) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener-tekstowy-odnosnik"><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum... nie będzie</div></div><div class="szczegoly">testowa zawartość</div></div>'; 	
+        nowyPojemnik += '<div id="wybrany_kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener-tekstowy-odnosnik"><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div><div class="dolna-zaslonka"></div><div class="szczegoly"><p>XXXX</p><p><span>galeria</span><br />podstrona</p><p>YYY</p></div></div>'; 	
 
         }  
     $( kontenerDocelowy ).empty();  // zerowanie wcześniejszej zawartości    
@@ -1206,7 +1206,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
                 // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' + usuwanie pierwotnego atrybutu
             $( $szukaneElementy[i] ).removeAttr('class').attr('data-href', $( $szukaneElementy[i] ).attr('href') ).removeAttr('href') ;      
                 
-            miejsceDocelowe = $( kontenerDocelowy + " .zdjecie_odnosnik:eq(" + i + ")" );
+            miejsceDocelowe = $( kontenerDocelowy + " .zdjecie-odnosnik:eq(" + i + ")" );
 
                 // użycie funkcji naprawiającej ścieżkę do SRC pozwala przekleić obrazek (w trakcie ładowania) do innego obszaru dokumentu 
             $( miejsceDocelowe ).html( $szukaneElementy[i] ); // przeniesienie ze źródłowej lokalizacji
@@ -1235,7 +1235,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
             miejsceDocelowe.html( trescSzczegolow );
                 
                 // ponowne posłużenie się tą samą zmienną dla innego równorzędnego kontenera   
-            miejsceDocelowe = $( kontenerDocelowy + " .tytul_odnosnik:eq(" + i + ")" );
+            miejsceDocelowe = $( kontenerDocelowy + " .tytul-odnosnik:eq(" + i + ")" );
 
             var tekstDocelowy = $( $szukaneElementy[i] ).text();
             $( $szukaneElementy[i] ).removeClass('link').wrapInner('<h2></h2>'); // usuwanie obcej klasy link i dodanie h2/h3
@@ -1264,7 +1264,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
         if ( $szukaneElementy.length > 0 )
         {
             for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ){
-            miejsceDocelowe = $( kontenerDocelowy + " .data_odnosnik:eq(" + i + ")" );
+            miejsceDocelowe = $( kontenerDocelowy + " .data-odnosnik:eq(" + i + ")" );
 
             tekstDocelowy = $( $szukaneElementy[i] ).text();
             tekstDocelowy = tekstDocelowy.replace( "data publikacji: ", "z dnia: ");  // proste zastąpienie tekstu innym ciągiem, aby nie kopiować znaczników 
@@ -1278,7 +1278,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
         if ( $szukaneElementy.length > 0 )
         {
             for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ) {
-            miejsceDocelowe = $( kontenerDocelowy + " .opis_odnosnik:eq(" + i + ")" );
+            miejsceDocelowe = $( kontenerDocelowy + " .opis-odnosnik:eq(" + i + ")" );
 
             tekstDocelowy = $( $szukaneElementy[i] ).text() ;	
             $( miejsceDocelowe ).html( tekstDocelowy );			
@@ -1298,7 +1298,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
     } // if-END ( ileGaleriiNaPodstronie > 0 )
 
     // obowiązkowe czyszczenie nadmiaru, warunek na element szablonu vs na ilość załadowanych
-var $nadmiarPojemnikow = $( kontenerDocelowy + " div.kontener_odnosnik:has(h3)");
+var $nadmiarPojemnikow = $( kontenerDocelowy + " .kontener-odnosnik:has(h3)");
     
     if ( $nadmiarPojemnikow.length > 0 ) 
     { 
@@ -1344,37 +1344,37 @@ odczytaneNamiary.data = roboczaWartosc.replace("data publikacji: ", "z dnia: ");
     
 console.log('Przeszukując "' + przeszukiwanyKontener + '" natrafiono na datę publikacji "' + roboczaWartosc + '" dla tytułu o indeksie +' + pozycjaElementuWSpisiePodstrony +
             '. ADRES_pełny: ', odczytaneNamiary.adres, ', NR_galerii: ', odczytaneNamiary.nrGalerii, 'NR_podstronyGalerii:  ', odczytaneNamiary.nrPodstronyGalerii);
-    // kasowanie SRC z IMG dla wskazanego tytułu galerii, aby nie było problemu z GET dla otrzymanego wycinka witryny macierzystej 
+    // kasowanie SRC z IMG dla wskazanego tytułu galerii, aby nie było problemu z GET dla otrzymanego wycinka witryny macierzystej
 $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).removeAttr('src');
 return odczytaneNamiary;    // zwróć obiekt 
 } // OdczytajTresciOdnosnikaWybranejGalerii-END
     
 
-	
 
+
+  
+// ---------- *** ----------  PRACA NA RZECZ APLIKACJI  ---------- *** ----------
     
-// ---------- *** ----------  PRACA NA RZECZ APLIKACJI  ---------- *** ----------	    
-    
-function InicjalizujCSSzAktywnymJS()  // UWAGA! style kierowane pod konkretne elementy oraz mozliwy hardkod 
+function InicjalizujCSSzAktywnymJS()  // UWAGA! style kierowane pod konkretne elementy oraz mozliwy hardkod
 {
-    // pomocnicza klasa-wskaźnik, dla podległości lub ogólny "włącz/wyłącz" dla zawartości gdy jest/brakuje JS    
-$('.glowny-kontener').removeClass('brak_js');   
+    // pomocnicza klasa-wskaźnik, dla podległości lub ogólny "włącz/wyłącz" dla zawartości gdy jest/brakuje JS
+$('.glowny-kontener').removeClass('brak-js');   
     // usuń ramkę z komunikatem o braku JS... już niepotrzebne -- powyższe + CSS załatwia sprawę lepiej
 // $('#brak_skryptow').css('display', 'none');  
     // czy kasować element z komunikatem o braku skryptów z DOMu? 
  $('#brak_skryptow').remove();    // wariant z kasowaniem
     
-    // ale NIE POKAZUJ wyzwalacza dla gry, bo to styl INLINE (sprawa dobrze załatwiona poprzez kwerendy)    
+    // ale NIE POKAZUJ wyzwalacza dla gry, bo to styl INLINE (sprawa dobrze załatwiona poprzez kwerendy)
 // $('#zagraj').css('display', 'block');   
     
     // ale aktywuj animację dla loga witryny, niech choć tu będzie nieco ruchu
-var slonceLogo = $('#slonce_logo'); 
-slonceLogo.removeClass('startowe_przesuniecie');
-    if ( slonceLogo.not(':hover') ) slonceLogo.removeClass('animacja_slonca');  // zabierz trwałą animację oraz przemieszczenie, nadawane poprzez JS dla loga w stanie hover (uwaga, "mysza" może być nad elemenetem w tym czasie!)
+var slonceLogo = $('#slonce_logo');
+slonceLogo.removeClass('startowe-przesuniecie');
+    if ( slonceLogo.not(':hover') ) slonceLogo.removeClass('animacja-interaktywnego-slonca');  // zabierz trwałą animację oraz przemieszczenie, nadawane poprzez JS dla loga w stanie hover (uwaga, "mysza" może być nad elemenetem w tym czasie!)
 // alternatywnie dla loga można po prostu wywalić atrybut klasy w całości (z całą zawartością), nie bacząc na skutki 
 
     // pokazywanie prostokąta z aktualnymi wymiarami okna przeglądarki    
-//$('#wymiary').css('visibility', 'visible');  // zmienione poprzez klasę rodzica "brak_js"
+//$('#wymiary').css('visibility', 'visible');  // zmienione poprzez klasę rodzica "brak-js"
     
 }   // InicjalizujCSSzAktywnymJS-END
 
@@ -1384,11 +1384,11 @@ function PokazIUkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
 sekundowyCzasAnimacji = parseInt( sekundowyCzasAnimacji ) || 5;
     if ( sekundowyCzasAnimacji < 5 ) sekundowyCzasAnimacji = 5; // ogólnie na (+), też by zapobiec dzieleniu przez 0
 
-//$('#naglowek .powiadamiacz').css('display', 'block');   // pokaż każdę z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie    
-//$('#naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje    
+//$('.naglowek .powiadamiacz').css('display', 'block');   // pokaż każdę z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie    
+//$('.naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje    
     
     // zmniejszanie długości pasków powiadamiania - indywidualne czasy dla każdego z pasków z wspólnego zakesu
-$('#naglowek .pasek').each( function() {
+$('.naglowek .pasek').each( function() {
 //    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / 2 ; // maksymalnie -49% parametru (też częsci całości)
     dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / ( 2 + Math.floor( sekundowyCzasAnimacji % 5 ) ); 
     sekundowyCzasAnimacji -= dodatkowe_sekundy;    // tu ewentualna dekrementacja 
@@ -1405,7 +1405,7 @@ $('#naglowek .pasek').each( function() {
         });   
     }, sekundowyCzasAnimacji * 1010 );  // + minimalny nadkład opóźnienia
     
-}); // each-$('#naglowek .pasek')-END
+}); // each-$('.naglowek .pasek')-END
     
 }   // PokazIUkryjPowiadomieniaOOdwiedzinach-END
     
@@ -1761,7 +1761,7 @@ var wybranyElementWczytywania = g_prezentacja_wczytywania[0].element,  // wyświ
 function GenerujPowiadomienieOBledzie ( opcjePrzekazane )
 {
 var elementRodzica = '#galeria_spis',
-    klasaAnimacji = 'animacja_zolty_blysk', // określony na sztywno 
+    klasaAnimacji = 'animacja-zolty-blysk', // określony na sztywno 
     budowanyElement = '';
 var opcjeDomyslne = {
     tytul : 'Wystapił błąd ogólny!',
@@ -1813,7 +1813,7 @@ budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik
             }
         budowanyElement += '</h4>'; 
         }     
-budowanyElement += '</div>'; // zamykacz dla div.blad_tresc
+budowanyElement += '</div>'; // zamykacz dla div.blad-tresc
     
     /* if ( ( opcje.nadanaKlasa == 'blad_dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
     {
@@ -1857,11 +1857,11 @@ function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTres
     {
         if ( $( elementKomunikatu ).length > 1 ) elementKomunikatu = $( elementKomunikatu )[0];    // w razie gdyby to jednak jakaś kolekcja była
         else elementKomunikatu = $( elementKomunikatu );    // poprawka na element jQuery
-    elementKomunikatu.removeClass('animacja_zolty_blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
-    elementKomunikatu.addClass('animacja_zolty_blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
+    elementKomunikatu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
+    elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
         
-    elementKomunikatu.find('h2.blad_tytul').html( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
-    elementKomunikatu.find('div.blad_tresc p').html( komunikatTresc ); 
+    elementKomunikatu.find('h2.blad-tytul').html( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
+    elementKomunikatu.find('div.blad-tresc p').html( komunikatTresc ); 
     }
 }   // ZmienTrescKomunikatu-END
     
@@ -1892,21 +1892,21 @@ function UsunKomunikatLubZmienNumeracjeWTresci ( elementKomunikatu )    // usuwa
         poprzedniBladPodstrony = PobierzOstatnieNieodebrane().adresZasobu;
         poprzedniBladPodstrony = parseInt( poprzedniBladPodstrony.substr( poprzedniBladPodstrony.lastIndexOf(",p") + 2 ) ); // numer podstrony niewczytanej
         elementKomunikatu.find('strong:last-of-type > span').text( poprzedniBladPodstrony );
-        tekstTytulu = elementKomunikatu.find('.blad_tytul').text(); // odczytanie tytułu komunkatu (choć niemal zawsze stała, inny postfiks)
+        tekstTytulu = elementKomunikatu.find('.blad-tytul').text(); // odczytanie tytułu komunkatu (choć niemal zawsze stała, inny postfiks)
             
             if ( g_suma_bledow_dolaczania == 1 )   // usuń "x" i krotność w tytule
             {    
             tekstTytulu = tekstTytulu.substr(0, tekstTytulu.lastIndexOf(' x') );    // do ostatniej spacji włącznie?
-            elementKomunikatu.find('.blad_tytul').text( tekstTytulu );  // obcięcie treści z numeracją    
+            elementKomunikatu.find('.blad-tytul').text( tekstTytulu );  // obcięcie treści z numeracją    
             }
             else    // po prostu zmień krotność w tytule 
             {
             tekstTytulu = tekstTytulu.substr(0, tekstTytulu.lastIndexOf(' x')+2 );    // tresc do ostatniego "x" włącznie
-            elementKomunikatu.find('.blad_tytul').text( tekstTytulu + g_suma_bledow_dolaczania );  // dodanie nowej numeracji  
+            elementKomunikatu.find('.blad-tytul').text( tekstTytulu + g_suma_bledow_dolaczania );  // dodanie nowej numeracji  
             }
         // zawsze też odśwież treść istniejącego komunikatu i zwróc uwagę obserwatora na to 
-        elementKomunikatu.removeClass('animacja_zolty_blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
-        elementKomunikatu.addClass('animacja_zolty_blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
+        elementKomunikatu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
+        elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
         }
     }   // if-( g_suma_bledow_dolaczania > 1 )-END
 }   // UsunKomunikatLubZmienNumeracjeWTresci
@@ -1925,16 +1925,16 @@ function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie )
     g_przechwytywacz_php = "./przechwytywacz.php";    // ewentualnie użyć "stałych", aby nie powodować błędu i hardkodu w kilku miejscach
     g_przechwytywacz_php_zapytanie = "?url_zewn=";
         // + wizualizacja zmian  
-    $('.status_ajaksa').removeClass('status_awaria').addClass('status_norma');
+    $('.status-ajaksa').removeClass('status-awaria').addClass('status-norma');
     }
 
     function ZepsujAjaksa ()
     {
-    g_przechwytywacz_php = "./przepuszczacz.php";  // dodatkowo zepsuto zapytanie    
-    //g_przechwytywacz_php = "./przechwytywacz.php";  // powrót do prawidłowgo oryginału z "przepuszczacza"  
+    g_przechwytywacz_php = "./przepuszczacz.php";  // dodatkowo zepsuto zapytanie
+    //g_przechwytywacz_php = "./przechwytywacz.php";  // powrót do prawidłowgo oryginału z "przepuszczacza"
     g_przechwytywacz_php_zapytanie = "?url_dupa=";
         // wizulizacja zmian  
-    $('.status_ajaksa').removeClass('status_norma').addClass('status_awaria');    
+    $('.status-ajaksa').removeClass('status-norma').addClass('status-awaria');    
     }
 
     // zarejestruj operacje zdarzeń - dwa przeciwstawne przyciski
@@ -2183,28 +2183,28 @@ poziomWidocznosci = poziomWidocznosci || '0.7';
 
 $(elementWyswietlajacy + '> h1').text( szerokoscOkna + ' x ' + wysokoscOkna );  // najpierw nadanie aktualnej treści (rozmiaru X x Y)
     
-    if ( !$(elementWyswietlajacy).hasClass('animacja_zanikanie2') ) $(elementWyswietlajacy).addClass('animacja_zanikanie2');    // ewentualne nadanie klasy z konretną animacją
+    if ( !$(elementWyswietlajacy).hasClass('animacja-zanikanie') ) $(elementWyswietlajacy).addClass('animacja-zanikanie');    // ewentualne nadanie klasy z konretną animacją
 
     // taka parodia, ale chodzi o przerwanie aktualnie zanikającej animacji i uruchomienie jej od nowa
-    // $(elementWyswietlajacy).hasClass('animacja_zanikanie').removeClass('animacja_zanikanie').addClass('animacja_zanikanie');
-    // istotny jest odstęp czasu pomiędzy zabranie, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)    
-$(elementWyswietlajacy).removeClass('animacja_zanikanie2').height(); 
+    // $(elementWyswietlajacy).hasClass('animacja-zanikanie').removeClass('animacja-zanikanie').addClass('animacja-zanikanie');
+    // istotny jest odstęp czasu pomiędzy zabraniem, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)    
+$(elementWyswietlajacy).removeClass('animacja-zanikanie').height();    // pobierana jest na próżno wysokość, jako mechanizm nowego odwołania się do DOM
 
-$(elementWyswietlajacy).addClass('animacja_zanikanie2');    
+$(elementWyswietlajacy).addClass('animacja-zanikanie');    
 
 /*
-    if ( $( elementWyswietlajacy ).hasClass('animacja_zanikanie2') ) 
+    if ( $( elementWyswietlajacy ).hasClass('animacja-zanikanie') ) 
     {
     //$(elementWyswietlajacy).css({ animationName : '', animationDuration : '', animationTimingFunction : '' }); 
         //  $(elementWyswietlajacy).css({ animationPlayState : 'paused' }).width();
         //  $(elementWyswietlajacy).css({ animationPlayState : 'running' });    
-    //$(elementWyswietlajacy).stop().removeClass('animacja_zanikanie').css({ animationName : '', animationDuration : '', animationTimingFunction : '', animationIterationCount : '0' }); 
+    //$(elementWyswietlajacy).stop().removeClass('animacja-zanikanie').css({ animationName : '', animationDuration : '', animationTimingFunction : '', animationIterationCount : '0' }); 
         //alert('W trakcie animacji');    
     }  
-    //if ( $(elementWyswietlajacy + ':animated') ) $(elementWyswietlajacy).stop().removeClass('animacja_zanikanie');
+    //if ( $(elementWyswietlajacy + ':animated') ) $(elementWyswietlajacy).stop().removeClass('animacja-zanikanie');
 */
 
-//$(elementWyswietlajacy).addClass('animacja_zanikanie');
+//$(elementWyswietlajacy).addClass('animacja-zanikanie');
 return szerokoscOkna;    
 }   // AktualnyRozmiarOkna-END
 
@@ -2917,12 +2917,12 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
 
     // ..., ale widać aktywne powiadomenie o ładowaniu treści!!!
 
-    //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii
+    //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii
     var zawartoscH2 = $('#nazwa_galerii').find('h2').text();    
         if ( zawartoscH2 != '' )
         {
         console.info('W <h2> do zabarwienia na szaro siedzi treść "' + zawartoscH2 + '" i nie chce zmienić koloru w IE/Edge.');    
-        $('#nazwa_galerii').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii ...NIE DZIAŁA w IE
+        $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii ...NIE DZIAŁA w IE
         }
 
     $( g_miejsce_na_zdjecia ).empty();
@@ -2956,8 +2956,8 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
 
     $('#status_wybranej_galerii').html( trescWygenerowana );	*/        
-    //$('div#wybrane_galerie_spis').addClass('szara_zawartosc');      
-        if ( $('#wybrane_galerie_spis').find('span:first').text() != '' ) $('#wybrane_galerie_spis').addClass('szara_zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu
+    //$('div#wybrane_galerie_spis').addClass('szara-zawartosc');      
+        if ( $('#wybrane_galerie_spis').find('span:first').text() != '' ) $('#wybrane_galerie_spis').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu
         
     ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania, gdyby wymusić kolejno w trakcie tej obsługi zdarzenia           
         
@@ -3074,13 +3074,13 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
 
     var tytulGalerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek, a nie na obrazek -- bo nie posiadałby tekstu)   
 
-    var opisGalerii = $this.parents('.kontener_odnosnik').find('.opis_odnosnik').html();	 // było .text(), ale teraz zyskujemy formatowanie tekstu
-    var dataGalerii = $this.parents('.kontener_odnosnik').find('.data_odnosnik').text();       // tu bezwzględnie tylko tekst
-    var srcObrazkaGalerii = $this.parent().siblings('div.zdjecie_odnosnik').find('a img').attr('src');    
+    var opisGalerii = $this.parents('.kontener-odnosnik').find('.opis-odnosnik').html();	 // było .text(), ale teraz zyskujemy formatowanie tekstu
+    var dataGalerii = $this.parents('.kontener-odnosnik').find('.data-odnosnik').text();       // tu bezwzględnie tylko tekst
+    var srcObrazkaGalerii = $this.parent().siblings('.zdjecie-odnosnik').find('a img').attr('src');    
 
         if ( tytulGalerii.length == 0 )  // jeżeli naciśnięto odnośnik z obrazkiem, ten drugi zawiera już treść odnośnika
         {
-        tytulGalerii = $this.parent().siblings('div.tytul_odnosnik').find('a h2').html();	 // było .text( ... )
+        tytulGalerii = $this.parent().siblings('div.tytul-odnosnik').find('a h2').html();	 // było .text( ... )
         galeriaDocelowa =  $this.attr('data-href');    
         srcObrazkaGalerii = $this.find('img').attr('src');    
         }
@@ -3139,13 +3139,13 @@ $('div#zaczytany_spis').on('click keydown', '.powiadamiacz', function ( e ) {  /
 // ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI  ---------- *** --------------	        
     
     
-$('#banner').hover( function() {    // animacje z "wychodzeniem" obrotowego słoneczka
-    $(this).find('#slonce_logo').addClass('animacja_slonca');
+$('.banner-kontener').hover( function() {    // animacje z "wychodzeniem" obrotowego słoneczka
+    $(this).find('#slonce_logo').addClass('animacja-interaktywnego-slonca');
     },
     function() {
-    $(this).find('#slonce_logo').removeClass('animacja_slonca');	
+    $(this).find('#slonce_logo').removeClass('animacja-interaktywnego-slonca');	
     }
-); // #banner hover-END    
+); // .banner-kontener hover-END    
     
     
 $('#galeria_spis').on('click', '.odswiez_strone', function () {   // globalnie obsługa zdarzenia z delegacją dla odświeżenia strony -- niezależnie od kolejności wygenerowania komunikatu o błędzie
@@ -3159,8 +3159,8 @@ $('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt ) { // te
     
     if ( ileNaLiscieNieotrzymanych > 0 )    // jeżeli istnieje nadal lista niepobranych/nieotrzymanych...    
     {
-        if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status_ajaksa').hasClass('status_norma') ) ) 
-            || ( $('.status_ajaksa').hasClass('status_norma') ) )  // wstępna weryfikacja po wyglądzie/zachowaniu
+        if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status-ajaksa').hasClass('status-norma') ) ) 
+            || ( $('.status-ajaksa').hasClass('status-norma') ) )  // wstępna weryfikacja po wyglądzie/zachowaniu
                     //tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
         {
             // dodatkowa weryfikacja, ewentualnie zrobić hardkoda
@@ -3302,30 +3302,29 @@ WystartujDebuggerLokalny();
 // GenerujPowiadomienieOBledzie(); // TEST wymuszony po raz pierwszy    
 // GenerujPowiadomienieOBledzie({ tytul : 'TEST! Problem z odczytem zawartości zdalnej! TEST!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny (1). TO JEST TYLKO PRÓBNE WYWOŁANIE POWIADOMIENIA, BŁĘDU NIE MA... ale przycisk reaguje. I jeszcze nieco więcej tekstu, dla wzorcowego wypełnienia. <br />Jestę nowo linio?!', przyciskAkcjiOdswiez : true, ikonaZamykania : true });
     
-UbijReklamy();    
+UbijReklamy();
 InicjalizujPrzyciskiWyboruGalerii();
-InicjalizujPrzyciskiWyboruPodstronyGalerii();    
+InicjalizujPrzyciskiWyboruPodstronyGalerii();
 	
 ZaczytajSpisGalerii();
 	
 // testowo też do autouruchamiania gry - pierwsza plansza
 InicjalizujGre();
-OdkryjEmail();     
-    
+OdkryjEmail();
+
 	
 	// sterowanie wielkością czcionki nagłówka
 	
-	//$("#banner h1.logo").fitText();
-$("#napisy h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '62px' });
-$("#napisy h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
-$("#napis_spod h3").fitText(3, { minFontSize: '9px', maxFontSize: '17px' });    
+$(".napisy-banner > h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '62px' });
+$(".napisy-banner > h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
+$(".napis-spod > h3").fitText(3, { minFontSize: '9px', maxFontSize: '17px' });    
 
 
     // parametryzacja pokazu zdjęć (przeniesione z pliku index.php)
-lightbox.option({ albumLabel : "Zdjęcie %1 z %2", positionFromTop : 10 });    
-    
-//$('#wymiary').addClass('animacja_zanikanie2');  // dynamiczne przypisanie klasy    
+lightbox.option({ albumLabel: "Zdjęcie %1 z %2", positionFromTop: 10 });    
+
+//$('#wymiary').addClass('animacja-zanikanie');  // dynamiczne przypisanie klasy    
 AktualnyRozmiarOkna('#wymiary');
 
-	
+
 }); //document-ready-END
