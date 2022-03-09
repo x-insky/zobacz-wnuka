@@ -1,3 +1,33 @@
+v0.5.70 - summary of update v0.5.70
+
+* v0.5.70 -- [2022-03-09]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* repairs to all CSS content from header thru main area into footer
+* degradation the specificity for selectors
+  - mostly removed overpowered element type peceding the ID and its descendants
+  - removed double IDs inside one selector
+  - shortened selectors by deleting middle element class selectors, when ancestor and descendant were well defined
+* changed some ID attributes into classes if possible
+  - almost the same or similar names but changed notation with dashes instead of underscores
+  - modified references to the newly changed class names into HTML and JS
+* sorting of CSS attributes inside definitions
+  - some kind universal hierarchy of order for attributes (mainly for relatively complicated definitions)
+* cleaning up the definition of animations and its names
+  - removed unused definitions
+* removed unused code: old comments, ancient or doubled attributes, etc
+* removed also extra spaces, tabs an other whitepsaces and bad indenations
+
+-- index.php
+* updated references to the renamed class names
+
+-- witryna.js
+* updated references to the renamed class names for the logic
+
+---------------------------
+
 v0.5.70 - CSS cleaning, approach #4 - dynamically loading table of contents
 
 * v0.5.70 -- [2022-02-24]
