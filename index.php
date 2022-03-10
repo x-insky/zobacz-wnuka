@@ -126,9 +126,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 
             <div id="spis_tresci">
                 <div id="zaczytany_spis">
-                <!--    <pre><?php /* var_dump( $_SERVER ); */ ?></pre>    -->
                     <?php
-
                         if ( $adres_przekierowania )   // tworzenie elementu z notyfikacją przekierownia !!!TRUE MA TU NIE BYĆ DOCELOWO!!!
                         {
                         echo '<div id="powiadamiacz_przekierowania" class="powiadamiacz" tabindex="0">';    
@@ -202,7 +200,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                                 <span class="prawy">starsze</span>    
                                             </aside>
                                             <div>
-                                                <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" alt="Wybierz numer galerii z zakresu" />
+                                                <input type="range" min="1" selectionDirection="backward" id="suwak_galerii" name="suwak_galerii" title="Wybierz numer galerii z zakresu" />
                                             </div>
                                         </div>
                                         <div id="suwak_info">
@@ -229,7 +227,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                                 <span class="prawy">starsze</span>    
                                             </aside>
                                             <div>
-                                                <input type="range" min="1" selectionDirection="forward" id="suwak_podstrony" name="suwak_podstrony" alt="Wybierz numer galerii z zakresu" />
+                                                <input type="range" min="1" selectionDirection="forward" id="suwak_podstrony" name="suwak_podstrony" title="Wybierz numer podstrony spośród całej listy galerii" />
                                             </div>
                                         </div>
                                         <div id="suwak_podstrona_info">
@@ -253,7 +251,6 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
 
                     <div id="status_wybranej_galerii">
                     </div>
-                    <!-- tu było #wczytywanie  ... -->
 
                     <div id="galeria_spis_podmiana" class="clearfix">
                     </div>
@@ -339,7 +336,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja-pulsowanie-kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.70</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.71</h6>
             <div id="poco">
                 <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
@@ -495,6 +492,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <div class="ramka">
 
                     <?php
+                                /* echo('<pre>') . var_dump( $_SERVER ) . echo('</pre>'); */    // listowanie całości zmiennych serwera
                     echo '<p>';
                     Wyswietl_zmienna_serwera( "PHP_SELF" );
                     Wyswietl_zmienna_serwera( "SCRIPT_FILENAME" );

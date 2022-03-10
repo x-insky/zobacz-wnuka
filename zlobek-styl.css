@@ -964,8 +964,8 @@ input#galeria_wybrany_nr,
 input#podstrona_wybrany_nr
 {
     max-width: 3.8em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
     text-align: center;
 }
 

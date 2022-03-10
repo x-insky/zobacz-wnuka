@@ -1,3 +1,32 @@
+v0.5.71 - fix display of higher indications of selected gallery and gallery list subpages, selection sliders got description on hover
+
+* v0.5.71 -- [2022-03-10]
+
+[*] MODIFIED
+
+-- index.php
+* replaced twice the invalid `alt` attribute with `title`
+  - the content of one of the attributes was updated
+* removing unnecessary HTML new lines or comments
+  - removed commented out php code displaying the contents of the global table
+  - the content of the above comment was visible explicitly as php code (but commented out!)
+  - ultimately moved as a comment inside the php block (no longer generated as HTML content)
+
+-- zlobek-styl.css
+* reduced side padding for text boxes with a range value selection
+  - longer / larger values ​​are not clipped by an invisible background
+  - information field with the display of the selected value via a slider, buttons or direct editing of the value
+
+[F] FIXED
+
+-- zlobek-styl.css
+* improved display of longer/larger gallery numbers and gallery list subpages
+
+-- index.php
+* displaying a description for a slider (correct use of attributes for an existing description) 
+
+---------------------------
+
 v0.5.70 - summary of update v0.5.70
 
 * v0.5.70 -- [2022-03-09]
@@ -3054,7 +3083,6 @@ v0.5.8 - jQuery lib v1 instead v3; Loading Content Notification System in use, s
   - used here to block commonly used standard actions of 'previous_page' ('[Alt]' + '[<-]' and also '[Backspace]') or 'next_page' ('[Alt]' + '[->]')
   - hack or improvement: pressing the '[Backspace]' key don't fires the blocking event inside any input text form fields (really the logic event is reversed)
 * placed the initial call of function 'InicjujRamkiLadowania' inside a auto runs block
-
 
 [*] MODIFIED
 
