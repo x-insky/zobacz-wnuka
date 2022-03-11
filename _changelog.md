@@ -1,3 +1,22 @@
+v0.5.72 - loging to the console only for failure to load external content
+
+* v0.5.72 -- [2022-03-11]
+
+[*] MODIFIED
+
+-- witryna.js
+* removed login entries in the console when is correct loading (remote reading success)
+  - concerns the logic of the main function 'WczytajZewnetrznyHTMLdoTAGU'
+  - no logging of detailed statuses and variable contents for successful reading of external contents
+* introduced logging in console for negative run inside the same function
+  - saving the values ​​of calling parameters and other variables
+  - details appear in the console, and the user gets a description of the error in the application window
+* removed commented out code displaying archaic notifications in the form of an alert
+  - removed possible sticking of content with a simplified message about will
+  - the user still gets a relatively detailed notification as a new "window" inside the application
+
+---------------------------
+
 v0.5.71 - fix display of higher indications of selected gallery and gallery list subpages, selection sliders got description on hover
 
 * v0.5.71 -- [2022-03-10]
@@ -23,7 +42,7 @@ v0.5.71 - fix display of higher indications of selected gallery and gallery list
 * improved display of longer/larger gallery numbers and gallery list subpages
 
 -- index.php
-* displaying a description for a slider (correct use of attributes for an existing description) 
+* displaying a description for a slider (correct use of attributes for an existing description)
 
 ---------------------------
 

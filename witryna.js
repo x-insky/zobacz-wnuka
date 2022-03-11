@@ -88,10 +88,10 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 UkryjRamkeLadowania('podstrona');  // jawne ukrycie, niezależnie od wyniku + wywalenie tego z treści wewnętrznej GenerujPodstronyGalerii()  
                     if ( status === "success" ) // ("success" / "notmodified" / "error" / "timeout" / "parsererror")
                     {
-                    // logowanie sukcesu ;) -- do tego operacja nad obiektem 'dane', przekazano atrybut 'ktoraPodstrona' zawierający numer podstrony galerii do wyświetlenia 
-                    console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania '" 
+                        // logowanie sukcesu ;) -- do tego operacja nad obiektem 'dane', przekazano atrybut 'ktoraPodstrona' zawierający numer podstrony galerii do wyświetlenia 
+                    /* console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania '" 
                                 + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny 
-                                + "'. Docelowo ma być wyświetlona " + dane.ktoraPodstrona + ". podstrona galerii.");
+                                + "'. Docelowo ma być wyświetlona " + dane.ktoraPodstrona + ". podstrona galerii.");    */
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {
                         // WYKONAJ DALSZE FUNKCJE, zależne od SUKCESU zaczytania lub nie	
@@ -115,13 +115,15 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     }
                     else    // każdy inny niż "success" stanowi "zły przebieg"
                     {
+                        // logowanie porażki ładowania "PODSTRONA"
+                    console.log( "NIE UDAŁO SIĘ załadować PODSTRONY - load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania '" 
+                                + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny 
+                                + "'. Docelowo ma być wyświetlona " + dane.ktoraPodstrona + ". podstrona galerii.");
+
                     // to nie powinno się generalnie wywoływać, lepiej odwołać się do obsługi błędu w CATCH    
-                    /* var komunikatOBledzie = "Problem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
-                    $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); */
                     var nrGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",a") + 2 ) ), 
                         nrPodstronyGalerii = dane.ktoraPodstrona; 
                         // nrGalerii = adres_zasobu 
-                    //console.log('Podstrona - odnośnik niezaładowany: ' + adres_zasobu + ", podstrona " + dane.ktoraPodstrona);    
                     var komunikatOBledzie = "Nie udało się załadować wskazanej podstrony nr <strong>" + nrPodstronyGalerii + "</strong> dla galerii o numerze <strong>" + nrGalerii + "</strong>. Spróbuj ponownie.<br />Diagnostyka: kod błędu nr " + xhr.status + " (" + xhr.statusText.toLowerCase() + ") o statusie \"" + status + "\".";    
                     GenerujPowiadomienieOBledzie({ tytul : 'Problem z załadowaniem galerii #' + nrGalerii +'!', tresc : komunikatOBledzie });    // działa lepeij niż wcześniejszy standard
                     PrzewinEkranDoElementu('div.blad', 500);
@@ -141,7 +143,6 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             catch (err2) 
             {
             var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
-            //alert(komunikatOBledzie);	
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
             PrzewinEkranDoElementu('p.blad', 500);    
             }
@@ -156,7 +157,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                                                 adresZasobu : adres_zasobu,
                                                 elementWitryny : element_witryny,
                                                 tag : tag_podmieniany });
-                console.info( g_niewyslane_podstrony ); // taka stopklatka do przeglądu (brak dostępu z zewnatrz do zmiennej)
+                // console.info( g_niewyslane_podstrony ); // taka stopklatka do przeglądu (brak dostępu z zewnatrz do zmiennej)
                 }
 
             try 
@@ -168,11 +169,10 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     {
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {
-                        // alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
-                        // logowanie sukcesu ;)
-                        console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
+                            // logowanie sukcesu ;)
+                        // console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
                         //var podmieniona_zawartosc = $(tag_podmieniany).html();
-                        //$(tag_podmieniany).html( unescape(encodeURIComponent(podmieniona_zawartosc)) );	// jednao z wielu mozliwych zamian kodowania
+                        //$(tag_podmieniany).html( unescape(encodeURIComponent(podmieniona_zawartosc)) );	// jednao z wielu możliwych zamian kodowania
 
                     // ... // przetwarzanie spisu treści
                         NaprawBrakujaceSRCwKontenerze( tag_podmieniany );
@@ -199,14 +199,16 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         }
                     }
                     else
-                    { 
+                    {
+                            // logowanie porażki ładowania "SPIS_GALERII"
+                        console.log( "NIE UDAŁO SIĘ załadować SPISU_GALERII - load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
+
                         // różnicowanie błędu względem pierwszego przebiegu (wystarczy maksymalnie jeden AND z kolejnych) lub odwołać się do ilości błędów (może wprowadzić chaos przy kasowaniu błędów!!!)
                         if ( ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ( g_zaczytana_ilosc_paginacji_galerii == 0 ) && ( g_biezaca_pozycja_galerii == 0 ) && ( g_ilosc_zaczytanych_galerii == 0 ) )  
-                        {       // prawdopodobnie ten błąd się juz nie wywoła, bo brak lub błędna zzawartość źródłowa wcześniej wywoła inny; dla pewności to samo działanie  
-                        //$('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button class="odswiez_strone">Odśwież stronę</button> </p>' );
+                        {       // prawdopodobnie ten błąd się juz nie wywoła, bo brak lub błędna zzawartość źródłowa wcześniej wywoła inny; dla pewności to samo działanie
                         GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Brak możliwości nawigacja po witrynie - konieczność przeładowania zawartości witryny.<br />Spróbuj za chwilę &ndash; naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true, ikonaZamykania : false });    
 
-    /*                    $('#galeria_spis').on('click', '.odswiez_strone', function () {   // nowa obsługa zdarzenia dla nowego elementu -- tu się wykona jako pierwsza
+                        /*  $('#galeria_spis').on('click', '.odswiez_strone', function () {   // nowa obsługa zdarzenia dla nowego elementu -- tu się wykona jako pierwsza
                             location.reload(); 
                         }); // on-click-END*/
 
@@ -285,7 +287,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {
                         UsunBrakujaceSRCwIMGPozaPrzekazanym ( tag_podmieniany, dane.pozycjaWGalerii );    
-                        console.log( "Ładowanie przed rekurencją (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
+                        // console.log("Ładowanie przed rekurencją (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
 
                             if ( $('#nazwa_galerii').hasClass('szara-zawartosc') ) $('#nazwa_galerii').removeClass('szara-zawartosc'); 
 
@@ -305,6 +307,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         }
                         else
                         {
+                            // bardziej szczegółowe logowanie błędu + oficjalna treść w przeglądarce 
+                        console.log("Ładowanie przed rekurencją NIE UDAŁO SIĘ (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
                         GenerujDomyslnePowiadomienieOBledzieSerwera( xhr, status );
                         }
                     }
@@ -349,7 +353,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     {
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {
-                        console.log( "Pierwsze ładowanie podwójnie zapętlone (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
+                        // console.log( "Pierwsze ładowanie podwójnie zapętlone (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
 
                         //UsunBrakujaceSRCwKontenerze ( element_witryny );  // ponowne kasowanie, teraz wszystkie bez wyjątku wylatują elementy  
 
@@ -372,6 +376,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         }
                         else
                         {
+                            // bardziej szczegółowe logowanie błędu + oficjalna treść błędu w przeglądarce 
+                        console.log( "Pierwsze ładowanie podwójnie zapętlone NIE UDAŁO SIĘ (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
                         GenerujDomyslnePowiadomienieOBledzieSerwera( xhr, status );
                         }    
                     }
@@ -416,7 +422,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {    
                             // dane.wybranaPaginacja
-                        console.log( "Ładowanie (" + rodzaj_dzialania + ") dla wybranego " + dane.wybranaPaginacja + " elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
+                        // console.log( "Ładowanie (" + rodzaj_dzialania + ") dla wybranego " + dane.wybranaPaginacja + " elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
                         //PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -200);
                         $('div#wybrane_galerie_spis').removeClass('szara-zawartosc');    
                         // Generuj spis wybranej galerii (podstrony spisu treści)
@@ -429,15 +435,13 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         }
                         else
                         {
+                            // bardziej szczegółowy opis w konsoli, reszta w ramce witryny
+                        console.log( "NIE UDAŁO SIĘ ładowanie (" + rodzaj_dzialania + ") dla wybranego " + dane.wybranaPaginacja + " elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
                         GenerujDomyslnePowiadomienieOBledzieSerwera( xhr, status );
                         }    
                     }
                     else    // cokolwiek, głownie "error"
                     {
-
-                    //var komunikatOBledzie = "Nie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
-                    //alert(komunikatOBledzie);
-                    //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
                     var nrPodstronySpisuGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );  // określona podstrona spisu treści jako parametr
                     var komunikatOBledzie = "Problem z załadowaniem grupy galerii, wskazanej podstrony o numerze <strong>" + nrPodstronySpisuGalerii + "</strong>! Ponów próbę.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
                     GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej #<strong>' + nrPodstronySpisuGalerii + '</strong> grupy galerii!', tresc : komunikatOBledzie });
@@ -459,14 +463,12 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             break;	               
             
 
-        default:    // gdyby się nie udało dowolne żądanie to wystawić domyślny komunikat o błędzie (raczej niewykonalne, bo błędy żądań mają swoje powiadomienia) 
-            //var komunikatOBledzie = 'Wystąpił ogólny problem z żądaniem! (PARAMETRY - tag: ' + tag_podmieniany + ', domena: ' + adres_domeny + ', zasób: ' + adres_zasobu + ', elem: ' + element_witryny + ', działanie: ' +  rodzaj_dzialania + ') ... COŚ POSZŁO NIE TAK' ;
-            //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
+        default:
+                // gdyby się nie udało dowolne żądanie to wystawić domyślny komunikat o błędzie (raczej niewykonalne, bo błędy żądań mają swoje powiadomienia) 
             var komunikatOBledzie = 'Wystąpił ogólny problem z żądaniem! Logowanie parametrów żądania - tag: "' + tag_podmieniany + '", domena: "' + adres_domeny + '", zasób: "' + adres_zasobu + '", elem: "' + element_witryny + '", działanie: "' +  rodzaj_dzialania + '... COŚ POSZŁO NIE TAK.' ;
             GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania grupy galerii!', tresc : komunikatOBledzie });
             PrzewinEkranDoElementu('.blad', 500);     
-            //console.log(komunikatOBledzie);
-            //break;
+
     } //switch-rodzaj_dzialania-END
 	
 	
