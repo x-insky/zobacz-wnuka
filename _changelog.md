@@ -1,3 +1,18 @@
+v0.5.73 - fixing error message background
+
+* v0.5.73 - [2022-03-13]
+
+[F] FIXED
+
+-- witryna.js
+* unifying the names of the classes used in references to the DOM structure
+  - rename from 'blad_dolaczania' to 'error-attachments' in logic
+  - it concerns the body of the main function 'WczytajZewnetrznyHTMLdoTAGU' and the function called 'UsunKomunikatLubZmienNumeracjeWTresci' from there
+  - changes inside the 'GenerujPowiadomienieOBledzie' function
+* fixes: #90 - 'incorrect display of the error message'
+
+---------------------------
+
 v0.5.72 - loging to the console only for failure to load external content
 
 * v0.5.72 -- [2022-03-11]

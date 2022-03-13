@@ -184,7 +184,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                             g_suma_bledow_dolaczania--; // dekrementacja wywołanych błędów
                             // i tu modyfikacja wyświetlanych komunikatów lub ich ukrywanie ... 
                                 // ... wymaga uglobalnienia zmiennych z treścią wyswietlanych komunikatów lub powtarzanie się z generowniem zmiany komunikatu :/ 
-                            UsunKomunikatLubZmienNumeracjeWTresci ( '.blad_dolaczania' );  // tylko element, numeracja będzie odnaleziona
+                            UsunKomunikatLubZmienNumeracjeWTresci ( '.blad-dolaczenia' );  // tylko element, numeracja będzie odnaleziona
                             // AktualizujLubUkryjKomunikat( elementKomunikatu, krotnoscBledu ); // + tytul, tresc; ale to funkcja ma odszukać ostatni nr niepobrany i go zmienić
                             OdblokujPrzycisk( '#przywroc_niewczytane' );   // hardkod... lub to wstawić w tę funkcję powyżej
                             } 
@@ -216,7 +216,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         else    // kolejny błąd - zliczanie i wyświetlonie zmian dla kolejnych błędów transferu przy dołączaniu 
                         {
                             // zamiast odczytywać stan z witryny lepiej operować na wewnętrznych zmiennych      
-                        /* var ileRazyBlad = $('.blad_dolaczenia span').text();
+                        /* var ileRazyBlad = $('.blad-dolaczenia span').text();
                             if ( ileRazyBlad == "" ) ileRazyBlad = 0;
                         ileRazyBlad = parseInt( ileRazyBlad ) + 1; */
                         var nrPodstronyNiewczytanejGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );    
@@ -231,17 +231,17 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                                 + "</span></strong>. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "). Naciśnij poniższy przycisk, aby ponowić próbę załadowania.";
                         var tytulBledu = "Błąd w pobieraniu kolejnych elementów";    
 
-                        //var trescKomunikatu = '<p class="blad_dolaczany">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>';    
+                        //var trescKomunikatu = '<p class="blad-dolaczany">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>';    
                         //alert(komunikatOBledzie);
                             if ( g_suma_bledow_dolaczania > 1 )  // zmień istniejący element komunikatu
                             {
                             tytulBledu += ' x' + g_suma_bledow_dolaczania; // warunkowo dopisywana treść
                                 
                                 // po prostu zmieniać istniejący komunmikat o błędzie - inkrementacja wystapień
-                            $('.blad_dolaczenia').html( komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' ); // + jakaś klasa dla przycisku                                
+                            $('.blad-dolaczenia').html( komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' ); // + jakaś klasa dla przycisku                                
                                 // zmiana wybranych fragmentów w istniejących treściach dla drugiego (nowego) elementu... później z tego zrobić funkcję
-                            ZmienTrescKomunikatu( $('.blad_dolaczania'), tytulBledu, komunikatOBledzie );
-                        /*  var nowyKomunikatBledu = $('.blad_dolaczania');
+                            ZmienTrescKomunikatu( $('.blad-dolaczenia'), tytulBledu, komunikatOBledzie );
+                        /*  var nowyKomunikatBledu = $('.blad-dolaczenia');
                             nowyKomunikatBledu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
                             nowyKomunikatBledu.find('strong:first-of-type > span').text( g_suma_bledow_dolaczania );
                             nowyKomunikatBledu.addClass('animacja-zolty-blysk').find('strong:last-of-type > span').text( nrPodstronyNiewczytanejGalerii );    */
@@ -252,15 +252,15 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                             {
                              // generowanie pierwszego ulepszonego powiadomienia - tworzenie jego pierwszej instancji 
                                 
-                            // $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' + '</p>' );
+                            // $('#galeria_spis').prepend( '<p class="blad-dolaczenia">' + komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' + '</p>' );
                             GenerujPowiadomienieOBledzie({ tytul : tytulBledu, tresc : komunikatOBledzie, ikonaZamykania : false, 
-                                                          dodatkowaKlasa : "blad_dolaczania", przyciskAkcjiDolacz : true });
+                                                          dodatkowaKlasa : "blad-dolaczenia", przyciskAkcjiDolacz : true });
                             console.log('Generuję błąd dołączania po raz #' + g_suma_bledow_dolaczania + ' dla ' + nrPodstronyNiewczytanejGalerii 
                                         + ' niewczytanej podstrony spisu teści: ' + komunikatOBledzie );    
                             }
-                        $('.blad_dolaczenia').removeClass('animacja-zolty-blysk').height(); // usunięcie i bzdurny odczyt z DOM...
-                        $('.blad_dolaczenia').addClass('animacja-zolty-blysk');  // aby zmienić stan animacji -- od nowa      
-                        PrzewinEkranDoElementu('.blad_dolaczania', 500);    // przewijanie już do nowego (później dodanego) komunikatu 
+                        $('.blad-dolaczenia').removeClass('animacja-zolty-blysk').height(); // usunięcie i bzdurny odczyt z DOM...
+                        $('.blad-dolaczenia').addClass('animacja-zolty-blysk');  // aby zmienić stan animacji -- od nowa      
+                        PrzewinEkranDoElementu('.blad-dolaczenia', 500);    // przewijanie już do nowego (później dodanego) komunikatu 
                         }   // if-END ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ...
                     }   // if-END ( status === "success" )
 
@@ -1771,8 +1771,8 @@ var opcjeDomyslne = {
     ikonaZamykania : true, 
         jednorazowy : true, // scalić to z powyższym (lub odwrotnie) bo ta sama flaga
     tryb : 'dodawanie', // dodawanie / zamiana / ... - też częściowo tożsame z tym co wyżej
-        nadanaKlasa : 'blad', // .blad / .blad_dolaczenia / .blad_odswiez
-        dodatkowaKlasa : '', // '' / .blad_dolaczenia / .blad_odswiez -- dwie powyższe do rezygnacji po precyzyjnej kategoryzacji przyciskow
+        nadanaKlasa : 'blad', // .blad / .blad-dolaczenia / .blad_odswiez
+        dodatkowaKlasa : '', // '' / .blad-dolaczenia / .blad_odswiez -- dwie powyższe do rezygnacji po precyzyjnej kategoryzacji przyciskow
     przyciskAkcjiOdswiez : false,
     trescPrzyciskuAkcjiOdswiez : 'Odśwież stronę',
     przyciskAkcjiDolacz : false,
@@ -1788,9 +1788,9 @@ budowanyElement = '<div class="' + opcje.nadanaKlasa;
     if ( opcje.animacja ) budowanyElement += " " + klasaAnimacji; // dopisanie elementu dodatkowej klasy z przypisaną animacją
     if ( opcje.dodatkowaKlasa ) budowanyElement += " " + opcje.dodatkowaKlasa;
 budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik  
-    + '<h2 class="blad_tytul">' + opcje.tytul + '</h2>'
-    + '<div class="blad_tresc">'
-    + '<div class="blad_ikona">!</div>';
+    + '<h2 class="blad-tytul">' + opcje.tytul + '</h2>'
+    + '<div class="blad-tresc">'
+    + '<div class="blad-ikona">!</div>';
     //    + '<p>Szczegóły powstałego błędu:<br />' // rezygnacja z "zajmowacza miejsca"
         if ( opcje.tryb == 'zamiana' )
         {
@@ -1817,7 +1817,7 @@ budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik
         }     
 budowanyElement += '</div>'; // zamykacz dla div.blad-tresc
     
-    /* if ( ( opcje.nadanaKlasa == 'blad_dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
+    /* if ( ( opcje.nadanaKlasa == 'blad-dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
     {
     budowanyElement = budowanyElement + '<button class="odswiez_strone">Odśwież stronę</button>' ;
     // +++  wstawienie przycisku do oświeżenia witryny
@@ -1825,7 +1825,7 @@ budowanyElement += '</div>'; // zamykacz dla div.blad-tresc
 /*        if ( ( opcje.przyciskAkcji ) && ( opcje.dodatkowaKlasa != '' ) )    // wymaga dodania przycisku do odświeżenia strony
     {
         // działania zależne od ewentualnej dołączonej klasy (dwie pozycje wzajemnie wykluczające się) -- przy ewentualnym trzecim (hmm... czwartym) rodzaju błędu zastosować 'switch'
-        if ( opcje.dodatkowaKlasa == 'blad_dolaczenia' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiDolaczanie + '</button>';
+        if ( opcje.dodatkowaKlasa == 'blad-dolaczenia' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiDolaczanie + '</button>';
         else if ( opcje.dodatkowaKlasa == 'blad_odswiez' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiOdswiez + '</button>'; 
     // +++  wstawienie przycisku do oświeżenia witryny
     }  */  
