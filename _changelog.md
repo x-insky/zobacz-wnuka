@@ -1,3 +1,25 @@
+v0.5.74 - corrected the structure of  error message after its content update (message repeated)
+
+* v0.5.74 - [2022-03-14]
+
+[*] MODIFIED
+
+-- witryna.js
+* quick upgrade to yesterday's solution to the problem
+  - it concerns the interior of the main function "WczytajZewnetrznyHTMLdoTAGU"
+  - standardization of class names for displaying error messages eliminated the use of similar class names
+  - there were problems after each refreshing the content of the already displayed message grouping unsuccessful adding of subsequent gallery subpages
+* removing duplicate actions modifying the content of an existing message
+  - removed "stray modifying instructions"
+  - "ZmienTrescKomunikatu" function as an appropriate method to change the message content
+* detailed description of the problem: previously there were two similar sounding classes (typo?) assigned to one error notification element
+  - the same element was referred to by both modifying codes one after the other
+  - the first modification had changed and simplified the structure of the element, but was followed by the correct replacement of the content and structure of the element
+  - the first modifications were lost anyway, but after changing to the same class name, this first modification was destructive to the structure of the notification element
+* removing unnecessary comments with the code inside the "ZmienTrescKomunikatu" function
+
+---------------------------
+
 v0.5.73 - fixing error message background
 
 * v0.5.73 - [2022-03-13]

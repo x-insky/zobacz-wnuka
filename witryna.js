@@ -194,14 +194,14 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 // z racji dodawanych treści i jednorazowych zapytań wymagane jest zachowanie "nieudanych naciśnięć", jeżeli gdzieś po drodze wystapiło coś nie tak z odpowiedzią z serwera     
                 // + umożliwienie ponownego wywołania każdego z niewykonanych zapytań w komunikacie o błędzie -- jak w błędnej z założenia ścieżce
                         GenerujDomyslnePowiadomienieOBledzieSerwera( xhr, status );
-                            
-                            
+                        
+
                         }
                     }
                     else
                     {
-                            // logowanie porażki ładowania "SPIS_GALERII"
-                        console.log( "NIE UDAŁO SIĘ załadować SPISU_GALERII - load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
+                        // logowanie porażki ładowania "SPIS_GALERII"
+                    console.log( "NIE UDAŁO SIĘ załadować SPISU_GALERII - load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
 
                         // różnicowanie błędu względem pierwszego przebiegu (wystarczy maksymalnie jeden AND z kolejnych) lub odwołać się do ilości błędów (może wprowadzić chaos przy kasowaniu błędów!!!)
                         if ( ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ( g_zaczytana_ilosc_paginacji_galerii == 0 ) && ( g_biezaca_pozycja_galerii == 0 ) && ( g_ilosc_zaczytanych_galerii == 0 ) )  
@@ -215,7 +215,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         }
                         else    // kolejny błąd - zliczanie i wyświetlonie zmian dla kolejnych błędów transferu przy dołączaniu 
                         {
-                            // zamiast odczytywać stan z witryny lepiej operować na wewnętrznych zmiennych      
+                            // zamiast odczytywać stan z witryny lepiej operować na wewnętrznych zmiennych lub odczytywać przy każdym żądaniu      
                         /* var ileRazyBlad = $('.blad-dolaczenia span').text();
                             if ( ileRazyBlad == "" ) ileRazyBlad = 0;
                         ileRazyBlad = parseInt( ileRazyBlad ) + 1; */
@@ -231,32 +231,20 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                                 + "</span></strong>. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "). Naciśnij poniższy przycisk, aby ponowić próbę załadowania.";
                         var tytulBledu = "Błąd w pobieraniu kolejnych elementów";    
 
-                        //var trescKomunikatu = '<p class="blad-dolaczany">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>';    
-                        //alert(komunikatOBledzie);
                             if ( g_suma_bledow_dolaczania > 1 )  // zmień istniejący element komunikatu
                             {
                             tytulBledu += ' x' + g_suma_bledow_dolaczania; // warunkowo dopisywana treść
-                                
                                 // po prostu zmieniać istniejący komunmikat o błędzie - inkrementacja wystapień
-                            $('.blad-dolaczenia').html( komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' ); // + jakaś klasa dla przycisku                                
-                                // zmiana wybranych fragmentów w istniejących treściach dla drugiego (nowego) elementu... później z tego zrobić funkcję
-                            ZmienTrescKomunikatu( $('.blad-dolaczenia'), tytulBledu, komunikatOBledzie );
-                        /*  var nowyKomunikatBledu = $('.blad-dolaczenia');
-                            nowyKomunikatBledu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
-                            nowyKomunikatBledu.find('strong:first-of-type > span').text( g_suma_bledow_dolaczania );
-                            nowyKomunikatBledu.addClass('animacja-zolty-blysk').find('strong:last-of-type > span').text( nrPodstronyNiewczytanejGalerii );    */
+                             ZmienTrescKomunikatu( '.blad-dolaczenia', tytulBledu, komunikatOBledzie );
                                 // rozbicie powyższego na dwa/trzy, aby zabrać i nadać tę samą klasę dla ponownego wyswietlenia animacji (.end() nie daje rady w jednym łańcuchu)      
-                                
                             }
                             else // pierwsze generowanie komunikatu do sumowania niewyswietlonych podstron
                             {
-                             // generowanie pierwszego ulepszonego powiadomienia - tworzenie jego pierwszej instancji 
-                                
-                            // $('#galeria_spis').prepend( '<p class="blad-dolaczenia">' + komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' + '</p>' );
+                                // generowanie pierwszego ulepszonego powiadomienia - tworzenie jego pierwszej instancji 
                             GenerujPowiadomienieOBledzie({ tytul : tytulBledu, tresc : komunikatOBledzie, ikonaZamykania : false, 
                                                           dodatkowaKlasa : "blad-dolaczenia", przyciskAkcjiDolacz : true });
-                            console.log('Generuję błąd dołączania po raz #' + g_suma_bledow_dolaczania + ' dla ' + nrPodstronyNiewczytanejGalerii 
-                                        + ' niewczytanej podstrony spisu teści: ' + komunikatOBledzie );    
+                            console.log('Generuję błąd dołączania po raz ' + g_suma_bledow_dolaczania + '. dla ' + nrPodstronyNiewczytanejGalerii 
+                                        + '. niewczytanej podstrony spisu teści: ' + komunikatOBledzie );    
                             }
                         $('.blad-dolaczenia').removeClass('animacja-zolty-blysk').height(); // usunięcie i bzdurny odczyt z DOM...
                         $('.blad-dolaczenia').addClass('animacja-zolty-blysk');  // aby zmienić stan animacji -- od nowa      
@@ -1772,7 +1760,7 @@ var opcjeDomyslne = {
         jednorazowy : true, // scalić to z powyższym (lub odwrotnie) bo ta sama flaga
     tryb : 'dodawanie', // dodawanie / zamiana / ... - też częściowo tożsame z tym co wyżej
         nadanaKlasa : 'blad', // .blad / .blad-dolaczenia / .blad_odswiez
-        dodatkowaKlasa : '', // '' / .blad-dolaczenia / .blad_odswiez -- dwie powyższe do rezygnacji po precyzyjnej kategoryzacji przyciskow
+        dodatkowaKlasa : false, // '' / .blad-dolaczenia / .blad_odswiez -- dwie powyższe do rezygnacji po precyzyjnej kategoryzacji przyciskow
     przyciskAkcjiOdswiez : false,
     trescPrzyciskuAkcjiOdswiez : 'Odśwież stronę',
     przyciskAkcjiDolacz : false,
@@ -1862,8 +1850,8 @@ function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTres
     elementKomunikatu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
     elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
         
-    elementKomunikatu.find('h2.blad-tytul').html( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
-    elementKomunikatu.find('div.blad-tresc p').html( komunikatTresc ); 
+    elementKomunikatu.find('h2.blad-tytul').text( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
+    elementKomunikatu.find('div.blad-tresc > p').html( komunikatTresc ); 
     }
 }   // ZmienTrescKomunikatu-END
     
@@ -1894,7 +1882,7 @@ function UsunKomunikatLubZmienNumeracjeWTresci ( elementKomunikatu )    // usuwa
         poprzedniBladPodstrony = PobierzOstatnieNieodebrane().adresZasobu;
         poprzedniBladPodstrony = parseInt( poprzedniBladPodstrony.substr( poprzedniBladPodstrony.lastIndexOf(",p") + 2 ) ); // numer podstrony niewczytanej
         elementKomunikatu.find('strong:last-of-type > span').text( poprzedniBladPodstrony );
-        tekstTytulu = elementKomunikatu.find('.blad-tytul').text(); // odczytanie tytułu komunkatu (choć niemal zawsze stała, inny postfiks)
+        tekstTytulu = elementKomunikatu.find('.blad-tytul').text(); // odczytanie tytułu komunikatu (choć niemal zawsze stała, inny postfiks)
             
             if ( g_suma_bledow_dolaczania == 1 )   // usuń "x" i krotność w tytule
             {    
