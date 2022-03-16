@@ -88,10 +88,10 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 UkryjRamkeLadowania('podstrona');  // jawne ukrycie, niezależnie od wyniku + wywalenie tego z treści wewnętrznej GenerujPodstronyGalerii()  
                     if ( status === "success" ) // ("success" / "notmodified" / "error" / "timeout" / "parsererror")
                     {
-                    // logowanie sukcesu ;) -- do tego operacja nad obiektem 'dane', przekazano atrybut 'ktoraPodstrona' zawierający numer podstrony galerii do wyświetlenia 
-                    console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania '" 
+                        // logowanie sukcesu ;) -- do tego operacja nad obiektem 'dane', przekazano atrybut 'ktoraPodstrona' zawierający numer podstrony galerii do wyświetlenia 
+                    /* console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania '" 
                                 + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny 
-                                + "'. Docelowo ma być wyświetlona " + dane.ktoraPodstrona + ". podstrona galerii.");
+                                + "'. Docelowo ma być wyświetlona " + dane.ktoraPodstrona + ". podstrona galerii.");    */
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {
                         // WYKONAJ DALSZE FUNKCJE, zależne od SUKCESU zaczytania lub nie	
@@ -115,13 +115,15 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     }
                     else    // każdy inny niż "success" stanowi "zły przebieg"
                     {
+                        // logowanie porażki ładowania "PODSTRONA"
+                    console.log( "NIE UDAŁO SIĘ załadować PODSTRONY - load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania '" 
+                                + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny 
+                                + "'. Docelowo ma być wyświetlona " + dane.ktoraPodstrona + ". podstrona galerii.");
+
                     // to nie powinno się generalnie wywoływać, lepiej odwołać się do obsługi błędu w CATCH    
-                    /* var komunikatOBledzie = "Problem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;
-                    $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); */
                     var nrGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",a") + 2 ) ), 
                         nrPodstronyGalerii = dane.ktoraPodstrona; 
                         // nrGalerii = adres_zasobu 
-                    //console.log('Podstrona - odnośnik niezaładowany: ' + adres_zasobu + ", podstrona " + dane.ktoraPodstrona);    
                     var komunikatOBledzie = "Nie udało się załadować wskazanej podstrony nr <strong>" + nrPodstronyGalerii + "</strong> dla galerii o numerze <strong>" + nrGalerii + "</strong>. Spróbuj ponownie.<br />Diagnostyka: kod błędu nr " + xhr.status + " (" + xhr.statusText.toLowerCase() + ") o statusie \"" + status + "\".";    
                     GenerujPowiadomienieOBledzie({ tytul : 'Problem z załadowaniem galerii #' + nrGalerii +'!', tresc : komunikatOBledzie });    // działa lepeij niż wcześniejszy standard
                     PrzewinEkranDoElementu('div.blad', 500);
@@ -141,7 +143,6 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             catch (err2) 
             {
             var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z załadowaniem podstrony galerii! Spróbuj ponownie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
-            //alert(komunikatOBledzie);	
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
             PrzewinEkranDoElementu('p.blad', 500);    
             }
@@ -156,7 +157,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                                                 adresZasobu : adres_zasobu,
                                                 elementWitryny : element_witryny,
                                                 tag : tag_podmieniany });
-                console.info( g_niewyslane_podstrony ); // taka stopklatka do przeglądu (brak dostępu z zewnatrz do zmiennej)
+                // console.info( g_niewyslane_podstrony ); // taka stopklatka do przeglądu (brak dostępu z zewnatrz do zmiennej)
                 }
 
             try 
@@ -168,11 +169,10 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     {
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {
-                        // alert( "LOAD się udała dla zapytania\n" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + pelny_adres + g_element_zewnetrzny );
-                        // logowanie sukcesu ;)
-                        console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
+                            // logowanie sukcesu ;)
+                        // console.log( "wykonano load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
                         //var podmieniona_zawartosc = $(tag_podmieniany).html();
-                        //$(tag_podmieniany).html( unescape(encodeURIComponent(podmieniona_zawartosc)) );	// jednao z wielu mozliwych zamian kodowania
+                        //$(tag_podmieniany).html( unescape(encodeURIComponent(podmieniona_zawartosc)) );	// jednao z wielu możliwych zamian kodowania
 
                     // ... // przetwarzanie spisu treści
                         NaprawBrakujaceSRCwKontenerze( tag_podmieniany );
@@ -184,7 +184,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                             g_suma_bledow_dolaczania--; // dekrementacja wywołanych błędów
                             // i tu modyfikacja wyświetlanych komunikatów lub ich ukrywanie ... 
                                 // ... wymaga uglobalnienia zmiennych z treścią wyswietlanych komunikatów lub powtarzanie się z generowniem zmiany komunikatu :/ 
-                            UsunKomunikatLubZmienNumeracjeWTresci ( '.blad_dolaczania' );  // tylko element, numeracja będzie odnaleziona
+                            UsunKomunikatLubZmienNumeracjeWTresci ( '.blad-dolaczenia' );  // tylko element, numeracja będzie odnaleziona
                             // AktualizujLubUkryjKomunikat( elementKomunikatu, krotnoscBledu ); // + tytul, tresc; ale to funkcja ma odszukać ostatni nr niepobrany i go zmienić
                             OdblokujPrzycisk( '#przywroc_niewczytane' );   // hardkod... lub to wstawić w tę funkcję powyżej
                             } 
@@ -194,27 +194,29 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                 // z racji dodawanych treści i jednorazowych zapytań wymagane jest zachowanie "nieudanych naciśnięć", jeżeli gdzieś po drodze wystapiło coś nie tak z odpowiedzią z serwera     
                 // + umożliwienie ponownego wywołania każdego z niewykonanych zapytań w komunikacie o błędzie -- jak w błędnej z założenia ścieżce
                         GenerujDomyslnePowiadomienieOBledzieSerwera( xhr, status );
-                            
-                            
+                        
+
                         }
                     }
                     else
-                    { 
+                    {
+                        // logowanie porażki ładowania "SPIS_GALERII"
+                    console.log( "NIE UDAŁO SIĘ załadować SPISU_GALERII - load(" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
+
                         // różnicowanie błędu względem pierwszego przebiegu (wystarczy maksymalnie jeden AND z kolejnych) lub odwołać się do ilości błędów (może wprowadzić chaos przy kasowaniu błędów!!!)
                         if ( ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ( g_zaczytana_ilosc_paginacji_galerii == 0 ) && ( g_biezaca_pozycja_galerii == 0 ) && ( g_ilosc_zaczytanych_galerii == 0 ) )  
-                        {       // prawdopodobnie ten błąd się juz nie wywoła, bo brak lub błędna zzawartość źródłowa wcześniej wywoła inny; dla pewności to samo działanie  
-                        //$('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej. <button class="odswiez_strone">Odśwież stronę</button> </p>' );
+                        {       // prawdopodobnie ten błąd się juz nie wywoła, bo brak lub błędna zzawartość źródłowa wcześniej wywoła inny; dla pewności to samo działanie
                         GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Brak możliwości nawigacja po witrynie - konieczność przeładowania zawartości witryny.<br />Spróbuj za chwilę &ndash; naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true, ikonaZamykania : false });    
 
-    /*                    $('#galeria_spis').on('click', '.odswiez_strone', function () {   // nowa obsługa zdarzenia dla nowego elementu -- tu się wykona jako pierwsza
+                        /*  $('#galeria_spis').on('click', '.odswiez_strone', function () {   // nowa obsługa zdarzenia dla nowego elementu -- tu się wykona jako pierwsza
                             location.reload(); 
                         }); // on-click-END*/
 
                         }
                         else    // kolejny błąd - zliczanie i wyświetlonie zmian dla kolejnych błędów transferu przy dołączaniu 
                         {
-                            // zamiast odczytywać stan z witryny lepiej operować na wewnętrznych zmiennych      
-                        /* var ileRazyBlad = $('.blad_dolaczenia span').text();
+                            // zamiast odczytywać stan z witryny lepiej operować na wewnętrznych zmiennych lub odczytywać przy każdym żądaniu      
+                        /* var ileRazyBlad = $('.blad-dolaczenia span').text();
                             if ( ileRazyBlad == "" ) ileRazyBlad = 0;
                         ileRazyBlad = parseInt( ileRazyBlad ) + 1; */
                         var nrPodstronyNiewczytanejGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );    
@@ -229,36 +231,24 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                                 + "</span></strong>. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + "). Naciśnij poniższy przycisk, aby ponowić próbę załadowania.";
                         var tytulBledu = "Błąd w pobieraniu kolejnych elementów";    
 
-                        //var trescKomunikatu = '<p class="blad_dolaczany">' + komunikatOBledzie + ' <button>Spróbuj ponownie</button>' + '</p>';    
-                        //alert(komunikatOBledzie);
                             if ( g_suma_bledow_dolaczania > 1 )  // zmień istniejący element komunikatu
                             {
                             tytulBledu += ' x' + g_suma_bledow_dolaczania; // warunkowo dopisywana treść
-                                
                                 // po prostu zmieniać istniejący komunmikat o błędzie - inkrementacja wystapień
-                            $('.blad_dolaczenia').html( komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' ); // + jakaś klasa dla przycisku                                
-                                // zmiana wybranych fragmentów w istniejących treściach dla drugiego (nowego) elementu... później z tego zrobić funkcję
-                            ZmienTrescKomunikatu( $('.blad_dolaczania'), tytulBledu, komunikatOBledzie );
-                        /*  var nowyKomunikatBledu = $('.blad_dolaczania');
-                            nowyKomunikatBledu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
-                            nowyKomunikatBledu.find('strong:first-of-type > span').text( g_suma_bledow_dolaczania );
-                            nowyKomunikatBledu.addClass('animacja-zolty-blysk').find('strong:last-of-type > span').text( nrPodstronyNiewczytanejGalerii );    */
+                             ZmienTrescKomunikatu( '.blad-dolaczenia', tytulBledu, komunikatOBledzie );
                                 // rozbicie powyższego na dwa/trzy, aby zabrać i nadać tę samą klasę dla ponownego wyswietlenia animacji (.end() nie daje rady w jednym łańcuchu)      
-                                
                             }
                             else // pierwsze generowanie komunikatu do sumowania niewyswietlonych podstron
                             {
-                             // generowanie pierwszego ulepszonego powiadomienia - tworzenie jego pierwszej instancji 
-                                
-                            // $('#galeria_spis').prepend( '<p class="blad_dolaczenia">' + komunikatOBledzieOld + ' <button>Spróbuj ponownie</button>' + '</p>' );
+                                // generowanie pierwszego ulepszonego powiadomienia - tworzenie jego pierwszej instancji 
                             GenerujPowiadomienieOBledzie({ tytul : tytulBledu, tresc : komunikatOBledzie, ikonaZamykania : false, 
-                                                          dodatkowaKlasa : "blad_dolaczania", przyciskAkcjiDolacz : true });
-                            console.log('Generuję błąd dołączania po raz #' + g_suma_bledow_dolaczania + ' dla ' + nrPodstronyNiewczytanejGalerii 
-                                        + ' niewczytanej podstrony spisu teści: ' + komunikatOBledzie );    
+                                                          dodatkowaKlasa : "blad-dolaczenia", przyciskAkcjiDolacz : true });
+                            console.log('Generuję błąd dołączania po raz ' + g_suma_bledow_dolaczania + '. dla ' + nrPodstronyNiewczytanejGalerii 
+                                        + '. niewczytanej podstrony spisu teści: ' + komunikatOBledzie );    
                             }
-                        $('.blad_dolaczenia').removeClass('animacja-zolty-blysk').height(); // usunięcie i bzdurny odczyt z DOM...
-                        $('.blad_dolaczenia').addClass('animacja-zolty-blysk');  // aby zmienić stan animacji -- od nowa      
-                        PrzewinEkranDoElementu('.blad_dolaczania', 500);    // przewijanie już do nowego (później dodanego) komunikatu 
+                        $('.blad-dolaczenia').removeClass('animacja-zolty-blysk').height(); // usunięcie i bzdurny odczyt z DOM...
+                        $('.blad-dolaczenia').addClass('animacja-zolty-blysk');  // aby zmienić stan animacji -- od nowa      
+                        PrzewinEkranDoElementu('.blad-dolaczenia', 500);    // przewijanie już do nowego (później dodanego) komunikatu 
                         }   // if-END ( g_ilosc_wszystkich_paginacji_galerii == 0 ) && ...
                     }   // if-END ( status === "success" )
 
@@ -285,7 +275,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {
                         UsunBrakujaceSRCwIMGPozaPrzekazanym ( tag_podmieniany, dane.pozycjaWGalerii );    
-                        console.log( "Ładowanie przed rekurencją (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
+                        // console.log("Ładowanie przed rekurencją (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
 
                             if ( $('#nazwa_galerii').hasClass('szara-zawartosc') ) $('#nazwa_galerii').removeClass('szara-zawartosc'); 
 
@@ -305,6 +295,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         }
                         else
                         {
+                            // bardziej szczegółowe logowanie błędu + oficjalna treść w przeglądarce 
+                        console.log("Ładowanie przed rekurencją NIE UDAŁO SIĘ (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_domeny + adres_zasobu + element_witryny +"\'");
                         GenerujDomyslnePowiadomienieOBledzieSerwera( xhr, status );
                         }
                     }
@@ -349,7 +341,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                     {
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {
-                        console.log( "Pierwsze ładowanie podwójnie zapętlone (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
+                        // console.log( "Pierwsze ładowanie podwójnie zapętlone (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
 
                         //UsunBrakujaceSRCwKontenerze ( element_witryny );  // ponowne kasowanie, teraz wszystkie bez wyjątku wylatują elementy  
 
@@ -372,6 +364,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         }
                         else
                         {
+                            // bardziej szczegółowe logowanie błędu + oficjalna treść błędu w przeglądarce 
+                        console.log( "Pierwsze ładowanie podwójnie zapętlone NIE UDAŁO SIĘ (" + rodzaj_dzialania + ") dla elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
                         GenerujDomyslnePowiadomienieOBledzieSerwera( xhr, status );
                         }    
                     }
@@ -416,7 +410,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {    
                             // dane.wybranaPaginacja
-                        console.log( "Ładowanie (" + rodzaj_dzialania + ") dla wybranego " + dane.wybranaPaginacja + " elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
+                        // console.log( "Ładowanie (" + rodzaj_dzialania + ") dla wybranego " + dane.wybranaPaginacja + " elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
                         //PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -200);
                         $('div#wybrane_galerie_spis').removeClass('szara-zawartosc');    
                         // Generuj spis wybranej galerii (podstrony spisu treści)
@@ -429,15 +423,13 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         }
                         else
                         {
+                            // bardziej szczegółowy opis w konsoli, reszta w ramce witryny
+                        console.log( "NIE UDAŁO SIĘ ładowanie (" + rodzaj_dzialania + ") dla wybranego " + dane.wybranaPaginacja + " elementu '" + tag_podmieniany + "' dla zapytania \'" + g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny +"\'");
                         GenerujDomyslnePowiadomienieOBledzieSerwera( xhr, status );
                         }    
                     }
                     else    // cokolwiek, głownie "error"
                     {
-
-                    //var komunikatOBledzie = "Nie można dołączyć wybranej podstrony do spisu galerii! Powtórz działanie. STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")" ;    
-                    //alert(komunikatOBledzie);
-                    //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
                     var nrPodstronySpisuGalerii = parseInt( adres_zasobu.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );  // określona podstrona spisu treści jako parametr
                     var komunikatOBledzie = "Problem z załadowaniem grupy galerii, wskazanej podstrony o numerze <strong>" + nrPodstronySpisuGalerii + "</strong>! Ponów próbę.<br />STATUS: \"" + status + "\", XHR: " + xhr.status + " - " + xhr.statusText;    
                     GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania wybranej #<strong>' + nrPodstronySpisuGalerii + '</strong> grupy galerii!', tresc : komunikatOBledzie });
@@ -459,14 +451,12 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             break;	               
             
 
-        default:    // gdyby się nie udało dowolne żądanie to wystawić domyślny komunikat o błędzie (raczej niewykonalne, bo błędy żądań mają swoje powiadomienia) 
-            //var komunikatOBledzie = 'Wystąpił ogólny problem z żądaniem! (PARAMETRY - tag: ' + tag_podmieniany + ', domena: ' + adres_domeny + ', zasób: ' + adres_zasobu + ', elem: ' + element_witryny + ', działanie: ' +  rodzaj_dzialania + ') ... COŚ POSZŁO NIE TAK' ;
-            //$('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' ); 
+        default:
+                // gdyby się nie udało dowolne żądanie to wystawić domyślny komunikat o błędzie (raczej niewykonalne, bo błędy żądań mają swoje powiadomienia) 
             var komunikatOBledzie = 'Wystąpił ogólny problem z żądaniem! Logowanie parametrów żądania - tag: "' + tag_podmieniany + '", domena: "' + adres_domeny + '", zasób: "' + adres_zasobu + '", elem: "' + element_witryny + '", działanie: "' +  rodzaj_dzialania + '... COŚ POSZŁO NIE TAK.' ;
             GenerujPowiadomienieOBledzie({ tytul : 'Błąd pobierania grupy galerii!', tresc : komunikatOBledzie });
             PrzewinEkranDoElementu('.blad', 500);     
-            //console.log(komunikatOBledzie);
-            //break;
+
     } //switch-rodzaj_dzialania-END
 	
 	
@@ -1769,8 +1759,8 @@ var opcjeDomyslne = {
     ikonaZamykania : true, 
         jednorazowy : true, // scalić to z powyższym (lub odwrotnie) bo ta sama flaga
     tryb : 'dodawanie', // dodawanie / zamiana / ... - też częściowo tożsame z tym co wyżej
-        nadanaKlasa : 'blad', // .blad / .blad_dolaczenia / .blad_odswiez
-        dodatkowaKlasa : '', // '' / .blad_dolaczenia / .blad_odswiez -- dwie powyższe do rezygnacji po precyzyjnej kategoryzacji przyciskow
+        nadanaKlasa : 'blad', // .blad / .blad-dolaczenia / .blad_odswiez
+        dodatkowaKlasa : false, // '' / .blad-dolaczenia / .blad_odswiez -- dwie powyższe do rezygnacji po precyzyjnej kategoryzacji przyciskow
     przyciskAkcjiOdswiez : false,
     trescPrzyciskuAkcjiOdswiez : 'Odśwież stronę',
     przyciskAkcjiDolacz : false,
@@ -1786,9 +1776,9 @@ budowanyElement = '<div class="' + opcje.nadanaKlasa;
     if ( opcje.animacja ) budowanyElement += " " + klasaAnimacji; // dopisanie elementu dodatkowej klasy z przypisaną animacją
     if ( opcje.dodatkowaKlasa ) budowanyElement += " " + opcje.dodatkowaKlasa;
 budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik  
-    + '<h2 class="blad_tytul">' + opcje.tytul + '</h2>'
-    + '<div class="blad_tresc">'
-    + '<div class="blad_ikona">!</div>';
+    + '<h2 class="blad-tytul">' + opcje.tytul + '</h2>'
+    + '<div class="blad-tresc">'
+    + '<div class="blad-ikona">!</div>';
     //    + '<p>Szczegóły powstałego błędu:<br />' // rezygnacja z "zajmowacza miejsca"
         if ( opcje.tryb == 'zamiana' )
         {
@@ -1815,7 +1805,7 @@ budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik
         }     
 budowanyElement += '</div>'; // zamykacz dla div.blad-tresc
     
-    /* if ( ( opcje.nadanaKlasa == 'blad_dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
+    /* if ( ( opcje.nadanaKlasa == 'blad-dolaczenia' ) || ( opcje.nadanaKlasa == 'blad_odswiez' ) )    // wymaga dodania przycisku do odświeżenia strony
     {
     budowanyElement = budowanyElement + '<button class="odswiez_strone">Odśwież stronę</button>' ;
     // +++  wstawienie przycisku do oświeżenia witryny
@@ -1823,7 +1813,7 @@ budowanyElement += '</div>'; // zamykacz dla div.blad-tresc
 /*        if ( ( opcje.przyciskAkcji ) && ( opcje.dodatkowaKlasa != '' ) )    // wymaga dodania przycisku do odświeżenia strony
     {
         // działania zależne od ewentualnej dołączonej klasy (dwie pozycje wzajemnie wykluczające się) -- przy ewentualnym trzecim (hmm... czwartym) rodzaju błędu zastosować 'switch'
-        if ( opcje.dodatkowaKlasa == 'blad_dolaczenia' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiDolaczanie + '</button>';
+        if ( opcje.dodatkowaKlasa == 'blad-dolaczenia' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiDolaczanie + '</button>';
         else if ( opcje.dodatkowaKlasa == 'blad_odswiez' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiOdswiez + '</button>'; 
     // +++  wstawienie przycisku do oświeżenia witryny
     }  */  
@@ -1860,8 +1850,8 @@ function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTres
     elementKomunikatu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
     elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
         
-    elementKomunikatu.find('h2.blad-tytul').html( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
-    elementKomunikatu.find('div.blad-tresc p').html( komunikatTresc ); 
+    elementKomunikatu.find('h2.blad-tytul').text( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
+    elementKomunikatu.find('div.blad-tresc > p').html( komunikatTresc ); 
     }
 }   // ZmienTrescKomunikatu-END
     
@@ -1892,7 +1882,7 @@ function UsunKomunikatLubZmienNumeracjeWTresci ( elementKomunikatu )    // usuwa
         poprzedniBladPodstrony = PobierzOstatnieNieodebrane().adresZasobu;
         poprzedniBladPodstrony = parseInt( poprzedniBladPodstrony.substr( poprzedniBladPodstrony.lastIndexOf(",p") + 2 ) ); // numer podstrony niewczytanej
         elementKomunikatu.find('strong:last-of-type > span').text( poprzedniBladPodstrony );
-        tekstTytulu = elementKomunikatu.find('.blad-tytul').text(); // odczytanie tytułu komunkatu (choć niemal zawsze stała, inny postfiks)
+        tekstTytulu = elementKomunikatu.find('.blad-tytul').text(); // odczytanie tytułu komunikatu (choć niemal zawsze stała, inny postfiks)
             
             if ( g_suma_bledow_dolaczania == 1 )   // usuń "x" i krotność w tytule
             {    

@@ -1,3 +1,118 @@
+v0.5.74 - corrected the structure of  error message after its content update (message repeated)
+
+* v0.5.74 - [2022-03-14]
+
+[*] MODIFIED
+
+-- witryna.js
+* quick upgrade to yesterday's solution to the problem
+  - it concerns the interior of the main function "WczytajZewnetrznyHTMLdoTAGU"
+  - standardization of class names for displaying error messages eliminated the use of similar class names
+  - there were problems after each refreshing the content of the already displayed message grouping unsuccessful adding of subsequent gallery subpages
+* removing duplicate actions modifying the content of an existing message
+  - removed "stray modifying instructions"
+  - "ZmienTrescKomunikatu" function as an appropriate method to change the message content
+* detailed description of the problem: previously there were two similar sounding classes (typo?) assigned to one error notification element
+  - the same element was referred to by both modifying codes one after the other
+  - the first modification had changed and simplified the structure of the element, but was followed by the correct replacement of the content and structure of the element
+  - the first modifications were lost anyway, but after changing to the same class name, this first modification was destructive to the structure of the notification element
+* removing unnecessary comments with the code inside the "ZmienTrescKomunikatu" function
+
+---------------------------
+
+v0.5.73 - fixing error message background
+
+* v0.5.73 - [2022-03-13]
+
+[F] FIXED
+
+-- witryna.js
+* unifying the names of the classes used in references to the DOM structure
+  - rename from 'blad_dolaczania' to 'error-attachments' in logic
+  - it concerns the body of the main function 'WczytajZewnetrznyHTMLdoTAGU' and the function called 'UsunKomunikatLubZmienNumeracjeWTresci' from there
+  - changes inside the 'GenerujPowiadomienieOBledzie' function
+* fixes: #90 - 'incorrect display of the error message'
+
+---------------------------
+
+v0.5.72 - loging to the console only for failure to load external content
+
+* v0.5.72 -- [2022-03-11]
+
+[*] MODIFIED
+
+-- witryna.js
+* removed login entries in the console when is correct loading (remote reading success)
+  - concerns the logic of the main function 'WczytajZewnetrznyHTMLdoTAGU'
+  - no logging of detailed statuses and variable contents for successful reading of external contents
+* introduced logging in console for negative run inside the same function
+  - saving the values ​​of calling parameters and other variables
+  - details appear in the console, and the user gets a description of the error in the application window
+* removed commented out code displaying archaic notifications in the form of an alert
+  - removed possible sticking of content with a simplified message about will
+  - the user still gets a relatively detailed notification as a new "window" inside the application
+
+---------------------------
+
+v0.5.71 - fix display of higher indications of selected gallery and gallery list subpages, selection sliders got description on hover
+
+* v0.5.71 -- [2022-03-10]
+
+[*] MODIFIED
+
+-- index.php
+* replaced twice the invalid `alt` attribute with `title`
+  - the content of one of the attributes was updated
+* removing unnecessary HTML new lines or comments
+  - removed commented out php code displaying the contents of the global table
+  - the content of the above comment was visible explicitly as php code (but commented out!)
+  - ultimately moved as a comment inside the php block (no longer generated as HTML content)
+
+-- zlobek-styl.css
+* reduced side padding for text boxes with a range value selection
+  - longer / larger values ​​are not clipped by an invisible background
+  - information field with the display of the selected value via a slider, buttons or direct editing of the value
+
+[F] FIXED
+
+-- zlobek-styl.css
+* improved display of longer/larger gallery numbers and gallery list subpages
+
+-- index.php
+* displaying a description for a slider (correct use of attributes for an existing description)
+
+---------------------------
+
+v0.5.70 - summary of update v0.5.70
+
+* v0.5.70 -- [2022-03-09]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* repairs to all CSS content from header thru main area into footer
+* degradation the specificity for selectors
+  - mostly removed overpowered element type peceding the ID and its descendants
+  - removed double IDs inside one selector
+  - shortened selectors by deleting middle element class selectors, when ancestor and descendant were well defined
+* changed some ID attributes into classes if possible
+  - almost the same or similar names but changed notation with dashes instead of underscores
+  - modified references to the newly changed class names into HTML and JS
+* sorting of CSS attributes inside definitions
+  - some kind universal hierarchy of order for attributes (mainly for relatively complicated definitions)
+* cleaning up the definition of animations and its names
+  - removed unused definitions
+* removed unused code: old comments, ancient or doubled attributes, etc
+* removed also extra spaces, tabs an other whitepsaces and bad indenations
+
+-- index.php
+* updated references to the renamed class names
+
+-- witryna.js
+* updated references to the renamed class names for the logic
+
+---------------------------
+
 v0.5.70 - CSS cleaning, approach #4 - dynamically loading table of contents
 
 * v0.5.70 -- [2022-02-24]
@@ -3024,7 +3139,6 @@ v0.5.8 - jQuery lib v1 instead v3; Loading Content Notification System in use, s
   - used here to block commonly used standard actions of 'previous_page' ('[Alt]' + '[<-]' and also '[Backspace]') or 'next_page' ('[Alt]' + '[->]')
   - hack or improvement: pressing the '[Backspace]' key don't fires the blocking event inside any input text form fields (really the logic event is reversed)
 * placed the initial call of function 'InicjujRamkiLadowania' inside a auto runs block
-
 
 [*] MODIFIED
 
