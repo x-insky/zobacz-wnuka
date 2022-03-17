@@ -1706,13 +1706,14 @@ function PokazAnimacjeLadowaniaDlaPrzycisku () {
     // na bazie logiki wyświewtlania dowolnego z trzech powiadomień... ale tu wskazane i specyficzne dla spisu galerii
 // var scrObrazka = 'grafiki/slonce_60x60.png';  // nadawany w statycznej wersji i ukrywany/pokazywany poprzez style CSS  
     // albo dać mniejszy obrazek, i tak skalowanie do około 38x38px: 'grafiki/slonce_40x40.png'
-var wybranyElementWczytywania = g_prezentacja_wczytywania[0].element,  // wyświetlaj pomocniczą animację tylko wtedy, gdy jest wyświetlane określone powiadomienie 
+var wybranyElementWczytywaniaID = '#' + g_prezentacja_wczytywania[0].element,  // wyświetlaj pomocniczą animację tylko wtedy, gdy jest wyświetlane określone powiadomienie
+    $wybranyElementWczytywania = $( wybranyElementWczytywaniaID ),
     krotnoscElementu = g_prezentacja_wczytywania[0].ile,
     $elementPrzycisku = $('#zaladuj_galerie_spis');     // jawny selektor identyfikatora elementu, wewnątrz którego będie animacja
 
-    if ( $('#wybrany_zaczytany_spis').is(':visible') )  // pokaż tylko wtedy gdy pomiędzy elementami jest wysoki segment z wybraną podstroną galerii
-    {
-        if ( ( wybranyElementWczytywania != -1 ) && ( krotnoscElementu > 0 ) ) // dodatkowa weryfikacja, wartości na podstawie funkcji PokazRamkeLadowania()
+    // if ( $wybranyElementWczytywania.is(':visible') )  // pokaż tylko wtedy gdy pomiędzy elementami jest wysoki segment z wybraną podstroną galerii
+    // {
+        if ( ( $wybranyElementWczytywania.length != -1 ) && ( krotnoscElementu > 0 ) ) // dodatkowa weryfikacja, wartości na podstawie funkcji PokazRamkeLadowania()
         { 
             // if ( krotnoscElementu == 1 ) $elementPrzycisku.find('img').attr( 'src', scrObrazka ).addClass('animacja').next('span').text('');  // po prostu pokaż słoneczko
             // if ( krotnoscElementu == 1 ) $elementPrzycisku.addClass('animacja').find('img').attr( 'src', scrObrazka ).next('span').text('');  // wariant z nadawaniem klasy, a nie poszczególnych atrybutów (tu ich więcej by było) 
@@ -1720,7 +1721,7 @@ var wybranyElementWczytywania = g_prezentacja_wczytywania[0].element,  // wyświ
             if ( krotnoscElementu == 1 ) $elementPrzycisku.addClass('animacja').find('span').text('');  // wariant z nadawaniem klasy, a nie poszczególnych atrybutów (tu ich więcej by było) 
             else $elementPrzycisku.find('span').text(' x ' + krotnoscElementu);  // pokaż grafikę, ale też i krotność (grafika już ustawiona dla pierwszego nadania wartości)
         }
-    }
+    // }
 }   // PokazAnimacjeLadowaniaDlaPrzycisku-END
 
     
@@ -1728,12 +1729,13 @@ function UkryjAnimacjeLadowaniaDlaPrzycisku () {
     // na bazie logiki wyświewtlania dowolnego z trzech powiadomień... ale tu wskazane i specyficzne dla spisu galerii
 // var scrObrazka = 'grafiki/slonce_60x60.png';  // niepotrzebny hardkod, teraz od razu umieszczane na stronie i ukrywane stylami  
     // albo dać mniejszy, i tak skalowanie do około 25x25px, max 38x38px: 'grafiki/slonce_40x40.png'
-var wybranyElementWczytywania = g_prezentacja_wczytywania[0].element,  // wyświetlaj pomocniczą animację tylko wtedy, gdy jest wyświetlane określone powiadomienie 
+var wybranyElementWczytywaniaID = '#' + g_prezentacja_wczytywania[0].element,  // wyświetlaj pomocniczą animację tylko wtedy, gdy jest wyświetlane określone powiadomienie
+    $wybranyElementWczytywania = $( wybranyElementWczytywaniaID ),
     krotnoscElementu = g_prezentacja_wczytywania[0].ile,
     $elementPrzycisku = $('#zaladuj_galerie_spis');     // jawny selektor identyfikatora
 
-    if ( $('#wybrany_zaczytany_spis').is(':visible') )  // pokaż tylko wtedy gdy pomiędzy elementami jest wysoki segment z wybraną podstroną galerii
-    {
+    // if ( $wybranyElementWczytywania.is(':visible') )  // "pokaż tylko wtedy gdy pomiędzy elementami jest wysoki segment z wybraną podstroną galerii" ?! czy chodzi o ten element?
+    // {
             // ewentualne odswieżenie widoku dla zmian ilościowych lub zabranie elementu z animacją
 // konieczność kombinowanego podejścia z uwagi na nieukrywanie elementu po usunięciu atrybutu SRC w starszych przeglądarkach (raz wpisany i pokazany nie usuwa się)
         //if ( krotnoscElementu == 1 ) $elementPrzycisku.addClass('animacja').find('img').attr( 'src', scrObrazka ).next('span').text('');  // odświeżenie statusu i pokazanie samej grafiki, bez tekstu liczbowego
@@ -1743,8 +1745,8 @@ var wybranyElementWczytywania = g_prezentacja_wczytywania[0].element,  // wyświ
             // usunięcie ścieżki do grafiki oraz ewentualnego tekstu krotności żądania
     //    if ( ( wybranyElementWczytywania != -1 ) && ( krotnoscElementu <= 0 ) ) $elementPrzycisku.find('img').removeClass('animacja').removeAttr( 'src' ).next('span').text(''); // wariant z większą ilością modyfikacji atrybutów    
         // if ( ( wybranyElementWczytywania != -1 ) && ( krotnoscElementu <= 0 ) ) $elementPrzycisku.removeClass('animacja').find('img').removeAttr( 'src' ).next('span').text('');    // tu zmieniamy klasę, która sama zmienia kilka wartości atrybutów
-        if ( ( wybranyElementWczytywania != -1 ) && ( krotnoscElementu <= 0 ) ) $elementPrzycisku.removeClass('animacja').find('span').text('');    // tu zmieniamy klasę, która sama zmienia kilka wartości atrybutów
-    }
+        if ( ( $wybranyElementWczytywania.length != -1 ) && ( krotnoscElementu <= 0 ) ) $elementPrzycisku.removeClass('animacja').find('span').text('');    // tu zmieniamy klasę, która sama zmienia kilka wartości atrybutów
+    // }
 }   // UkryjAnimacjeLadowaniaDlaPrzycisku-END    
     
     

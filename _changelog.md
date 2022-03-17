@@ -1,4 +1,21 @@
-v0.5.74 - corrected the structure of  error message after its content update (message repeated)
+v0.5.75 - restoration of the loading animation inside the button for loading another gallery subpage
+
+* v0.5.75 - [2022-03-17]
+
+[*] MODIFIED
+
+-- witryna.js
+* after activating the loading button for the next gallery subpage, additional content is displayed inside this button while loading in the background:
+  - picture with rotation animation
+  - depending on the number of times the button is pressed and the charging status, the number of ongoing charges may also appear (interaction of the charge activation button)
+   - the phase / phase of the animation is the same as the notification displayed above the button
+* restoration of the loading animation, appearance and behavior was previously specified inside project
+  - fast fixes in the functions of showing and hiding the content of the button ("PokazAnimacjeLadowaniaDlaPrzycisku" i "UkryjAnimacjeLadowaniaDlaPrzycisku")
+  - the logical conditions inside the above functions have been simplified and improved
+
+---------------------------
+
+v0.5.74 - corrected the structure of error message after its content update (message repeated)
 
 * v0.5.74 - [2022-03-14]
 
