@@ -732,9 +732,9 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // zmiana NIEISTOTNA, i tak późniejsz
         // czy to mniej zasmieci przestrzeń? (+) nie potrzeba tworzyć tablicy X-elementów, aby pobrać tylko jej ostatni lub przedostani element
     var ostatniaPaginacja = $( g_tag_do_podmiany_spis + " table.galeria tbody tr td a.link_tresc:last" );  // "najbardziej optymalny" wyróżnik toto nie jest 
    
-    var ilePaginacji = parseInt( ostatniaPaginacja.text() );    // tu winna się znaleźć konkretna liczba, przynajmniej dla większości odnosników
+    var ilePaginacji = parseInt( ostatniaPaginacja.text() );    // tu winna się znaleźć konkretna liczba, przynajmniej dla większości odnośników
     
-        if ( isNaN(ilePaginacji) ) // kolejny błąd, jeśli mamy "starsze >>" jako ostatnie to wynikiem konwersji jest 'NaN'
+        if ( isNaN( ilePaginacji ) ) // kolejny błąd, jeśli mamy "starsze >>" jako ostatnie to wynikiem konwersji jest 'NaN'
         {
         ostatniaPaginacja.remove(); // usuń ostatni element paginacji witryny, po czym pobierz "nowy ostatni" -- tak samo jak powyżej 
         ostatniaPaginacja = $( g_tag_do_podmiany_spis + " table.galeria tbody tr td a.link_tresc:last" );    
@@ -745,16 +745,18 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // zmiana NIEISTOTNA, i tak późniejsz
             {
             //$('#galeria_spis').prepend( '<p class="blad_odswiez">Wystąpił problem z odczytaniem zawartości zdalnej (2). <button class="odswiez_strone">Odśwież stronę</button> </p>' );
             GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Nie udało się załadować wstepnych wartości (2)! Konieczność przeładowania zawartości witryny. <br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true });    
-                // zapewniono globalną obsługę zdarzenia na kliknięcie - odświeżenie  
+                // zapewniono globalną obsługę zdarzenia na kliknięcie - odświeżenie
+                console.log('PIERWSZY PRZEBIEG "NIEUDANY", szczegóły: wszystkich podstron jest ' + g_ilosc_wszystkich_paginacji_galerii + ', zaczytano ' + g_zaczytana_ilosc_paginacji_galerii 
+                + ' podstron, pozycja w galerii to ' + g_biezaca_pozycja_galerii +', a kliknięć było ' + g_suma_klikniec_zaladuj + '.');     
             return false; // !!!
             }
-        }   
+        }
             // !!! i drugi warunek poprawności na przypisanie zaczytanego maksimum podstron (ewentualnego), gdy SĄ JUŻ WPISY w ilości > 5, dla 1..5 będzie lipa    
         if ( ilePaginacji > 0 ) g_ilosc_wszystkich_paginacji_galerii = ilePaginacji;  // !!!
 
         // KOPIA: poniższy log przeniesiono z początku tej funkcji z uwagi na celowość wyświetlania w nim zaczytanych danych z zewnatrz przy każdym > 1 przebiegu
-        console.log('PIERWSZY PRZEBIEG - wszystkich podstron jest ' + g_ilosc_wszystkich_paginacji_galerii + ', zaczytano ' + g_zaczytana_ilosc_paginacji_galerii 
-            + ' podstron, pozycja w galerii to ' + g_biezaca_pozycja_galerii +', a kliknięć było ' + g_suma_klikniec_zaladuj + '.');      
+        /* console.log('PIERWSZY PRZEBIEG - wszystkich podstron jest ' + g_ilosc_wszystkich_paginacji_galerii + ', zaczytano ' + g_zaczytana_ilosc_paginacji_galerii 
+            + ' podstron, pozycja w galerii to ' + g_biezaca_pozycja_galerii +', a kliknięć było ' + g_suma_klikniec_zaladuj + '.');    */ 
         
     PrzewinEkranDoElementu( 'div#zaczytany_spis > h2', 500, 2 );    // Przewinięcie do znalezionych galerii - tylko przy pierwszym-auto-załadowaniu treści
     //g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5;
@@ -954,8 +956,8 @@ g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; // inkrementacja 
     // ...
     
     // poniższy log przeniesiono z początku tej funkcji z uwagi na celowość wyświetlania w nim zaczytanych danych z zewnatrz przy każdym > 1 przebiegu
-console.log('Wszystkich podstron jest ' + g_ilosc_wszystkich_paginacji_galerii + ', zaczytano ' + g_zaczytana_ilosc_paginacji_galerii 
-            + ' podstron, pozycja w galerii to ' + g_biezaca_pozycja_galerii +', a kliknięć było ' + g_suma_klikniec_zaladuj + '.');        
+    /* console.log('GenerujSpisGalerii(): wszystkich podstron jest ' + g_ilosc_wszystkich_paginacji_galerii + ', zaczytano ' + g_zaczytana_ilosc_paginacji_galerii 
+            + ' podstron, pozycja w galerii to ' + g_biezaca_pozycja_galerii +', a kliknięć było ' + g_suma_klikniec_zaladuj + '.'); */
     	
 //	for( var i=1 + g_zaczytana_ilosc_paginacji_galerii ; i <= 5 + g_zaczytana_ilosc_paginacji_galerii ; i++ ) {
     
@@ -1449,7 +1451,7 @@ var $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.li
 function InicjalizujPrzyciskiWyboruGalerii ()	
 {
 g_wybrany_nr_galerii = Math.floor(Math.random() * 100) + 1;	
-console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_galerii + ') wartości pól formularza przeglądania galerii...');
+// console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_galerii + ') wartości pól formularza przeglądania galerii...');
 $g_input_nr_galerii.val( g_wybrany_nr_galerii );	
 $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );	
 $g_suwak_nr_galerii.attr( 'max' , 105 ); // nie trzeba teraz?	
@@ -1459,7 +1461,7 @@ $g_suwak_nr_galerii.attr( 'max' , 105 ); // nie trzeba teraz?
 function InicjalizujPrzyciskiWyboruPodstronyGalerii ()	
 {
 g_wybrany_nr_podstrony_galerii = Math.floor(Math.random() * 5) + 1 ;	
-console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_podstrony_galerii + ') wartości pól formularza przeglądania podstronami galerii...');
+// console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_podstrony_galerii + ') wartości pól formularza przeglądania podstronami galerii...');
 $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );	
 $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );	
 $g_suwak_nr_podstrony_galerii.attr( 'max' , 6 ); // "trzeba, czy nie trzeba?" oto jest pytanie	
@@ -1469,19 +1471,19 @@ $g_suwak_nr_podstrony_galerii.attr( 'max' , 6 ); // "trzeba, czy nie trzeba?" ot
 function UstawSuwakiJakOdczytanoPierwszymPrzebiegiem() 
 {    
 // odniesie tej wartości do maksymalnej wartośc przesuwu suwaka wyboru galerii + inicjowanie suwaka i inputa na tę wartość
-console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii i wyboru podstron ...');		
+// console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii i wyboru podstron ...');		
 
 g_wybrany_nr_galerii = g_ilosc_wszystkich_galerii;
     if ( g_wybrany_nr_galerii > 1 ) g_wybrany_nr_galerii = parseInt( g_wybrany_nr_galerii / 2 );    // ustawienie na połowie wartości przedziału
 
-$g_suwak_nr_galerii.attr( 'max' , g_ilosc_wszystkich_galerii );     // ustalenie zakresu maksymalnego dla suwaka
+$g_suwak_nr_galerii.attr( 'max', g_ilosc_wszystkich_galerii );     // ustalenie zakresu maksymalnego dla suwaka
 $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );	
 $g_input_nr_galerii.val( g_wybrany_nr_galerii );	
 
 g_wybrany_nr_podstrony_galerii = g_ilosc_wszystkich_paginacji_galerii;
     if ( g_wybrany_nr_podstrony_galerii > 1 ) g_wybrany_nr_podstrony_galerii = parseInt( g_wybrany_nr_podstrony_galerii / 2 );   // ustawienie na połowie wartości przedziału        
 
-$g_suwak_nr_podstrony_galerii.attr( 'max' , g_ilosc_wszystkich_paginacji_galerii );
+$g_suwak_nr_podstrony_galerii.attr( 'max', g_ilosc_wszystkich_paginacji_galerii );
   // jednak bez ustawiania na maksimum, bo to okresla PIERWSZĄ podstronę spisu treści galerii, a nie ostatnią... więc zostaje automat albo 'MIN' 
 $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );	
 $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
@@ -1631,7 +1633,8 @@ var wybranyElement = -1,
     {
         case 'spis':
         case 0:
-            wybranyElement = g_prezentacja_wczytywania[0].element;
+                // tymczasowe lub docelowe wyłączenie obsługi dla pierwszego powiadomienia
+            wybranyElement = g_prezentacja_wczytywania[0].element;   // ZAKOMENTOWANE == brak przypisywania elementu do  pokazywania (/ukrywania)
             g_prezentacja_wczytywania[0].ile++;
             krotnoscElementu = g_prezentacja_wczytywania[0].ile;
                 PokazAnimacjeLadowaniaDlaPrzycisku();    // dodatkowe powiadomienie wewnątrz przycisku ładowania kolejnej podstrony
@@ -1672,7 +1675,8 @@ var wybranyElement = -1,
     {
         case 'spis':
         case 0:
-            wybranyElement = g_prezentacja_wczytywania[0].element;
+                // tymczasowe lub docelowe wyłączenie obsługi dla pierwszego powiadomienia
+            wybranyElement = g_prezentacja_wczytywania[0].element;  // ZAKOMENTOWANE == brak przypisywania elementu do ukrywania (/pokazywania)
             g_prezentacja_wczytywania[0].ile--;
             krotnoscElementu = g_prezentacja_wczytywania[0].ile;
             UkryjAnimacjeLadowaniaDlaPrzycisku();   // powiązana dodatkowa treść wewnątrz przycisku ładowania kolejnej podstrony z listy galerii
@@ -2094,7 +2098,7 @@ var adres_zasobu_galerii = g_protokol_www + g_adres_strony;
 
 //$( g_wczytywanie_spis ).show(100); //
 PokazRamkeLadowania('spis');    
-console.log('Załadowano spis treści dla ' + g_biezaca_pozycja_galerii + '. pozycji galerii, adres z http: "' + adres_zasobu_galerii + '" odnośnik: "' + adres_ostatniej_galerii + '".');	
+// console.log('Załadowano spis treści dla ' + g_biezaca_pozycja_galerii + '. pozycji galerii, adres z http: "' + adres_zasobu_galerii + '" odnośnik: "' + adres_ostatniej_galerii + '".');	
     // najpierw komunikat konsoli później działanie - odwrotnie niż każde zwykłe działanie
 WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres_ostatniej_galerii, g_element_zewnetrzny_spis, "spis_galerii" ); 
 
@@ -2539,7 +2543,7 @@ var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpo
 function InicjalizujGre () 
 {
 var nrPlanszy = LosujPlansze(); // póki co na pusto
-console.log('Wylosowano nr planszy: ', nrPlanszy);    
+// console.log('Wylosowano nr planszy: ', nrPlanszy);    
 var przesuniecie = WybierzPlansze( nrPlanszy );     // od razu zwrot, choć on już wstawiony do zmiennych globalnych
   
 RozmiescCzesci( nrPlanszy );
@@ -3017,38 +3021,37 @@ WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), serwer, $this.attr('data-ad
 	   // "przycisk" ładujący kolejne +5 galerii (max), porządek ujemnie chronologiczny
 $('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function(e) { 
     
-console.info('DEBUG: przycisk naciśnieto już ' + g_suma_klikniec_zaladuj + ' razy, a paginacji odczytano wcześniej ' + g_zaczytana_ilosc_paginacji_galerii );
+// console.info('DEBUG: przycisk naciśnieto już ' + g_suma_klikniec_zaladuj + ' razy, a paginacji odczytano wcześniej ' + g_zaczytana_ilosc_paginacji_galerii );
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {   
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po kliknięciu
         if ( e.which == 32 ) e.preventDefault();  // blokowanie przewijania zawartości spacją
         
-        
     g_suma_klikniec_zaladuj++;	// zliczaj naciśnięcia na ten przycisk
-    // alternatywnbie można by sumować PO sprawdzeniku prostszego warunku...   
+    // alternatywnbie można by sumować PO sprawdzeniku prostszego warunku...
 
         if ( g_suma_klikniec_zaladuj < ( g_zaczytana_ilosc_paginacji_galerii + 1) ) // bieżącą stronę też liczyć jako paginację, dlatego +1
         {
-        //g_biezaca_pozycja_galerii++;  // zwiększenie licznika, przejście do wywołania kolejnej podstrony
-        // licznik zwiększa się już PO nacisnięciu odnosnika i PRZED zakończeniem przetwarznia uprzednio zaczytanych treści !!! 
+        // g_biezaca_pozycja_galerii++;  // zwiększenie licznika, przejście do wywołania kolejnej podstrony
+        // licznik zwiększa się już PO nacisnięciu odnosnika i PRZED zakończeniem przetwarznia uprzednio zaczytanych treści !!!
         // co najwyżej kolejność może być inna na liście wyników
 
             if ( g_biezaca_pozycja_galerii <= g_zaczytana_ilosc_paginacji_galerii )
             {
-            // $( g_wczytywanie_spis ).show(100); // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
-            // PokazRamkeLadowania('spis');  //  -- to jest zbedne, wewnatrz ZaczytajSpisGalerii() jest dodane wyświetlenie  
+            // $( g_wczytywanie_spis ).show(100); // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle
+            // PokazRamkeLadowania('spis');  //  -- to jest zbedne, wewnatrz ZaczytajSpisGalerii() jest dodane wyświetlenie
 
-            console.log('Na ' + g_suma_klikniec_zaladuj + ' żądanie zaczytano kolejną podstronę w galerii ' + g_biezaca_pozycja_galerii + ' z ' + g_zaczytana_ilosc_paginacji_galerii + ' podstron.');
+            // console.log('Na ' + g_suma_klikniec_zaladuj + ' żądanie zaczytano kolejną podstronę w galerii ' + g_biezaca_pozycja_galerii + ' z ' + g_zaczytana_ilosc_paginacji_galerii + ' podstron.');
 
-            //g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; //inkrementacja o każde 5 zdjęc z poszczególnych zaczytanych galerii 	
+            // g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; // inkrementacja o każde 5 zdjęć z poszczególnych zaczytanych galerii
 
             ZaczytajSpisGalerii();
-            //wyświetlenie-dodanie kolejnego spisu do już wyświetlonej listy odnosników	
-            //WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona"	);
-            } 
+            // wyświetlenie-dodanie kolejnego spisu do już wyświetlonej listy odnosników
+            // WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona" );
+            }
         }
     }   // if (e.which == ... )-END
-});	// on("click")-$('#spis_sterowanie')-END		
+});	// on("click")-$('#spis_sterowanie')-END
 
 	
     // DLA KOLEJNYCH GALERII: '$('#galeria_spis').on("click", "a", function(e){'

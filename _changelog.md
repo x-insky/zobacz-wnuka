@@ -1,3 +1,22 @@
+v0.5.76 - - limited the number of unnecessary logins in the console
+
+* v0.5.76 - [2022-03-18]
+
+[*] MODIFIED
+
+-- witryna.js
+* significantly increased the quantitative limit for logging the status to the console
+  - no more logging for positive states (generally redundant logging)
+  -introduced for some login for unsuccessful attempts of reads from remote server
+  - the login code has not been removed, only commented out
+* attempts to not display a notification about loading another gallery subpage, simultaneously with the animation inside the button for loading these subpages
+  - ultimately the animation in the button was to replace the notification about loading "area"
+  - double notification is weak ...
+  - ... but better than showing just one of the two charging notifications (two ways, there are pros and cons of both)
+  - a topic to think about and reorganize the logical conditions (first loading as an area notification, then only inside the button?)
+
+---------------------------
+
 v0.5.75 - restoration of the loading animation inside the button for loading another gallery subpage
 
 * v0.5.75 - [2022-03-17]
