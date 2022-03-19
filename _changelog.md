@@ -1,4 +1,20 @@
-v0.5.76 - - limited the number of unnecessary logins in the console
+v0.5.77 - streamlining the presentation to activate loading in the background after pressing the loading button for the next gallery subpage
+
+* v0.5.77 - [2022-03-19]
+
+[*] MODIFIED
+
+-- witryna.js
+* after activating the loading button for the next subpage, the image animation is launched in it
+  - the animation inside the button shows the active loading of content in the background
+  - the information message about loading remains as it is
+  - the number of active charges in the background has been displayed no longer (after pressing the button several times)
+  - it makes no sense to display the same text inside the button and right in front of it, in a dedicated message
+  - the animation and quantitative information itself does not guarantee the understanding of the message that the content is being loaded to the site
+
+---------------------------
+
+v0.5.76 - limited the number of unnecessary logins in the console
 
 * v0.5.76 - [2022-03-18]
 

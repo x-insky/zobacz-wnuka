@@ -1605,7 +1605,7 @@ return nrPodstronyGalerii;
 
 function InicjalizujRamkiLadowania ()  
 {
-// oto wstepna, prosta forma; tu rejestrowane są na sztywno wszystkie powiadomienia o ładowaniu konkretnych zawartości - wymaga podpięci do wuitryny
+// oto wstepna, prosta forma; tu rejestrowane są na sztywno wszystkie powiadomienia o ładowaniu konkretnych zawartości - wymaga podpięcia do witryny
 // ... póki co trzy notyfikacje - IDeki: "wczytywanie_podstrona" (podstrona galerii), "wczytywanie_spis", "wczytywanie_wybrane_galerie_spis" 
 //    (dopisać ewentualne kolejne animacje ładowania)    
     g_prezentacja_wczytywania = [   // raczej przypisać elmenty z HTMLa tu
@@ -1637,7 +1637,7 @@ var wybranyElement = -1,
             wybranyElement = g_prezentacja_wczytywania[0].element;   // ZAKOMENTOWANE == brak przypisywania elementu do  pokazywania (/ukrywania)
             g_prezentacja_wczytywania[0].ile++;
             krotnoscElementu = g_prezentacja_wczytywania[0].ile;
-                PokazAnimacjeLadowaniaDlaPrzycisku();    // dodatkowe powiadomienie wewnątrz przycisku ładowania kolejnej podstrony
+            PokazAnimacjeLadowaniaDlaPrzycisku();    // dodatkowe powiadomienie wewnątrz przycisku ładowania kolejnej podstrony
             break;
 
         case 'wybrane_galerie_spis':
@@ -1717,13 +1717,18 @@ var wybranyElementWczytywaniaID = '#' + g_prezentacja_wczytywania[0].element,  /
 
     // if ( $wybranyElementWczytywania.is(':visible') )  // pokaż tylko wtedy gdy pomiędzy elementami jest wysoki segment z wybraną podstroną galerii
     // {
+        // wyłączenie wyświetlania krotności wewnątrz przycisku ładowania
         if ( ( $wybranyElementWczytywania.length != -1 ) && ( krotnoscElementu > 0 ) ) // dodatkowa weryfikacja, wartości na podstawie funkcji PokazRamkeLadowania()
         { 
             // if ( krotnoscElementu == 1 ) $elementPrzycisku.find('img').attr( 'src', scrObrazka ).addClass('animacja').next('span').text('');  // po prostu pokaż słoneczko
             // if ( krotnoscElementu == 1 ) $elementPrzycisku.addClass('animacja').find('img').attr( 'src', scrObrazka ).next('span').text('');  // wariant z nadawaniem klasy, a nie poszczególnych atrybutów (tu ich więcej by było) 
     // jeszcze łatwiejsze ukrywanie IMG wzorcowymi stylami oraz operowanie klasą rodzica (żonglerka atrybutami niepotrzebna)!
-            if ( krotnoscElementu == 1 ) $elementPrzycisku.addClass('animacja').find('span').text('');  // wariant z nadawaniem klasy, a nie poszczególnych atrybutów (tu ich więcej by było) 
+        if ( krotnoscElementu == 1 ) $elementPrzycisku.addClass('animacja');  // NAJPROSTSZY WARIANT Z OPEROWNIEM ANIMACJĄ NA OBRAZKU 
+                // porzucenie wyswietlania krotnosci naciśniącia przyciku i aktywowanego ładowania kolejnej podstrony
+
+            /* if ( krotnoscElementu == 1 ) $elementPrzycisku.addClass('animacja').find('span').text('');  // wariant z nadawaniem klasy, a nie poszczególnych atrybutów (tu ich więcej by było) 
             else $elementPrzycisku.find('span').text(' x ' + krotnoscElementu);  // pokaż grafikę, ale też i krotność (grafika już ustawiona dla pierwszego nadania wartości)
+            */  // nie pokazuj krotności
         }
     // }
 }   // PokazAnimacjeLadowaniaDlaPrzycisku-END
@@ -1744,8 +1749,13 @@ var wybranyElementWczytywaniaID = '#' + g_prezentacja_wczytywania[0].element,  /
 // konieczność kombinowanego podejścia z uwagi na nieukrywanie elementu po usunięciu atrybutu SRC w starszych przeglądarkach (raz wpisany i pokazany nie usuwa się)
         //if ( krotnoscElementu == 1 ) $elementPrzycisku.addClass('animacja').find('img').attr( 'src', scrObrazka ).next('span').text('');  // odświeżenie statusu i pokazanie samej grafiki, bez tekstu liczbowego
 // łatwiejsze ukrywanie IMG stylami przez operowanie klasą rodzica!
+        // tylko notyfikacja dla aktywnynego wczytywania
+        if ( krotnoscElementu == 1 ) $elementPrzycisku.addClass('animacja');
+
+        /* 
         if ( krotnoscElementu == 1 ) $elementPrzycisku.addClass('animacja').find('span').text('');  // odświeżenie statusu i pokazanie samej grafiki, bez tekstu liczbowego
         if ( krotnoscElementu > 1 ) $elementPrzycisku.find('span').text(' x ' + krotnoscElementu);  // pokaż grafikę, ale też i krotność
+        */ // tylko animacja, bez aktualnej ilości wczytywań w tle
             // usunięcie ścieżki do grafiki oraz ewentualnego tekstu krotności żądania
     //    if ( ( wybranyElementWczytywania != -1 ) && ( krotnoscElementu <= 0 ) ) $elementPrzycisku.find('img').removeClass('animacja').removeAttr( 'src' ).next('span').text(''); // wariant z większą ilością modyfikacji atrybutów    
         // if ( ( wybranyElementWczytywania != -1 ) && ( krotnoscElementu <= 0 ) ) $elementPrzycisku.removeClass('animacja').find('img').removeAttr( 'src' ).next('span').text('');    // tu zmieniamy klasę, która sama zmienia kilka wartości atrybutów
@@ -3226,7 +3236,7 @@ $('#debugger_zamykanie').on("click keydown", function( e ) {
     }
 });    
 
-    // uwtorzono nowe zdarzenia dla naciśniecia przyciku 'X" bezpośrenio dla tego elementu, BEZ DELAGACJI ZDARZEŃ 
+    // utworzono nowe zdarzenia dla naciśniecia przyciku 'X" bezpośrednio dla tego elementu, BEZ DELAGACJI ZDARZEŃ 
     // nowa logika zapewnia OBSŁUGĘ ZDARZENIA NA ŻĄDANIE, tzn. jego aktywowanie lub blokowanie, zależnie czy przycisk 'X' jest wyświetlany (powinno współpracować też z animacją pojawiania/ukrywania się tego przycisku)
 /* $('#glowna').on("click keydown", "#biezaca_galeria_zamykanie", function( e ) {  // zadziała z delegacją zdarzeń
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
