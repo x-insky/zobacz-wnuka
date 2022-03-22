@@ -1,3 +1,23 @@
+v0.5.78 - display order for gallery changed on request
+
+* v0.5.78 - [2022-03-22]
+
+[*] MODIFIED
+
+-- index.php
+* the target place is below the drop-down component that allows you to choose to display the selected gallery or a specific subpage on the list of the gallery list
+* moved from the place above the loading button for the next gallery subpage
+* better logical layout of the content
+  - the next galleries are loaded above the button
+  - also above the cut, a notification about loading new content is displayed right next to the loading destination
+  - the selected target element is displayed below the conditional selector (component for selecting the gallery number or subpage from the list)
+  - if it is a specific subpage, the next subpage of the gallery is no longer placed over the loading button
+* pre-relocated element and the appearance of the component and subordinate elements are kept as in the previous location
+  - no style selectors connected with the parent container
+
+---------------------------
+
+
 v0.5.77 - streamlining the presentation to activate loading in the background after pressing the loading button for the next gallery subpage
 
 * v0.5.77 - [2022-03-19]

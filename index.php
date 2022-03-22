@@ -162,25 +162,10 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     
                 </div>
             
-                <div id="wybrany_zaczytany_spis">
-                    <h2>Lista galerii z wybranej <span></span> podstrony</h2>
-                    <div id="wczytywanie_wybrane_galerie_spis">
-                        <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
-                    </div>
-                    <div class="ciemne_tlo_spis">                        
-                        <div class="kontener">
-                            <div id="wybrane_galerie_spis">
-                            </div>
-                        </div>
-                    </div>
-                    <div id="skladowisko_wybrane_galerie_spis">
-                    </div>
-                </div>
-                
                 
                 <nav id="spis_sterowanie">
                     <div class="kontener">
-                    <p id="status_galerii_spis"></p>
+                        <p id="status_galerii_spis"></p>
                     </div>
                     <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2" tabindex="0">Załaduj kolejne galerie<img src="grafiki/slonce_60x60.png" alt="" /><span></span></h2>
 
@@ -242,7 +227,23 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                         </div>	
                                     </div>  <!-- div#wybor_podstrony_galerii --> 
                                 </form>
-                            </div>    
+                            </div>
+                            
+                            <div id="wybrany_zaczytany_spis">
+                                <h2>Lista galerii z wybranej <span></span> podstrony</h2>
+                                <div id="wczytywanie_wybrane_galerie_spis">
+                                    <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
+                                </div>
+                                <div class="ciemne_tlo_spis">                        
+                                    <div class="kontener">
+                                        <div id="wybrane_galerie_spis">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="skladowisko_wybrane_galerie_spis">
+                                </div>
+                            </div>
+
                         </div> <!-- div#selektor -->
                     </div>  <!-- div.kontener -->
                     
@@ -336,7 +337,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja-pulsowanie-kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.77</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.5.78</h6>
             <div id="poco">
                 <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
