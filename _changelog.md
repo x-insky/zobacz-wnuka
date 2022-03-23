@@ -1,3 +1,21 @@
+v0.5.79 - notification areas of content loading now with border animation
+
+* v0.5.79 - [2022-03-23]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* introduced border sliding animation for content notification components, which notify of loading in the background
+  - additional visualization that the content is being actively downloaded in the background
+  - same presentation for each of the three in-site loading notifications
+  - it is not directly animating the border attribute of the notification component itself
+  - ... is a background animation trick that introduces small elements as graphics to the background of the element, along with their animation
+  - in fact, the frame attribute is not used because it introduces another, "outer" border
+  - added additional animation "moving border" that moves the leading border color clockwise (and rotating little sun image while loading content)
+  - help, image generator and suggestions are from: https://css-tricks.com/more-control-over-css-borders-with-background-image/
+
+---------------------------
+
 v0.5.78 - display order for gallery changed on request
 
 * v0.5.78 - [2022-03-22]
