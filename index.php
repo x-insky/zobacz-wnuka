@@ -229,24 +229,24 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                 </form>
                             </div>
                             
-                            <div id="wybrany_zaczytany_spis">
-                                <h2>Lista galerii z wybranej <span></span> podstrony</h2>
-                                <div id="wczytywanie_wybrane_galerie_spis">
-                                    <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
-                                </div>
-                                <div class="ciemne_tlo_spis">                        
-                                    <div class="kontener">
-                                        <div id="wybrane_galerie_spis">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="skladowisko_wybrane_galerie_spis">
-                                </div>
-                            </div>
-
                         </div> <!-- div#selektor -->
                     </div>  <!-- div.kontener -->
                     
+                    <div id="wybrany_zaczytany_spis">
+                        <h2>Lista galerii z wybranej <span></span> podstrony</h2>
+                        <div id="wczytywanie_wybrane_galerie_spis">
+                            <h2>Trwa wczytywanie... <img src="grafiki/slonce_60x60.png" alt="" /> <span></span></h2>
+                        </div>
+                        <div class="ciemne-tlo-spis">                        
+                            <div class="kontener">
+                                <div id="wybrane_galerie_spis">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="skladowisko_wybrane_galerie_spis">
+                        </div>
+                    </div>
+
                     <div id="skladowisko_status_wybranej_galerii">
                     </div>
 

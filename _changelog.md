@@ -1,3 +1,21 @@
+v0.5.80 - improvemnets for the display of the selected gallery subpage
+
+* v0.5.80 - [2022-03-24]
+
+[*] MODIFIED
+
+-- index.php
+* moved the area of ​​the selected subpage of the gallery
+  - moved a list of at least five items to the bottom of the parent container
+  - the list is placed outside of the parent-container class
+  - class "container" as a distinguishing feature of one of many elements/components, not for the entire grouping element
+  - the correct class name was used, which has already been defined, thanks to which the appearance of each gallery subpage being read was retained (the same background and appearance thanks to the "dark-background-list" class instead of "dark_tlo_spis")
+
+-- zlobek-styl.css
+* removed the bottom margin for the area of ​​the selected subpage of the gallery after its loading
+
+---------------------------
+
 v0.5.79 - notification areas of content loading now with border animation
 
 * v0.5.79 - [2022-03-23]
