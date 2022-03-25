@@ -759,6 +759,19 @@ div#wybrany_zaczytany_spis {
     display: none;
 }
 
+#wybrany_zaczytany_spis > h2 {
+    padding-top: 3em;
+}
+
+#wybrany_zaczytany_spis .kontener {
+    position: relative;
+}
+
+#wybrany_zaczytany_spis .zamykanie {
+    top: -3em;
+    right: 0.25em;
+}
+
 div#wybrane_galerie_spis {
     width: 100%;
     text-align: center;
@@ -2101,6 +2114,15 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     {
         padding-top: 0.5em;
         padding-right: 2.5em;
+    }
+
+    #wybrany_zaczytany_spis > h2 {
+        padding-top: 2em;
+        padding-right: 3.5em;
+    }
+    
+    #wybrany_zaczytany_spis .zamykanie {
+        top: -1.5em;
     }
 
     .maly_guzik {

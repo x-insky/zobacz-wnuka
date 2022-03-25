@@ -1,4 +1,20 @@
-v0.5.80 - improvemnets for the display of the selected gallery subpage
+v0.5.81 - adding a button to close the selected gallery subpage
+
+* v0.5.81 - [2022-03-25]
+
+[*] MODIFIED
+
+-- index.php
+* the close button element has been added to the main container for the selected list of gallery subpages
+
+-- zlobek-styl.css
+* new base style using ancestor container dependencies
+  - attempts to define a similar arrangement in relation to the list of subpages and header dimensions, with a variable screen width
+  - the only closing button that is limited by the size of the intermediate container, with the maximum width
+
+---------------------------
+
+v0.5.80 - improvements for the display of the selected gallery subpage
 
 * v0.5.80 - [2022-03-24]
 
