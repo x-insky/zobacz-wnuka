@@ -759,12 +759,24 @@ div#wybrany_zaczytany_spis {
     display: none;
 }
 
+#wybrany_zaczytany_spis > h2 {
+    padding-top: 3em;
+}
+
+#wybrany_zaczytany_spis .kontener {
+    position: relative;
+}
+
+#wybrany_zaczytany_spis .zamykanie {
+    top: -3em;
+    right: 0.25em;
+}
+
 div#wybrane_galerie_spis {
     width: 100%;
     text-align: center;
     padding-top: 1em;
     padding-bottom: 1em;
-    margin-bottom: 1em;
     background-color: cornflowerblue;
 }
 
@@ -1147,7 +1159,16 @@ div#wczytywanie_wybrane_galerie_spis
     display: none;
     padding: 1.5em 2em;
     background-color: cornflowerblue;	
-    border: 3px dotted yellow;
+    /* border: 3px dotted yellow; */ /* atrybut obramowania nie jest używany, skoro nastepnie w tle elementu umieszczamy "gradentowe obrazki" i je animujemy
+        /* info o animowaniu obramowaniem (bez atrybutu obramowania) i generator: https://css-tricks.com/more-control-over-css-borders-with-background-image/ */
+    background-image:   repeating-linear-gradient(1deg, #ffff00, #ffff00 5px, transparent 5px, transparent 9px, #ffff00 9px),
+                        repeating-linear-gradient(91deg, #ffff00, #ffff00 5px, transparent 5px, transparent 9px, #ffff00 9px),
+                        repeating-linear-gradient(181deg, #ffff00, #ffff00 5px, transparent 5px, transparent 9px, #ffff00 9px),
+                        repeating-linear-gradient(271deg, #ffff00, #ffff00 5px, transparent 5px, transparent 9px, #ffff00 9px);
+    background-size:    4px calc(100% + 9px), calc(100% + 9px) 4px, 4px calc(100% + 9px), calc(100% + 9px) 4px; 
+    background-position: 0 0, 0 0, 100% 0, 0 100%;
+    background-repeat: no-repeat; 
+    animation: ruchome-obramowanie 0.3s infinite linear;
     user-select: none;
 }
 
@@ -2025,6 +2046,15 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     }
 }
 
+@keyframes ruchome-obramowanie {
+    from {
+        background-position: 0 0, -17px 0, 100% -17px, 0 100%;
+    }
+    to { 
+        background-position: 0 -17px, 0 0, 100% 0, -17px 100%;
+    }
+}
+
 
 /*    --------------------------       KWERENDY     --------------------------    */
 
@@ -2084,6 +2114,15 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     {
         padding-top: 0.5em;
         padding-right: 2.5em;
+    }
+
+    #wybrany_zaczytany_spis > h2 {
+        padding-top: 2em;
+        padding-right: 3.5em;
+    }
+    
+    #wybrany_zaczytany_spis .zamykanie {
+        top: -1.5em;
     }
 
     .maly_guzik {

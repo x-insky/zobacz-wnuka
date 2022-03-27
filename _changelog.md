@@ -1,3 +1,75 @@
+v0.5.81 - adding a button to close the selected gallery subpage
+
+* v0.5.81 - [2022-03-25]
+
+[*] MODIFIED
+
+-- index.php
+* the close button element has been added to the main container for the selected list of gallery subpages
+
+-- zlobek-styl.css
+* new base style using ancestor container dependencies
+  - attempts to define a similar arrangement in relation to the list of subpages and header dimensions, with a variable screen width
+  - the only closing button that is limited by the size of the intermediate container, with the maximum width
+
+---------------------------
+
+v0.5.80 - improvements for the display of the selected gallery subpage
+
+* v0.5.80 - [2022-03-24]
+
+[*] MODIFIED
+
+-- index.php
+* moved the area of ​​the selected subpage of the gallery
+  - moved a list of at least five items to the bottom of the parent container
+  - the list is placed outside of the parent-container class
+  - class "container" as a distinguishing feature of one of many elements/components, not for the entire grouping element
+  - the correct class name was used, which has already been defined, thanks to which the appearance of each gallery subpage being read was retained (the same background and appearance thanks to the "dark-background-list" class instead of "dark_tlo_spis")
+
+-- zlobek-styl.css
+* removed the bottom margin for the area of ​​the selected subpage of the gallery after its loading
+
+---------------------------
+
+v0.5.79 - notification areas of content loading now with border animation
+
+* v0.5.79 - [2022-03-23]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* introduced border sliding animation for content notification components, which notify of loading in the background
+  - additional visualization that the content is being actively downloaded in the background
+  - same presentation for each of the three in-site loading notifications
+  - it is not directly animating the border attribute of the notification component itself
+  - ... is a background animation trick that introduces small elements as graphics to the background of the element, along with their animation
+  - in fact, the frame attribute is not used because it introduces another, "outer" border
+  - added additional animation "moving border" that moves the leading border color clockwise (and rotating little sun image while loading content)
+  - help, image generator and suggestions are from: https://css-tricks.com/more-control-over-css-borders-with-background-image/
+
+---------------------------
+
+v0.5.78 - display order for gallery changed on request
+
+* v0.5.78 - [2022-03-22]
+
+[*] MODIFIED
+
+-- index.php
+* the target place is below the drop-down component that allows you to choose to display the selected gallery or a specific subpage on the list of the gallery list
+* moved from the place above the loading button for the next gallery subpage
+* better logical layout of the content
+  - the next galleries are loaded above the button
+  - also above the cut, a notification about loading new content is displayed right next to the loading destination
+  - the selected target element is displayed below the conditional selector (component for selecting the gallery number or subpage from the list)
+  - if it is a specific subpage, the next subpage of the gallery is no longer placed over the loading button
+* pre-relocated element and the appearance of the component and subordinate elements are kept as in the previous location
+  - no style selectors connected with the parent container
+
+---------------------------
+
+
 v0.5.77 - streamlining the presentation to activate loading in the background after pressing the loading button for the next gallery subpage
 
 * v0.5.77 - [2022-03-19]
