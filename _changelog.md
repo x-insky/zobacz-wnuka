@@ -1,3 +1,23 @@
+v0.5.82 - close button for a selected subpage from the gallery list appears only after the list is read
+
+* v0.5.82 - [2022-03-28]
+
+[*] MODIFIED
+
+-- witryna.js
+* functions for showing and hiding the close button for the selected gallery list have been defined
+ ("UkryjPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii()" i "PokazPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii()")
+  - use of the function showing the close button only after the given subpage with the gallery list has been fully read and displayed
+
+-- zlobek-styl.css
+* added new query slightly below the first screen width threshold (320px)
+  - threshold already at 270px, only for the needs of one element
+  - too small margin between the gallery/subpage selection component and the container with the text header below
+  - effect: the positioning of the close button has been changed for the selected gallery subpage, which no longer overlaps the gallery/subpage selection component
+  - the problem occurred only with a small screen width, when the header text was vertically compacted, just near the border values ​​of the first width threshold
+
+---------------------------
+
 v0.5.81 - adding a button to close the selected gallery subpage
 
 * v0.5.81 - [2022-03-25]
