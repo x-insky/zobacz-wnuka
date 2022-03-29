@@ -1,3 +1,20 @@
+v0.5.83 - close button for selected subpage of the gallery list: finally the press response is functional!
+
+* v0.5.83 - [2022-03-29]
+
+[*] MODIFIED
+
+-- witryna.js
+* the auxiliary functions "PokazWybranaPodstroneListyGalerii/ShowSelectedSubpageGalleryList" and "UkryjWybranaPodstroneListyGalerii/HideSelectedSubpageGalleryLists" were defined
+  - an obvious goal of showing and hiding the entire area of ​​a selected subpage of the gallery list
+  - pre-hiding all content to show content in a given area after finished loading on demand
+* created an event on pressing the button (#wybrane_galerie_zamykanie) which calls the hiding function
+  - content appears after background loading is complete
+  - now with expected area appearance animation, while loading in progress is starting
+* interesting effect with content refreshing (and predefined temporary gray), as a remnant after closing the area with the previous subpage selection
+
+---------------------------
+
 v0.5.82 - close button for a selected subpage from the gallery list appears only after the list is read
 
 * v0.5.82 - [2022-03-28]
