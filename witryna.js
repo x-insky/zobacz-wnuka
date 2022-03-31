@@ -335,7 +335,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             $(tag_podmieniany).load( g_przechwytywacz_php + g_przechwytywacz_php_zapytanie + adres_zasobu + element_witryny, function ( odpowiedz, status, xhr ) {
                 
                 UkryjRamkeLadowania('podstrona');
-                OdblokujPrzycisk ( '#suwak_galerii_submit' );    // zezwól na ponowną akcję, zawsze wywoływane niezależnie od powodzenia bieżącej obsługi    
+                OdblokujPrzycisk ( '#suwak_galerii_submit' );    // zezwól na ponowną akcję, zawsze wywoływane niezależnie od powodzenia bieżącej obsługi
 
                     if ( status === "success" )
                     {
@@ -404,6 +404,7 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             
                 UkryjRamkeLadowania('wybrane_galerie_spis');    // jak poprzedni - jawne wywołanie dla dodolnego ze stanówi i zabranie tef funkcjonalności z Generuj...()     
                 OdblokujPrzycisk ( '#suwak_podstrony_submit' );    // zezwól na ponowną akcję, niezależnie od powodzenia bieżącej obsługi - zawsze zostaje to wywołane   
+                PokazPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii();
 
                     if ( status === "success" )
                     {	
@@ -2007,43 +2008,43 @@ var coWStorage = OdczytajLocalStorage;
     // ...   ?  
 return false;
 }
-    
+
 function AwariaWLocalStorage ()
 {
 localStorage.setItem('awariaNaStale', '<AWARIA!>')    
 }
-    
+
 function NaprawaWLocalStorage ()
 {
 localStorage.setItem('awariaNaStale', '<BRAK AWARII>')    
 }
-    
+
 function ZerujLocalStorage ()
 {
 localStorage.removeItem('awariaNaStale');
 }
-    
+
 function PokazDebuggowanie () {
     $('#odpluskwiacz_ajaksowy').fadeIn(200);
-}    
-    
+}
+
 function UkryjDebuggowanie () {
     $('#odpluskwiacz_ajaksowy').fadeOut(200);
-}    
+}
 
 function PokazBiezacaGalerie ( czasAnimacji ) {
 czasAnimacji = czasAnimacji || 200;    
 $('#nazwa_galerii').fadeIn( czasAnimacji );
 $('#skladowisko').fadeIn( czasAnimacji );
 $('#nawigacja_galeria').fadeIn( czasAnimacji );
-}    
-    
+}
+
 function UkryjBiezacaGalerie ( czasAnimacji ) {
 czasAnimacji = czasAnimacji || 200;    
 $('#nazwa_galerii').fadeOut( czasAnimacji );
 $('#skladowisko').fadeOut( czasAnimacji );
 $('#nawigacja_galeria').fadeOut( czasAnimacji );
-}    
+}
 
 function DostawPrzyciskZamykaniaDoBiezacejGalerii () {
 var $przyciskZamykania = $('#biezaca_galeria_zamykanie');
@@ -2066,6 +2067,16 @@ czasAnimacji = czasAnimacji || 300;
 $('#biezaca_galeria_zamykanie').fadeOut( czasAnimacji );
 }
 
+function PokazPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii ( czasAnimacji ) {
+czasAnimacji = czasAnimacji || 300;
+$('#wybrane_galerie_zamykanie').fadeIn( czasAnimacji );
+}
+
+function UkryjPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii ( czasAnimacji ) {
+czasAnimacji = czasAnimacji || 300;
+$('#wybrane_galerie_zamykanie').fadeOut( czasAnimacji );
+}
+
 function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( ) {
 
     $('#biezaca_galeria_zamykanie').on("click keydown", function( e ) {  // działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
@@ -2086,6 +2097,15 @@ function DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( ) {
     }); 
 }
 
+function PokazWybranaPodstroneListyGalerii ( czasAnimacji ) {
+czasAnimacji = czasAnimacji || 200;    
+$('#wybrany_zaczytany_spis').fadeIn( czasAnimacji );
+}
+
+function UkryjWybranaPodstroneListyGalerii ( czasAnimacji ) {
+czasAnimacji = czasAnimacji || 200;    
+$('#wybrany_zaczytany_spis').fadeOut( czasAnimacji );
+}
 
 function ZaczytajSpisGalerii () 
 {
@@ -2965,15 +2985,17 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     //$('div#wybrane_galerie_spis').addClass('szara-zawartosc');      
         if ( $('#wybrane_galerie_spis').find('span:first').text() != '' ) $('#wybrane_galerie_spis').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu
         
-    ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania, gdyby wymusić kolejno w trakcie tej obsługi zdarzenia           
+    ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania, gdyby wymusić kolejno w trakcie tej obsługi zdarzenia
         
     WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
                                 "wybrany_spis_galerii", { 'wybranaPaginacja' : wybranyNrPaginacji } ); 	// ES6 unfriendly
     
-    $('div#wybrany_zaczytany_spis h2 span').text( wybranyNrPaginacji.toString() + '.' );    
-    $('div#wybrany_zaczytany_spis').show(100);
+    $('div#wybrany_zaczytany_spis h2 span').text( wybranyNrPaginacji.toString() + '.' );
+    PokazWybranaPodstroneListyGalerii(300);
+        // $('div#wybrany_zaczytany_spis').show(100);   // standardowe pokazywanie, powyżej zastąpiono animacją
     // $('div#wczytywanie_wybrane_galerie_spis').show(100);
-    PokazRamkeLadowania('wybrane_galerie_spis');    
+    PokazRamkeLadowania('wybrane_galerie_spis');
+    UkryjPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii();
         
     PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -50);    // naddatek korekty, aby widzieć efekt szarosci... który jest niepotrzebny dle  
     //PrzewinEkranDoElementu('nav#spis_sterowanie', 500, -100);    // nie można przewinąc do 'div#wybrany_zaczytany_spis' jeśli jest jeszcze niewidoczny
@@ -3244,6 +3266,13 @@ $('#debugger_zamykanie').on("click keydown", function( e ) {
     UkryjBiezacaGalerie();
     }
 });     */
+
+$('#wybrane_galerie_zamykanie').on("click keydown", function( e ) {  // zamykanie wybranej podstrony listy galerii -- BEZ delegacji zdarzeń!
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
+    {
+    UkryjWybranaPodstroneListyGalerii();
+    }
+});   
 
 
 $('div#zagraj').click( function() {

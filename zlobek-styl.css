@@ -2058,6 +2058,17 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
 
 /*    --------------------------       KWERENDY     --------------------------    */
 
+
+@media screen and (min-width: 270px) {  /*  definicja na potrzeby jednego przyciku zamykania, który tuż przed pierwszą graniczną szerokością ekranu (320px) zachodzi od dołu na wcześniejszy komponent, 
+            z uwagi na skokową zmianę wysokości i marginesu dla H2 oraz wspomnianego komponentu wyboru galerii */
+
+    #wybrany_zaczytany_spis .zamykanie {
+        top: -2.5em;
+    }
+
+}
+
+
 @media screen and (min-width: 320px) {
     
     body {
