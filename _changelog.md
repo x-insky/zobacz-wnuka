@@ -1,3 +1,15 @@
+v0.5.84 - removing unnecessary comments and typos
+
+* v0.5.84 - [2022-04-01]
+
+[*] MODIFIED
+
+-- witryna.js
+* fixed typos and got rid of redundant comments inside the "WczytajZewnetrznyHTMLdoTAGU/LoadExternalHTMLintoTAG()" function
+  - removed comments containing unnecessary and definitely outdated logic of the site
+
+---------------------------
+
 v0.5.83 - close button for selected subpage of the gallery list: finally the press response is functional!
 
 * v0.5.83 - [2022-03-29]
