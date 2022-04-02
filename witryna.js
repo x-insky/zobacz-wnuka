@@ -495,56 +495,52 @@ var przyciskPoprzedni = {
         aktywny : false
     };
     
-var przyciskiDoWstawienia = [];    
+var przyciskiDoWstawienia = [];
     
 $('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
-//$('#wczytywanie_podstrona').hide(100);	// schowaj informację, skoro wczytano zawartość
-    // UkryjRamkeLadowania('podstrona');    // - to nie jest typowa funkcja generowania treści... albo się mylę   
-//$('#glowna div#komentarz').hide(100);	//showaj opis-informację o ile była pokazana  // NIE MA JUŻ TEGO ELEMENTU 
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
 $kontenerDocelowy.show( 100 );	// pokaż kontener na zaczytaną zawartość ... + przewiń po wyświetleniu całości?
 
-var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie wewnątrz danego pojemnika 
+var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie wewnątrz danego pojemnika
 
     if ( $listaPodstron.length >= 1 )	// czy są jakieś odnośniki do podstron/paginacji galerii? (zlicza wszystkie, też NOWSZE/STARSZE)
-    {					// startujemy od kolej strony po pierwszej, ale ostatni zawiera ciąg "starsze"
-    // $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Pozostałe podstrony w tej galerii</h3></div>');    // poprzedni tekst 
-    $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Przeglądaj kolejno pozostałe podstrony tej galerii</h3></div>'); 
+    {					// startujemy od kolejnej strony po pierwszej, ale ostatni zawiera ciąg "starsze"
+    $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Przeglądaj kolejno pozostałe podstrony tej galerii</h3></div>');
         
     var nazwaPodstronyGalerii = '';
-/*    var numerPodstronyDoWyswietlenia = 0;
-    var numerJeszczeNieokreślony = true;   */ 
-        for (var i=0; i < $listaPodstron.length; i++) {
+
+        for ( var i=0; i < $listaPodstron.length; i++ ) {
             // każda podstrona/paginacja zaczytywana po kolei z odsyłaczem w formie tekstowej -- treść tekstowa danego odnośnika
         nazwaPodstronyGalerii = $( $listaPodstron[i] ).text();  // pozyskiwanie bezpośredniej treści tekstowej odsyłacza
-            if ( ( nazwaPodstronyGalerii.search("nowsze") >= 0 ) || ( nazwaPodstronyGalerii.search("starsze") >= 0 ) ) 
+            if ( ( nazwaPodstronyGalerii.search("nowsze") >= 0 ) || ( nazwaPodstronyGalerii.search("starsze") >= 0 ) )
             {
-            // nic nie rób dla takiego odnośnika, najlepiej zakończyć iterację
-            continue;  // nie wyświetlaj przyciku/-ów z starsze/nowsze dla danego wykonania pętli - wyjście z kroku pętli
+            // nic nie robimy dla takiego odnośnika, najlepiej zakończyć bieżącą iterację
+            continue;  // nie wyświetlaj przyciku/-ów z tekstem "starsze/nowsze" dla danego wykonania pętli - wyjście z kroku pętli
             }
-        ileLinkowDoPodstron++;  // dopiero tu inkrementacja znalezionej ilości "dobrych" przycisków    
+        ileLinkowDoPodstron++;  // dopiero tu inkrementacja znalezionej ilości "dobrych" przycisków
 
         var odnosnikPodstrony = $( $listaPodstron[i] ).attr('href'); 	// wyciąga href z nawigacji podstrony/paginacji
-        console.log('Natrafiono na odnośnik nr ' + (i+1) + ' o zawartości \'' + odnosnikPodstrony + '\'');
+        // informacja o pozytywneym odczytaniu odnośnika do podstrony galerii
+        // console.log('Natrafiono na odnośnik nr ' + (i+1) + ' o zawartości \'' + odnosnikPodstrony + '\'');
 
         //var nrGalerii = odnosnikPodstrony.split(",")[2]; // to był wystarczający warunek, póki w "tytule" nie zawarto przecinka/ów (",")
         var nrGalerii = parseInt ( odnosnikPodstrony.substr( odnosnikPodstrony.lastIndexOf(",p") + 2, odnosnikPodstrony.length - 5 ) );
-            // "http.../u_misiow,a20,p2.html"  <-- usuwanie przecinka i "p", które są o "2 przed" numerem podstrony galerii 
+            // "http.../u_misiow,a20,p2.html"  <-- usuwanie przecinka i "p", które są o "2 przed" numerem podstrony galerii
             // treść z numerem kończy się ".html" - pomijane te 5 znaków przy krojeniu STRINGU)
 
-                // tu oblicznanie w pętli przejścia do ewentualnego poprzedniego oraz ewentualnego następnego względem bieżącego 
+                // tu oblicznanie w pętli przejścia do ewentualnego poprzedniego oraz ewentualnego następnego względem bieżącego
             if ( ( nrGalerii == ( nrWyswietlanejGalerii - 1 ) ) && ( nrGalerii > 0 ) )  // > "jeden" to źle?
             {
-            przyciskPoprzedni.nrPodstrony = nrGalerii; // przypisanie numeru galerri, który jest -1 w stosunku do bieżącej (wyświetlanej)
+            przyciskPoprzedni.nrPodstrony = nrGalerii; // przypisanie numeru galerii, który jest -1 w stosunku do bieżącej (wyświetlanej)
             przyciskPoprzedni.adresUrl = odnosnikPodstrony; // też jej adres jest potrzebny
             }
             if ( ( nrGalerii == ( nrWyswietlanejGalerii + 1 ) ) && ( nrGalerii < ( $listaPodstron.length + 1 ) ) )      // korekta na +1 max
             {
             przyciskNastepny.nrPodstrony = nrGalerii;
-            przyciskNastepny.adresUrl = odnosnikPodstrony;    
+            przyciskNastepny.adresUrl = odnosnikPodstrony;
             }
         var nowyPrzycisk = $('<button></button>', {
-        // var nowyPrzycisk = $('<input></input>', { 
+        // var nowyPrzycisk = $('<input></input>', {
         // type : "button",            
             //id : "galeria_paginacja_" + ( i+1 ),  // tu generowane po kolei
             id : "galeria_paginacja_" + nrGalerii,  // a tu użycie obliczonego numeru do konkretnej podstrony danej galerii (też po kolei, ale z wyłączeniem aktualnie wyswietlanej podstrony)
@@ -558,14 +554,14 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         });	 
 
         przyciskiDoWstawienia.push( nowyPrzycisk ); // zbieranie istniejących przycisków podgalerii do jednej kolekcji (z wyłaczeniem "poprzednia/następna" oraz siebie samego)
+            // powyższe celem polepszenia wydajności, aby dołączyć do DOM jeden element, zawierający kolekcję przycisków (po zebraniu tej kolekcji)
 
-        // $('nav#nawigacja_galeria > div:first').append( nowyPrzycisk ); // wstawianie przycisku innego niż "poprzednia/następna" podstrona danej galerii
-                // też brak przycisku dla bieżacej galerii, np. w formie wyłączonego (nieaktywnego), bo brak takiego odnośnika teraz na www
         } // for-END
         
-    console.log('NOWY: ', przyciskiDoWstawienia );
+            // logownie kolekcji przycisków dla sukcesu (znaleziono na stronie) 
+        // console.log('NOWY: ', przyciskiDoWstawienia );
         
-            // wstepne dane do tworzenia przycisków DALEJ/WSTECZ  - dobre miejsce na zrobienie funkcji z tej treści (al eza dużo parametrów i sprzecznej logiki w niej)
+            // wstepne dane do tworzenia przycisków NASTĘPNY/POPRZEDNI - dobre miejsce na zrobienie funkcji z tej treści (ale za dużo parametrów i sprzecznej logiki w niej)
         if ( przyciskPoprzedni.nrPodstrony != 0 ) 
         {
         przyciskPoprzedni.trescPrzycisku = "<< Poprzednia (nr " + przyciskPoprzedni.nrPodstrony + ")"; // ustaw treść z numerem gdy jest zmieniony pierwowzór
@@ -576,7 +572,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         przyciskPoprzedni.trescPrzycisku = "<< Poprzednia";    // wstaw domyślny tekst (... i tak się nie uda naciśnąc tego przycisku później)
         }
         
-        if ( przyciskNastepny.nrPodstrony != 0 ) 
+        if ( przyciskNastepny.nrPodstrony != 0 )
         {
         przyciskNastepny.trescPrzycisku = "Następna (nr " + przyciskNastepny.nrPodstrony + ") >>";
         przyciskNastepny.aktywny = true;
@@ -585,7 +581,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         {
         przyciskNastepny.trescPrzycisku = "Następna >>";
         }
-        // tworzenie przycisku WSTECZ w pamięci, bazując na istniejących przyciskach konkretnych podstron danej galerii 
+        // tworzenie przycisku POPRZEDNI w pamięci, bazując na istniejących przyciskach konkretnych podstron danej galerii .. nastepnie przycisku NASTĘPNY
     var poprzedniButton = $('<button></button>', {
         id : "galeria_poprzednia",
         "class" : "przycisk_galeria",   // jako sygnalizacja, że to nie jest słowo kluczowe, "className" też dobrze działa dla IE8 
@@ -603,7 +599,7 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         "class" : "przycisk_galeria",
         value : przyciskNastepny.nrPodstrony, 
         text : przyciskNastepny.trescPrzycisku,
-        disabled : !przyciskNastepny.aktywny,      // tu negacja wartości!
+        disabled : !przyciskNastepny.aktywny,      // negacja wartości!
         "data-tag" : g_tag_do_podmiany_zdjecia,
         "data-adres_strony" : g_adres_strony,
         "data-adres_galerii" : przyciskNastepny.adresUrl,
@@ -621,22 +617,21 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
     }   // if-END $listaPodstron.length >= 1
     else 
     {   // jakiś odzew w przypadku, gdy nic więcej nie ma poza beżącą podstroną w danej galerii (tekst dla braku podstrony)
-        // zawsze to lepsze, niż brak tego komunikatu (+: rozwiewa niepewność, że nic więcej nie ma) 
+        // zawsze to lepsze, niż brak tego komunikatu, (+): rozwiewa niepewność, że nic więcej nie ma
     $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Brak innych podstron dla tej galerii</h3></div>'); 
     }   // if-else-END $listaPodstron.length >= 1
 
 //przeszukiwanie odnośników dla miniatur w galerii, link z miniatury prowadzi do normalnej (większej) kopii obrazka
 // do galerii prowadzą odnośniki z tą klasą, do paginacji niestety też ;) | same zdjęcia i miniatury bez przypisanej klasy dla <a>
 var $odnosnikiMiniatur  = $( kontenerZrodlowy + ' a:not(.link_tresc)' );
-    //$odnosnikiMiniatur.css({ "border" : "1px solid yellow" }); // testowanie
 
-console.log('Znaleziono na podstronie ' + $odnosnikiMiniatur.length + ' miniatur - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
+// logowanie sukcesu: znelezione miniatury dla bieącej podstrony 
+// console.log('Znaleziono na podstronie ' + $odnosnikiMiniatur.length + ' miniatur - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
 
         // zweryfikować obliczenie bieżącej galerii we wcześniejszej pętli ...
     
 $( g_miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyświetlenie nowej galerii 
-$( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietlanejGalerii  + '.</span> podstrony galerii</h2>');  // dopisanie nagłówka dla bieżącej galerii - z parametru wywołania
-//$( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej ' + numerPodstronyDoWyswietlenia  + '. podstrony wybranej galerii</h2>');  // dopisanie nagłówka dla bieżącej galerii OBLICZONEGO, na podstawie przebiegu 
+$( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietlanejGalerii  + '.</span> podstrony galerii</h2>');  // dopisanie nagłówka dla bieżącej galerii - z PARAMETRU WYWOŁANIA, a nie obliczonego na podstawie przebiegu
     
     $odnosnikiMiniatur.each(function(){
 
@@ -667,7 +662,11 @@ $( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietl
     $kontenerDocelowy.append( $biezacyOdnosnik ); 
     }); //each-function-END
 
-//	} //if-END $listaPodstron.length >= 1
+    if ( $odnosnikiMiniatur.length <= 0) // gdyby jednak nic nie znaleziono (chyżby coś z serwerem lub transmisją?)
+    {
+    console.log('Nie znaleziono na podstronie żadnych miniatur (stan: ' + $odnosnikiMiniatur.length + ') - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
+    }
+
 } // GenerujPodstronyGalerii-END    
     
 

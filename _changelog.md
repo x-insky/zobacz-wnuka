@@ -5,8 +5,10 @@ v0.5.84 - removing unnecessary comments and typos
 [*] MODIFIED
 
 -- witryna.js
-* fixed typos and got rid of redundant comments inside the "WczytajZewnetrznyHTMLdoTAGU/LoadExternalHTMLintoTAG()" function
+* fixed typos and got rid of redundant comments 
   - removed comments containing unnecessary and definitely outdated logic of the site
+  - cleaning inside the main function "WczytajZewnetrznyHTMLdoTAGU/LoadExternalHTMLintoTAG()"
+  - the same actions for function "GenerujPodstronyGalerii/GenerateGallerySubpages()"
 
 ---------------------------
 
