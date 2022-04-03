@@ -1,14 +1,18 @@
-v0.5.84 - removing unnecessary comments and typos
+v0.5.84 - removing unnecessary comments and typos (v.3)
 
 * v0.5.84 - [2022-04-01]
 
 [*] MODIFIED
 
 -- witryna.js
-* fixed typos and got rid of redundant comments 
+* fixed typos and got rid of redundant comments
   - removed comments containing unnecessary and definitely outdated logic of the site
   - cleaning inside the main function "WczytajZewnetrznyHTMLdoTAGU/LoadExternalHTMLintoTAG()"
   - the same actions for function "GenerujPodstronyGalerii/GenerateGallerySubpages()"
+* removed logging into console for positive cases
+  - commented out them
+  - added extra condition for negative readings, before logging any
+  - ...but many times inside reading functions are processed only the positive paths of logic
 
 ---------------------------
 
