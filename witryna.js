@@ -1323,18 +1323,17 @@ function InicjalizujCSSzAktywnymJS()  // UWAGA! style kierowane pod konkretne el
     // pomocnicza klasa-wskaźnik, dla podległości lub ogólny "włącz/wyłącz" dla zawartości gdy jest/brakuje JS
 $('.glowny-kontener').removeClass('brak-js');
     // usuń ramkę z komunikatem o braku JS... już niepotrzebne -- powyższe + CSS załatwia sprawę lepiej
-// $('#brak_skryptow').css('display', 'none');
-    // czy kasować element z komunikatem o braku skryptów z DOMu? 
+    // czy kasować element z komunikatem o braku skryptów z DOMu?
  $('#brak_skryptow').remove();    // wariant z kasowaniem
-    
-    // ale NIE POKAZUJ wyzwalacza dla gry, bo to styl INLINE (sprawa dobrze załatwiona poprzez kwerendy)
+
+    // NIE POKAZUJ wyzwalacza dla gry, bo to styl INLINE (sprawa dobrze załatwiona poprzez kwerendy)
 // $('#zagraj').css('display', 'block');
-    
+
     // ale aktywuj animację dla loga witryny, niech choć tu będzie nieco ruchu
 var slonceLogo = $('#slonce_logo');
 slonceLogo.removeClass('startowe-przesuniecie');
     if ( slonceLogo.not(':hover') ) slonceLogo.removeClass('animacja-interaktywnego-slonca');  // zabierz trwałą animację oraz przemieszczenie, nadawane poprzez JS dla loga w stanie hover (uwaga, "mysza" może być nad elemenetem w tym czasie!)
-// alternatywnie dla loga można po prostu wywalić atrybut klasy w całości (z całą zawartością), nie bacząc na skutki 
+// alternatywnie dla loga można po prostu wywalić atrybut klasy w całości (z całą zawartością), nie bacząc na skutki
 
     // pokazywanie prostokąta z aktualnymi wymiarami okna przeglądarki
 //$('#wymiary').css('visibility', 'visible');  // zmienione poprzez klasę rodzica "brak-js"
@@ -1347,24 +1346,24 @@ function PokazIUkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
 sekundowyCzasAnimacji = parseInt( sekundowyCzasAnimacji ) || 5;
     if ( sekundowyCzasAnimacji < 5 ) sekundowyCzasAnimacji = 5; // ogólnie na (+), też by zapobiec dzieleniu przez 0
 
-//$('.naglowek .powiadamiacz').css('display', 'block');   // pokaż każdę z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie
-//$('.naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje
+// $('.naglowek .powiadamiacz').css('display', 'block');   // pokaż każdę z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie
+// $('.naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje
 
-    // zmniejszanie długości pasków powiadamiania - indywidualne czasy dla każdego z pasków z wspólnego zakesu
+    // zmniejszanie długości pasków powiadamiania - indywidualne czasy dla każdego z pasków z wspólnego zakresu
 $('.naglowek .pasek').each( function() {
-//    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / 2 ; // maksymalnie -49% parametru (też częsci całości)
-    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / ( 2 + Math.floor( sekundowyCzasAnimacji % 5 ) ); 
-    sekundowyCzasAnimacji -= dodatkowe_sekundy;    // tu ewentualna dekrementacja 
+    // dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / 2 ; // maksymalnie -49% parametru (też częsci całości)
+    dodatkowe_sekundy = Math.floor( Math.random() * sekundowyCzasAnimacji ) / ( 2 + Math.floor( sekundowyCzasAnimacji % 5 ) );
+    sekundowyCzasAnimacji -= dodatkowe_sekundy;    // tu ewentualna dekrementacja
     var aktualnyPasek = this;
-//    $(this).css({ 'transition-duration' : sekundowyCzasAnimacji + 's', 'width' : 0 });    // tu wymuszona (i niejawna) konwersja liczby na string
+    // $(this).css({ 'transition-duration' : sekundowyCzasAnimacji + 's', 'width' : 0 });    // tu wymuszona (i niejawna) konwersja liczby na string
     $(this).css('transition-duration', sekundowyCzasAnimacji + 's');
-    var czasozabieracz = $(this).innerHeight; 
+    var czasozabieracz = $(this).innerHeight;
     $(this).css('width', '0' );    // tu wymuszona (i niejawna) konwersja liczby na string
     setTimeout( function() {
         $(aktualnyPasek).parent('div').slideUp(1000, function() {    // dla każdego z elementów powinna być osobna funkcja po ukończnieu animacji
             //$(this).remove();   // najlepiej usuwać dany kontener po animacji zniknięcia - tu zniknie każdy <div.powiadamiacz> z osobna
-// TU WYŁĄCZONO USUWANIE ELEMENTU
-            
+// TU (powyżej) WYŁĄCZONO USUWANIE ELEMENTU
+
         });   
     }, sekundowyCzasAnimacji * 1010 );  // + minimalny nadkład opóźnienia
     
@@ -1374,7 +1373,7 @@ $('.naglowek .pasek').each( function() {
     
     
 function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
-{   // dodawanie działającej ścieżki dla obrazka, w spisie treści galerii oraz w każdej z podstron galerii 
+{   // dodawanie działającej ścieżki dla obrazka, w spisie treści galerii oraz w każdej z podstron galerii
 var srcObrazka = '';    
 var $obrazkiTytuloweGalerii = ''; 
     if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img"); // ~(spis treści) to obrazki w galerii
@@ -1386,8 +1385,8 @@ var $obrazkiTytuloweGalerii = '';
     srcObrazka = g_protokol_www + g_adres_strony + "/" + srcObrazka;
     srcObrazka = $($obrazkiTytuloweGalerii[i]).attr('src', srcObrazka);
     }
-}  // NaprawBrakujaceSRCwKontenerze-END 
-    
+}  // NaprawBrakujaceSRCwKontenerze-END
+
 
 function UsunBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
 {
@@ -1399,9 +1398,9 @@ var $obrazkiTytuloweGalerii = '';
 	{
     $($obrazkiTytuloweGalerii[i]).removeAttr('src');
     }
-}  // UsunBrakujaceSRCwKontenerze-END     
-    
-  
+}  // UsunBrakujaceSRCwKontenerze-END
+
+
 function UsunBrakujaceSRCwIMGPozaPrzekazanym ( przeszukiwanyKontener, numerGaleriiDoPozostawienia )
 {
 var $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img");
@@ -1409,144 +1408,144 @@ var $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.li
 	{	
 		for (var i=0; i < $obrazkiTytuloweGalerii.length ; i++ )
 		{
-            if ( i != numerGaleriiDoPozostawienia ) 
+            if ( i != numerGaleriiDoPozostawienia )
             {
-            $($obrazkiTytuloweGalerii[i]).removeAttr('src');    
+            $($obrazkiTytuloweGalerii[i]).removeAttr('src');
             console.log('Usunięto brakujący SRC w IMG #' + (i+1) + ' spośród ' + $obrazkiTytuloweGalerii.length + ' obrazków galerii' );
             }
         }
     }
-} // UsunBrakujaceSRCwIMGPozaPrzekazanym-END    
-    
+} // UsunBrakujaceSRCwIMGPozaPrzekazanym-END
 
-function InicjalizujPrzyciskiWyboruGalerii ()	
+
+function InicjalizujPrzyciskiWyboruGalerii ()
 {
-g_wybrany_nr_galerii = Math.floor(Math.random() * 100) + 1;	
+g_wybrany_nr_galerii = Math.floor(Math.random() * 100) + 1;
 // console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_galerii + ') wartości pól formularza przeglądania galerii...');
-$g_input_nr_galerii.val( g_wybrany_nr_galerii );	
-$g_suwak_nr_galerii.val( g_wybrany_nr_galerii );	
-$g_suwak_nr_galerii.attr( 'max' , 105 ); // nie trzeba teraz?	
+$g_input_nr_galerii.val( g_wybrany_nr_galerii );
+$g_suwak_nr_galerii.val( g_wybrany_nr_galerii );
+$g_suwak_nr_galerii.attr( 'max' , 105 ); // nie trzeba teraz?
 }   // InicjalizujPrzyciskiWyboruGalerii-END
 
-    
+
 function InicjalizujPrzyciskiWyboruPodstronyGalerii ()	
 {
-g_wybrany_nr_podstrony_galerii = Math.floor(Math.random() * 5) + 1 ;	
+g_wybrany_nr_podstrony_galerii = Math.floor(Math.random() * 5) + 1;
 // console.log('Ustalanie POCZĄTKOWYCH (np. ' + g_wybrany_nr_podstrony_galerii + ') wartości pól formularza przeglądania podstronami galerii...');
-$g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );	
-$g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );	
-$g_suwak_nr_podstrony_galerii.attr( 'max' , 6 ); // "trzeba, czy nie trzeba?" oto jest pytanie	
-}   // InicjalizujPrzyciskiWyboruPodstronyGalerii-END    
-    
-    
-function UstawSuwakiJakOdczytanoPierwszymPrzebiegiem() 
-{    
+$g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+$g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+$g_suwak_nr_podstrony_galerii.attr( 'max' , 6 ); // "trzeba, czy nie trzeba?" oto jest pytanie
+}   // InicjalizujPrzyciskiWyboruPodstronyGalerii-END
+
+
+function UstawSuwakiJakOdczytanoPierwszymPrzebiegiem()
+{
 // odniesie tej wartości do maksymalnej wartośc przesuwu suwaka wyboru galerii + inicjowanie suwaka i inputa na tę wartość
-// console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii i wyboru podstron ...');		
+// console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii i wyboru podstron ...');
 
 g_wybrany_nr_galerii = g_ilosc_wszystkich_galerii;
     if ( g_wybrany_nr_galerii > 1 ) g_wybrany_nr_galerii = parseInt( g_wybrany_nr_galerii / 2 );    // ustawienie na połowie wartości przedziału
 
 $g_suwak_nr_galerii.attr( 'max', g_ilosc_wszystkich_galerii );     // ustalenie zakresu maksymalnego dla suwaka
-$g_suwak_nr_galerii.val( g_wybrany_nr_galerii );	
-$g_input_nr_galerii.val( g_wybrany_nr_galerii );	
+$g_suwak_nr_galerii.val( g_wybrany_nr_galerii );
+$g_input_nr_galerii.val( g_wybrany_nr_galerii );
 
 g_wybrany_nr_podstrony_galerii = g_ilosc_wszystkich_paginacji_galerii;
-    if ( g_wybrany_nr_podstrony_galerii > 1 ) g_wybrany_nr_podstrony_galerii = parseInt( g_wybrany_nr_podstrony_galerii / 2 );   // ustawienie na połowie wartości przedziału        
+    if ( g_wybrany_nr_podstrony_galerii > 1 ) g_wybrany_nr_podstrony_galerii = parseInt( g_wybrany_nr_podstrony_galerii / 2 );   // ustawienie na połowie wartości przedziału
 
 $g_suwak_nr_podstrony_galerii.attr( 'max', g_ilosc_wszystkich_paginacji_galerii );
-  // jednak bez ustawiania na maksimum, bo to okresla PIERWSZĄ podstronę spisu treści galerii, a nie ostatnią... więc zostaje automat albo 'MIN' 
-$g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );	
+  // jednak bez ustawiania na maksimum, bo to okresla PIERWSZĄ podstronę spisu treści galerii, a nie ostatnią... więc zostaje automat albo 'MIN'
+$g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
 $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
-// console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii... PO -- g_wybrany_nr_galerii: ' + g_wybrany_nr_galerii + ', a POZYCJA: ' + atrybut_href_pozycja 
-//                                                + ' dla odnośnika: ' + atrybut_href );		    
+// console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii... PO -- g_wybrany_nr_galerii: ' + g_wybrany_nr_galerii + ', a POZYCJA: ' + atrybut_href_pozycja
+//                                                + ' dla odnośnika: ' + atrybut_href );
 }   // UstawSuwakiJakOdczytanoPierwszymPrzebiegiem-END
-  
-    
+
+
 function NormalizujZakresPolaInput ( wartoscBiezaca, normalizacjaPolaPodstrony )
 {
-wartoscBiezaca = parseInt( wartoscBiezaca );   // konwersja do typu Number, całkowite liczby 
+wartoscBiezaca = parseInt( wartoscBiezaca );   // konwersja do typu Number, całkowite liczby
     
     if ( !normalizacjaPolaPodstrony )   // zwykły tryb, dotyczy pola wyboru numeru galerii spośród zakresu
     {
-        if ( ( wartoscBiezaca === undefined ) || ( isNaN( wartoscBiezaca ) ) ) 
+        if ( ( wartoscBiezaca === undefined ) || ( isNaN( wartoscBiezaca ) ) )
         {
-        wartoscBiezaca = 1;   
+        wartoscBiezaca = 1;
         $g_input_nr_galerii.val( wartoscBiezaca );
-        $g_suwak_nr_galerii.val( wartoscBiezaca ); 
+        $g_suwak_nr_galerii.val( wartoscBiezaca );
         }
 
-        if ( wartoscBiezaca <= 0 )  
+        if ( wartoscBiezaca <= 0 )
         {
-        wartoscBiezaca = 1;   
+        wartoscBiezaca = 1;
         $g_input_nr_galerii.val( wartoscBiezaca );
-        $g_suwak_nr_galerii.val( wartoscBiezaca ); 
+        $g_suwak_nr_galerii.val( wartoscBiezaca );
         }
 
-        if ( wartoscBiezaca > g_ilosc_wszystkich_galerii ) 
+        if ( wartoscBiezaca > g_ilosc_wszystkich_galerii )
         { 
-        wartoscBiezaca = g_ilosc_wszystkich_galerii;    
+        wartoscBiezaca = g_ilosc_wszystkich_galerii;
         $g_input_nr_galerii.val( g_ilosc_wszystkich_galerii );
-        $g_suwak_nr_galerii.val( g_ilosc_wszystkich_galerii ); 
-        } 
+        $g_suwak_nr_galerii.val( g_ilosc_wszystkich_galerii );
+        }
     } 
     else    // tryb dla pola wyboru podstrony galerii, gdy zmienna == ('cokolwiek' / 2 && TRUE)
     {           // te same warunki, tylko zakresy i elementy formularza inne
-        if ( ( wartoscBiezaca === undefined ) || ( isNaN( wartoscBiezaca ) ) ) 
+        if ( ( wartoscBiezaca === undefined ) || ( isNaN( wartoscBiezaca ) ) )
         {
-        wartoscBiezaca = 1;   
+        wartoscBiezaca = 1;
         $g_input_nr_podstrony_galerii.val( wartoscBiezaca );
-        $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca ); 
+        $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca );
         }
 
-        if ( wartoscBiezaca <= 0 )  
+        if ( wartoscBiezaca <= 0 )
         {
-        wartoscBiezaca = 1;   
+        wartoscBiezaca = 1;
         $g_input_nr_podstrony_galerii.val( wartoscBiezaca );
-        $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca ); 
+        $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca );
         }
 
-        if ( wartoscBiezaca > g_ilosc_wszystkich_paginacji_galerii ) 
-        { 
-        wartoscBiezaca = g_ilosc_wszystkich_paginacji_galerii;    
+        if ( wartoscBiezaca > g_ilosc_wszystkich_paginacji_galerii )
+        {
+        wartoscBiezaca = g_ilosc_wszystkich_paginacji_galerii;
         $g_input_nr_podstrony_galerii.val( g_ilosc_wszystkich_paginacji_galerii );
-        $g_suwak_nr_podstrony_galerii.val( g_ilosc_wszystkich_paginacji_galerii ); 
-        }     
-    }     
-    
-return wartoscBiezaca;   
+        $g_suwak_nr_podstrony_galerii.val( g_ilosc_wszystkich_paginacji_galerii );
+        }
+    }
+
+return wartoscBiezaca;
 } // NormalizujZakresPolaInput-END
 
-   
+
 function ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( trescOdpowiedzi )
 {
-    // jeżeli otrzymano z serwera/pośrednika odpowiedź na żądanie GET, które w treści zawiera początek wewnętrznego komuniakatu PHP o błędzie...     
+    // jeżeli otrzymano z serwera/pośrednika odpowiedź na żądanie GET, które w treści zawiera początek wewnętrznego komuniakatu PHP o błędzie...
     if ( trescOdpowiedzi.indexOf('!-A-W-A-R-I-A-!') >= 0 ) return false;   // aby ustawić na błąd to co otrzymano, zamiast na wiadomość
-return true;    
+return true;
 }   // ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera-END
-    
-    
-function UzupełnijNaglowekBiezacejGalerii ( galeria, diagnostyka ) 
+
+
+function UzupełnijNaglowekBiezacejGalerii ( galeria, diagnostyka )
 { // atrybuty { tytul, opis, srcObrazka, data } + o inne też można rozszerzyć, nejlepiej aby był to pełny opis obiekt galerii
 var trescDaty = galeria.data;   // przykładowa: "z dnia: 2016-02-25 18:45"
-trescDaty = trescDaty.slice( trescDaty.indexOf(":")+2, trescDaty.lastIndexOf(":")-3 ); 
+trescDaty = trescDaty.slice( trescDaty.indexOf(":")+2, trescDaty.lastIndexOf(":")-3 );
 trescDaty = '(' + trescDaty.replace(/-/g, '.') + ')'; // zamiana WSZYSTKICH DWÓCH łączników na kropki
     
 var trescHtml = ''; // <div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>';   // doklej przycisk na początku ;)
 trescHtml += '<div class="kontener"><h2>Galeria nr <span>' + galeria.nrGalerii + '</span> &ndash; <span>' + galeria.tytul + '</span></h2>'; // najpierw <h2>, aby go ewentualny <img> z float nie wyprzedzał na wąskim ekranie
 trescHtml += '<img src="' + galeria.srcObrazka + '" alt="' + galeria.tytul + '" title="' + galeria.tytul + '" />';
 // trescHtml += '<h2>' + galeria.tytul + ' <span class="data">' + trescDaty + '</span></h2>';
-trescHtml += '<p class="data">' + trescDaty + '</p>';    
+trescHtml += '<p class="data">' + trescDaty + '</p>';
 trescHtml += '<p>';
-    if ( diagnostyka ) trescHtml += diagnostyka + '<br />' ;
-trescHtml += galeria.opis + '</p></div>';    
+    if ( diagnostyka ) trescHtml += diagnostyka + '<br />';
+trescHtml += galeria.opis + '</p></div>';
 
 $('#nazwa_galerii').html( trescHtml );
 PokazBiezacaGalerie(200);
-} // UzupełnijNaglowekBiezacejGalerii-END  
-    
-    
-function KtoraPozycjaWGalerii ( nrGalerii ) 
+} // UzupełnijNaglowekBiezacejGalerii-END
+
+
+function KtoraPozycjaWGalerii ( nrGalerii )
 {
 return ( g_ilosc_wszystkich_galerii - nrGalerii ) % 5;
 }
@@ -1554,7 +1553,7 @@ return ( g_ilosc_wszystkich_galerii - nrGalerii ) % 5;
 
 function MaksymalnaIloscPodstronGalerii ()
 {
-return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszystkich_galerii % 5 ) / 5 ) ; 
+return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszystkich_galerii % 5 ) / 5 ) ;
 }
 
 
@@ -1565,13 +1564,13 @@ var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();	// ze zmiennej glo
 //var ileReszty = nrGalerii % 5 ;         // teraz niepotrzebne
 var pozycjaWGalerii = KtoraPozycjaWGalerii( nrGalerii );
 var nrPodstronyGalerii;
-var korekta = 0;    // wykryto różnice w przypadku pełnych podstron (czyli zawierających po pięć obrazków na OSTATNIEJ podstronie spisu treści)... wtedy ==1
+var korekta = 0;    // wykryto różnice w przypadku pełnych podstron (czyli zawierających po pięć obrazków na OSTATNIEJ podstronie spisu treści)... wtedy == 1
 
     if ( ( g_ilosc_wszystkich_galerii % nrPodstronyGaleriiMAX ) == 0 ) korekta = 1; //  dodać +1 gdy galerie to wielokrotność pełnych spisów galerii
 nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.floor( ( nrGalerii + pozycjaWGalerii ) / 5 ) + korekta;  // da się zrobić warunek inaczej, wzór bez dodatkowej zmiennej?
-    //nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.ceil( ( nrGalerii + pozycjaWGalerii ) / 5 ) ;
+    //nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.ceil( ( nrGalerii + pozycjaWGalerii ) / 5 );
 return nrPodstronyGalerii;
-} // KtoraPodstronaWGalerii-END    
+} // KtoraPodstronaWGalerii-END
 
 
 function InicjalizujRamkiLadowania ()  

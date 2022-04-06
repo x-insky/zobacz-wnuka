@@ -1,4 +1,4 @@
-v0.5.84 - removing unnecessary comments and typos (v.5)
+v0.5.84 - removing unnecessary comments and typos (v.6)
 
 * v0.5.84 - [2022-04-01]
 
@@ -8,6 +8,7 @@ v0.5.84 - removing unnecessary comments and typos (v.5)
 * fixed typos and got rid of redundant comments
   - removed comments containing unnecessary and definitely outdated logic of the site
   - cleaning inside the functions of defined JS logic
+  - removed hidden whitespaces
 * removed logging into console for positive cases
   - commented out them
   - added extra condition for negative readings, before logging any
