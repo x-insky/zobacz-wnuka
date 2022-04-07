@@ -1336,7 +1336,7 @@ slonceLogo.removeClass('startowe-przesuniecie');
 // alternatywnie dla loga można po prostu wywalić atrybut klasy w całości (z całą zawartością), nie bacząc na skutki
 
     // pokazywanie prostokąta z aktualnymi wymiarami okna przeglądarki
-//$('#wymiary').css('visibility', 'visible');  // zmienione poprzez klasę rodzica "brak-js"
+// $('#wymiary').css('visibility', 'visible');  // zmienione poprzez CSS rodzica, klasę "brak-js"
 
 }   // InicjalizujCSSzAktywnymJS-END
 
@@ -1346,7 +1346,7 @@ function PokazIUkryjPowiadomieniaOOdwiedzinach ( sekundowyCzasAnimacji )
 sekundowyCzasAnimacji = parseInt( sekundowyCzasAnimacji ) || 5;
     if ( sekundowyCzasAnimacji < 5 ) sekundowyCzasAnimacji = 5; // ogólnie na (+), też by zapobiec dzieleniu przez 0
 
-// $('.naglowek .powiadamiacz').css('display', 'block');   // pokaż każdę z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie
+// $('.naglowek .powiadamiacz').css('display', 'block');   // pokaż każdą z ramek powiadomień by po chwili ukryć... ale gdy JS nieaktywny to nie zniknie
 // $('.naglowek .powiadamiacz').css('visibility', 'visible');   // z wcześniej wpisanym w css 'display: none' to <div.pasek> się nie pojawia i nie animuje
 
     // zmniejszanie długości pasków powiadamiania - indywidualne czasy dla każdego z pasków z wspólnego zakresu
@@ -1358,13 +1358,13 @@ $('.naglowek .pasek').each( function() {
     // $(this).css({ 'transition-duration' : sekundowyCzasAnimacji + 's', 'width' : 0 });    // tu wymuszona (i niejawna) konwersja liczby na string
     $(this).css('transition-duration', sekundowyCzasAnimacji + 's');
     var czasozabieracz = $(this).innerHeight;
-    $(this).css('width', '0' );    // tu wymuszona (i niejawna) konwersja liczby na string
+    $(this).css('width', '0');    // tu wymuszona (i niejawna) konwersja liczby na string
     setTimeout( function() {
         $(aktualnyPasek).parent('div').slideUp(1000, function() {    // dla każdego z elementów powinna być osobna funkcja po ukończnieu animacji
             //$(this).remove();   // najlepiej usuwać dany kontener po animacji zniknięcia - tu zniknie każdy <div.powiadamiacz> z osobna
 // TU (powyżej) WYŁĄCZONO USUWANIE ELEMENTU
 
-        });   
+        });
     }, sekundowyCzasAnimacji * 1010 );  // + minimalny nadkład opóźnienia
     
 }); // each-$('.naglowek .pasek')-END
@@ -1374,8 +1374,8 @@ $('.naglowek .pasek').each( function() {
     
 function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
 {   // dodawanie działającej ścieżki dla obrazka, w spisie treści galerii oraz w każdej z podstron galerii
-var srcObrazka = '';    
-var $obrazkiTytuloweGalerii = ''; 
+var srcObrazka = '';
+var $obrazkiTytuloweGalerii = '';
     if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img"); // ~(spis treści) to obrazki w galerii
     else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " a:not(.link_tresc) img");
     
@@ -1440,7 +1440,7 @@ $g_suwak_nr_podstrony_galerii.attr( 'max' , 6 ); // "trzeba, czy nie trzeba?" ot
 
 function UstawSuwakiJakOdczytanoPierwszymPrzebiegiem()
 {
-// odniesie tej wartości do maksymalnej wartośc przesuwu suwaka wyboru galerii + inicjowanie suwaka i inputa na tę wartość
+// odniesienie tej wartości do maksymalnej wartości przesuwu suwaka wyboru galerii + inicjowanie suwaka i inputa na tę wartość
 // console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii i wyboru podstron ...');
 
 g_wybrany_nr_galerii = g_ilosc_wszystkich_galerii;
@@ -1519,18 +1519,18 @@ return wartoscBiezaca;
 
 function ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( trescOdpowiedzi )
 {
-    // jeżeli otrzymano z serwera/pośrednika odpowiedź na żądanie GET, które w treści zawiera początek wewnętrznego komuniakatu PHP o błędzie...
+    // jeżeli otrzymano z serwera/pośrednika odpowiedź na żądanie GET, które w treści zawiera początek wewnętrznego komunikatu PHP o błędzie...
     if ( trescOdpowiedzi.indexOf('!-A-W-A-R-I-A-!') >= 0 ) return false;   // aby ustawić na błąd to co otrzymano, zamiast na wiadomość
 return true;
 }   // ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera-END
 
 
 function UzupełnijNaglowekBiezacejGalerii ( galeria, diagnostyka )
-{ // atrybuty { tytul, opis, srcObrazka, data } + o inne też można rozszerzyć, nejlepiej aby był to pełny opis obiekt galerii
+{ // atrybuty { tytul, opis, srcObrazka, data } + o inne też można rozszerzyć, najlepiej aby był to pełny opis obiektu galerii
 var trescDaty = galeria.data;   // przykładowa: "z dnia: 2016-02-25 18:45"
 trescDaty = trescDaty.slice( trescDaty.indexOf(":")+2, trescDaty.lastIndexOf(":")-3 );
 trescDaty = '(' + trescDaty.replace(/-/g, '.') + ')'; // zamiana WSZYSTKICH DWÓCH łączników na kropki
-    
+
 var trescHtml = ''; // <div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>';   // doklej przycisk na początku ;)
 trescHtml += '<div class="kontener"><h2>Galeria nr <span>' + galeria.nrGalerii + '</span> &ndash; <span>' + galeria.tytul + '</span></h2>'; // najpierw <h2>, aby go ewentualny <img> z float nie wyprzedzał na wąskim ekranie
 trescHtml += '<img src="' + galeria.srcObrazka + '" alt="' + galeria.tytul + '" title="' + galeria.tytul + '" />';
@@ -1573,12 +1573,12 @@ return nrPodstronyGalerii;
 } // KtoraPodstronaWGalerii-END
 
 
-function InicjalizujRamkiLadowania ()  
+function InicjalizujRamkiLadowania ()
 {
-// oto wstepna, prosta forma; tu rejestrowane są na sztywno wszystkie powiadomienia o ładowaniu konkretnych zawartości - wymaga podpięcia do witryny
+// oto wstępna, prosta forma; tu rejestrowane są wszystkie powiadomienia o ładowaniu konkretnych zawartości - wymaga podpięcia do witryny
 // ... póki co trzy notyfikacje - IDeki: "wczytywanie_podstrona" (podstrona galerii), "wczytywanie_spis", "wczytywanie_wybrane_galerie_spis" 
-//    (dopisać ewentualne kolejne animacje ładowania)    
-    g_prezentacja_wczytywania = [   // raczej przypisać elmenty z HTMLa tu
+//    (dopisać ewentualne kolejne notyfikacje ładowania)
+    g_prezentacja_wczytywania = [   // raczej przypisać elementy z HTMLa tu
         {   element : 'wczytywanie_spis',
             ile : 0 
         },
