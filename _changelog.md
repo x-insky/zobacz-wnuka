@@ -7,6 +7,7 @@ v0.5.84 - removing unnecessary comments and typos (v.6)
 -- witryna.js
 * fixed typos and got rid of redundant comments
   - removed comments containing unnecessary and definitely outdated logic of the site
+  - ...but leaved some of them with sophisticated logic
   - cleaning inside the functions of defined JS logic
   - removed hidden whitespaces
 * removed logging into console for positive cases

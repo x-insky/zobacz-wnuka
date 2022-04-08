@@ -1595,7 +1595,7 @@ function InicjalizujRamkiLadowania ()
 
 function PokazRamkeLadowania ( element, czasPokazania )
 {
-    if ( ( !czasPokazania ) || ( czasPokazania < 0 ) ) czasPokazania = 100; // domyślnie       
+    if ( ( !czasPokazania ) || ( czasPokazania < 0 ) ) czasPokazania = 100; // domyślnie
 var wybranyElement = -1,
     krotnoscElementu = -1;
     
@@ -1622,26 +1622,26 @@ var wybranyElement = -1,
             wybranyElement = g_prezentacja_wczytywania[2].element;
             g_prezentacja_wczytywania[2].ile++;
             krotnoscElementu = g_prezentacja_wczytywania[2].ile;
-            break;     
+            break;
     } // switch-END ( element )
         
     if ( ( wybranyElement != -1 ) && ( krotnoscElementu > 0 ) )
     { 
-        if ( krotnoscElementu == 1 ) $('#' + wybranyElement ).find('span').text('');  
-        else $('#' + wybranyElement ).find('span').text(' x ' + krotnoscElementu);  // z lewej i tak jedna spacja będzie  
+        if ( krotnoscElementu == 1 ) $('#' + wybranyElement ).find('span').text('');
+        else $('#' + wybranyElement ).find('span').text(' x ' + krotnoscElementu);  // z lewej i tak jedna spacja będzie
      $('#' + wybranyElement ).show( czasPokazania );
         // !!! MA POZOSTAĆ WZORCOWE ZAMIAST POWYŻSZYCH: $('#' + wybranyElement ).show( czasPokazania ); // !!!
-    }                                                                                
+    }
 }   // PokazRamkeLadowania-END
 
     
-function UkryjRamkeLadowania ( ktoryElement, czasUkrycia )    // zachowanie i wewnatrzne warunki jako całkowite przeciwieństwo poprzednika - PokazRamkeLadowania() 
+function UkryjRamkeLadowania ( ktoryElement, czasUkrycia )    // zachowanie i wewnętrzne warunki jako całkowite przeciwieństwo poprzednika - PokazRamkeLadowania()
 {
-    if ( ( !czasUkrycia ) || ( czasUkrycia < 0 ) ) czasUkrycia = 100; // domyślnie       
+    if ( ( !czasUkrycia ) || ( czasUkrycia < 0 ) ) czasUkrycia = 100; // domyślnie
 var wybranyElement = -1,
-    krotnoscElementu = -1; 
+    krotnoscElementu = -1;
     
-    switch ( ktoryElement )  // też w odwołaniu do kolejnosci typu elementu względem umieszcznenia na www
+    switch ( ktoryElement )  // też w odwołaniu do kolejności typu elementu względem umieszczenia na www
     {
         case 'spis':
         case 0:
@@ -1664,26 +1664,26 @@ var wybranyElement = -1,
             wybranyElement = g_prezentacja_wczytywania[2].element;
             g_prezentacja_wczytywania[2].ile--;
             krotnoscElementu = g_prezentacja_wczytywania[2].ile;
-            break;     
+            break;
     } // switch-END ( ktoryElement )
       
     // MA POZOSTAĆ PONIŻSZE: ... zamiast tego co po drugim komentarzu
 //    if ( ( wybranyElement != -1 ) && ( krotnoscElementu <= 0 ) ) $('#' + wybranyElement ).hide( czasUkrycia );
-    if ( krotnoscElementu == 1 ) $('#' + wybranyElement ).find('span').text('');    
+    if ( krotnoscElementu == 1 ) $('#' + wybranyElement ).find('span').text('');
     if ( krotnoscElementu > 1 ) $('#' + wybranyElement ).find('span').text(' x ' + krotnoscElementu );
 
     if ( ( wybranyElement != -1 ) && ( krotnoscElementu <= 0 ) ) $('#' + wybranyElement ).hide( czasUkrycia );
 }   // UkryjRamkeLadowania-END
-    
+
 
 function PokazAnimacjeLadowaniaDlaPrzycisku () {
-    // na bazie logiki wyświewtlania dowolnego z trzech powiadomień... ale tu wskazane i specyficzne dla spisu galerii
-// var scrObrazka = 'grafiki/slonce_60x60.png';  // nadawany w statycznej wersji i ukrywany/pokazywany poprzez style CSS  
+    // na bazie logiki wyświetlania dowolnego z trzech powiadomień... ale tu wskazane i specyficzne dla spisu galerii
+// var scrObrazka = 'grafiki/slonce_60x60.png';  // nadawany w statycznej wersji i ukrywany/pokazywany poprzez style CSS
     // albo dać mniejszy obrazek, i tak skalowanie do około 38x38px: 'grafiki/slonce_40x40.png'
 var wybranyElementWczytywaniaID = '#' + g_prezentacja_wczytywania[0].element,  // wyświetlaj pomocniczą animację tylko wtedy, gdy jest wyświetlane określone powiadomienie
     $wybranyElementWczytywania = $( wybranyElementWczytywaniaID ),
     krotnoscElementu = g_prezentacja_wczytywania[0].ile,
-    $elementPrzycisku = $('#zaladuj_galerie_spis');     // jawny selektor identyfikatora elementu, wewnątrz którego będie animacja
+    $elementPrzycisku = $('#zaladuj_galerie_spis');     // jawny selektor identyfikatora elementu, wewnątrz którego będzie animacja
 
     // if ( $wybranyElementWczytywania.is(':visible') )  // pokaż tylko wtedy gdy pomiędzy elementami jest wysoki segment z wybraną podstroną galerii
     // {
@@ -1743,10 +1743,10 @@ var opcjeDomyslne = {
     tytul : 'Wystapił błąd ogólny!',
     tresc : '&lt;tu szczegóły błędu...&gt;',
     ikonaZamykania : true, 
-        jednorazowy : true, // scalić to z powyższym (lub odwrotnie) bo ta sama flaga
-    tryb : 'dodawanie', // dodawanie / zamiana / ... - też częściowo tożsame z tym co wyżej
+        jednorazowy : true, // scalić to z powyższym (lub odwrotnie), bo wskzanie na tę samą flagę
+    tryb : 'dodawanie',     // dodawanie / zamiana / ... - też częściowo tożsame z tym co wyżej
         nadanaKlasa : 'blad', // .blad / .blad-dolaczenia / .blad_odswiez
-        dodatkowaKlasa : false, // '' / .blad-dolaczenia / .blad_odswiez -- dwie powyższe do rezygnacji po precyzyjnej kategoryzacji przyciskow
+        dodatkowaKlasa : false, // '' / .blad-dolaczenia / .blad_odswiez -- dwie powyższe do rezygnacji po precyzyjnej kategoryzacji przycisków
     przyciskAkcjiOdswiez : false,
     trescPrzyciskuAkcjiOdswiez : 'Odśwież stronę',
     przyciskAkcjiDolacz : false,
@@ -1761,7 +1761,7 @@ budowanyElement = '<div class="' + opcje.nadanaKlasa;
 
     if ( opcje.animacja ) budowanyElement += " " + klasaAnimacji; // dopisanie elementu dodatkowej klasy z przypisaną animacją
     if ( opcje.dodatkowaKlasa ) budowanyElement += " " + opcje.dodatkowaKlasa;
-budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik  
+budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik
     + '<h2 class="blad-tytul">' + opcje.tytul + '</h2>'
     + '<div class="blad-tresc">'
     + '<div class="blad-ikona">!</div>';
@@ -1769,7 +1769,7 @@ budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik
         if ( opcje.tryb == 'zamiana' )
         {
             // generowanie treści sztucznej z doklejeniem tego do przekazanego komunikatu o błędzie (przed lub za treścią)
-            // tu weryfikacja, czy powiadomienie tego typu już jest na stronie -> ewentualne pobranie wartości 
+            // tu weryfikacja, czy powiadomienie tego typu już jest na stronie -> ewentualne pobranie wartości
         }
         else
         {
@@ -1777,7 +1777,7 @@ budowanyElement += '">'     // zakończnie tagu otwierającego pojemnik
         }
         
         if ( ( opcje.przyciskAkcjiOdswiez ) || ( opcje.przyciskAkcjiDolacz) )    // wersja zagmatwana
-        {   // nigdy więcej składania htmla w postaci tekstowej!
+        {   // (-): NIGDY WIĘCEJ SKŁADANIA HTMLa Z POSTACI TEKSTOWEJ!!!
         budowanyElement += '<h4>';
             if ( opcje.przyciskAkcjiOdswiez )
             {
@@ -1800,9 +1800,9 @@ budowanyElement += '</div>'; // zamykacz dla div.blad-tresc
     {
         // działania zależne od ewentualnej dołączonej klasy (dwie pozycje wzajemnie wykluczające się) -- przy ewentualnym trzecim (hmm... czwartym) rodzaju błędu zastosować 'switch'
         if ( opcje.dodatkowaKlasa == 'blad-dolaczenia' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiDolaczanie + '</button>';
-        else if ( opcje.dodatkowaKlasa == 'blad_odswiez' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiOdswiez + '</button>'; 
+        else if ( opcje.dodatkowaKlasa == 'blad_odswiez' ) budowanyElement = budowanyElement + '<button class="' + opcje.dodatkowaKlasa + '">' + opcje.trescPrzyciskuAkcjiOdswiez + '</button>';
     // +++  wstawienie przycisku do oświeżenia witryny
-    }  */  
+    }  */
 
     if ( opcje.ikonaZamykania )    // doklejenie standardowego trybu działania: "krzyżyk/iksior" do zamykania całego powiadomienia (obszaru z treścią w rodzicu lub przodku) 
     {
@@ -1811,22 +1811,22 @@ budowanyElement += '</div>'; // zamykacz dla div.blad-tresc
 budowanyElement = budowanyElement + '</div>' ;  // znacznik kończący strukturę powiadomienia o błędzie
 //...
 
-    
+
 $( elementRodzica ).prepend( budowanyElement ); // dopisanie elementu do strony
     
-//    if ( opcje.dodatkowaKlasa ) $( elementRodzica + "div:first-child" ).addClass( opcje.dodatkowaKlasa );   // jeżeli ma mieć dodatkowa klasę ten element, to wstawienie jej po wyrenderowiu 
+//    if ( opcje.dodatkowaKlasa ) $( elementRodzica + "div:first-child" ).addClass( opcje.dodatkowaKlasa );   // jeżeli ma mieć dodatkowa klasę ten element, to wstawienie jej po wyrenderowiu
     
 }   // GenerujPowiadomienieOBledzie-END
 
-    
-function GenerujDomyslnePowiadomienieOBledzieSerwera ( xhr, status )    // użyć parametryzowanego komunikatu o błędzie? 
+
+function GenerujDomyslnePowiadomienieOBledzieSerwera ( xhr, status )    // użyć parametryzowanego komunikatu o błędzie?
 {
-var komunikatOBledzie = "Błąd w dostępie do treści serwera macierzystego lub użyto niewłaściwego adresu. Otrzymano prawidłową odpowiedź, ale bez oczekiwanych elementów.<br />Diagnostyka: kod błędu nr " + xhr.status + " (" + xhr.statusText.toLowerCase() + ") o statusie \"" + status + "\".";    
-GenerujPowiadomienieOBledzie({ tytul : 'Problem globalny z załadowaniem treści!', tresc : komunikatOBledzie });    // semi projeska lepsza niż wcześniejszy standard
+var komunikatOBledzie = "Błąd w dostępie do treści serwera macierzystego lub użyto niewłaściwego adresu. Otrzymano prawidłową odpowiedź, ale bez oczekiwanych elementów.<br />Diagnostyka: kod błędu nr " + xhr.status + " (" + xhr.statusText.toLowerCase() + ") o statusie \"" + status + "\".";
+GenerujPowiadomienieOBledzie({ tytul: 'Problem globalny z załadowaniem treści!', tresc: komunikatOBledzie });    // semi projeska lepsza niż wcześniejszy standard
 PrzewinEkranDoElementu('div.blad', 500);
 }   // GenerujDomyslnePowiadomienieOBledzieSerwera-END
 
-    
+
 function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTresc ) // tworzy nowe zawartości tekstowe (+html) na podstawie parametrów
 {
     if ( $( elementKomunikatu ).length > 0 )
@@ -1834,10 +1834,10 @@ function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTres
         if ( $( elementKomunikatu ).length > 1 ) elementKomunikatu = $( elementKomunikatu )[0];    // w razie gdyby to jednak jakaś kolekcja była
         else elementKomunikatu = $( elementKomunikatu );    // poprawka na element jQuery
     elementKomunikatu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
-    elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
+    elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem każdorazowego i jednokrotnego wystartowania animacji
         
     elementKomunikatu.find('h2.blad-tytul').text( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
-    elementKomunikatu.find('div.blad-tresc > p').html( komunikatTresc ); 
+    elementKomunikatu.find('div.blad-tresc > p').html( komunikatTresc );
     }
 }   // ZmienTrescKomunikatu-END
     
