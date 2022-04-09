@@ -778,7 +778,7 @@ return noweGalerie; // zwróć zawartość "nagłowkową" dla każdej kolejno od
 }   // OdczytajSpisGalerii-END
 
 
-function GenerujSpisOdczytanejGrupyGalerii ( miejsceDocelowe, grupaGalerii, czyWybrane ) // refaktoryzacja jako NOWE - zawartość generowana na podstawie zapamiętanych obiektów 
+function GenerujSpisOdczytanejGrupyGalerii ( miejsceDocelowe, grupaGalerii, czyWybrane ) // refaktoryzacja jako NOWE - zawartość generowana na podstawie przekazywanych/zapamiętanych obiektów (JSON jeszcze nie teraz...) 
 {        
 var ileSpisowGalerii = grupaGalerii.length,
     html = '',  // generowanie w HTMLa na tekstową modłę póki co (do zastąpienia np. Reactem)   
@@ -1438,7 +1438,7 @@ $g_suwak_nr_podstrony_galerii.attr( 'max' , 6 ); // "trzeba, czy nie trzeba?" ot
 }   // InicjalizujPrzyciskiWyboruPodstronyGalerii-END
 
 
-function UstawSuwakiJakOdczytanoPierwszymPrzebiegiem()
+function UstawSuwakiJakOdczytanoPierwszymPrzebiegiem ()
 {
 // odniesienie tej wartości do maksymalnej wartości przesuwu suwaka wyboru galerii + inicjowanie suwaka i inputa na tę wartość
 // console.log('Ustalanie ZACZYTANYCH wartości pól formularza przeglądania galerii i wyboru podstron ...');
@@ -1676,7 +1676,8 @@ var wybranyElement = -1,
 }   // UkryjRamkeLadowania-END
 
 
-function PokazAnimacjeLadowaniaDlaPrzycisku () {
+function PokazAnimacjeLadowaniaDlaPrzycisku ()
+{
     // na bazie logiki wyświetlania dowolnego z trzech powiadomień... ale tu wskazane i specyficzne dla spisu galerii
 // var scrObrazka = 'grafiki/slonce_60x60.png';  // nadawany w statycznej wersji i ukrywany/pokazywany poprzez style CSS
     // albo dać mniejszy obrazek, i tak skalowanie do około 38x38px: 'grafiki/slonce_40x40.png'
@@ -1833,7 +1834,7 @@ function ZmienTrescKomunikatu ( elementKomunikatu, komunikatTytul, komunikatTres
     {
         if ( $( elementKomunikatu ).length > 1 ) elementKomunikatu = $( elementKomunikatu )[0];    // w razie gdyby to jednak jakaś kolekcja była
         else elementKomunikatu = $( elementKomunikatu );    // poprawka na element jQuery
-    elementKomunikatu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
+    elementKomunikatu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNA "bzdurna" akcja (np. odczyt atrybutu, który i tak idzie w niebyt)
     elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem każdorazowego i jednokrotnego wystartowania animacji
         
     elementKomunikatu.find('h2.blad-tytul').text( komunikatTytul );   // edycja treści i tytułu w zawartości ramki
@@ -1847,22 +1848,20 @@ function UsunKomunikatLubZmienNumeracjeWTresci ( elementKomunikatu )    // usuwa
     if ( $( elementKomunikatu ).length > 0 )
     {
         if ( $( elementKomunikatu ).length > 1 ) elementKomunikatu = $( elementKomunikatu )[0];    // w razie gdyby to jednak jakaś kolekcja była
-        else elementKomunikatu = $( elementKomunikatu ) ; // przekształć wskazany elelemnt na jQuery (owiń tym obiektem)    
+        else elementKomunikatu = $( elementKomunikatu ) ; // przekształć wskazany elelemnt na jQuery (owiń tym obiektem)
 
-        // pobierz aktualnie wyświetlane wartości przed usunięciem/aktualizacją komunikatu
-    var krotnoscBledu = parseInt( elementKomunikatu.find('strong:first-of-type > span').text() ),   // pobierz pierwszy == g_suma_bledow_dolaczania ... więc po co odczytywać DOM
-        poprzedniBladPodstrony = 0, // ta i kolejne zmienne zostaną obliczone później, o ile jest sens
-        tekstTytulu = "",
-        zawartoscKomunikatu = "";
+    var poprzedniBladPodstrony = 0, // ta i kolejne zmienne zostaną obliczone później, o ile jest sens
+        tekstTytulu = "";
 
+        // operujemy na stanie danych aplikacji, zatem odwołanie do zmiennej globalnej, zamiast odczytywać DOM z ilości aktualnie wyświetlonych komunikatów
         if ( g_suma_bledow_dolaczania < 1 ) // jeżeli był to pierwszy/jedyny błąd dołączania -- usuń okno komunikatu
         {
         elementKomunikatu.slideUp(1000, function() { $(this).remove(); });  // usuń okno z komunikatem po animacji
         }
-            
+        
         if ( g_suma_bledow_dolaczania >= 1 )  // jeżeli to kolejny błąd dołączania -- zmień treści w wyświetlanym oknie komunikatu (zmniejsz liczby)
         {
-        // do LIFO, określenie wcześniejszego błędu - odczytanie przedostatniego elementu z nieobsłuzonych żądań    
+        // do LIFO, określenie wcześniejszego błędu - odczytanie przedostatniego elementu z nieobsłużonych żądań
             // zmiana w zasadniczej treści komunikatu
         elementKomunikatu.find('strong:first-of-type > span').text( g_suma_bledow_dolaczania );
         poprzedniBladPodstrony = PobierzOstatnieNieodebrane().adresZasobu;
@@ -1873,34 +1872,34 @@ function UsunKomunikatLubZmienNumeracjeWTresci ( elementKomunikatu )    // usuwa
             if ( g_suma_bledow_dolaczania == 1 )   // usuń "x" i krotność w tytule
             {    
             tekstTytulu = tekstTytulu.substr(0, tekstTytulu.lastIndexOf(' x') );    // do ostatniej spacji włącznie?
-            elementKomunikatu.find('.blad-tytul').text( tekstTytulu );  // obcięcie treści z numeracją    
+            elementKomunikatu.find('.blad-tytul').text( tekstTytulu );  // obcięcie treści z numeracją
             }
-            else    // po prostu zmień krotność w tytule 
+            else    // po prostu zmień krotność w tytule
             {
-            tekstTytulu = tekstTytulu.substr(0, tekstTytulu.lastIndexOf(' x')+2 );    // tresc do ostatniego "x" włącznie
-            elementKomunikatu.find('.blad-tytul').text( tekstTytulu + g_suma_bledow_dolaczania );  // dodanie nowej numeracji  
+            tekstTytulu = tekstTytulu.substr(0, tekstTytulu.lastIndexOf(' x')+2 );    // treść do ostatniego "x" włącznie
+            elementKomunikatu.find('.blad-tytul').text( tekstTytulu + g_suma_bledow_dolaczania );  // dodanie nowej numeracji
             }
-        // zawsze też odśwież treść istniejącego komunikatu i zwróc uwagę obserwatora na to 
+        // zawsze też odśwież treść istniejącego komunikatu i zwróc uwagę obserwatora na to
         elementKomunikatu.removeClass('animacja-zolty-blysk').css('color');    // zabranie klasy z danego węzła + KONIECZNY "bzdurny" odczyt atrybutu z danego węzła!
-        elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem kazdorazowego i jednokrotnego wystartowania animacji
+        elementKomunikatu.addClass('animacja-zolty-blysk'); // dodanie klasy celem każdorazowego i jednokrotnego wystartowania animacji
         }
     }   // if-( g_suma_bledow_dolaczania > 1 )-END
 }   // UsunKomunikatLubZmienNumeracjeWTresci
     
-function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie ) 
+function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie )
 {
-// bez domyślnych parametrów staruje w tle i nie szkodzi zachowaniu; 
+// bez domyślnych parametrów staruje w tle i nie szkodzi zachowaniu;
 // generalnie też bez rozgraniczenia LOCALHOST vs INNE_SERWERY i inne zachowanie domyślne
 //      tylko powiadomienie startuje w LOCALHOŚCIE (domyślnie jako środowisko DEV)
  
 // definicje funkcji wewnątrz wywołania - podległości... tylko, gdy mamy LOKALNE uruchamianie (też testowanie) ;)
-    /*  if ( window.location.host == 'localhost' || nieTylkoLokalnie )  // też drugi parametr 
+    /*  if ( window.location.host == 'localhost' || nieTylkoLokalnie )  // też drugi parametr
     {   */
     function NaprawAjaksa ()
     {
     g_przechwytywacz_php = "./przechwytywacz.php";    // ewentualnie użyć "stałych", aby nie powodować błędu i hardkodu w kilku miejscach
     g_przechwytywacz_php_zapytanie = "?url_zewn=";
-        // + wizualizacja zmian  
+        // + wizualizacja zmian tłem
     $('.status-ajaksa').removeClass('status-awaria').addClass('status-norma');
     }
 
@@ -1909,40 +1908,40 @@ function WystartujDebuggerLokalny ( czyZepsuc, nieTylkoLokalnie )
     g_przechwytywacz_php = "./przepuszczacz.php";  // dodatkowo zepsuto zapytanie
     //g_przechwytywacz_php = "./przechwytywacz.php";  // powrót do prawidłowgo oryginału z "przepuszczacza"
     g_przechwytywacz_php_zapytanie = "?url_dupa=";
-        // wizulizacja zmian  
-    $('.status-ajaksa').removeClass('status-norma').addClass('status-awaria');    
+        // wizualizacja zmian dla tła
+    $('.status-ajaksa').removeClass('status-norma').addClass('status-awaria');
     }
 
     // zarejestruj operacje zdarzeń - dwa przeciwstawne przyciski
-    $('.zepsuj').click( function () { 
+    $('.zepsuj').click( function () {
         ZepsujAjaksa();
-            if ( $('#awaria_na_stale:checked').length == 1 ) AwariaWLocalStorage() ;    // ustawianie konkretnej wartości dla "awarii" lub czyszcznie pamięci dla tej komórki
+            if ( $('#awaria_na_stale:checked').length == 1 ) AwariaWLocalStorage() ;    // ustawianie konkretnej wartości dla "awarii" lub czyszczenie pamięci dla tej komórki
             else ZerujLocalStorage();
     });    
 
-    $('.napraw').click( function () { 
+    $('.napraw').click( function () {
         NaprawAjaksa();
             if ( $('#awaria_na_stale:checked').length == 1 ) NaprawaWLocalStorage() ;    // ustawianie konkretnej wartości dla "poprawnego działania" lub czyszcznie komórki pamięci
             else ZerujLocalStorage();
-    });    
+    });
 
-    // na koniec wymuś automatyczny start "naprawy" -- stan bieżący winien być prawidłowy (chyba, ze określony parametr opcjonalny)    
+    // na koniec wymuś automatyczny start "naprawy" -- stan bieżący winien być prawidłowy (chyba, ze określony parametr opcjonalny)
 NaprawAjaksa();
 
-        // odczytanie stanu ze zmiennej... . 
+        // odczytanie stanu ze zmiennej...
 
     // ....
-        //     + dopracować PONIŻSZE warunki -- od nich zależy inicjownanie belki sterującej przy autortarcie programu..
+        //     + dopracować PONIŻSZE warunki -- od nich zależy inicjownanie belki sterującej przy autostarcie programu...
     // ...  + localStorage.removeItem()
 
-        // inicjowanie stanu AJAKSA: 
+        // inicjowanie stanu AJAKSA:
     if ( localStorage.getItem('awariaNaStale') == '<AWARIA!>' )
     {
-    $( '#awaria_na_stale').prop('checked', true);   // ... ewentualnie zaznacz przełącznik na [X] 
-        //  ... 
+    $( '#awaria_na_stale').prop('checked', true);   // ... ewentualnie zaznacz przełącznik na [X]
+        //  ...
     }    
         // odczytanie  stanu zminnej i ewentualna akcja (powtórzone 50% warunku :/)
-    if ( ( localStorage.getItem('awariaNaStale') == '<AWARIA!>') || ( czyZepsuc == 'ZEPSUJ!' ) ) 
+    if ( ( localStorage.getItem('awariaNaStale') == '<AWARIA!>') || ( czyZepsuc == 'ZEPSUJ!' ) )
     {
         // ...
     ZepsujAjaksa();
@@ -1951,41 +1950,42 @@ NaprawAjaksa();
     if ( window.location.host == 'localhost' || nieTylkoLokalnie ) PokazDebuggowanie(); // drugi parametr też ma znacznie 
         //tylko DEV lub z tym bym poczekał na reakcje - kliknięcie własciwego przycisku... później usunąć po testach komunikatów o błędach
     
-    //} // if ( localhost )-END //... o czym wtedy myślałem?! -- nie zrobi nic dla innych serwerów 
+    //} // if ( localhost )-END //... o czym wtedy myślałem?! -- nie zrobi nic dla innych serwerów
     
-} // WystartujDebuggerLokalny-END    
+} // WystartujDebuggerLokalny-END
 
 function OdczytajLocalStorage ()
 {
 var zawartoscDebuggowaniaLocalStorage = localStorage.getItem('awariaNaStale');    
-    if ( ( zawartoscDebuggowaniaLocalStorage == '<AWARIA!>' ) || ( zawartoscDebuggowaniaLocalStorage == '<BRAK AWARII>' ) ) // czy to sa prawidłowe wartości stałych?
+    if ( ( zawartoscDebuggowaniaLocalStorage == '<AWARIA!>' ) || ( zawartoscDebuggowaniaLocalStorage == '<BRAK AWARII>' ) ) // czy to są prawidłowe wartości stałych?
     {    
-    return zawartoscDebuggowaniaLocalStorage;       
+    return zawartoscDebuggowaniaLocalStorage;
     }
 return false;
 }
-    
-function InicjalizujLocalStorage () {   // jaki jest cel tej funkcji, skoro nie jest używana?
+
+function InicjalizujLocalStorage ()   // jaki jest cel tej funkcji, skoro nie jest używana?
+{
 var coWStorage = OdczytajLocalStorage;
-    if ( coWStorage == '<AWARIA!>' || coWStorage == '<BRAK AWARII>')    // "zaptaszenie" checkboksa tylko, gdy jedna z tych wartość jako zawartość 
+    if ( coWStorage == '<AWARIA!>' || coWStorage == '<BRAK AWARII>')    // "zaptaszenie" checkboksa tylko, gdy jedna z tych wartość jako zawartość
     {
-    $( '#awaria_na_stale').prop('checked', true);    
-    PokazDebuggowanie();    // bardzo dobre miejsce - gdy ustawione jest coś w pamięci przeglądarki to na starcie pokaż pasek debugowania (+)  
+    $( '#awaria_na_stale').prop('checked', true);
+    PokazDebuggowanie();    // bardzo dobre miejsce - gdy ustawione jest coś w pamięci przeglądarki to na starcie pokaż pasek debugowania (+)
     return COS; // co ma zwrócić? poprzednio było "return zawartoscDebuggowaniaLocalStorage;"
     }
 
-    // ...   ?  
+    // ...   ?
 return false;
 }
 
 function AwariaWLocalStorage ()
 {
-localStorage.setItem('awariaNaStale', '<AWARIA!>')    
+localStorage.setItem('awariaNaStale', '<AWARIA!>');
 }
 
 function NaprawaWLocalStorage ()
 {
-localStorage.setItem('awariaNaStale', '<BRAK AWARII>')    
+localStorage.setItem('awariaNaStale', '<BRAK AWARII>');
 }
 
 function ZerujLocalStorage ()
@@ -1993,121 +1993,133 @@ function ZerujLocalStorage ()
 localStorage.removeItem('awariaNaStale');
 }
 
-function PokazDebuggowanie () {
+function PokazDebuggowanie ()
+{
     $('#odpluskwiacz_ajaksowy').fadeIn(200);
 }
 
-function UkryjDebuggowanie () {
+function UkryjDebuggowanie ()
+{
     $('#odpluskwiacz_ajaksowy').fadeOut(200);
 }
 
-function PokazBiezacaGalerie ( czasAnimacji ) {
-czasAnimacji = czasAnimacji || 200;    
+function PokazBiezacaGalerie ( czasAnimacji )
+{
+czasAnimacji = czasAnimacji || 200;
 $('#nazwa_galerii').fadeIn( czasAnimacji );
 $('#skladowisko').fadeIn( czasAnimacji );
 $('#nawigacja_galeria').fadeIn( czasAnimacji );
 }
 
-function UkryjBiezacaGalerie ( czasAnimacji ) {
-czasAnimacji = czasAnimacji || 200;    
+function UkryjBiezacaGalerie ( czasAnimacji )
+{
+czasAnimacji = czasAnimacji || 200;
 $('#nazwa_galerii').fadeOut( czasAnimacji );
 $('#skladowisko').fadeOut( czasAnimacji );
 $('#nawigacja_galeria').fadeOut( czasAnimacji );
 }
 
-function DostawPrzyciskZamykaniaDoBiezacejGalerii () {
+function DostawPrzyciskZamykaniaDoBiezacejGalerii ()
+{
 var $przyciskZamykania = $('#biezaca_galeria_zamykanie');
-    // wstaw element tylko gdy nie ma go jeszcze na stronie 
+    // wstaw element tylko gdy nie ma go jeszcze na stronie
     if ( $przyciskZamykania.length == 0 ) $('#nazwa_galerii').prepend( '<div id="biezaca_galeria_zamykanie" class="zamykanie" tabindex="0">&times;</div>' );
 }
 
-function UsunPrzyciskZamykaniaDlaBiezacejGalerii () {
+function UsunPrzyciskZamykaniaDlaBiezacejGalerii ()
+{
 $('#biezaca_galeria_zamykanie').remove();   // usuń element (jeśli znaleziono)
-$('#selektor_naglowek').focus();    // IU/UX: też przenies focus na jakiś aktywny element PRZED lub ZA tym guzikiem (wybrano wariant PRZED)
+$('#selektor_naglowek').focus();    // IU/UX: też przenieś focus na jakiś aktywny element PRZED lub ZA tym guzikiem (wybrano wariant PRZED)
 }
 
-function PokazPrzyciskZamykaniaDlaBiezacejGalerii ( czasAnimacji ) {
+function PokazPrzyciskZamykaniaDlaBiezacejGalerii ( czasAnimacji )
+{
 czasAnimacji = czasAnimacji || 300;
 $('#biezaca_galeria_zamykanie').fadeIn( czasAnimacji );
 }
 
-function UkryjPrzyciskZamykaniaDlaBiezacejGalerii ( czasAnimacji ) {
+function UkryjPrzyciskZamykaniaDlaBiezacejGalerii ( czasAnimacji )
+{
 czasAnimacji = czasAnimacji || 300;
 $('#biezaca_galeria_zamykanie').fadeOut( czasAnimacji );
 }
 
-function PokazPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii ( czasAnimacji ) {
+function PokazPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii ( czasAnimacji )
+{
 czasAnimacji = czasAnimacji || 300;
 $('#wybrane_galerie_zamykanie').fadeIn( czasAnimacji );
 }
 
-function UkryjPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii ( czasAnimacji ) {
+function UkryjPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii ( czasAnimacji )
+{
 czasAnimacji = czasAnimacji || 300;
 $('#wybrane_galerie_zamykanie').fadeOut( czasAnimacji );
 }
 
-function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( ) {
-
+function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( )
+{
     $('#biezaca_galeria_zamykanie').on("click keydown", function( e ) {  // działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
         if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
         {
         UkryjBiezacaGalerie();
         }
-    });   
+    });
 }
 
-function DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( ) {
-
+function DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( )
+{
     $('#biezaca_galeria_zamykanie').off("click keydown", function( e ) {  // "OFF", nie "ON"!!! -- też działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
         if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
         {
         PokazBiezacaGalerie();
         }
-    }); 
+    });
 }
 
-function PokazWybranaPodstroneListyGalerii ( czasAnimacji ) {
-czasAnimacji = czasAnimacji || 200;    
+function PokazWybranaPodstroneListyGalerii ( czasAnimacji )
+{
+czasAnimacji = czasAnimacji || 200;
 $('#wybrany_zaczytany_spis').fadeIn( czasAnimacji );
 }
 
-function UkryjWybranaPodstroneListyGalerii ( czasAnimacji ) {
-czasAnimacji = czasAnimacji || 200;    
+function UkryjWybranaPodstroneListyGalerii ( czasAnimacji )
+{
+czasAnimacji = czasAnimacji || 200;
 $('#wybrany_zaczytany_spis').fadeOut( czasAnimacji );
 }
 
-function ZaczytajSpisGalerii () 
+function ZaczytajSpisGalerii ()
 {
-//http://zlobek.chojnow.eu/galeria,k0,p1.html - adres ostatniej galerii, wg. daty
-var adres_ostatniej_galerii = "/galeria,k0,p1.html";	
+//http://zlobek.chojnow.eu/galeria,k0,p1.html - adres ostatniej galerii, wg daty
+var adres_ostatniej_galerii = "/galeria,k0,p1.html";
 var adres_zasobu_galerii = g_protokol_www + g_adres_strony;
 
-        // operowanie na jawnym zliczaniu kliknięć (zamiast 'g_bieżącej_pozycji_galerii'), bo to definiuje kolejny numer podstrony do załadowania 
-    if ( g_suma_klikniec_zaladuj > 0 )    
+        // operowanie na jawnym zliczaniu kliknięć (zamiast 'g_bieżącej_pozycji_galerii'), bo to definiuje kolejny numer podstrony do załadowania
+    if ( g_suma_klikniec_zaladuj > 0 )
     //if ( g_biezaca_pozycja_galerii > 0 )
     {
-    // var nowa_podstrona_spisu_galerii = g_biezaca_pozycja_galerii + 1;				
+    // var nowa_podstrona_spisu_galerii = g_biezaca_pozycja_galerii + 1;
     // adres_ostatniej_galerii = "/galeria,k0,p" + String( g_biezaca_pozycja_galerii + 1 ) + ".html";
         
-        // powyższe warunkowe działania pomijają ładowanie DRUGIEJ PODSTRONY przy PIERWSZYM naciśnięciu przycisku 'Załaduj kolejne galerie'  
+        // powyższe warunkowe działania pomijają ładowanie DRUGIEJ PODSTRONY przy PIERWSZYM naciśnięciu przycisku 'Załaduj kolejne galerie'
     // adres_ostatniej_galerii = "/galeria,k0,p" + String( g_biezaca_pozycja_galerii ) + ".html";
         
-    adres_ostatniej_galerii = "/galeria,k0,p" + String( g_suma_klikniec_zaladuj ) + ".html";	
+    adres_ostatniej_galerii = "/galeria,k0,p" + String( g_suma_klikniec_zaladuj ) + ".html";
     }
 
 //$( g_wczytywanie_spis ).show(100); //
-PokazRamkeLadowania('spis');    
-// console.log('Załadowano spis treści dla ' + g_biezaca_pozycja_galerii + '. pozycji galerii, adres z http: "' + adres_zasobu_galerii + '" odnośnik: "' + adres_ostatniej_galerii + '".');	
+PokazRamkeLadowania('spis');
+// console.log('Załadowano spis treści dla ' + g_biezaca_pozycja_galerii + '. pozycji galerii, adres z http: "' + adres_zasobu_galerii + '" odnośnik: "' + adres_ostatniej_galerii + '".');
     // najpierw komunikat konsoli później działanie - odwrotnie niż każde zwykłe działanie
-WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres_ostatniej_galerii, g_element_zewnetrzny_spis, "spis_galerii" ); 
+WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres_ostatniej_galerii, g_element_zewnetrzny_spis, "spis_galerii" );
 
 }	// ZaczytajSpisGalerii-END
 
-    
-    
 
-// ---------- *** ----------  OGÓLNE PRZEZNACZENIE  ---------- *** ----------    
-    
+
+
+// ---------- *** ----------  OGÓLNE PRZEZNACZENIE  ---------- *** ----------
+
 function PrzewinEkranDoElementu ( element, czasAnimacji, korektaY ) 
 {
 var pozycjaElementuWPionie;    
