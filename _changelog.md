@@ -1,3 +1,22 @@
+v0.5.84 - removing unnecessary comments and typos (v.8)
+
+* v0.5.84 - [2022-04-01]
+
+[*] MODIFIED
+
+-- witryna.js
+* fixed typos and got rid of redundant comments
+  - removed comments containing unnecessary and definitely outdated logic of the site
+  - ...but leaved some of them with sophisticated logic
+  - cleaning inside the functions of defined JS logic
+  - removed hidden whitespaces
+* removed logging into console for positive cases
+  - commented out them
+  - added extra condition for negative readings, before logging any
+  - ...but many times inside reading functions are processed only the positive paths of logic
+
+---------------------------
+
 v0.5.83 - close button for selected subpage of the gallery list: finally the press response is functional!
 
 * v0.5.83 - [2022-03-29]
