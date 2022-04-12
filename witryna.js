@@ -2056,7 +2056,7 @@ czasAnimacji = czasAnimacji || 300;
 $('#wybrane_galerie_zamykanie').fadeOut( czasAnimacji );
 }
 
-function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( )
+function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ()
 {
     $('#biezaca_galeria_zamykanie').on("click keydown", function( e ) {  // działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
         if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
@@ -2066,7 +2066,7 @@ function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( )
     });
 }
 
-function DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( )
+function DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ()
 {
     $('#biezaca_galeria_zamykanie').off("click keydown", function( e ) {  // "OFF", nie "ON"!!! -- też działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
         if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
@@ -2120,72 +2120,74 @@ WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres
 
 // ---------- *** ----------  OGÓLNE PRZEZNACZENIE  ---------- *** ----------
 
-function PrzewinEkranDoElementu ( element, czasAnimacji, korektaY ) 
+function PrzewinEkranDoElementu ( element, czasAnimacji, korektaY )
 {
-var pozycjaElementuWPionie;    
-        //parametryzacja parametru domyślnego by ES5 ;)
+var pozycjaElementuWPionie;
+        // parametryzacja parametru domyślnego by ES5 ;)
     if ( korektaY === undefined ) korektaY = -10;
-        //jeśli jest kilka elmentów, to użyj pierwszego w kolekcji jako "wybranego"
+        // jeśli jest kilka elementów, to użyj pierwszego w kolekcji jako "wybranego"
     if ( $(element).length > 0 ) 
     {
         if ( $(element).length > 1 ) element = $(element)[0];
-    pozycjaElementuWPionie = $(element).offset().top; 
-    console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ', pozycjaElementuWPionie, ' [px] (korektaY: ' + korektaY 
+    pozycjaElementuWPionie = $(element).offset().top;
+    console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ', pozycjaElementuWPionie, ' [px] (korektaY: ' + korektaY
                 + ', czasA: ' + czasAnimacji + ')');    
     $('html, body').animate( { scrollTop : (pozycjaElementuWPionie + korektaY) + 'px' }, czasAnimacji );  // dwa główne elementy dla zapewnienia kompatybilności
     }
 }   
 
-    
+
 function ZablokujPrzycisk ( przycisk )
 {
-//console.log('PRZYCISK:', przycisk);    
+//console.log('PRZYCISK:', przycisk);
 $( przycisk ).prop('disabled', true);
 }
 
-    
+
 function OdblokujPrzycisk ( przycisk )
 {
 $( przycisk ).prop('disabled', false);  // działanie OK, zamiast spodziewanego rezultatu poprzez: $.removeProperty('disabled');
 }
 
-    
-function OkreslPolozenieElementuJS ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
+
+function OkreslPolozenieElementuJS ( element )  // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top'
+{
 var pozycja = element.getBoundingClientRect();
     // debug do kasacji gdy OK
-    console.log('Element "' + element + '" ma X:' + ( parseInt( pozycja.left ) + parseInt( window.scrollX ) ) +  
-                ', Y:' + ( parseInt( pozycja.top ) + parseInt( window.scrollY ) ) );    
+    console.log('Element "' + element + '" ma X:' + ( parseInt( pozycja.left ) + parseInt( window.scrollX ) ) + 
+                ', Y:' + ( parseInt( pozycja.top ) + parseInt( window.scrollY ) ) );
 return { left: pozycja.left + window.scrollX,
          top: pozycja.top + window.scrollY };
-}    
+}
 
 
-function OkreslPolozenieElementu ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
+function OkreslPolozenieElementu ( element )  // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top'
+{
 var pozycja = $(element).offset();
     // debug do kasacji gdy OK
-    console.log('Element "', element, '" ma X:' + pozycja.left, ', Y:' + pozycja.top );    
+    console.log('Element "', element, '" ma X:' + pozycja.left, ', Y:' + pozycja.top );
 return { left: pozycja.left, top: pozycja.top };
-}    
-       
+}
 
-function OdkryjEmail ( element, adres, adresPokazywany, wariant )   // zrobić z atrybutów obiekt?! 
+
+function OdkryjEmail ( element, adres, adresPokazywany, wariant )   // zrobić z atrybutów obiekt?!
 {
     // wartości domyślne, aby nie wklepywać atrybutów
 element = element || $("#adres_email");
 adres = adres || 'zobaczwnuka' + String.fromCharCode(64) + 'em' + 'ail' + '.c' + 'om';   // takie tam rozbicie ze scaleniem dla szukaczy
-adresPokazywany = adresPokazywany || 'kontakt';     
-var adresEmail = 'ma' + 'ilt' + 'o:' + adres;  // tu już to rozdzielanie niepotrzebne, to nie jest parsowany plik html  
-$( element ).text( adresPokazywany ).attr( 'href', adresEmail ); 
+adresPokazywany = adresPokazywany || 'kontakt';
+var adresEmail = 'ma' + 'ilt' + 'o:' + adres;  // tu już to rozdzielanie niepotrzebne, to nie jest parsowany plik html
+$( element ).text( adresPokazywany ).attr( 'href', adresEmail );
 }   // OdkryjEmail-END
 
-    
-function AktualnyRozmiarOkna ( elementWyswietlajacy, poziomWidocznosci ) 
+
+function AktualnyRozmiarOkna ( elementWyswietlajacy, poziomWidocznosci )
 {
 var szerokoscOkna = $(window).outerWidth(true),
     wysokoscOkna = $(window).outerHeight(true);
 poziomWidocznosci = poziomWidocznosci || '0.7';
 
-    // zawartość w <h1> powinna otrzymać aktualny wymiar okna i go wyswietlić... warunek element powinien mieć specyficzną klasę, żeby nie wyświetlał 'X' przy wyłączonym JS! 
+    // zawartość w <h1> powinna otrzymać aktualny wymiar okna i go wyswietlić... warunek element powinien mieć specyficzną klasę, żeby nie wyświetlał 'X' przy wyłączonym JS!
     // nadać klasę ręcznie, czy z automatu ponownie przypisać na początku tej funkcji?
 
 $(elementWyswietlajacy + '> h1').text( szerokoscOkna + ' x ' + wysokoscOkna );  // najpierw nadanie aktualnej treści (rozmiaru X x Y)
@@ -2194,32 +2196,32 @@ $(elementWyswietlajacy + '> h1').text( szerokoscOkna + ' x ' + wysokoscOkna );  
 
     // taka parodia, ale chodzi o przerwanie aktualnie zanikającej animacji i uruchomienie jej od nowa
     // $(elementWyswietlajacy).hasClass('animacja-zanikanie').removeClass('animacja-zanikanie').addClass('animacja-zanikanie');
-    // istotny jest odstęp czasu pomiędzy zabraniem, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)    
+    // istotny jest odstęp czasu pomiędzy zabraniem, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)
 $(elementWyswietlajacy).removeClass('animacja-zanikanie').height();    // pobierana jest na próżno wysokość, jako mechanizm nowego odwołania się do DOM
 
-$(elementWyswietlajacy).addClass('animacja-zanikanie');    
+$(elementWyswietlajacy).addClass('animacja-zanikanie');
 
 /*
-    if ( $( elementWyswietlajacy ).hasClass('animacja-zanikanie') ) 
+    if ( $( elementWyswietlajacy ).hasClass('animacja-zanikanie') )
     {
-    //$(elementWyswietlajacy).css({ animationName : '', animationDuration : '', animationTimingFunction : '' }); 
+    //$(elementWyswietlajacy).css({ animationName : '', animationDuration : '', animationTimingFunction : '' });
         //  $(elementWyswietlajacy).css({ animationPlayState : 'paused' }).width();
-        //  $(elementWyswietlajacy).css({ animationPlayState : 'running' });    
-    //$(elementWyswietlajacy).stop().removeClass('animacja-zanikanie').css({ animationName : '', animationDuration : '', animationTimingFunction : '', animationIterationCount : '0' }); 
-        //alert('W trakcie animacji');    
-    }  
+        //  $(elementWyswietlajacy).css({ animationPlayState : 'running' });
+    //$(elementWyswietlajacy).stop().removeClass('animacja-zanikanie').css({ animationName : '', animationDuration : '', animationTimingFunction : '', animationIterationCount : '0' });
+        //alert('W trakcie animacji');
+    }
     //if ( $(elementWyswietlajacy + ':animated') ) $(elementWyswietlajacy).stop().removeClass('animacja-zanikanie');
 */
 
 //$(elementWyswietlajacy).addClass('animacja-zanikanie');
-return szerokoscOkna;    
+return szerokoscOkna;
 }   // AktualnyRozmiarOkna-END
 
 
 function KonwertujNaLiczbe ( jakasWartosc )     // zwraca tę samą prawidłową wartośc liczbową lub 1 jeśli nie liczba (minimum używanych dalej zakresów)
 {
 var poKonwersji = parseInt( jakasWartosc, 10 );   // konwersja na liczbę o jawnie podanej podstawie dziesiętnej, a nie domysły JS odnośnie tej podstawy (8 vs 16 v 10)
-    if ( ( poKonwersji === undefined ) || ( isNaN( poKonwersji ) ) ) return 1;  // jako bezpieczna wartość, galeria MUSI mieć tę minimalną wartość 
+    if ( ( poKonwersji === undefined ) || ( isNaN( poKonwersji ) ) ) return 1;  // jako bezpieczna wartość, galeria MUSI mieć tę minimalną wartość
     else return poKonwersji;   // gdyby ktoś zmieniał wartości suwaka w locie na www
 }   // KonwertujNaLiczbe-END
 
@@ -2234,14 +2236,14 @@ var indeksZnalezionego = false;
         if ( g_niewyslane_podstrony[i].adresPelny.indexOf( adresZasobu ) != -1 ) // że odnaleziono cały adres z poszukiwanym fragmentem
         {
         indeksZnalezionego = i; // przypisanie indeksu z tabeli "nieobsłużonych" żądań
-        break;    
+        break;
         }
     }
     
     if ( indeksZnalezionego >= 0 )
     {
-    g_niewyslane_podstrony.splice( indeksZnalezionego, 1 ); // wyrzucenie z listy żądań oczekujących jednego, właśnie obsłużonego odnośnika     
-    return indeksZnalezionego;    
+    g_niewyslane_podstrony.splice( indeksZnalezionego, 1 ); // wyrzucenie z listy żądań oczekujących jednego, właśnie obsłużonego odnośnika
+    return indeksZnalezionego;
     }
 return false;
     
@@ -2250,69 +2252,68 @@ return false;
     )*/
     
 }   // UsunPobraneZadanie-END
-        
-    
+
+
 function PobierzPierwszeNieodebrane() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
     if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[0];  // weryfikacja jest przed wywołaniem tej funkcji, ale nie zaszkodzi
-return false;    
-}    
-    
+return false;
+}
+
 
 function PobierzOstatnieNieodebrane() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
     if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[g_niewyslane_podstrony.length-1];  // weryfikacja jest przed wywołaniem tej funkcji, ale dodatkowa nie zaszkodzi
-return false;    
-}       
-    
-    
+return false;
+}
+
+
 function UbijReklamy ()
 {   
-    // *** HOSTING webhost.com *** 
-    // 000webhost.com || 000webhostapp.com -- bezwarunkwe ubijanie (o ile jQuery przypasuje coś)
+    // *** HOSTING webhost.com ***
+    // 000webhost.com || 000webhostapp.com -- bezwarunkowe ubijanie (o ile jQuery przypasuje coś)
 $('a[href*=000webhost]').parent('div').remove();
-  
 
-    // *** HOSTING cba.pl *** 
+
+    // *** HOSTING cba.pl ***
     // cba.pl -- tu wstępnie warunkowo, ale i tak na jedno wychodzi poprzez jQuery (nieznalezionych nie usunie/zmieni/odczyta)
 var $cbaReklamaBig = $('center');
-    if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tę wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
+    if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tę wielgachną reklamę (szerszą niż ekran ewentualnego telefonu!)
     {
     $cbaReklamaBig.parent().prev().remove();    // wywal małą reklamę - pasek u góry (ewentualnie to może pozostać)
     $cbaReklamaBig.parent().remove();           // ale to wielgachne bezwzględnie wylatuje (sorry cba)
-        // console.log('Ubijam_CBA #1 - <center>'); 
+        // console.log('Ubijam_CBA #1 - <center>');
     }
 
-// PRZENIESIENIE małoinwazyjnej reklamy tekstowej z początku, na koniec witryny - lepsze to niż wywalenie tej treści hostingu (a regulamin ;) ) 
+// PRZENIESIENIE małoinwazyjnej reklamy tekstowej z początku, na koniec witryny - lepsze to niż wywalenie tej treści hostingu (a regulamin ;) )
 /*
  - tuż za <body> zaczynają się doklejone treści z hostingu
  - docelowo ma się znaleźć tuż przed </body>, ale ~PRZED~ ZA doklejanymi treściami na spodzie strony (ZA mniej się rzuca niż PRZED)
- - "troskliwie" zmieniono kolejnośc, by inny selektor nie usunął tych treści
+ - "troskliwie" zmieniono kolejność, by inny selektor nie usunął tych treści
  - UX: górna belka jest zbyt cenna dla głupot spoza serwisu!!!
 */
 var $reklamaDoPrzeniesieniaZGory = $('div[style]:first-child');
 var $reklamaDoklejonaNaDole = $('.cbalink');
 
-    if ( $reklamaDoPrzeniesieniaZGory && $reklamaDoklejonaNaDole )  // jeśli dopasowały się oba elementy do operowania... to przenieś ZA, czyli jako ostatni wyświetlany element 
+    if ( $reklamaDoPrzeniesieniaZGory && $reklamaDoklejonaNaDole )  // jeśli dopasowały się oba elementy do operowania... to przenieś ZA, czyli jako ostatni wyświetlany element
     {
         $reklamaDoklejonaNaDole.after( $reklamaDoPrzeniesieniaZGory );  // lepiej gdy jest ZA, niż PRZED; czarne tło lepiej wygląda na końcu, niż pomiędzy białymi
-        // console.log('zlokalizowana doklejona reklama, do przeniesienia z góry za stopkę strony:', $reklamaDoPrzeniesieniaZGory);
     }
-        // kolejna ewentualna reklama na CBA, co rozwala układ telefonu -- z uwagi na szerszy banner obrazkowy niż używaną rozdzielczość
-$cbaReklamaBig = $('img[usemap]');    
-    if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tą wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
+        // kolejna ewentualna reklama na CBA, co rozwala układ telefonu -- z uwagi na szerszy banner obrazkowy niż używaną wielkość/szerokość ekranu
+$cbaReklamaBig = $('img[usemap]');
+    if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tą wielgachną reklamę (szerszą niż ekran ewentualnego telefonu!)
     {
     // $cbaReklamaBig.sibling('map').remove();    // wywal opis odnośników do dużego bannera na górze, później właściwy obrazek
     $cbaReklamaBig.parent().remove();           // albo po prostu pogoń kontener nadrzędny z DOMu (div#top_10)
-        // console.log('Ubijam_CBA #2 - <img usemap>');     
+        // console.log('Ubijam_CBA #2 - <img usemap>');
     }
 
     /*
     UWAGA: poniższe jest BARDZO restrykcyjne, gdyż wywala JEDNĄ lub DWIE reklamy:
       - pierwsza z nich jest statycznym tekstem, stanowiącym początek widocznych treści witryny (małe literki i opis)... PRZENIESIONO NA SPÓD STRONY
-      - druga z nich to wyskakujacy banner z kłopotliwym zamykaniem 'x' na starych przeglądarkach bez flexboksa!-- co rozszrza stronę poza ekran!!
-        (do tego kłopotliwe zamykanie, "X" w prawym górnym rogu, pod suwakiem przewijania pionowego) 
-      - czasem ten banner łapie poprzednia definicja "usuwacza", ale często zostaje on nieusunięty (ALBO: usuwa go mechanim antyreklamowy przeglądarki!)
-      - ale obie są równożędnymi <div>ami, czyli RODZEŃSTWO, ale uciążliwy banner może być już usunięty wewnątrznie (przeglądarka lub plugin antyreklamowy)
-        lub poprzednimi instrukcjami, przez co dopasowanie może przejąć "małoinwazyjnego tekstu reklamowaego" i go wywalić (dlatego go PRZENIESIONO, zamiast kasować)    
+      - druga z nich to wyskakujacy banner z kłopotliwym zamykaniem 'x' na starych przeglądarkach bez flexboksa!-- co rozszerza stronę poza ekran!!
+        (do tego kłopotliwe zamykanie, "X" w prawym górnym rogu, pod suwakiem przewijania pionowego)
+      - czasem ten banner łapie poprzednia definicja "usuwacza", ale często zostaje on nieusunięty (ALBO: usuwa go mechanizm antyreklamowy przeglądarki!)
+      - ale obie są równorzędnymi <div>-ami, czyli RODZEŃSTWO, ale uciążliwy banner może być już usunięty wewnętrznie (przeglądarka lub plugin antyreklamowy)
+        lub poprzednimi instrukcjami, przez co dopasowanie może przejąć "małoinwazyjny tekst reklamowy" i go wywalić (dlatego go PRZENIESIONO, zamiast kasować)
     */
         // "aktualizacja antyreklamowna" na ostatni kwartał 2019 roku i później
 $cbaReklamaBig = $('.glowny-kontener').prev();  // jakiś poprzednik istniejącego kontenera dla całej witryny, który jest doklejany z automatu przez hosting cba.pl
@@ -2326,7 +2327,7 @@ $cbaReklamaBig = $('.glowny-kontener').prev();  // jakiś poprzednik istniejące
     ładowane z konkretnych adresów danego hostingu... ale wtedy należało by wydzielić blokowanie zawartości reklamowej i uruchamiać ją ZARAZ NA POCZĄTKU
      działania witryny (utworzyć nowe zdarzenia), by przechwycić i zablokować tworzenie nowych elementów, zwłaszcza doklejanych zewnętrznych <script> z określonego adresu;
     ...(+): takie działanie byłoby skuteczniejsze, też zapewaniałoby większą wydajność (nie trzeba kasować od razu czegoś, co przed chwilą utworzył skrypt),
-     ten warunek reakcji na konkretne działanie spowalnijące by nie musiał być wykonywany...
+     ten warunek reakcji na konkretne działanie spowalniające by nie musiał być wykonywany...
     ...(-): ale wymaga to lepszego podejścia do działania pod specyficzny hosting (a jego regulamin?!), ale (+) przy tym zyskujemy brak aktualizacji na reakcję na
         nowe/zmienione podejście do generowania treści reklamowych... TERMAT ZAPEWNE WRÓCI!   
 */
@@ -2341,18 +2342,19 @@ $cbaReklamaBig = $('.glowny-kontener').prev();  // jakiś poprzednik istniejące
     // *** HOSTING 5v.pl *** 
 $('iframe').remove();	// obce i doklejone dodatki od hostingu na stronie
 
-$('#ads').remove();	// reklamy na górze, przed początkiem witryny 
+$('#ads').remove();	// reklamy na górze, przed początkiem witryny
 
 $('#ads_bottom_static').remove();	// reklamy z dołu, za treściami
 
 $('[class^=app_gdpr--]').remove();	// "menu konfiguracyjne dla reklam" przy pierwszej wizycie
 
-$('style').remove(); 	// !!! *OSTROŻNIE, OBOSIECZNE* !!! wlepione do heada - uruchomione na wstepie od razu wywala też wszystkie reklamy, ale nie da się przewjać w pionie witryny!
+$('style').remove(); 	// !!! *OSTROŻNIE, OBOSIECZNE* !!! wlepione do heada - uruchomione na wstępie od razu wywala też wszystkie reklamy, ale nie da się przewijać w pionie witryny!
 
-$('body').removeAttr('style'); // przywrócenie możliwosci przewijania, zablokowanego przez wstawiane reklamy 
+$('body').removeAttr('style'); // przywrócenie możliwości przewijania, zablokowanego przez wstawiane reklamy
 
 }   // UbijReklamy-END
-    
+
+
 // ---------- *** ----------  GRA -- POMOCNICZA OBSŁUGA  ---------- *** ----------     
 
     
