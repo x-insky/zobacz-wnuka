@@ -2339,7 +2339,7 @@ $cbaReklamaBig = $('.glowny-kontener').prev();  // jakiś poprzednik istniejące
     }
 
 
-    // *** HOSTING 5v.pl *** 
+    // *** HOSTING 5v.pl ***
 $('iframe').remove();	// obce i doklejone dodatki od hostingu na stronie
 
 $('#ads').remove();	// reklamy na górze, przed początkiem witryny
@@ -2355,28 +2355,22 @@ $('body').removeAttr('style'); // przywrócenie możliwości przewijania, zablok
 }   // UbijReklamy-END
 
 
-// ---------- *** ----------  GRA -- POMOCNICZA OBSŁUGA  ---------- *** ----------     
 
+// ---------- *** ----------  GRA -- POMOCNICZA OBSŁUGA  ---------- *** ----------
     
-function LosujPlansze ( zakres ) 
+function LosujPlansze ( zakres )
 {
-    if ( !zakres ) zakres = 1;    
-var wylosowanyNr = Math.floor( Math.random() * zakres );    
-return wylosowanyNr;    
-}       
+    if ( !zakres ) zakres = 1;
+var wylosowanyNr = Math.floor( Math.random() * zakres );
+return wylosowanyNr;
+}
 
 
 function WybierzPlansze ( nrPlanszy )        // docelowo będzie ajax/api
-{   
-/* var tloSrc = '', // poszło w global
-    ileCzesci = 0,
-    nazwa = '',
-    nazwaSrc = '',
-    obrazki = []; */
+{
+    if ( !nrPlanszy ) nrPlanszy = 0;    // przydział startowy na sztywno w razie czego
     
-    if ( !nrPlanszy ) nrPlanszy = 0;    // przydział startowy na sztywno w razie czego 
-    
-    switch ( nrPlanszy ) 
+    switch ( nrPlanszy )
     {
      case 0:
         g_tloSrc = './grafiki/gra/autobus/autobus.png';
@@ -2387,41 +2381,38 @@ function WybierzPlansze ( nrPlanszy )        // docelowo będzie ajax/api
         var wysokoscTla = noweTlo.height;
         var szerokoscTla = noweTlo.width;
             // środkowanie względem kontenera 1090px x 700px
-        g_przesuniecieTlaX = String( ( $('#rysunek').width() - szerokoscTla ) / 2 ) + 'px';  
-        g_przesuniecieTlaY = String( ( $('#rysunek').height() - wysokoscTla ) / 2 ) + 'px'; 
-            
+        g_przesuniecieTlaX = String( ( $('#rysunek').width() - szerokoscTla ) / 2 ) + 'px';
+        g_przesuniecieTlaY = String( ( $('#rysunek').height() - wysokoscTla ) / 2 ) + 'px';
+        
             // wyświetlenie i centrowanie dopiero, gdy przeliczą się wymiary tego obrazka
-        $('div#rysunek').css({ 'backgroundImage': 'url(' + g_tloSrc + ')', 'backgroundRepeat' : 'no-repeat', 
-                           'backgroundPosition' : g_przesuniecieTlaX + ' ' + g_przesuniecieTlaY });    
-        // debug
-        var statusTla = '<p>Grafika \'' + noweTlo.src + '\' ma szerokość ' + szerokoscTla + ' i wysokość ' + wysokoscTla + '<br />'  
+        $('div#rysunek').css({ 'backgroundImage': 'url(' + g_tloSrc + ')', 'backgroundRepeat' : 'no-repeat', 'backgroundPosition' : g_przesuniecieTlaX + ' ' + g_przesuniecieTlaY });
+            // debug
+        var statusTla = '<p>Grafika \'' + noweTlo.src + '\' ma szerokość ' + szerokoscTla + ' i wysokość ' + wysokoscTla + '<br />' 
             + 'Przesunięcie wyśrodkowania to (' + g_przesuniecieTlaX + ', ' + g_przesuniecieTlaY + ').</p>';
-        $('#dolny_zasobnik').append(statusTla);    
+        $('#dolny_zasobnik').append(statusTla);
         };  // noweTlo.onload = function()-END
- 
-            
+             
     // ...
             // tego oczywiście ma być więcej
             
     }   // switch-( nrPlanszy )-END
-    //
 
 return { dx : g_przesuniecieTlaX, dy: g_przesuniecieTlaY };    // dobrze by było zwrócić jakąś tabelę rekordów lub cokolwiek...
-}   // WybierzPlansze-END    
+}   // WybierzPlansze-END
 
 
 function RozmiescCzesci ( nrPlanszy ) {         // TODO: refaktoryzacja - utworzyć każdy PNG poprzez jQuery dla wsparcia IE9
 g_nazwaPlanszy = 'Autobus';
 g_nazwaPlanszySciezka = './grafiki/gra/autobus/';
 g_ileCzesci = 10;
-g_nazwaElementu = 'cz_';    
+g_nazwaElementu = 'cz_';
 var przesuniecieX1 = 1110,
     przesuniecieY1 = -30,
-    przesuniecieX2 = 30,    // co drugi przestawiac pomiędzy kontenerami dla lepszej widoczności... w planach 
+    przesuniecieX2 = 30,    // co drugi przestawiac pomiędzy kontenerami dla lepszej widoczności... w planach
     przesuniecieY2 = 720,
     numerPliku;
-    
-    for ( var i=1; i <= g_ileCzesci; i++ ) 
+
+    for ( var i=1; i <= g_ileCzesci; i++ )
     {
         if ( i < 10 ) numerPliku = String( '0' + i );
         else numerPliku = String( i );
@@ -2435,7 +2426,7 @@ var przesuniecieX1 = 1110,
     var nowyObrazek = $('<img />', {
         src: g_nazwaPlanszySciezka + g_nazwaElementu + numerPliku + '.png',
         alt: numerPliku,
-        'class': 'przenosny',    // z "classList.add()" mają problemy IE do 9 włącznie! jQuery?        
+        'class': 'przenosny',    // z "classList.add()" mają problemy IE do 9 włącznie! jQuery?
         css: {      // tu zdefiniowane wzorcowo wszystkie style w jednym miejscu (inline)
             left: String( przesuniecieX1 ) + 'px',
             top: String( przesuniecieY1 ) + 'px',
@@ -2445,13 +2436,13 @@ var przesuniecieX1 = 1110,
         'draggable': true
     });     //było "new Image();", teraz jQ tworzy i parametryzuje od razu
 
-    $('#plansza').append( nowyObrazek );    
+    $('#plansza').append( nowyObrazek );
 
     }   // for-END
-}   // RozmiescCzesci-END    
+}   // RozmiescCzesci-END
 
     
-function RozmiescCzesciWzorcowo () 
+function RozmiescCzesciWzorcowo ()
 {
 var fragmenty = $('#plansza img.przenosny');
 var ileFragmentow = fragmenty.length;
@@ -2459,24 +2450,24 @@ var ileFragmentow = fragmenty.length;
     // to skopiowane z funkcji powyżej - docelowo przydzielić to jako parametry/podfunkcje, by nie kopiowac dalszej treści
 var przesuniecieX1 = 1110,
     przesuniecieY1 = -30,
-    przesuniecieX2 = 30,  
-    przesuniecieY2 = 720;    
+    przesuniecieX2 = 30,
+    przesuniecieY2 = 720;
     
     for (var i = 0 ; i < ileFragmentow ; i++ )
     {
-    $( fragmenty[i] ).css({outlineColor: '', outlineStyle: ''}); 
+    $( fragmenty[i] ).css({outlineColor: '', outlineStyle: ''});
         // kasować resztę dodanych atrybutów dla czystego zerowania, czy pozostawić je do nadpisania?
-        
+    
         if ( !( i % 2 ) ) przesuniecieX1 += 80;
         else przesuniecieX1 -= 80;
     fragmenty[i].style.left = String( przesuniecieX1 ) + 'px';
     przesuniecieY1 += 50;
     fragmenty[i].style.top = String( przesuniecieY1 ) + 'px';
-    fragmenty[i].style.zIndex = 100 + i;     
+    fragmenty[i].style.zIndex = 100 + i;
     }
 }   // RozmiescCzesciWzorcowo-END
 
-    
+
 function UsunCzesci () {
  $('#plansza img.przenosny').remove();
 }
@@ -2484,49 +2475,50 @@ function UsunCzesci () {
 
 function PoczatekRuchuPrzeciagania ( e )  // 'dragstart'
 {
-e = e || window.event;    
+e = e || window.event;
 g_ktoraGrafika = e.target;
     //this.style.opacity = '0.9';
-g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach 
+g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach
 g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // zachowywanie obu położeń początkowych
-    
-ResetujZIndexWszystkim();    
+
+ResetujZIndexWszystkim();
     var pionowosc = g_ktoraGrafika.style.zIndex;
-    if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
-    // poruszany wyskakuje przed szereg podczas wyciągania co najwużej kilka razy i tak już zostaje... 
+    if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;
+    // poruszany wyskakuje przed szereg podczas wyciągania co najwyżej kilka razy i tak już zostaje...
     // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
 console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
                 ', e.offsetY:', e.offsetY,')]');
 
 }   // PoczatekRuchuPrzeciagania-END
-    
-    
+
+
 function RuchUpuszczania ( e )    // 'drop'
 {
 e = e || window.event;
-    
-var scena = document.querySelector('#rysunek'); 
+
+var scena = document.querySelector('#rysunek');
 var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
-//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
+//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszcza taki, który nie może być kontenerem, czyli <img> w <img>! )
 /* g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
 g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px'; */
-g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';    
-g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';    
-    
+g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';
+g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';
+
 console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
             ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
-console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
+console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");
 e.preventDefault(); // przestawione z góry
 return false;
 }   // RuchUpuszczania-END
 
 
-function RuchPrzeciagania ( e ) { // 'dragover'
+function RuchPrzeciagania ( e )     // 'dragover'
+{
 e = e || window.event;
-e.preventDefault();     // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elemntu
+e.preventDefault();     // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i przenoszenia elemntu
     // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
-return false;   // dodane    
-}   // RuchPrzeciagania    
+return false;   // dodane
+}   // RuchPrzeciagania
 
 
 function ResetujZIndexWszystkim ()
@@ -2538,7 +2530,7 @@ var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpo
     }
 }
  
-    // archaiczne połączneie z htmlem ... do wywalenie obie poniższe funkcje
+    // archaiczne połączeneie z htmlem ... do wywalenie obie poniższe funkcje
         function dragover_handler(ev) {
          ev.preventDefault();
          // Set the dropEffect to move
@@ -2550,7 +2542,7 @@ var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpo
          // Get the id of the target and add the moved element to the target's DOM
         /* var data = ev.dataTransfer.getData("text");
          ev.target.appendChild(document.getElementById(data));*/
-        }    
+        }
 
     
 function InicjalizujGre () 
@@ -2558,147 +2550,147 @@ function InicjalizujGre ()
 var nrPlanszy = LosujPlansze(); // póki co na pusto
 // console.log('Wylosowano nr planszy: ', nrPlanszy);    
 var przesuniecie = WybierzPlansze( nrPlanszy );     // od razu zwrot, choć on już wstawiony do zmiennych globalnych
-  
+
 RozmiescCzesci( nrPlanszy );
     
 }   // InicjalizujGre-END
-    
-    
+
+
+
 // ---------- *** ----------  GRA W PRZECIĄGANIE ELEMENTÓW v.0.9 #1  ---------- *** ----------
-    
-var Przeciaganie = ( function() {
-    
-function PoczatekRuchuPrzeciaganiaJS ( e )  // 'dragstart'
-{
-//e = e || window.event;    
-g_ktoraGrafika = e.target;      // !!! wpisanie namiarów na przeciagany element, który będzie dalej używany w kolejnych zdarzeniach 
-    //this.style.opacity = '0.9';
-g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // róznica odległoścvi pomiedzy kliknięciem, a początkiem klikniętego elementu  
-g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach
-   // pobranie pozycji "globalnej" danego elementu - ofsetu
-var pozycjaElementu = OkreslPolozenieElementu ( e.target );
-e.target.setAttribute( 'data-offset_x', e.target.style.left );
-e.target.setAttribute( 'data-offset_y', e.target.style.top );
-e.target.setAttribute( 'data-mysz_pocz_x', e.pageX );
-e.target.setAttribute( 'data-mysz_pocz_y', e.pageY );    
 
-ResetujZIndexWszystkimJS();    
-    var pionowosc = g_ktoraGrafika.style.zIndex;
-    if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
-    // poruszany wyskakuje przed szereg podczas wyciągania co najwużej kilka razy i tak już zostaje... 
-    // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
-console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
-            ', e.offsetY:', e.offsetY,')], zaś globalnie to (', pozycjaElementu.left, ', ', pozycjaElementu.top, 
-            '), MYSZ (', e.pageX, ',' , e.pageY, ' )', 'ELEMENT (', e.target.style.left, ',' , e.target.style.top, ' )' );
-} // PoczatekRuchuPrzeciaganiaJS-END
 
-    
-function RuchPrzeciaganiaJS ( e )    // 'dragover'
+var Przeciaganie = ( function()     // i tak autostart tej funkcji i jej podległych podpiętych funkcji obsługi zdarzeń
 {
-//e = e || window.event;
-   // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elementu
-    // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
-    g_ktoraGrafika.style.opacity = 0.5;
-    g_ktoraGrafika.style.outlineColor = "#d00";
-    
-e.preventDefault();      
-return false;   // dodane    
-} // RuchPrzeciaganiaJS-END       
-    
-    
-function RuchUpuszczaniaJS ( e )  // 'drop'
-{
-//e = e || window.event;
- // przestawione znów do góry    
-var scena = document.querySelector('#rysunek'); 
-var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
-//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
-//g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
-//g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px';    
-/*g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';    
-g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';*/  
-//g_ktoraGrafika.style.left = e.pageX - e.target.getAttribute( 'data-mysz_pocz_x' ) - polozenieTla.left + parseInt( g_przesuniecieTlaX ) - g_mojX + 'px';    
-//g_ktoraGrafika.style.top = e.pageY - e.target.getAttribute( 'data-mysz_pocz_y' ) - polozenieTla.top + parseInt( g_przesuniecieTlaY ) - g_mojY + 'px';    
 
-//g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + g_mojX + 'px';    
-//g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + g_mojY + 'px';    
-g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + 'px';    // o dziwo dwie poniższe linie są wierniejsze ułożeniu finalnemu?!
-g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + 'px';      // tu też?!
-
-g_ktoraGrafika.style.outlineStyle = "solid";    
-g_ktoraGrafika.style.outlineColor = "#00d"; 
-g_ktoraGrafika.style.opacity = 1;
-    
-/*g_ktoraGrafika.style.left = 200 + 'px';    
-g_ktoraGrafika.style.top = 100 + 'px';  */
-    
-console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
-            ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
-console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
-e.preventDefault();
-return false;
-} // RuchUpuszczaniaJS-END
-    
-    
-function ResetujZIndexWszystkimJS ()
-{
-var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
-    for ( var i = elementy.length-1 ; i >= 0 ; i-- )
+    function PoczatekRuchuPrzeciaganiaJS ( e )  // 'dragstart'
     {
-    elementy[i].style.zIndex = 20;  // ustawianie z-indeksu na wartość wzorcową (różnica pomiędzy początkiem)
-    }
-} // ResetujZIndexWszystkimJS-END   
+        // e = e || window.event;
+    g_ktoraGrafika = e.target;      // !!! wpisanie namiarów na przeciagany element, który będzie dalej używany w kolejnych zdarzeniach
+        // this.style.opacity = '0.9';
+    g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // róznica odległoścvi pomiedzy kliknięciem, a początkiem klikniętego elementu
+    g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach
+        // pobranie pozycji "globalnej" danego elementu-ofsetu
+    var pozycjaElementu = OkreslPolozenieElementu ( e.target );
+    e.target.setAttribute( 'data-offset_x', e.target.style.left );
+    e.target.setAttribute( 'data-offset_y', e.target.style.top );
+    e.target.setAttribute( 'data-mysz_pocz_x', e.pageX );
+    e.target.setAttribute( 'data-mysz_pocz_y', e.pageY );
 
-    
-function PoczatekDotykuJS ( e ) 
-{
-e.preventDefault(); // zapobieganie przewijaniu ekranu przy dotyku elementów przesuwnych    
-var ktoraGrafika = e.target;    // wewnątrzna zmienna o tym samym znaczniu
-var dotykJednopalczasty = e.touches[0]; // tablica dla pierwszej "operacji jednopalcowej", czyli gestów z jednym naciskiem palca
-var ruchOsX = ktoraGrafika.offsetLeft - dotykJednopalczasty.pageX;  
-var ruchOsY = ktoraGrafika.offsetTop - dotykJednopalczasty.pageY;     
-ResetujZIndexWszystkimJS();
-ktoraGrafika.style.zIndex = 200;    
-//debug
-console.log('Dotyk ekranu');    
-    
-    
-//od razu podpięcie do obiektu poruszanego kolejnego zdarzenia (podległość)
-ktoraGrafika.addEventListener('touchmove', function() {
+    ResetujZIndexWszystkimJS();    
+        var pionowosc = g_ktoraGrafika.style.zIndex;
+        if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
+        // poruszany wyskakuje przed szereg podczas wyciągania co najwyżej kilka razy i tak już zostaje... 
+        // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
+    console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
+                ', e.offsetY:', e.offsetY,')], zaś globalnie to (', pozycjaElementu.left, ', ', pozycjaElementu.top, 
+                '), MYSZ (', e.pageX, ',' , e.pageY, ' )', 'ELEMENT (', e.target.style.left, ',' , e.target.style.top, ' )' );
+    } // PoczatekRuchuPrzeciaganiaJS-END
+
+
+    function RuchPrzeciaganiaJS ( e )    // 'dragover'
+    {
+    // e = e || window.event;
+    // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i przenoszenia elementu
+        // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
+        g_ktoraGrafika.style.opacity = 0.5;
+        g_ktoraGrafika.style.outlineColor = "#d00";
+
+    e.preventDefault();
+    return false;   // dodane
+    } // RuchPrzeciaganiaJS-END
+
+
+    function RuchUpuszczaniaJS ( e )  // 'drop'
+    {
+    //e = e || window.event;
+    // przestawione znów do góry
+    var scena = document.querySelector('#rysunek');
+    var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
+    // e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli np. <img> w <img>! )
+    // g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
+    // g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px';
+    /* g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';
+    g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px'; */
+    // g_ktoraGrafika.style.left = e.pageX - e.target.getAttribute( 'data-mysz_pocz_x' ) - polozenieTla.left + parseInt( g_przesuniecieTlaX ) - g_mojX + 'px';
+    // g_ktoraGrafika.style.top = e.pageY - e.target.getAttribute( 'data-mysz_pocz_y' ) - polozenieTla.top + parseInt( g_przesuniecieTlaY ) - g_mojY + 'px';
+
+    // g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + g_mojX + 'px';
+    // g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + g_mojY + 'px';
+    g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + 'px';    // o dziwo dwie poniższe linie są wierniejsze ułożeniu finalnemu?!
+    g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + 'px';      // tu też?!
+
+    g_ktoraGrafika.style.outlineStyle = "solid";
+    g_ktoraGrafika.style.outlineColor = "#00d";
+    g_ktoraGrafika.style.opacity = 1;
+
+    /* g_ktoraGrafika.style.left = 200 + 'px';
+    g_ktoraGrafika.style.top = 100 + 'px'; */
+
+    console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
+                ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
+    console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");
+    e.preventDefault();
+    return false;
+    } // RuchUpuszczaniaJS-END
+
+
+    function ResetujZIndexWszystkimJS ()
+    {
+    var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
+        for ( var i = elementy.length-1 ; i >= 0 ; i-- )
+        {
+        elementy[i].style.zIndex = 20;  // ustawianie z-indeksu na wartość wzorcową (różnica pomiędzy początkiem)
+        }
+    } // ResetujZIndexWszystkimJS-END
+
+
+    function PoczatekDotykuJS ( e )
+    {
+    e.preventDefault(); // zapobieganie przewijaniu ekranu przy dotyku elementów przesuwnych
+    var ktoraGrafika = e.target;    // wewnątrzna zmienna o tym samym znaczniu
+    var dotykJednopalczasty = e.touches[0]; // tablica dla pierwszej "operacji jednopalcowej", czyli gestów z jednym naciskiem palca
+    var ruchOsX = ktoraGrafika.offsetLeft - dotykJednopalczasty.pageX;
+    var ruchOsY = ktoraGrafika.offsetTop - dotykJednopalczasty.pageY;
+    ResetujZIndexWszystkimJS();
+    ktoraGrafika.style.zIndex = 200;
     //debug
-console.log('Dotyk ekranu - przeciąganie elementu');    
+    console.log('Dotyk ekranu');
+
+    //od razu podpięcie do obiektu poruszanego kolejnego zdarzenia (podległość)
+    ktoraGrafika.addEventListener('touchmove', function() {
+        //debug
+    console.log('Dotyk ekranu - przeciąganie elementu');
     var pozycjaX = dotykJednopalczasty.pageX + ruchOsX;
     var pozycjaY = dotykJednopalczasty.pageY + ruchOsY;
     
-    // pozycjonowanie elementu do poruszania
+        // pozycjonowanie elementu do poruszania
     ktoraGrafika.style.left = pozycjaX + 'px';
     ktoraGrafika.style.top = pozycjaY + 'px';
-}, false); // jako 'bublowanie'    
-} // PoczatekDotykuJS-END
-    
-    
-function KlikniecieObrazkaJS ( e ) 
-{
-e.target.style.zIndex = e.target.style.zIndex + 1;
-}  
-    
+    }, false); // jako 'bublowanie'
+    } // PoczatekDotykuJS-END
+
+
+    function KlikniecieObrazkaJS ( e )
+    {
+    e.target.style.zIndex = e.target.style.zIndex + 1;
+    }
+
 document.querySelector('#gra').addEventListener('dragstart', PoczatekRuchuPrzeciaganiaJS, false );
 document.querySelector('#gra').addEventListener('dragover', RuchPrzeciaganiaJS, false );
 document.querySelector('#gra').addEventListener('drop', RuchUpuszczaniaJS, false );
 
 document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, false );
-    
-/*var obrazki = document.querySelectorAll('img.przenosny');
-    obrazki.forEach( function ( obrazek ) {
-    obrazek.addEventListener('click', KlikniecieObrazkaJS, false );    
-    });*/
 
-    
+/* var obrazki = document.querySelectorAll('img.przenosny');
+    obrazki.forEach( function ( obrazek ) {
+    obrazek.addEventListener('click', KlikniecieObrazkaJS, false );
+    }); */
+
 })();   // Przeciaganie-END   
-    
-    
-    
-    
+
+
+
 // ---------- *** ----------  FUNKCJE ZDARZENIOWE - GLOBALNE  ---------- *** --------------	    
     
     
