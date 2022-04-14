@@ -2659,15 +2659,15 @@ var Przeciaganie = ( function()     // i tak autostart tej funkcji i jej podleg�
 
     //od razu podpięcie do obiektu poruszanego kolejnego zdarzenia (podległość)
     ktoraGrafika.addEventListener('touchmove', function() {
-        //debug
-    console.log('Dotyk ekranu - przeciąganie elementu');
-    var pozycjaX = dotykJednopalczasty.pageX + ruchOsX;
-    var pozycjaY = dotykJednopalczasty.pageY + ruchOsY;
-    
-        // pozycjonowanie elementu do poruszania
-    ktoraGrafika.style.left = pozycjaX + 'px';
-    ktoraGrafika.style.top = pozycjaY + 'px';
-    }, false); // jako 'bublowanie'
+            //debug
+        console.log('Dotyk ekranu - przeciąganie elementu');
+        var pozycjaX = dotykJednopalczasty.pageX + ruchOsX;
+        var pozycjaY = dotykJednopalczasty.pageY + ruchOsY;
+        
+            // pozycjonowanie elementu do poruszania
+        ktoraGrafika.style.left = pozycjaX + 'px';
+        ktoraGrafika.style.top = pozycjaY + 'px';
+        }, false); // jako 'bublowanie'
     } // PoczatekDotykuJS-END
 
 
@@ -2691,36 +2691,34 @@ document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, 
 
 
 
-// ---------- *** ----------  FUNKCJE ZDARZENIOWE - GLOBALNE  ---------- *** --------------	    
-    
-    
-$(window).on('resize', function() {
-    
+// ---------- *** ----------  FUNKCJE ZDARZENIOWE - GLOBALNE  ---------- *** --------------
+
+
+$(window).on('resize', function()
+{
 var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
-    // ... tez można coś z tą wartościa zrobić prócz samego wyświetlenia  
+    // ... też można coś z tą wartościa zrobić prócz samego wyświetlenia
     
     // warunkowe ukrywanie elementu z grą, gdy najpierw naciśnięto "Zagraj" -- element posiada style INLINE, których nie nadpisuje standardowy CSS w @media
-    /*  if ( szeroskoscOkna < 1300 ) 
-    {
-    $('#gra').hide();
-    }   */
+    /*  if ( szeroskoscOkna < 1300 ) $('#gra').hide(); */
     
 }); // $(window).on('resize')-END
-    
-    
-$(document).on("keypress", function( evt ) {    // warunkowanie globalne WYŁĄCZENIA względem naciśnięcia klawisza 
+
+
+$(document).on("keypress", function ( evt )    // warunkowanie globalne WYŁĄCZENIA względem naciśnięcia klawisza
+{
 var elementZdarzenia = evt.target.tagName.toLowerCase();    // określenie rodzaju elementu
 console.log('KLAWISZ: ', evt);
-console.info('Element zdarzenia to ', elementZdarzenia);    
+console.info('Element zdarzenia to ', elementZdarzenia);
 var nawigacjaKlawiaturowa = evt.originalEvent ? evt.originalEvent.keyCode : evt.keyCode,
     czyAlt = evt.originalEvent ? evt.originalEvent.altKey : evt.altKey;
-    
+
     if ( ( nawigacjaKlawiaturowa == 39 ) && ( czyAlt ) ) evt.preventDefault(); // GLOBALNIE: [->] + [Alt] -- nadrzędnie względem przeglądarki Firefox, IE nie słucha się
     if ( ( nawigacjaKlawiaturowa == 37 ) && ( czyAlt ) ) evt.preventDefault(); // GLOBALNIE: [<-] + [Alt] -- nadrzędnie względem przeglądarki Firefox, IE nie słucha się
     
-    if ( ( elementZdarzenia.indexOf('input') < 0 ) || ( elementZdarzenia.indexOf('textarea') < 0 ) )   // ma NIE OBWIĄZYWAĆ wewnątrz pól <input> czy innych ewentulanych TEXTAREA 
+    if ( ( elementZdarzenia.indexOf('input') < 0 ) || ( elementZdarzenia.indexOf('textarea') < 0 ) )   // ma NIE OBWIĄZYWAĆ wewnątrz pól <input> czy innych ewentulanych TEXTAREA
     {
-    //console.log('KLAWISZE: ', evt); 
+    //console.log('KLAWISZE: ', evt);
 
         if ( evt.which == 8) evt.preventDefault();  // [BackSpace] - brak reakcji na niego poza polem wpisywania
     }
@@ -2729,90 +2727,98 @@ var nawigacjaKlawiaturowa = evt.originalEvent ? evt.originalEvent.keyCode : evt.
         if ( ( evt.which == 13 ) || ( evt.which == 32 ) ) alert("KLAWISZ [Spacji] lub [Entera] w <a>");
         // evt.preventDefault();
     }*/
-}); // $(document).on('keypress')-END    
+}); // $(document).on('keypress')-END
 
 
-$('#glowna').on("click keypress", "a", function ( e ) {  // kasowanie FOCUSU przy kliknięciu w obrazek dla LIGHTBOXa oraz aktywacji spacją
-    
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]    
+$('#glowna').on("click keypress", "a", function ( e )   // kasowanie FOCUSU przy kliknięciu w obrazek dla LIGHTBOXa oraz aktywacji spacją
+{    
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po ewentualnym kliknięciu
 
-        if ( e.which == 32 ) 
+        if ( e.which == 32 )
         {
         e.preventDefault(); // blokowanie przewijania ekranu spacją oraz aktywacja elementu - symulacja klieknięcia
         $(this).click();    // sztuczne kliknięcie myszą na tym samym elemencie - przekierowanie do tego samego zdarzenia (+ kasacja obrysu)
         }
-    }    
+    }
 }); // $('#glowna').on('click keypress')-END
     
     
 // ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI, ODNOŚNIKI, ELEMENTY, ...  ---------- *** --------------	
 	
 
-$('#odswiez').click(function() {
-    location.reload();
+$('#odswiez').click( function()
+{
+ location.reload();
 });	
 
     
-$('#poco_button').click( function() {
- $('#poco').toggle(200);	
+$('#poco_button').click( function()
+{
+ $('#poco').toggle(200);
 });
 
     
-$('#pomoc_button').click( function() {
- $('#pomoc').toggle(200);	
+$('#pomoc_button').click( function()
+{
+ $('#pomoc').toggle(200);
 });
 
-    
-$('#symulacja_button').click( function() {
- $('#odpluskwiacz_ajaksowy').fadeToggle(200);	
-});    
-    
-	
-$('#losuj_zakres').click( function() {
+
+$('#symulacja_button').click( function()
+{
+ $('#odpluskwiacz_ajaksowy').fadeToggle(200);
+});
+
+
+$('#losuj_zakres').click( function()
+{
     if ( g_ilosc_wszystkich_galerii > 0 )
     {
-        g_wybrany_nr_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_galerii ) + 1 ; 
+    g_wybrany_nr_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_galerii ) + 1 ;
 
         //ustawienie wartości w polu tekstowym i suwaku
-        $g_input_nr_galerii.val( g_wybrany_nr_galerii );
-        $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );
+    $g_input_nr_galerii.val( g_wybrany_nr_galerii );
+    $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );
     }
 }); // #losuj_zakres click-END	
 
     
-$('#losuj_zakres_podstrony').click( function() {
+$('#losuj_zakres_podstrony').click( function()
+{
     if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
     {
-        g_wybrany_nr_podstrony_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_paginacji_galerii ) + 1 ; 
+    g_wybrany_nr_podstrony_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_paginacji_galerii ) + 1 ;
+
         //ustawienie pola tekstowego i suwaka wygenerowaną wartością
-        $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
-        $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+    $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+    $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
     }
-}); // #losuj_zakres_podstrony click-END	
+}); // #losuj_zakres_podstrony click-END
         
 
-$g_suwak_nr_galerii.change( function() {
-
-g_wybrany_nr_galerii = KonwertujNaLiczbe ( $(this).val() );  // trzy przypisania!!! PODANA_WARTOŚĆ lub 1 (MINimum) dla błędnych wpisów! 
-                                                             // dodatkowa weryfikacja, nawet gdyby ktoś edytował wartości suwaka 
+$g_suwak_nr_galerii.change( function()
+{
+g_wybrany_nr_galerii = KonwertujNaLiczbe ( $(this).val() );  // trzy przypisania!!! PODANA_WARTOŚĆ lub 1 (MINimum) dla błędnych wpisów!
+                                                             // dodatkowa weryfikacja, nawet gdyby ktoś edytował wartości suwaka
 $g_input_nr_galerii.val( g_wybrany_nr_galerii );
 });	
 
 
-$g_suwak_nr_podstrony_galerii.change( function() {
-
-g_wybrany_nr_podstrony_galerii = KonwertujNaLiczbe ( $(this).val() );  // też trzy przypisania!!! PODANA_WARTOŚĆ lub 1 (MINimum) dla błędnych wpisów!    
+$g_suwak_nr_podstrony_galerii.change( function()
+{
+g_wybrany_nr_podstrony_galerii = KonwertujNaLiczbe ( $(this).val() );  // też trzy przypisania!!! PODANA_WARTOŚĆ lub 1 (MINimum) dla błędnych wpisów!
     
 $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
 });	
     
     
-$('#wybrany_nr_zwieksz').click( function() {
+$('#wybrany_nr_zwieksz').click( function()
+{
     if ( ( g_ilosc_wszystkich_galerii > 0 ) && ( g_wybrany_nr_galerii > 0 ) )  // dodatkowe sprawdzenie, w razie przeoczenia lub usunięcia wcześniejszego: g_wybrany_nr_galerii = g_ilosc_wszystkich_galerii (ewentualnie, gdyby wybrać to jako pierwsze)  
     {  
-        if ( g_wybrany_nr_galerii < g_ilosc_wszystkich_galerii ) 
+        if ( g_wybrany_nr_galerii < g_ilosc_wszystkich_galerii )
         {
         g_wybrany_nr_galerii++;
         $g_input_nr_galerii.val( g_wybrany_nr_galerii );
@@ -2822,10 +2828,11 @@ $('#wybrany_nr_zwieksz').click( function() {
 }); //  #wybrany_nr_zwieksz click-END
 
 
-$('#wybrany_nr_zmniejsz').click( function() {
+$('#wybrany_nr_zmniejsz').click( function()
+{
     if ( g_ilosc_wszystkich_galerii > 0 )
     {
-        if ( g_wybrany_nr_galerii > 1 ) 
+        if ( g_wybrany_nr_galerii > 1 )
         {
         g_wybrany_nr_galerii--;
         $g_input_nr_galerii.val( g_wybrany_nr_galerii );
@@ -2834,11 +2841,12 @@ $('#wybrany_nr_zmniejsz').click( function() {
     }
 }); //  #wybrany_nr_zmniejsz click-END
 
-    
-$('#wybrany_nr_podstrony_zwieksz').click( function() {
-    if ( ( g_ilosc_wszystkich_paginacji_galerii > 0 ) && ( g_wybrany_nr_podstrony_galerii > 0 ) )  // dodatkowe sprawdzenie  
+
+$('#wybrany_nr_podstrony_zwieksz').click( function()
+{
+    if ( ( g_ilosc_wszystkich_paginacji_galerii > 0 ) && ( g_wybrany_nr_podstrony_galerii > 0 ) )  // dodatkowe sprawdzenie
     {  
-        if ( g_wybrany_nr_podstrony_galerii < g_ilosc_wszystkich_paginacji_galerii ) 
+        if ( g_wybrany_nr_podstrony_galerii < g_ilosc_wszystkich_paginacji_galerii )
         {
         g_wybrany_nr_podstrony_galerii++;
         $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
@@ -2847,43 +2855,44 @@ $('#wybrany_nr_podstrony_zwieksz').click( function() {
     }
 }); //  #wybrany_nr_podstrony_zwieksz click-END
 
-    
-$('#wybrany_nr_podstrony_zmniejsz').click( function() {
+
+$('#wybrany_nr_podstrony_zmniejsz').click( function()
+{
     if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
     {
-        if ( g_wybrany_nr_podstrony_galerii > 1 ) 
+        if ( g_wybrany_nr_podstrony_galerii > 1 )
         {
         g_wybrany_nr_podstrony_galerii--;
         $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
         $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
         }
     }
-}); //  #wybrany_nr_zmniejsz click-END    
-    
-    
-$('#galeria_wybrany_nr').blur( function() {
-    
-var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );     
-wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca );  // dodatkowa weryfikacja zakresu, ale zawsze z 1 jako błędną ewentualnością na WE 
+}); //  #wybrany_nr_zmniejsz click-END
+
+
+$('#galeria_wybrany_nr').blur( function()
+{
+var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );
+wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca );  // dodatkowa weryfikacja zakresu, ale zawsze z 1 jako błędną ewentualnością na WE
 
 g_wybrany_nr_galerii = wartoscBiezaca;      // przypisania poprawnej wartości zakresu dla numeru wybranej galerii
 $(this).val( wartoscBiezaca );
 $g_suwak_nr_galerii.val( wartoscBiezaca );
 });
-    
 
-$('#podstrona_wybrany_nr').blur( function() {
-    
+
+$('#podstrona_wybrany_nr').blur( function()
+{
 var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );     // na wzór nr_galerii; dodatkowa weryfikacja zakresów, ale zawsze z 1 jako błędną ewentualnością na WE 
-wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca, 'wybórPodstrony' );    
+wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca, 'wybórPodstrony' );
 
 g_wybrany_nr_podstrony_galerii = wartoscBiezaca;    // przypisania poprawnej wartości zakresu dla numeru wybranej podstrony galerii
 $(this).val( wartoscBiezaca );
 $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca );
 });
-    
-    
-$('#suwak_galerii_submit').click( function( evt ) 
+
+
+$('#suwak_galerii_submit').click( function( evt )
 {
 evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     if ( g_ilosc_wszystkich_galerii > 0 )
@@ -2891,52 +2900,52 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     var tagDocelowyDoZaczytania = 'div#skladowisko_status_wybranej_galerii';
     var wartoscPolaNumerycznego = KonwertujNaLiczbe( $g_input_nr_galerii.val() );   // weryfikacja wartośći liczbowej, WARTOŚĆ_POLA lub 1 dla nieliczbowych wartości
     var wybranyNrGalerii = NormalizujZakresPolaInput( wartoscPolaNumerycznego ); // odczytanie z formularza PO_KONWERSJI_NA_10 + weryfikacja zakresu
-    // obliczenie pozycji w ramach podstrony galerii oraz pozycji w zadanym obszarze podstrony (przesunięcie w ramach tego spisu)
+        // obliczenie pozycji w ramach podstrony galerii oraz pozycji w zadanym obszarze podstrony (przesunięcie w ramach tego spisu)
     var pozycjaWGalerii = KtoraPozycjaWGalerii ( wybranyNrGalerii );
-    var podstronaWGalerii = KtoraPodstronaWGalerii ( wybranyNrGalerii ); 
-    var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();    
+    var podstronaWGalerii = KtoraPodstronaWGalerii ( wybranyNrGalerii );
+    var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();
         
         // http://zlobek.chojnow.eu/galeria,k0,p38.html	<-- 'k0' == 'kategoria WSZYSTKO', 'pXYZ' to XYZ-ta 'p'-odstrona w danej galerii (zawiera max 5 elem.)
-        // porządek odwrotnie chronologiczny - 'p1' lub 'p0' lub jego brak wskazuje na pierwszą od końca podstronę z pięcioma elemenatmi, 'p2' na przedostatnią, ... 
-        // konieczne obliczenie pozycji 'spisu treści' - da się ustalić numerycznie jako m-ta podstrona z wszystkich galerii
-        // celem jest pozyskanie stamtąd adresu dla wybranej N-tej galerii 
+        // porządek odwrotnie chronologiczny - 'p1' lub 'p0' lub jego brak wskazuje na pierwszą od końca podstronę z pięcioma elemenatmi, 'p2' na przedostatnią, ...
+        // konieczne obliczenie pozycji 'spisu treści' - uda się ustalić numerycznie jako M-ta podstrona z wszystkich galerii
+        // celem jest pozyskanie stamtąd adresu dla wybranej N-tej galerii
     var adresPodstrony =  '/' + 'galeria,k0,p' + podstronaWGalerii + '.html' ;    // sumowanie ciagu tekstowego
  
-    // DEBUG_MODE    
-        /*  var trescWygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nrPodstronyGaleriiMAX + "<br />"; 
-            trescWygenerowana += "WYBRANA: " + wybranyNrGalerii + ", PODSTRONA: " + podstronaWGalerii + ", POZYCJA_W_GALERII: +" + pozycjaWGalerii + "<br />"; 
+    // DEBUG_MODE
+        /*  var trescWygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nrPodstronyGaleriiMAX + "<br />";
+            trescWygenerowana += "WYBRANA: " + wybranyNrGalerii + ", PODSTRONA: " + podstronaWGalerii + ", POZYCJA_W_GALERII: +" + pozycjaWGalerii + "<br />";
             trescWygenerowana += "<br /> Dopasowano na " + podstronaWGalerii + ". podstronie, z przesunięciem " + pozycjaWGalerii ;
             trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
-            $('#status_wybranej_galerii').html( trescWygenerowana );*/
+            $('#status_wybranej_galerii').html( trescWygenerowana ); */
         
-    ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania w trakcie oczekiwnia na obsługę   
+    ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania w trakcie oczekiwnia na obsługę
  
-    // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X'" JAK NAJBLIŻEJ KODU OBSŁUGI ŻĄDANIA WYŚWIETLENIA WYBRANEJ GALERII 
-    // UsunPrzyciskZamykaniaDlaBiezacejGalerii(); // bez tej definicji można w czasie ładowania ZAMKNĄĆ podgląd galerii, przez co nie pojawi się treść, 
+    // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X'" JAK NAJBLIŻEJ KODU OBSŁUGI ŻĄDANIA WYŚWIETLENIA WYBRANEJ GALERII
+    // UsunPrzyciskZamykaniaDlaBiezacejGalerii(); // bez tej definicji można w czasie ładowania ZAMKNĄĆ podgląd galerii, przez co nie pojawi się treść
     DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii();   // najpierw wyłączenie funkcjonalności (.off), później animacja zanikania
     UkryjPrzyciskZamykaniaDlaBiezacejGalerii();
 
     // ..., ale widać aktywne powiadomenie o ładowaniu treści!!!
 
-    //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii
-    var zawartoscH2 = $('#nazwa_galerii').find('h2').text();    
+    //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdego z już wyświetlonych podglądów szczegółów galerii
+    var zawartoscH2 = $('#nazwa_galerii').find('h2').text();
         if ( zawartoscH2 != '' )
         {
-        console.info('W <h2> do zabarwienia na szaro siedzi treść "' + zawartoscH2 + '" i nie chce zmienić koloru w IE/Edge.');    
+        console.info('W <h2> do zabarwienia na szaro siedzi treść "' + zawartoscH2 + '" i nie chce zmienić koloru w IE/Edge.');
         $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii ...NIE DZIAŁA w IE
         }
 
     $( g_miejsce_na_zdjecia ).empty();
-    $('nav#nawigacja_galeria').empty(); 
-    // $('#wczytywanie_podstrona').show(100);  
+    $('nav#nawigacja_galeria').empty();
+    
     PokazRamkeLadowania('podstrona');   // pokazanie ramki ładowania -- najbliższy obszar to podstrona galerii
 
-    PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania           
+    PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania
         
     WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
                                 "wybrana_galeria_rekurencja", { 'pozycjaWGalerii' : pozycjaWGalerii, 'wybranyNrGalerii' : wybranyNrGalerii } ); 	// ES6 unfriendly
     }
-return false;  // to jest lepszy i konieczny warunek na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nierobienie nic" po kliknięciu
+return false;  // to jest lepszy i konieczny warunek na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nic-nierobienie" po kliknięciu
 }); // click('#suwak_galerii_submit')-END
 
     
