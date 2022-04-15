@@ -2883,7 +2883,7 @@ $g_suwak_nr_galerii.val( wartoscBiezaca );
 
 $('#podstrona_wybrany_nr').blur( function()
 {
-var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );     // na wzór nr_galerii; dodatkowa weryfikacja zakresów, ale zawsze z 1 jako błędną ewentualnością na WE 
+var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );     // na wzór nr_galerii; dodatkowa weryfikacja zakresów, ale zawsze z 1 jako błędną ewentualnością na WE
 wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca, 'wybórPodstrony' );
 
 g_wybrany_nr_podstrony_galerii = wartoscBiezaca;    // przypisania poprawnej wartości zakresu dla numeru wybranej podstrony galerii
@@ -2941,15 +2941,16 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     PokazRamkeLadowania('podstrona');   // pokazanie ramki ładowania -- najbliższy obszar to podstrona galerii
 
     PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania
-        
+
     WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
                                 "wybrana_galeria_rekurencja", { 'pozycjaWGalerii' : pozycjaWGalerii, 'wybranyNrGalerii' : wybranyNrGalerii } ); 	// ES6 unfriendly
     }
 return false;  // to jest lepszy i konieczny warunek na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nic-nierobienie" po kliknięciu
 }); // click('#suwak_galerii_submit')-END
 
-    
-$('#suwak_podstrony_submit').click( function(evt) {
+
+$('#suwak_podstrony_submit').click( function( evt )
+{
 evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
     {
@@ -2960,13 +2961,12 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     var adresPodstrony =  '/' + 'galeria,k0,p' + wybranyNrPaginacji + '.html' ;    // po prostu podstawienie do ciagu tekstowego
  
     // DEBUG_MODE    
-    /* var trescWygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nrPodstronyGaleriiMAX + "<br />"; 
-    trescWygenerowana += "WYBRANA: " + wybranyNrGalerii + ", PODSTRONA: " + podstronaWGalerii + ", POZYCJA_W_GALERII: +" + pozycjaWGalerii + "<br />"; 
+    /* var trescWygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nrPodstronyGaleriiMAX + "<br />";
+    trescWygenerowana += "WYBRANA: " + wybranyNrGalerii + ", PODSTRONA: " + podstronaWGalerii + ", POZYCJA_W_GALERII: +" + pozycjaWGalerii + "<br />";
     trescWygenerowana += "<br /> Dopasowano na " + podstronaWGalerii + ". podstronie, z przesunięciem " + pozycjaWGalerii ;
     trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
+    $('#status_wybranej_galerii').html( trescWygenerowana ); */
 
-    $('#status_wybranej_galerii').html( trescWygenerowana );	*/        
-    //$('div#wybrane_galerie_spis').addClass('szara-zawartosc');      
         if ( $('#wybrane_galerie_spis').find('span:first').text() != '' ) $('#wybrane_galerie_spis').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu
         
     ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania, gdyby wymusić kolejno w trakcie tej obsługi zdarzenia
@@ -2980,17 +2980,16 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     // $('div#wczytywanie_wybrane_galerie_spis').show(100);
     PokazRamkeLadowania('wybrane_galerie_spis');
     UkryjPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii();
-        
-    PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -50);    // naddatek korekty, aby widzieć efekt szarosci... który jest niepotrzebny dle  
-    //PrzewinEkranDoElementu('nav#spis_sterowanie', 500, -100);    // nie można przewinąc do 'div#wybrany_zaczytany_spis' jeśli jest jeszcze niewidoczny
+
+    PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -50);    // naddatek korekty, aby widzieć efekt szarosci... który jest niepotrzebny ale
+    //PrzewinEkranDoElementu('nav#spis_sterowanie', 500, -100);    // ...nie można przewinąc do 'div#wybrany_zaczytany_spis', jeśli jest jeszcze niewidoczny
     }
-return false;  // konieczny warunek pomimo .preventDefault na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nierobienie nic" po kliknięciu
-}); // click('#suwak_podstrony_submit')-END     
-    
-	
-    
-$('h2#selektor_naglowek').on("click keypress", function ( e ) {   // rozszerzone operowanie o klawiaturę; zamiennie "keypress" z .which działa identycznie 
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]    
+return false;  // konieczny warunek pomimo .preventDefault na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nicnierobienie || robienie nic" po kliknięciu
+}); // click('#suwak_podstrony_submit')-END
+
+
+$('h2#selektor_naglowek').on("click keypress", function ( e ) {   // rozszerzone operowanie o klawiaturę; zamiennie "keypress" z .which działa identycznie
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po ewentualnym kliknięciu
         if ( e.which == 32 ) e.preventDefault(); // blokowanie przewijania ekranu spacją
@@ -2998,45 +2997,45 @@ $('h2#selektor_naglowek').on("click keypress", function ( e ) {   // rozszerzone
         if ( $(this).hasClass('rozwiniety') ) $(this).removeClass('rozwiniety').next('div').hide(100);
         else $(this).addClass('rozwiniety').next('div').show(100);
     }
-});    
-	
+});
+
 
     // uruchomienie
 $('#nawigacja_galeria').on("click", ".przycisk_galeria", function( evt ) { // BUTTON z ewentualną podstroną galerii obiektem zdarzenia
 var $this = $(this);	
 var serwer = g_protokol_www + $this.attr('data-adres_strony') + '/';
-var ktoraPodstrona = $this.attr('value');    
+var ktoraPodstrona = $this.attr('value');
 
-ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nowno z pominięciem "aktualnego" przycisku == zawartość aktulanej podstrony galerii    
+ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nowno z pominięciem "aktualnego" przycisku == zawartość aktualnej podstrony galerii
 
-    // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X' "JAK NAJBLIŻEJ KODU OBSŁUGI NACISNIĘCIA DOWOLNEGO PRZYCISKU NAWIGACJI W PODGALERII
-    // ustawić jako początkową czynność blokowanie przycisku lub ukrywanie innego od zamykania (zależy na czasie!), a przetestowano możliwość wciśnięcia
-    // ...przycisku podgalerii klawiaturą, gdy kurosor myszy był nad zamykaniem podglądu bieżącej galerii!     
+    // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X' "JAK NAJBLIŻEJ KODU OBSŁUGI NACIŚNIĘCIA DOWOLNEGO PRZYCISKU NAWIGACJI W PODGALERII
+    // ustawić jako początkową czynność blokowanie przycisku lub ukrywanie innego od zamykania (zależy na czasie!), a przetestowano możliwość wciśnięcia przycisku podgalerii klawiaturą,
+    // gdy kursor myszy był nad zamykaniem podglądu bieżącej galerii!
 //UsunPrzyciskZamykaniaDlaBiezacejGalerii();   // zamiast jednokrotnie tworzyć (kiedy?), pokazywać i ukrywać, to prostsze jest kasowanie OD RAZU elementu i jego tworzenie nowo
 DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii();
-UkryjPrzyciskZamykaniaDlaBiezacejGalerii();     // najpierw wyłaczenie (.off), teraz animacja zanikania elementu 'X' 
+UkryjPrzyciskZamykaniaDlaBiezacejGalerii();     // najpierw wyłaczenie (.off), teraz animacja zanikania elementu 'X'
 PokazBiezacaGalerie();  // ratunkowe pokazanie zawartości bieżącej galerii, nawet gdy WCZEŚNIEJ naciśnieto przycisk 'X" (co standardowo nie powinno się udać, ale w wyniku opóźnienia lub wolnego sprzętu TO SIĘ JEDNAK ZDARZA DLA "CHCĄCEGO MAGIKA"!)
-            // coś jednak nie działa tak, jakbym chciał.. nie pojawi się komponent aktualnej galerii :/ 
-    //$( g_wczytywanie_podstrona ).show(100); 
-PokazRamkeLadowania('podstrona');   // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
+            // coś jednak nie działa tak, jakbym chciał.. nie pojawi się komponent aktualnej galerii :/
+    //$( g_wczytywanie_podstrona ).show(100);
+PokazRamkeLadowania('podstrona');   // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle
 
 //alert("kliknięto '.przycisk_galeria'... albo kontener: " + this.tagName );
 //alert("VAL: '" + $this.attr('value') + "', DATA-TAG: " + $this.attr('data-tag') );
 
-console.log('Naciśnięto wywołanie ' + ktoraPodstrona + '. podstrony danej galerii');  
+console.log('Naciśnięto wywołanie ' + ktoraPodstrona + '. podstrony danej galerii');
 // ?!?!
 //alert( 'TAG: ' + $this.attr('data-tag') + ' ADRES: ' + $this.attr('data-adres_strony') + ' GALERIA: ' + $this.attr('data-adres_galerii') + ' ELEMENT: ' + $this.attr('data-elem_zewn') );
 //WczytajZewnetrznyHTMLdoTAGU( nowyDiv.attr('id'), g_adres_strony, odnosnik_podstrony, g_element_zewnetrzny, true);
 
 //WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona"	);
-WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), serwer, $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona", 
-                            { 'ktoraPodstrona' : ktoraPodstrona } );    // ES5, nie ES6
+WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), serwer, $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona", { 'ktoraPodstrona' : ktoraPodstrona } );    // ES5, nie ES6
 
-});	//  on("click")-$('#nawigacja_galeria')-END	
-	
+});	//  on("click")-$('#nawigacja_galeria')-END
+
+
 	   // "przycisk" ładujący kolejne +5 galerii (max), porządek ujemnie chronologiczny
-$('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function(e) { 
-    
+$('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function( e )
+{ 
 // console.info('DEBUG: przycisk naciśnieto już ' + g_suma_klikniec_zaladuj + ' razy, a paginacji odczytano wcześniej ' + g_zaczytana_ilosc_paginacji_galerii );
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {   
