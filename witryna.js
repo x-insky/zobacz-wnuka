@@ -3019,45 +3019,37 @@ PokazBiezacaGalerie();  // ratunkowe pokazanie zawartości bieżącej galerii, n
     //$( g_wczytywanie_podstrona ).show(100);
 PokazRamkeLadowania('podstrona');   // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle
 
-//alert("kliknięto '.przycisk_galeria'... albo kontener: " + this.tagName );
-//alert("VAL: '" + $this.attr('value') + "', DATA-TAG: " + $this.attr('data-tag') );
+// logownaie sukcesu dla podstrony glaerii
+// console.log('Naciśnięto wywołanie ' + ktoraPodstrona + '. podstrony danej galerii');
 
-console.log('Naciśnięto wywołanie ' + ktoraPodstrona + '. podstrony danej galerii');
-// ?!?!
-//alert( 'TAG: ' + $this.attr('data-tag') + ' ADRES: ' + $this.attr('data-adres_strony') + ' GALERIA: ' + $this.attr('data-adres_galerii') + ' ELEMENT: ' + $this.attr('data-elem_zewn') );
-//WczytajZewnetrznyHTMLdoTAGU( nowyDiv.attr('id'), g_adres_strony, odnosnik_podstrony, g_element_zewnetrzny, true);
-
-//WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona"	);
 WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), serwer, $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona", { 'ktoraPodstrona' : ktoraPodstrona } );    // ES5, nie ES6
-
 });	//  on("click")-$('#nawigacja_galeria')-END
 
 
-	   // "przycisk" ładujący kolejne +5 galerii (max), porządek ujemnie chronologiczny
+   // "przycisk" ładujący kolejne +5 galerii (max), porządek ujemnie chronologiczny
 $('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function( e )
 { 
 // console.info('DEBUG: przycisk naciśnieto już ' + g_suma_klikniec_zaladuj + ' razy, a paginacji odczytano wcześniej ' + g_zaczytana_ilosc_paginacji_galerii );
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
-    {   
+    {
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po kliknięciu
         if ( e.which == 32 ) e.preventDefault();  // blokowanie przewijania zawartości spacją
-        
+
     g_suma_klikniec_zaladuj++;	// zliczaj naciśnięcia na ten przycisk
-    // alternatywnbie można by sumować PO sprawdzeniku prostszego warunku...
+    // alternatywnbie można by sumować PO sprawdzeniu prostszego warunku...
 
         if ( g_suma_klikniec_zaladuj < ( g_zaczytana_ilosc_paginacji_galerii + 1) ) // bieżącą stronę też liczyć jako paginację, dlatego +1
         {
         // g_biezaca_pozycja_galerii++;  // zwiększenie licznika, przejście do wywołania kolejnej podstrony
-        // licznik zwiększa się już PO nacisnięciu odnosnika i PRZED zakończeniem przetwarznia uprzednio zaczytanych treści !!!
+        // licznik zwiększa się już PO naciśnięciu odnośnika i PRZED zakończeniem przetwarzania uprzednio zaczytanych treści !!!
         // co najwyżej kolejność może być inna na liście wyników
 
             if ( g_biezaca_pozycja_galerii <= g_zaczytana_ilosc_paginacji_galerii )
             {
             // $( g_wczytywanie_spis ).show(100); // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle
-            // PokazRamkeLadowania('spis');  //  -- to jest zbedne, wewnatrz ZaczytajSpisGalerii() jest dodane wyświetlenie
+            // PokazRamkeLadowania('spis');  // -- to jest zbędne, wewnatrz ZaczytajSpisGalerii() jest dodane wyświetlenie
 
             // console.log('Na ' + g_suma_klikniec_zaladuj + ' żądanie zaczytano kolejną podstronę w galerii ' + g_biezaca_pozycja_galerii + ' z ' + g_zaczytana_ilosc_paginacji_galerii + ' podstron.');
-
             // g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; // inkrementacja o każde 5 zdjęć z poszczególnych zaczytanych galerii
 
             ZaczytajSpisGalerii();
@@ -3068,87 +3060,91 @@ $('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function( e 
     }   // if (e.which == ... )-END
 });	// on("click")-$('#spis_sterowanie')-END
 
-	
+
     // DLA KOLEJNYCH GALERII: '$('#galeria_spis').on("click", "a", function(e){'
-$('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e ) {    // 
+$('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e )
+{
     // włączono KEYPRESSED/KEYDOWN i CLICK -- bez rozbijania na przyciski "warunkowe" - "click auxclick contextmenu"
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
         if ( e.which == 1 ) $(this).blur(); // usunęcie focusu z elementu po jego kliknięciu
-    e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku && nieprzewijanie ekranu spacją   
-        
+    e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku && nieprzewijanie ekranu spacją
+
     var $this = $(this);
     var galeriaDocelowa = $this.attr('data-href');	// pierwotnie był odczyt bezpośrednio z istniejącego 'href', teraz w jego miejscu 'data-href'
     var nrGalerii = parseInt( galeriaDocelowa.substr( galeriaDocelowa.lastIndexOf(",a") + 2 ) ); // wg sprawdzonego algorytmu
     var nrPodstronyGalerii = parseInt( MaksymalnaIloscPodstronGalerii( nrGalerii ) );
 
-    var tytulGalerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek, a nie na obrazek -- bo nie posiadałby tekstu)   
+    var tytulGalerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek, a nie na obrazek -- bo nie posiadałby tekstu)
 
     var opisGalerii = $this.parents('.kontener-odnosnik').find('.opis-odnosnik').html();	 // było .text(), ale teraz zyskujemy formatowanie tekstu
     var dataGalerii = $this.parents('.kontener-odnosnik').find('.data-odnosnik').text();       // tu bezwzględnie tylko tekst
-    var srcObrazkaGalerii = $this.parent().siblings('.zdjecie-odnosnik').find('a img').attr('src');    
+    var srcObrazkaGalerii = $this.parent().siblings('.zdjecie-odnosnik').find('a img').attr('src');
 
         if ( tytulGalerii.length == 0 )  // jeżeli naciśnięto odnośnik z obrazkiem, ten drugi zawiera już treść odnośnika
         {
         tytulGalerii = $this.parent().siblings('div.tytul-odnosnik').find('a h2').html();	 // było .text( ... )
-        galeriaDocelowa =  $this.attr('data-href');    
-        srcObrazkaGalerii = $this.find('img').attr('src');    
+        galeriaDocelowa =  $this.attr('data-href');
+        srcObrazkaGalerii = $this.find('img').attr('src');
         }
     //alert('g_tag_do_podmiany, g_protokol_www + g_adres_strony + '/' + g_folder_serwera + '/', galeriaDocelowa, g_element_zewnetrzny, "galeria_podstrona")
     //alert('WczytajZewnetrznyHTMLdoTAGU( tag: ' + g_tag_do_podmiany_zdjecia + ', domena: ' + g_protokol_www + g_adres_strony + '/' + g_folder_serwera + '/' + ', zasób: ' + galeriaDocelowa + ', elem: ' + g_element_zewnetrzny + ') ... MYSZA NAJECHAŁA');
-    console.log('ZDARZENIE: "Naciśnięto" i wywołano odnośnik dla galerii "' + tytulGalerii + '"' ); 	
+    console.log('ZDARZENIE: "Naciśnięto" i wywołano odnośnik dla galerii "' + tytulGalerii + '"' );
 
-        // załaduj tytuł, opis i obrazek dla danej galerii, po czym załaduje się jej pierwszą podstronę	
+        // załaduj tytuł, opis i obrazek dla danej galerii, po czym załaduje się jej pierwszą podstronę
     UzupełnijNaglowekBiezacejGalerii ( { 'tytul' : tytulGalerii, 'opis' : opisGalerii, 'srcObrazka' : srcObrazkaGalerii, 'data' : dataGalerii,
-                                            'nrGalerii' : nrGalerii, 'nrPodstronyGalerii' : nrPodstronyGalerii } );     // lista uzupełniona o numerację odczytanych   
+                                            'nrGalerii' : nrGalerii, 'nrPodstronyGalerii' : nrPodstronyGalerii } );     // lista uzupełniona o numerację odczytanych
 
         // wstawienie animacji na postęp ładowania
     // $( g_wczytywanie_podstrona ).show(100);
         PokazRamkeLadowania('podstrona');
 
         // od razu zerowanie zawartości kontenerów docelowych do zaczytania zawartości
-    $('nav#nawigacja_galeria').empty(); 
+    $('nav#nawigacja_galeria').empty();
     $('div#skladowisko').empty(); 
 
     WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres_strony + '/' , galeriaDocelowa, g_element_zewnetrzny, "galeria_podstrona" ); 	
-    //return; // wyjście, aby nie przechodzić do odnosnika... gdyby .preventDefault() zawiodło	
-    PrzewinEkranDoElementu('div#glowna', 700, -6);   		// przewinięcie ekranu do lokalizacji galerii
+    //return; // wyjście, aby nie przechodzić do odnosnika... gdyby .preventDefault() zawiodło
+    PrzewinEkranDoElementu('div#glowna', 700, -6);      // przewinięcie ekranu do lokalizacji galerii
     }   // if-( e.which == 1 )...
-});	//  on("click")-$('#galeria_spis')-END			
+});	//  on("click")-$('#galeria_spis')-END
+
 
         // tylko te <a> mają sztucznie dodany TABINDEX (bo nie mają zabrany HREF!), zatem warianty: a || a[data-href] || a[tabindex]
-$('#galeria_spis, #wybrane_galerie_spis').on("focus", "a[data-href]", function ( e ) {
+$('#galeria_spis, #wybrane_galerie_spis').on("focus", "a[data-href]", function ( e )
+{
         // dla NIEKOMPLETNEGO <a> NIE DZIAŁA nawet przypisanie obrysu poprzez klasę (ani szczątkowe :focus w CSS - działa tylko w FF, bez JS!)
-        // pozostawiono z nadzieją istnienia zmiany w przyszłych wersjach przeglądarek (przyszłe aktualizacje to obejmą?!)
-        // skopiowano ten styl też dla rodzica, aby ujednolicić stan focus na kontenerze 
+        // pozostawiono z nadzieją istnienia zmiany w przyszłych wersjach przeglądarek (być może przyszłe aktualizacje różnych przeglądarek to obejmą?!)
+        // skopiowano ten styl też dla rodzica, aby ujednolicić stan focus na kontenerze
     $(this).addClass('sztuczny-focus').parent().parent().addClass('sztuczny-hover sztuczny-focus');    // "dwa kontenery wyżej" to cały pojemnik dla tego odnośnika - do wyświetlenia galerii
-}); //  on("focus")-$('a')-END 
+}); //  on("focus")-$('a')-END
 
 
-$('#galeria_spis, #wybrane_galerie_spis').on("blur", "a[data-href]", function ( e ) {  
-        // istnienie klasa "sztuczny-focus" dla <a> i tak nic nie zmienia w stanie i wyglądzie odnośnika, brak tej ramki; 
+$('#galeria_spis, #wybrane_galerie_spis').on("blur", "a[data-href]", function ( e )
+{  
+        // istnienie klasa "sztuczny-focus" dla <a> i tak nic nie zmienia w stanie i wyglądzie odnośnika, brak tej ramki;
         // bardziej istotne póki co to warunkowanie JEST/BRAK dla skopiowanego stylu w rodzicu rodzica (czyli cały kontener elementu)
     $(this).removeClass('sztuczny-focus').parent().parent().removeClass('sztuczny-hover sztuczny-focus');    // "dwa kontenery wyżej" jako pojemnik dla bieżącego odnośnika;
 }); //  on("blur")-$('a')-END 
 
 
-$('div#zaczytany_spis').on('click keydown', '.powiadamiacz', function ( e ) {  // też na klawiaturę ma reagować ... powstał Mały Warunkowy Potworek  
-
+$('div#zaczytany_spis').on('click keydown', '.powiadamiacz', function ( e )     // też na klawiaturę ma reagować ... powstał Mały Warunkowy Potworek
+{
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
-        if ( e.which == 32 ) e.preventDefault(); // tylko zamknie, bez ewentualnego przewijania    
+        if ( e.which == 32 ) e.preventDefault(); // tylko zamknie, bez ewentualnego przewijania
 
         if ( $(this).not( $(this).is(':animated') ) )      // pozwól na wcześniejsze "zrolowanie" elementu tylko przed rozpoczęciem nieuniknionej animacji
         {
         $(this).slideUp(500);   // szybsza o 50% animacja by było widać różnicę i efekt kliknięcia
         }
     }
-}); //  on("click")-$('.powiadamiacz')-END	
-    
+}); //  on("click")-$('.powiadamiacz')-END
+
 
 // ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI  ---------- *** --------------	        
-    
-    
+
+
 $('.banner-kontener').hover( function() {    // animacje z "wychodzeniem" obrotowego słoneczka
     $(this).find('#slonce_logo').addClass('animacja-interaktywnego-slonca');
     },
