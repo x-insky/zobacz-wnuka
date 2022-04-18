@@ -633,7 +633,7 @@ var $odnosnikiMiniatur  = $( kontenerZrodlowy + ' a:not(.link_tresc)' );
 $( g_miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyświetlenie nowej galerii 
 $( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietlanejGalerii  + '.</span> podstrony galerii</h2>');  // dopisanie nagłówka dla bieżącej galerii - z PARAMETRU WYWOŁANIA, a nie obliczonego na podstawie przebiegu
     
-    $odnosnikiMiniatur.each(function(){
+    $odnosnikiMiniatur.each( function() {
 
     var $biezacyOdnosnik = $(this);
     var biezacyOdnosnikHREF = $biezacyOdnosnik.attr('href');
@@ -1318,7 +1318,7 @@ return odczytaneNamiary;    // zwróć obiekt
 
 // ---------- *** ----------  PRACA NA RZECZ APLIKACJI  ---------- *** ----------
     
-function InicjalizujCSSzAktywnymJS()  // UWAGA! style kierowane pod konkretne elementy oraz mozliwy hardkod
+function InicjalizujCSSzAktywnymJS ()  // UWAGA! style kierowane pod konkretne elementy oraz mozliwy hardkod
 {
     // pomocnicza klasa-wskaźnik, dla podległości lub ogólny "włącz/wyłącz" dla zawartości gdy jest/brakuje JS
 $('.glowny-kontener').removeClass('brak-js');
@@ -2254,13 +2254,15 @@ return false;
 }   // UsunPobraneZadanie-END
 
 
-function PobierzPierwszeNieodebrane() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+function PobierzPierwszeNieodebrane()   // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+{
     if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[0];  // weryfikacja jest przed wywołaniem tej funkcji, ale nie zaszkodzi
 return false;
 }
 
 
-function PobierzOstatnieNieodebrane() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+function PobierzOstatnieNieodebrane()   // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+{
     if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[g_niewyslane_podstrony.length-1];  // weryfikacja jest przed wywołaniem tej funkcji, ale dodatkowa nie zaszkodzi
 return false;
 }
@@ -3142,45 +3144,44 @@ $('div#zaczytany_spis').on('click keydown', '.powiadamiacz', function ( e )     
 }); //  on("click")-$('.powiadamiacz')-END
 
 
-// ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI  ---------- *** --------------	        
+// ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI  ---------- *** --------------
 
 
 $('.banner-kontener').hover( function() {    // animacje z "wychodzeniem" obrotowego słoneczka
     $(this).find('#slonce_logo').addClass('animacja-interaktywnego-slonca');
     },
     function() {
-    $(this).find('#slonce_logo').removeClass('animacja-interaktywnego-slonca');	
+    $(this).find('#slonce_logo').removeClass('animacja-interaktywnego-slonca');
     }
-); // .banner-kontener hover-END    
-    
-    
+); // .banner-kontener hover-END
+
+
 $('#galeria_spis').on('click', '.odswiez_strone', function () {   // globalnie obsługa zdarzenia z delegacją dla odświeżenia strony -- niezależnie od kolejności wygenerowania komunikatu o błędzie
-    location.reload(); 
-}); // on-click-END    
+    location.reload();
+}); // on-click-END
     
     
 $('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt ) { // też delegacja, ponawianie wyswietlania nieudanej transmisji
 
-    var ileNaLiscieNieotrzymanych = g_niewyslane_podstrony.length;    // sprawdzenie długości listy   
-    
-    if ( ileNaLiscieNieotrzymanych > 0 )    // jeżeli istnieje nadal lista niepobranych/nieotrzymanych...    
+    var ileNaLiscieNieotrzymanych = g_niewyslane_podstrony.length;    // sprawdzenie długości listy
+
+    if ( ileNaLiscieNieotrzymanych > 0 )    // jeżeli istnieje nadal lista niepobranych/nieotrzymanych...
     {
-        if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status-ajaksa').hasClass('status-norma') ) ) 
-            || ( $('.status-ajaksa').hasClass('status-norma') ) )  // wstępna weryfikacja po wyglądzie/zachowaniu
-                    //tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
+        if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status-ajaksa').hasClass('status-norma') ) ) || ( $('.status-ajaksa').hasClass('status-norma') ) )  // wstępna weryfikacja po wyglądzie/zachowaniu
+            //tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
         {
             // dodatkowa weryfikacja, ewentualnie zrobić hardkoda
             if ( ( g_przechwytywacz_php == g_przechwytywacz_php_ok ) && ( g_przechwytywacz_php_zapytanie == g_przechwytywacz_php_zapytanie_ok ) )
             {
-        // to pobierz kolejny OSTATNI/pierwszy z tej listy niepobranych i spóbuj ponownie wszystkie operacje z transferem
+        // to pobierz kolejny OSTATNI/pierwszy z tej listy niepobranych i spróbuj ponownie wszystkie operacje z transferem
             // #OSTATNI: psuje kolejność dołączania (gdy kilka się nie udało), ale odświeżane powiadomienie o błędzie ma sens
-            // #pierwszy: kolejka FIFO lepsza względem "sprawiedliwości" niewczytania, przeciwnieństwo wcześniejszego  
-            // do pobrania jest więcej danych "fragmentowych" z jednego linku        
-        // ... ale nie zdejmuj póki co tego zadania z listy, zablokuj też przycisk na tę operację 
-            
+            // #pierwszy: kolejka FIFO lepsza względem "sprawiedliwości" niewczytania, przeciwnieństwo wcześniejszego
+            // do pobrania jest więcej danych "fragmentowych" z jednego linku
+        // ... ale nie zdejmuj póki co tego zadania z listy, zablokuj też przycisk na tę operację
+
         //var zadanieNieodebrane = PobierzPierwszeNieodebrane();
         var zadanieNieodebrane = PobierzOstatnieNieodebrane();  // tu odczytywana jest ostatnia pozycja z tablicy
-                
+
         /*
         // var nrPodstronyNiewczytanejGalerii = parseInt( zadanieNieodebrane.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );
         // var adresZasobu = zadanieNieodebrane.adres.indexOf();
@@ -3194,22 +3195,21 @@ $('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt ) { // te
             {
             zadanieNieodebrane.adres.replace('?url_dupa=', '?url_zewn=');
             }
-        */    
-        ZablokujPrzycisk( evt.target ); 
+        */
+        ZablokujPrzycisk( evt.target );
         PokazRamkeLadowania('spis'); 
-        PrzewinEkranDoElementu('#wczytywanie_spis', 500); // hardkod #elementu        
-            // wywołanie tego samego, ale wystawić dodatkowy znacznik, by go interpretować po zwrotnym otrzymaniu danych   
-            // + DANE, np. daneDodatkowe = { trybPowtorki : true } 
+        PrzewinEkranDoElementu('#wczytywanie_spis', 500); // hardkod #elementu
+            // wywołanie tego samego, ale wystawić dodatkowy znacznik, by go interpretować po zwrotnym otrzymaniu danych
+            // + DANE, np. daneDodatkowe = { trybPowtorki : true }
         WczytajZewnetrznyHTMLdoTAGU ( zadanieNieodebrane.tag, g_protokol_www + g_adres_strony, zadanieNieodebrane.adresZasobu, zadanieNieodebrane.elementWitryny, "spis_galerii", { trybPowtorki : true } );    // + znacznik: .tryb
         console.log('NAPRAWA BŁĘDU DLA podstrony: "' + zadanieNieodebrane.adresZasobu + '"');
-                
-      // ...dużo wątków aktualizacyjnych przy okazji (dekrementacje i komunikaty), ale PO UDANEJ obsłudze ponowionego żądania!     
+
+      // ...dużo wątków aktualizacyjnych przy okazji (dekrementacje i komunikaty), ale PO UDANEJ obsłudze ponowionego żądania!
             
-            }   // if-(( g_przechwytywacz_php == g_przechwytywacz_php_ok )...-END 
+            }   // if-(( g_przechwytywacz_php == g_przechwytywacz_php_ok )...-END
         } // if-( !OdczytajLocalStorage() )-END
     } // if-( ileNaLiscieNieotrzymanych > 0 )-END
-      
-    
+
 }); //  on("click")-$('#przywroc_niewczytane')-END	   
     
                                             //zamykanie "okienek" i pasków w obszarze "#galeria_spis", czyli w "okienkach z błędami" nad spisem galerii
