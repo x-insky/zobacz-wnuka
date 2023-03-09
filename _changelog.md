@@ -1,3 +1,31 @@
+v0.6.0 - the ability to run the site after applying UTF-8 on the source server (external change)
+
+* v0.6.0 - [2022-12-05]
+
+[*] MODIFIED
+
+-- przechwytywacz.php
+* restored ability to display galleries after reading them from the nursery's home website
+  - this website has been encoded in UTF-8 from the beginning, and since the end of November 2022 the nursery website has also uses UTF-8 (previously it was always "windows-1250" encoding)
+  - fixed problem with unnecessary codepage conversion for texts (iconv() function was commented out)
+  - contrary to expectations, converting UTF-8 to UTF-8 returns an error, not the same input content
+* when querying the master website, instead of text content with a function error message, we get the expected HTML content from the nursery website 
+  - previously, every time the host page was read, the following error was received: "Detected an illegal character in input string"
+  - an initial error prevented the use of the "Look at Grandson" site
+* reorganization of comments
+  - removed outdated content
+  - layout changes, better descriptions, etc.
+  - correction of typos
+
+[F] FIXED
+
+-- przechwytywacz.php
+* external cause: changing the text encoding of the master nursery site
+  - the modification in the source content was reacted - removed redundant conversion
+* fixes: #97 - 'Galleries not loading when opening the site - only error message'
+
+---------------------------
+
 v0.5.84 - removing unnecessary comments and typos (v.8)
 
 * v0.5.84 - [2022-04-01]
