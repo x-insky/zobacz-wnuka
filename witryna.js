@@ -3,7 +3,7 @@
 $(document).ready(function ()
 {
 /* GARŚĆ TEORII i FAKTÓW:
-* ścieżka pełna do zdjęcia:	
+* ścieżka pełna do zdjęcia:
 * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdj_XXXXX.jpg			// <-- adres zdjęcia, X to cyfra [0..9]
 * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdjp_XXXXX.jpg 	// <-- adres miniatury zdjęcia ()
 * http://zlobek.chojnow.eu/u_tygryskow,a147.html; 			// przykładowa strona z galerią
@@ -94,8 +94,8 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                                 + "'. Docelowo ma być wyświetlona " + dane.ktoraPodstrona + ". podstrona galerii.");    */
                         if ( ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( odpowiedz ) )
                         {
-                        // WYKONAJ DALSZE FUNKCJE, zależne od SUKCESU zaczytania lub nie	
-                        // kasuj poprzednią zawartość elementu???	
+                        // WYKONAJ DALSZE FUNKCJE, zależne od SUKCESU zaczytania lub nie
+                        // kasuj poprzednią zawartość elementu???
                         NaprawBrakujaceSRCwKontenerze ( tag_podmieniany, true );
                         CzyscNiepotrzebneElementy();	
                         //GenerujPodstronyGalerii( element_witryny, dane.ktoraPodstrona );
@@ -252,7 +252,6 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             catch (err2)
             {
             var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z dołączeniem kolejnego spisu galerii! STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")";
-            // alert(komunikatOBledzie);
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
             PrzewinEkranDoElementu('p.blad', 500);
             }
@@ -312,7 +311,6 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             catch (err2) 
             {
             var komunikatOBledzie = "BŁĄD! " + err2 + "/nProblem z ładowaniem w tle dla generowania wybranej galerii! STATUS: " + status + ", XHR: " + xhr.status + " (" + xhr.statusText + ")";
-            //alert(komunikatOBledzie);
             $('#galeria_spis').prepend( '<p class="blad">' + komunikatOBledzie + '</p>' );
             PrzewinEkranDoElementu('p.blad', 500);
             }
@@ -435,9 +433,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             PrzewinEkranDoElementu('p.blad', 500);     
             alert(komunikatOBledzie);   // tu wyjatkowo zostaje komunikat w formie okna
             }
- 		
+
             break;
-            
+
 
         default:
                 // gdyby się nie udało dowolne żądanie to wystawić domyślny komunikat o błędzie (raczej niewykonalne, bo błędy żądań mają swoje powiadomienia) 
@@ -446,9 +444,9 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
             PrzewinEkranDoElementu('.blad', 500);
 
     } //switch-rodzaj_dzialania-END
-	
-	
-    function CzyscNiepotrzebneElementy () 
+
+
+    function CzyscNiepotrzebneElementy ()   // zdefiniowano wewnątrz funkcji, w której jest tylko używana/wywoływana
     {
         /* błędy zgłaszane w konsoli dla pobierania niepotrzebnych plików - grafiki:
                         <img src="zdjecia/zlobek.gif" border="0" align="center">
@@ -460,17 +458,17 @@ function WczytajZewnetrznyHTMLdoTAGU ( tag_podmieniany, adres_domeny, adres_zaso
                         <LINK href='style/stylglowny.css' rel='stylesheet' type='text/css' />
         */	
         var $pierwszyObrazek = $('img[src*="zdjecia/zlobek.gif"]');
-            if ( $pierwszyObrazek.length === 1 ) 
+            if ( $pierwszyObrazek.length === 1 )
             {
-            console.info('usuwanie pliku grafiki dla "zdjecia/zlobek.gif"');	
+            console.info('usuwanie pliku grafiki dla "zdjecia/zlobek.gif"');
             $pierwszyObrazek.remove();
             }
             //$('img[src*="zdjecia/zlobek.jpg"]').remove();
             //
     };
-																
+
 } // WczytajZewnetrznyHTMLdoTAGU-END
-    
+
 
 function GenerujPodstronyGalerii ( kontenerZrodlowy, nrWyswietlanejGalerii ) 
 { 	     // poniżej wartości domyślne dla parametrów ES5
@@ -494,9 +492,9 @@ var przyciskPoprzedni = {
         adresUrl : '',
         aktywny : false
     };
-    
+
 var przyciskiDoWstawienia = [];
-    
+
 $('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na nawigację galerii, NIEZALEŻNIE czy wcześniej zawierał zawartość + jego pokazanie (gdy pierwsze wyświetlenie pierwszej podstrony)
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
 $kontenerDocelowy.show( 100 );	// pokaż kontener na zaczytaną zawartość ... + przewiń po wyświetleniu całości?
@@ -633,7 +631,7 @@ var $odnosnikiMiniatur  = $( kontenerZrodlowy + ' a:not(.link_tresc)' );
 $( g_miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyświetlenie nowej galerii 
 $( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietlanejGalerii  + '.</span> podstrony galerii</h2>');  // dopisanie nagłówka dla bieżącej galerii - z PARAMETRU WYWOŁANIA, a nie obliczonego na podstawie przebiegu
     
-    $odnosnikiMiniatur.each(function(){
+    $odnosnikiMiniatur.each( function() {
 
     var $biezacyOdnosnik = $(this);
     var biezacyOdnosnikHREF = $biezacyOdnosnik.attr('href');
@@ -1318,7 +1316,7 @@ return odczytaneNamiary;    // zwróć obiekt
 
 // ---------- *** ----------  PRACA NA RZECZ APLIKACJI  ---------- *** ----------
     
-function InicjalizujCSSzAktywnymJS()  // UWAGA! style kierowane pod konkretne elementy oraz mozliwy hardkod
+function InicjalizujCSSzAktywnymJS ()  // UWAGA! style kierowane pod konkretne elementy oraz mozliwy hardkod
 {
     // pomocnicza klasa-wskaźnik, dla podległości lub ogólny "włącz/wyłącz" dla zawartości gdy jest/brakuje JS
 $('.glowny-kontener').removeClass('brak-js');
@@ -2056,7 +2054,7 @@ czasAnimacji = czasAnimacji || 300;
 $('#wybrane_galerie_zamykanie').fadeOut( czasAnimacji );
 }
 
-function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( )
+function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ()
 {
     $('#biezaca_galeria_zamykanie').on("click keydown", function( e ) {  // działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
         if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
@@ -2066,7 +2064,7 @@ function AktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( )
     });
 }
 
-function DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ( )
+function DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii ()
 {
     $('#biezaca_galeria_zamykanie').off("click keydown", function( e ) {  // "OFF", nie "ON"!!! -- też działanie EWIDENTNIE BEZ delegacji zdarzeń!!!
         if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
@@ -2120,72 +2118,74 @@ WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_spis, adres_zasobu_galerii, adres
 
 // ---------- *** ----------  OGÓLNE PRZEZNACZENIE  ---------- *** ----------
 
-function PrzewinEkranDoElementu ( element, czasAnimacji, korektaY ) 
+function PrzewinEkranDoElementu ( element, czasAnimacji, korektaY )
 {
-var pozycjaElementuWPionie;    
-        //parametryzacja parametru domyślnego by ES5 ;)
+var pozycjaElementuWPionie;
+        // parametryzacja parametru domyślnego by ES5 ;)
     if ( korektaY === undefined ) korektaY = -10;
-        //jeśli jest kilka elmentów, to użyj pierwszego w kolekcji jako "wybranego"
+        // jeśli jest kilka elementów, to użyj pierwszego w kolekcji jako "wybranego"
     if ( $(element).length > 0 ) 
     {
         if ( $(element).length > 1 ) element = $(element)[0];
-    pozycjaElementuWPionie = $(element).offset().top; 
-    console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ', pozycjaElementuWPionie, ' [px] (korektaY: ' + korektaY 
+    pozycjaElementuWPionie = $(element).offset().top;
+    console.log('Ustalono, że element wywołania "' + element + '" ma pozycję Y ', pozycjaElementuWPionie, ' [px] (korektaY: ' + korektaY
                 + ', czasA: ' + czasAnimacji + ')');    
     $('html, body').animate( { scrollTop : (pozycjaElementuWPionie + korektaY) + 'px' }, czasAnimacji );  // dwa główne elementy dla zapewnienia kompatybilności
     }
 }   
 
-    
+
 function ZablokujPrzycisk ( przycisk )
 {
-//console.log('PRZYCISK:', przycisk);    
+//console.log('PRZYCISK:', przycisk);
 $( przycisk ).prop('disabled', true);
 }
 
-    
+
 function OdblokujPrzycisk ( przycisk )
 {
 $( przycisk ).prop('disabled', false);  // działanie OK, zamiast spodziewanego rezultatu poprzez: $.removeProperty('disabled');
 }
 
-    
-function OkreslPolozenieElementuJS ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
+
+function OkreslPolozenieElementuJS ( element )  // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top'
+{
 var pozycja = element.getBoundingClientRect();
     // debug do kasacji gdy OK
-    console.log('Element "' + element + '" ma X:' + ( parseInt( pozycja.left ) + parseInt( window.scrollX ) ) +  
-                ', Y:' + ( parseInt( pozycja.top ) + parseInt( window.scrollY ) ) );    
+    console.log('Element "' + element + '" ma X:' + ( parseInt( pozycja.left ) + parseInt( window.scrollX ) ) + 
+                ', Y:' + ( parseInt( pozycja.top ) + parseInt( window.scrollY ) ) );
 return { left: pozycja.left + window.scrollX,
          top: pozycja.top + window.scrollY };
-}    
+}
 
 
-function OkreslPolozenieElementu ( element ) { // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top' 
+function OkreslPolozenieElementu ( element )  // używanie jako bezpośrednie 'getOffset(element).left' lub 'getOffset(element).top'
+{
 var pozycja = $(element).offset();
     // debug do kasacji gdy OK
-    console.log('Element "', element, '" ma X:' + pozycja.left, ', Y:' + pozycja.top );    
+    console.log('Element "', element, '" ma X:' + pozycja.left, ', Y:' + pozycja.top );
 return { left: pozycja.left, top: pozycja.top };
-}    
-       
+}
 
-function OdkryjEmail ( element, adres, adresPokazywany, wariant )   // zrobić z atrybutów obiekt?! 
+
+function OdkryjEmail ( element, adres, adresPokazywany, wariant )   // zrobić z atrybutów obiekt?!
 {
     // wartości domyślne, aby nie wklepywać atrybutów
 element = element || $("#adres_email");
 adres = adres || 'zobaczwnuka' + String.fromCharCode(64) + 'em' + 'ail' + '.c' + 'om';   // takie tam rozbicie ze scaleniem dla szukaczy
-adresPokazywany = adresPokazywany || 'kontakt';     
-var adresEmail = 'ma' + 'ilt' + 'o:' + adres;  // tu już to rozdzielanie niepotrzebne, to nie jest parsowany plik html  
-$( element ).text( adresPokazywany ).attr( 'href', adresEmail ); 
+adresPokazywany = adresPokazywany || 'kontakt';
+var adresEmail = 'ma' + 'ilt' + 'o:' + adres;  // tu już to rozdzielanie niepotrzebne, to nie jest parsowany plik html
+$( element ).text( adresPokazywany ).attr( 'href', adresEmail );
 }   // OdkryjEmail-END
 
-    
-function AktualnyRozmiarOkna ( elementWyswietlajacy, poziomWidocznosci ) 
+
+function AktualnyRozmiarOkna ( elementWyswietlajacy, poziomWidocznosci )
 {
 var szerokoscOkna = $(window).outerWidth(true),
     wysokoscOkna = $(window).outerHeight(true);
 poziomWidocznosci = poziomWidocznosci || '0.7';
 
-    // zawartość w <h1> powinna otrzymać aktualny wymiar okna i go wyswietlić... warunek element powinien mieć specyficzną klasę, żeby nie wyświetlał 'X' przy wyłączonym JS! 
+    // zawartość w <h1> powinna otrzymać aktualny wymiar okna i go wyswietlić... warunek element powinien mieć specyficzną klasę, żeby nie wyświetlał 'X' przy wyłączonym JS!
     // nadać klasę ręcznie, czy z automatu ponownie przypisać na początku tej funkcji?
 
 $(elementWyswietlajacy + '> h1').text( szerokoscOkna + ' x ' + wysokoscOkna );  // najpierw nadanie aktualnej treści (rozmiaru X x Y)
@@ -2194,32 +2194,32 @@ $(elementWyswietlajacy + '> h1').text( szerokoscOkna + ' x ' + wysokoscOkna );  
 
     // taka parodia, ale chodzi o przerwanie aktualnie zanikającej animacji i uruchomienie jej od nowa
     // $(elementWyswietlajacy).hasClass('animacja-zanikanie').removeClass('animacja-zanikanie').addClass('animacja-zanikanie');
-    // istotny jest odstęp czasu pomiędzy zabraniem, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)    
+    // istotny jest odstęp czasu pomiędzy zabraniem, a ponownym dodaniem tej samej klasy (najlepiej z jakąś modyfikacją/odczytem DOM pomiędzy)
 $(elementWyswietlajacy).removeClass('animacja-zanikanie').height();    // pobierana jest na próżno wysokość, jako mechanizm nowego odwołania się do DOM
 
-$(elementWyswietlajacy).addClass('animacja-zanikanie');    
+$(elementWyswietlajacy).addClass('animacja-zanikanie');
 
 /*
-    if ( $( elementWyswietlajacy ).hasClass('animacja-zanikanie') ) 
+    if ( $( elementWyswietlajacy ).hasClass('animacja-zanikanie') )
     {
-    //$(elementWyswietlajacy).css({ animationName : '', animationDuration : '', animationTimingFunction : '' }); 
+    //$(elementWyswietlajacy).css({ animationName : '', animationDuration : '', animationTimingFunction : '' });
         //  $(elementWyswietlajacy).css({ animationPlayState : 'paused' }).width();
-        //  $(elementWyswietlajacy).css({ animationPlayState : 'running' });    
-    //$(elementWyswietlajacy).stop().removeClass('animacja-zanikanie').css({ animationName : '', animationDuration : '', animationTimingFunction : '', animationIterationCount : '0' }); 
-        //alert('W trakcie animacji');    
-    }  
+        //  $(elementWyswietlajacy).css({ animationPlayState : 'running' });
+    //$(elementWyswietlajacy).stop().removeClass('animacja-zanikanie').css({ animationName : '', animationDuration : '', animationTimingFunction : '', animationIterationCount : '0' });
+        //alert('W trakcie animacji');
+    }
     //if ( $(elementWyswietlajacy + ':animated') ) $(elementWyswietlajacy).stop().removeClass('animacja-zanikanie');
 */
 
 //$(elementWyswietlajacy).addClass('animacja-zanikanie');
-return szerokoscOkna;    
+return szerokoscOkna;   // zwraca wymiary, ale wcześniej wprost modyfikuje UI o te wartości
 }   // AktualnyRozmiarOkna-END
 
 
 function KonwertujNaLiczbe ( jakasWartosc )     // zwraca tę samą prawidłową wartośc liczbową lub 1 jeśli nie liczba (minimum używanych dalej zakresów)
 {
 var poKonwersji = parseInt( jakasWartosc, 10 );   // konwersja na liczbę o jawnie podanej podstawie dziesiętnej, a nie domysły JS odnośnie tej podstawy (8 vs 16 v 10)
-    if ( ( poKonwersji === undefined ) || ( isNaN( poKonwersji ) ) ) return 1;  // jako bezpieczna wartość, galeria MUSI mieć tę minimalną wartość 
+    if ( ( poKonwersji === undefined ) || ( isNaN( poKonwersji ) ) ) return 1;  // jako bezpieczna wartość, galeria MUSI mieć tę minimalną wartość
     else return poKonwersji;   // gdyby ktoś zmieniał wartości suwaka w locie na www
 }   // KonwertujNaLiczbe-END
 
@@ -2234,14 +2234,14 @@ var indeksZnalezionego = false;
         if ( g_niewyslane_podstrony[i].adresPelny.indexOf( adresZasobu ) != -1 ) // że odnaleziono cały adres z poszukiwanym fragmentem
         {
         indeksZnalezionego = i; // przypisanie indeksu z tabeli "nieobsłużonych" żądań
-        break;    
+        break;
         }
     }
     
     if ( indeksZnalezionego >= 0 )
     {
-    g_niewyslane_podstrony.splice( indeksZnalezionego, 1 ); // wyrzucenie z listy żądań oczekujących jednego, właśnie obsłużonego odnośnika     
-    return indeksZnalezionego;    
+    g_niewyslane_podstrony.splice( indeksZnalezionego, 1 ); // wyrzucenie z listy żądań oczekujących jednego, właśnie obsłużonego odnośnika
+    return indeksZnalezionego;
     }
 return false;
     
@@ -2250,69 +2250,70 @@ return false;
     )*/
     
 }   // UsunPobraneZadanie-END
-        
-    
-function PobierzPierwszeNieodebrane() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
-    if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[0];  // weryfikacja jest przed wywołaniem tej funkcji, ale nie zaszkodzi
-return false;    
-}    
-    
 
-function PobierzOstatnieNieodebrane() { // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+
+function PobierzPierwszeNieodebrane()   // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+{
+    if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[0];  // weryfikacja jest przed wywołaniem tej funkcji, ale nie zaszkodzi
+return false;
+}
+
+
+function PobierzOstatnieNieodebrane()   // jeżeli jest lista nieobsłużonych żądań, to pobierz z niej pierwszy obiekt
+{
     if ( g_niewyslane_podstrony.length > 0 ) return g_niewyslane_podstrony[g_niewyslane_podstrony.length-1];  // weryfikacja jest przed wywołaniem tej funkcji, ale dodatkowa nie zaszkodzi
-return false;    
-}       
-    
-    
+return false;
+}
+
+
 function UbijReklamy ()
 {   
-    // *** HOSTING webhost.com *** 
-    // 000webhost.com || 000webhostapp.com -- bezwarunkwe ubijanie (o ile jQuery przypasuje coś)
+    // *** HOSTING webhost.com ***
+    // 000webhost.com || 000webhostapp.com -- bezwarunkowe ubijanie (o ile jQuery przypasuje coś)
 $('a[href*=000webhost]').parent('div').remove();
-  
 
-    // *** HOSTING cba.pl *** 
+
+    // *** HOSTING cba.pl ***
     // cba.pl -- tu wstępnie warunkowo, ale i tak na jedno wychodzi poprzez jQuery (nieznalezionych nie usunie/zmieni/odczyta)
 var $cbaReklamaBig = $('center');
-    if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tę wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
+    if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tę wielgachną reklamę (szerszą niż ekran ewentualnego telefonu!)
     {
     $cbaReklamaBig.parent().prev().remove();    // wywal małą reklamę - pasek u góry (ewentualnie to może pozostać)
     $cbaReklamaBig.parent().remove();           // ale to wielgachne bezwzględnie wylatuje (sorry cba)
-        // console.log('Ubijam_CBA #1 - <center>'); 
+        // console.log('Ubijam_CBA #1 - <center>');
     }
 
-// PRZENIESIENIE małoinwazyjnej reklamy tekstowej z początku, na koniec witryny - lepsze to niż wywalenie tej treści hostingu (a regulamin ;) ) 
+// PRZENIESIENIE małoinwazyjnej reklamy tekstowej z początku, na koniec witryny - lepsze to niż wywalenie tej treści hostingu (a regulamin ;) )
 /*
  - tuż za <body> zaczynają się doklejone treści z hostingu
  - docelowo ma się znaleźć tuż przed </body>, ale ~PRZED~ ZA doklejanymi treściami na spodzie strony (ZA mniej się rzuca niż PRZED)
- - "troskliwie" zmieniono kolejnośc, by inny selektor nie usunął tych treści
+ - "troskliwie" zmieniono kolejność, by inny selektor nie usunął tych treści
  - UX: górna belka jest zbyt cenna dla głupot spoza serwisu!!!
 */
 var $reklamaDoPrzeniesieniaZGory = $('div[style]:first-child');
 var $reklamaDoklejonaNaDole = $('.cbalink');
 
-    if ( $reklamaDoPrzeniesieniaZGory && $reklamaDoklejonaNaDole )  // jeśli dopasowały się oba elementy do operowania... to przenieś ZA, czyli jako ostatni wyświetlany element 
+    if ( $reklamaDoPrzeniesieniaZGory && $reklamaDoklejonaNaDole )  // jeśli dopasowały się oba elementy do operowania... to przenieś ZA, czyli jako ostatni wyświetlany element
     {
         $reklamaDoklejonaNaDole.after( $reklamaDoPrzeniesieniaZGory );  // lepiej gdy jest ZA, niż PRZED; czarne tło lepiej wygląda na końcu, niż pomiędzy białymi
-        // console.log('zlokalizowana doklejona reklama, do przeniesienia z góry za stopkę strony:', $reklamaDoPrzeniesieniaZGory);
     }
-        // kolejna ewentualna reklama na CBA, co rozwala układ telefonu -- z uwagi na szerszy banner obrazkowy niż używaną rozdzielczość
-$cbaReklamaBig = $('img[usemap]');    
-    if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tą wielgachną reklamę (większą niż ekran ewentualnego telefonu!) 
+        // kolejna ewentualna reklama na CBA, co rozwala układ telefonu -- z uwagi na szerszy banner obrazkowy niż używaną wielkość/szerokość ekranu
+$cbaReklamaBig = $('img[usemap]');
+    if ( $cbaReklamaBig ) // jeżeli znaleziono to wywal pasek poprzedzający oraz tą wielgachną reklamę (szerszą niż ekran ewentualnego telefonu!)
     {
     // $cbaReklamaBig.sibling('map').remove();    // wywal opis odnośników do dużego bannera na górze, później właściwy obrazek
     $cbaReklamaBig.parent().remove();           // albo po prostu pogoń kontener nadrzędny z DOMu (div#top_10)
-        // console.log('Ubijam_CBA #2 - <img usemap>');     
+        // console.log('Ubijam_CBA #2 - <img usemap>');
     }
 
     /*
     UWAGA: poniższe jest BARDZO restrykcyjne, gdyż wywala JEDNĄ lub DWIE reklamy:
       - pierwsza z nich jest statycznym tekstem, stanowiącym początek widocznych treści witryny (małe literki i opis)... PRZENIESIONO NA SPÓD STRONY
-      - druga z nich to wyskakujacy banner z kłopotliwym zamykaniem 'x' na starych przeglądarkach bez flexboksa!-- co rozszrza stronę poza ekran!!
-        (do tego kłopotliwe zamykanie, "X" w prawym górnym rogu, pod suwakiem przewijania pionowego) 
-      - czasem ten banner łapie poprzednia definicja "usuwacza", ale często zostaje on nieusunięty (ALBO: usuwa go mechanim antyreklamowy przeglądarki!)
-      - ale obie są równożędnymi <div>ami, czyli RODZEŃSTWO, ale uciążliwy banner może być już usunięty wewnątrznie (przeglądarka lub plugin antyreklamowy)
-        lub poprzednimi instrukcjami, przez co dopasowanie może przejąć "małoinwazyjnego tekstu reklamowaego" i go wywalić (dlatego go PRZENIESIONO, zamiast kasować)    
+      - druga z nich to wyskakujacy banner z kłopotliwym zamykaniem 'x' na starych przeglądarkach bez flexboksa!-- co rozszerza stronę poza ekran!!
+        (do tego kłopotliwe zamykanie, "X" w prawym górnym rogu, pod suwakiem przewijania pionowego)
+      - czasem ten banner łapie poprzednia definicja "usuwacza", ale często zostaje on nieusunięty (ALBO: usuwa go mechanizm antyreklamowy przeglądarki!)
+      - ale obie są równorzędnymi <div>-ami, czyli RODZEŃSTWO, ale uciążliwy banner może być już usunięty wewnętrznie (przeglądarka lub plugin antyreklamowy)
+        lub poprzednimi instrukcjami, przez co dopasowanie może przejąć "małoinwazyjny tekst reklamowy" i go wywalić (dlatego go PRZENIESIONO, zamiast kasować)
     */
         // "aktualizacja antyreklamowna" na ostatni kwartał 2019 roku i później
 $cbaReklamaBig = $('.glowny-kontener').prev();  // jakiś poprzednik istniejącego kontenera dla całej witryny, który jest doklejany z automatu przez hosting cba.pl
@@ -2326,7 +2327,7 @@ $cbaReklamaBig = $('.glowny-kontener').prev();  // jakiś poprzednik istniejące
     ładowane z konkretnych adresów danego hostingu... ale wtedy należało by wydzielić blokowanie zawartości reklamowej i uruchamiać ją ZARAZ NA POCZĄTKU
      działania witryny (utworzyć nowe zdarzenia), by przechwycić i zablokować tworzenie nowych elementów, zwłaszcza doklejanych zewnętrznych <script> z określonego adresu;
     ...(+): takie działanie byłoby skuteczniejsze, też zapewaniałoby większą wydajność (nie trzeba kasować od razu czegoś, co przed chwilą utworzył skrypt),
-     ten warunek reakcji na konkretne działanie spowalnijące by nie musiał być wykonywany...
+     ten warunek reakcji na konkretne działanie spowalniające by nie musiał być wykonywany...
     ...(-): ale wymaga to lepszego podejścia do działania pod specyficzny hosting (a jego regulamin?!), ale (+) przy tym zyskujemy brak aktualizacji na reakcję na
         nowe/zmienione podejście do generowania treści reklamowych... TERMAT ZAPEWNE WRÓCI!   
 */
@@ -2338,43 +2339,38 @@ $cbaReklamaBig = $('.glowny-kontener').prev();  // jakiś poprzednik istniejące
     }
 
 
-    // *** HOSTING 5v.pl *** 
+    // *** HOSTING 5v.pl ***
 $('iframe').remove();	// obce i doklejone dodatki od hostingu na stronie
 
-$('#ads').remove();	// reklamy na górze, przed początkiem witryny 
+$('#ads').remove();	// reklamy na górze, przed początkiem witryny
 
 $('#ads_bottom_static').remove();	// reklamy z dołu, za treściami
 
 $('[class^=app_gdpr--]').remove();	// "menu konfiguracyjne dla reklam" przy pierwszej wizycie
 
-$('style').remove(); 	// !!! *OSTROŻNIE, OBOSIECZNE* !!! wlepione do heada - uruchomione na wstepie od razu wywala też wszystkie reklamy, ale nie da się przewjać w pionie witryny!
+$('style').remove(); 	// !!! *OSTROŻNIE, OBOSIECZNE* !!! wlepione do heada - uruchomione na wstępie od razu wywala też wszystkie reklamy, ale nie da się przewijać w pionie witryny!
 
-$('body').removeAttr('style'); // przywrócenie możliwosci przewijania, zablokowanego przez wstawiane reklamy 
+$('body').removeAttr('style'); // przywrócenie możliwości przewijania, zablokowanego przez wstawiane reklamy
 
 }   // UbijReklamy-END
-    
-// ---------- *** ----------  GRA -- POMOCNICZA OBSŁUGA  ---------- *** ----------     
 
+
+
+// ---------- *** ----------  GRA -- POMOCNICZA OBSŁUGA  ---------- *** ----------
     
-function LosujPlansze ( zakres ) 
+function LosujPlansze ( zakres )
 {
-    if ( !zakres ) zakres = 1;    
-var wylosowanyNr = Math.floor( Math.random() * zakres );    
-return wylosowanyNr;    
-}       
+    if ( !zakres ) zakres = 1;
+var wylosowanyNr = Math.floor( Math.random() * zakres );
+return wylosowanyNr;
+}
 
 
 function WybierzPlansze ( nrPlanszy )        // docelowo będzie ajax/api
-{   
-/* var tloSrc = '', // poszło w global
-    ileCzesci = 0,
-    nazwa = '',
-    nazwaSrc = '',
-    obrazki = []; */
+{
+    if ( !nrPlanszy ) nrPlanszy = 0;    // przydział startowy na sztywno w razie czego
     
-    if ( !nrPlanszy ) nrPlanszy = 0;    // przydział startowy na sztywno w razie czego 
-    
-    switch ( nrPlanszy ) 
+    switch ( nrPlanszy )
     {
      case 0:
         g_tloSrc = './grafiki/gra/autobus/autobus.png';
@@ -2385,41 +2381,38 @@ function WybierzPlansze ( nrPlanszy )        // docelowo będzie ajax/api
         var wysokoscTla = noweTlo.height;
         var szerokoscTla = noweTlo.width;
             // środkowanie względem kontenera 1090px x 700px
-        g_przesuniecieTlaX = String( ( $('#rysunek').width() - szerokoscTla ) / 2 ) + 'px';  
-        g_przesuniecieTlaY = String( ( $('#rysunek').height() - wysokoscTla ) / 2 ) + 'px'; 
-            
+        g_przesuniecieTlaX = String( ( $('#rysunek').width() - szerokoscTla ) / 2 ) + 'px';
+        g_przesuniecieTlaY = String( ( $('#rysunek').height() - wysokoscTla ) / 2 ) + 'px';
+        
             // wyświetlenie i centrowanie dopiero, gdy przeliczą się wymiary tego obrazka
-        $('div#rysunek').css({ 'backgroundImage': 'url(' + g_tloSrc + ')', 'backgroundRepeat' : 'no-repeat', 
-                           'backgroundPosition' : g_przesuniecieTlaX + ' ' + g_przesuniecieTlaY });    
-        // debug
-        var statusTla = '<p>Grafika \'' + noweTlo.src + '\' ma szerokość ' + szerokoscTla + ' i wysokość ' + wysokoscTla + '<br />'  
+        $('div#rysunek').css({ 'backgroundImage': 'url(' + g_tloSrc + ')', 'backgroundRepeat' : 'no-repeat', 'backgroundPosition' : g_przesuniecieTlaX + ' ' + g_przesuniecieTlaY });
+            // debug
+        var statusTla = '<p>Grafika \'' + noweTlo.src + '\' ma szerokość ' + szerokoscTla + ' i wysokość ' + wysokoscTla + '<br />' 
             + 'Przesunięcie wyśrodkowania to (' + g_przesuniecieTlaX + ', ' + g_przesuniecieTlaY + ').</p>';
-        $('#dolny_zasobnik').append(statusTla);    
+        $('#dolny_zasobnik').append(statusTla);
         };  // noweTlo.onload = function()-END
- 
-            
+
     // ...
             // tego oczywiście ma być więcej
-            
+
     }   // switch-( nrPlanszy )-END
-    //
 
 return { dx : g_przesuniecieTlaX, dy: g_przesuniecieTlaY };    // dobrze by było zwrócić jakąś tabelę rekordów lub cokolwiek...
-}   // WybierzPlansze-END    
+}   // WybierzPlansze-END
 
 
 function RozmiescCzesci ( nrPlanszy ) {         // TODO: refaktoryzacja - utworzyć każdy PNG poprzez jQuery dla wsparcia IE9
 g_nazwaPlanszy = 'Autobus';
 g_nazwaPlanszySciezka = './grafiki/gra/autobus/';
 g_ileCzesci = 10;
-g_nazwaElementu = 'cz_';    
+g_nazwaElementu = 'cz_';
 var przesuniecieX1 = 1110,
     przesuniecieY1 = -30,
-    przesuniecieX2 = 30,    // co drugi przestawiac pomiędzy kontenerami dla lepszej widoczności... w planach 
+    przesuniecieX2 = 30,    // co drugi przestawiac pomiędzy kontenerami dla lepszej widoczności... w planach
     przesuniecieY2 = 720,
     numerPliku;
-    
-    for ( var i=1; i <= g_ileCzesci; i++ ) 
+
+    for ( var i=1; i <= g_ileCzesci; i++ )
     {
         if ( i < 10 ) numerPliku = String( '0' + i );
         else numerPliku = String( i );
@@ -2433,7 +2426,7 @@ var przesuniecieX1 = 1110,
     var nowyObrazek = $('<img />', {
         src: g_nazwaPlanszySciezka + g_nazwaElementu + numerPliku + '.png',
         alt: numerPliku,
-        'class': 'przenosny',    // z "classList.add()" mają problemy IE do 9 włącznie! jQuery?        
+        'class': 'przenosny',    // z "classList.add()" mają problemy IE do 9 włącznie! jQuery?
         css: {      // tu zdefiniowane wzorcowo wszystkie style w jednym miejscu (inline)
             left: String( przesuniecieX1 ) + 'px',
             top: String( przesuniecieY1 ) + 'px',
@@ -2443,13 +2436,13 @@ var przesuniecieX1 = 1110,
         'draggable': true
     });     //było "new Image();", teraz jQ tworzy i parametryzuje od razu
 
-    $('#plansza').append( nowyObrazek );    
+    $('#plansza').append( nowyObrazek );
 
     }   // for-END
-}   // RozmiescCzesci-END    
+}   // RozmiescCzesci-END
 
-    
-function RozmiescCzesciWzorcowo () 
+
+function RozmiescCzesciWzorcowo ()
 {
 var fragmenty = $('#plansza img.przenosny');
 var ileFragmentow = fragmenty.length;
@@ -2457,24 +2450,24 @@ var ileFragmentow = fragmenty.length;
     // to skopiowane z funkcji powyżej - docelowo przydzielić to jako parametry/podfunkcje, by nie kopiowac dalszej treści
 var przesuniecieX1 = 1110,
     przesuniecieY1 = -30,
-    przesuniecieX2 = 30,  
-    przesuniecieY2 = 720;    
+    przesuniecieX2 = 30,
+    przesuniecieY2 = 720;
     
     for (var i = 0 ; i < ileFragmentow ; i++ )
     {
-    $( fragmenty[i] ).css({outlineColor: '', outlineStyle: ''}); 
+    $( fragmenty[i] ).css({outlineColor: '', outlineStyle: ''});
         // kasować resztę dodanych atrybutów dla czystego zerowania, czy pozostawić je do nadpisania?
-        
+    
         if ( !( i % 2 ) ) przesuniecieX1 += 80;
         else przesuniecieX1 -= 80;
     fragmenty[i].style.left = String( przesuniecieX1 ) + 'px';
     przesuniecieY1 += 50;
     fragmenty[i].style.top = String( przesuniecieY1 ) + 'px';
-    fragmenty[i].style.zIndex = 100 + i;     
+    fragmenty[i].style.zIndex = 100 + i;
     }
 }   // RozmiescCzesciWzorcowo-END
 
-    
+
 function UsunCzesci () {
  $('#plansza img.przenosny').remove();
 }
@@ -2482,49 +2475,50 @@ function UsunCzesci () {
 
 function PoczatekRuchuPrzeciagania ( e )  // 'dragstart'
 {
-e = e || window.event;    
+e = e || window.event;
 g_ktoraGrafika = e.target;
     //this.style.opacity = '0.9';
-g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach 
+g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach
 g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // zachowywanie obu położeń początkowych
-    
-ResetujZIndexWszystkim();    
+
+ResetujZIndexWszystkim();
     var pionowosc = g_ktoraGrafika.style.zIndex;
-    if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
-    // poruszany wyskakuje przed szereg podczas wyciągania co najwużej kilka razy i tak już zostaje... 
+    if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;
+    // poruszany wyskakuje przed szereg podczas wyciągania co najwyżej kilka razy i tak już zostaje...
     // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
 console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
                 ', e.offsetY:', e.offsetY,')]');
 
 }   // PoczatekRuchuPrzeciagania-END
-    
-    
+
+
 function RuchUpuszczania ( e )    // 'drop'
 {
 e = e || window.event;
-    
-var scena = document.querySelector('#rysunek'); 
+
+var scena = document.querySelector('#rysunek');
 var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
-//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
+//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszcza taki, który nie może być kontenerem, czyli <img> w <img>! )
 /* g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
 g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px'; */
-g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';    
-g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';    
-    
+g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';
+g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';
+
 console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
             ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
-console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
+console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");
 e.preventDefault(); // przestawione z góry
 return false;
 }   // RuchUpuszczania-END
 
 
-function RuchPrzeciagania ( e ) { // 'dragover'
+function RuchPrzeciagania ( e )     // 'dragover'
+{
 e = e || window.event;
-e.preventDefault();     // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elemntu
+e.preventDefault();     // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i przenoszenia elemntu
     // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
-return false;   // dodane    
-}   // RuchPrzeciagania    
+return false;   // dodane
+}   // RuchPrzeciagania
 
 
 function ResetujZIndexWszystkim ()
@@ -2536,7 +2530,7 @@ var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpo
     }
 }
  
-    // archaiczne połączneie z htmlem ... do wywalenie obie poniższe funkcje
+    // archaiczne połączeneie z htmlem ... do wywalenie obie poniższe funkcje
         function dragover_handler(ev) {
          ev.preventDefault();
          // Set the dropEffect to move
@@ -2548,185 +2542,184 @@ var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpo
          // Get the id of the target and add the moved element to the target's DOM
         /* var data = ev.dataTransfer.getData("text");
          ev.target.appendChild(document.getElementById(data));*/
-        }    
+        }
 
     
-function InicjalizujGre () 
+function InicjalizujGre ()
 {
 var nrPlanszy = LosujPlansze(); // póki co na pusto
 // console.log('Wylosowano nr planszy: ', nrPlanszy);    
 var przesuniecie = WybierzPlansze( nrPlanszy );     // od razu zwrot, choć on już wstawiony do zmiennych globalnych
-  
+
 RozmiescCzesci( nrPlanszy );
-    
+
 }   // InicjalizujGre-END
-    
-    
+
+
+
 // ---------- *** ----------  GRA W PRZECIĄGANIE ELEMENTÓW v.0.9 #1  ---------- *** ----------
-    
-var Przeciaganie = ( function() {
-    
-function PoczatekRuchuPrzeciaganiaJS ( e )  // 'dragstart'
-{
-//e = e || window.event;    
-g_ktoraGrafika = e.target;      // !!! wpisanie namiarów na przeciagany element, który będzie dalej używany w kolejnych zdarzeniach 
-    //this.style.opacity = '0.9';
-g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // róznica odległoścvi pomiedzy kliknięciem, a początkiem klikniętego elementu  
-g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach
-   // pobranie pozycji "globalnej" danego elementu - ofsetu
-var pozycjaElementu = OkreslPolozenieElementu ( e.target );
-e.target.setAttribute( 'data-offset_x', e.target.style.left );
-e.target.setAttribute( 'data-offset_y', e.target.style.top );
-e.target.setAttribute( 'data-mysz_pocz_x', e.pageX );
-e.target.setAttribute( 'data-mysz_pocz_y', e.pageY );    
 
-ResetujZIndexWszystkimJS();    
-    var pionowosc = g_ktoraGrafika.style.zIndex;
-    if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
-    // poruszany wyskakuje przed szereg podczas wyciągania co najwużej kilka razy i tak już zostaje... 
-    // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
-console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
-            ', e.offsetY:', e.offsetY,')], zaś globalnie to (', pozycjaElementu.left, ', ', pozycjaElementu.top, 
-            '), MYSZ (', e.pageX, ',' , e.pageY, ' )', 'ELEMENT (', e.target.style.left, ',' , e.target.style.top, ' )' );
-} // PoczatekRuchuPrzeciaganiaJS-END
 
-    
-function RuchPrzeciaganiaJS ( e )    // 'dragover'
+var Przeciaganie = ( function()     // i tak autostart tej funkcji i jej podległych podpiętych funkcji obsługi zdarzeń
 {
-//e = e || window.event;
-   // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i pzrenoszenia elementu
-    // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
-    g_ktoraGrafika.style.opacity = 0.5;
-    g_ktoraGrafika.style.outlineColor = "#d00";
-    
-e.preventDefault();      
-return false;   // dodane    
-} // RuchPrzeciaganiaJS-END       
-    
-    
-function RuchUpuszczaniaJS ( e )  // 'drop'
-{
-//e = e || window.event;
- // przestawione znów do góry    
-var scena = document.querySelector('#rysunek'); 
-var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
-//e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli <img> w <img>! )
-//g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
-//g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px';    
-/*g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';    
-g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px';*/  
-//g_ktoraGrafika.style.left = e.pageX - e.target.getAttribute( 'data-mysz_pocz_x' ) - polozenieTla.left + parseInt( g_przesuniecieTlaX ) - g_mojX + 'px';    
-//g_ktoraGrafika.style.top = e.pageY - e.target.getAttribute( 'data-mysz_pocz_y' ) - polozenieTla.top + parseInt( g_przesuniecieTlaY ) - g_mojY + 'px';    
 
-//g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + g_mojX + 'px';    
-//g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + g_mojY + 'px';    
-g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + 'px';    // o dziwo dwie poniższe linie są wierniejsze ułożeniu finalnemu?!
-g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + 'px';      // tu też?!
-
-g_ktoraGrafika.style.outlineStyle = "solid";    
-g_ktoraGrafika.style.outlineColor = "#00d"; 
-g_ktoraGrafika.style.opacity = 1;
-    
-/*g_ktoraGrafika.style.left = 200 + 'px';    
-g_ktoraGrafika.style.top = 100 + 'px';  */
-    
-console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
-            ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
-console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");    
-e.preventDefault();
-return false;
-} // RuchUpuszczaniaJS-END
-    
-    
-function ResetujZIndexWszystkimJS ()
-{
-var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
-    for ( var i = elementy.length-1 ; i >= 0 ; i-- )
+    function PoczatekRuchuPrzeciaganiaJS ( e )  // 'dragstart'
     {
-    elementy[i].style.zIndex = 20;  // ustawianie z-indeksu na wartość wzorcową (różnica pomiędzy początkiem)
-    }
-} // ResetujZIndexWszystkimJS-END   
+        // e = e || window.event;
+    g_ktoraGrafika = e.target;      // !!! wpisanie namiarów na przeciagany element, który będzie dalej używany w kolejnych zdarzeniach
+        // this.style.opacity = '0.9';
+    g_mojX = e.offsetX === undefined ? e.layerX : e.offsetX ;   // róznica odległoścvi pomiedzy kliknięciem, a początkiem klikniętego elementu
+    g_mojY= e.offsetY === undefined ? e.layerY : e.offsetY ;    // jakoby Firefox był nadal oporny i te współrzędne na przekór trzyma w innych atrybutach
+        // pobranie pozycji "globalnej" danego elementu-ofsetu
+    var pozycjaElementu = OkreslPolozenieElementu ( e.target );
+    e.target.setAttribute( 'data-offset_x', e.target.style.left );
+    e.target.setAttribute( 'data-offset_y', e.target.style.top );
+    e.target.setAttribute( 'data-mysz_pocz_x', e.pageX );
+    e.target.setAttribute( 'data-mysz_pocz_y', e.pageY );
 
-    
-function PoczatekDotykuJS ( e ) 
-{
-e.preventDefault(); // zapobieganie przewijaniu ekranu przy dotyku elementów przesuwnych    
-var ktoraGrafika = e.target;    // wewnątrzna zmienna o tym samym znaczniu
-var dotykJednopalczasty = e.touches[0]; // tablica dla pierwszej "operacji jednopalcowej", czyli gestów z jednym naciskiem palca
-var ruchOsX = ktoraGrafika.offsetLeft - dotykJednopalczasty.pageX;  
-var ruchOsY = ktoraGrafika.offsetTop - dotykJednopalczasty.pageY;     
-ResetujZIndexWszystkimJS();
-ktoraGrafika.style.zIndex = 200;    
-//debug
-console.log('Dotyk ekranu');    
-    
-    
-//od razu podpięcie do obiektu poruszanego kolejnego zdarzenia (podległość)
-ktoraGrafika.addEventListener('touchmove', function() {
+    ResetujZIndexWszystkimJS();    
+        var pionowosc = g_ktoraGrafika.style.zIndex;
+        if ( ( pionowosc > 100 ) && ( pionowosc < 1000 ) ) g_ktoraGrafika.style.zIndex = parseInt( g_ktoraGrafika.style.zIndex ) + 100;    
+        // poruszany wyskakuje przed szereg podczas wyciągania co najwyżej kilka razy i tak już zostaje... 
+        // ...w ramach tego działania (ale może zostać przykryty częsciowo przez sąsiedni element)
+    console.log('Podczas przeciągania: g_mojX:', g_mojX, ' [ (e.layerX:', e.layerX, ', e.offsetX:', e.offsetX,'), (g_mojY:', g_mojY, ' (e.layerY:', e.layerY,
+                ', e.offsetY:', e.offsetY,')], zaś globalnie to (', pozycjaElementu.left, ', ', pozycjaElementu.top, 
+                '), MYSZ (', e.pageX, ',' , e.pageY, ' )', 'ELEMENT (', e.target.style.left, ',' , e.target.style.top, ' )' );
+    } // PoczatekRuchuPrzeciaganiaJS-END
+
+
+    function RuchPrzeciaganiaJS ( e )    // 'dragover'
+    {
+    // e = e || window.event;
+    // wszelkie dziwne działania, które mogą wyniknąć podczas chwytania i przenoszenia elementu
+        // w zasadzie "nicnierobienie();" o ile można wszelkie działania 'dragover' przeglądarek tym olać
+        g_ktoraGrafika.style.opacity = 0.5;
+        g_ktoraGrafika.style.outlineColor = "#d00";
+
+    e.preventDefault();
+    return false;   // dodane
+    } // RuchPrzeciaganiaJS-END
+
+
+    function RuchUpuszczaniaJS ( e )  // 'drop'
+    {
+    //e = e || window.event;
+    // przestawione znów do góry
+    var scena = document.querySelector('#rysunek');
+    var polozenieTla = OkreslPolozenieElementu( scena );    // dostaję { top, left }
+    // e.preventDefault(); // bez interpretacji i przetwarzania, gdy przeciągamy element w inny element (zwłaszca taki, który nie może być kontenerem, czyli np. <img> w <img>! )
+    // g_ktoraGrafika.style.left = parseInt( e.pageX - g_mojX ) + 'px'; // od współrzędnych globalnych odejmij wcześniejsze położenie elementu ... i nic się nie dzieje
+    // g_ktoraGrafika.style.top = parseInt( e.pageY - g_mojY ) + 'px';
+    /* g_ktoraGrafika.style.left = parseInt( e.pageX - polozenieTla.left + g_przesuniecieTlaX - g_mojX ) + 'px';
+    g_ktoraGrafika.style.top = parseInt( e.pageY - polozenieTla.top + g_przesuniecieTlaY - g_mojY ) + 'px'; */
+    // g_ktoraGrafika.style.left = e.pageX - e.target.getAttribute( 'data-mysz_pocz_x' ) - polozenieTla.left + parseInt( g_przesuniecieTlaX ) - g_mojX + 'px';
+    // g_ktoraGrafika.style.top = e.pageY - e.target.getAttribute( 'data-mysz_pocz_y' ) - polozenieTla.top + parseInt( g_przesuniecieTlaY ) - g_mojY + 'px';
+
+    // g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + g_mojX + 'px';
+    // g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + g_mojY + 'px';
+    g_ktoraGrafika.style.left = e.pageX - polozenieTla.left - parseInt( g_przesuniecieTlaX ) + 'px';    // o dziwo dwie poniższe linie są wierniejsze ułożeniu finalnemu?!
+    g_ktoraGrafika.style.top = e.pageY - polozenieTla.top - parseInt( g_przesuniecieTlaY ) + 'px';      // tu też?!
+
+    g_ktoraGrafika.style.outlineStyle = "solid";
+    g_ktoraGrafika.style.outlineColor = "#00d";
+    g_ktoraGrafika.style.opacity = 1;
+
+    /* g_ktoraGrafika.style.left = 200 + 'px';
+    g_ktoraGrafika.style.top = 100 + 'px'; */
+
+    console.log("Przeciąganie! e.pageX: ", e.pageX, ", g_mojX:", g_mojX, ", położenieTła.left:", polozenieTla.left, ", g_przesunięcieTłaX:", g_przesuniecieTlaX, 
+                ", e.pageY:", e.pageY, ", g_mojY:", g_mojY, ", położenieTła.top:", polozenieTla.top,", g_przesunięcieTłaY:", g_przesuniecieTlaY );
+    console.log("Docelowy element ma mieć zatem (", g_ktoraGrafika.style.left, ", " ,g_ktoraGrafika.style.top, ").");
+    e.preventDefault();
+    return false;
+    } // RuchUpuszczaniaJS-END
+
+
+    function ResetujZIndexWszystkimJS ()
+    {
+    var elementy = document.querySelectorAll('img.przenosny');  // manipulacja bezpośrednio w JS (DOMie)
+        for ( var i = elementy.length-1 ; i >= 0 ; i-- )
+        {
+        elementy[i].style.zIndex = 20;  // ustawianie z-indeksu na wartość wzorcową (różnica pomiędzy początkiem)
+        }
+    } // ResetujZIndexWszystkimJS-END
+
+
+    function PoczatekDotykuJS ( e )
+    {
+    e.preventDefault(); // zapobieganie przewijaniu ekranu przy dotyku elementów przesuwnych
+    var ktoraGrafika = e.target;    // wewnątrzna zmienna o tym samym znaczniu
+    var dotykJednopalczasty = e.touches[0]; // tablica dla pierwszej "operacji jednopalcowej", czyli gestów z jednym naciskiem palca
+    var ruchOsX = ktoraGrafika.offsetLeft - dotykJednopalczasty.pageX;
+    var ruchOsY = ktoraGrafika.offsetTop - dotykJednopalczasty.pageY;
+    ResetujZIndexWszystkimJS();
+    ktoraGrafika.style.zIndex = 200;
     //debug
-console.log('Dotyk ekranu - przeciąganie elementu');    
-    var pozycjaX = dotykJednopalczasty.pageX + ruchOsX;
-    var pozycjaY = dotykJednopalczasty.pageY + ruchOsY;
-    
-    // pozycjonowanie elementu do poruszania
-    ktoraGrafika.style.left = pozycjaX + 'px';
-    ktoraGrafika.style.top = pozycjaY + 'px';
-}, false); // jako 'bublowanie'    
-} // PoczatekDotykuJS-END
-    
-    
-function KlikniecieObrazkaJS ( e ) 
-{
-e.target.style.zIndex = e.target.style.zIndex + 1;
-}  
-    
+    console.log('Dotyk ekranu');
+
+    //od razu podpięcie do obiektu poruszanego kolejnego zdarzenia (podległość)
+        ktoraGrafika.addEventListener('touchmove', function ()
+        {
+            //debug
+        console.log('Dotyk ekranu - przeciąganie elementu');
+        var pozycjaX = dotykJednopalczasty.pageX + ruchOsX;
+        var pozycjaY = dotykJednopalczasty.pageY + ruchOsY;
+        
+            // pozycjonowanie elementu do poruszania
+        ktoraGrafika.style.left = pozycjaX + 'px';
+        ktoraGrafika.style.top = pozycjaY + 'px';
+        }, false); // jako 'bublowanie'
+    } // PoczatekDotykuJS-END
+
+
+    function KlikniecieObrazkaJS ( e )
+    {
+    e.target.style.zIndex = e.target.style.zIndex + 1;
+    }
+
 document.querySelector('#gra').addEventListener('dragstart', PoczatekRuchuPrzeciaganiaJS, false );
 document.querySelector('#gra').addEventListener('dragover', RuchPrzeciaganiaJS, false );
 document.querySelector('#gra').addEventListener('drop', RuchUpuszczaniaJS, false );
 
 document.querySelector('#gra').addEventListener('touchstart', PoczatekDotykuJS, false );
-    
-/*var obrazki = document.querySelectorAll('img.przenosny');
-    obrazki.forEach( function ( obrazek ) {
-    obrazek.addEventListener('click', KlikniecieObrazkaJS, false );    
-    });*/
 
-    
+/* var obrazki = document.querySelectorAll('img.przenosny');
+    obrazki.forEach( function ( obrazek ) {
+    obrazek.addEventListener('click', KlikniecieObrazkaJS, false );
+    }); */
+
 })();   // Przeciaganie-END   
-    
-    
-    
-    
-// ---------- *** ----------  FUNKCJE ZDARZENIOWE - GLOBALNE  ---------- *** --------------	    
-    
-    
-$(window).on('resize', function() {
-    
+
+
+
+// ---------- *** ----------  FUNKCJE ZDARZENIOWE - GLOBALNE  ---------- *** --------------
+
+
+$(window).on('resize', function ()
+{
 var szeroskoscOkna = AktualnyRozmiarOkna('#wymiary');
-    // ... tez można coś z tą wartościa zrobić prócz samego wyświetlenia  
+    // ... też można coś z tą wartościa zrobić prócz samego wyświetlenia
     
     // warunkowe ukrywanie elementu z grą, gdy najpierw naciśnięto "Zagraj" -- element posiada style INLINE, których nie nadpisuje standardowy CSS w @media
-    /*  if ( szeroskoscOkna < 1300 ) 
-    {
-    $('#gra').hide();
-    }   */
+    /*  if ( szeroskoscOkna < 1300 ) $('#gra').hide(); */
     
 }); // $(window).on('resize')-END
-    
-    
-$(document).on("keypress", function( evt ) {    // warunkowanie globalne WYŁĄCZENIA względem naciśnięcia klawisza 
+
+
+$(document).on("keypress", function ( evt )    // warunkowanie globalne WYŁĄCZENIA względem naciśnięcia klawisza
+{
 var elementZdarzenia = evt.target.tagName.toLowerCase();    // określenie rodzaju elementu
 console.log('KLAWISZ: ', evt);
-console.info('Element zdarzenia to ', elementZdarzenia);    
+console.info('Element zdarzenia to ', elementZdarzenia);
 var nawigacjaKlawiaturowa = evt.originalEvent ? evt.originalEvent.keyCode : evt.keyCode,
     czyAlt = evt.originalEvent ? evt.originalEvent.altKey : evt.altKey;
-    
+
     if ( ( nawigacjaKlawiaturowa == 39 ) && ( czyAlt ) ) evt.preventDefault(); // GLOBALNIE: [->] + [Alt] -- nadrzędnie względem przeglądarki Firefox, IE nie słucha się
     if ( ( nawigacjaKlawiaturowa == 37 ) && ( czyAlt ) ) evt.preventDefault(); // GLOBALNIE: [<-] + [Alt] -- nadrzędnie względem przeglądarki Firefox, IE nie słucha się
     
-    if ( ( elementZdarzenia.indexOf('input') < 0 ) || ( elementZdarzenia.indexOf('textarea') < 0 ) )   // ma NIE OBWIĄZYWAĆ wewnątrz pól <input> czy innych ewentulanych TEXTAREA 
+    if ( ( elementZdarzenia.indexOf('input') < 0 ) || ( elementZdarzenia.indexOf('textarea') < 0 ) )   // ma NIE OBWIĄZYWAĆ wewnątrz pól <input> czy innych ewentulanych TEXTAREA
     {
-    //console.log('KLAWISZE: ', evt); 
+    //console.log('KLAWISZE: ', evt);
 
         if ( evt.which == 8) evt.preventDefault();  // [BackSpace] - brak reakcji na niego poza polem wpisywania
     }
@@ -2735,90 +2728,98 @@ var nawigacjaKlawiaturowa = evt.originalEvent ? evt.originalEvent.keyCode : evt.
         if ( ( evt.which == 13 ) || ( evt.which == 32 ) ) alert("KLAWISZ [Spacji] lub [Entera] w <a>");
         // evt.preventDefault();
     }*/
-}); // $(document).on('keypress')-END    
+}); // $(document).on('keypress')-END
 
 
-$('#glowna').on("click keypress", "a", function ( e ) {  // kasowanie FOCUSU przy kliknięciu w obrazek dla LIGHTBOXa oraz aktywacji spacją
-    
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]    
+$('#glowna').on("click keypress", "a", function ( e )   // kasowanie FOCUSU przy kliknięciu w obrazek dla LIGHTBOXa oraz aktywacji spacją
+{    
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po ewentualnym kliknięciu
 
-        if ( e.which == 32 ) 
+        if ( e.which == 32 )
         {
         e.preventDefault(); // blokowanie przewijania ekranu spacją oraz aktywacja elementu - symulacja klieknięcia
         $(this).click();    // sztuczne kliknięcie myszą na tym samym elemencie - przekierowanie do tego samego zdarzenia (+ kasacja obrysu)
         }
-    }    
+    }
 }); // $('#glowna').on('click keypress')-END
     
     
 // ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI, ODNOŚNIKI, ELEMENTY, ...  ---------- *** --------------	
 	
 
-$('#odswiez').click(function() {
-    location.reload();
+$('#odswiez').click( function ()
+{
+ location.reload();
 });	
 
     
-$('#poco_button').click( function() {
- $('#poco').toggle(200);	
+$('#poco_button').click( function ()
+{
+ $('#poco').toggle(200);
 });
 
     
-$('#pomoc_button').click( function() {
- $('#pomoc').toggle(200);	
+$('#pomoc_button').click( function ()
+{
+ $('#pomoc').toggle(200);
 });
 
-    
-$('#symulacja_button').click( function() {
- $('#odpluskwiacz_ajaksowy').fadeToggle(200);	
-});    
-    
-	
-$('#losuj_zakres').click( function() {
+
+$('#symulacja_button').click( function ()
+{
+ $('#odpluskwiacz_ajaksowy').fadeToggle(200);
+});
+
+
+$('#losuj_zakres').click( function ()
+{
     if ( g_ilosc_wszystkich_galerii > 0 )
     {
-        g_wybrany_nr_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_galerii ) + 1 ; 
+    g_wybrany_nr_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_galerii ) + 1 ;
 
         //ustawienie wartości w polu tekstowym i suwaku
-        $g_input_nr_galerii.val( g_wybrany_nr_galerii );
-        $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );
+    $g_input_nr_galerii.val( g_wybrany_nr_galerii );
+    $g_suwak_nr_galerii.val( g_wybrany_nr_galerii );
     }
-}); // #losuj_zakres click-END	
+}); // #losuj_zakres click-END
 
-    
-$('#losuj_zakres_podstrony').click( function() {
+
+$('#losuj_zakres_podstrony').click( function ()
+{
     if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
     {
-        g_wybrany_nr_podstrony_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_paginacji_galerii ) + 1 ; 
+    g_wybrany_nr_podstrony_galerii = Math.floor( Math.random() * g_ilosc_wszystkich_paginacji_galerii ) + 1 ;
+
         //ustawienie pola tekstowego i suwaka wygenerowaną wartością
-        $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
-        $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+    $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
+    $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
     }
-}); // #losuj_zakres_podstrony click-END	
-        
+}); // #losuj_zakres_podstrony click-END
 
-$g_suwak_nr_galerii.change( function() {
 
-g_wybrany_nr_galerii = KonwertujNaLiczbe ( $(this).val() );  // trzy przypisania!!! PODANA_WARTOŚĆ lub 1 (MINimum) dla błędnych wpisów! 
-                                                             // dodatkowa weryfikacja, nawet gdyby ktoś edytował wartości suwaka 
+$g_suwak_nr_galerii.change( function ()
+{
+g_wybrany_nr_galerii = KonwertujNaLiczbe ( $(this).val() );  // trzy przypisania!!! PODANA_WARTOŚĆ lub 1 (MINimum) dla błędnych wpisów!
+                                                             // dodatkowa weryfikacja, nawet gdyby ktoś edytował wartości suwaka
 $g_input_nr_galerii.val( g_wybrany_nr_galerii );
 });	
 
 
-$g_suwak_nr_podstrony_galerii.change( function() {
-
-g_wybrany_nr_podstrony_galerii = KonwertujNaLiczbe ( $(this).val() );  // też trzy przypisania!!! PODANA_WARTOŚĆ lub 1 (MINimum) dla błędnych wpisów!    
+$g_suwak_nr_podstrony_galerii.change( function ()
+{
+g_wybrany_nr_podstrony_galerii = KonwertujNaLiczbe ( $(this).val() );  // też trzy przypisania!!! PODANA_WARTOŚĆ lub 1 (MINimum) dla błędnych wpisów!
     
 $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
 });	
     
     
-$('#wybrany_nr_zwieksz').click( function() {
+$('#wybrany_nr_zwieksz').click( function ()
+{
     if ( ( g_ilosc_wszystkich_galerii > 0 ) && ( g_wybrany_nr_galerii > 0 ) )  // dodatkowe sprawdzenie, w razie przeoczenia lub usunięcia wcześniejszego: g_wybrany_nr_galerii = g_ilosc_wszystkich_galerii (ewentualnie, gdyby wybrać to jako pierwsze)  
     {  
-        if ( g_wybrany_nr_galerii < g_ilosc_wszystkich_galerii ) 
+        if ( g_wybrany_nr_galerii < g_ilosc_wszystkich_galerii )
         {
         g_wybrany_nr_galerii++;
         $g_input_nr_galerii.val( g_wybrany_nr_galerii );
@@ -2828,10 +2829,11 @@ $('#wybrany_nr_zwieksz').click( function() {
 }); //  #wybrany_nr_zwieksz click-END
 
 
-$('#wybrany_nr_zmniejsz').click( function() {
+$('#wybrany_nr_zmniejsz').click( function ()
+{
     if ( g_ilosc_wszystkich_galerii > 0 )
     {
-        if ( g_wybrany_nr_galerii > 1 ) 
+        if ( g_wybrany_nr_galerii > 1 )
         {
         g_wybrany_nr_galerii--;
         $g_input_nr_galerii.val( g_wybrany_nr_galerii );
@@ -2840,11 +2842,12 @@ $('#wybrany_nr_zmniejsz').click( function() {
     }
 }); //  #wybrany_nr_zmniejsz click-END
 
-    
-$('#wybrany_nr_podstrony_zwieksz').click( function() {
-    if ( ( g_ilosc_wszystkich_paginacji_galerii > 0 ) && ( g_wybrany_nr_podstrony_galerii > 0 ) )  // dodatkowe sprawdzenie  
+
+$('#wybrany_nr_podstrony_zwieksz').click( function ()
+{
+    if ( ( g_ilosc_wszystkich_paginacji_galerii > 0 ) && ( g_wybrany_nr_podstrony_galerii > 0 ) )  // dodatkowe sprawdzenie
     {  
-        if ( g_wybrany_nr_podstrony_galerii < g_ilosc_wszystkich_paginacji_galerii ) 
+        if ( g_wybrany_nr_podstrony_galerii < g_ilosc_wszystkich_paginacji_galerii )
         {
         g_wybrany_nr_podstrony_galerii++;
         $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
@@ -2853,43 +2856,44 @@ $('#wybrany_nr_podstrony_zwieksz').click( function() {
     }
 }); //  #wybrany_nr_podstrony_zwieksz click-END
 
-    
-$('#wybrany_nr_podstrony_zmniejsz').click( function() {
+
+$('#wybrany_nr_podstrony_zmniejsz').click( function ()
+{
     if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
     {
-        if ( g_wybrany_nr_podstrony_galerii > 1 ) 
+        if ( g_wybrany_nr_podstrony_galerii > 1 )
         {
         g_wybrany_nr_podstrony_galerii--;
         $g_input_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
         $g_suwak_nr_podstrony_galerii.val( g_wybrany_nr_podstrony_galerii );
         }
     }
-}); //  #wybrany_nr_zmniejsz click-END    
-    
-    
-$('#galeria_wybrany_nr').blur( function() {
-    
-var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );     
-wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca );  // dodatkowa weryfikacja zakresu, ale zawsze z 1 jako błędną ewentualnością na WE 
+}); //  #wybrany_nr_zmniejsz click-END
+
+
+$('#galeria_wybrany_nr').blur( function ()
+{
+var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );
+wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca );  // dodatkowa weryfikacja zakresu, ale zawsze z 1 jako błędną ewentualnością na WE
 
 g_wybrany_nr_galerii = wartoscBiezaca;      // przypisania poprawnej wartości zakresu dla numeru wybranej galerii
 $(this).val( wartoscBiezaca );
 $g_suwak_nr_galerii.val( wartoscBiezaca );
 });
-    
 
-$('#podstrona_wybrany_nr').blur( function() {
-    
-var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );     // na wzór nr_galerii; dodatkowa weryfikacja zakresów, ale zawsze z 1 jako błędną ewentualnością na WE 
-wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca, 'wybórPodstrony' );    
+
+$('#podstrona_wybrany_nr').blur( function ()
+{
+var wartoscBiezaca = KonwertujNaLiczbe( $(this).val() );     // na wzór nr_galerii; dodatkowa weryfikacja zakresów, ale zawsze z 1 jako błędną ewentualnością na WE
+wartoscBiezaca = NormalizujZakresPolaInput( wartoscBiezaca, 'wybórPodstrony' );
 
 g_wybrany_nr_podstrony_galerii = wartoscBiezaca;    // przypisania poprawnej wartości zakresu dla numeru wybranej podstrony galerii
 $(this).val( wartoscBiezaca );
 $g_suwak_nr_podstrony_galerii.val( wartoscBiezaca );
 });
-    
-    
-$('#suwak_galerii_submit').click( function( evt ) 
+
+
+$('#suwak_galerii_submit').click( function ( evt )
 {
 evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     if ( g_ilosc_wszystkich_galerii > 0 )
@@ -2897,56 +2901,57 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     var tagDocelowyDoZaczytania = 'div#skladowisko_status_wybranej_galerii';
     var wartoscPolaNumerycznego = KonwertujNaLiczbe( $g_input_nr_galerii.val() );   // weryfikacja wartośći liczbowej, WARTOŚĆ_POLA lub 1 dla nieliczbowych wartości
     var wybranyNrGalerii = NormalizujZakresPolaInput( wartoscPolaNumerycznego ); // odczytanie z formularza PO_KONWERSJI_NA_10 + weryfikacja zakresu
-    // obliczenie pozycji w ramach podstrony galerii oraz pozycji w zadanym obszarze podstrony (przesunięcie w ramach tego spisu)
+        // obliczenie pozycji w ramach podstrony galerii oraz pozycji w zadanym obszarze podstrony (przesunięcie w ramach tego spisu)
     var pozycjaWGalerii = KtoraPozycjaWGalerii ( wybranyNrGalerii );
-    var podstronaWGalerii = KtoraPodstronaWGalerii ( wybranyNrGalerii ); 
-    var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();    
+    var podstronaWGalerii = KtoraPodstronaWGalerii ( wybranyNrGalerii );
+    var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();
         
         // http://zlobek.chojnow.eu/galeria,k0,p38.html	<-- 'k0' == 'kategoria WSZYSTKO', 'pXYZ' to XYZ-ta 'p'-odstrona w danej galerii (zawiera max 5 elem.)
-        // porządek odwrotnie chronologiczny - 'p1' lub 'p0' lub jego brak wskazuje na pierwszą od końca podstronę z pięcioma elemenatmi, 'p2' na przedostatnią, ... 
-        // konieczne obliczenie pozycji 'spisu treści' - da się ustalić numerycznie jako m-ta podstrona z wszystkich galerii
-        // celem jest pozyskanie stamtąd adresu dla wybranej N-tej galerii 
+        // porządek odwrotnie chronologiczny - 'p1' lub 'p0' lub jego brak wskazuje na pierwszą od końca podstronę z pięcioma elemenatmi, 'p2' na przedostatnią, ...
+        // konieczne obliczenie pozycji 'spisu treści' - uda się ustalić numerycznie jako M-ta podstrona z wszystkich galerii
+        // celem jest pozyskanie stamtąd adresu dla wybranej N-tej galerii
     var adresPodstrony =  '/' + 'galeria,k0,p' + podstronaWGalerii + '.html' ;    // sumowanie ciagu tekstowego
  
-    // DEBUG_MODE    
-        /*  var trescWygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nrPodstronyGaleriiMAX + "<br />"; 
-            trescWygenerowana += "WYBRANA: " + wybranyNrGalerii + ", PODSTRONA: " + podstronaWGalerii + ", POZYCJA_W_GALERII: +" + pozycjaWGalerii + "<br />"; 
+    // DEBUG_MODE
+        /*  var trescWygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nrPodstronyGaleriiMAX + "<br />";
+            trescWygenerowana += "WYBRANA: " + wybranyNrGalerii + ", PODSTRONA: " + podstronaWGalerii + ", POZYCJA_W_GALERII: +" + pozycjaWGalerii + "<br />";
             trescWygenerowana += "<br /> Dopasowano na " + podstronaWGalerii + ". podstronie, z przesunięciem " + pozycjaWGalerii ;
             trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
-            $('#status_wybranej_galerii').html( trescWygenerowana );*/
+            $('#status_wybranej_galerii').html( trescWygenerowana ); */
         
-    ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania w trakcie oczekiwnia na obsługę   
+    ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania w trakcie oczekiwnia na obsługę
  
-    // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X'" JAK NAJBLIŻEJ KODU OBSŁUGI ŻĄDANIA WYŚWIETLENIA WYBRANEJ GALERII 
-    // UsunPrzyciskZamykaniaDlaBiezacejGalerii(); // bez tej definicji można w czasie ładowania ZAMKNĄĆ podgląd galerii, przez co nie pojawi się treść, 
+    // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X'" JAK NAJBLIŻEJ KODU OBSŁUGI ŻĄDANIA WYŚWIETLENIA WYBRANEJ GALERII
+    // UsunPrzyciskZamykaniaDlaBiezacejGalerii(); // bez tej definicji można w czasie ładowania ZAMKNĄĆ podgląd galerii, przez co nie pojawi się treść
     DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii();   // najpierw wyłączenie funkcjonalności (.off), później animacja zanikania
     UkryjPrzyciskZamykaniaDlaBiezacejGalerii();
 
     // ..., ale widać aktywne powiadomenie o ładowaniu treści!!!
 
-    //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii
-    var zawartoscH2 = $('#nazwa_galerii').find('h2').text();    
+    //      if ( $('#nazwa_galerii').find('h2').text() != "" ) $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdego z już wyświetlonych podglądów szczegółów galerii
+    var zawartoscH2 = $('#nazwa_galerii').find('h2').text();
         if ( zawartoscH2 != '' )
         {
-        console.info('W <h2> do zabarwienia na szaro siedzi treść "' + zawartoscH2 + '" i nie chce zmienić koloru w IE/Edge.');    
+        console.info('W <h2> do zabarwienia na szaro siedzi treść "' + zawartoscH2 + '" i nie chce zmienić koloru w IE/Edge.');
         $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii ...NIE DZIAŁA w IE
         }
 
     $( g_miejsce_na_zdjecia ).empty();
-    $('nav#nawigacja_galeria').empty(); 
-    // $('#wczytywanie_podstrona').show(100);  
+    $('nav#nawigacja_galeria').empty();
+    
     PokazRamkeLadowania('podstrona');   // pokazanie ramki ładowania -- najbliższy obszar to podstrona galerii
 
-    PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania           
-        
+    PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania
+
     WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
                                 "wybrana_galeria_rekurencja", { 'pozycjaWGalerii' : pozycjaWGalerii, 'wybranyNrGalerii' : wybranyNrGalerii } ); 	// ES6 unfriendly
     }
-return false;  // to jest lepszy i konieczny warunek na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nierobienie nic" po kliknięciu
+return false;  // to jest lepszy i konieczny warunek na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nic-nierobienie" po kliknięciu
 }); // click('#suwak_galerii_submit')-END
 
-    
-$('#suwak_podstrony_submit').click( function(evt) {
+
+$('#suwak_podstrony_submit').click( function( evt )
+{
 evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     if ( g_ilosc_wszystkich_paginacji_galerii > 0 )
     {
@@ -2957,13 +2962,12 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     var adresPodstrony =  '/' + 'galeria,k0,p' + wybranyNrPaginacji + '.html' ;    // po prostu podstawienie do ciagu tekstowego
  
     // DEBUG_MODE    
-    /* var trescWygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nrPodstronyGaleriiMAX + "<br />"; 
-    trescWygenerowana += "WYBRANA: " + wybranyNrGalerii + ", PODSTRONA: " + podstronaWGalerii + ", POZYCJA_W_GALERII: +" + pozycjaWGalerii + "<br />"; 
+    /* var trescWygenerowana = "<p>ILOŚĆ_GALERII_MAX: " + g_ilosc_wszystkich_galerii + ", ILOŚĆ_PODSTRON_MAX: " + nrPodstronyGaleriiMAX + "<br />";
+    trescWygenerowana += "WYBRANA: " + wybranyNrGalerii + ", PODSTRONA: " + podstronaWGalerii + ", POZYCJA_W_GALERII: +" + pozycjaWGalerii + "<br />";
     trescWygenerowana += "<br /> Dopasowano na " + podstronaWGalerii + ". podstronie, z przesunięciem " + pozycjaWGalerii ;
     trescWygenerowana += ". Łączny adres to: \"" + g_adres_strony + adresPodstrony + "\"</p>";
+    $('#status_wybranej_galerii').html( trescWygenerowana ); */
 
-    $('#status_wybranej_galerii').html( trescWygenerowana );	*/        
-    //$('div#wybrane_galerie_spis').addClass('szara-zawartosc');      
         if ( $('#wybrane_galerie_spis').find('span:first').text() != '' ) $('#wybrane_galerie_spis').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu
         
     ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania, gdyby wymusić kolejno w trakcie tej obsługi zdarzenia
@@ -2977,17 +2981,16 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     // $('div#wczytywanie_wybrane_galerie_spis').show(100);
     PokazRamkeLadowania('wybrane_galerie_spis');
     UkryjPrzyciskZamykaniaDlaWybranejPodstronyListyGalerii();
-        
-    PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -50);    // naddatek korekty, aby widzieć efekt szarosci... który jest niepotrzebny dle  
-    //PrzewinEkranDoElementu('nav#spis_sterowanie', 500, -100);    // nie można przewinąc do 'div#wybrany_zaczytany_spis' jeśli jest jeszcze niewidoczny
+
+    PrzewinEkranDoElementu('div#wybrany_zaczytany_spis', 500, -50);    // naddatek korekty, aby widzieć efekt szarosci... który jest niepotrzebny ale
+    //PrzewinEkranDoElementu('nav#spis_sterowanie', 500, -100);    // ...nie można przewinąc do 'div#wybrany_zaczytany_spis', jeśli jest jeszcze niewidoczny
     }
-return false;  // konieczny warunek pomimo .preventDefault na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nierobienie nic" po kliknięciu
-}); // click('#suwak_podstrony_submit')-END     
-    
-	
-    
-$('h2#selektor_naglowek').on("click keypress", function ( e ) {   // rozszerzone operowanie o klawiaturę; zamiennie "keypress" z .which działa identycznie 
-    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]    
+return false;  // konieczny warunek pomimo .preventDefault na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nicnierobienie || robienie nic" po kliknięciu
+}); // click('#suwak_podstrony_submit')-END
+
+
+$('h2#selektor_naglowek').on("click keypress", function ( e ) {   // rozszerzone operowanie o klawiaturę; zamiennie "keypress" z .which działa identycznie
+    if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po ewentualnym kliknięciu
         if ( e.which == 32 ) e.preventDefault(); // blokowanie przewijania ekranu spacją
@@ -2995,67 +2998,59 @@ $('h2#selektor_naglowek').on("click keypress", function ( e ) {   // rozszerzone
         if ( $(this).hasClass('rozwiniety') ) $(this).removeClass('rozwiniety').next('div').hide(100);
         else $(this).addClass('rozwiniety').next('div').show(100);
     }
-});    
-	
+});
+
 
     // uruchomienie
-$('#nawigacja_galeria').on("click", ".przycisk_galeria", function( evt ) { // BUTTON z ewentualną podstroną galerii obiektem zdarzenia
+$('#nawigacja_galeria').on("click", ".przycisk_galeria", function ( evt ) { // BUTTON z ewentualną podstroną galerii obiektem zdarzenia
 var $this = $(this);	
 var serwer = g_protokol_www + $this.attr('data-adres_strony') + '/';
-var ktoraPodstrona = $this.attr('value');    
+var ktoraPodstrona = $this.attr('value');
 
-ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nowno z pominięciem "aktualnego" przycisku == zawartość aktulanej podstrony galerii    
+ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nowno z pominięciem "aktualnego" przycisku == zawartość aktualnej podstrony galerii
 
-    // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X' "JAK NAJBLIŻEJ KODU OBSŁUGI NACISNIĘCIA DOWOLNEGO PRZYCISKU NAWIGACJI W PODGALERII
-    // ustawić jako początkową czynność blokowanie przycisku lub ukrywanie innego od zamykania (zależy na czasie!), a przetestowano możliwość wciśnięcia
-    // ...przycisku podgalerii klawiaturą, gdy kurosor myszy był nad zamykaniem podglądu bieżącej galerii!     
+    // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X' "JAK NAJBLIŻEJ KODU OBSŁUGI NACIŚNIĘCIA DOWOLNEGO PRZYCISKU NAWIGACJI W PODGALERII
+    // ustawić jako początkową czynność blokowanie przycisku lub ukrywanie innego od zamykania (zależy na czasie!), a przetestowano możliwość wciśnięcia przycisku podgalerii klawiaturą,
+    // gdy kursor myszy był nad zamykaniem podglądu bieżącej galerii!
 //UsunPrzyciskZamykaniaDlaBiezacejGalerii();   // zamiast jednokrotnie tworzyć (kiedy?), pokazywać i ukrywać, to prostsze jest kasowanie OD RAZU elementu i jego tworzenie nowo
 DezaktywujZamykanieDlaPrzyciskuZamykaniaDlaBiezacejGalerii();
-UkryjPrzyciskZamykaniaDlaBiezacejGalerii();     // najpierw wyłaczenie (.off), teraz animacja zanikania elementu 'X' 
+UkryjPrzyciskZamykaniaDlaBiezacejGalerii();     // najpierw wyłaczenie (.off), teraz animacja zanikania elementu 'X'
 PokazBiezacaGalerie();  // ratunkowe pokazanie zawartości bieżącej galerii, nawet gdy WCZEŚNIEJ naciśnieto przycisk 'X" (co standardowo nie powinno się udać, ale w wyniku opóźnienia lub wolnego sprzętu TO SIĘ JEDNAK ZDARZA DLA "CHCĄCEGO MAGIKA"!)
-            // coś jednak nie działa tak, jakbym chciał.. nie pojawi się komponent aktualnej galerii :/ 
-    //$( g_wczytywanie_podstrona ).show(100); 
-PokazRamkeLadowania('podstrona');   // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle 
+            // coś jednak nie działa tak, jakbym chciał.. nie pojawi się komponent aktualnej galerii :/
+    //$( g_wczytywanie_podstrona ).show(100);
+PokazRamkeLadowania('podstrona');   // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle
 
-//alert("kliknięto '.przycisk_galeria'... albo kontener: " + this.tagName );
-//alert("VAL: '" + $this.attr('value') + "', DATA-TAG: " + $this.attr('data-tag') );
+// logownaie sukcesu dla podstrony glaerii
+// console.log('Naciśnięto wywołanie ' + ktoraPodstrona + '. podstrony danej galerii');
 
-console.log('Naciśnięto wywołanie ' + ktoraPodstrona + '. podstrony danej galerii');  
-// ?!?!
-//alert( 'TAG: ' + $this.attr('data-tag') + ' ADRES: ' + $this.attr('data-adres_strony') + ' GALERIA: ' + $this.attr('data-adres_galerii') + ' ELEMENT: ' + $this.attr('data-elem_zewn') );
-//WczytajZewnetrznyHTMLdoTAGU( nowyDiv.attr('id'), g_adres_strony, odnosnik_podstrony, g_element_zewnetrzny, true);
+WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), serwer, $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona", { 'ktoraPodstrona' : ktoraPodstrona } );    // ES5, nie ES6
+});	//  on("click")-$('#nawigacja_galeria')-END
 
-//WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), $this.attr('data-adres_strony'), $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona"	);
-WczytajZewnetrznyHTMLdoTAGU( $this.attr('data-tag'), serwer, $this.attr('data-adres_galerii'), $this.attr('data-elem_zewn'), "galeria_podstrona", 
-                            { 'ktoraPodstrona' : ktoraPodstrona } );    // ES5, nie ES6
 
-});	//  on("click")-$('#nawigacja_galeria')-END	
-	
-	   // "przycisk" ładujący kolejne +5 galerii (max), porządek ujemnie chronologiczny
-$('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function(e) { 
-    
+   // "przycisk" ładujący kolejne +5 galerii (max), porządek ujemnie chronologiczny
+$('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function ( e )
+{ 
 // console.info('DEBUG: przycisk naciśnieto już ' + g_suma_klikniec_zaladuj + ' razy, a paginacji odczytano wcześniej ' + g_zaczytana_ilosc_paginacji_galerii );
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
-    {   
+    {
         if ( e.which == 1 ) $(this).blur();  // usuwanie focusu po kliknięciu
         if ( e.which == 32 ) e.preventDefault();  // blokowanie przewijania zawartości spacją
-        
+
     g_suma_klikniec_zaladuj++;	// zliczaj naciśnięcia na ten przycisk
-    // alternatywnbie można by sumować PO sprawdzeniku prostszego warunku...
+    // alternatywnbie można by sumować PO sprawdzeniu prostszego warunku...
 
         if ( g_suma_klikniec_zaladuj < ( g_zaczytana_ilosc_paginacji_galerii + 1) ) // bieżącą stronę też liczyć jako paginację, dlatego +1
         {
         // g_biezaca_pozycja_galerii++;  // zwiększenie licznika, przejście do wywołania kolejnej podstrony
-        // licznik zwiększa się już PO nacisnięciu odnosnika i PRZED zakończeniem przetwarznia uprzednio zaczytanych treści !!!
+        // licznik zwiększa się już PO naciśnięciu odnośnika i PRZED zakończeniem przetwarzania uprzednio zaczytanych treści !!!
         // co najwyżej kolejność może być inna na liście wyników
 
             if ( g_biezaca_pozycja_galerii <= g_zaczytana_ilosc_paginacji_galerii )
             {
             // $( g_wczytywanie_spis ).show(100); // wyświetlenie informacji o uruchomieniu wczytywania podstrony galerii - działania w tle
-            // PokazRamkeLadowania('spis');  //  -- to jest zbedne, wewnatrz ZaczytajSpisGalerii() jest dodane wyświetlenie
+            // PokazRamkeLadowania('spis');  // -- to jest zbędne, wewnatrz ZaczytajSpisGalerii() jest dodane wyświetlenie
 
             // console.log('Na ' + g_suma_klikniec_zaladuj + ' żądanie zaczytano kolejną podstronę w galerii ' + g_biezaca_pozycja_galerii + ' z ' + g_zaczytana_ilosc_paginacji_galerii + ' podstron.');
-
             // g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; // inkrementacja o każde 5 zdjęć z poszczególnych zaczytanych galerii
 
             ZaczytajSpisGalerii();
@@ -3066,123 +3061,128 @@ $('#spis_sterowanie').on("click keypress", "#zaladuj_galerie_spis", function(e) 
     }   // if (e.which == ... )-END
 });	// on("click")-$('#spis_sterowanie')-END
 
-	
+
     // DLA KOLEJNYCH GALERII: '$('#galeria_spis').on("click", "a", function(e){'
-$('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e ) {    // 
+$('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e )
+{
     // włączono KEYPRESSED/KEYDOWN i CLICK -- bez rozbijania na przyciski "warunkowe" - "click auxclick contextmenu"
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
         if ( e.which == 1 ) $(this).blur(); // usunęcie focusu z elementu po jego kliknięciu
-    e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku && nieprzewijanie ekranu spacją   
-        
+    e.preventDefault();	// "nieprzechodzeniedalej" po odnośnku && nieprzewijanie ekranu spacją
+
     var $this = $(this);
     var galeriaDocelowa = $this.attr('data-href');	// pierwotnie był odczyt bezpośrednio z istniejącego 'href', teraz w jego miejscu 'data-href'
     var nrGalerii = parseInt( galeriaDocelowa.substr( galeriaDocelowa.lastIndexOf(",a") + 2 ) ); // wg sprawdzonego algorytmu
     var nrPodstronyGalerii = parseInt( MaksymalnaIloscPodstronGalerii( nrGalerii ) );
 
-    var tytulGalerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek, a nie na obrazek -- bo nie posiadałby tekstu)   
+    var tytulGalerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek, a nie na obrazek -- bo nie posiadałby tekstu)
 
     var opisGalerii = $this.parents('.kontener-odnosnik').find('.opis-odnosnik').html();	 // było .text(), ale teraz zyskujemy formatowanie tekstu
     var dataGalerii = $this.parents('.kontener-odnosnik').find('.data-odnosnik').text();       // tu bezwzględnie tylko tekst
-    var srcObrazkaGalerii = $this.parent().siblings('.zdjecie-odnosnik').find('a img').attr('src');    
+    var srcObrazkaGalerii = $this.parent().siblings('.zdjecie-odnosnik').find('a img').attr('src');
 
         if ( tytulGalerii.length == 0 )  // jeżeli naciśnięto odnośnik z obrazkiem, ten drugi zawiera już treść odnośnika
         {
         tytulGalerii = $this.parent().siblings('div.tytul-odnosnik').find('a h2').html();	 // było .text( ... )
-        galeriaDocelowa =  $this.attr('data-href');    
-        srcObrazkaGalerii = $this.find('img').attr('src');    
+        galeriaDocelowa =  $this.attr('data-href');
+        srcObrazkaGalerii = $this.find('img').attr('src');
         }
     //alert('g_tag_do_podmiany, g_protokol_www + g_adres_strony + '/' + g_folder_serwera + '/', galeriaDocelowa, g_element_zewnetrzny, "galeria_podstrona")
     //alert('WczytajZewnetrznyHTMLdoTAGU( tag: ' + g_tag_do_podmiany_zdjecia + ', domena: ' + g_protokol_www + g_adres_strony + '/' + g_folder_serwera + '/' + ', zasób: ' + galeriaDocelowa + ', elem: ' + g_element_zewnetrzny + ') ... MYSZA NAJECHAŁA');
-    console.log('ZDARZENIE: "Naciśnięto" i wywołano odnośnik dla galerii "' + tytulGalerii + '"' ); 	
+    console.log('ZDARZENIE: "Naciśnięto" i wywołano odnośnik dla galerii "' + tytulGalerii + '"' );
 
-        // załaduj tytuł, opis i obrazek dla danej galerii, po czym załaduje się jej pierwszą podstronę	
+        // załaduj tytuł, opis i obrazek dla danej galerii, po czym załaduje się jej pierwszą podstronę
     UzupełnijNaglowekBiezacejGalerii ( { 'tytul' : tytulGalerii, 'opis' : opisGalerii, 'srcObrazka' : srcObrazkaGalerii, 'data' : dataGalerii,
-                                            'nrGalerii' : nrGalerii, 'nrPodstronyGalerii' : nrPodstronyGalerii } );     // lista uzupełniona o numerację odczytanych   
+                                            'nrGalerii' : nrGalerii, 'nrPodstronyGalerii' : nrPodstronyGalerii } );     // lista uzupełniona o numerację odczytanych
 
         // wstawienie animacji na postęp ładowania
     // $( g_wczytywanie_podstrona ).show(100);
         PokazRamkeLadowania('podstrona');
 
         // od razu zerowanie zawartości kontenerów docelowych do zaczytania zawartości
-    $('nav#nawigacja_galeria').empty(); 
+    $('nav#nawigacja_galeria').empty();
     $('div#skladowisko').empty(); 
 
     WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres_strony + '/' , galeriaDocelowa, g_element_zewnetrzny, "galeria_podstrona" ); 	
-    //return; // wyjście, aby nie przechodzić do odnosnika... gdyby .preventDefault() zawiodło	
-    PrzewinEkranDoElementu('div#glowna', 700, -6);   		// przewinięcie ekranu do lokalizacji galerii
+    //return; // wyjście, aby nie przechodzić do odnosnika... gdyby .preventDefault() zawiodło
+    PrzewinEkranDoElementu('div#glowna', 700, -6);      // przewinięcie ekranu do lokalizacji galerii
     }   // if-( e.which == 1 )...
-});	//  on("click")-$('#galeria_spis')-END			
+});	//  on("click")-$('#galeria_spis')-END
+
 
         // tylko te <a> mają sztucznie dodany TABINDEX (bo nie mają zabrany HREF!), zatem warianty: a || a[data-href] || a[tabindex]
-$('#galeria_spis, #wybrane_galerie_spis').on("focus", "a[data-href]", function ( e ) {
+$('#galeria_spis, #wybrane_galerie_spis').on("focus", "a[data-href]", function ( e )
+{
         // dla NIEKOMPLETNEGO <a> NIE DZIAŁA nawet przypisanie obrysu poprzez klasę (ani szczątkowe :focus w CSS - działa tylko w FF, bez JS!)
-        // pozostawiono z nadzieją istnienia zmiany w przyszłych wersjach przeglądarek (przyszłe aktualizacje to obejmą?!)
-        // skopiowano ten styl też dla rodzica, aby ujednolicić stan focus na kontenerze 
+        // pozostawiono z nadzieją istnienia zmiany w przyszłych wersjach przeglądarek (być może przyszłe aktualizacje różnych przeglądarek to obejmą?!)
+        // skopiowano ten styl też dla rodzica, aby ujednolicić stan focus na kontenerze
     $(this).addClass('sztuczny-focus').parent().parent().addClass('sztuczny-hover sztuczny-focus');    // "dwa kontenery wyżej" to cały pojemnik dla tego odnośnika - do wyświetlenia galerii
-}); //  on("focus")-$('a')-END 
+}); //  on("focus")-$('a')-END
 
 
-$('#galeria_spis, #wybrane_galerie_spis').on("blur", "a[data-href]", function ( e ) {  
-        // istnienie klasa "sztuczny-focus" dla <a> i tak nic nie zmienia w stanie i wyglądzie odnośnika, brak tej ramki; 
+$('#galeria_spis, #wybrane_galerie_spis').on("blur", "a[data-href]", function ( e )
+{  
+        // istnienie klasa "sztuczny-focus" dla <a> i tak nic nie zmienia w stanie i wyglądzie odnośnika, brak tej ramki;
         // bardziej istotne póki co to warunkowanie JEST/BRAK dla skopiowanego stylu w rodzicu rodzica (czyli cały kontener elementu)
     $(this).removeClass('sztuczny-focus').parent().parent().removeClass('sztuczny-hover sztuczny-focus');    // "dwa kontenery wyżej" jako pojemnik dla bieżącego odnośnika;
 }); //  on("blur")-$('a')-END 
 
 
-$('div#zaczytany_spis').on('click keydown', '.powiadamiacz', function ( e ) {  // też na klawiaturę ma reagować ... powstał Mały Warunkowy Potworek  
-
+$('div#zaczytany_spis').on('click keydown', '.powiadamiacz', function ( e )     // też na klawiaturę ma reagować ... powstał Mały Warunkowy Potworek
+{
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
-        if ( e.which == 32 ) e.preventDefault(); // tylko zamknie, bez ewentualnego przewijania    
+        if ( e.which == 32 ) e.preventDefault(); // tylko zamknie, bez ewentualnego przewijania
 
         if ( $(this).not( $(this).is(':animated') ) )      // pozwól na wcześniejsze "zrolowanie" elementu tylko przed rozpoczęciem nieuniknionej animacji
         {
         $(this).slideUp(500);   // szybsza o 50% animacja by było widać różnicę i efekt kliknięcia
         }
     }
-}); //  on("click")-$('.powiadamiacz')-END	
-    
+}); //  on("click")-$('.powiadamiacz')-END
 
-// ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI  ---------- *** --------------	        
-    
-    
-$('.banner-kontener').hover( function() {    // animacje z "wychodzeniem" obrotowego słoneczka
-    $(this).find('#slonce_logo').addClass('animacja-interaktywnego-slonca');
+
+// ---------- *** ----------  FUNKCJE ZDARZENIOWE - PRZYCISKI  ---------- *** --------------
+
+
+$('.banner-kontener').hover(    // animacje z "wychodzeniem" obrotowego słoneczka
+    function() {
+        $(this).find('#slonce_logo').addClass('animacja-interaktywnego-slonca');
     },
     function() {
-    $(this).find('#slonce_logo').removeClass('animacja-interaktywnego-slonca');	
+        $(this).find('#slonce_logo').removeClass('animacja-interaktywnego-slonca');
     }
-); // .banner-kontener hover-END    
-    
-    
-$('#galeria_spis').on('click', '.odswiez_strone', function () {   // globalnie obsługa zdarzenia z delegacją dla odświeżenia strony -- niezależnie od kolejności wygenerowania komunikatu o błędzie
-    location.reload(); 
-}); // on-click-END    
-    
-    
-$('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt ) { // też delegacja, ponawianie wyswietlania nieudanej transmisji
+); // .banner-kontener hover-END
 
-    var ileNaLiscieNieotrzymanych = g_niewyslane_podstrony.length;    // sprawdzenie długości listy   
+
+$('#galeria_spis').on('click', '.odswiez_strone', function ()   // globalnie obsługa zdarzenia z delegacją dla odświeżenia strony -- niezależnie od kolejności wygenerowania komunikatu o błędzie
+{
+    location.reload();
+}); // on-click-END
     
-    if ( ileNaLiscieNieotrzymanych > 0 )    // jeżeli istnieje nadal lista niepobranych/nieotrzymanych...    
+    
+$('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt )    // też delegacja, ponawianie wyswietlania nieudanej transmisji
+{
+    var ileNaLiscieNieotrzymanych = g_niewyslane_podstrony.length;    // sprawdzenie długości listy
+
+    if ( ileNaLiscieNieotrzymanych > 0 )    // jeżeli istnieje nadal lista niepobranych/nieotrzymanych...
     {
-        if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status-ajaksa').hasClass('status-norma') ) ) 
-            || ( $('.status-ajaksa').hasClass('status-norma') ) )  // wstępna weryfikacja po wyglądzie/zachowaniu
-                    //tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
+        if ( ( ( OdczytajLocalStorage() == "<BRAK AWARII>" ) && ( $('.status-ajaksa').hasClass('status-norma') ) ) || ( $('.status-ajaksa').hasClass('status-norma') ) )  // wstępna weryfikacja po wyglądzie/zachowaniu
+            //tutaj bym się zastanowił ponownie, czy warunek jest dobry dla stanu OK i BAD
         {
             // dodatkowa weryfikacja, ewentualnie zrobić hardkoda
             if ( ( g_przechwytywacz_php == g_przechwytywacz_php_ok ) && ( g_przechwytywacz_php_zapytanie == g_przechwytywacz_php_zapytanie_ok ) )
             {
-        // to pobierz kolejny OSTATNI/pierwszy z tej listy niepobranych i spóbuj ponownie wszystkie operacje z transferem
+        // to pobierz kolejny OSTATNI/pierwszy z tej listy niepobranych i spróbuj ponownie wszystkie operacje z transferem
             // #OSTATNI: psuje kolejność dołączania (gdy kilka się nie udało), ale odświeżane powiadomienie o błędzie ma sens
-            // #pierwszy: kolejka FIFO lepsza względem "sprawiedliwości" niewczytania, przeciwnieństwo wcześniejszego  
-            // do pobrania jest więcej danych "fragmentowych" z jednego linku        
-        // ... ale nie zdejmuj póki co tego zadania z listy, zablokuj też przycisk na tę operację 
-            
+            // #pierwszy: kolejka FIFO lepsza względem "sprawiedliwości" niewczytania, przeciwnieństwo wcześniejszego
+            // do pobrania jest więcej danych "fragmentowych" z jednego linku
+        // ... ale nie zdejmuj póki co tego zadania z listy, zablokuj też przycisk na tę operację
+
         //var zadanieNieodebrane = PobierzPierwszeNieodebrane();
         var zadanieNieodebrane = PobierzOstatnieNieodebrane();  // tu odczytywana jest ostatnia pozycja z tablicy
-                
+
         /*
         // var nrPodstronyNiewczytanejGalerii = parseInt( zadanieNieodebrane.substr( adres_zasobu.lastIndexOf(",p") + 2 ) );
         // var adresZasobu = zadanieNieodebrane.adres.indexOf();
@@ -3196,31 +3196,31 @@ $('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt ) { // te
             {
             zadanieNieodebrane.adres.replace('?url_dupa=', '?url_zewn=');
             }
-        */    
-        ZablokujPrzycisk( evt.target ); 
-        PokazRamkeLadowania('spis'); 
-        PrzewinEkranDoElementu('#wczytywanie_spis', 500); // hardkod #elementu        
-            // wywołanie tego samego, ale wystawić dodatkowy znacznik, by go interpretować po zwrotnym otrzymaniu danych   
-            // + DANE, np. daneDodatkowe = { trybPowtorki : true } 
+        */
+        ZablokujPrzycisk( evt.target );
+        PokazRamkeLadowania('spis');
+        PrzewinEkranDoElementu('#wczytywanie_spis', 500); // hardkod #elementu
+            // wywołanie tego samego, ale wystawić dodatkowy znacznik, by go interpretować po zwrotnym otrzymaniu danych
+            // + DANE, np. daneDodatkowe = { trybPowtorki : true }
         WczytajZewnetrznyHTMLdoTAGU ( zadanieNieodebrane.tag, g_protokol_www + g_adres_strony, zadanieNieodebrane.adresZasobu, zadanieNieodebrane.elementWitryny, "spis_galerii", { trybPowtorki : true } );    // + znacznik: .tryb
         console.log('NAPRAWA BŁĘDU DLA podstrony: "' + zadanieNieodebrane.adresZasobu + '"');
-                
-      // ...dużo wątków aktualizacyjnych przy okazji (dekrementacje i komunikaty), ale PO UDANEJ obsłudze ponowionego żądania!     
+
+      // ...dużo wątków aktualizacyjnych przy okazji (dekrementacje i komunikaty), ale PO UDANEJ obsłudze ponowionego żądania!
             
-            }   // if-(( g_przechwytywacz_php == g_przechwytywacz_php_ok )...-END 
+            }   // if-(( g_przechwytywacz_php == g_przechwytywacz_php_ok )...-END
         } // if-( !OdczytajLocalStorage() )-END
     } // if-( ileNaLiscieNieotrzymanych > 0 )-END
-      
-    
-}); //  on("click")-$('#przywroc_niewczytane')-END	   
-    
+
+}); //  on("click")-$('#przywroc_niewczytane')-END
+
                                             //zamykanie "okienek" i pasków w obszarze "#galeria_spis", czyli w "okienkach z błędami" nad spisem galerii
-$('#galeria_spis').on("click keydown", ".zamykanie-komunikatu-bledu", function( e ) {    // dodano sztuczna klasę wprost dla jasności obsługi zdarzeń;
+$('#galeria_spis').on("click keydown", ".zamykanie-komunikatu-bledu", function ( e )     // dodano sztuczna klasę wprost dla jasności obsługi zdarzeń;
+{
 var $this = $(this);
-    // jakoby warunkowe wykonanie, mimo że na CLICK wstępnie reagowało 
+    // jakoby warunkowe wykonanie, mimo że na CLICK wstępnie reagowało
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
-        if ( e.which == 32 ) e.preventDefault(); // tylko zamknie, bez ewentualnego przewijania      
+        if ( e.which == 32 ) e.preventDefault(); // tylko zamknie, bez ewentualnego przewijania
     $(this).blur(); // bezwarunkowe usunięcie focusu z elementu zamykającego
     var kontenerBledu = $this.parent('.blad');  // wystarczający krok o jeden poziom w górę
 //    kontenerBledu.hide(300, function() { $(this).remove(); });  // usuń powiązany komunikat (jednorazowy) - tylko dla wskazanej klasy ".bład" pozostałe dwie wymagają innych działań niż zamknięcie ramki komunikatu
@@ -3230,16 +3230,17 @@ var $this = $(this);
     }
 });
 
-    
-$('#debugger_zamykanie').on("click keydown", function( e ) { 
+
+$('#debugger_zamykanie').on("click keydown", function ( e )
+{
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
-        if ( e.which == 32 ) e.preventDefault(); // nie przewijaj ekranu spacją, skoro naciśnięto nią to zamykane w TYM naciśnięciu    
+        if ( e.which == 32 ) e.preventDefault(); // nie przewijaj ekranu spacją, skoro naciśnięto nią to zamykane w TYM naciśnięciu
     UkryjDebuggowanie();
     }
-});    
+});
 
-    // utworzono nowe zdarzenia dla naciśniecia przyciku 'X" bezpośrednio dla tego elementu, BEZ DELAGACJI ZDARZEŃ 
+    // utworzono nowe zdarzenia dla naciśniecia przyciku 'X" bezpośrednio dla tego elementu, BEZ DELAGACJI ZDARZEŃ
     // nowa logika zapewnia OBSŁUGĘ ZDARZENIA NA ŻĄDANIE, tzn. jego aktywowanie lub blokowanie, zależnie czy przycisk 'X' jest wyświetlany (powinno współpracować też z animacją pojawiania/ukrywania się tego przycisku)
 /* $('#glowna').on("click keydown", "#biezaca_galeria_zamykanie", function( e ) {  // zadziała z delegacją zdarzeń
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
@@ -3248,31 +3249,35 @@ $('#debugger_zamykanie').on("click keydown", function( e ) {
     }
 });     */
 
-$('#wybrane_galerie_zamykanie').on("click keydown", function( e ) {  // zamykanie wybranej podstrony listy galerii -- BEZ delegacji zdarzeń!
+$('#wybrane_galerie_zamykanie').on("click keydown", function ( e )  // zamykanie wybranej podstrony listy galerii -- BEZ delegacji zdarzeń!
+{
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
     UkryjWybranaPodstroneListyGalerii();
     }
-});   
+});
 
 
-$('div#zagraj').click( function() {
+$('div#zagraj').click( function ()
+{
     $('div#gra').show(300);
     PrzewinEkranDoElementu( 'div#gra', 500, 10 ); // + korekta marginesu górnego elementu
 //    InicjalizujGre();
     RozmiescCzesciWzorcowo();
     // ...
 });
-    
 
-$('#gra_start').click( function() { // start tylko dla naciśnięcia elementu myszą/dotykiem, bo klawiaturą nie da się przeciągać efektywnie
-    // ...
+
+$('#gra_start').click( function ()   // start tylko dla naciśnięcia elementu myszą/dotykiem, bo klawiaturą nie da się przeciągać efektywnie
+{
+        // ...
     RozmiescCzesciWzorcowo();
     // ...
 });
 
 
-$('#gra_zamykanie').on("click keydown", function( e ) { 
+$('#gra_zamykanie').on("click keydown", function ( e )
+{
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
     $('#gra').slideUp(333);        // lepiej dać animację (nie .hide, ale .slideUp jako lepszy efekt) niż proste .css('display', 'none');
@@ -3280,65 +3285,67 @@ $('#gra_zamykanie').on("click keydown", function( e ) {
     }
 });
 
-$('#poco_zamykanie').on("click keydown", function( e ) { 
+
+$('#poco_zamykanie').on("click keydown", function ( e )
+{ 
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
     $('#poco').slideUp(333);
     }
 });
 
-$('#pomoc_zamykanie').on("click keydown", function( e ) { 
+
+$('#pomoc_zamykanie').on("click keydown", function ( e )
+{
     if ( ( e.which == 1 ) || ( e.which == 13 ) || ( e.which == 32 ) ) // [LEWY] || [ENTER] || [spacja]
     {
     $('#pomoc').slideUp(333);
     }
 });
 
-    // nie działa mi w JQ, mimo delegacji zdarzeń - próba powrotu do JS... te same zdarzenie i funkcje użyte w wywołaniu 
+    // nie działa mi w JQ, mimo delegacji zdarzeń - próba powrotu do JS... te same zdarzenie i funkcje użyte w wywołaniu
 /*
 $('body').on('dragstart', '.przenosny', PoczatekRuchuPrzeciagania ); // $('#gra).on... bez zmian
-    
-$('body').on('drop', '.przenosny', RuchUpuszczania );   // RuchUpuszczania 
-    
-$('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania   
-    
-    */
-    
-	
-// ***************************************************************************	
-// ---------- *** ----------  AUTOURUCHAMIANIE  ---------- *** ----------	 
-// ***************************************************************************		
+
+$('body').on('drop', '.przenosny', RuchUpuszczania );   // RuchUpuszczania
+
+$('body').on('dragover', '.przenosny', RuchPrzeciagania );  // RuchPrzeciagania
+*/
+
+
+// ***************************************************************************
+// ---------- *** ----------  AUTOURUCHAMIANIE  ---------- *** ----------
+// ***************************************************************************
 
 InicjalizujCSSzAktywnymJS();
-PokazIUkryjPowiadomieniaOOdwiedzinach(20);    
-InicjalizujRamkiLadowania();    
-//WystartujDebuggerLokalny( 'ZEPSUJ!' );    
+PokazIUkryjPowiadomieniaOOdwiedzinach(20);
+InicjalizujRamkiLadowania();
+//WystartujDebuggerLokalny( 'ZEPSUJ!' );
 WystartujDebuggerLokalny();
-// GenerujPowiadomienieOBledzie(); // TEST wymuszony po raz pierwszy    
+// GenerujPowiadomienieOBledzie(); // TEST wymuszony po raz pierwszy
 // GenerujPowiadomienieOBledzie({ tytul : 'TEST! Problem z odczytem zawartości zdalnej! TEST!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej! Konieczność przeładowania zawartości witryny (1). TO JEST TYLKO PRÓBNE WYWOŁANIE POWIADOMIENIA, BŁĘDU NIE MA... ale przycisk reaguje. I jeszcze nieco więcej tekstu, dla wzorcowego wypełnienia. <br />Jestę nowo linio?!', przyciskAkcjiOdswiez : true, ikonaZamykania : true });
-    
+
 UbijReklamy();
 InicjalizujPrzyciskiWyboruGalerii();
 InicjalizujPrzyciskiWyboruPodstronyGalerii();
-	
+
 ZaczytajSpisGalerii();
-	
+
 // testowo też do autouruchamiania gry - pierwsza plansza
 InicjalizujGre();
 OdkryjEmail();
 
-	
+
 	// sterowanie wielkością czcionki nagłówka
-	
 $(".napisy-banner > h1").fitText(0.9, { minFontSize: '15px', maxFontSize: '62px' });
 $(".napisy-banner > h2").fitText(1.6, { minFontSize: '8px', maxFontSize: '23px' });
-$(".napis-spod > h3").fitText(3, { minFontSize: '9px', maxFontSize: '17px' });    
+$(".napis-spod > h3").fitText(3, { minFontSize: '9px', maxFontSize: '17px' });
 
 
     // parametryzacja pokazu zdjęć (przeniesione z pliku index.php)
-lightbox.option({ albumLabel: "Zdjęcie %1 z %2", positionFromTop: 10 });    
+lightbox.option({ albumLabel: "Zdjęcie %1 z %2", positionFromTop: 10 });
 
-//$('#wymiary').addClass('animacja-zanikanie');  // dynamiczne przypisanie klasy    
+//$('#wymiary').addClass('animacja-zanikanie');  // dynamiczne przypisanie klasy
 AktualnyRozmiarOkna('#wymiary');
 
 

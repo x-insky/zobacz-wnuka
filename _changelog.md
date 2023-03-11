@@ -26,7 +26,7 @@ v0.6.0 - the ability to run the site after applying UTF-8 on the source server (
 
 ---------------------------
 
-v0.5.84 - removing unnecessary comments and typos (v.8)
+v0.5.84 - removing unnecessary comments and typos (v.16)
 
 * v0.5.84 - [2022-04-01]
 
@@ -53,7 +53,7 @@ v0.5.83 - close button for selected subpage of the gallery list: finally the pre
 
 -- witryna.js
 * the auxiliary functions "PokazWybranaPodstroneListyGalerii/ShowSelectedSubpageGalleryList" and "UkryjWybranaPodstroneListyGalerii/HideSelectedSubpageGalleryLists" were defined
-  - an obvious goal of showing and hiding the entire area of ​​a selected subpage of the gallery list
+  - an obvious goal of showing and hiding the entire area of a selected subpage of the gallery list
   - pre-hiding all content to show content in a given area after finished loading on demand
 * created an event on pressing the button (#wybrane_galerie_zamykanie) which calls the hiding function
   - content appears after background loading is complete
@@ -78,7 +78,7 @@ v0.5.82 - close button for a selected subpage from the gallery list appears only
   - threshold already at 270px, only for the needs of one element
   - too small margin between the gallery/subpage selection component and the container with the text header below
   - effect: the positioning of the close button has been changed for the selected gallery subpage, which no longer overlaps the gallery/subpage selection component
-  - the problem occurred only with a small screen width, when the header text was vertically compacted, just near the border values ​​of the first width threshold
+  - the problem occurred only with a small screen width, when the header text was vertically compacted, just near the border values of the first width threshold
 
 ---------------------------
 
@@ -105,14 +105,14 @@ v0.5.80 - improvements for the display of the selected gallery subpage
 [*] MODIFIED
 
 -- index.php
-* moved the area of ​​the selected subpage of the gallery
+* moved the area of the selected subpage of the gallery
   - moved a list of at least five items to the bottom of the parent container
   - the list is placed outside of the parent-container class
   - class "container" as a distinguishing feature of one of many elements/components, not for the entire grouping element
   - the correct class name was used, which has already been defined, thanks to which the appearance of each gallery subpage being read was retained (the same background and appearance thanks to the "dark-background-list" class instead of "dark_tlo_spis")
 
 -- zlobek-styl.css
-* removed the bottom margin for the area of ​​the selected subpage of the gallery after its loading
+* removed the bottom margin for the area of the selected subpage of the gallery after its loading
 
 ---------------------------
 
@@ -254,7 +254,7 @@ v0.5.72 - loging to the console only for failure to load external content
   - concerns the logic of the main function 'WczytajZewnetrznyHTMLdoTAGU'
   - no logging of detailed statuses and variable contents for successful reading of external contents
 * introduced logging in console for negative run inside the same function
-  - saving the values ​​of calling parameters and other variables
+  - saving the values of calling parameters and other variables
   - details appear in the console, and the user gets a description of the error in the application window
 * removed commented out code displaying archaic notifications in the form of an alert
   - removed possible sticking of content with a simplified message about will
