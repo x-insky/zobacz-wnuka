@@ -1,3 +1,25 @@
+v0.6.1 - Ajax query returns correct site snippet again
+
+* v0.6.1 - [2023-03-12]
+
+[*] MODIFIED
+
+-- przechwytywacz.php
+* fix remote read after changes in parent site structure
+   - only a fragment with the expected content of the site is passed
+   - only wanted container is forwarded for further processing
+   - first version of the algorithm - contains lots of comments and inconsistent code
+   - added features for recurring search issues
+* difficulties:
+   - operating on many similar <div> elements instead of one <table> element
+   - specifying the start and end for the container with the target content
+   - matching the closing tags to the opening tags (these result from the changed structure of the nursery website and mutual proximity)
+   - clearing the end range (closing tag)
+   - searching for text strings in the vicinity of a given distinguishing feature
+   - operating on HTML as plain text, without support for the structural search system (which is offered by e.g. CSS or jQuery)
+
+---------------------------
+
 v0.6.0 - the ability to run the site after applying UTF-8 on the source server (external change)
 
 * v0.6.0 - [2022-12-05]

@@ -11,7 +11,7 @@ $(document).ready(function ()
 * http://zlobek.chojnow.eu/1-u_misiow,z1028,p2.html		// przykładowa strona druga (2) z powiększonym zdjęciem nr 1 ("1028" to nr zdjęcia w galerii)
 *
 */
-var g_element_zewnetrzny = "table.galeria",	// wszystko jest w tablicy o klasie "galeria", w komórce wyższej tablicy
+var g_element_zewnetrzny = "#galeria_tresc",	// od 2022-11 kontenerem treści dynamicznych/docelowych jest w <div> tablicy o id "galeria_tresc"; nie ma już <table> dla układu witryny
  g_adres_strony = "zlobek.chojnow.eu",		// nazwa serwisu
  g_folder_serwera = "zdjecia_galeria",      // ścieżka ma serwerze, tj. folder udostępniony
  g_wyszukiwany_serwer = "",		    // na przechowywanie adresu serwera wraz z protokołem
@@ -31,7 +31,7 @@ var g_element_zewnetrzny = "table.galeria",	// wszystko jest w tablicy o klasie 
  // g_wczytywanie_podstrona = "#wczytywanie_podstrona",
  // g_wczytywanie_spis = "#wczytywanie_spis",	
 
- g_element_zewnetrzny_spis = "table.galeria",   // g_element_zewnetrzny_spis = "td#tresc_glowna.tlo_artykulow",
+ g_element_zewnetrzny_spis = "#galeria_tresc",   // g_element_zewnetrzny_spis = "td#tresc_glowna.tlo_artykulow",
  g_tag_do_podmiany_spis = "div#galeria_spis_podmiana",
  g_miejsce_na_spis = "div#galeria_spis",	
 
