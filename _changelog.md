@@ -1,3 +1,18 @@
+v0.6.2 - ordering file structure for the Ajax query
+
+* v0.6.2 - [2023-03-13]
+
+[*] MODIFIED
+
+-- przechwytywacz.php
+* cleaning the file structure
+  - removing redundant comments
+  - commented code blocks and unused variables are not needed
+  - removing commented code that logs variable values (not necessarily those still used)
+  - adding descriptions and comments for the functioning code - better understanding of the idea
+
+---------------------------
+
 v0.6.1 - Ajax query returns correct site snippet again
 
 * v0.6.1 - [2023-03-12]
