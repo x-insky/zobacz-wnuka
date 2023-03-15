@@ -682,7 +682,8 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // zmiana NIEISTOTNA, i tak późniejsz
     if ( g_biezaca_pozycja_galerii === 0 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
     {
     g_ilosc_zaczytanych_galerii	= -5 ;  // takie dziwne numerowanie w trakcie odczytu, aby nie zmieniać innych warunków
-    var $temp_odnosnik_tytul = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link:first" );	 // dobre do czasu, o ile nie powstanie nowa galeria w trakcie przeglądania starej listy!
+    var ilePaginacji = 0;   // wartość robocza, powinna być zaraz nadpisana
+    var $temp_odnosnik_tytul = $( g_tag_do_podmiany_spis + " .card:first a" );	 // dobre do czasu, o ile nie powstanie nowa galeria w trakcie przeglądania starej listy!
     var atrybut_href = $( $temp_odnosnik_tytul ).attr('href'); // np. "http://zlobek.chojnow.eu/u_tygryskow,a153.html"
         //temp_atrybut = temp_atrybut.split(",")[1]; // jest dobre, ale leży przy dodanym ',' w adresie odnosnika (jako treść)
 
@@ -691,17 +692,20 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // zmiana NIEISTOTNA, i tak późniejsz
         {
         GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej. Nie udało się załadować wstepnych wartości (1)! Konieczność przeładowania zawartości witryny. <br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true });
             // zapewniono globalną obsługę zdarzenia na kliknięcie - odświeżenie
-        return false; // !!!
+        return false; // !!! wyjście z funkcji, brak dalszych obliczeń !!!
         }
         else
         {   // bezpieczniejszy kod na później, bo istnienie wartości undefined generuje błedy
-        var atrybut_href_pozycja = atrybut_href.lastIndexOf(",a");		    // łatwiejsze nawigowanie z kontekstem - "a" jako numerem galerii
+        var atrybut_href_pozycja = atrybut_href.lastIndexOf(",a");		    // łatwiejsze nawigowanie z kontekstem - "a" jest numerem galerii/albumu
         atrybut_href = atrybut_href.substr( atrybut_href_pozycja + 2 ); // +2 znaki za pozycją (',' i 'a'), poprawna konwersja liczby na początku danego ciągu
         g_ilosc_wszystkich_galerii = parseInt( atrybut_href );
+        ilePaginacji = ObliczMaksymalnaIloscPodstronGalerii( g_ilosc_wszystkich_galerii );   // liczone na podstawie odczytanej właśnie maksymalnej ilości galerii, skoro (pierwszy) odczyt witryny nie ujawnia ilości podston z odnośniami do galerii/albumów 
         }
             
         //g_ilosc_wszystkich_paginacji_galerii    // też szukamy "najostatniejszej" paginacji - podstrony z najwyższym numerem/odnośnikiem
         // czy to mniej zasmieci przestrzeń? (+): nie potrzeba tworzyć tablicy X-elementów, aby pobrać tylko jej ostatni lub przedostani element
+
+    /*
     var ostatniaPaginacja = $( g_tag_do_podmiany_spis + " table.galeria tbody tr td a.link_tresc:last" );  // "najbardziej optymalny" wyróżnik toto nie jest
    
     var ilePaginacji = parseInt( ostatniaPaginacja.text() );    // tu winna się znaleźć konkretna liczba, przynajmniej dla większości odnośników
@@ -723,6 +727,7 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // zmiana NIEISTOTNA, i tak późniejsz
             }
         }
             // !!! i drugi warunek poprawności na przypisanie zaczytanego maksimum podstron (ewentualnego), gdy SĄ JUŻ WPISY w ilości > 5, dla 1..5 będzie lipa
+    */        
         if ( ilePaginacji > 0 ) g_ilosc_wszystkich_paginacji_galerii = ilePaginacji;  // !!!
 
         // KOPIA: poniższy log przeniesiono z początku tej funkcji z uwagi na celowość wyświetlania w nim zaczytanych danych z zewnatrz przy każdym > 1 przebiegu
@@ -941,8 +946,8 @@ var odnosnikPojemnik = '';  // do przechowywania spisu galerii, będzie budowana
 $( g_miejsce_na_spis ).append( odnosnikPojemnik );		// tworzenie naraz pięciu elementów -- odnośników dla spisu galerii
 		
 // akcja wypełniacz - zdjęcia
-var $odnosnikiZdjecia = $( g_tag_do_podmiany_spis + " td.galeria_kolor a.link_tresc" );
-	
+var $odnosnikiZdjecia = $( g_tag_do_podmiany_spis + " .card img" );
+
     if ( $odnosnikiZdjecia.length > 0 )
     {
         for( var i=0 ; i < $odnosnikiZdjecia.length ; i++ ){
@@ -963,7 +968,7 @@ var $odnosnikiZdjecia = $( g_tag_do_podmiany_spis + " td.galeria_kolor a.link_tr
     }
 
 	// akcja wypełniacz - tytuły
-var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" );	// jest <b>, ale też inny ".link" niż ".link_tresc"
+var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " .card-title > a" );
 	
     if ( $odnosnikiTytuly.length > 0 )
     {
@@ -1016,7 +1021,7 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" 
     }
 
 	// akcja wypełniacz - data
-var $odnosnikiData = $( g_tag_do_podmiany_spis + " td.galeria_kolor font" );
+var $odnosnikiData = $( g_tag_do_podmiany_spis + " .card small.text-muted" );
 	
     if ( $odnosnikiData.length > 0 )
     {
@@ -1037,7 +1042,7 @@ var $odnosnikiData = $( g_tag_do_podmiany_spis + " td.galeria_kolor font" );
     }
 	
 		// akcja wypełniacz - opis
-var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " td blockquote div[align=justify]" );
+var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " .card p.card-text:first-of-type" );  // tylko pierwszy napotkany ".card-text" w ".card", drugi poniżej stanowi datownik danego albumu/galerii 
 	
     if ( $odnosnikiOpis.length > 0 )
     {
@@ -1077,6 +1082,8 @@ var $listaPodstron = $( g_tag_do_podmiany_spis + ' ' + 'tr:last td[colspan=2] a.
 	ilePodstronSpisuTresci++; // dodatkowe +1 konieczne do zliczenia aktualnej galerii, która nie generuje odnośnik -- a przecież ją wyświetlamy teraz
 		
 	g_zaczytana_ilosc_paginacji_galerii = ilePodstronSpisuTresci;	  // !!! muerto importante !!!
+            // !!!!! WRÓCIĆ DO LINII POWYŻEJ PRZY KOLEJNYCH PRACACH ... UAKTUALNIĆ WARUNEK WYMAGANY DO DZIAŁANIA WITRYNY !!!!!  
+
         // ale zliczać można chyba łatwiej już wyświetlone podstrony, na zasadzie prostej inkrementacji? chyba...
 
 // debugowanie -- wyprowadzenie nowych treści w statusie dla zaczytanych właśnie treści 
@@ -1098,7 +1105,7 @@ var $listaPodstron = $( g_tag_do_podmiany_spis + ' ' + 'tr:last td[colspan=2] a.
 	} // if-END ( $listaPodstron.length >= 1 )
     
 	// czyszczenie kontenera źródłowego, dla testów pozostaje paginacja galerii -- docelowo zerować cały pojemnik źródłowy
-$( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie
+$( g_tag_do_podmiany_spis + ' > div' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie
     // efektywniej wywalić całość, oczywiście po odczytaniu wszelkich grup elementów i paginacji!  
     
     // obowiązakowe czyszczenie nadmiaru, warunek na szablon vs ilość załadowanych
@@ -1374,8 +1381,8 @@ function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii 
 {   // dodawanie działającej ścieżki dla obrazka, w spisie treści galerii oraz w każdej z podstron galerii
 var srcObrazka = '';
 var $obrazkiTytuloweGalerii = '';
-    if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img"); // ~(spis treści) to obrazki w galerii
-    else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " a:not(.link_tresc) img");
+    if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " .card img"); // ~(spis treści) to obrazki w galerii
+    else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " a:not(.link_tresc) img"); // ?!?! CO Z TYM ZROBIĆ ?!?! teraz na spisie treści każda pozycja to jeden <img> i jeden <a> jako tytuł; <a> nie otacza <img>
     
 	for (var i=0; i < $obrazkiTytuloweGalerii.length ; i++ )
 	{
@@ -1552,6 +1559,12 @@ return ( g_ilosc_wszystkich_galerii - nrGalerii ) % 5;
 function MaksymalnaIloscPodstronGalerii ()
 {
 return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszystkich_galerii % 5 ) / 5 ) ;
+}
+
+
+function ObliczMaksymalnaIloscPodstronGalerii ( nrGalerii )
+{
+return Math.ceil( nrGalerii / 5 );
 }
 
 
@@ -2088,7 +2101,7 @@ $('#wybrany_zaczytany_spis').fadeOut( czasAnimacji );
 
 function ZaczytajSpisGalerii ()
 {
-//http://zlobek.chojnow.eu/galeria,k0,p1.html - adres ostatniej galerii, wg daty
+// "http://zlobek.chojnow.eu/galeria,k0,p1.html" <-- adres ostatnio dodanych galerii/albumów, wg daty - lista z [1, 5] linkami; najnowsze/najświeższe wydarzenie na górze  
 var adres_ostatniej_galerii = "/galeria,k0,p1.html";
 var adres_zasobu_galerii = g_protokol_www + g_adres_strony;
 

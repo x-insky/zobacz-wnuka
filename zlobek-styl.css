@@ -226,6 +226,10 @@ a[data-href]:focus,
     filter: grayscale(80%);
 }
 
+.przekreslony-tekst {
+    text-decoration: line-through;
+}
+
 /*    --------------------------       NAGŁOWEK - KLASY      --------------------------     */
 
 h1.logo {

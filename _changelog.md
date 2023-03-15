@@ -1,3 +1,39 @@
+v0.6.3 - the list of recent galleries appears again on startup & links opens gallery/album
+
+* v0.6.3 - [2023-03-14]
+
+[+] ADDED
+
+-- witryna.js
+* added helper function "ObliczMaksymalnaIloscPodstronGalerii()" to calculate the maximum number of gallery subpages
+   - lack of this information when parsing website content - list of recent galleries
+   - limited pagination of the source site does not show all navigational links: maximum six for subpages forward, maximum 4 for navigation
+   
+-- zlobek-styl.css
+* added general class for displaying strikethrough text
+
+[*] MODIFIED
+
+-- witryna.js
+* change of preconditions for function "GenerujSpisGaleriiPierwszyPrzebieg()"
+   - verification of the existence of key attributes in relation to changes in the structure of the site
+   - update of data-acquiring selectors
+* modification of "GenerujSpisGalerii()" function
+   - preliminary version of the logic, needs a further work!
+   - new element selectors when parsing read content
+   - applies to reading: title, description, image and date of insertion for each album/gallery on the list
+   - .. reading content from the hierarchy of elements and their new classes - thanks to classes it is sometimes even easier ;) (less complex selectors)
+   - even allows you to display photos from each album (only the first/title subpage) :)
+* update of selectors in "NaprawBrakujaceSRCwKontenerze()" function
+   - preliminary logic
+
+-- index.php
+* added the name of another child in the dedication paragraph
+* after changes in the structure of the parent site - updated information about the number of displayed photos in the description
+* comments: unified the naming of main element distinguishing features at their closing tags (main functional containers)
+
+---------------------------
+
 v0.6.2 - ordering file structure for the Ajax query
 
 * v0.6.2 - [2023-03-13]
