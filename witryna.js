@@ -1000,7 +1000,7 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " .card-title > a" );
 
         	// nadawanie zmienionej formy wyświetlania odnośnika tekstowego	(tytuł galerii)
         trescTytulu = $( $odnosnikiTytuly[i] ).text();
-        $( $odnosnikiTytuly[i] ).removeClass('link').wrapInner('<h2></h2>'); // usuwanie obcej klasy link i wstawianie do wewnątrz <h2>
+        $( $odnosnikiTytuly[i] ).wrapInner('<h2></h2>'); // usuwanie obcej klasy link i wstawianie do wewnątrz <h2>
             if ( trescTytulu.length < 15 )
             { 
             $( $odnosnikiTytuly[i] ).find('h2').addClass('wyzszy'); // klasa ze zwiększonym odstępem pionowym - wyśrodkowanie w pionie
@@ -1031,7 +1031,7 @@ var $odnosnikiData = $( g_tag_do_podmiany_spis + " .card small.text-muted" );
          // zmiana treści wyświetlanej, lekka modyfikacja tekstu przy dacie i godzienie
         var tekstDocelowy = $( $odnosnikiData[i] ).text();
 
-        tekstDocelowy = tekstDocelowy.replace( "data publikacji: ", "z dnia: ");
+        tekstDocelowy = tekstDocelowy.replace( "data publikacji: ", "z dnia: ");    // dokonać korekty tekstu -- wyrażenie regularne lub .split()
     // poniższe niepotrzebne, tylko kilka liter -- nie ma potrzeby podmieniać i modyfikować znacznika jako HTML
     // tekstDocelowy = tekstDocelowy.replace('<font>', '' );
     // tekstDocelowy = tekstDocelowy.replace('</font>', '' );
@@ -1062,7 +1062,15 @@ var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " .card p.card-text:first-of-ty
     } // if-end $odnosnikiOpis
 
     	// nadal przegląd tego kontenera źródłowego, bo w innym podmienianym (spisie treści) też są te same klasy i identyczna struktura zagnieżdżenia!!! 
-var $listaPodstron = $( g_tag_do_podmiany_spis + ' ' + 'tr:last td[colspan=2] a.link_tresc' ); // ODSTĘP jest ważny (zawężanie kryterium też) 
+
+var liczbaPodstronListyGalerii = IleJestPodstronListyGalerii();
+
+    if ( liczbaPodstronListyGalerii >= 1 ) {
+    g_zaczytana_ilosc_paginacji_galerii = --liczbaPodstronListyGalerii;
+    }  
+
+/*     
+var $listaPodstron = $( g_tag_do_podmiany_spis + ' ' + 'tr:last td[colspan=2] a.link_tresc' ); // ODSTĘP jest ważny (zawężanie kryterium też) -- odczyt zawartości z wyszukiwania ostatniego odnośnika (były wszystkie dostepne linki do psotsron)
 
 	if ( $listaPodstron.length >= 1 )	// czy są jakieś odnośniki do podstron galerii? muszą być (wariant działającej już witryny)
 	{	// pierwsza podstrona nie zawiera odnośników do przejścia +1 w przód / -1 w tył -- "starsze" i "nowsze"!
@@ -1102,7 +1110,8 @@ var $listaPodstron = $( g_tag_do_podmiany_spis + ' ' + 'tr:last td[colspan=2] a.
                                         + 'A wcześniej zaczytano: "' + g_zaczytana_ilosc_paginacji_galerii + '" paginacji, a załadowano łącznie ' 
                                         + g_biezaca_pozycja_galerii + ' (vs ' + g_ilosc_zaczytanych_galerii + ') elementów galerii ze wszystkich ' 
                                         + g_ilosc_wszystkich_galerii + ' galerii');     */
-	} // if-END ( $listaPodstron.length >= 1 )
+    // } // if-END ( $listaPodstron.length >= 1 )
+
     
 	// czyszczenie kontenera źródłowego, dla testów pozostaje paginacja galerii -- docelowo zerować cały pojemnik źródłowy
 $( g_tag_do_podmiany_spis + ' > div' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie
@@ -1382,7 +1391,7 @@ function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii 
 var srcObrazka = '';
 var $obrazkiTytuloweGalerii = '';
     if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " .card img"); // ~(spis treści) to obrazki w galerii
-    else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " a:not(.link_tresc) img"); // ?!?! CO Z TYM ZROBIĆ ?!?! teraz na spisie treści każda pozycja to jeden <img> i jeden <a> jako tytuł; <a> nie otacza <img>
+    else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " .card img"); // ?!?! TĘ SAMĄ STRUKTURĘ zwraca ?!?! teraz na spisie treści każda pozycja to jeden <img> i jeden <a> jako tytuł; <a> nie otacza <img>
     
 	for (var i=0; i < $obrazkiTytuloweGalerii.length ; i++ )
 	{
@@ -1565,6 +1574,12 @@ return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszys
 function ObliczMaksymalnaIloscPodstronGalerii ( nrGalerii )
 {
 return Math.ceil( nrGalerii / 5 );
+}
+
+
+function IleJestPodstronListyGalerii ()
+{
+return g_ilosc_wszystkich_paginacji_galerii;
 }
 
 

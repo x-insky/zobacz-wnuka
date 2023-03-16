@@ -1,3 +1,28 @@
+v0.6.4 - restored the ability to load subsequent subpages with galleries
+
+* v0.6.4 - [2023-03-15]
+
+[+] ADDED
+
+-- witryna.js
+* new function "IleJestPodstronListyGalerii" returns the found number of subpages for the gallery list
+
+[*] MODIFIED
+
+-- witryna.js
+* altered the condition for counting subpages in the "GenerujSpisGalerii" function
+   - pre-simplification, no longer need to read values from content and quantify that content
+   - reference to the gallery list read for the first time (displayed with the latest content)
+   - the number of subpages with galleries is not explicitly shown, it should be calculated on the basis of gallery numbering
+   - the button loading the next subpage finally works
+   - ...and its multiple presses as well
+   - ...and simulation of failure to Ajax communication
+
+* unification of image search inside the function "NaprawBrakujaceSRCwKontenerze"
+   - for now, it works in listing the list of galleries (initially also for images of the selected gallery, but possible errors)
+
+---------------------------
+
 v0.6.3 - the list of recent galleries appears again on startup & links opens gallery/album
 
 * v0.6.3 - [2023-03-14]
