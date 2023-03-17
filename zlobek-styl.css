@@ -190,6 +190,10 @@ a[data-href]:focus,
     text-align: center;
 }
 
+.ukryte {
+    display: none;
+}
+
 .zamykanie {
     position: absolute;
     z-index: 11;
@@ -688,6 +692,7 @@ div.data-odnosnik {
     text-align: center;
     font-size: 80%;
     font-weight: bold;
+    color: #222;
     padding-top: 0.4em;
     padding-bottom: 0.4em;
 }

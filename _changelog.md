@@ -1,3 +1,29 @@
+v0.6.5 - date fixes in gallery/album links
+
+[+] ADDED
+
+-- witryna.js
+* new function "OdczytajNumerGaleriiZOdnosnika"
+   - transfers the gallery number from a link to a specific gallery/album
+
+-- zlobek-styl.css
+* introduced a new generic ".ukryte" class for hiding elements
+   - in order not to display the indicated elements
+
+[*] MODIFIED
+
+-- witryna.js
+* changed date format in each gallery list item to dotted separator
+   - time has been removed from the display
+   - prefix before date changed to "added"
+* minor corrections for the for() loop
+  - unified the syntax
+
+-- zlobek-styl.css
+* minor brightened color of creation date inside gallery link element
+
+---------------------------
+
 v0.6.4 - restored the ability to load subsequent subpages with galleries
 
 * v0.6.4 - [2023-03-15]
