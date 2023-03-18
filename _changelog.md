@@ -1,21 +1,47 @@
+v0.6.6 - the title photo is displayed again in the gallery details
+
+[*] MODIFIED
+
+-- witryna.js
+* fixes in handling click/button_press event on gallery list item
+  - fixed selector for image search
+  - introduced the use of the recently defined function "OdczytajNumerGaleriiZOdnosnika"
+  - processing date and time as separate attributes for better building of text strings 
+  - added a separate "time" attribute when calling the function "UzupełnijNaglowekBiezacejGalerii"
+* changed the generating of date and time for each displayed gallery in the list
+  - applies to the function "GenerujSpisGalerii"
+  - stopped "printing" time as hidden text for further processing
+  - ...instead the time is passed as a date attribute (literally in Polish "date-time" attribute, not "data-time" ;P)
+  - easier to operate separately on the date and time when passing to other functions or creating text
+* extended function "UzupełnijNaglowekBiezacejGalerii" with a separate time attribute
+  - better text merging
+
+-- zlobek-styl.css
+* slightly increased padding for gallery title (h2 elem)
+  - creation date no longer wraps under close gallery button on narrow screens
+  - also an improvement for very wide gallery title images - more spacing from title and close button
+  - ricochet also improved for footer content in close proximity of display h2 and close button
+
+---------------------------
+
 v0.6.5 - date fixes in gallery/album links
 
 [+] ADDED
 
 -- witryna.js
 * new function "OdczytajNumerGaleriiZOdnosnika"
-   - transfers the gallery number from a link to a specific gallery/album
+  - transfers the gallery number from a link to a specific gallery/album
 
 -- zlobek-styl.css
 * introduced a new generic ".ukryte" class for hiding elements
-   - in order not to display the indicated elements
+  - in order not to display the indicated elements
 
 [*] MODIFIED
 
 -- witryna.js
 * changed date format in each gallery list item to dotted separator
-   - time has been removed from the display
-   - prefix before date changed to "added"
+  - time has been removed from the display
+  - prefix before date changed to "added"
 * minor corrections for the for() loop
   - unified the syntax
 
@@ -37,15 +63,15 @@ v0.6.4 - restored the ability to load subsequent subpages with galleries
 
 -- witryna.js
 * altered the condition for counting subpages in the "GenerujSpisGalerii" function
-   - pre-simplification, no longer need to read values from content and quantify that content
-   - reference to the gallery list read for the first time (displayed with the latest content)
-   - the number of subpages with galleries is not explicitly shown, it should be calculated on the basis of gallery numbering
-   - the button loading the next subpage finally works
-   - ...and its multiple presses as well
-   - ...and simulation of failure to Ajax communication
+  - pre-simplification, no longer need to read values from content and quantify that content
+  - reference to the gallery list read for the first time (displayed with the latest content)
+  - the number of subpages with galleries is not explicitly shown, it should be calculated on the basis of gallery numbering
+  - the button loading the next subpage finally works
+  - ...and its multiple presses as well
+  - ...and simulation of failure to Ajax communication
 
 * unification of image search inside the function "NaprawBrakujaceSRCwKontenerze"
-   - for now, it works in listing the list of galleries (initially also for images of the selected gallery, but possible errors)
+  - for now, it works in listing the list of galleries (initially also for images of the selected gallery, but possible errors)
 
 ---------------------------
 
@@ -57,8 +83,8 @@ v0.6.3 - the list of recent galleries appears again on startup & links opens gal
 
 -- witryna.js
 * added helper function "ObliczMaksymalnaIloscPodstronGalerii()" to calculate the maximum number of gallery subpages
-   - lack of this information when parsing website content - list of recent galleries
-   - limited pagination of the source site does not show all navigational links: maximum six for subpages forward, maximum 4 for navigation
+  - lack of this information when parsing website content - list of recent galleries
+  - limited pagination of the source site does not show all navigational links: maximum six for subpages forward, maximum 4 for navigation
    
 -- zlobek-styl.css
 * added general class for displaying strikethrough text
@@ -67,16 +93,16 @@ v0.6.3 - the list of recent galleries appears again on startup & links opens gal
 
 -- witryna.js
 * change of preconditions for function "GenerujSpisGaleriiPierwszyPrzebieg()"
-   - verification of the existence of key attributes in relation to changes in the structure of the site
-   - update of data-acquiring selectors
+  - verification of the existence of key attributes in relation to changes in the structure of the site
+  - update of data-acquiring selectors
 * modification of "GenerujSpisGalerii()" function
-   - preliminary version of the logic, needs a further work!
-   - new element selectors when parsing read content
-   - applies to reading: title, description, image and date of insertion for each album/gallery on the list
-   - .. reading content from the hierarchy of elements and their new classes - thanks to classes it is sometimes even easier ;) (less complex selectors)
-   - even allows you to display photos from each album (only the first/title subpage) :)
+  - preliminary version of the logic, needs a further work!
+  - new element selectors when parsing read content
+  - applies to reading: title, description, image and date of insertion for each album/gallery on the list
+  - ...reading content from the hierarchy of elements and their new classes - thanks to classes it is sometimes even easier ;) (less complex selectors)
+  - even allows you to display photos from each album (only the first/title subpage) :)
 * update of selectors in "NaprawBrakujaceSRCwKontenerze()" function
-   - preliminary logic
+  - preliminary logic
 
 -- index.php
 * added the name of another child in the dedication paragraph
@@ -108,17 +134,17 @@ v0.6.1 - Ajax query returns correct site snippet again
 
 -- przechwytywacz.php
 * fix remote read after changes in parent site structure
-   - only a fragment with the expected content of the site is passed
-   - only wanted container is forwarded for further processing
-   - first version of the algorithm - contains lots of comments and inconsistent code
-   - added features for recurring search issues
+  - only a fragment with the expected content of the site is passed
+  - only wanted container is forwarded for further processing
+  - first version of the algorithm - contains lots of comments and inconsistent code
+  - added features for recurring search issues
 * difficulties:
-   - operating on many similar <div> elements instead of one <table> element
-   - specifying the start and end for the container with the target content
-   - matching the closing tags to the opening tags (these result from the changed structure of the nursery website and mutual proximity)
-   - clearing the end range (closing tag)
-   - searching for text strings in the vicinity of a given distinguishing feature
-   - operating on HTML as plain text, without support for the structural search system (which is offered by e.g. CSS or jQuery)
+  - operating on many similar <div> elements instead of one <table> element
+  - specifying the start and end for the container with the target content
+  - matching the closing tags to the opening tags (these result from the changed structure of the nursery website and mutual proximity)
+  - clearing the end range (closing tag)
+  - searching for text strings in the vicinity of a given distinguishing feature
+  - operating on HTML as plain text, without support for the structural search system (which is offered by e.g. CSS or jQuery)
 
 ---------------------------
 

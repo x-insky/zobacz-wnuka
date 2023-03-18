@@ -29,7 +29,7 @@ var g_element_zewnetrzny = "#galeria_tresc",	// od 2022-11 kontenerem treści dy
  g_tag_do_podmiany_zdjecia = "div#zawartosc_do_podmiany", // element DOM, do którego load() wstawi zawartość tagu <table.galeria> z witryny zewnętrznej
  g_miejsce_na_zdjecia = "div#skladowisko", // zamienić na coś sensowniejszego
  // g_wczytywanie_podstrona = "#wczytywanie_podstrona",
- // g_wczytywanie_spis = "#wczytywanie_spis",	
+ // g_wczytywanie_spis = "#wczytywanie_spis",
 
  g_element_zewnetrzny_spis = "#galeria_tresc",   // g_element_zewnetrzny_spis = "td#tresc_glowna.tlo_artykulow",
  g_tag_do_podmiany_spis = "div#galeria_spis_podmiana",
@@ -46,9 +46,9 @@ var g_element_zewnetrzny = "#galeria_tresc",	// od 2022-11 kontenerem treści dy
  g_wybrany_nr_galerii = 0,              // zapamiętanie co siedzi w polu od numeru galerii (pozycja suwaka)
  g_wybrany_nr_podstrony_galerii = 0,    // zapamiętanie co siedzi w polu od numeru podstrony galerii (też suwak)
 
- $g_input_nr_galerii = $('input#galeria_wybrany_nr'), 
- $g_suwak_nr_galerii = $('input#suwak_galerii'), 
- $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'), 
+ $g_input_nr_galerii = $('input#galeria_wybrany_nr'),
+ $g_suwak_nr_galerii = $('input#suwak_galerii'),
+ $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'),
  $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),    
  g_niewyslane_podstrony = [],     // wszystkie żądania wyświetlenia ...vs lub tylko te do kolejnych podstron
  g_prezentacja_wczytywania = [],  // niejako kontener na stan wszystkich powiadomień o wczytywaniu
@@ -1032,20 +1032,15 @@ var $odnosnikiData = $( g_tag_do_podmiany_spis + " .card small.text-muted" );
         var tekstDocelowy = $( $odnosnikiData[i] ).text();
 
         tekstDocelowy = tekstDocelowy.replace(/-/g, '.'); // zamiana WSZYSTKICH DWÓCH łączników na kropki poprzez wyraażenie regularne
-        tekstDocelowy = "dodano: " + tekstDocelowy;  // proste zastąpienie tekstu innym ciągiem, aby nie kopiować znaczników
 
-        var godzinaPozycja = tekstDocelowy.lastIndexOf(" "); //
-        var godzina = tekstDocelowy.substr( godzinaPozycja + 1 ); // od tej spacji-oddzielnika do końca 
+        var godzinaPozycja = tekstDocelowy.lastIndexOf(" "); // podział na datę i godzinę
+        var godzina = tekstDocelowy.substr( godzinaPozycja + 1 ); // wydzielenie godziny; od tej spacji-oddzielnika do końca 
 
-        tekstDocelowy = tekstDocelowy.substr( 0, godzinaPozycja ); // !! skrócenie do postaci tekstu z samą datą
-        tekstDocelowy = tekstDocelowy + '<span class="ukryte"> ' + godzina + ' </span>';    // ukryta treść z godziną ma posiadać odstępy 
+        tekstDocelowy = tekstDocelowy.substr( 0, godzinaPozycja ); // !! skrócenie do postaci tekstu z samą datą (tak, bez godziny)
+        tekstDocelowy = "dodano: " + tekstDocelowy;  // proste dopisanie prefiksu do daty
 
-    // poniższe niepotrzebne, tylko kilka liter -- nie ma potrzeby podmieniać i modyfikować znacznika jako HTML
-    // tekstDocelowy = tekstDocelowy.replace('<font>', '' );
-    // tekstDocelowy = tekstDocelowy.replace('</font>', '' );
-    // $( $odnosnikiData[i] ).text( tekstDocelowy ).removeAttr("style");
-    // $( miejsceDocelowe ).html( $odnosnikiData[i] );
         $( miejsceDocelowe ).html( tekstDocelowy );
+        $( miejsceDocelowe ).attr('data-godzina', godzina); // dodanie atrybutu "godzina" do elementu z treścią tekstową z datą
         }
     }
 	
@@ -1319,7 +1314,7 @@ odczytaneNamiary.tytul = roboczaWartosc.text();
 odczytaneNamiary.adres = roboczaWartosc.attr('href'); // + normalizacja ścieżki na pełny zewnętrzny adres poniżej
 odczytaneNamiary.adres = g_protokol_www + g_adres_strony + "/" + odczytaneNamiary.adres;
 odczytaneNamiary.nrGalerii = parseInt( odczytaneNamiary.adres.substr( odczytaneNamiary.adres.lastIndexOf(",a") + 2 ) ); // już sprawdzony algorytm pozyskiwnia numeru galerii/podstrony
-odczytaneNamiary.nrPodstronyGalerii = parseInt( MaksymalnaIloscPodstronGalerii( odczytaneNamiary.nrGalerii ) );  // przeliczenie podstrony na podstawie odczytanego numer galerii
+odczytaneNamiary.nrPodstronyGalerii = MaksymalnaIloscPodstronGalerii( odczytaneNamiary.nrGalerii );  // przeliczenie podstrony na podstawie odczytanego numer galerii
 odczytaneNamiary.opis = $( przeszukiwanyKontener + " td blockquote div[align=justify]:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).text();
 roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")").attr('src');
 roboczaWartosc = g_protokol_www + g_adres_strony + "/" + roboczaWartosc ; // normalizacja ścieżki na pełny zewnętrzny serwer
@@ -1548,10 +1543,9 @@ return true;
 
 
 function UzupełnijNaglowekBiezacejGalerii ( galeria, diagnostyka )
-{ // atrybuty { tytul, opis, srcObrazka, data } + o inne też można rozszerzyć, najlepiej aby był to pełny opis obiektu galerii
-var trescDaty = galeria.data;   // przykładowa: "z dnia: 2016-02-25 18:45"
-trescDaty = trescDaty.slice( trescDaty.indexOf(":")+2, trescDaty.lastIndexOf(":")-3 );
-trescDaty = '(' + trescDaty.replace(/-/g, '.') + ')'; // zamiana WSZYSTKICH DWÓCH łączników na kropki
+{ // atrybuty { tytul, opis, srcObrazka, data, godzina } + o inne też można rozszerzyć, najlepiej aby był to pełny opis obiektu galerii
+var trescDaty = "utworzono: " + galeria.data + " o " + galeria.godzina;   // teraz każdy z atrybutów osobno (ale ciąg scalany z obu), a nie jak wcześniej z klikniętej galerii skopiowane: "z dnia: 2016-02-25 18:45"
+trescDaty = trescDaty.replace(/-/g, '.'); // gdyby nadal z separatorami typu "-" to zamień WSZYSTKICH DWÓCH łączników na kropki poprzez wyrażenie regularne
 
 var trescHtml = ''; // <div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>';   // doklej przycisk na początku ;)
 trescHtml += '<div class="kontener"><h2>Galeria nr <span>' + galeria.nrGalerii + '</span> &ndash; <span>' + galeria.tytul + '</span></h2>'; // najpierw <h2>, aby go ewentualny <img> z float nie wyprzedzał na wąskim ekranie
@@ -2782,7 +2776,7 @@ $('#glowna').on("click keypress", "a", function ( e )   // kasowanie FOCUSU przy
 
         if ( e.which == 32 )
         {
-        e.preventDefault(); // blokowanie przewijania ekranu spacją oraz aktywacja elementu - symulacja klieknięcia
+        e.preventDefault(); // blokowanie przewijania ekranu spacją oraz aktywacja elementu - symulacja kliknięcia
         $(this).click();    // sztuczne kliknięcie myszą na tym samym elemencie - przekierowanie do tego samego zdarzenia (+ kasacja obrysu)
         }
     }
@@ -3050,7 +3044,7 @@ var $this = $(this);
 var serwer = g_protokol_www + $this.attr('data-adres_strony') + '/';
 var ktoraPodstrona = $this.attr('value');
 
-ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nowno z pominięciem "aktualnego" przycisku == zawartość aktualnej podstrony galerii
+ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nono z pominięciem "aktualnego" przycisku == zawartość aktualnej podstrony galerii
 
     // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X' "JAK NAJBLIŻEJ KODU OBSŁUGI NACIŚNIĘCIA DOWOLNEGO PRZYCISKU NAWIGACJI W PODGALERII
     // ustawić jako początkową czynność blokowanie przycisku lub ukrywanie innego od zamykania (zależy na czasie!), a przetestowano możliwość wciśnięcia przycisku podgalerii klawiaturą,
@@ -3116,14 +3110,19 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
 
     var $this = $(this);
     var galeriaDocelowa = $this.attr('data-href');	// pierwotnie był odczyt bezpośrednio z istniejącego 'href', teraz w jego miejscu 'data-href'
-    var nrGalerii = parseInt( galeriaDocelowa.substr( galeriaDocelowa.lastIndexOf(",a") + 2 ) ); // wg sprawdzonego algorytmu
-    var nrPodstronyGalerii = parseInt( MaksymalnaIloscPodstronGalerii( nrGalerii ) );
+    var nrGalerii = OdczytajNumerGaleriiZOdnosnika( galeriaDocelowa );
+    var nrPodstronyGalerii = MaksymalnaIloscPodstronGalerii( nrGalerii );
 
     var tytulGalerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek, a nie na obrazek -- bo nie posiadałby tekstu)
 
     var opisGalerii = $this.parents('.kontener-odnosnik').find('.opis-odnosnik').html();	 // było .text(), ale teraz zyskujemy formatowanie tekstu
     var dataGalerii = $this.parents('.kontener-odnosnik').find('.data-odnosnik').text();       // tu bezwzględnie tylko tekst
-    var srcObrazkaGalerii = $this.parent().siblings('.zdjecie-odnosnik').find('a img').attr('src');
+        if ( dataGalerii.indexOf(" ") > 0 )     // jeśli treśc daty zawiera spacje (czyli jest coś przed datą - nie tylko samą datę) to usuń takowy tekst (no chyba że spacja "za" :/)  
+        {
+        dataGalerii = dataGalerii.substr( dataGalerii.lastIndexOf(" ")+1 ); // tylko sama data do przechowania
+        }
+    var godzinaGalerii = $this.parents('.kontener-odnosnik').find('.data-odnosnik').attr('data-godzina'); // wyciągnięcie samej godziny; sens atrybutu po polsku może być podobny do oczekiwanego
+    var srcObrazkaGalerii = $this.parent().siblings('.zdjecie-odnosnik').find('img').attr('src');
 
         if ( tytulGalerii.length == 0 )  // jeżeli naciśnięto odnośnik z obrazkiem, ten drugi zawiera już treść odnośnika
         {
@@ -3136,8 +3135,8 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
     console.log('ZDARZENIE: "Naciśnięto" i wywołano odnośnik dla galerii "' + tytulGalerii + '"' );
 
         // załaduj tytuł, opis i obrazek dla danej galerii, po czym załaduje się jej pierwszą podstronę
-    UzupełnijNaglowekBiezacejGalerii ( { 'tytul' : tytulGalerii, 'opis' : opisGalerii, 'srcObrazka' : srcObrazkaGalerii, 'data' : dataGalerii,
-                                            'nrGalerii' : nrGalerii, 'nrPodstronyGalerii' : nrPodstronyGalerii } );     // lista uzupełniona o numerację odczytanych
+    UzupełnijNaglowekBiezacejGalerii ( { 'tytul': tytulGalerii, 'opis': opisGalerii, 'srcObrazka': srcObrazkaGalerii, 'data': dataGalerii, 'godzina': godzinaGalerii,
+                                            'nrGalerii': nrGalerii, 'nrPodstronyGalerii': nrPodstronyGalerii } );     // lista uzupełniona o numerację odczytanych
 
         // wstawienie animacji na postęp ładowania
     // $( g_wczytywanie_podstrona ).show(100);
