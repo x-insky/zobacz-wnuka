@@ -1,4 +1,35 @@
+v0.6.7 - provided navigation between subpages of a displayed gallery
+
+* v0.6.7 - [2023-03-22]
+
+[+] ADDED
+
+-- witryna.js
+* created a number of utility functions to read the content of any link (to the picture or navigation link)
+  - it was possible to obtain: gallery number, gallery/album subpage, global photo number/address, photo number inside the gallery
+  - unified names were given for these functions in order to obtain the above values - by prefixing the name of the function "OdczytajZOdnosnika..."
+  - in accordance with the DRY principle
+
+[*] MODIFIED
+
+-- witryna.js
+* changed the order of searching and processing images in relation to buttons (nav links) inside the "GenerujPodstronyGalerii" function
+  - in the new www structure, we get a maximum of seven links to subpages instead all of them as before
+  - ...and now all galleries/albums has only a half of the number of displayed photos in subpages (change from 18 to 9), which doubles the number of subpages of any displayed gallery
+  - we can only read 9 images at a time :(
+  - by obtaining the highest number from the first encountered photo on the first subpage of the gallery, you can calculate the total number of subpages in the album
+  - expanded or added new logical conditions
+* replaced repetitive code in various functions with calling appropriate utility function "OdczytajZOdnosnika..."
+* renamed the "OdczytajNumerGaleriiZOdnosnika" function to "OdczytajZOdnosnika..."
+* improved generation of ALT attribute for photos (a la thumbnails)
+  - "new page" does not submit this attribute
+  - assigned in relation to the number of a given photo in relation to the number of all photos in this gallery (the first displayed is actually the last photo)
+
+---------------------------
+
 v0.6.6 - the title photo is displayed again in the gallery details
+
+* v0.6.6 - [2023-03-17]
 
 [*] MODIFIED
 
@@ -25,6 +56,8 @@ v0.6.6 - the title photo is displayed again in the gallery details
 ---------------------------
 
 v0.6.5 - date fixes in gallery/album links
+
+* v0.6.5 - [2023-03-16]
 
 [+] ADDED
 

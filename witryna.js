@@ -37,6 +37,7 @@ var g_element_zewnetrzny = "#galeria_tresc",	// od 2022-11 kontenerem treści dy
 
  g_ilosc_wszystkich_paginacji_galerii = 0,   // ile ogółem jest podstron ze spisem galerii, w grupach po pięć, poza ostatnią grupą 1..5 elementów
  g_zaczytana_ilosc_paginacji_galerii = 0,  // ile pozostało podstron poza zaczytaną i wyświetloną podstroną
+ g_ilosc_zdjec_biezaca_galeria = 0            // ile zdjęć siedzi w bieżącej galerii
  g_biezaca_pozycja_galerii = 0,         // które elementy już wyświetlono/zaczytano od ostatniego (jako pierwszego) w grupach po pięć
  g_ilosc_zaczytanych_galerii = 0,		// ile elementów wstawiono do tej pory na stronę
  g_ilosc_wszystkich_galerii = 0,        // ilość galerii zawartych na www
@@ -474,7 +475,7 @@ function GenerujPodstronyGalerii ( kontenerZrodlowy, nrWyswietlanejGalerii )
 { 	     // poniżej wartości domyślne dla parametrów ES5
 nrWyswietlanejGalerii = parseInt( nrWyswietlanejGalerii );    
     if ( ( !kontenerZrodlowy ) || ( kontenerZrodlowy == '') ) kontenerZrodlowy = '#zawartosc_do_podmiany';
-    if ( ( nrWyswietlanejGalerii == undefined ) || ( isNaN( nrWyswietlanejGalerii) ) ) nrWyswietlanejGalerii = 1;
+    if ( ( nrWyswietlanejGalerii == undefined ) || ( isNaN( nrWyswietlanejGalerii) ) || ( nrWyswietlanejGalerii < 1 ) ) nrWyswietlanejGalerii = 1;  // uzwględniono chyba wszystkie nieprawidłowe warunki liczbowe 
 
 var kontenerDocelowyElement = "div#skladowisko",
     $kontenerDocelowy = $( kontenerDocelowyElement ),
@@ -499,7 +500,58 @@ $('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na 
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
 $kontenerDocelowy.show( 100 );	// pokaż kontener na zaczytaną zawartość ... + przewiń po wyświetleniu całości?
 
-var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie wewnątrz danego pojemnika
+//przeszukiwanie odnośników dla miniatur w galerii; link z miniatury prowadziŁ do normalnej (większej) kopii obrazka (aktualne do 2022.11; teraz MINIATURA == OBRAZEK)
+var $odnosnikiMiniatur  = $( kontenerZrodlowy + ' .card > a' ); // skoro powinny zawsze być znalezione [1..maks_grupa_zdjęć_w_podstronie], to nie weryfikuję dalej 
+
+// logowanie sukcesu: znelezione miniatury dla bieącej podstrony 
+console.log('Znaleziono na podstronie ' + $odnosnikiMiniatur.length + ' miniatur - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
+
+        // zweryfikować obliczenie bieżącej galerii we wcześniejszej pętli ...
+    
+$( g_miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyświetlenie nowej galerii 
+$( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietlanejGalerii  + '.</span> podstrony galerii</h2>');  // dopisanie nagłówka dla bieżącej galerii - z PARAMETRU WYWOŁANIA, a nie obliczonego na podstawie przebiegu
+    
+    $odnosnikiMiniatur.each( function( i, biezacyOdnosnik) {
+
+    var $biezacyOdnosnik = $(biezacyOdnosnik); // this == biezacyOdnosnik
+    var biezacyOdnosnikHREF = $biezacyOdnosnik.attr('href');
+    var $obrazekWOdnosniku = $biezacyOdnosnik.find('img');
+
+        // podobnie określany numer, jako konwersja wybranego wycinka z części odnośnika
+        // tu końcówka napisu z numerem podstrony już do niczego niepotrzebna
+    var numerZdjecia = OdczytajZOdnosnikaNumerZdjeciaWGalerii( biezacyOdnosnikHREF );
+    var odnosnikNrZdjeciaGlobalne = OdczytajZOdnosnikaGlobalnyNumerZdjecia( biezacyOdnosnikHREF );
+    
+        if ( ( nrWyswietlanejGalerii == 1 ) && ( i == 0) )  // jeśli to pierwsza (tytułowa) podstrona i pierwszy znaleziony element to zawiera on liczbę 
+        {
+            g_ilosc_zdjec_biezaca_galeria = numerZdjecia;   // przypisz caościową liczbę obrazków w galerii
+        }
+
+    var serwerowyOpisObrazkaALT = ( $obrazekWOdnosniku.attr('alt') || ( ( numerZdjecia ).toString() + " z " + ( g_ilosc_zdjec_biezaca_galeria ).toString() ) );// pozyskanie atrybutu ALT ze źródła (o ile istnieje, to dostajemy wprost numer zdjęcia w danej galerii)
+    var opisObrazkaALT = 'zdjęcie ' + serwerowyOpisObrazkaALT;
+    $obrazekWOdnosniku.attr('alt', opisObrazkaALT);     // modyfikacja/tworzenie treści atrybutu (o ile istniał)
+    var opisObrazkaALTDuzaLitera = "Zdjęcie nr "  + serwerowyOpisObrazkaALT + " w tej galerii (" + odnosnikNrZdjeciaGlobalne + g_rozszerzenie_obrazka + ")"; // nowa lepsza nazwa na tytuł w podglądzie JS
+
+    // console.log("Dla elementu <a> o HREF '" + biezacyOdnosnikHREF + "' NR_ZDJĘCIA to '" + odnosnikNrZdjecia + "', a ALT miniatury IMG to '" + opisObrazkaALT + "'" );	// DEBUG
+
+    // sklejanie adresu docelowego obrazka z ustalonych fragmentów i ścieżki względnej (numeru zdjęcia w zasadzie)   
+    var pelnyAdresOdnosnika = g_protokol_www + g_adres_strony + "/" + g_folder_serwera + "/" + g_matryca_nazwy_pliku + odnosnikNrZdjeciaGlobalne + g_rozszerzenie_obrazka ;	
+    $biezacyOdnosnik.attr( { href: pelnyAdresOdnosnika, "data-lightbox": "Galeria",
+                            "data-title": opisObrazkaALTDuzaLitera, title: opisObrazkaALT } ); // zmienia href na bezpośrednie odnośniki do serwera zewnętrznego
+            // PLUS Lightbox w atrybutach data!!!
+    $biezacyOdnosnik.siblings().remove();
+
+    // sklejanie adresu dla miniatury, owiniętej odnośnikiem   -  
+    // przeklejenie - wstawienie odnośników do zdjęć w innym, właściwym obszarze
+    $kontenerDocelowy.append( $biezacyOdnosnik ); 
+    }); //each-function-END
+
+    if ( $odnosnikiMiniatur.length <= 0) // gdyby jednak nic nie znaleziono (chyżby coś z serwerem lub transmisją?)
+    {
+    console.log('Nie znaleziono na podstronie żadnych miniatur (stan: ' + $odnosnikiMiniatur.length + ') - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
+    }
+
+    var $listaPodstron = $( kontenerZrodlowy + ' .pagination .page-link' ); // wyszukiwanie wewnątrz danego pojemnika
 
     if ( $listaPodstron.length >= 1 )	// czy są jakieś odnośniki do podstron/paginacji galerii? (zlicza wszystkie, też NOWSZE/STARSZE)
     {					// startujemy od kolejnej strony po pierwszej, ale ostatni zawiera ciąg "starsze"
@@ -510,50 +562,51 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         for ( var i=0; i < $listaPodstron.length; i++ ) {
             // każda podstrona/paginacja zaczytywana po kolei z odsyłaczem w formie tekstowej -- treść tekstowa danego odnośnika
         nazwaPodstronyGalerii = $( $listaPodstron[i] ).text();  // pozyskiwanie bezpośredniej treści tekstowej odsyłacza
-            if ( ( nazwaPodstronyGalerii.search("nowsze") >= 0 ) || ( nazwaPodstronyGalerii.search("starsze") >= 0 ) )
+            if ( ( nazwaPodstronyGalerii.search("nowsze") >= 0 ) || ( nazwaPodstronyGalerii.search("starsze") >= 0 )
+                 || ( nazwaPodstronyGalerii.search("następne") >= 0 ) || ( nazwaPodstronyGalerii.search("poprzednie") >= 0 ) )
             {
             // nic nie robimy dla takiego odnośnika, najlepiej zakończyć bieżącą iterację
-            continue;  // nie wyświetlaj przyciku/-ów z tekstem "starsze/nowsze" dla danego wykonania pętli - wyjście z kroku pętli
+            continue;  // nie wyświetlaj przyciku/-ów z tekstem "starsze/nowsze"/"poprzednie/następne" dla danego wykonania pętli - wyjście z kroku pętli
             }
         ileLinkowDoPodstron++;  // dopiero tu inkrementacja znalezionej ilości "dobrych" przycisków
 
         var odnosnikPodstrony = $( $listaPodstron[i] ).attr('href'); 	// wyciąga href z nawigacji podstrony/paginacji
-        // informacja o pozytywneym odczytaniu odnośnika do podstrony galerii
+        // informacja o pozytywnym odczytaniu odnośnika do podstrony galerii
         // console.log('Natrafiono na odnośnik nr ' + (i+1) + ' o zawartości \'' + odnosnikPodstrony + '\'');
 
-        //var nrGalerii = odnosnikPodstrony.split(",")[2]; // to był wystarczający warunek, póki w "tytule" nie zawarto przecinka/ów (",")
-        var nrGalerii = parseInt ( odnosnikPodstrony.substr( odnosnikPodstrony.lastIndexOf(",p") + 2, odnosnikPodstrony.length - 5 ) );
-            // "http.../u_misiow,a20,p2.html"  <-- usuwanie przecinka i "p", które są o "2 przed" numerem podstrony galerii
-            // treść z numerem kończy się ".html" - pomijane te 5 znaków przy krojeniu STRINGU)
+        var nrGalerii = OdczytajZOdnosnikaNumerPodstronyGalerii ( odnosnikPodstrony );
 
-                // tu oblicznanie w pętli przejścia do ewentualnego poprzedniego oraz ewentualnego następnego względem bieżącego
-            if ( ( nrGalerii == ( nrWyswietlanejGalerii - 1 ) ) && ( nrGalerii > 0 ) )  // > "jeden" to źle?
+            if ( ( nrGalerii !== undefined ) && ( !isNaN( nrGalerii ) ) )   // jeżeli odczytano z przycisku odnośnik z NUMEREM podstrony to wstaw przycisk z odnośnik do tej podstron
             {
-            przyciskPoprzedni.nrPodstrony = nrGalerii; // przypisanie numeru galerii, który jest -1 w stosunku do bieżącej (wyświetlanej)
-            przyciskPoprzedni.adresUrl = odnosnikPodstrony; // też jej adres jest potrzebny
-            }
-            if ( ( nrGalerii == ( nrWyswietlanejGalerii + 1 ) ) && ( nrGalerii < ( $listaPodstron.length + 1 ) ) )      // korekta na +1 max
-            {
-            przyciskNastepny.nrPodstrony = nrGalerii;
-            przyciskNastepny.adresUrl = odnosnikPodstrony;
-            }
-        var nowyPrzycisk = $('<button></button>', {
-        // var nowyPrzycisk = $('<input></input>', {
-        // type : "button",            
-            //id : "galeria_paginacja_" + ( i+1 ),  // tu generowane po kolei
-            id : "galeria_paginacja_" + nrGalerii,  // a tu użycie obliczonego numeru do konkretnej podstrony danej galerii (też po kolei, ale z wyłączeniem aktualnie wyswietlanej podstrony)
-            "class" : "przycisk_galeria",
-            value : nrGalerii, 
-            text : "Podstrona nr " + nrGalerii, // etykieta z konkretnym numerem do nawigowania
-            "data-tag" : g_tag_do_podmiany_zdjecia,
-            "data-adres_strony" : g_adres_strony,
-            "data-adres_galerii" : odnosnikPodstrony,
-            "data-elem_zewn" : g_element_zewnetrzny
-        });	 
+                    // tu oblicznanie w pętli przejścia do ewentualnego poprzedniego oraz ewentualnego następnego względem bieżącego
+                if ( ( nrGalerii == ( nrWyswietlanejGalerii - 1 ) ) && ( nrGalerii > 0 ) )  // > "jeden" to źle?
+                {
+                przyciskPoprzedni.nrPodstrony = nrGalerii; // przypisanie numeru galerii, który jest -1 w stosunku do bieżącej (wyświetlanej)
+                przyciskPoprzedni.adresUrl = odnosnikPodstrony; // też jej adres jest potrzebny
+                }
+                if ( ( nrGalerii == ( nrWyswietlanejGalerii + 1 ) ) && ( nrGalerii < ( $listaPodstron.length + 1 ) ) )      // korekta na +1 max
+                {
+                przyciskNastepny.nrPodstrony = nrGalerii;
+                przyciskNastepny.adresUrl = odnosnikPodstrony;
+                }
+            var nowyPrzycisk = $('<button></button>', {
+            // var nowyPrzycisk = $('<input></input>', {
+            // type : "button",            
+                //id : "galeria_paginacja_" + ( i+1 ),  // tu generowane po kolei
+                id : "galeria_paginacja_" + nrGalerii,  // a tu użycie obliczonego numeru do konkretnej podstrony danej galerii (też po kolei, ale z wyłączeniem aktualnie wyswietlanej podstrony)
+                "class" : "przycisk_galeria",
+                value : nrGalerii, 
+                text : "Podstrona nr " + nrGalerii, // etykieta z konkretnym numerem do nawigowania
+                "data-tag" : g_tag_do_podmiany_zdjecia,
+                "data-adres_strony" : g_adres_strony,
+                "data-adres_galerii" : odnosnikPodstrony,
+                "data-elem_zewn" : g_element_zewnetrzny
+            });	 
 
-        przyciskiDoWstawienia.push( nowyPrzycisk ); // zbieranie istniejących przycisków podgalerii do jednej kolekcji (z wyłaczeniem "poprzednia/następna" oraz siebie samego)
-            // powyższe celem polepszenia wydajności, aby dołączyć do DOM jeden element, zawierający kolekcję przycisków (po zebraniu tej kolekcji)
+            przyciskiDoWstawienia.push( nowyPrzycisk ); // warunkowe dodamie - zbieranie istniejących przycisków podgalerii do jednej kolekcji (z wyłaczeniem "poprzednia/następna" oraz siebie samego)
+                // powyższe celem polepszenia wydajności, aby dołączyć do DOM jeden element, zawierający kolekcję przycisków (po zebraniu tej kolekcji)
 
+            } // if-END !undefined && !isNaN
         } // for-END
         
             // logownie kolekcji przycisków dla sukcesu (znaleziono na stronie) 
@@ -618,52 +671,6 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         // zawsze to lepsze, niż brak tego komunikatu, (+): rozwiewa niepewność, że nic więcej nie ma
     $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Brak innych podstron dla tej galerii</h3></div>'); 
     }   // if-else-END $listaPodstron.length >= 1
-
-//przeszukiwanie odnośników dla miniatur w galerii, link z miniatury prowadzi do normalnej (większej) kopii obrazka
-// do galerii prowadzą odnośniki z tą klasą, do paginacji niestety też ;) | same zdjęcia i miniatury bez przypisanej klasy dla <a>
-var $odnosnikiMiniatur  = $( kontenerZrodlowy + ' a:not(.link_tresc)' );
-
-// logowanie sukcesu: znelezione miniatury dla bieącej podstrony 
-// console.log('Znaleziono na podstronie ' + $odnosnikiMiniatur.length + ' miniatur - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
-
-        // zweryfikować obliczenie bieżącej galerii we wcześniejszej pętli ...
-    
-$( g_miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyświetlenie nowej galerii 
-$( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietlanejGalerii  + '.</span> podstrony galerii</h2>');  // dopisanie nagłówka dla bieżącej galerii - z PARAMETRU WYWOŁANIA, a nie obliczonego na podstawie przebiegu
-    
-    $odnosnikiMiniatur.each( function() {
-
-    var $biezacyOdnosnik = $(this);
-    var biezacyOdnosnikHREF = $biezacyOdnosnik.attr('href');
-    var $obrazekWOdnosniku = $biezacyOdnosnik.find('img');
-
-        // podobnie określany numer, jako konwersja wybranego wycinka z części odnośnika
-        // tu końcówka napisu z numerem podstrony już do niczego niepotrzebna 
-    var odnosnikNrZdjecia = parseInt( biezacyOdnosnikHREF.substr( biezacyOdnosnikHREF.lastIndexOf( ",z") + 2, biezacyOdnosnikHREF.length - 8 ) );
-
-    var serwerowyOpisObrazkaALT = $obrazekWOdnosniku.removeAttr('border').attr('alt') || "Obrazek galerii"; // pozyskanie atrybutu ALT ze źródła wraz z usunięciem głupiego atrybutu BORDER danego obrazka/miniatury (pozyskujemy wprost numer zdjęcia w danej galerii)
-    var opisObrazkaALT = 'zdjęcie ' + serwerowyOpisObrazkaALT
-    $obrazekWOdnosniku.attr('alt', opisObrazkaALT);     // wydłużenie treści oryginalnego atrybutu
-    var opisObrazkaALTDuzaLitera = "Zdjęcie nr "  + serwerowyOpisObrazkaALT + " w tej galerii (" + odnosnikNrZdjecia + g_rozszerzenie_obrazka + ")"; // nowa lepsza nazwa na tytuł  po kliknięciu
-
-    // console.log("Dla elementu <a> o HREF '" + biezacyOdnosnikHREF + "' NR_ZDJĘCIA to '" + odnosnikNrZdjecia + "', a ALT miniatury IMG to '" + opisObrazkaALT + "'" );	// DEBUG
-
-    // sklejanie adresu docelowego obrazka z ustalonych fragmentów i ścieżki względnej (numeru zdjęcia w zasadzie)   
-    var pelnyAdresOdnosnika = g_protokol_www + g_adres_strony + "/" + g_folder_serwera + "/" + g_matryca_nazwy_pliku + odnosnikNrZdjecia + g_rozszerzenie_obrazka ;	
-    $biezacyOdnosnik.attr( { href: pelnyAdresOdnosnika, "data-lightbox": "Galeria",
-                            "data-title": opisObrazkaALTDuzaLitera, title: opisObrazkaALT } ); // zmienia href na bezpośrednie odnośniki do serwera zewnętrznego
-            // PLUS Lightbox w atrybutach data!!!
-    $biezacyOdnosnik.siblings().remove();
-
-    // sklejanie adresu dla miniatury, owiniętej odnośnikiem   -  
-    // przeklejenie - wstawienie odnośników do zdjęć w innym, właściwym obszarze
-    $kontenerDocelowy.append( $biezacyOdnosnik ); 
-    }); //each-function-END
-
-    if ( $odnosnikiMiniatur.length <= 0) // gdyby jednak nic nie znaleziono (chyżby coś z serwerem lub transmisją?)
-    {
-    console.log('Nie znaleziono na podstronie żadnych miniatur (stan: ' + $odnosnikiMiniatur.length + ') - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
-    }
 
 } // GenerujPodstronyGalerii-END
 
@@ -980,7 +987,7 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " .card-title > a" );
         {
             // np. http://zlobek.chojnow.eu/u_misiow_i_motylkow,a3.html     // "a" + nr_galerii + ".html"
         ktoraToGaleria = $( $odnosnikiTytuly[i] ).removeAttr('class').attr('href'); // pobranie 'href" + wcześniejsze wywalenie pustego 'class' z tego odnośnika
-        ktoraToGaleria = OdczytajNumerGaleriiZOdnosnika( ktoraToGaleria ); // przypisz docelową wartość w tej samej zmiennej
+        ktoraToGaleria = OdczytajZOdnosnikaNumerGalerii( ktoraToGaleria ); // przypisz docelową wartość w tej samej zmiennej
         
         ktoraToPodstrona = KtoraPodstronaWGalerii ( ktoraToGaleria ); // obliczenie podstrony dla aktualnej galerii (wszystkie [1..5] ładowane w jednym rzucie powinny mieć identyczna podstronę!)
             
@@ -1204,7 +1211,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
             for ( var i = 0 ; i < ileGaleriiNaPodstronie ; i++ ) {
             // dodatkowo odczytanie numeru galerii, aby od razu to wyświetlić wraz z numerem podstrony
             ktoraToGaleria = $( $szukaneElementy[i] ).removeAttr('class').attr('href'); // pobranie 'href" + wcześniejsze wywalenie pustego 'class' z tego odnośnika
-            ktoraToGaleria = OdczytajNumerGaleriiZOdnosnika( ktoraToGaleria );  // przypisuje docelową wartość w tej samej zmiennej
+            ktoraToGaleria = OdczytajZOdnosnikaNumerGalerii( ktoraToGaleria );  // przypisuje docelową wartość w tej samej zmiennej
   
                 // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' i usuwanie tego pierwotnego atrybutu
             $( $szukaneElementy[i] ).attr('data-href', $( $szukaneElementy[i] ).attr('href') ).removeAttr('href')
@@ -1601,10 +1608,35 @@ return nrPodstronyGalerii;
 } // KtoraPodstronaWGalerii-END
 
 
-function OdczytajNumerGaleriiZOdnosnika ( atrybutHref ) {
-    // np. "http://zlobek.chojnow.eu/u_misiow_i_motylkow,a3.html" -- tytul_galerii, "a" + nr_galerii + ".html" (a == album/galeria; cazsem w tytule też są ","!!!)
+function OdczytajZOdnosnikaNumerGalerii ( atrybutHref )
+{
+    // np. "http://zlobek.chojnow.eu/u_misiow_i_motylkow,a3.html" -- tytul_galerii, ",a" + nr_galerii + ".html" (a == album/galeria; !!!: niekdiedy w tytule też są "," !!!)
 var numerGalerii = parseInt( atrybutHref.substr( atrybutHref.lastIndexOf(",a") + 2 ) ); // po przesunieciu o długość ciągu szukanego (",a") dostajemy "<liczba>.html" -- do konwersji i odrzucenia sufiksa-nie-liczby 
 return numerGalerii;
+}
+
+function OdczytajZOdnosnikaNumerPodstronyGalerii ( atrybutHref )
+{
+    // np. "http://zlobek.chojnow.eu/u_misiow,a20,p2.html" -- tytul_galerii, "a" + nr_galerii + ",p" + nr_podstrony_galerii + ".html" (a == album/galeria; p == podstrona; !!!: czasem w tytule też są używane "," !!!)
+var numerPodstronyGalerii = parseInt ( atrybutHref.substr( atrybutHref.lastIndexOf(",p") + 2, atrybutHref.length - 5 ) ); // po przesunieciu o długość ciągu szukanego (",p") dostajemy "<liczba>.html" -- do konwersji i odrzucenia sufiksa-nie-liczby 
+    // dopowiedzenie: "http.../u_misiow,a20,p2.html"  <-- usuwanie przecinka i "p", które są o "2 przed" numerem podstrony galerii; treść z numerem kończy się ".html" - pomijane te 5 znaków przy krojeniu STRINGU)
+return numerPodstronyGalerii;
+}
+
+
+function OdczytajZOdnosnikaNumerZdjeciaWGalerii ( atrybutHref )
+{
+    // np. '<a href="54,z45887,p1.html"><img ...></a>' -- nr_zdjecia_w_galerii, "z" + nr_zdjecia_globalny + ",p" + nr_podstrony_galerii + ".html" (z == zdjęcie; p == podstrona; !!!: parsujemy tylko treść HREF, <a> i img dla kontekstu !!!)
+var numerZdjeciaWGalerii = parseInt ( atrybutHref.substr( 0, atrybutHref.indexOf(",z") ) ); // wystarczajacy byłby odczyt SAMEGO POCZĄTKU, JS "raczej" odrzuci wszystko co jest ZA liczbą i NIE JEST liczbą (raczej!?) 
+return numerZdjeciaWGalerii;
+}
+
+
+function OdczytajZOdnosnikaGlobalnyNumerZdjecia ( atrybutHref )
+{
+    // np. '<a href="54,z45887,p1.html"><img ...></a>' -- nr_zdjecia_w_galerii, "z" + nr_zdjecia_globalny + ",p" + nr_podstrony_galerii + ".html" (z == zdjęcie; p == podstrona; !!!: parsujemy tylko treść HREF, <a> i img dla kontekstu !!!)
+var numerZdjeciaGlobalny = parseInt( atrybutHref.substr( atrybutHref.lastIndexOf( ",z") + 2, atrybutHref.length - 8 ) ) // wystarczajacy byłby odczyt samego początku, JS "raczej" odrzuci wszystko co jest ZA liczbą i NIE JEST liczbą (raczej!?) 
+return numerZdjeciaGlobalny;
 }
 
 
@@ -3110,7 +3142,7 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
 
     var $this = $(this);
     var galeriaDocelowa = $this.attr('data-href');	// pierwotnie był odczyt bezpośrednio z istniejącego 'href', teraz w jego miejscu 'data-href'
-    var nrGalerii = OdczytajNumerGaleriiZOdnosnika( galeriaDocelowa );
+    var nrGalerii = OdczytajZOdnosnikaNumerGalerii( galeriaDocelowa );
     var nrPodstronyGalerii = MaksymalnaIloscPodstronGalerii( nrGalerii );
 
     var tytulGalerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek, a nie na obrazek -- bo nie posiadałby tekstu)
