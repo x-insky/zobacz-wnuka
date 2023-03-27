@@ -1,3 +1,26 @@
+v0.6.8 - restored the display of the selected subpage for the gallery list (of course, further transition to displaying a given gallery also works)
+
+* v0.6.8 - [2023-03-25]
+
+[+] ADDED
+
+-- witryna.js
+* set up helper functions to handle the date and time from given text
+  - "OdczytajDateIKonwertujJejPostac" function - extracting date from text and converting it to another form (with different separators)
+  - "OdczytajGodzine" function - extracting the hour from the text
+  - use of both functions in generating gallery subpages - links opening galleries/albums
+
+[*] MODIFIED
+
+-- witryna.js
+* logic update for changed parent site structure
+  - modification of selectors inside the function "GenerujSpisWybranejGalerii"
+* unified functions readout and handling of date and time in the GenerujSpisGalerii" and "GenerujSpisWybranejGalerii"
+* fixes: unified structure for some of the encountered "for" loops
+  - mainly inside both functions from generating the gallery/album list
+
+---------------------------
+
 v0.6.7 - provided navigation between subpages of a displayed gallery
 
 * v0.6.7 - [2023-03-22]

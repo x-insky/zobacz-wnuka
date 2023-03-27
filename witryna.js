@@ -848,7 +848,8 @@ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
     var $nadmiar = $( g_miejsce_na_spis + " .kontener-odnosnik:has(h3)");
         if ( $nadmiar.length > 0 ) 
         {       // FOR lepszy, czy zostawić '$nadmiar.each( function() { ... }'? -- wydajność vs lepszy dostęp do elementów w jQ
-            for (var i=0; i < $nadmiar.length ; i++) {
+            for ( var i = 0 ; i < $nadmiar.length ; i++ )
+            {
             console.log('Znaleziono nadmiar w ilości ' + (i+1) + ' wpisu/wpisów z ' + $nadmiar.length + ' dla obiektu o id="' + $( $nadmiar[i] ).attr('id') + '", który usunięto.');
                 // $( $nadmiar[i] ).css({ "backgroundColor" : "#933" });
             $( $nadmiar[i] ).remove();      // kasowanie pustych pojemników na odnośniki do galerii
@@ -882,7 +883,8 @@ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
             // do tego pominięcie indeksu aktualnie wyświetlanej paginacji, nie jest już odnośnikiem tylko zwykłym tekstem (czerwonym i pogrubionym);
             // liczba odnośników stanowi liczbę paginacji galerii, ale jest pomijany pierwszy i ostatni... więc potrzebna korekta -2 i +1 brakująca (aktualna)
         var ilePodstronSpisuTresci = 0;
-            for (var i=0 ; i < $listaPodstron.length ; i++ ) {    // ta pętla zawsze liczy dobrze, odrzuca ewentualne +/- podstrona, ale też dodaje bieżącą podstronę
+            for ( var i = 0 ; i < $listaPodstron.length ; i++ )   // ta pętla zawsze liczy dobrze, odrzuca ewentualne +/- podstrona, ale też dodaje bieżącą podstronę
+            {
             var nazwaPodstronyGalerii = $( $listaPodstron[i] ).text();  
                 if ( ( nazwaPodstronyGalerii.search("nowsze") >= 0 ) || ( nazwaPodstronyGalerii.search("starsze") >= 0 ) )
                 {
@@ -944,7 +946,7 @@ g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; // inkrementacja 
     
 var odnosnikPojemnik = '';  // do przechowywania spisu galerii, będzie budowana treść htmla dla kolejnych elementów
     
-	for ( var i=1 ; i <= 5  ; i++ )	// zawsze +5 elementów DIV, po co je wcześniej zliczać?
+	for ( var i = 1 ; i <= 5  ; i++ )	// zawsze +5 elementów DIV, po co je wcześniej zliczać?
 	{ 
 	/* var odnosnikPojemnik = '<div id="kontener_odnosnik_' + String(i) + '" class="kontener-odnosnik"><div id="zdjecie_odnosnik_' + String(i) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener-tekstowy-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div></div>'; 	*/
 	
@@ -957,7 +959,8 @@ var $odnosnikiZdjecia = $( g_tag_do_podmiany_spis + " .card img" );
 
     if ( $odnosnikiZdjecia.length > 0 )
     {
-        for ( var i=0 ; i < $odnosnikiZdjecia.length ; i++ ){
+        for ( var i = 0 ; i < $odnosnikiZdjecia.length ; i++ )
+        {
             // usuwanie niepotrzebnej klasy, najprostsze/najszybsze bezpośrednio poprzez JS
         $( $odnosnikiZdjecia[i] ).removeAttr('class').attr('data-href', $( $odnosnikiZdjecia[i] ).attr('href') ).removeAttr('href');   
             // lepiej wywalić cały atrybut 'class', bo i tak zostaje pusty gdy się tylko usunie z niego klasę "link_tresc" ;
@@ -1032,22 +1035,20 @@ var $odnosnikiData = $( g_tag_do_podmiany_spis + " .card small.text-muted" );
 	
     if ( $odnosnikiData.length > 0 )
     {
-        for ( var i = 0 ; i < $odnosnikiData.length ; i++ ) {
+        for ( var i = 0 ; i < $odnosnikiData.length ; i++ )
+        {
         miejsceDocelowe = $( g_miejsce_na_spis + " .data-odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
 
-         // zmiana treści wyświetlanej, lekka modyfikacja tekstu przy dacie i godzienie
-        var tekstDocelowy = $( $odnosnikiData[i] ).text();
+         // zmiana treści wyświetlanej, lekka modyfikacja tekstu przy dacie i godzinie
+         var tekstDocelowy = $( $odnosnikiData[i] ).text();
 
-        tekstDocelowy = tekstDocelowy.replace(/-/g, '.'); // zamiana WSZYSTKICH DWÓCH łączników na kropki poprzez wyraażenie regularne
-
-        var godzinaPozycja = tekstDocelowy.lastIndexOf(" "); // podział na datę i godzinę
-        var godzina = tekstDocelowy.substr( godzinaPozycja + 1 ); // wydzielenie godziny; od tej spacji-oddzielnika do końca 
-
-        tekstDocelowy = tekstDocelowy.substr( 0, godzinaPozycja ); // !! skrócenie do postaci tekstu z samą datą (tak, bez godziny)
-        tekstDocelowy = "dodano: " + tekstDocelowy;  // proste dopisanie prefiksu do daty
-
-        $( miejsceDocelowe ).html( tekstDocelowy );
-        $( miejsceDocelowe ).attr('data-godzina', godzina); // dodanie atrybutu "godzina" do elementu z treścią tekstową z datą
+         var dataOsobno = OdczytajDateIKonwertujJejPostac ( tekstDocelowy );
+         dataOsobno = "dodano: " + dataOsobno;  // proste dopisanie prefiksu do daty
+ 
+         var godzinaOsobno = OdczytajGodzine ( tekstDocelowy );
+ 
+         $( miejsceDocelowe ).text( dataOsobno );
+         $( miejsceDocelowe ).attr('data-godzina', godzinaOsobno); // dodanie atrybutu "godzina" do elementu z treścią tekstową z datą        
         }
     }
 	
@@ -1056,7 +1057,8 @@ var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " .card p.card-text:first-of-ty
 	
     if ( $odnosnikiOpis.length > 0 )
     {
-        for ( var i=0 ; i < $odnosnikiOpis.length ; i++ ) {
+        for ( var i=0 ; i < $odnosnikiOpis.length ; i++ )
+        {
         miejsceDocelowe = $( g_miejsce_na_spis + " .opis-odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
 
         var trescOpisu = $( $odnosnikiOpis[i] ).text();
@@ -1131,7 +1133,8 @@ $( g_tag_do_podmiany_spis + ' > div' ).remove();  // po testach czyszczenie cał
 var $nadmiar = $( g_miejsce_na_spis + " .kontener-odnosnik:has(h3)");
     if ( $nadmiar.length > 0 )  // jeśli sa jakieś nieuzupełnione szablony...
     {       // FOR lepszy, czy zostawić '$nadmiar.each( function() { ... }'? -- wydajność vs lepszy dostęp do elementów w jQ
-        for (var i=0; i < $nadmiar.length ; i++) {
+        for ( var i = 0 ; i < $nadmiar.length ; i++ )
+        {
             // informowanie o nieuzupełnionym szablonie niepotrzebne, ani jego znakowanie stylami; po prostu usunąć wzornik po jego znalezieniu
         // console.log('Znaleziono nadmiar w ilości ' + (i+1) + ' wpisu/wpisów z ' + $nadmiar.length + ' dla obiektu o id="' + $( $nadmiar[i] ).attr('id') + '", który usunięto.');
             // $( $nadmiar[i] ).css({ "backgroundColor" : "#933" });
@@ -1166,14 +1169,15 @@ function GenerujSpisWybranejGalerii ( kontenerZrodlowy, kontenerDocelowy, nrPods
     generować teraz całe elementy, czy fragmentami po kawałku jak wcześniej?  */
     
     // policzenie czegoś, co określi bezposrednio tę ilość, gdy brak wprost takowego kontenera w źródle... <img> się nada
-var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tresc img' ).length;
+var $tytuloweObrazki = $( kontenerZrodlowy + ' .card img' );
     
-    if ( ileGaleriiNaPodstronie > 0)    // jeżeli są jakieś elementy to robimy całość kopiowania/przenoszenia
+    if ( $tytuloweObrazki.length > 0)    // jeżeli są jakieś elementy to robimy całość kopiowania/przenoszenia
     {
     var nowyPojemnik = '';
             // tworzenie pustej struktury, do zapełnienia zaczytaną zawartością
-        for ( var i=1 ; i <= 5  ; i++ ) {	// maksymalnie pięc elementów się zaczyta, ewentalny nadmiar zostanie usunięty
-            // budowanie długiego zestawu pojemników
+        for ( var i = 1 ; i <= 5 ; i++ )	// maksymalnie pięc elementów się zaczyta, ewentalny nadmiar zostanie usunięty
+        {
+        // budowanie długiego zestawu pojemników
             // '<div id="kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener-tekstowy-odnosnik"><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div><div class="dolna-zaslonka"></div><div class="szczegoly"><p>XXXX</p><p>galeria<br />podstrona</p><p>YYY</p></div></div>'
         //nowyPojemnik += '<div id="wybrany_kontener_odnosnik_' + String(i) + '" class="kontener-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_wybrany_odnosnik_' + String(i) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener-tekstowy-odnosnik"><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum... nie będzie</div></div><div class="szczegoly">testowa zawartość</div></div>';
         nowyPojemnik += '<div id="wybrany_kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener-tekstowy-odnosnik"><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div><div class="dolna-zaslonka"></div><div class="szczegoly"><p>XXXX</p><p><span>galeria</span><br />podstrona</p><p>YYY</p></div></div>';
@@ -1181,34 +1185,33 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
         }
     $( kontenerDocelowy ).empty();  // zerowanie wcześniejszej zawartości
     $( kontenerDocelowy ).append( nowyPojemnik );  // wstawienie tych pięciu wygenerownych kontenerów-szablonów za jednym podejściem
-    
-            //przeklejanie zdjęć pomiędzy kontenerami ( w zasadzie to <a> ze <img>)
-    var $szukaneElementy = $( kontenerZrodlowy + " td.galeria_kolor a.link_tresc" );	// tak naprawdę to przeklejany jest cały <a> razem z <img> wewnątrz
+
     var miejsceDocelowe = '';
 
-        if ( $szukaneElementy.length > 0 )
+        // przed chwilą już wyszukano kolekcję zdjęć, teraz operujemy na atrybutach znaleziska 
+        // przeklejanie zdjęć pomiędzy kontenerami
+        for ( var i = 0 ; i < $tytuloweObrazki.length ; i++ )
         {
-            for ( var i = 0 ; i < ileGaleriiNaPodstronie ; i++ ) {
-                // najpierw wylatuje atrybut klasy, bo nie ma przewidzianego osobnego stylu w css, a 'link_tresc' też nie wnosi żadnej logiki
-                // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' + usuwanie pierwotnego atrybutu
-            $( $szukaneElementy[i] ).removeAttr('class').attr('data-href', $( $szukaneElementy[i] ).attr('href') ).removeAttr('href') ;      
-            
-            miejsceDocelowe = $( kontenerDocelowy + " .zdjecie-odnosnik:eq(" + i + ")" );
+            // najpierw wylatuje cały atrybut klasy (po co się rozdraniać na obie klasy, i tak nie ma określonego stylu
+            // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' + usuwanie pierwotnego atrybutu
+        $( $tytuloweObrazki[i] ).removeAttr('class').attr('data-href', $( $tytuloweObrazki[i] ).attr('href') ).removeAttr('href') ;      
+        
+        miejsceDocelowe = $( kontenerDocelowy + " .zdjecie-odnosnik:eq(" + i + ")" );
 
-                // użycie funkcji naprawiającej ścieżkę do SRC pozwala przekleić obrazek (w trakcie ładowania) do innego obszaru dokumentu 
-            $( miejsceDocelowe ).html( $szukaneElementy[i] ); // przeniesienie ze źródłowej lokalizacji
-            }
+            // użycie funkcji naprawiającej ścieżkę do SRC pozwala przekleić obrazek (w trakcie ładowania) do innego obszaru dokumentu 
+        $( miejsceDocelowe ).html( $tytuloweObrazki[i] ); // przeniesienie ze źródłowej lokalizacji
         }
 
-    //akcja wypełniacz - tytuły
-    $szukaneElementy = $( kontenerZrodlowy + " td.galeria_kolor b a.link" );
+    // akcja wypełniacz - tytuły
+    var $szukaneElementy = $( kontenerZrodlowy + " .card-title > a" );
 
         if ( $szukaneElementy.length > 0 )
         {
         var ktoraToGaleria = '';
         var trescSzczegolow = '';
             
-            for ( var i = 0 ; i < ileGaleriiNaPodstronie ; i++ ) {
+            for ( var i = 0 ; i < $tytuloweObrazki.length ; i++ )
+            {
             // dodatkowo odczytanie numeru galerii, aby od razu to wyświetlić wraz z numerem podstrony
             ktoraToGaleria = $( $szukaneElementy[i] ).removeAttr('class').attr('href'); // pobranie 'href" + wcześniejsze wywalenie pustego 'class' z tego odnośnika
             ktoraToGaleria = OdczytajZOdnosnikaNumerGalerii( ktoraToGaleria );  // przypisuje docelową wartość w tej samej zmiennej
@@ -1245,26 +1248,32 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
             }
         }
 
-    //akcja wypełniacz - data
-    $szukaneElementy = $( kontenerZrodlowy + " td.galeria_kolor font" );
+    // akcja wypełniacz - data
+    $szukaneElementy = $( kontenerZrodlowy + " .card small.text-muted" );
 
         if ( $szukaneElementy.length > 0 )
         {
-            for ( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ){
+            for ( var i = 0 ; i < $tytuloweObrazki.length ; i++ )
+            {
             miejsceDocelowe = $( kontenerDocelowy + " .data-odnosnik:eq(" + i + ")" );
 
             tekstDocelowy = $( $szukaneElementy[i] ).text();
-            tekstDocelowy = tekstDocelowy.replace( "data publikacji: ", "z dnia: ");  // proste zastąpienie tekstu innym ciągiem, aby nie kopiować znaczników
-            $( miejsceDocelowe ).text( tekstDocelowy );
+            var dataOsobno = OdczytajDateIKonwertujJejPostac ( tekstDocelowy );   // pobranie samej daty w zmienionej formie (separator)
+            dataOsobno = "dodano: " + dataOsobno;   // rozszerzenie daty o treść poprzedzającą
+            var godzinaOsobno = OdczytajGodzine ( tekstDocelowy );
+
+            $( miejsceDocelowe ).text( dataOsobno );    // wyświetlenie samej daty
+            $( miejsceDocelowe ).attr('data-godzina', godzinaOsobno); // dodanie atrybutu "godzina" do elementu z treścią tekstową z datą
             }
         }
 
-    //akcja wypełniacz - opis
-    $szukaneElementy = $( kontenerZrodlowy + " td blockquote div[align=justify]" );
+    // akcja wypełniacz - opis
+    $szukaneElementy = $( kontenerZrodlowy + " .card p.card-text:first-of-type" );
 
         if ( $szukaneElementy.length > 0 )
         {
-            for ( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ) {
+            for ( var i = 0 ; i < $tytuloweObrazki.length ; i++ )
+            {
             miejsceDocelowe = $( kontenerDocelowy + " .opis-odnosnik:eq(" + i + ")" );
 
             tekstDocelowy = $( $szukaneElementy[i] ).text();
@@ -1282,7 +1291,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
         // czyszczenie kontenera źródłowego, teraz już jasne, proste i EFEKTYWNE!
     $( kontenerZrodlowy ).empty();    // po wycięciu prawie całej zawartośc tabelki pozostaje tylko z niej spis podstron... który przejmował :focus !!! .empty() zeruje z elementów
 
-    } // if-END ( ileGaleriiNaPodstronie > 0 )
+    } // if-END ( $tytuloweObrazki.length > 0 )
 
     // obowiązkowe czyszczenie nadmiaru, warunek na element szablonu vs na ilość załadowanych
 var $nadmiarPojemnikow = $( kontenerDocelowy + " .kontener-odnosnik:has(h3)");
@@ -1290,7 +1299,8 @@ var $nadmiarPojemnikow = $( kontenerDocelowy + " .kontener-odnosnik:has(h3)");
     if ( $nadmiarPojemnikow.length > 0 )
     { 
         // na for(), już śmiga
-        for (var i=0; i < $nadmiarPojemnikow.length ; i++) {
+        for ( var i = 0; i < $nadmiarPojemnikow.length ; i++ )
+        {
         console.log('Znaleziono nadmiar w ilości ' + (i+1) + ' wpisu/wpisów z ' + $nadmiarPojemnikow.length + ' dla obiektu o id="' + $($nadmiarPojemnikow[i]).attr('id') + '", który usunięto.');
             //$(this).css({ "backgroundColor" : "#933" }); 
         $($nadmiarPojemnikow[i]).remove();
@@ -1301,7 +1311,7 @@ var $nadmiarPojemnikow = $( kontenerDocelowy + " .kontener-odnosnik:has(h3)");
 var $wierszeTabeli = $( kontenerZrodlowy + " tr:nth-child(4n-3)" );
 	
     $wierszeTabeli.each( function() {
-    $(this).css({ "border" : "1px dotted gray" });	
+        $(this).css({ "border" : "1px dotted gray" });	
 	}); // each-END
 } // GenerujSpisWybranejGalerii-END
 
@@ -1615,6 +1625,7 @@ var numerGalerii = parseInt( atrybutHref.substr( atrybutHref.lastIndexOf(",a") +
 return numerGalerii;
 }
 
+
 function OdczytajZOdnosnikaNumerPodstronyGalerii ( atrybutHref )
 {
     // np. "http://zlobek.chojnow.eu/u_misiow,a20,p2.html" -- tytul_galerii, "a" + nr_galerii + ",p" + nr_podstrony_galerii + ".html" (a == album/galeria; p == podstrona; !!!: czasem w tytule też są używane "," !!!)
@@ -1637,6 +1648,25 @@ function OdczytajZOdnosnikaGlobalnyNumerZdjecia ( atrybutHref )
     // np. '<a href="54,z45887,p1.html"><img ...></a>' -- nr_zdjecia_w_galerii, "z" + nr_zdjecia_globalny + ",p" + nr_podstrony_galerii + ".html" (z == zdjęcie; p == podstrona; !!!: parsujemy tylko treść HREF, <a> i img dla kontekstu !!!)
 var numerZdjeciaGlobalny = parseInt( atrybutHref.substr( atrybutHref.lastIndexOf( ",z") + 2, atrybutHref.length - 8 ) ) // wystarczajacy byłby odczyt samego początku, JS "raczej" odrzuci wszystko co jest ZA liczbą i NIE JEST liczbą (raczej!?) 
 return numerZdjeciaGlobalny;
+}
+
+
+function OdczytajDateIKonwertujJejPostac ( trescDatyIGodziny )
+{
+var nowyFormatDaty = trescDatyIGodziny.replace(/-/g, '.'); // zamiana WSZYSTKICH DWÓCH łączników na kropki poprzez wyraażenie regularne
+var pozycjaSpacji = nowyFormatDaty.indexOf(" "); // miejsce podziału za datę, przed godzinę
+nowyFormatDaty = nowyFormatDaty.substr( 0, pozycjaSpacji ); // !! skrócenie do postaci tekstu z samą datą (tak, bez godziny)
+
+return nowyFormatDaty;
+}
+
+
+function OdczytajGodzine ( trescDatyIGodziny )
+{
+var godzinaPozycja = trescDatyIGodziny.lastIndexOf(" "); // podział na datę i godzinę
+var godzina = trescDatyIGodziny.substr( godzinaPozycja + 1 ); // wydzielenie godziny; od tej spacji-oddzielnika do końca 
+
+return godzina;
 }
 
 
