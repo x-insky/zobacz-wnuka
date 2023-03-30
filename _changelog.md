@@ -1,3 +1,19 @@
+v0.6.9 - restored the ability to display the selected gallery
+
+* v0.6.9 - [2023-03-25]
+
+[*] MODIFIED
+
+-- witryna.js
+* almost completely rebuilt the function "OdczytajTresciOdnosnikaWybranejGalerii"
+  - introduced modified selectors to search for five text attributes of the gallery (album relative address, title, description, image path and date with time)
+  - reading and calculating the remaining key attributes (gallery number, specifying the subpage number, building a full address for the gallery and the title image, also breaking data into date and time)
+  - using the DRY principle to search for a gallery/album number through a defined tool function
+  - quite easy to modify, because it is a standard function for obtaining data and saving them as attributes of a temporary object, which is used in content rendering in a moment
+  - introduced a fix after reading all the expected parameters, which removes all temporarily downloaded title photos to display the gallery with the desired number (concerns the subpage of the table of contents, where the sought gallery/album number and its vicinity are located; each "src" attribute is invalid anyway)
+
+---------------------------
+
 v0.6.8 - restored the display of the selected subpage for the gallery list (of course, further transition to displaying a given gallery also works)
 
 * v0.6.8 - [2023-03-25]

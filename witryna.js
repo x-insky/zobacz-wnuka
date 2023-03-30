@@ -1324,25 +1324,26 @@ var $wierszeTabeli = $( kontenerZrodlowy + " tr:nth-child(4n-3)" );
 
 function OdczytajTresciOdnosnikaWybranejGalerii ( przeszukiwanyKontener, pozycjaElementuWSpisiePodstrony )
 {
-pozycjaElementuWSpisiePodstrony = pozycjaElementuWSpisiePodstrony || 0; // zostawić na wypadek błędów z przekazanymi parametrami
+pozycjaElementuWSpisiePodstrony = parseInt( pozycjaElementuWSpisiePodstrony ) || 0; // zostawić na wypadek błędów z przekazanymi parametrami
 var odczytaneNamiary = {};
-var roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor b a.link:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ); // zmienna ogólna
+var roboczaWartosc = $( przeszukiwanyKontener + " .card-title > a:eq(" + pozycjaElementuWSpisiePodstrony + ")" ); // zmienna ogólna - ale tu wyciąga HREF do zbudowania zapytania
 odczytaneNamiary.tytul = roboczaWartosc.text();
 odczytaneNamiary.adres = roboczaWartosc.attr('href'); // + normalizacja ścieżki na pełny zewnętrzny adres poniżej
 odczytaneNamiary.adres = g_protokol_www + g_adres_strony + "/" + odczytaneNamiary.adres;
-odczytaneNamiary.nrGalerii = parseInt( odczytaneNamiary.adres.substr( odczytaneNamiary.adres.lastIndexOf(",a") + 2 ) ); // już sprawdzony algorytm pozyskiwnia numeru galerii/podstrony
+odczytaneNamiary.nrGalerii = OdczytajZOdnosnikaNumerGalerii( odczytaneNamiary.adres ); // popularyzaja użycia własnej funkcji narzędziowej
 odczytaneNamiary.nrPodstronyGalerii = MaksymalnaIloscPodstronGalerii( odczytaneNamiary.nrGalerii );  // przeliczenie podstrony na podstawie odczytanego numer galerii
-odczytaneNamiary.opis = $( przeszukiwanyKontener + " td blockquote div[align=justify]:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).text();
-roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")").attr('src');
+odczytaneNamiary.opis = $( przeszukiwanyKontener + " .card p.card-text:first-of-type:eq(" + pozycjaElementuWSpisiePodstrony + ")" ).text(); // niby nielogiczne, trochę na siłę ale 
+roboczaWartosc = $( przeszukiwanyKontener + " .card img:eq(" + pozycjaElementuWSpisiePodstrony + ")").attr('src');
 roboczaWartosc = g_protokol_www + g_adres_strony + "/" + roboczaWartosc ; // normalizacja ścieżki na pełny zewnętrzny serwer
 odczytaneNamiary.srcObrazka = roboczaWartosc;
-roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor font:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).text();
-odczytaneNamiary.data = roboczaWartosc.replace("data publikacji: ", "z dnia: ");
+roboczaWartosc = $( przeszukiwanyKontener + " .card small.text-muted:eq(" + pozycjaElementuWSpisiePodstrony + ")" ).text();
+odczytaneNamiary.data = OdczytajDateIKonwertujJejPostac( roboczaWartosc );
+odczytaneNamiary.godzina = OdczytajGodzine( roboczaWartosc );
     
-console.log('Przeszukując "' + przeszukiwanyKontener + '" natrafiono na datę publikacji "' + roboczaWartosc + '" dla tytułu o indeksie +' + pozycjaElementuWSpisiePodstrony +
+console.log('Przeszukując "' + przeszukiwanyKontener + '" natrafiono na datę publikacji "' + odczytaneNamiary.data + " o " + odczytaneNamiary.godzina + '" dla tytułu o indeksie +' + pozycjaElementuWSpisiePodstrony +
             '. ADRES_pełny: ', odczytaneNamiary.adres, ', NR_galerii: ', odczytaneNamiary.nrGalerii, 'NR_podstronyGalerii:  ', odczytaneNamiary.nrPodstronyGalerii);
-    // kasowanie SRC z IMG dla wskazanego tytułu galerii, aby nie było problemu z GET dla otrzymanego wycinka witryny macierzystej
-$( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).removeAttr('src');
+    // kasowanie SRC z IMG dla WSZYSTKICH obrazków tytułowych galerii (na danej podstornie, w sąsiedztwie poszukiwanego), aby nie było problemu z GET dla otrzymanego wycinka witryny macierzystej
+$( przeszukiwanyKontener + " .card img" ).removeAttr('src');
 return odczytaneNamiary;    // zwróć obiekt 
 } // OdczytajTresciOdnosnikaWybranejGalerii-END
 
