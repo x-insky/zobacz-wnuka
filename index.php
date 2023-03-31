@@ -167,11 +167,11 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     <div class="kontener">
                         <p id="status_galerii_spis"></p>
                     </div>
-                    <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2" tabindex="0">Załaduj kolejne galerie<img src="grafiki/slonce_60x60.png" alt="" /><span></span></h2>
+                    <h2 id="zaladuj_galerie_spis" class="przycisk szary-cien clearfix2" tabindex="0">Załaduj kolejne galerie<img src="grafiki/slonce_60x60.png" alt="" /><span></span></h2>
 
                     <div class="kontener">
                         <div id="selektor">     
-                            <h2 id="selektor_naglowek" tabindex="0">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
+                            <h2 id="selektor_naglowek" class="szary-cien" tabindex="0">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
                             <div>
                                 <form action="#" method="post" id="wybierz_galerie" autocomplete="off">
                                     <div id="wybor_galerii">
@@ -338,7 +338,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja-pulsowanie-kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.6.9</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.6.10</h6>
             <div id="poco">
                 <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>

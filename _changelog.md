@@ -1,6 +1,25 @@
+v0.6.10 - unified display of gallery titles (indicated subpage vs list of subsequent subpages of the list of contents)
+
+* v0.6.10 - [2023-03-30]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* introduced an additional "gray-shadow" class to display the album list in the same way, regardless of the location in the container
+  - gallery titles equally light and with a dark background under the subtitles
+  - the changed definition of the container with the new class (higher specificity) applies only to the indicated elements
+  - issues: multiple use of the <h2> element for multiple purposes inside the container (complexity and subordination of structure to style for nested containers)
+  - ...and high specificity of the selector for the parent container (and its only text shadow property)
+
+-- index.php
+* adding a rigid class to two critical elements (the button for loading subsequent gallery subpages and the button for expanding the menu for loading selected albums or subpages of their table of contents)
+  - ...the rest of the subordinate elements inherit the container's style
+
+---------------------------
+
 v0.6.9 - restored the ability to display the selected gallery
 
-* v0.6.9 - [2023-03-25]
+* v0.6.9 - [2023-03-29]
 
 [*] MODIFIED
 
