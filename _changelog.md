@@ -1,3 +1,35 @@
+v0.6.11 - fixed going forward by the NEXT button within the displayed gallery
+
+* v0.6.11 - [2023-03-31]
+
+[+] ADDED
+
+-- witryna.js
+* introduced the function "MaksymalnaIloscPodstronDlaWyswietlanejGalerii" to calculate the number of subpages for the currently displayed gallery
+  - since 2022.12 changes in webserver not displaying all sitelinks within the current gallery
+* added global to remember the total subpage links
+  - when navigating between subpages within a given gallery, this calculated value was lost
+  - optionally pass one more parameter to the "GenerujGallerySubpages" function (indicate directly the gallery subpage to be displayed)
+
+[*] MODIFIED
+
+-- witryna.js
+* changes in the logic in the "GenerujPodstronyGalerii" function to take into account the number of subpages in order to activate the "next" button
+* cosmetic changes
+- modification of the name for the variable used repeatedly in logical conditions in the "GenerujPodstronyGalerii" function (the name was misleading)
+- in the content of comments in relation to constant values in the calculations
+- typos in comments, etc.
+
+[F] FIXED
+
+-- witryna.js
+* fixed activation of "Next" button
+  - improved the quality of the logic that activates the transition to the next gallery
+  - in relation to external changes on the nursery server
+* fixes #101 - 'The button for moving to the next subpage of the displayed gallery becomes inactive'
+
+---------------------------
+
 v0.6.10 - unified display of gallery titles (indicated subpage vs list of subsequent subpages of the list of contents)
 
 * v0.6.10 - [2023-03-30]

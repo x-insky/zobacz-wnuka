@@ -38,6 +38,7 @@ var g_element_zewnetrzny = "#galeria_tresc",	// od 2022-11 kontenerem treści dy
  g_ilosc_wszystkich_paginacji_galerii = 0,   // ile ogółem jest podstron ze spisem galerii, w grupach po pięć, poza ostatnią grupą 1..5 elementów
  g_zaczytana_ilosc_paginacji_galerii = 0,  // ile pozostało podstron poza zaczytaną i wyświetloną podstroną
  g_ilosc_zdjec_biezaca_galeria = 0            // ile zdjęć siedzi w bieżącej galerii
+ g_ile_podstron_ma_ta_galeria = 0,          // obliczona wartość na podstawie odczytu pierwszego numeru zdjęcia z pierwszej podstrony wyświetlanej galerii 
  g_biezaca_pozycja_galerii = 0,         // które elementy już wyświetlono/zaczytano od ostatniego (jako pierwszego) w grupach po pięć
  g_ilosc_zaczytanych_galerii = 0,		// ile elementów wstawiono do tej pory na stronę
  g_ilosc_wszystkich_galerii = 0,        // ilość galerii zawartych na www
@@ -524,7 +525,8 @@ $( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietl
     
         if ( ( nrWyswietlanejGalerii == 1 ) && ( i == 0) )  // jeśli to pierwsza (tytułowa) podstrona i pierwszy znaleziony element to zawiera on liczbę 
         {
-            g_ilosc_zdjec_biezaca_galeria = numerZdjecia;   // przypisz caościową liczbę obrazków w galerii
+            g_ilosc_zdjec_biezaca_galeria = numerZdjecia;   // przypisz całościową liczbę obrazków w galerii
+            g_ile_podstron_ma_ta_galeria = MaksymalnaIloscPodstronDlaWyswietlanejGalerii( numerZdjecia ); // uczynić globalną? TAK (wstępnie wartość na potrzeby funkcji, ale przy innej podstronie niż pierwsza wartość "ginie"
         }
 
     var serwerowyOpisObrazkaALT = ( $obrazekWOdnosniku.attr('alt') || ( ( numerZdjecia ).toString() + " z " + ( g_ilosc_zdjec_biezaca_galeria ).toString() ) );// pozyskanie atrybutu ALT ze źródła (o ile istnieje, to dostajemy wprost numer zdjęcia w danej galerii)
@@ -574,29 +576,29 @@ $( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietl
         // informacja o pozytywnym odczytaniu odnośnika do podstrony galerii
         // console.log('Natrafiono na odnośnik nr ' + (i+1) + ' o zawartości \'' + odnosnikPodstrony + '\'');
 
-        var nrGalerii = OdczytajZOdnosnikaNumerPodstronyGalerii ( odnosnikPodstrony );
+        var odczytanyNrPodstronyBiezacejGalerii = OdczytajZOdnosnikaNumerPodstronyGalerii ( odnosnikPodstrony );
 
-            if ( ( nrGalerii !== undefined ) && ( !isNaN( nrGalerii ) ) )   // jeżeli odczytano z przycisku odnośnik z NUMEREM podstrony to wstaw przycisk z odnośnik do tej podstron
+            if ( ( odczytanyNrPodstronyBiezacejGalerii !== undefined ) && ( !isNaN( odczytanyNrPodstronyBiezacejGalerii ) ) )   // jeżeli odczytano z przycisku odnośnik z NUMEREM podstrony to wstaw przycisk z odnośnik do tej podstron
             {
                     // tu oblicznanie w pętli przejścia do ewentualnego poprzedniego oraz ewentualnego następnego względem bieżącego
-                if ( ( nrGalerii == ( nrWyswietlanejGalerii - 1 ) ) && ( nrGalerii > 0 ) )  // > "jeden" to źle?
+                if ( ( odczytanyNrPodstronyBiezacejGalerii == ( nrWyswietlanejGalerii - 1 ) ) && ( odczytanyNrPodstronyBiezacejGalerii > 0 ) )  // > "jeden" to źle?
                 {
-                przyciskPoprzedni.nrPodstrony = nrGalerii; // przypisanie numeru galerii, który jest -1 w stosunku do bieżącej (wyświetlanej)
+                przyciskPoprzedni.nrPodstrony = odczytanyNrPodstronyBiezacejGalerii; // przypisanie numeru galerii, który jest -1 w stosunku do bieżącej (wyświetlanej)
                 przyciskPoprzedni.adresUrl = odnosnikPodstrony; // też jej adres jest potrzebny
                 }
-                if ( ( nrGalerii == ( nrWyswietlanejGalerii + 1 ) ) && ( nrGalerii < ( $listaPodstron.length + 1 ) ) )      // korekta na +1 max
+                if ( ( odczytanyNrPodstronyBiezacejGalerii == ( nrWyswietlanejGalerii + 1 ) ) && ( odczytanyNrPodstronyBiezacejGalerii <= g_ile_podstron_ma_ta_galeria ) )      // korekta na +1 max, ale dla obliczonych już wszystkich podston niepotrzebna, lepiej operator porówniania zaktualizować
                 {
-                przyciskNastepny.nrPodstrony = nrGalerii;
+                przyciskNastepny.nrPodstrony = odczytanyNrPodstronyBiezacejGalerii;
                 przyciskNastepny.adresUrl = odnosnikPodstrony;
                 }
             var nowyPrzycisk = $('<button></button>', {
             // var nowyPrzycisk = $('<input></input>', {
             // type : "button",            
                 //id : "galeria_paginacja_" + ( i+1 ),  // tu generowane po kolei
-                id : "galeria_paginacja_" + nrGalerii,  // a tu użycie obliczonego numeru do konkretnej podstrony danej galerii (też po kolei, ale z wyłączeniem aktualnie wyswietlanej podstrony)
+                id : "galeria_paginacja_" + odczytanyNrPodstronyBiezacejGalerii,  // a tu użycie obliczonego numeru do konkretnej podstrony danej galerii (też po kolei, ale z wyłączeniem aktualnie wyswietlanej podstrony)
                 "class" : "przycisk_galeria",
-                value : nrGalerii, 
-                text : "Podstrona nr " + nrGalerii, // etykieta z konkretnym numerem do nawigowania
+                value : odczytanyNrPodstronyBiezacejGalerii, 
+                text : "Podstrona nr " + odczytanyNrPodstronyBiezacejGalerii, // etykieta z konkretnym numerem do nawigowania
                 "data-tag" : g_tag_do_podmiany_zdjecia,
                 "data-adres_strony" : g_adres_strony,
                 "data-adres_galerii" : odnosnikPodstrony,
@@ -912,7 +914,8 @@ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
     // prostszy wariant dla uzupełnienia wskazanej galerii
         
     }
-
+    
+console.info( "NADAL JEST COŚ DO SKASOWANIA? (i to ta zaszłośc <table>?!)", g_tag_do_podmiany_spis );
 $( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie
 
     // poniższe przenieść poza funkcję? (istotne przy pierwszym wywołaniu)
@@ -1581,19 +1584,25 @@ PokazBiezacaGalerie(200);
 
 function KtoraPozycjaWGalerii ( nrGalerii )
 {
-return ( g_ilosc_wszystkich_galerii - nrGalerii ) % 5;
+return ( g_ilosc_wszystkich_galerii - nrGalerii ) % 5;  // "5" to stała krotności, po ile maksymalnie galerii na jedej podstronie spisu treści
 }
 
 
 function MaksymalnaIloscPodstronGalerii ()
 {
-return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszystkich_galerii % 5 ) / 5 ) ;
+return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszystkich_galerii % 5 ) / 5 ) ; // // "5" to stała krotności, po ile maksymalnie galerii na jedej podstronie spisu treści
 }
 
 
 function ObliczMaksymalnaIloscPodstronGalerii ( nrGalerii )
 {
-return Math.ceil( nrGalerii / 5 );
+return Math.ceil( nrGalerii / 5 );  // // "5" to stała krotności, po ile maksymalnie galerii na jedej podstronie spisu treści 
+}
+
+
+function MaksymalnaIloscPodstronDlaWyswietlanejGalerii ( iloscZdjecWGalerii )
+{
+return Math.ceil( iloscZdjecWGalerii / 9 ) ; // "9" to stała krotności, po naraz może być zdjęć na podstronie danej galerii
 }
 
 
