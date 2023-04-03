@@ -1,3 +1,27 @@
+v0.6.12 - fixed: selecting a specific gallery/album number displays that album
+
+* v0.6.12 - [2023-04-03]
+
+[+] ADDED
+
+-- witryna.js
+* introducedthe function "SkorygujNumerDlaWyswietleniaWybranejGalerii", which verifies the number of the gallery with the list of known and unreachable galleries/albums
+  - the function "filters" the value entered in the form field and introduces a possible correction of the location of the target element
+  - without this correction, the previous position calculation algorithm indicates the next position (or by a few spots if the number of unavailable galleries will increase)
+  - initially only one problematic gallery was found on the home page as non-existent (the one with the number "589" )
+  - code ready for expansion - possibly you should enter statically problematic gallery numbers into the table (hopefully not!)
+  - frequent update required for live remote reading whenever "empty album" occurs!
+
+[F] FIXED
+
+-- witryna.js
+* fixed the problem with the numbering of the selected gallery to display
+  - the gallery is no longer displayed with an offset of -1 instead of the expected one
+  - the disputed gallery number was specified and a correction was applied to the gallery number
+* fixes #102 - 'Another gallery is opened, the target displayed album has a different number than the one indicated'
+
+---------------------------
+
 v0.6.11 - fixed going forward by the NEXT button within the displayed gallery
 
 * v0.6.11 - [2023-03-31]
@@ -16,9 +40,9 @@ v0.6.11 - fixed going forward by the NEXT button within the displayed gallery
 -- witryna.js
 * changes in the logic in the "GenerujPodstronyGalerii" function to take into account the number of subpages in order to activate the "next" button
 * cosmetic changes
-- modification of the name for the variable used repeatedly in logical conditions in the "GenerujPodstronyGalerii" function (the name was misleading)
-- in the content of comments in relation to constant values in the calculations
-- typos in comments, etc.
+  - modification of the name for the variable used repeatedly in logical conditions in the "GenerujPodstronyGalerii" function (the name was misleading)
+  - in the content of comments in relation to constant values in the calculations
+  - typos in comments, etc.
 
 [F] FIXED
 

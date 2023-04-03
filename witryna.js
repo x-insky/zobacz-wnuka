@@ -1555,6 +1555,20 @@ return wartoscBiezaca;
 } // NormalizujZakresPolaInput-END
 
 
+function SkorygujNumerDlaWyswietleniaWybranejGalerii ( nrGaleriiDocelowej )
+{   // poniższa tablica zawiera wszystkie znane i niedostępne numery galerii - ZAKODOWANE NA SZTYWNO i zaprwne wymaga rozszerzenia listy w przyszłości...
+var tabelaWykluczen = [ 589 ];    // !!! wstępnie od 2022.10.25/26 nie można wyświetlić tego albumu; nr galerii nie występuje na podstronie listy galerii, która zawiera numery sąsiednie (namierzono metodą kolejnych prób)
+var korektaPrzesuniecia = 0;
+
+    for ( var i = 0; i < tabelaWykluczen.length; i++ )  // poniższa pętla będzie liczyć poprawnie pod warunkiem "pilnowania" na bieżąco zawartości tabeli wykluczeń
+    {       // kolejne elementy ZA elementem wykluczonym wymagają przesuniecia indeksu docelowego (korekta o +1 miejsce względem oczekiwanego/brakującego)  
+        if ( ( nrGaleriiDocelowej <= tabelaWykluczen[i] ) && ( nrGaleriiDocelowej > 0 ) ) korektaPrzesuniecia++; // zwiększ przesuniecie za każdym razem, gdy wartość kwalifikuje się do korekty; zależy od długości listy brakujących/niedostępnych elementów      
+    }
+
+return nrGaleriiDocelowej + korektaPrzesuniecia;
+} 
+
+
 function ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( trescOdpowiedzi )
 {
     // jeżeli otrzymano z serwera/pośrednika odpowiedź na żądanie GET, które w treści zawiera początek wewnętrznego komunikatu PHP o błędzie...
@@ -3011,6 +3025,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     var wartoscPolaNumerycznego = KonwertujNaLiczbe( $g_input_nr_galerii.val() );   // weryfikacja wartośći liczbowej, WARTOŚĆ_POLA lub 1 dla nieliczbowych wartości
     var wybranyNrGalerii = NormalizujZakresPolaInput( wartoscPolaNumerycznego ); // odczytanie z formularza PO_KONWERSJI_NA_10 + weryfikacja zakresu
         // obliczenie pozycji w ramach podstrony galerii oraz pozycji w zadanym obszarze podstrony (przesunięcie w ramach tego spisu)
+        wybranyNrGalerii = SkorygujNumerDlaWyswietleniaWybranejGalerii ( wybranyNrGalerii );    // ale najpierw odrzucenie ZNANYCH i NIEDOSTĘPNYCH numerów galerii, które mogą fałszować nr docelowej galerii
     var pozycjaWGalerii = KtoraPozycjaWGalerii ( wybranyNrGalerii );
     var podstronaWGalerii = KtoraPodstronaWGalerii ( wybranyNrGalerii );
     var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();
