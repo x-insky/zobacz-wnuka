@@ -1,71 +1,81 @@
 // 'use strict'; 
 
-$(document).ready(function ()
+    /*  !!! "Potential XSS vulnerability in jQuery (jquery-1.12.4.js)" - problem zgłoszony przez GitHub (Dependabot)/jQuery Community
+       (+) zalecane: aktualizacja do v3.5.0
+       (+/-) obejście: nadpisanie funkcji/metody o prawdopodobnie niebezpiecznych możliwościach pustą definicją
+    */
+jQuery.htmlPrefilter = function ( html )
+{
+	return html;    // nie rób nic (też nic z możliwych wcześniej niebezpiecznych działań), przerzuć wartości do dalszego wywołania łańcuchowego
+};
+
+
+$( document ).ready ( function ()
 {
 /* GARŚĆ TEORII i FAKTÓW:
-* ścieżka pełna do zdjęcia:
-* http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdj_XXXXX.jpg			// <-- adres zdjęcia, X to cyfra [0..9]
-* http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdjp_XXXXX.jpg 	// <-- adres miniatury zdjęcia ()
-* http://zlobek.chojnow.eu/u_tygryskow,a147.html; 			// przykładowa strona z galerią
-* http://zlobek.chojnow.eu/u_misiow,a20,p2.html						// przykładowa strona druga (2) galerii
-* http://zlobek.chojnow.eu/1-u_misiow,z1028,p2.html		// przykładowa strona druga (2) z powiększonym zdjęciem nr 1 ("1028" to nr zdjęcia w galerii)
-*
-*/
-var g_element_zewnetrzny = "#galeria_tresc",	// od 2022-11 kontenerem treści dynamicznych/docelowych jest w <div> tablicy o id "galeria_tresc"; nie ma już <table> dla układu witryny
- g_adres_strony = "zlobek.chojnow.eu",		// nazwa serwisu
- g_folder_serwera = "zdjecia_galeria",      // ścieżka ma serwerze, tj. folder udostępniony
- g_wyszukiwany_serwer = "",		    // na przechowywanie adresu serwera wraz z protokołem
- g_protokol_www = "http://",
- g_matryca_nazwy_pliku = "zlobek_zdj_",
- g_matryca_nazwy_pliku_miniatury = "zlobek_zdjp_",
- g_rozszerzenie_obrazka = ".jpg",
+ * ścieżka pełna do zdjęcia:
+ * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdj_XXXXX.jpg			// <-- adres zdjęcia, X to cyfra [0..9]
+ * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdjp_XXXXX.jpg 	// <-- adres miniatury zdjęcia ()
+ * http://zlobek.chojnow.eu/u_tygryskow,a147.html; 			// przykładowa strona z galerią
+ * http://zlobek.chojnow.eu/u_misiow,a20,p2.html						// przykładowa strona druga (2) galerii
+ * http://zlobek.chojnow.eu/1-u_misiow,z1028,p2.html		// przykładowa strona druga (2) z powiększonym zdjęciem nr 1 ("1028" to nr zdjęcia w galerii)
+ *
+ */
+var g_element_zewnetrzny = "#galeria_tresc",	// od 2022-11 kontenerem treści dynamicznych/docelowych jest <div> o id "galeria_tresc"; nie ma już <table> dla układu witryny
+    g_adres_strony = "zlobek.chojnow.eu",		// nazwa serwisu
+    g_folder_serwera = "zdjecia_galeria",      // ścieżka ma serwerze, tj. folder udostępniony
+    g_wyszukiwany_serwer = "",		    // na przechowywanie adresu serwera wraz z protokołem
+    g_protokol_www = "http://",
+    g_matryca_nazwy_pliku = "zlobek_zdj_",
+    g_matryca_nazwy_pliku_miniatury = "zlobek_zdjp_",
+    g_rozszerzenie_obrazka = ".jpg",
 
- g_przechwytywacz_php = "./przechwytywacz.php",			// skrypt z fopen do zaczytania witryny przez stronę php. Wymaga serwera z PHP!
- g_przechwytywacz_php_ok = "./przechwytywacz.php",			// oczekiwana zawartość zmiennej jako prawidłowa
-    
- g_przechwytywacz_php_zapytanie = "?url_zewn=",			// adres zmiennej GET, zawartość bez weryfikacji !!!
- g_przechwytywacz_php_zapytanie_ok = "?url_zewn=",			// oczekiwana zawartość zmiennej jako poprawna 
-    
- g_tag_do_podmiany_zdjecia = "div#zawartosc_do_podmiany", // element DOM, do którego load() wstawi zawartość tagu <table.galeria> z witryny zewnętrznej
- g_miejsce_na_zdjecia = "div#skladowisko", // zamienić na coś sensowniejszego
- // g_wczytywanie_podstrona = "#wczytywanie_podstrona",
- // g_wczytywanie_spis = "#wczytywanie_spis",
+    g_przechwytywacz_php = "./przechwytywacz.php",			// skrypt z fopen do zaczytania witryny przez stronę php. Wymaga serwera z PHP!
+    g_przechwytywacz_php_ok = "./przechwytywacz.php",			// oczekiwana zawartość zmiennej jako prawidłowa
+        
+    g_przechwytywacz_php_zapytanie = "?url_zewn=",			// adres zmiennej GET, zawartość bez weryfikacji !!!
+    g_przechwytywacz_php_zapytanie_ok = "?url_zewn=",			// oczekiwana zawartość zmiennej jako poprawna 
+        
+    g_tag_do_podmiany_zdjecia = "div#zawartosc_do_podmiany", // element DOM, do którego load() wstawi zawartość tagu <table.galeria> z witryny zewnętrznej
+    g_miejsce_na_zdjecia = "div#skladowisko", // zamienić na coś sensowniejszego
+    // g_wczytywanie_podstrona = "#wczytywanie_podstrona",
+    // g_wczytywanie_spis = "#wczytywanie_spis",
 
- g_element_zewnetrzny_spis = "#galeria_tresc",   // g_element_zewnetrzny_spis = "td#tresc_glowna.tlo_artykulow",
- g_tag_do_podmiany_spis = "div#galeria_spis_podmiana",
- g_miejsce_na_spis = "div#galeria_spis",	
+    g_element_zewnetrzny_spis = "#galeria_tresc",   // g_element_zewnetrzny_spis = "td#tresc_glowna.tlo_artykulow",
+    g_tag_do_podmiany_spis = "div#galeria_spis_podmiana",
+    g_miejsce_na_spis = "div#galeria_spis",	
 
- g_ilosc_wszystkich_paginacji_galerii = 0,   // ile ogółem jest podstron ze spisem galerii, w grupach po pięć, poza ostatnią grupą 1..5 elementów
- g_zaczytana_ilosc_paginacji_galerii = 0,  // ile pozostało podstron poza zaczytaną i wyświetloną podstroną
- g_ilosc_zdjec_biezaca_galeria = 0            // ile zdjęć siedzi w bieżącej galerii
- g_ile_podstron_ma_ta_galeria = 0,          // obliczona wartość na podstawie odczytu pierwszego numeru zdjęcia z pierwszej podstrony wyświetlanej galerii 
- g_biezaca_pozycja_galerii = 0,         // które elementy już wyświetlono/zaczytano od ostatniego (jako pierwszego) w grupach po pięć
- g_ilosc_zaczytanych_galerii = 0,		// ile elementów wstawiono do tej pory na stronę
- g_ilosc_wszystkich_galerii = 0,        // ilość galerii zawartych na www
- g_suma_klikniec_zaladuj = 0,           // zliczanie kliknięć jako żądanie ładowania + auto_ładowanie
- g_suma_bledow_dolaczania = 0,          // ile razy nie udało się załadować i dodać treści do istniejącego zbioru wyświetlonych elementów
+    g_ilosc_wszystkich_paginacji_galerii = 0,   // ile ogółem jest podstron ze spisem galerii, w grupach po pięć, poza ostatnią grupą 1..5 elementów
+    g_zaczytana_ilosc_paginacji_galerii = 0,  // ile pozostało podstron poza zaczytaną i wyświetloną podstroną
+    g_ilosc_zdjec_biezaca_galeria = 0            // ile zdjęć siedzi w bieżącej galerii
+    g_ile_podstron_ma_ta_galeria = 0,          // obliczona wartość na podstawie odczytu pierwszego numeru zdjęcia z pierwszej podstrony wyświetlanej galerii 
+    g_biezaca_pozycja_galerii = 0,         // które elementy już wyświetlono/zaczytano od ostatniego (jako pierwszego) w grupach po pięć
+    g_ilosc_zaczytanych_galerii = 0,		// ile elementów wstawiono do tej pory na stronę
+    g_ilosc_wszystkich_galerii = 0,        // ilość galerii zawartych na www
+    g_suma_klikniec_zaladuj = 0,           // zliczanie kliknięć jako żądanie ładowania + auto_ładowanie
+    g_suma_bledow_dolaczania = 0,          // ile razy nie udało się załadować i dodać treści do istniejącego zbioru wyświetlonych elementów
 
- g_wybrany_nr_galerii = 0,              // zapamiętanie co siedzi w polu od numeru galerii (pozycja suwaka)
- g_wybrany_nr_podstrony_galerii = 0,    // zapamiętanie co siedzi w polu od numeru podstrony galerii (też suwak)
+    g_wybrany_nr_galerii = 0,              // zapamiętanie co siedzi w polu od numeru galerii (pozycja suwaka)
+    g_wybrany_nr_podstrony_galerii = 0,    // zapamiętanie co siedzi w polu od numeru podstrony galerii (też suwak)
 
- $g_input_nr_galerii = $('input#galeria_wybrany_nr'),
- $g_suwak_nr_galerii = $('input#suwak_galerii'),
- $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'),
- $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),    
- g_niewyslane_podstrony = [],     // wszystkie żądania wyświetlenia ...vs lub tylko te do kolejnych podstron
- g_prezentacja_wczytywania = [],  // niejako kontener na stan wszystkich powiadomień o wczytywaniu
-    
- g_tloSrc = '',
- g_ileCzesci = 0,
- g_nazwaPlanszy = '',
- g_nazwaPlanszySciezka = '',
- g_nazwaElementu = '',
- g_obrazki = [],
- g_przesuniecieTlaX = 0,  // korekta umieszczenia obrazka w tle
- g_przesuniecieTlaY = 0,  // korekta umieszczenia obrazka w tle
- g_ktoraGrafika = '',
- g_mojX = '',
- g_mojY = '';
+    $g_input_nr_galerii = $('input#galeria_wybrany_nr'),
+    $g_suwak_nr_galerii = $('input#suwak_galerii'),
+    $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'),
+    $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),    
+    g_niewyslane_podstrony = [],     // wszystkie żądania wyświetlenia ...vs lub tylko te do kolejnych podstron
+    g_prezentacja_wczytywania = [],  // niejako kontener na stan wszystkich powiadomień o wczytywaniu
+        
+    g_tloSrc = '',
+    g_ileCzesci = 0,
+    g_nazwaPlanszy = '',
+    g_nazwaPlanszySciezka = '',
+    g_nazwaElementu = '',
+    g_obrazki = [],
+    g_przesuniecieTlaX = 0,  // korekta umieszczenia obrazka w tle
+    g_przesuniecieTlaY = 0,  // korekta umieszczenia obrazka w tle
+    g_ktoraGrafika = '',
+    g_mojX = '',
+    g_mojY = '';
 
 
 // ---------- *** ----------  FUNKCJE PRAWIE GLOBALNE *** ---------- *** ----------

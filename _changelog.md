@@ -1,3 +1,21 @@
+v0.6.13 - reaction to security alert - Potential XSS vulnerability in jQuery
+
+* v0.6.13 - [2023-04-04]
+
+[*] MODIFIED
+
+-- witryna.js
+* cosmetic changes on comments and indenations
+
+[F] FIXED
+
+-- witryna.js
+* security alert: "Potential XSS vulnerability in jQuery" for library file "jquery-1.12.4.js"
+  - due to compatibility, library has not been updated to version 3.5+ (possibility up to v3.6+)
+  - workaround applied for v1.12+ - override behavior of "htmlPrefilter" method by empty actions as Dependabot/jQuery Community recommends
+
+---------------------------
+
 v0.6.12 - fixed: selecting a specific gallery/album number displays that album
 
 * v0.6.12 - [2023-04-03]
