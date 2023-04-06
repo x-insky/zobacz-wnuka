@@ -313,6 +313,7 @@ v0.6.1 - Ajax query returns correct site snippet again
 
 ---------------------------
 
+
 v0.6.0 - the ability to run the site after applying UTF-8 on the source server (external change)
 
 * v0.6.0 - [2022-12-05]
