@@ -190,6 +190,10 @@ a[data-href]:focus,
     text-align: center;
 }
 
+.ukryte {
+    display: none;
+}
+
 .zamykanie {
     position: absolute;
     z-index: 11;
@@ -224,6 +228,10 @@ a[data-href]:focus,
     /*    -ms-filter: grayscale(80%);    */
     filter: gray;    /* 100% szarości działać ma w IE [6..9]  */
     filter: grayscale(80%);
+}
+
+.przekreslony-tekst {
+    text-decoration: line-through;
 }
 
 /*    --------------------------       NAGŁOWEK - KLASY      --------------------------     */
@@ -684,6 +692,7 @@ div.data-odnosnik {
     text-align: center;
     font-size: 80%;
     font-weight: bold;
+    color: #222;
     padding-top: 0.4em;
     padding-bottom: 0.4em;
 }
@@ -789,7 +798,7 @@ p#status_galerii_spis {
     background-color: rgba(50, 60, 200, 0.7);
 }
 
-nav#spis_sterowanie h2 {
+nav#spis_sterowanie h2.szary-cien {
     text-shadow: 2px 2px 6px #666;
 }
 
@@ -2124,6 +2133,7 @@ iframe      /* wszelakie <iframe> (póki co nie używam w ogóle) */
     #stopka h2
     {
         padding-top: 0.5em;
+        padding-bottom: 0.75em;
         padding-right: 2.5em;
     }
 

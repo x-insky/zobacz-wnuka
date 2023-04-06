@@ -57,7 +57,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
     
     <link rel="shortcut icon" href="./grafiki/slonce_ikona.png" />
     <link rel="stylesheet" href="reset.css">
-    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />  <!-- czcionka Muli -->	
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />  <!-- czcionka Muli -->
     <?php
     // odczyt warunkowej minifikacji styli   
         if ( $serwer_lokalny ) echo '<link rel="stylesheet" href="zlobek-styl.css" />';
@@ -73,7 +73,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
     <?php
         if ( $serwer_lokalny ) echo '<script src="./lib/jquery-1.12.4.js"></script>';  // pobieranie pliku nieskompresowanego przez przeglądarkę
         else echo '<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>';    // pobieranie pliku z serwera zewnętrznego w wariancie skompresowanym: *.MIN.js
-    ?>  <!-- testy uruchamiania nawet na kalkulatorach --> 
+    ?>
 
 </head>
 
@@ -122,7 +122,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     <h3>Serwis umożliwia łatwiejszy podgląd rozrabiających wnuków przez dziadków... i nie tylko. Treści pochodzą&nbsp;z&nbsp;witryny <a class="odnosnik_kolor" href="http://zlobek.chojnow.eu/" target="_blank">zlobek.chojnow.eu</a></h3>
                 </div>
 
-            </div>	<!-- div.banner-kontener -->    
+            </div>	<!--  .banner-kontener  -->    
                 
             <div id="spis_tresci">
                 <div id="zaczytany_spis">
@@ -167,11 +167,11 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     <div class="kontener">
                         <p id="status_galerii_spis"></p>
                     </div>
-                    <h2 id="zaladuj_galerie_spis" class="przycisk clearfix2" tabindex="0">Załaduj kolejne galerie<img src="grafiki/slonce_60x60.png" alt="" /><span></span></h2>
+                    <h2 id="zaladuj_galerie_spis" class="przycisk szary-cien clearfix2" tabindex="0">Załaduj kolejne galerie<img src="grafiki/slonce_60x60.png" alt="" /><span></span></h2>
 
                     <div class="kontener">
                         <div id="selektor">     
-                            <h2 id="selektor_naglowek" tabindex="0">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
+                            <h2 id="selektor_naglowek" class="szary-cien" tabindex="0">...lub wybierz dowolną galerię poniżej <span>rozwiń ▼</span></h2>
                             <div>
                                 <form action="#" method="post" id="wybierz_galerie" autocomplete="off">
                                     <div id="wybor_galerii">
@@ -198,7 +198,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                             <input type="button" id="losuj_zakres" name="losuj_zakres" class="szerszy_guzik" value="Losuj galerię" />
                                             <input type="submit" id="suwak_galerii_submit" name="suwak_galerii_submit" class="szerszy_guzik" role="submit" value="Zobacz wybrany" />
                                         </div>
-                                    </div>  <!-- div#wybor_galerii -->  
+                                    </div>  <!--  #wybor_galerii  -->  
                                 </form>    
                                 <form action="#" method="post" id="wybierz_podstrone" autocomplete="off">
                                     <div id="wybor_podstrony_galerii">
@@ -225,12 +225,12 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                                             <input type="button" id="losuj_zakres_podstrony" class="szerszy_guzik" name="losuj_zakres_podstrony" value="Losuj podstronę" />
                                             <input type="submit" id="suwak_podstrony_submit" class="szerszy_guzik" name="suwak_podstrony_submit" role="submit" value="Zobacz wybrany" />
                                         </div>	
-                                    </div>  <!-- div#wybor_podstrony_galerii --> 
+                                    </div>  <!--  #wybor_podstrony_galerii  --> 
                                 </form>
                             </div>
                             
-                        </div> <!-- div#selektor -->
-                    </div>  <!-- div.kontener -->
+                        </div> <!-- #selektor  -->
+                    </div>  <!--  .kontener  -->
                     
                     <div id="wybrany_zaczytany_spis">
                         <h2>Lista galerii z wybranej <span></span> podstrony</h2>
@@ -257,7 +257,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     <div id="galeria_spis_podmiana" class="clearfix">
                     </div>
                 </nav>	
-            </div>  <!-- div#spis_tresci -->
+            </div>  <!--  #spis_tresci  -->
 
             <div id="brak_skryptow" style="">
                 <div class="blad animacja-zolty-blysk">
@@ -300,7 +300,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
             <div id="zawartosc_do_podmiany">
             </div>
             
-        </div> <!-- <div id="glowna"> -->
+        </div> <!--  #glowna  -->
 
         
         <div id="gra">
@@ -329,7 +329,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                     </div>
                 </div>
             </div>
-        </div> <!--     <div id="gra">  -->
+        </div> <!--  #gra  -->
         
         
         <footer id="stopka">
@@ -338,14 +338,14 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                 <button id="pomoc_button">Pomoc &darr;</button>
                 <button id="symulacja_button" class="animacja-pulsowanie-kolorow">Symul-A(JAX)-cja</button>
             </div>
-            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.6.0</h6>
+            <h6>&copy;2018<?php echo "-" . date('Y'); ?> v0.6.13</h6>
             <div id="poco">
                 <aside id="poco_zamykanie" class="zamykanie" tabindex="0">&times;</aside>
                 <h2><em>Ale na co to komu?!</em> &ndash; sens projektu</h2>
                 <div class="kontener">
                     <div>
                         <h3>Dla Hani</h3>
-                        <p>Bo tak! Z mniejszą dedykacją dla Szymonka i Ninki też. Niech za jakiś czas maluchy zobaczą siebie, jak wyglądały kiedyś.</p>
+                        <p>Bo tak! Z mniejszą dedykacją dla Szymonka, Ninki i Ali też. Niech za jakiś czas maluchy zobaczą siebie, jak wyglądały kiedyś.</p>
 
                         <h3>Jaki jest cel?</h3>
                         <p>Ta strona odpowiada żywotnym potrzebom całego społeczeństwa. To jest witryna na skalę naszych możliwości. Ty wiesz, co my robimy tym serwisem? My otwieramy oczy niedowiarkom. Patrzcie, to nasze, przez nas wykonane i to nie jest nasze ostatnie słowo.</p>
@@ -419,7 +419,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <h3>To tylko przeglądarka</h3>
                         <p>Niniejszy serwis służy do łatwiejszego wyświetlania galerii z osobami skazanymi na pobyt w żłobku. Wymagane bezwzględnie jest istnienie i funkcjonowanie macierzystego serwisu www: <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a>.</p>
                         <h3>Podstrony</h3>
-                        <p>Wygodne przeglądanie zdjęć w grupach, ograniczających nadmiarowe klikanie - funkcjonuje na raz dla maksymalnie osiemnastu obrazków w danej galerii (założenia pierwotnej witryny żłobka). Serwis umożliwia łatwą nawigację pomiędzy kolejnymi obrazkami i ewentualnymi podstronami danej galerii (kolejnymi grupami obrazków). <br />
+                        <p>Wygodne przeglądanie zdjęć w grupach, ograniczających nadmiarowe klikanie - funkcjonuje na raz dla maksymalnie <span class="przekreslony-tekst">osiemnastu</span> dziewięciu obrazków w danej galerii (założenia pierwotnej witryny żłobka). Serwis umożliwia łatwą nawigację pomiędzy kolejnymi obrazkami i ewentualnymi podstronami danej galerii (kolejnymi grupami obrazków). <br />
                         <em>Zobacz Wnuka</em> pozwala na przeglądania tylko zawartości tego Żłobka, nie wyświetlą się pokazy zdjęć z innych adresów.</p>
                         <h3>Pożegnanie <em>kopiuj-wklej</em></h3>
                         <p>Pierwotna funkcjonalność <em>Zobacz Wnuka</em> zmuszała do podania odnośnika do wskazanej galerii zdjęć z serwisu <a href="http://zlobek.chojnow.eu" target="_blank">zlobek.chojnow.eu</a>, by uruchomić pokaz zdjęć. Udoskonalono mechanizm automatycznego pozyskiwania tytułów galerii, by wyświetlić kolejno miniatury i przeglądać wskazane zdjęcia.</p>
@@ -474,7 +474,7 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         <h3>Status projektu</h3>
                         <p>W zakresie głównej funkcjonalności na ukończeniu. Szlifowanie, testy i poprawki różnego kalibru jasno określają, że projekt jest nadal <em>nieukończony</em> (choć brakuje dosłownie kilku procent dla zamknięcia kilku kluczowych i kosmetycznych zagadnień - głównie kompatybilność i brak niespodziewanych udziwnień). Nadal rozszerzone informowanie dla potrzeb debugowania. W obszarze dodatkowym (gra), z uwagi na &quot;przeciągające się&quot; problemy z przeciąganiem - jeszcze daleko do statusu <em>ukończony</em>...</p>
                     </div>    
-                </div> <!-- .kontener -->
+                </div> <!--  .kontener  -->
                 <div class="kontener">
                     <h3>Wymagania programowe</h3>
                     <ul class="ramka">
@@ -539,16 +539,16 @@ setcookie('zlobek_zliczacz', $laczna_ilosc_wizyt, $czas_teraz + 3600 * 24 * 365 
                         }
                     ?>
 
-                </div>  <!-- .ramka -->
+                </div>  <!--  .ramka  -->
                 <h4>Powyższe wkrótce zniknie, gdy tylko zostanie osiągnięty kolejny etap testów.</h4>  
-            </div> <!-- #pomoc -->
+            </div> <!--  #pomoc  -->
         </footer>	
 
         <div id="wymiary">
             <h1>&nbsp;</h1>    
         </div>    
         
-    </div>	<!-- DIV.witryna -->
+    </div>	<!--  .witryna   -->
 
 
     <script>

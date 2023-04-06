@@ -1,69 +1,81 @@
 // 'use strict'; 
 
-$(document).ready(function ()
+    /*  !!! "Potential XSS vulnerability in jQuery (jquery-1.12.4.js)" - problem zgłoszony przez GitHub (Dependabot)/jQuery Community
+       (+) zalecane: aktualizacja do v3.5.0
+       (+/-) obejście: nadpisanie funkcji/metody o prawdopodobnie niebezpiecznych możliwościach pustą definicją
+    */
+jQuery.htmlPrefilter = function ( html )
+{
+	return html;    // nie rób nic (też nic z możliwych wcześniej niebezpiecznych działań), przerzuć wartości do dalszego wywołania łańcuchowego
+};
+
+
+$( document ).ready ( function ()
 {
 /* GARŚĆ TEORII i FAKTÓW:
-* ścieżka pełna do zdjęcia:
-* http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdj_XXXXX.jpg			// <-- adres zdjęcia, X to cyfra [0..9]
-* http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdjp_XXXXX.jpg 	// <-- adres miniatury zdjęcia ()
-* http://zlobek.chojnow.eu/u_tygryskow,a147.html; 			// przykładowa strona z galerią
-* http://zlobek.chojnow.eu/u_misiow,a20,p2.html						// przykładowa strona druga (2) galerii
-* http://zlobek.chojnow.eu/1-u_misiow,z1028,p2.html		// przykładowa strona druga (2) z powiększonym zdjęciem nr 1 ("1028" to nr zdjęcia w galerii)
-*
-*/
-var g_element_zewnetrzny = "table.galeria",	// wszystko jest w tablicy o klasie "galeria", w komórce wyższej tablicy
- g_adres_strony = "zlobek.chojnow.eu",		// nazwa serwisu
- g_folder_serwera = "zdjecia_galeria",      // ścieżka ma serwerze, tj. folder udostępniony
- g_wyszukiwany_serwer = "",		    // na przechowywanie adresu serwera wraz z protokołem
- g_protokol_www = "http://",
- g_matryca_nazwy_pliku = "zlobek_zdj_",
- g_matryca_nazwy_pliku_miniatury = "zlobek_zdjp_",
- g_rozszerzenie_obrazka = ".jpg",
+ * ścieżka pełna do zdjęcia:
+ * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdj_XXXXX.jpg			// <-- adres zdjęcia, X to cyfra [0..9]
+ * http://zlobek.chojnow.eu/zdjecia_galeria/zlobek_zdjp_XXXXX.jpg 	// <-- adres miniatury zdjęcia ()
+ * http://zlobek.chojnow.eu/u_tygryskow,a147.html; 			// przykładowa strona z galerią
+ * http://zlobek.chojnow.eu/u_misiow,a20,p2.html						// przykładowa strona druga (2) galerii
+ * http://zlobek.chojnow.eu/1-u_misiow,z1028,p2.html		// przykładowa strona druga (2) z powiększonym zdjęciem nr 1 ("1028" to nr zdjęcia w galerii)
+ *
+ */
+var g_element_zewnetrzny = "#galeria_tresc",	// od 2022-11 kontenerem treści dynamicznych/docelowych jest <div> o id "galeria_tresc"; nie ma już <table> dla układu witryny
+    g_adres_strony = "zlobek.chojnow.eu",		// nazwa serwisu
+    g_folder_serwera = "zdjecia_galeria",      // ścieżka ma serwerze, tj. folder udostępniony
+    g_wyszukiwany_serwer = "",		    // na przechowywanie adresu serwera wraz z protokołem
+    g_protokol_www = "http://",
+    g_matryca_nazwy_pliku = "zlobek_zdj_",
+    g_matryca_nazwy_pliku_miniatury = "zlobek_zdjp_",
+    g_rozszerzenie_obrazka = ".jpg",
 
- g_przechwytywacz_php = "./przechwytywacz.php",			// skrypt z fopen do zaczytania witryny przez stronę php. Wymaga serwera z PHP!
- g_przechwytywacz_php_ok = "./przechwytywacz.php",			// oczekiwana zawartość zmiennej jako prawidłowa
-    
- g_przechwytywacz_php_zapytanie = "?url_zewn=",			// adres zmiennej GET, zawartość bez weryfikacji !!!
- g_przechwytywacz_php_zapytanie_ok = "?url_zewn=",			// oczekiwana zawartość zmiennej jako poprawna 
-    
- g_tag_do_podmiany_zdjecia = "div#zawartosc_do_podmiany", // element DOM, do którego load() wstawi zawartość tagu <table.galeria> z witryny zewnętrznej
- g_miejsce_na_zdjecia = "div#skladowisko", // zamienić na coś sensowniejszego
- // g_wczytywanie_podstrona = "#wczytywanie_podstrona",
- // g_wczytywanie_spis = "#wczytywanie_spis",	
+    g_przechwytywacz_php = "./przechwytywacz.php",			// skrypt z fopen do zaczytania witryny przez stronę php. Wymaga serwera z PHP!
+    g_przechwytywacz_php_ok = "./przechwytywacz.php",			// oczekiwana zawartość zmiennej jako prawidłowa
+        
+    g_przechwytywacz_php_zapytanie = "?url_zewn=",			// adres zmiennej GET, zawartość bez weryfikacji !!!
+    g_przechwytywacz_php_zapytanie_ok = "?url_zewn=",			// oczekiwana zawartość zmiennej jako poprawna 
+        
+    g_tag_do_podmiany_zdjecia = "div#zawartosc_do_podmiany", // element DOM, do którego load() wstawi zawartość tagu <table.galeria> z witryny zewnętrznej
+    g_miejsce_na_zdjecia = "div#skladowisko", // zamienić na coś sensowniejszego
+    // g_wczytywanie_podstrona = "#wczytywanie_podstrona",
+    // g_wczytywanie_spis = "#wczytywanie_spis",
 
- g_element_zewnetrzny_spis = "table.galeria",   // g_element_zewnetrzny_spis = "td#tresc_glowna.tlo_artykulow",
- g_tag_do_podmiany_spis = "div#galeria_spis_podmiana",
- g_miejsce_na_spis = "div#galeria_spis",	
+    g_element_zewnetrzny_spis = "#galeria_tresc",   // g_element_zewnetrzny_spis = "td#tresc_glowna.tlo_artykulow",
+    g_tag_do_podmiany_spis = "div#galeria_spis_podmiana",
+    g_miejsce_na_spis = "div#galeria_spis",	
 
- g_ilosc_wszystkich_paginacji_galerii = 0,   // ile ogółem jest podstron ze spisem galerii, w grupach po pięć, poza ostatnią grupą 1..5 elementów
- g_zaczytana_ilosc_paginacji_galerii = 0,  // ile pozostało podstron poza zaczytaną i wyświetloną podstroną
- g_biezaca_pozycja_galerii = 0,         // które elementy już wyświetlono/zaczytano od ostatniego (jako pierwszego) w grupach po pięć
- g_ilosc_zaczytanych_galerii = 0,		// ile elementów wstawiono do tej pory na stronę
- g_ilosc_wszystkich_galerii = 0,        // ilość galerii zawartych na www
- g_suma_klikniec_zaladuj = 0,           // zliczanie kliknięć jako żądanie ładowania + auto_ładowanie
- g_suma_bledow_dolaczania = 0,          // ile razy nie udało się załadować i dodać treści do istniejącego zbioru wyświetlonych elementów
+    g_ilosc_wszystkich_paginacji_galerii = 0,   // ile ogółem jest podstron ze spisem galerii, w grupach po pięć, poza ostatnią grupą 1..5 elementów
+    g_zaczytana_ilosc_paginacji_galerii = 0,  // ile pozostało podstron poza zaczytaną i wyświetloną podstroną
+    g_ilosc_zdjec_biezaca_galeria = 0            // ile zdjęć siedzi w bieżącej galerii
+    g_ile_podstron_ma_ta_galeria = 0,          // obliczona wartość na podstawie odczytu pierwszego numeru zdjęcia z pierwszej podstrony wyświetlanej galerii 
+    g_biezaca_pozycja_galerii = 0,         // które elementy już wyświetlono/zaczytano od ostatniego (jako pierwszego) w grupach po pięć
+    g_ilosc_zaczytanych_galerii = 0,		// ile elementów wstawiono do tej pory na stronę
+    g_ilosc_wszystkich_galerii = 0,        // ilość galerii zawartych na www
+    g_suma_klikniec_zaladuj = 0,           // zliczanie kliknięć jako żądanie ładowania + auto_ładowanie
+    g_suma_bledow_dolaczania = 0,          // ile razy nie udało się załadować i dodać treści do istniejącego zbioru wyświetlonych elementów
 
- g_wybrany_nr_galerii = 0,              // zapamiętanie co siedzi w polu od numeru galerii (pozycja suwaka)
- g_wybrany_nr_podstrony_galerii = 0,    // zapamiętanie co siedzi w polu od numeru podstrony galerii (też suwak)
+    g_wybrany_nr_galerii = 0,              // zapamiętanie co siedzi w polu od numeru galerii (pozycja suwaka)
+    g_wybrany_nr_podstrony_galerii = 0,    // zapamiętanie co siedzi w polu od numeru podstrony galerii (też suwak)
 
- $g_input_nr_galerii = $('input#galeria_wybrany_nr'), 
- $g_suwak_nr_galerii = $('input#suwak_galerii'), 
- $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'), 
- $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),    
- g_niewyslane_podstrony = [],     // wszystkie żądania wyświetlenia ...vs lub tylko te do kolejnych podstron
- g_prezentacja_wczytywania = [],  // niejako kontener na stan wszystkich powiadomień o wczytywaniu
-    
- g_tloSrc = '',
- g_ileCzesci = 0,
- g_nazwaPlanszy = '',
- g_nazwaPlanszySciezka = '',
- g_nazwaElementu = '',
- g_obrazki = [],
- g_przesuniecieTlaX = 0,  // korekta umieszczenia obrazka w tle
- g_przesuniecieTlaY = 0,  // korekta umieszczenia obrazka w tle
- g_ktoraGrafika = '',
- g_mojX = '',
- g_mojY = '';
+    $g_input_nr_galerii = $('input#galeria_wybrany_nr'),
+    $g_suwak_nr_galerii = $('input#suwak_galerii'),
+    $g_input_nr_podstrony_galerii = $('input#podstrona_wybrany_nr'),
+    $g_suwak_nr_podstrony_galerii = $('input#suwak_podstrony'),    
+    g_niewyslane_podstrony = [],     // wszystkie żądania wyświetlenia ...vs lub tylko te do kolejnych podstron
+    g_prezentacja_wczytywania = [],  // niejako kontener na stan wszystkich powiadomień o wczytywaniu
+        
+    g_tloSrc = '',
+    g_ileCzesci = 0,
+    g_nazwaPlanszy = '',
+    g_nazwaPlanszySciezka = '',
+    g_nazwaElementu = '',
+    g_obrazki = [],
+    g_przesuniecieTlaX = 0,  // korekta umieszczenia obrazka w tle
+    g_przesuniecieTlaY = 0,  // korekta umieszczenia obrazka w tle
+    g_ktoraGrafika = '',
+    g_mojX = '',
+    g_mojY = '';
 
 
 // ---------- *** ----------  FUNKCJE PRAWIE GLOBALNE *** ---------- *** ----------
@@ -474,7 +486,7 @@ function GenerujPodstronyGalerii ( kontenerZrodlowy, nrWyswietlanejGalerii )
 { 	     // poniżej wartości domyślne dla parametrów ES5
 nrWyswietlanejGalerii = parseInt( nrWyswietlanejGalerii );    
     if ( ( !kontenerZrodlowy ) || ( kontenerZrodlowy == '') ) kontenerZrodlowy = '#zawartosc_do_podmiany';
-    if ( ( nrWyswietlanejGalerii == undefined ) || ( isNaN( nrWyswietlanejGalerii) ) ) nrWyswietlanejGalerii = 1;
+    if ( ( nrWyswietlanejGalerii == undefined ) || ( isNaN( nrWyswietlanejGalerii) ) || ( nrWyswietlanejGalerii < 1 ) ) nrWyswietlanejGalerii = 1;  // uzwględniono chyba wszystkie nieprawidłowe warunki liczbowe 
 
 var kontenerDocelowyElement = "div#skladowisko",
     $kontenerDocelowy = $( kontenerDocelowyElement ),
@@ -499,7 +511,59 @@ $('nav#nawigacja_galeria').empty().show( 100 );     // czyszczenie kontenera na 
 // $kontenerDocelowy.show( 100, PrzewinEkranDoElementu( kontenerDocelowyElement, 200, -8 - (wysokoscDivWczytywanie + wysokoscDivKomentarz) )  );	// pokaż kontener na zaczytaną zawartość + przewiń po wyświetleniu całości
 $kontenerDocelowy.show( 100 );	// pokaż kontener na zaczytaną zawartość ... + przewiń po wyświetleniu całości?
 
-var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie wewnątrz danego pojemnika
+//przeszukiwanie odnośników dla miniatur w galerii; link z miniatury prowadziŁ do normalnej (większej) kopii obrazka (aktualne do 2022.11; teraz MINIATURA == OBRAZEK)
+var $odnosnikiMiniatur  = $( kontenerZrodlowy + ' .card > a' ); // skoro powinny zawsze być znalezione [1..maks_grupa_zdjęć_w_podstronie], to nie weryfikuję dalej 
+
+// logowanie sukcesu: znelezione miniatury dla bieącej podstrony 
+console.log('Znaleziono na podstronie ' + $odnosnikiMiniatur.length + ' miniatur - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
+
+        // zweryfikować obliczenie bieżącej galerii we wcześniejszej pętli ...
+    
+$( g_miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyświetlenie nowej galerii 
+$( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietlanejGalerii  + '.</span> podstrony galerii</h2>');  // dopisanie nagłówka dla bieżącej galerii - z PARAMETRU WYWOŁANIA, a nie obliczonego na podstawie przebiegu
+    
+    $odnosnikiMiniatur.each( function( i, biezacyOdnosnik) {
+
+    var $biezacyOdnosnik = $(biezacyOdnosnik); // this == biezacyOdnosnik
+    var biezacyOdnosnikHREF = $biezacyOdnosnik.attr('href');
+    var $obrazekWOdnosniku = $biezacyOdnosnik.find('img');
+
+        // podobnie określany numer, jako konwersja wybranego wycinka z części odnośnika
+        // tu końcówka napisu z numerem podstrony już do niczego niepotrzebna
+    var numerZdjecia = OdczytajZOdnosnikaNumerZdjeciaWGalerii( biezacyOdnosnikHREF );
+    var odnosnikNrZdjeciaGlobalne = OdczytajZOdnosnikaGlobalnyNumerZdjecia( biezacyOdnosnikHREF );
+    
+        if ( ( nrWyswietlanejGalerii == 1 ) && ( i == 0) )  // jeśli to pierwsza (tytułowa) podstrona i pierwszy znaleziony element to zawiera on liczbę 
+        {
+            g_ilosc_zdjec_biezaca_galeria = numerZdjecia;   // przypisz całościową liczbę obrazków w galerii
+            g_ile_podstron_ma_ta_galeria = MaksymalnaIloscPodstronDlaWyswietlanejGalerii( numerZdjecia ); // uczynić globalną? TAK (wstępnie wartość na potrzeby funkcji, ale przy innej podstronie niż pierwsza wartość "ginie"
+        }
+
+    var serwerowyOpisObrazkaALT = ( $obrazekWOdnosniku.attr('alt') || ( ( numerZdjecia ).toString() + " z " + ( g_ilosc_zdjec_biezaca_galeria ).toString() ) );// pozyskanie atrybutu ALT ze źródła (o ile istnieje, to dostajemy wprost numer zdjęcia w danej galerii)
+    var opisObrazkaALT = 'zdjęcie ' + serwerowyOpisObrazkaALT;
+    $obrazekWOdnosniku.attr('alt', opisObrazkaALT);     // modyfikacja/tworzenie treści atrybutu (o ile istniał)
+    var opisObrazkaALTDuzaLitera = "Zdjęcie nr "  + serwerowyOpisObrazkaALT + " w tej galerii (" + odnosnikNrZdjeciaGlobalne + g_rozszerzenie_obrazka + ")"; // nowa lepsza nazwa na tytuł w podglądzie JS
+
+    // console.log("Dla elementu <a> o HREF '" + biezacyOdnosnikHREF + "' NR_ZDJĘCIA to '" + odnosnikNrZdjecia + "', a ALT miniatury IMG to '" + opisObrazkaALT + "'" );	// DEBUG
+
+    // sklejanie adresu docelowego obrazka z ustalonych fragmentów i ścieżki względnej (numeru zdjęcia w zasadzie)   
+    var pelnyAdresOdnosnika = g_protokol_www + g_adres_strony + "/" + g_folder_serwera + "/" + g_matryca_nazwy_pliku + odnosnikNrZdjeciaGlobalne + g_rozszerzenie_obrazka ;	
+    $biezacyOdnosnik.attr( { href: pelnyAdresOdnosnika, "data-lightbox": "Galeria",
+                            "data-title": opisObrazkaALTDuzaLitera, title: opisObrazkaALT } ); // zmienia href na bezpośrednie odnośniki do serwera zewnętrznego
+            // PLUS Lightbox w atrybutach data!!!
+    $biezacyOdnosnik.siblings().remove();
+
+    // sklejanie adresu dla miniatury, owiniętej odnośnikiem   -  
+    // przeklejenie - wstawienie odnośników do zdjęć w innym, właściwym obszarze
+    $kontenerDocelowy.append( $biezacyOdnosnik ); 
+    }); //each-function-END
+
+    if ( $odnosnikiMiniatur.length <= 0) // gdyby jednak nic nie znaleziono (chyżby coś z serwerem lub transmisją?)
+    {
+    console.log('Nie znaleziono na podstronie żadnych miniatur (stan: ' + $odnosnikiMiniatur.length + ') - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
+    }
+
+    var $listaPodstron = $( kontenerZrodlowy + ' .pagination .page-link' ); // wyszukiwanie wewnątrz danego pojemnika
 
     if ( $listaPodstron.length >= 1 )	// czy są jakieś odnośniki do podstron/paginacji galerii? (zlicza wszystkie, też NOWSZE/STARSZE)
     {					// startujemy od kolejnej strony po pierwszej, ale ostatni zawiera ciąg "starsze"
@@ -510,50 +574,51 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
         for ( var i=0; i < $listaPodstron.length; i++ ) {
             // każda podstrona/paginacja zaczytywana po kolei z odsyłaczem w formie tekstowej -- treść tekstowa danego odnośnika
         nazwaPodstronyGalerii = $( $listaPodstron[i] ).text();  // pozyskiwanie bezpośredniej treści tekstowej odsyłacza
-            if ( ( nazwaPodstronyGalerii.search("nowsze") >= 0 ) || ( nazwaPodstronyGalerii.search("starsze") >= 0 ) )
+            if ( ( nazwaPodstronyGalerii.search("nowsze") >= 0 ) || ( nazwaPodstronyGalerii.search("starsze") >= 0 )
+                 || ( nazwaPodstronyGalerii.search("następne") >= 0 ) || ( nazwaPodstronyGalerii.search("poprzednie") >= 0 ) )
             {
             // nic nie robimy dla takiego odnośnika, najlepiej zakończyć bieżącą iterację
-            continue;  // nie wyświetlaj przyciku/-ów z tekstem "starsze/nowsze" dla danego wykonania pętli - wyjście z kroku pętli
+            continue;  // nie wyświetlaj przyciku/-ów z tekstem "starsze/nowsze"/"poprzednie/następne" dla danego wykonania pętli - wyjście z kroku pętli
             }
         ileLinkowDoPodstron++;  // dopiero tu inkrementacja znalezionej ilości "dobrych" przycisków
 
         var odnosnikPodstrony = $( $listaPodstron[i] ).attr('href'); 	// wyciąga href z nawigacji podstrony/paginacji
-        // informacja o pozytywneym odczytaniu odnośnika do podstrony galerii
+        // informacja o pozytywnym odczytaniu odnośnika do podstrony galerii
         // console.log('Natrafiono na odnośnik nr ' + (i+1) + ' o zawartości \'' + odnosnikPodstrony + '\'');
 
-        //var nrGalerii = odnosnikPodstrony.split(",")[2]; // to był wystarczający warunek, póki w "tytule" nie zawarto przecinka/ów (",")
-        var nrGalerii = parseInt ( odnosnikPodstrony.substr( odnosnikPodstrony.lastIndexOf(",p") + 2, odnosnikPodstrony.length - 5 ) );
-            // "http.../u_misiow,a20,p2.html"  <-- usuwanie przecinka i "p", które są o "2 przed" numerem podstrony galerii
-            // treść z numerem kończy się ".html" - pomijane te 5 znaków przy krojeniu STRINGU)
+        var odczytanyNrPodstronyBiezacejGalerii = OdczytajZOdnosnikaNumerPodstronyGalerii ( odnosnikPodstrony );
 
-                // tu oblicznanie w pętli przejścia do ewentualnego poprzedniego oraz ewentualnego następnego względem bieżącego
-            if ( ( nrGalerii == ( nrWyswietlanejGalerii - 1 ) ) && ( nrGalerii > 0 ) )  // > "jeden" to źle?
+            if ( ( odczytanyNrPodstronyBiezacejGalerii !== undefined ) && ( !isNaN( odczytanyNrPodstronyBiezacejGalerii ) ) )   // jeżeli odczytano z przycisku odnośnik z NUMEREM podstrony to wstaw przycisk z odnośnik do tej podstron
             {
-            przyciskPoprzedni.nrPodstrony = nrGalerii; // przypisanie numeru galerii, który jest -1 w stosunku do bieżącej (wyświetlanej)
-            przyciskPoprzedni.adresUrl = odnosnikPodstrony; // też jej adres jest potrzebny
-            }
-            if ( ( nrGalerii == ( nrWyswietlanejGalerii + 1 ) ) && ( nrGalerii < ( $listaPodstron.length + 1 ) ) )      // korekta na +1 max
-            {
-            przyciskNastepny.nrPodstrony = nrGalerii;
-            przyciskNastepny.adresUrl = odnosnikPodstrony;
-            }
-        var nowyPrzycisk = $('<button></button>', {
-        // var nowyPrzycisk = $('<input></input>', {
-        // type : "button",            
-            //id : "galeria_paginacja_" + ( i+1 ),  // tu generowane po kolei
-            id : "galeria_paginacja_" + nrGalerii,  // a tu użycie obliczonego numeru do konkretnej podstrony danej galerii (też po kolei, ale z wyłączeniem aktualnie wyswietlanej podstrony)
-            "class" : "przycisk_galeria",
-            value : nrGalerii, 
-            text : "Podstrona nr " + nrGalerii, // etykieta z konkretnym numerem do nawigowania
-            "data-tag" : g_tag_do_podmiany_zdjecia,
-            "data-adres_strony" : g_adres_strony,
-            "data-adres_galerii" : odnosnikPodstrony,
-            "data-elem_zewn" : g_element_zewnetrzny
-        });	 
+                    // tu oblicznanie w pętli przejścia do ewentualnego poprzedniego oraz ewentualnego następnego względem bieżącego
+                if ( ( odczytanyNrPodstronyBiezacejGalerii == ( nrWyswietlanejGalerii - 1 ) ) && ( odczytanyNrPodstronyBiezacejGalerii > 0 ) )  // > "jeden" to źle?
+                {
+                przyciskPoprzedni.nrPodstrony = odczytanyNrPodstronyBiezacejGalerii; // przypisanie numeru galerii, który jest -1 w stosunku do bieżącej (wyświetlanej)
+                przyciskPoprzedni.adresUrl = odnosnikPodstrony; // też jej adres jest potrzebny
+                }
+                if ( ( odczytanyNrPodstronyBiezacejGalerii == ( nrWyswietlanejGalerii + 1 ) ) && ( odczytanyNrPodstronyBiezacejGalerii <= g_ile_podstron_ma_ta_galeria ) )      // korekta na +1 max, ale dla obliczonych już wszystkich podston niepotrzebna, lepiej operator porówniania zaktualizować
+                {
+                przyciskNastepny.nrPodstrony = odczytanyNrPodstronyBiezacejGalerii;
+                przyciskNastepny.adresUrl = odnosnikPodstrony;
+                }
+            var nowyPrzycisk = $('<button></button>', {
+            // var nowyPrzycisk = $('<input></input>', {
+            // type : "button",            
+                //id : "galeria_paginacja_" + ( i+1 ),  // tu generowane po kolei
+                id : "galeria_paginacja_" + odczytanyNrPodstronyBiezacejGalerii,  // a tu użycie obliczonego numeru do konkretnej podstrony danej galerii (też po kolei, ale z wyłączeniem aktualnie wyswietlanej podstrony)
+                "class" : "przycisk_galeria",
+                value : odczytanyNrPodstronyBiezacejGalerii, 
+                text : "Podstrona nr " + odczytanyNrPodstronyBiezacejGalerii, // etykieta z konkretnym numerem do nawigowania
+                "data-tag" : g_tag_do_podmiany_zdjecia,
+                "data-adres_strony" : g_adres_strony,
+                "data-adres_galerii" : odnosnikPodstrony,
+                "data-elem_zewn" : g_element_zewnetrzny
+            });	 
 
-        przyciskiDoWstawienia.push( nowyPrzycisk ); // zbieranie istniejących przycisków podgalerii do jednej kolekcji (z wyłaczeniem "poprzednia/następna" oraz siebie samego)
-            // powyższe celem polepszenia wydajności, aby dołączyć do DOM jeden element, zawierający kolekcję przycisków (po zebraniu tej kolekcji)
+            przyciskiDoWstawienia.push( nowyPrzycisk ); // warunkowe dodamie - zbieranie istniejących przycisków podgalerii do jednej kolekcji (z wyłaczeniem "poprzednia/następna" oraz siebie samego)
+                // powyższe celem polepszenia wydajności, aby dołączyć do DOM jeden element, zawierający kolekcję przycisków (po zebraniu tej kolekcji)
 
+            } // if-END !undefined && !isNaN
         } // for-END
         
             // logownie kolekcji przycisków dla sukcesu (znaleziono na stronie) 
@@ -619,52 +684,6 @@ var $listaPodstron = $( kontenerZrodlowy + ' a.link_tresc' ); // wyszukiwanie we
     $('nav#nawigacja_galeria').append('<div class="kontener"><h3>Brak innych podstron dla tej galerii</h3></div>'); 
     }   // if-else-END $listaPodstron.length >= 1
 
-//przeszukiwanie odnośników dla miniatur w galerii, link z miniatury prowadzi do normalnej (większej) kopii obrazka
-// do galerii prowadzą odnośniki z tą klasą, do paginacji niestety też ;) | same zdjęcia i miniatury bez przypisanej klasy dla <a>
-var $odnosnikiMiniatur  = $( kontenerZrodlowy + ' a:not(.link_tresc)' );
-
-// logowanie sukcesu: znelezione miniatury dla bieącej podstrony 
-// console.log('Znaleziono na podstronie ' + $odnosnikiMiniatur.length + ' miniatur - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
-
-        // zweryfikować obliczenie bieżącej galerii we wcześniejszej pętli ...
-    
-$( g_miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyświetlenie nowej galerii 
-$( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietlanejGalerii  + '.</span> podstrony galerii</h2>');  // dopisanie nagłówka dla bieżącej galerii - z PARAMETRU WYWOŁANIA, a nie obliczonego na podstawie przebiegu
-    
-    $odnosnikiMiniatur.each( function() {
-
-    var $biezacyOdnosnik = $(this);
-    var biezacyOdnosnikHREF = $biezacyOdnosnik.attr('href');
-    var $obrazekWOdnosniku = $biezacyOdnosnik.find('img');
-
-        // podobnie określany numer, jako konwersja wybranego wycinka z części odnośnika
-        // tu końcówka napisu z numerem podstrony już do niczego niepotrzebna 
-    var odnosnikNrZdjecia = parseInt( biezacyOdnosnikHREF.substr( biezacyOdnosnikHREF.lastIndexOf( ",z") + 2, biezacyOdnosnikHREF.length - 8 ) );
-
-    var serwerowyOpisObrazkaALT = $obrazekWOdnosniku.removeAttr('border').attr('alt') || "Obrazek galerii"; // pozyskanie atrybutu ALT ze źródła wraz z usunięciem głupiego atrybutu BORDER danego obrazka/miniatury (pozyskujemy wprost numer zdjęcia w danej galerii)
-    var opisObrazkaALT = 'zdjęcie ' + serwerowyOpisObrazkaALT
-    $obrazekWOdnosniku.attr('alt', opisObrazkaALT);     // wydłużenie treści oryginalnego atrybutu
-    var opisObrazkaALTDuzaLitera = "Zdjęcie nr "  + serwerowyOpisObrazkaALT + " w tej galerii (" + odnosnikNrZdjecia + g_rozszerzenie_obrazka + ")"; // nowa lepsza nazwa na tytuł  po kliknięciu
-
-    // console.log("Dla elementu <a> o HREF '" + biezacyOdnosnikHREF + "' NR_ZDJĘCIA to '" + odnosnikNrZdjecia + "', a ALT miniatury IMG to '" + opisObrazkaALT + "'" );	// DEBUG
-
-    // sklejanie adresu docelowego obrazka z ustalonych fragmentów i ścieżki względnej (numeru zdjęcia w zasadzie)   
-    var pelnyAdresOdnosnika = g_protokol_www + g_adres_strony + "/" + g_folder_serwera + "/" + g_matryca_nazwy_pliku + odnosnikNrZdjecia + g_rozszerzenie_obrazka ;	
-    $biezacyOdnosnik.attr( { href: pelnyAdresOdnosnika, "data-lightbox": "Galeria",
-                            "data-title": opisObrazkaALTDuzaLitera, title: opisObrazkaALT } ); // zmienia href na bezpośrednie odnośniki do serwera zewnętrznego
-            // PLUS Lightbox w atrybutach data!!!
-    $biezacyOdnosnik.siblings().remove();
-
-    // sklejanie adresu dla miniatury, owiniętej odnośnikiem   -  
-    // przeklejenie - wstawienie odnośników do zdjęć w innym, właściwym obszarze
-    $kontenerDocelowy.append( $biezacyOdnosnik ); 
-    }); //each-function-END
-
-    if ( $odnosnikiMiniatur.length <= 0) // gdyby jednak nic nie znaleziono (chyżby coś z serwerem lub transmisją?)
-    {
-    console.log('Nie znaleziono na podstronie żadnych miniatur (stan: ' + $odnosnikiMiniatur.length + ') - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
-    }
-
 } // GenerujPodstronyGalerii-END
 
 
@@ -682,7 +701,8 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // zmiana NIEISTOTNA, i tak późniejsz
     if ( g_biezaca_pozycja_galerii === 0 )		// pierwsze przejście -- przetwarzamy pierwszy odnośnik, który zawiera najwyższy numer galerii
     {
     g_ilosc_zaczytanych_galerii	= -5 ;  // takie dziwne numerowanie w trakcie odczytu, aby nie zmieniać innych warunków
-    var $temp_odnosnik_tytul = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link:first" );	 // dobre do czasu, o ile nie powstanie nowa galeria w trakcie przeglądania starej listy!
+    var ilePaginacji = 0;   // wartość robocza, powinna być zaraz nadpisana
+    var $temp_odnosnik_tytul = $( g_tag_do_podmiany_spis + " .card:first a" );	 // dobre do czasu, o ile nie powstanie nowa galeria w trakcie przeglądania starej listy!
     var atrybut_href = $( $temp_odnosnik_tytul ).attr('href'); // np. "http://zlobek.chojnow.eu/u_tygryskow,a153.html"
         //temp_atrybut = temp_atrybut.split(",")[1]; // jest dobre, ale leży przy dodanym ',' w adresie odnosnika (jako treść)
 
@@ -691,17 +711,20 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // zmiana NIEISTOTNA, i tak późniejsz
         {
         GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej. Nie udało się załadować wstepnych wartości (1)! Konieczność przeładowania zawartości witryny. <br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true });
             // zapewniono globalną obsługę zdarzenia na kliknięcie - odświeżenie
-        return false; // !!!
+        return false; // !!! wyjście z funkcji, brak dalszych obliczeń !!!
         }
         else
         {   // bezpieczniejszy kod na później, bo istnienie wartości undefined generuje błedy
-        var atrybut_href_pozycja = atrybut_href.lastIndexOf(",a");		    // łatwiejsze nawigowanie z kontekstem - "a" jako numerem galerii
+        var atrybut_href_pozycja = atrybut_href.lastIndexOf(",a");		    // łatwiejsze nawigowanie z kontekstem - "a" jest numerem galerii/albumu
         atrybut_href = atrybut_href.substr( atrybut_href_pozycja + 2 ); // +2 znaki za pozycją (',' i 'a'), poprawna konwersja liczby na początku danego ciągu
         g_ilosc_wszystkich_galerii = parseInt( atrybut_href );
+        ilePaginacji = ObliczMaksymalnaIloscPodstronGalerii( g_ilosc_wszystkich_galerii );   // liczone na podstawie odczytanej właśnie maksymalnej ilości galerii, skoro (pierwszy) odczyt witryny nie ujawnia ilości podston z odnośniami do galerii/albumów 
         }
             
         //g_ilosc_wszystkich_paginacji_galerii    // też szukamy "najostatniejszej" paginacji - podstrony z najwyższym numerem/odnośnikiem
         // czy to mniej zasmieci przestrzeń? (+): nie potrzeba tworzyć tablicy X-elementów, aby pobrać tylko jej ostatni lub przedostani element
+
+    /*
     var ostatniaPaginacja = $( g_tag_do_podmiany_spis + " table.galeria tbody tr td a.link_tresc:last" );  // "najbardziej optymalny" wyróżnik toto nie jest
    
     var ilePaginacji = parseInt( ostatniaPaginacja.text() );    // tu winna się znaleźć konkretna liczba, przynajmniej dla większości odnośników
@@ -723,6 +746,7 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // zmiana NIEISTOTNA, i tak późniejsz
             }
         }
             // !!! i drugi warunek poprawności na przypisanie zaczytanego maksimum podstron (ewentualnego), gdy SĄ JUŻ WPISY w ilości > 5, dla 1..5 będzie lipa
+    */        
         if ( ilePaginacji > 0 ) g_ilosc_wszystkich_paginacji_galerii = ilePaginacji;  // !!!
 
         // KOPIA: poniższy log przeniesiono z początku tej funkcji z uwagi na celowość wyświetlania w nim zaczytanych danych z zewnatrz przy każdym > 1 przebiegu
@@ -766,7 +790,7 @@ console.log('Wszystkich podstron jest ' + g_ilosc_wszystkich_paginacji_galerii +
     	
 //	for( var i=1 + g_zaczytana_ilosc_paginacji_galerii ; i <= 5 + g_zaczytana_ilosc_paginacji_galerii ; i++ ) { // czemu rezygnacja, rozbierzność?!
 
-    for( var i = 0 ; i < ileNapotkanoGalerii ; i++ )  // pętla numerowana od ZERA, gdyż EQ też numeruje elementy względem ZERA 
+    for ( var i = 0 ; i < ileNapotkanoGalerii ; i++ )  // pętla numerowana od ZERA, gdyż EQ też numeruje elementy względem ZERA 
     {	// zawsze +X elementów DIV, oczekiwane [1,5], ale czy trafi się 0?
     odczytanaZawartoscGalerii = OdczytajTresciOdnosnikaWybranejGalerii( g_tag_do_podmiany_spis , i );
     noweGalerie.push( odczytanaZawartoscGalerii ); 
@@ -836,7 +860,8 @@ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
     var $nadmiar = $( g_miejsce_na_spis + " .kontener-odnosnik:has(h3)");
         if ( $nadmiar.length > 0 ) 
         {       // FOR lepszy, czy zostawić '$nadmiar.each( function() { ... }'? -- wydajność vs lepszy dostęp do elementów w jQ
-            for (var i=0; i < $nadmiar.length ; i++) {
+            for ( var i = 0 ; i < $nadmiar.length ; i++ )
+            {
             console.log('Znaleziono nadmiar w ilości ' + (i+1) + ' wpisu/wpisów z ' + $nadmiar.length + ' dla obiektu o id="' + $( $nadmiar[i] ).attr('id') + '", który usunięto.');
                 // $( $nadmiar[i] ).css({ "backgroundColor" : "#933" });
             $( $nadmiar[i] ).remove();      // kasowanie pustych pojemników na odnośniki do galerii
@@ -870,7 +895,8 @@ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
             // do tego pominięcie indeksu aktualnie wyświetlanej paginacji, nie jest już odnośnikiem tylko zwykłym tekstem (czerwonym i pogrubionym);
             // liczba odnośników stanowi liczbę paginacji galerii, ale jest pomijany pierwszy i ostatni... więc potrzebna korekta -2 i +1 brakująca (aktualna)
         var ilePodstronSpisuTresci = 0;
-            for (var i=0 ; i < $listaPodstron.length ; i++ ) {    // ta pętla zawsze liczy dobrze, odrzuca ewentualne +/- podstrona, ale też dodaje bieżącą podstronę
+            for ( var i = 0 ; i < $listaPodstron.length ; i++ )   // ta pętla zawsze liczy dobrze, odrzuca ewentualne +/- podstrona, ale też dodaje bieżącą podstronę
+            {
             var nazwaPodstronyGalerii = $( $listaPodstron[i] ).text();  
                 if ( ( nazwaPodstronyGalerii.search("nowsze") >= 0 ) || ( nazwaPodstronyGalerii.search("starsze") >= 0 ) )
                 {
@@ -898,7 +924,8 @@ $( g_tag_do_podmiany_spis + ' tr' ).not(':last').remove();   // przed testami
     // prostszy wariant dla uzupełnienia wskazanej galerii
         
     }
-
+    
+console.info( "NADAL JEST COŚ DO SKASOWANIA? (i to ta zaszłośc <table>?!)", g_tag_do_podmiany_spis );
 $( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie
 
     // poniższe przenieść poza funkcję? (istotne przy pierwszym wywołaniu)
@@ -928,11 +955,11 @@ g_ilosc_zaczytanych_galerii = g_ilosc_zaczytanych_galerii + 5; // inkrementacja 
     /* console.log('GenerujSpisGalerii(): wszystkich podstron jest ' + g_ilosc_wszystkich_paginacji_galerii + ', zaczytano ' + g_zaczytana_ilosc_paginacji_galerii 
             + ' podstron, pozycja w galerii to ' + g_biezaca_pozycja_galerii +', a kliknięć było ' + g_suma_klikniec_zaladuj + '.'); */
 
-//	for( var i=1 + g_zaczytana_ilosc_paginacji_galerii ; i <= 5 + g_zaczytana_ilosc_paginacji_galerii ; i++ ) {
+//	for ( var i=1 + g_zaczytana_ilosc_paginacji_galerii ; i <= 5 + g_zaczytana_ilosc_paginacji_galerii ; i++ ) {
     
 var odnosnikPojemnik = '';  // do przechowywania spisu galerii, będzie budowana treść htmla dla kolejnych elementów
     
-	for( var i=1 ; i <= 5  ; i++ )	// zawsze +5 elementów DIV, po co je wcześniej zliczać?
+	for ( var i = 1 ; i <= 5  ; i++ )	// zawsze +5 elementów DIV, po co je wcześniej zliczać?
 	{ 
 	/* var odnosnikPojemnik = '<div id="kontener_odnosnik_' + String(i) + '" class="kontener-odnosnik"><div id="zdjecie_odnosnik_' + String(i) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener-tekstowy-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div></div>'; 	*/
 	
@@ -941,11 +968,12 @@ var odnosnikPojemnik = '';  // do przechowywania spisu galerii, będzie budowana
 $( g_miejsce_na_spis ).append( odnosnikPojemnik );		// tworzenie naraz pięciu elementów -- odnośników dla spisu galerii
 		
 // akcja wypełniacz - zdjęcia
-var $odnosnikiZdjecia = $( g_tag_do_podmiany_spis + " td.galeria_kolor a.link_tresc" );
-	
+var $odnosnikiZdjecia = $( g_tag_do_podmiany_spis + " .card img" );
+
     if ( $odnosnikiZdjecia.length > 0 )
     {
-        for( var i=0 ; i < $odnosnikiZdjecia.length ; i++ ){
+        for ( var i = 0 ; i < $odnosnikiZdjecia.length ; i++ )
+        {
             // usuwanie niepotrzebnej klasy, najprostsze/najszybsze bezpośrednio poprzez JS
         $( $odnosnikiZdjecia[i] ).removeAttr('class').attr('data-href', $( $odnosnikiZdjecia[i] ).attr('href') ).removeAttr('href');   
             // lepiej wywalić cały atrybut 'class', bo i tak zostaje pusty gdy się tylko usunie z niego klasę "link_tresc" ;
@@ -963,7 +991,7 @@ var $odnosnikiZdjecia = $( g_tag_do_podmiany_spis + " td.galeria_kolor a.link_tr
     }
 
 	// akcja wypełniacz - tytuły
-var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" );	// jest <b>, ale też inny ".link" niż ".link_tresc"
+var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " .card-title > a" );
 	
     if ( $odnosnikiTytuly.length > 0 )
     {
@@ -971,11 +999,11 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" 
     var ktoraToPodstrona = 0;
     var trescTytulu = '';
         
-        for( var i=0 ; i < $odnosnikiTytuly.length ; i++ )
+        for ( var i=0 ; i < $odnosnikiTytuly.length ; i++ )
         {
             // np. http://zlobek.chojnow.eu/u_misiow_i_motylkow,a3.html     // "a" + nr_galerii + ".html"
         ktoraToGaleria = $( $odnosnikiTytuly[i] ).removeAttr('class').attr('href'); // pobranie 'href" + wcześniejsze wywalenie pustego 'class' z tego odnośnika
-        ktoraToGaleria = parseInt( ktoraToGaleria.substr( ktoraToGaleria.lastIndexOf(",a") + 2 ) ); // całość przekształcenia w jednym przypisaniu
+        ktoraToGaleria = OdczytajZOdnosnikaNumerGalerii( ktoraToGaleria ); // przypisz docelową wartość w tej samej zmiennej
         
         ktoraToPodstrona = KtoraPodstronaWGalerii ( ktoraToGaleria ); // obliczenie podstrony dla aktualnej galerii (wszystkie [1..5] ładowane w jednym rzucie powinny mieć identyczna podstronę!)
             
@@ -995,7 +1023,7 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" 
 
         	// nadawanie zmienionej formy wyświetlania odnośnika tekstowego	(tytuł galerii)
         trescTytulu = $( $odnosnikiTytuly[i] ).text();
-        $( $odnosnikiTytuly[i] ).removeClass('link').wrapInner('<h2></h2>'); // usuwanie obcej klasy link i wstawianie do wewnątrz <h2>
+        $( $odnosnikiTytuly[i] ).wrapInner('<h2></h2>'); // usuwanie obcej klasy link i wstawianie do wewnątrz <h2>
             if ( trescTytulu.length < 15 )
             { 
             $( $odnosnikiTytuly[i] ).find('h2').addClass('wyzszy'); // klasa ze zwiększonym odstępem pionowym - wyśrodkowanie w pionie
@@ -1016,32 +1044,34 @@ var $odnosnikiTytuly = $( g_tag_do_podmiany_spis + " td.galeria_kolor b a.link" 
     }
 
 	// akcja wypełniacz - data
-var $odnosnikiData = $( g_tag_do_podmiany_spis + " td.galeria_kolor font" );
+var $odnosnikiData = $( g_tag_do_podmiany_spis + " .card small.text-muted" );
 	
     if ( $odnosnikiData.length > 0 )
     {
-        for( var i = 0 ; i < $odnosnikiData.length ; i++ ) {
+        for ( var i = 0 ; i < $odnosnikiData.length ; i++ )
+        {
         miejsceDocelowe = $( g_miejsce_na_spis + " .data-odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
 
-         // zmiana treści wyświetlanej, lekka modyfikacja tekstu przy dacie i godzienie
-        var tekstDocelowy = $( $odnosnikiData[i] ).text();
+         // zmiana treści wyświetlanej, lekka modyfikacja tekstu przy dacie i godzinie
+         var tekstDocelowy = $( $odnosnikiData[i] ).text();
 
-        tekstDocelowy = tekstDocelowy.replace( "data publikacji: ", "z dnia: ");
-    // poniższe niepotrzebne, tylko kilka liter -- nie ma potrzeby podmieniać i modyfikować znacznika jako HTML
-    // tekstDocelowy = tekstDocelowy.replace('<font>', '' );
-    // tekstDocelowy = tekstDocelowy.replace('</font>', '' );
-    // $( $odnosnikiData[i] ).text( tekstDocelowy ).removeAttr("style");
-    // $( miejsceDocelowe ).html( $odnosnikiData[i] );
-        $( miejsceDocelowe ).text( tekstDocelowy );
+         var dataOsobno = OdczytajDateIKonwertujJejPostac ( tekstDocelowy );
+         dataOsobno = "dodano: " + dataOsobno;  // proste dopisanie prefiksu do daty
+ 
+         var godzinaOsobno = OdczytajGodzine ( tekstDocelowy );
+ 
+         $( miejsceDocelowe ).text( dataOsobno );
+         $( miejsceDocelowe ).attr('data-godzina', godzinaOsobno); // dodanie atrybutu "godzina" do elementu z treścią tekstową z datą        
         }
     }
 	
 		// akcja wypełniacz - opis
-var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " td blockquote div[align=justify]" );
+var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " .card p.card-text:first-of-type" );  // tylko pierwszy napotkany ".card-text" w ".card", drugi poniżej stanowi datownik danego albumu/galerii 
 	
     if ( $odnosnikiOpis.length > 0 )
     {
-        for( var i=0 ; i < $odnosnikiOpis.length ; i++ ) {
+        for ( var i=0 ; i < $odnosnikiOpis.length ; i++ )
+        {
         miejsceDocelowe = $( g_miejsce_na_spis + " .opis-odnosnik:eq(" + ( g_ilosc_zaczytanych_galerii + i ) + ")" );
 
         var trescOpisu = $( $odnosnikiOpis[i] ).text();
@@ -1057,7 +1087,15 @@ var $odnosnikiOpis = $( g_tag_do_podmiany_spis + " td blockquote div[align=justi
     } // if-end $odnosnikiOpis
 
     	// nadal przegląd tego kontenera źródłowego, bo w innym podmienianym (spisie treści) też są te same klasy i identyczna struktura zagnieżdżenia!!! 
-var $listaPodstron = $( g_tag_do_podmiany_spis + ' ' + 'tr:last td[colspan=2] a.link_tresc' ); // ODSTĘP jest ważny (zawężanie kryterium też) 
+
+var liczbaPodstronListyGalerii = IleJestPodstronListyGalerii();
+
+    if ( liczbaPodstronListyGalerii >= 1 ) {
+    g_zaczytana_ilosc_paginacji_galerii = --liczbaPodstronListyGalerii;
+    }  
+
+/*     
+var $listaPodstron = $( g_tag_do_podmiany_spis + ' ' + 'tr:last td[colspan=2] a.link_tresc' ); // ODSTĘP jest ważny (zawężanie kryterium też) -- odczyt zawartości z wyszukiwania ostatniego odnośnika (były wszystkie dostepne linki do psotsron)
 
 	if ( $listaPodstron.length >= 1 )	// czy są jakieś odnośniki do podstron galerii? muszą być (wariant działającej już witryny)
 	{	// pierwsza podstrona nie zawiera odnośników do przejścia +1 w przód / -1 w tył -- "starsze" i "nowsze"!
@@ -1077,6 +1115,8 @@ var $listaPodstron = $( g_tag_do_podmiany_spis + ' ' + 'tr:last td[colspan=2] a.
 	ilePodstronSpisuTresci++; // dodatkowe +1 konieczne do zliczenia aktualnej galerii, która nie generuje odnośnik -- a przecież ją wyświetlamy teraz
 		
 	g_zaczytana_ilosc_paginacji_galerii = ilePodstronSpisuTresci;	  // !!! muerto importante !!!
+            // !!!!! WRÓCIĆ DO LINII POWYŻEJ PRZY KOLEJNYCH PRACACH ... UAKTUALNIĆ WARUNEK WYMAGANY DO DZIAŁANIA WITRYNY !!!!!  
+
         // ale zliczać można chyba łatwiej już wyświetlone podstrony, na zasadzie prostej inkrementacji? chyba...
 
 // debugowanie -- wyprowadzenie nowych treści w statusie dla zaczytanych właśnie treści 
@@ -1095,17 +1135,19 @@ var $listaPodstron = $( g_tag_do_podmiany_spis + ' ' + 'tr:last td[colspan=2] a.
                                         + 'A wcześniej zaczytano: "' + g_zaczytana_ilosc_paginacji_galerii + '" paginacji, a załadowano łącznie ' 
                                         + g_biezaca_pozycja_galerii + ' (vs ' + g_ilosc_zaczytanych_galerii + ') elementów galerii ze wszystkich ' 
                                         + g_ilosc_wszystkich_galerii + ' galerii');     */
-	} // if-END ( $listaPodstron.length >= 1 )
+    // } // if-END ( $listaPodstron.length >= 1 )
+
     
 	// czyszczenie kontenera źródłowego, dla testów pozostaje paginacja galerii -- docelowo zerować cały pojemnik źródłowy
-$( g_tag_do_podmiany_spis + ' > table' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie
+$( g_tag_do_podmiany_spis + ' > div' ).remove();  // po testach czyszczenie całej zawartości - aby nie przeklikiwać [Tab]em tego ewentualnie
     // efektywniej wywalić całość, oczywiście po odczytaniu wszelkich grup elementów i paginacji!  
     
     // obowiązakowe czyszczenie nadmiaru, warunek na szablon vs ilość załadowanych
 var $nadmiar = $( g_miejsce_na_spis + " .kontener-odnosnik:has(h3)");
     if ( $nadmiar.length > 0 )  // jeśli sa jakieś nieuzupełnione szablony...
     {       // FOR lepszy, czy zostawić '$nadmiar.each( function() { ... }'? -- wydajność vs lepszy dostęp do elementów w jQ
-        for (var i=0; i < $nadmiar.length ; i++) {
+        for ( var i = 0 ; i < $nadmiar.length ; i++ )
+        {
             // informowanie o nieuzupełnionym szablonie niepotrzebne, ani jego znakowanie stylami; po prostu usunąć wzornik po jego znalezieniu
         // console.log('Znaleziono nadmiar w ilości ' + (i+1) + ' wpisu/wpisów z ' + $nadmiar.length + ' dla obiektu o id="' + $( $nadmiar[i] ).attr('id') + '", który usunięto.');
             // $( $nadmiar[i] ).css({ "backgroundColor" : "#933" });
@@ -1140,14 +1182,15 @@ function GenerujSpisWybranejGalerii ( kontenerZrodlowy, kontenerDocelowy, nrPods
     generować teraz całe elementy, czy fragmentami po kawałku jak wcześniej?  */
     
     // policzenie czegoś, co określi bezposrednio tę ilość, gdy brak wprost takowego kontenera w źródle... <img> się nada
-var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tresc img' ).length;
+var $tytuloweObrazki = $( kontenerZrodlowy + ' .card img' );
     
-    if ( ileGaleriiNaPodstronie > 0)    // jeżeli są jakieś elementy to robimy całość kopiowania/przenoszenia
+    if ( $tytuloweObrazki.length > 0)    // jeżeli są jakieś elementy to robimy całość kopiowania/przenoszenia
     {
     var nowyPojemnik = '';
             // tworzenie pustej struktury, do zapełnienia zaczytaną zawartością
-        for( var i=1 ; i <= 5  ; i++ ) {	// maksymalnie pięc elementów się zaczyta, ewentalny nadmiar zostanie usunięty
-            // budowanie długiego zestawu pojemników
+        for ( var i = 1 ; i <= 5 ; i++ )	// maksymalnie pięc elementów się zaczyta, ewentalny nadmiar zostanie usunięty
+        {
+        // budowanie długiego zestawu pojemników
             // '<div id="kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener-tekstowy-odnosnik"><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div><div class="dolna-zaslonka"></div><div class="szczegoly"><p>XXXX</p><p>galeria<br />podstrona</p><p>YYY</p></div></div>'
         //nowyPojemnik += '<div id="wybrany_kontener_odnosnik_' + String(i) + '" class="kontener-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_wybrany_odnosnik_' + String(i) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i) + '</div><div class="kontener-tekstowy-odnosnik"><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum... nie będzie</div></div><div class="szczegoly">testowa zawartość</div></div>';
         nowyPojemnik += '<div id="wybrany_kontener_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="kontener-odnosnik"><div class="tytul-odnosnik"><h3>Tytuł odnośnika nr '	+ String(i) + ' </h3></div><div id="zdjecie_odnosnik_' + String(i + g_ilosc_zaczytanych_galerii) + '" class="zdjecie-odnosnik">Zdjęcie nr ' + String(i + g_ilosc_zaczytanych_galerii) + '</div><div class="kontener-tekstowy-odnosnik"><div class="data-odnosnik">Data galerii</div><div class="opis-odnosnik">A tu nieco więcej tekstu, dokumentującego opis tej galerii ' + String(i) + '. Więcej wypełniacza typu lorem ipsum...</div></div><div class="dolna-zaslonka"></div><div class="szczegoly"><p>XXXX</p><p><span>galeria</span><br />podstrona</p><p>YYY</p></div></div>';
@@ -1155,37 +1198,36 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
         }
     $( kontenerDocelowy ).empty();  // zerowanie wcześniejszej zawartości
     $( kontenerDocelowy ).append( nowyPojemnik );  // wstawienie tych pięciu wygenerownych kontenerów-szablonów za jednym podejściem
-    
-            //przeklejanie zdjęć pomiędzy kontenerami ( w zasadzie to <a> ze <img>)
-    var $szukaneElementy = $( kontenerZrodlowy + " td.galeria_kolor a.link_tresc" );	// tak naprawdę to przeklejany jest cały <a> razem z <img> wewnątrz
+
     var miejsceDocelowe = '';
 
-        if ( $szukaneElementy.length > 0 )
+        // przed chwilą już wyszukano kolekcję zdjęć, teraz operujemy na atrybutach znaleziska 
+        // przeklejanie zdjęć pomiędzy kontenerami
+        for ( var i = 0 ; i < $tytuloweObrazki.length ; i++ )
         {
-            for( var i = 0 ; i < ileGaleriiNaPodstronie ; i++ ) {
-                // najpierw wylatuje atrybut klasy, bo nie ma przewidzianego osobnego stylu w css, a 'link_tresc' też nie wnosi żadnej logiki
-                // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' + usuwanie pierwotnego atrybutu
-            $( $szukaneElementy[i] ).removeAttr('class').attr('data-href', $( $szukaneElementy[i] ).attr('href') ).removeAttr('href') ;      
-            
-            miejsceDocelowe = $( kontenerDocelowy + " .zdjecie-odnosnik:eq(" + i + ")" );
+            // najpierw wylatuje cały atrybut klasy (po co się rozdraniać na obie klasy, i tak nie ma określonego stylu
+            // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' + usuwanie pierwotnego atrybutu
+        $( $tytuloweObrazki[i] ).removeAttr('class').attr('data-href', $( $tytuloweObrazki[i] ).attr('href') ).removeAttr('href') ;      
+        
+        miejsceDocelowe = $( kontenerDocelowy + " .zdjecie-odnosnik:eq(" + i + ")" );
 
-                // użycie funkcji naprawiającej ścieżkę do SRC pozwala przekleić obrazek (w trakcie ładowania) do innego obszaru dokumentu 
-            $( miejsceDocelowe ).html( $szukaneElementy[i] ); // przeniesienie ze źródłowej lokalizacji
-            }
+            // użycie funkcji naprawiającej ścieżkę do SRC pozwala przekleić obrazek (w trakcie ładowania) do innego obszaru dokumentu 
+        $( miejsceDocelowe ).html( $tytuloweObrazki[i] ); // przeniesienie ze źródłowej lokalizacji
         }
 
-    //akcja wypełniacz - tytuły
-    $szukaneElementy = $( kontenerZrodlowy + " td.galeria_kolor b a.link" );
+    // akcja wypełniacz - tytuły
+    var $szukaneElementy = $( kontenerZrodlowy + " .card-title > a" );
 
         if ( $szukaneElementy.length > 0 )
         {
         var ktoraToGaleria = '';
         var trescSzczegolow = '';
             
-            for( var i = 0 ; i < ileGaleriiNaPodstronie ; i++ ) {
+            for ( var i = 0 ; i < $tytuloweObrazki.length ; i++ )
+            {
             // dodatkowo odczytanie numeru galerii, aby od razu to wyświetlić wraz z numerem podstrony
             ktoraToGaleria = $( $szukaneElementy[i] ).removeAttr('class').attr('href'); // pobranie 'href" + wcześniejsze wywalenie pustego 'class' z tego odnośnika
-            ktoraToGaleria = parseInt( ktoraToGaleria.substr( ktoraToGaleria.lastIndexOf(",a") + 2 ) ); // w jednym przypisaniu wiele instrukcji, bez rozbijania na pojedyncze
+            ktoraToGaleria = OdczytajZOdnosnikaNumerGalerii( ktoraToGaleria );  // przypisuje docelową wartość w tej samej zmiennej
   
                 // tworzenie 'data-href' w celu podmiany zamiast domyślnego 'href' i usuwanie tego pierwotnego atrybutu
             $( $szukaneElementy[i] ).attr('data-href', $( $szukaneElementy[i] ).attr('href') ).removeAttr('href')
@@ -1219,26 +1261,32 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
             }
         }
 
-    //akcja wypełniacz - data
-    $szukaneElementy = $( kontenerZrodlowy + " td.galeria_kolor font" );
+    // akcja wypełniacz - data
+    $szukaneElementy = $( kontenerZrodlowy + " .card small.text-muted" );
 
         if ( $szukaneElementy.length > 0 )
         {
-            for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ){
+            for ( var i = 0 ; i < $tytuloweObrazki.length ; i++ )
+            {
             miejsceDocelowe = $( kontenerDocelowy + " .data-odnosnik:eq(" + i + ")" );
 
             tekstDocelowy = $( $szukaneElementy[i] ).text();
-            tekstDocelowy = tekstDocelowy.replace( "data publikacji: ", "z dnia: ");  // proste zastąpienie tekstu innym ciągiem, aby nie kopiować znaczników
-            $( miejsceDocelowe ).text( tekstDocelowy );
+            var dataOsobno = OdczytajDateIKonwertujJejPostac ( tekstDocelowy );   // pobranie samej daty w zmienionej formie (separator)
+            dataOsobno = "dodano: " + dataOsobno;   // rozszerzenie daty o treść poprzedzającą
+            var godzinaOsobno = OdczytajGodzine ( tekstDocelowy );
+
+            $( miejsceDocelowe ).text( dataOsobno );    // wyświetlenie samej daty
+            $( miejsceDocelowe ).attr('data-godzina', godzinaOsobno); // dodanie atrybutu "godzina" do elementu z treścią tekstową z datą
             }
         }
 
-    //akcja wypełniacz - opis
-    $szukaneElementy = $( kontenerZrodlowy + " td blockquote div[align=justify]" );
+    // akcja wypełniacz - opis
+    $szukaneElementy = $( kontenerZrodlowy + " .card p.card-text:first-of-type" );
 
         if ( $szukaneElementy.length > 0 )
         {
-            for( var i=0 ; i < ileGaleriiNaPodstronie ; i++ ) {
+            for ( var i = 0 ; i < $tytuloweObrazki.length ; i++ )
+            {
             miejsceDocelowe = $( kontenerDocelowy + " .opis-odnosnik:eq(" + i + ")" );
 
             tekstDocelowy = $( $szukaneElementy[i] ).text();
@@ -1256,7 +1304,7 @@ var ileGaleriiNaPodstronie = $( kontenerZrodlowy + ' td.galeria_kolor a.link_tre
         // czyszczenie kontenera źródłowego, teraz już jasne, proste i EFEKTYWNE!
     $( kontenerZrodlowy ).empty();    // po wycięciu prawie całej zawartośc tabelki pozostaje tylko z niej spis podstron... który przejmował :focus !!! .empty() zeruje z elementów
 
-    } // if-END ( ileGaleriiNaPodstronie > 0 )
+    } // if-END ( $tytuloweObrazki.length > 0 )
 
     // obowiązkowe czyszczenie nadmiaru, warunek na element szablonu vs na ilość załadowanych
 var $nadmiarPojemnikow = $( kontenerDocelowy + " .kontener-odnosnik:has(h3)");
@@ -1264,7 +1312,8 @@ var $nadmiarPojemnikow = $( kontenerDocelowy + " .kontener-odnosnik:has(h3)");
     if ( $nadmiarPojemnikow.length > 0 )
     { 
         // na for(), już śmiga
-        for (var i=0; i < $nadmiarPojemnikow.length ; i++) {
+        for ( var i = 0; i < $nadmiarPojemnikow.length ; i++ )
+        {
         console.log('Znaleziono nadmiar w ilości ' + (i+1) + ' wpisu/wpisów z ' + $nadmiarPojemnikow.length + ' dla obiektu o id="' + $($nadmiarPojemnikow[i]).attr('id') + '", który usunięto.');
             //$(this).css({ "backgroundColor" : "#933" }); 
         $($nadmiarPojemnikow[i]).remove();
@@ -1275,7 +1324,7 @@ var $nadmiarPojemnikow = $( kontenerDocelowy + " .kontener-odnosnik:has(h3)");
 var $wierszeTabeli = $( kontenerZrodlowy + " tr:nth-child(4n-3)" );
 	
     $wierszeTabeli.each( function() {
-    $(this).css({ "border" : "1px dotted gray" });	
+        $(this).css({ "border" : "1px dotted gray" });	
 	}); // each-END
 } // GenerujSpisWybranejGalerii-END
 
@@ -1288,25 +1337,26 @@ var $wierszeTabeli = $( kontenerZrodlowy + " tr:nth-child(4n-3)" );
 
 function OdczytajTresciOdnosnikaWybranejGalerii ( przeszukiwanyKontener, pozycjaElementuWSpisiePodstrony )
 {
-pozycjaElementuWSpisiePodstrony = pozycjaElementuWSpisiePodstrony || 0; // zostawić na wypadek błędów z przekazanymi parametrami
+pozycjaElementuWSpisiePodstrony = parseInt( pozycjaElementuWSpisiePodstrony ) || 0; // zostawić na wypadek błędów z przekazanymi parametrami
 var odczytaneNamiary = {};
-var roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor b a.link:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ); // zmienna ogólna
+var roboczaWartosc = $( przeszukiwanyKontener + " .card-title > a:eq(" + pozycjaElementuWSpisiePodstrony + ")" ); // zmienna ogólna - ale tu wyciąga HREF do zbudowania zapytania
 odczytaneNamiary.tytul = roboczaWartosc.text();
 odczytaneNamiary.adres = roboczaWartosc.attr('href'); // + normalizacja ścieżki na pełny zewnętrzny adres poniżej
 odczytaneNamiary.adres = g_protokol_www + g_adres_strony + "/" + odczytaneNamiary.adres;
-odczytaneNamiary.nrGalerii = parseInt( odczytaneNamiary.adres.substr( odczytaneNamiary.adres.lastIndexOf(",a") + 2 ) ); // już sprawdzony algorytm pozyskiwnia numeru galerii/podstrony
-odczytaneNamiary.nrPodstronyGalerii = parseInt( MaksymalnaIloscPodstronGalerii( odczytaneNamiary.nrGalerii ) );  // przeliczenie podstrony na podstawie odczytanego numer galerii
-odczytaneNamiary.opis = $( przeszukiwanyKontener + " td blockquote div[align=justify]:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).text();
-roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")").attr('src');
+odczytaneNamiary.nrGalerii = OdczytajZOdnosnikaNumerGalerii( odczytaneNamiary.adres ); // popularyzaja użycia własnej funkcji narzędziowej
+odczytaneNamiary.nrPodstronyGalerii = MaksymalnaIloscPodstronGalerii( odczytaneNamiary.nrGalerii );  // przeliczenie podstrony na podstawie odczytanego numer galerii
+odczytaneNamiary.opis = $( przeszukiwanyKontener + " .card p.card-text:first-of-type:eq(" + pozycjaElementuWSpisiePodstrony + ")" ).text(); // niby nielogiczne, trochę na siłę ale 
+roboczaWartosc = $( przeszukiwanyKontener + " .card img:eq(" + pozycjaElementuWSpisiePodstrony + ")").attr('src');
 roboczaWartosc = g_protokol_www + g_adres_strony + "/" + roboczaWartosc ; // normalizacja ścieżki na pełny zewnętrzny serwer
 odczytaneNamiary.srcObrazka = roboczaWartosc;
-roboczaWartosc = $( przeszukiwanyKontener + " td.galeria_kolor font:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).text();
-odczytaneNamiary.data = roboczaWartosc.replace("data publikacji: ", "z dnia: ");
+roboczaWartosc = $( przeszukiwanyKontener + " .card small.text-muted:eq(" + pozycjaElementuWSpisiePodstrony + ")" ).text();
+odczytaneNamiary.data = OdczytajDateIKonwertujJejPostac( roboczaWartosc );
+odczytaneNamiary.godzina = OdczytajGodzine( roboczaWartosc );
     
-console.log('Przeszukując "' + przeszukiwanyKontener + '" natrafiono na datę publikacji "' + roboczaWartosc + '" dla tytułu o indeksie +' + pozycjaElementuWSpisiePodstrony +
+console.log('Przeszukując "' + przeszukiwanyKontener + '" natrafiono na datę publikacji "' + odczytaneNamiary.data + " o " + odczytaneNamiary.godzina + '" dla tytułu o indeksie +' + pozycjaElementuWSpisiePodstrony +
             '. ADRES_pełny: ', odczytaneNamiary.adres, ', NR_galerii: ', odczytaneNamiary.nrGalerii, 'NR_podstronyGalerii:  ', odczytaneNamiary.nrPodstronyGalerii);
-    // kasowanie SRC z IMG dla wskazanego tytułu galerii, aby nie było problemu z GET dla otrzymanego wycinka witryny macierzystej
-$( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img:eq(" + parseInt( pozycjaElementuWSpisiePodstrony ) + ")" ).removeAttr('src');
+    // kasowanie SRC z IMG dla WSZYSTKICH obrazków tytułowych galerii (na danej podstornie, w sąsiedztwie poszukiwanego), aby nie było problemu z GET dla otrzymanego wycinka witryny macierzystej
+$( przeszukiwanyKontener + " .card img" ).removeAttr('src');
 return odczytaneNamiary;    // zwróć obiekt 
 } // OdczytajTresciOdnosnikaWybranejGalerii-END
 
@@ -1374,8 +1424,8 @@ function NaprawBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii 
 {   // dodawanie działającej ścieżki dla obrazka, w spisie treści galerii oraz w każdej z podstron galerii
 var srcObrazka = '';
 var $obrazkiTytuloweGalerii = '';
-    if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img"); // ~(spis treści) to obrazki w galerii
-    else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " a:not(.link_tresc) img");
+    if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " .card img"); // ~(spis treści) to obrazki w galerii
+    else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " .card img"); // ?!?! TĘ SAMĄ STRUKTURĘ zwraca ?!?! teraz na spisie treści każda pozycja to jeden <img> i jeden <a> jako tytuł; <a> nie otacza <img>
     
 	for (var i=0; i < $obrazkiTytuloweGalerii.length ; i++ )
 	{
@@ -1389,7 +1439,7 @@ var $obrazkiTytuloweGalerii = '';
 function UsunBrakujaceSRCwKontenerze ( przeszukiwanyKontener, kontenerGalerii )
 {
 var $obrazkiTytuloweGalerii = '';
-    if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img");
+    if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " .card img");
     else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " a:not(.link_tresc) img");
     
 	for (var i=0; i < $obrazkiTytuloweGalerii.length ; i++ )
@@ -1515,6 +1565,20 @@ return wartoscBiezaca;
 } // NormalizujZakresPolaInput-END
 
 
+function SkorygujNumerDlaWyswietleniaWybranejGalerii ( nrGaleriiDocelowej )
+{   // poniższa tablica zawiera wszystkie znane i niedostępne numery galerii - ZAKODOWANE NA SZTYWNO i zaprwne wymaga rozszerzenia listy w przyszłości...
+var tabelaWykluczen = [ 589 ];    // !!! wstępnie od 2022.10.25/26 nie można wyświetlić tego albumu; nr galerii nie występuje na podstronie listy galerii, która zawiera numery sąsiednie (namierzono metodą kolejnych prób)
+var korektaPrzesuniecia = 0;
+
+    for ( var i = 0; i < tabelaWykluczen.length; i++ )  // poniższa pętla będzie liczyć poprawnie pod warunkiem "pilnowania" na bieżąco zawartości tabeli wykluczeń
+    {       // kolejne elementy ZA elementem wykluczonym wymagają przesuniecia indeksu docelowego (korekta o +1 miejsce względem oczekiwanego/brakującego)  
+        if ( ( nrGaleriiDocelowej <= tabelaWykluczen[i] ) && ( nrGaleriiDocelowej > 0 ) ) korektaPrzesuniecia++; // zwiększ przesuniecie za każdym razem, gdy wartość kwalifikuje się do korekty; zależy od długości listy brakujących/niedostępnych elementów      
+    }
+
+return nrGaleriiDocelowej + korektaPrzesuniecia;
+} 
+
+
 function ZweryfikujIstnieniePrawidlowejOdpowiedziSerwera ( trescOdpowiedzi )
 {
     // jeżeli otrzymano z serwera/pośrednika odpowiedź na żądanie GET, które w treści zawiera początek wewnętrznego komunikatu PHP o błędzie...
@@ -1524,10 +1588,9 @@ return true;
 
 
 function UzupełnijNaglowekBiezacejGalerii ( galeria, diagnostyka )
-{ // atrybuty { tytul, opis, srcObrazka, data } + o inne też można rozszerzyć, najlepiej aby był to pełny opis obiektu galerii
-var trescDaty = galeria.data;   // przykładowa: "z dnia: 2016-02-25 18:45"
-trescDaty = trescDaty.slice( trescDaty.indexOf(":")+2, trescDaty.lastIndexOf(":")-3 );
-trescDaty = '(' + trescDaty.replace(/-/g, '.') + ')'; // zamiana WSZYSTKICH DWÓCH łączników na kropki
+{ // atrybuty { tytul, opis, srcObrazka, data, godzina } + o inne też można rozszerzyć, najlepiej aby był to pełny opis obiektu galerii
+var trescDaty = "utworzono: " + galeria.data + " o " + galeria.godzina;   // teraz każdy z atrybutów osobno (ale ciąg scalany z obu), a nie jak wcześniej z klikniętej galerii skopiowane: "z dnia: 2016-02-25 18:45"
+trescDaty = trescDaty.replace(/-/g, '.'); // gdyby nadal z separatorami typu "-" to zamień WSZYSTKICH DWÓCH łączników na kropki poprzez wyrażenie regularne
 
 var trescHtml = ''; // <div id="biezaca_galeria_zamykanie" tabindex="0">&times;</div>';   // doklej przycisk na początku ;)
 trescHtml += '<div class="kontener"><h2>Galeria nr <span>' + galeria.nrGalerii + '</span> &ndash; <span>' + galeria.tytul + '</span></h2>'; // najpierw <h2>, aby go ewentualny <img> z float nie wyprzedzał na wąskim ekranie
@@ -1545,13 +1608,31 @@ PokazBiezacaGalerie(200);
 
 function KtoraPozycjaWGalerii ( nrGalerii )
 {
-return ( g_ilosc_wszystkich_galerii - nrGalerii ) % 5;
+return ( g_ilosc_wszystkich_galerii - nrGalerii ) % 5;  // "5" to stała krotności, po ile maksymalnie galerii na jedej podstronie spisu treści
 }
 
 
 function MaksymalnaIloscPodstronGalerii ()
 {
-return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszystkich_galerii % 5 ) / 5 ) ;
+return Math.floor( g_ilosc_wszystkich_galerii / 5 ) + Math.ceil( ( g_ilosc_wszystkich_galerii % 5 ) / 5 ) ; // // "5" to stała krotności, po ile maksymalnie galerii na jedej podstronie spisu treści
+}
+
+
+function ObliczMaksymalnaIloscPodstronGalerii ( nrGalerii )
+{
+return Math.ceil( nrGalerii / 5 );  // // "5" to stała krotności, po ile maksymalnie galerii na jedej podstronie spisu treści 
+}
+
+
+function MaksymalnaIloscPodstronDlaWyswietlanejGalerii ( iloscZdjecWGalerii )
+{
+return Math.ceil( iloscZdjecWGalerii / 9 ) ; // "9" to stała krotności, po naraz może być zdjęć na podstronie danej galerii
+}
+
+
+function IleJestPodstronListyGalerii ()
+{
+return g_ilosc_wszystkich_paginacji_galerii;
 }
 
 
@@ -1569,6 +1650,58 @@ nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.floor( ( nrGalerii + pozycjaWG
     //nrPodstronyGalerii = nrPodstronyGaleriiMAX - Math.ceil( ( nrGalerii + pozycjaWGalerii ) / 5 );
 return nrPodstronyGalerii;
 } // KtoraPodstronaWGalerii-END
+
+
+function OdczytajZOdnosnikaNumerGalerii ( atrybutHref )
+{
+    // np. "http://zlobek.chojnow.eu/u_misiow_i_motylkow,a3.html" -- tytul_galerii, ",a" + nr_galerii + ".html" (a == album/galeria; !!!: niekdiedy w tytule też są "," !!!)
+var numerGalerii = parseInt( atrybutHref.substr( atrybutHref.lastIndexOf(",a") + 2 ) ); // po przesunieciu o długość ciągu szukanego (",a") dostajemy "<liczba>.html" -- do konwersji i odrzucenia sufiksa-nie-liczby 
+return numerGalerii;
+}
+
+
+function OdczytajZOdnosnikaNumerPodstronyGalerii ( atrybutHref )
+{
+    // np. "http://zlobek.chojnow.eu/u_misiow,a20,p2.html" -- tytul_galerii, "a" + nr_galerii + ",p" + nr_podstrony_galerii + ".html" (a == album/galeria; p == podstrona; !!!: czasem w tytule też są używane "," !!!)
+var numerPodstronyGalerii = parseInt ( atrybutHref.substr( atrybutHref.lastIndexOf(",p") + 2, atrybutHref.length - 5 ) ); // po przesunieciu o długość ciągu szukanego (",p") dostajemy "<liczba>.html" -- do konwersji i odrzucenia sufiksa-nie-liczby 
+    // dopowiedzenie: "http.../u_misiow,a20,p2.html"  <-- usuwanie przecinka i "p", które są o "2 przed" numerem podstrony galerii; treść z numerem kończy się ".html" - pomijane te 5 znaków przy krojeniu STRINGU)
+return numerPodstronyGalerii;
+}
+
+
+function OdczytajZOdnosnikaNumerZdjeciaWGalerii ( atrybutHref )
+{
+    // np. '<a href="54,z45887,p1.html"><img ...></a>' -- nr_zdjecia_w_galerii, "z" + nr_zdjecia_globalny + ",p" + nr_podstrony_galerii + ".html" (z == zdjęcie; p == podstrona; !!!: parsujemy tylko treść HREF, <a> i img dla kontekstu !!!)
+var numerZdjeciaWGalerii = parseInt ( atrybutHref.substr( 0, atrybutHref.indexOf(",z") ) ); // wystarczajacy byłby odczyt SAMEGO POCZĄTKU, JS "raczej" odrzuci wszystko co jest ZA liczbą i NIE JEST liczbą (raczej!?) 
+return numerZdjeciaWGalerii;
+}
+
+
+function OdczytajZOdnosnikaGlobalnyNumerZdjecia ( atrybutHref )
+{
+    // np. '<a href="54,z45887,p1.html"><img ...></a>' -- nr_zdjecia_w_galerii, "z" + nr_zdjecia_globalny + ",p" + nr_podstrony_galerii + ".html" (z == zdjęcie; p == podstrona; !!!: parsujemy tylko treść HREF, <a> i img dla kontekstu !!!)
+var numerZdjeciaGlobalny = parseInt( atrybutHref.substr( atrybutHref.lastIndexOf( ",z") + 2, atrybutHref.length - 8 ) ) // wystarczajacy byłby odczyt samego początku, JS "raczej" odrzuci wszystko co jest ZA liczbą i NIE JEST liczbą (raczej!?) 
+return numerZdjeciaGlobalny;
+}
+
+
+function OdczytajDateIKonwertujJejPostac ( trescDatyIGodziny )
+{
+var nowyFormatDaty = trescDatyIGodziny.replace(/-/g, '.'); // zamiana WSZYSTKICH DWÓCH łączników na kropki poprzez wyraażenie regularne
+var pozycjaSpacji = nowyFormatDaty.indexOf(" "); // miejsce podziału za datę, przed godzinę
+nowyFormatDaty = nowyFormatDaty.substr( 0, pozycjaSpacji ); // !! skrócenie do postaci tekstu z samą datą (tak, bez godziny)
+
+return nowyFormatDaty;
+}
+
+
+function OdczytajGodzine ( trescDatyIGodziny )
+{
+var godzinaPozycja = trescDatyIGodziny.lastIndexOf(" "); // podział na datę i godzinę
+var godzina = trescDatyIGodziny.substr( godzinaPozycja + 1 ); // wydzielenie godziny; od tej spacji-oddzielnika do końca 
+
+return godzina;
+}
 
 
 function InicjalizujRamkiLadowania ()
@@ -2088,7 +2221,7 @@ $('#wybrany_zaczytany_spis').fadeOut( czasAnimacji );
 
 function ZaczytajSpisGalerii ()
 {
-//http://zlobek.chojnow.eu/galeria,k0,p1.html - adres ostatniej galerii, wg daty
+// "http://zlobek.chojnow.eu/galeria,k0,p1.html" <-- adres ostatnio dodanych galerii/albumów, wg daty - lista z [1, 5] linkami; najnowsze/najświeższe wydarzenie na górze  
 var adres_ostatniej_galerii = "/galeria,k0,p1.html";
 var adres_zasobu_galerii = g_protokol_www + g_adres_strony;
 
@@ -2739,7 +2872,7 @@ $('#glowna').on("click keypress", "a", function ( e )   // kasowanie FOCUSU przy
 
         if ( e.which == 32 )
         {
-        e.preventDefault(); // blokowanie przewijania ekranu spacją oraz aktywacja elementu - symulacja klieknięcia
+        e.preventDefault(); // blokowanie przewijania ekranu spacją oraz aktywacja elementu - symulacja kliknięcia
         $(this).click();    // sztuczne kliknięcie myszą na tym samym elemencie - przekierowanie do tego samego zdarzenia (+ kasacja obrysu)
         }
     }
@@ -2902,6 +3035,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     var wartoscPolaNumerycznego = KonwertujNaLiczbe( $g_input_nr_galerii.val() );   // weryfikacja wartośći liczbowej, WARTOŚĆ_POLA lub 1 dla nieliczbowych wartości
     var wybranyNrGalerii = NormalizujZakresPolaInput( wartoscPolaNumerycznego ); // odczytanie z formularza PO_KONWERSJI_NA_10 + weryfikacja zakresu
         // obliczenie pozycji w ramach podstrony galerii oraz pozycji w zadanym obszarze podstrony (przesunięcie w ramach tego spisu)
+        wybranyNrGalerii = SkorygujNumerDlaWyswietleniaWybranejGalerii ( wybranyNrGalerii );    // ale najpierw odrzucenie ZNANYCH i NIEDOSTĘPNYCH numerów galerii, które mogą fałszować nr docelowej galerii
     var pozycjaWGalerii = KtoraPozycjaWGalerii ( wybranyNrGalerii );
     var podstronaWGalerii = KtoraPodstronaWGalerii ( wybranyNrGalerii );
     var nrPodstronyGaleriiMAX = MaksymalnaIloscPodstronGalerii();
@@ -3007,7 +3141,7 @@ var $this = $(this);
 var serwer = g_protokol_www + $this.attr('data-adres_strony') + '/';
 var ktoraPodstrona = $this.attr('value');
 
-ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nowno z pominięciem "aktualnego" przycisku == zawartość aktualnej podstrony galerii
+ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nono z pominięciem "aktualnego" przycisku == zawartość aktualnej podstrony galerii
 
     // PRZESUNIĘTO USUWANIE "PRZYCISKU 'X' "JAK NAJBLIŻEJ KODU OBSŁUGI NACIŚNIĘCIA DOWOLNEGO PRZYCISKU NAWIGACJI W PODGALERII
     // ustawić jako początkową czynność blokowanie przycisku lub ukrywanie innego od zamykania (zależy na czasie!), a przetestowano możliwość wciśnięcia przycisku podgalerii klawiaturą,
@@ -3073,14 +3207,19 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
 
     var $this = $(this);
     var galeriaDocelowa = $this.attr('data-href');	// pierwotnie był odczyt bezpośrednio z istniejącego 'href', teraz w jego miejscu 'data-href'
-    var nrGalerii = parseInt( galeriaDocelowa.substr( galeriaDocelowa.lastIndexOf(",a") + 2 ) ); // wg sprawdzonego algorytmu
-    var nrPodstronyGalerii = parseInt( MaksymalnaIloscPodstronGalerii( nrGalerii ) );
+    var nrGalerii = OdczytajZOdnosnikaNumerGalerii( galeriaDocelowa );
+    var nrPodstronyGalerii = MaksymalnaIloscPodstronGalerii( nrGalerii );
 
     var tytulGalerii = $this.text();	  // przypisanie treści -- tytułu dla danej galerii (wstępnie, jeśli naciśnięto na nagłówek, a nie na obrazek -- bo nie posiadałby tekstu)
 
     var opisGalerii = $this.parents('.kontener-odnosnik').find('.opis-odnosnik').html();	 // było .text(), ale teraz zyskujemy formatowanie tekstu
     var dataGalerii = $this.parents('.kontener-odnosnik').find('.data-odnosnik').text();       // tu bezwzględnie tylko tekst
-    var srcObrazkaGalerii = $this.parent().siblings('.zdjecie-odnosnik').find('a img').attr('src');
+        if ( dataGalerii.indexOf(" ") > 0 )     // jeśli treśc daty zawiera spacje (czyli jest coś przed datą - nie tylko samą datę) to usuń takowy tekst (no chyba że spacja "za" :/)  
+        {
+        dataGalerii = dataGalerii.substr( dataGalerii.lastIndexOf(" ")+1 ); // tylko sama data do przechowania
+        }
+    var godzinaGalerii = $this.parents('.kontener-odnosnik').find('.data-odnosnik').attr('data-godzina'); // wyciągnięcie samej godziny; sens atrybutu po polsku może być podobny do oczekiwanego
+    var srcObrazkaGalerii = $this.parent().siblings('.zdjecie-odnosnik').find('img').attr('src');
 
         if ( tytulGalerii.length == 0 )  // jeżeli naciśnięto odnośnik z obrazkiem, ten drugi zawiera już treść odnośnika
         {
@@ -3093,8 +3232,8 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
     console.log('ZDARZENIE: "Naciśnięto" i wywołano odnośnik dla galerii "' + tytulGalerii + '"' );
 
         // załaduj tytuł, opis i obrazek dla danej galerii, po czym załaduje się jej pierwszą podstronę
-    UzupełnijNaglowekBiezacejGalerii ( { 'tytul' : tytulGalerii, 'opis' : opisGalerii, 'srcObrazka' : srcObrazkaGalerii, 'data' : dataGalerii,
-                                            'nrGalerii' : nrGalerii, 'nrPodstronyGalerii' : nrPodstronyGalerii } );     // lista uzupełniona o numerację odczytanych
+    UzupełnijNaglowekBiezacejGalerii ( { 'tytul': tytulGalerii, 'opis': opisGalerii, 'srcObrazka': srcObrazkaGalerii, 'data': dataGalerii, 'godzina': godzinaGalerii,
+                                            'nrGalerii': nrGalerii, 'nrPodstronyGalerii': nrPodstronyGalerii } );     // lista uzupełniona o numerację odczytanych
 
         // wstawienie animacji na postęp ładowania
     // $( g_wczytywanie_podstrona ).show(100);

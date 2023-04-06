@@ -1,3 +1,319 @@
+v0.6.13 - reaction to security alert - Potential XSS vulnerability in jQuery
+
+* v0.6.13 - [2023-04-04]
+
+[*] MODIFIED
+
+-- witryna.js
+* cosmetic changes on comments and indenations
+
+[F] FIXED
+
+-- witryna.js
+* security alert: "Potential XSS vulnerability in jQuery" for library file "jquery-1.12.4.js"
+  - due to compatibility, library has not been updated to version 3.5+ (possibility up to v3.6+)
+  - workaround applied for v1.12+ - override behavior of "htmlPrefilter" method by empty actions as Dependabot/jQuery Community recommends
+
+---------------------------
+
+v0.6.12 - fixed: selecting a specific gallery/album number displays that album
+
+* v0.6.12 - [2023-04-03]
+
+[+] ADDED
+
+-- witryna.js
+* introducedthe function "SkorygujNumerDlaWyswietleniaWybranejGalerii", which verifies the number of the gallery with the list of known and unreachable galleries/albums
+  - the function "filters" the value entered in the form field and introduces a possible correction of the location of the target element
+  - without this correction, the previous position calculation algorithm indicates the next position (or by a few spots if the number of unavailable galleries will increase)
+  - initially only one problematic gallery was found on the home page as non-existent (the one with the number "589" )
+  - code ready for expansion - possibly you should enter statically problematic gallery numbers into the table (hopefully not!)
+  - frequent update required for live remote reading whenever "empty album" occurs!
+
+[F] FIXED
+
+-- witryna.js
+* fixed the problem with the numbering of the selected gallery to display
+  - the gallery is no longer displayed with an offset of -1 instead of the expected one
+  - the disputed gallery number was specified and a correction was applied to the gallery number
+* fixes #102 - 'Another gallery is opened, the target displayed album has a different number than the one indicated'
+
+---------------------------
+
+v0.6.11 - fixed going forward by the NEXT button within the displayed gallery
+
+* v0.6.11 - [2023-03-31]
+
+[+] ADDED
+
+-- witryna.js
+* introduced the function "MaksymalnaIloscPodstronDlaWyswietlanejGalerii" to calculate the number of subpages for the currently displayed gallery
+  - since 2022.12 changes in webserver not displaying all sitelinks within the current gallery
+* added global to remember the total subpage links
+  - when navigating between subpages within a given gallery, this calculated value was lost
+  - optionally pass one more parameter to the "GenerujGallerySubpages" function (indicate directly the gallery subpage to be displayed)
+
+[*] MODIFIED
+
+-- witryna.js
+* changes in the logic in the "GenerujPodstronyGalerii" function to take into account the number of subpages in order to activate the "next" button
+* cosmetic changes
+  - modification of the name for the variable used repeatedly in logical conditions in the "GenerujPodstronyGalerii" function (the name was misleading)
+  - in the content of comments in relation to constant values in the calculations
+  - typos in comments, etc.
+
+[F] FIXED
+
+-- witryna.js
+* fixed activation of "Next" button
+  - improved the quality of the logic that activates the transition to the next gallery
+  - in relation to external changes on the nursery server
+* fixes #101 - 'The button for moving to the next subpage of the displayed gallery becomes inactive'
+
+---------------------------
+
+v0.6.10 - unified display of gallery titles (indicated subpage vs list of subsequent subpages of the list of contents)
+
+* v0.6.10 - [2023-03-30]
+
+[*] MODIFIED
+
+-- zlobek-styl.css
+* introduced an additional "gray-shadow" class to display the album list in the same way, regardless of the location in the container
+  - gallery titles equally light and with a dark background under the subtitles
+  - the changed definition of the container with the new class (higher specificity) applies only to the indicated elements
+  - issues: multiple use of the <h2> element for multiple purposes inside the container (complexity and subordination of structure to style for nested containers)
+  - ...and high specificity of the selector for the parent container (and its only text shadow property)
+
+-- index.php
+* adding a rigid class to two critical elements (the button for loading subsequent gallery subpages and the button for expanding the menu for loading selected albums or subpages of their table of contents)
+  - ...the rest of the subordinate elements inherit the container's style
+
+---------------------------
+
+v0.6.9 - restored the ability to display the selected gallery
+
+* v0.6.9 - [2023-03-29]
+
+[*] MODIFIED
+
+-- witryna.js
+* almost completely rebuilt the function "OdczytajTresciOdnosnikaWybranejGalerii"
+  - introduced modified selectors to search for five text attributes of the gallery (album relative address, title, description, image path and date with time)
+  - reading and calculating the remaining key attributes (gallery number, specifying the subpage number, building a full address for the gallery and the title image, also breaking data into date and time)
+  - using the DRY principle to search for a gallery/album number through a defined tool function
+  - quite easy to modify, because it is a standard function for obtaining data and saving them as attributes of a temporary object, which is used in content rendering in a moment
+  - introduced a fix after reading all the expected parameters, which removes all temporarily downloaded title photos to display the gallery with the desired number (concerns the subpage of the table of contents, where the sought gallery/album number and its vicinity are located; each "src" attribute is invalid anyway)
+
+---------------------------
+
+v0.6.8 - restored the display of the selected subpage for the gallery list (of course, further transition to displaying a given gallery also works)
+
+* v0.6.8 - [2023-03-25]
+
+[+] ADDED
+
+-- witryna.js
+* set up helper functions to handle the date and time from given text
+  - "OdczytajDateIKonwertujJejPostac" function - extracting date from text and converting it to another form (with different separators)
+  - "OdczytajGodzine" function - extracting the hour from the text
+  - use of both functions in generating gallery subpages - links opening galleries/albums
+
+[*] MODIFIED
+
+-- witryna.js
+* logic update for changed parent site structure
+  - modification of selectors inside the function "GenerujSpisWybranejGalerii"
+* unified functions readout and handling of date and time in the GenerujSpisGalerii" and "GenerujSpisWybranejGalerii"
+* fixes: unified structure for some of the encountered "for" loops
+  - mainly inside both functions from generating the gallery/album list
+
+---------------------------
+
+v0.6.7 - provided navigation between subpages of a displayed gallery
+
+* v0.6.7 - [2023-03-22]
+
+[+] ADDED
+
+-- witryna.js
+* created a number of utility functions to read the content of any link (to the picture or navigation link)
+  - it was possible to obtain: gallery number, gallery/album subpage, global photo number/address, photo number inside the gallery
+  - unified names were given for these functions in order to obtain the above values - by prefixing the name of the function "OdczytajZOdnosnika..."
+  - in accordance with the DRY principle
+
+[*] MODIFIED
+
+-- witryna.js
+* changed the order of searching and processing images in relation to buttons (nav links) inside the "GenerujPodstronyGalerii" function
+  - in the new www structure, we get a maximum of seven links to subpages instead all of them as before
+  - ...and now all galleries/albums has only a half of the number of displayed photos in subpages (change from 18 to 9), which doubles the number of subpages of any displayed gallery
+  - we can only read 9 images at a time :(
+  - by obtaining the highest number from the first encountered photo on the first subpage of the gallery, you can calculate the total number of subpages in the album
+  - expanded or added new logical conditions
+* replaced repetitive code in various functions with calling appropriate utility function "OdczytajZOdnosnika..."
+* renamed the "OdczytajNumerGaleriiZOdnosnika" function to "OdczytajZOdnosnika..."
+* improved generation of ALT attribute for photos (a la thumbnails)
+  - "new page" does not submit this attribute
+  - assigned in relation to the number of a given photo in relation to the number of all photos in this gallery (the first displayed is actually the last photo)
+
+---------------------------
+
+v0.6.6 - the title photo is displayed again in the gallery details
+
+* v0.6.6 - [2023-03-17]
+
+[*] MODIFIED
+
+-- witryna.js
+* fixes in handling click/button_press event on gallery list item
+  - fixed selector for image search
+  - introduced the use of the recently defined function "OdczytajNumerGaleriiZOdnosnika"
+  - processing date and time as separate attributes for better building of text strings 
+  - added a separate "time" attribute when calling the function "UzupełnijNaglowekBiezacejGalerii"
+* changed the generating of date and time for each displayed gallery in the list
+  - applies to the function "GenerujSpisGalerii"
+  - stopped "printing" time as hidden text for further processing
+  - ...instead the time is passed as a date attribute (literally in Polish "date-time" attribute, not "data-time" ;P)
+  - easier to operate separately on the date and time when passing to other functions or creating text
+* extended function "UzupełnijNaglowekBiezacejGalerii" with a separate time attribute
+  - better text merging
+
+-- zlobek-styl.css
+* slightly increased padding for gallery title (h2 elem)
+  - creation date no longer wraps under close gallery button on narrow screens
+  - also an improvement for very wide gallery title images - more spacing from title and close button
+  - ricochet also improved for footer content in close proximity of display h2 and close button
+
+---------------------------
+
+v0.6.5 - date fixes in gallery/album links
+
+* v0.6.5 - [2023-03-16]
+
+[+] ADDED
+
+-- witryna.js
+* new function "OdczytajNumerGaleriiZOdnosnika"
+  - transfers the gallery number from a link to a specific gallery/album
+
+-- zlobek-styl.css
+* introduced a new generic ".ukryte" class for hiding elements
+  - in order not to display the indicated elements
+
+[*] MODIFIED
+
+-- witryna.js
+* changed date format in each gallery list item to dotted separator
+  - time has been removed from the display
+  - prefix before date changed to "added"
+* minor corrections for the for() loop
+  - unified the syntax
+
+-- zlobek-styl.css
+* minor brightened color of creation date inside gallery link element
+
+---------------------------
+
+v0.6.4 - restored the ability to load subsequent subpages with galleries
+
+* v0.6.4 - [2023-03-15]
+
+[+] ADDED
+
+-- witryna.js
+* new function "IleJestPodstronListyGalerii" returns the found number of subpages for the gallery list
+
+[*] MODIFIED
+
+-- witryna.js
+* altered the condition for counting subpages in the "GenerujSpisGalerii" function
+  - pre-simplification, no longer need to read values from content and quantify that content
+  - reference to the gallery list read for the first time (displayed with the latest content)
+  - the number of subpages with galleries is not explicitly shown, it should be calculated on the basis of gallery numbering
+  - the button loading the next subpage finally works
+  - ...and its multiple presses as well
+  - ...and simulation of failure to Ajax communication
+
+* unification of image search inside the function "NaprawBrakujaceSRCwKontenerze"
+  - for now, it works in listing the list of galleries (initially also for images of the selected gallery, but possible errors)
+
+---------------------------
+
+v0.6.3 - the list of recent galleries appears again on startup & links opens gallery/album
+
+* v0.6.3 - [2023-03-14]
+
+[+] ADDED
+
+-- witryna.js
+* added helper function "ObliczMaksymalnaIloscPodstronGalerii()" to calculate the maximum number of gallery subpages
+  - lack of this information when parsing website content - list of recent galleries
+  - limited pagination of the source site does not show all navigational links: maximum six for subpages forward, maximum 4 for navigation
+   
+-- zlobek-styl.css
+* added general class for displaying strikethrough text
+
+[*] MODIFIED
+
+-- witryna.js
+* change of preconditions for function "GenerujSpisGaleriiPierwszyPrzebieg()"
+  - verification of the existence of key attributes in relation to changes in the structure of the site
+  - update of data-acquiring selectors
+* modification of "GenerujSpisGalerii()" function
+  - preliminary version of the logic, needs a further work!
+  - new element selectors when parsing read content
+  - applies to reading: title, description, image and date of insertion for each album/gallery on the list
+  - ...reading content from the hierarchy of elements and their new classes - thanks to classes it is sometimes even easier ;) (less complex selectors)
+  - even allows you to display photos from each album (only the first/title subpage) :)
+* update of selectors in "NaprawBrakujaceSRCwKontenerze()" function
+  - preliminary logic
+
+-- index.php
+* added the name of another child in the dedication paragraph
+* after changes in the structure of the parent site - updated information about the number of displayed photos in the description
+* comments: unified the naming of main element distinguishing features at their closing tags (main functional containers)
+
+---------------------------
+
+v0.6.2 - ordering file structure for the Ajax query
+
+* v0.6.2 - [2023-03-13]
+
+[*] MODIFIED
+
+-- przechwytywacz.php
+* cleaning the file structure
+  - removing redundant comments
+  - commented code blocks and unused variables are not needed
+  - removing commented code that logs variable values (not necessarily those still used)
+  - adding descriptions and comments for the functioning code - better understanding of the idea
+
+---------------------------
+
+v0.6.1 - Ajax query returns correct site snippet again
+
+* v0.6.1 - [2023-03-12]
+
+[*] MODIFIED
+
+-- przechwytywacz.php
+* fix remote read after changes in parent site structure
+  - only a fragment with the expected content of the site is passed
+  - only wanted container is forwarded for further processing
+  - first version of the algorithm - contains lots of comments and inconsistent code
+  - added features for recurring search issues
+* difficulties:
+  - operating on many similar <div> elements instead of one <table> element
+  - specifying the start and end for the container with the target content
+  - matching the closing tags to the opening tags (these result from the changed structure of the nursery website and mutual proximity)
+  - clearing the end range (closing tag)
+  - searching for text strings in the vicinity of a given distinguishing feature
+  - operating on HTML as plain text, without support for the structural search system (which is offered by e.g. CSS or jQuery)
+
+---------------------------
+
+
 v0.6.0 - the ability to run the site after applying UTF-8 on the source server (external change)
 
 * v0.6.0 - [2022-12-05]
