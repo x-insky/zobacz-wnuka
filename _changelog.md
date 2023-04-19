@@ -1,3 +1,33 @@
+v0.6.14 - introduction of the HTTPS protocol for read images - no mixed content
+
+* v0.6.14 - [2023-04-18]
+
+[*] MODIFIED
+
+-- witryna.js
+* automatic detection in the browser of the currently used communication protocol with the server (HTTP vs HTTPS)
+  - behavior unchanged for HTTP-only servers
+  - updating resource addresses for images to the secure version of the HTTPS protocol
+  - the reading algorithm must first connect in HTTP mode to the home server to read the resource addresses, to build the correct address for the images necessary to display the resources and change the protocol type to HTTPS (rebuilding the contents of the SRC attribute)
+  - important: no HTTPS support when reading content from the nursery's home website via the php function used (server to server read)
+* blanking out unnecessary logins in the console, especially about the success of the event
+  - added one login for details of failure to read the last galleries from the server for the first time
+* minor unification of indentation or spacing
+
+[F] FIXED
+
+-- witryna.js
+* problems with operation on mobile devices
+  - errors resulted from the JS code minification tool used
+  - after changing the tool/site and testing on the hosting, the problem was initially eliminated
+  - a problem difficult to determine, since so far the behavior of the minified version ALWAYS corresponded to the version of the source code
+  - FIXES #104: 'The site does not read the source content in mobile browsers'
+* introduced support for the HTTPS protocol, instead of HTTP for graphic resources (path/resource address)
+  - internal reading between servers via php is still in HTTP mode
+  - FIXES #105: 'Getting rid of mixed content warnings.'
+
+---------------------------
+
 v0.6.13 - reaction to security alert - Potential XSS vulnerability in jQuery
 
 * v0.6.13 - [2023-04-04]

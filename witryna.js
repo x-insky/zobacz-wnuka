@@ -25,7 +25,8 @@ var g_element_zewnetrzny = "#galeria_tresc",	// od 2022-11 kontenerem treści dy
     g_adres_strony = "zlobek.chojnow.eu",		// nazwa serwisu
     g_folder_serwera = "zdjecia_galeria",      // ścieżka ma serwerze, tj. folder udostępniony
     g_wyszukiwany_serwer = "",		    // na przechowywanie adresu serwera wraz z protokołem
-    g_protokol_www = "http://",
+    g_protokol_www = window.location.protocol + "//",      // protokół uzupełniany automatycznie, zależnie od protokołu serwera (hosting)
+    g_protokol_odczytu_lokalnego = "http://",       // ujednolicone odwołania do treści zaczytywanych "lokalnie-zdalnie"
     g_matryca_nazwy_pliku = "zlobek_zdj_",
     g_matryca_nazwy_pliku_miniatury = "zlobek_zdjp_",
     g_rozszerzenie_obrazka = ".jpg",
@@ -514,16 +515,16 @@ $kontenerDocelowy.show( 100 );	// pokaż kontener na zaczytaną zawartość ... 
 //przeszukiwanie odnośników dla miniatur w galerii; link z miniatury prowadziŁ do normalnej (większej) kopii obrazka (aktualne do 2022.11; teraz MINIATURA == OBRAZEK)
 var $odnosnikiMiniatur  = $( kontenerZrodlowy + ' .card > a' ); // skoro powinny zawsze być znalezione [1..maks_grupa_zdjęć_w_podstronie], to nie weryfikuję dalej 
 
-// logowanie sukcesu: znelezione miniatury dla bieącej podstrony 
-console.log('Znaleziono na podstronie ' + $odnosnikiMiniatur.length + ' miniatur - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
+// logowanie sukcesu: znelezione miniatury dla bieżącej podstrony
+// console.log('Znaleziono na podstronie ' + $odnosnikiMiniatur.length + ' miniatur - dla zmiennej \'' + g_tag_do_podmiany_zdjecia + '\'' );
 
         // zweryfikować obliczenie bieżącej galerii we wcześniejszej pętli ...
     
 $( g_miejsce_na_zdjecia ).empty(); // czyszczenie bieżącej podstrony, dla wyświetlenie nowej galerii 
 $( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietlanejGalerii  + '.</span> podstrony galerii</h2>');  // dopisanie nagłówka dla bieżącej galerii - z PARAMETRU WYWOŁANIA, a nie obliczonego na podstawie przebiegu
     
-    $odnosnikiMiniatur.each( function( i, biezacyOdnosnik) {
-
+    $odnosnikiMiniatur.each( function( i, biezacyOdnosnik )
+    {
     var $biezacyOdnosnik = $(biezacyOdnosnik); // this == biezacyOdnosnik
     var biezacyOdnosnikHREF = $biezacyOdnosnik.attr('href');
     var $obrazekWOdnosniku = $biezacyOdnosnik.find('img');
@@ -544,10 +545,10 @@ $( g_miejsce_na_zdjecia ).append('<h2>Zdjęcia z bieżącej <span>' + nrWyswietl
     $obrazekWOdnosniku.attr('alt', opisObrazkaALT);     // modyfikacja/tworzenie treści atrybutu (o ile istniał)
     var opisObrazkaALTDuzaLitera = "Zdjęcie nr "  + serwerowyOpisObrazkaALT + " w tej galerii (" + odnosnikNrZdjeciaGlobalne + g_rozszerzenie_obrazka + ")"; // nowa lepsza nazwa na tytuł w podglądzie JS
 
-    // console.log("Dla elementu <a> o HREF '" + biezacyOdnosnikHREF + "' NR_ZDJĘCIA to '" + odnosnikNrZdjecia + "', a ALT miniatury IMG to '" + opisObrazkaALT + "'" );	// DEBUG
+    // console.log("Dla elementu <a> o HREF '" + biezacyOdnosnikHREF + "' NR_ZDJĘCIA to '" + odnosnikNrZdjeciaGlobalne + "', a ALT miniatury IMG to '" + opisObrazkaALT + "'" );	// DEBUG
 
     // sklejanie adresu docelowego obrazka z ustalonych fragmentów i ścieżki względnej (numeru zdjęcia w zasadzie)   
-    var pelnyAdresOdnosnika = g_protokol_www + g_adres_strony + "/" + g_folder_serwera + "/" + g_matryca_nazwy_pliku + odnosnikNrZdjeciaGlobalne + g_rozszerzenie_obrazka ;	
+    var pelnyAdresOdnosnika = g_protokol_www + g_adres_strony + "/" + g_folder_serwera + "/" + g_matryca_nazwy_pliku + odnosnikNrZdjeciaGlobalne + g_rozszerzenie_obrazka ;
     $biezacyOdnosnik.attr( { href: pelnyAdresOdnosnika, "data-lightbox": "Galeria",
                             "data-title": opisObrazkaALTDuzaLitera, title: opisObrazkaALT } ); // zmienia href na bezpośrednie odnośniki do serwera zewnętrznego
             // PLUS Lightbox w atrybutach data!!!
@@ -709,6 +710,7 @@ g_zaczytana_ilosc_paginacji_galerii = 0; // zmiana NIEISTOTNA, i tak późniejsz
     // generalnie powinien być odnaleziony jakiś (PIERWSZY) odsyłacz do galerii, gdy nie to rzuć powiadomieniem
         if ( ( $temp_odnosnik_tytul.length == 0 ) && ( ( atrybut_href == '' ) || ( atrybut_href == undefined ) ) )
         {
+        console.info("atrybut_href:", atrybut_href, "$temp_odnosnik_tytul:", $temp_odnosnik_tytul);     // notowanie szczegółów dla błędu
         GenerujPowiadomienieOBledzie({ tytul : 'Problem z odczytem zawartości zdalnej!', tresc : 'Wystąpił problem z odczytaniem zawartości zdalnej. Nie udało się załadować wstepnych wartości (1)! Konieczność przeładowania zawartości witryny. <br />Naciśnij poniższy przycisk.', przyciskAkcjiOdswiez : true });
             // zapewniono globalną obsługę zdarzenia na kliknięcie - odświeżenie
         return false; // !!! wyjście z funkcji, brak dalszych obliczeń !!!
@@ -1342,7 +1344,7 @@ var odczytaneNamiary = {};
 var roboczaWartosc = $( przeszukiwanyKontener + " .card-title > a:eq(" + pozycjaElementuWSpisiePodstrony + ")" ); // zmienna ogólna - ale tu wyciąga HREF do zbudowania zapytania
 odczytaneNamiary.tytul = roboczaWartosc.text();
 odczytaneNamiary.adres = roboczaWartosc.attr('href'); // + normalizacja ścieżki na pełny zewnętrzny adres poniżej
-odczytaneNamiary.adres = g_protokol_www + g_adres_strony + "/" + odczytaneNamiary.adres;
+odczytaneNamiary.adres = g_protokol_odczytu_lokalnego + g_adres_strony + "/" + odczytaneNamiary.adres;    // HTTP !!!
 odczytaneNamiary.nrGalerii = OdczytajZOdnosnikaNumerGalerii( odczytaneNamiary.adres ); // popularyzaja użycia własnej funkcji narzędziowej
 odczytaneNamiary.nrPodstronyGalerii = MaksymalnaIloscPodstronGalerii( odczytaneNamiary.nrGalerii );  // przeliczenie podstrony na podstawie odczytanego numer galerii
 odczytaneNamiary.opis = $( przeszukiwanyKontener + " .card p.card-text:first-of-type:eq(" + pozycjaElementuWSpisiePodstrony + ")" ).text(); // niby nielogiczne, trochę na siłę ale 
@@ -1353,8 +1355,8 @@ roboczaWartosc = $( przeszukiwanyKontener + " .card small.text-muted:eq(" + pozy
 odczytaneNamiary.data = OdczytajDateIKonwertujJejPostac( roboczaWartosc );
 odczytaneNamiary.godzina = OdczytajGodzine( roboczaWartosc );
     
-console.log('Przeszukując "' + przeszukiwanyKontener + '" natrafiono na datę publikacji "' + odczytaneNamiary.data + " o " + odczytaneNamiary.godzina + '" dla tytułu o indeksie +' + pozycjaElementuWSpisiePodstrony +
-            '. ADRES_pełny: ', odczytaneNamiary.adres, ', NR_galerii: ', odczytaneNamiary.nrGalerii, 'NR_podstronyGalerii:  ', odczytaneNamiary.nrPodstronyGalerii);
+// console.log('Przeszukując "' + przeszukiwanyKontener + '" natrafiono na datę publikacji "' + odczytaneNamiary.data + " o " + odczytaneNamiary.godzina + '" dla tytułu o indeksie +' + pozycjaElementuWSpisiePodstrony +
+//             '. ADRES_pełny: ', odczytaneNamiary.adres, ', NR_galerii: ', odczytaneNamiary.nrGalerii, 'NR_podstronyGalerii:  ', odczytaneNamiary.nrPodstronyGalerii);
     // kasowanie SRC z IMG dla WSZYSTKICH obrazków tytułowych galerii (na danej podstornie, w sąsiedztwie poszukiwanego), aby nie było problemu z GET dla otrzymanego wycinka witryny macierzystej
 $( przeszukiwanyKontener + " .card img" ).removeAttr('src');
 return odczytaneNamiary;    // zwróć obiekt 
@@ -1427,11 +1429,11 @@ var $obrazkiTytuloweGalerii = '';
     if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " .card img"); // ~(spis treści) to obrazki w galerii
     else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " .card img"); // ?!?! TĘ SAMĄ STRUKTURĘ zwraca ?!?! teraz na spisie treści każda pozycja to jeden <img> i jeden <a> jako tytuł; <a> nie otacza <img>
     
-	for (var i=0; i < $obrazkiTytuloweGalerii.length ; i++ )
+	for (var i = 0; i < $obrazkiTytuloweGalerii.length ; i++ )
 	{
     srcObrazka = $($obrazkiTytuloweGalerii[i]).attr('src');
     srcObrazka = g_protokol_www + g_adres_strony + "/" + srcObrazka;
-    srcObrazka = $($obrazkiTytuloweGalerii[i]).attr('src', srcObrazka);
+    $($obrazkiTytuloweGalerii[i]).attr('src', srcObrazka);      // nadpisanie pierwotnej wartości
     }
 }  // NaprawBrakujaceSRCwKontenerze-END
 
@@ -1442,7 +1444,7 @@ var $obrazkiTytuloweGalerii = '';
     if ( !kontenerGalerii ) $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " .card img");
     else $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " a:not(.link_tresc) img");
     
-	for (var i=0; i < $obrazkiTytuloweGalerii.length ; i++ )
+	for (var i = 0; i < $obrazkiTytuloweGalerii.length ; i++ )
 	{
     $($obrazkiTytuloweGalerii[i]).removeAttr('src');
     }
@@ -1454,7 +1456,7 @@ function UsunBrakujaceSRCwIMGPozaPrzekazanym ( przeszukiwanyKontener, numerGaler
 var $obrazkiTytuloweGalerii = $( przeszukiwanyKontener + " td.galeria_kolor a.link_tresc img");
 	if ( numerGaleriiDoPozostawienia >= 0 )
 	{	
-		for (var i=0; i < $obrazkiTytuloweGalerii.length ; i++ )
+		for (var i = 0; i < $obrazkiTytuloweGalerii.length ; i++ )
 		{
             if ( i != numerGaleriiDoPozostawienia )
             {
@@ -2223,7 +2225,7 @@ function ZaczytajSpisGalerii ()
 {
 // "http://zlobek.chojnow.eu/galeria,k0,p1.html" <-- adres ostatnio dodanych galerii/albumów, wg daty - lista z [1, 5] linkami; najnowsze/najświeższe wydarzenie na górze  
 var adres_ostatniej_galerii = "/galeria,k0,p1.html";
-var adres_zasobu_galerii = g_protokol_www + g_adres_strony;
+var adres_zasobu_galerii = g_protokol_odczytu_lokalnego + g_adres_strony;     // odczytywanie witryny zdalnej w wersja HTTP bez "S" !!!
 
         // operowanie na jawnym zliczaniu kliknięć (zamiast 'g_bieżącej_pozycji_galerii'), bo to definiuje kolejny numer podstrony do załadowania
     if ( g_suma_klikniec_zaladuj > 0 )
@@ -3066,7 +3068,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
     var zawartoscH2 = $('#nazwa_galerii').find('h2').text();
         if ( zawartoscH2 != '' )
         {
-        console.info('W <h2> do zabarwienia na szaro siedzi treść "' + zawartoscH2 + '" i nie chce zmienić koloru w IE/Edge.');
+        // console.info('W <h2> do zabarwienia na szaro siedzi treść "' + zawartoscH2 + '" i nie chce zmienić koloru w IE/Edge.');
         $('#nazwa_galerii').addClass('szara-zawartosc');  // warunkowe nadanie tymczasowej szarości dla każdej z już wyświetlonego podglądu szczegółów galerii ...NIE DZIAŁA w IE
         }
 
@@ -3077,7 +3079,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
 
     PrzewinEkranDoElementu('div#glowna', 500, -50);  // przesunięcie do podglądu galerii, aby widzieć reakcję i postęp ładowania
 
-    WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
+    WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_odczytu_lokalnego + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
                                 "wybrana_galeria_rekurencja", { 'pozycjaWGalerii' : pozycjaWGalerii, 'wybranyNrGalerii' : wybranyNrGalerii } ); 	// ES6 unfriendly
     }
 return false;  // to jest lepszy i konieczny warunek na "niewysyłanie formularza" -- warunkowe zaczytywanie albo "nic-nierobienie" po kliknięciu
@@ -3106,7 +3108,7 @@ evt.preventDefault; // nie wykonuj domyślnego SUBMIT po kliknięciu
         
     ZablokujPrzycisk( evt.target );     // blokada ewentualnego kolejnego wywołania, gdyby wymusić kolejno w trakcie tej obsługi zdarzenia
         
-    WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_www + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
+    WczytajZewnetrznyHTMLdoTAGU( tagDocelowyDoZaczytania, g_protokol_odczytu_lokalnego + g_adres_strony, adresPodstrony, g_element_zewnetrzny_spis, 
                                 "wybrany_spis_galerii", { 'wybranaPaginacja' : wybranyNrPaginacji } ); 	// ES6 unfriendly
     
     $('div#wybrany_zaczytany_spis h2 span').text( wybranyNrPaginacji.toString() + '.' );
@@ -3138,7 +3140,7 @@ $('h2#selektor_naglowek').on("click keypress", function ( e ) {   // rozszerzone
     // uruchomienie
 $('#nawigacja_galeria').on("click", ".przycisk_galeria", function ( evt ) { // BUTTON z ewentualną podstroną galerii obiektem zdarzenia
 var $this = $(this);	
-var serwer = g_protokol_www + $this.attr('data-adres_strony') + '/';
+var serwer = g_protokol_odczytu_lokalnego + $this.attr('data-adres_strony') + '/';    // HTTP !!!
 var ktoraPodstrona = $this.attr('value');
 
 ZablokujPrzycisk( evt.target );   // blokowanie aktualnie naciśniętego przycisku do kolejnej podstrony-galeriowej; nie wymaga aktywowania, bo lista pod-galerii zostaje wygenerowana na nono z pominięciem "aktualnego" przycisku == zawartość aktualnej podstrony galerii
@@ -3243,7 +3245,7 @@ $('#galeria_spis, #wybrane_galerie_spis').on("click keydown", "a", function ( e 
     $('nav#nawigacja_galeria').empty();
     $('div#skladowisko').empty(); 
 
-    WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_www + g_adres_strony + '/' , galeriaDocelowa, g_element_zewnetrzny, "galeria_podstrona" ); 	
+    WczytajZewnetrznyHTMLdoTAGU( g_tag_do_podmiany_zdjecia, g_protokol_odczytu_lokalnego + g_adres_strony + '/' , galeriaDocelowa, g_element_zewnetrzny, "galeria_podstrona" ); 	
     //return; // wyjście, aby nie przechodzić do odnosnika... gdyby .preventDefault() zawiodło
     PrzewinEkranDoElementu('div#glowna', 700, -6);      // przewinięcie ekranu do lokalizacji galerii
     }   // if-( e.which == 1 )...
@@ -3341,7 +3343,7 @@ $('#galeria_spis').on('click', '#przywroc_niewczytane', function ( evt )    // t
         PrzewinEkranDoElementu('#wczytywanie_spis', 500); // hardkod #elementu
             // wywołanie tego samego, ale wystawić dodatkowy znacznik, by go interpretować po zwrotnym otrzymaniu danych
             // + DANE, np. daneDodatkowe = { trybPowtorki : true }
-        WczytajZewnetrznyHTMLdoTAGU ( zadanieNieodebrane.tag, g_protokol_www + g_adres_strony, zadanieNieodebrane.adresZasobu, zadanieNieodebrane.elementWitryny, "spis_galerii", { trybPowtorki : true } );    // + znacznik: .tryb
+        WczytajZewnetrznyHTMLdoTAGU ( zadanieNieodebrane.tag, g_protokol_odczytu_lokalnego + g_adres_strony, zadanieNieodebrane.adresZasobu, zadanieNieodebrane.elementWitryny, "spis_galerii", { trybPowtorki : true } );    // + znacznik: .tryb
         console.log('NAPRAWA BŁĘDU DLA podstrony: "' + zadanieNieodebrane.adresZasobu + '"');
 
       // ...dużo wątków aktualizacyjnych przy okazji (dekrementacje i komunikaty), ale PO UDANEJ obsłudze ponowionego żądania!
