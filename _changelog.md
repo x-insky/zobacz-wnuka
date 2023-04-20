@@ -1,3 +1,22 @@
+v0.6.15 - ad removal is triggered three times; animation of gallery selection bottom corners
+
+* v0.6.15 - [2023-04-19]
+
+[*] MODIFIED
+
+-- witryna.js
+* improved the "UbijReklamy" function
+  - created the "UsuwanieReklam5v" function for the currently used hosting, which contains the same "filters" for removing known advertising elements
+  - the function is run twice more with a time delay (several seconds short and longer call delay)
+  - (+) you can generally scroll the screen in browsers without an ad blocker present
+  - (-) problem with ad activated on the whole screen surface (above the page) and pop-up new windows from ads still for further analysis
+
+-- zlobek-styl.css
+* introduced rounding animation for the bottom corners for the button that expands the gallery selection area to be loaded
+  - simple two-state animation based on transitions
+
+---------------------------
+
 v0.6.14 - introduction of the HTTPS protocol for read images - no mixed content
 
 * v0.6.14 - [2023-04-18]

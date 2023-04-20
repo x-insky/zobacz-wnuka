@@ -2401,11 +2401,30 @@ return false;
 }
 
 
+function UsuwanieReklam5v ()
+{
+    // *** HOSTING 5v.pl ***
+$('iframe').remove();	// obce i doklejone dodatki od hostingu na stronie
+
+$('#ads').remove();	// reklamy na górze, przed początkiem witryny
+
+$('#ads_bottom_static').remove();	// reklamy z dołu, za treściami
+
+$('[class^=app_gdpr--]').remove();	// "menu konfiguracyjne dla reklam" przy pierwszej wizycie
+
+$('style').remove(); 	// !!! *OSTROŻNIE, OBOSIECZNE* !!! wlepione do heada - uruchomione na wstępie od razu wywala też wszystkie reklamy, ale nie da się przewijać w pionie witryny!
+
+$('body').removeAttr('style'); // przywrócenie możliwości przewijania, zablokowanego przez wstawiane reklamy
+
+    console.log("czyszczę z reklam w 5v");  // monit konsolowy dla notyfiacji o wywołaniu sprzątania
+}   // UsuwanieReklam-END
+
+
 function UbijReklamy ()
 {   
     // *** HOSTING webhost.com ***
     // 000webhost.com || 000webhostapp.com -- bezwarunkowe ubijanie (o ile jQuery przypasuje coś)
-$('a[href*=000webhost]').parent('div').remove();
+    $('a[href*=000webhost]').parent('div').remove();
 
 
     // *** HOSTING cba.pl ***
@@ -2473,19 +2492,15 @@ $cbaReklamaBig = $('.glowny-kontener').prev();  // jakiś poprzednik istniejące
     // console.log('Wywalono niepotrzebną doklejoną zawartość poniżej stopki ("dzikie formularze, czy inne węże").');
     }
 
+    UsuwanieReklam5v();     // pod używany hosting
 
-    // *** HOSTING 5v.pl ***
-$('iframe').remove();	// obce i doklejone dodatki od hostingu na stronie
-
-$('#ads').remove();	// reklamy na górze, przed początkiem witryny
-
-$('#ads_bottom_static').remove();	// reklamy z dołu, za treściami
-
-$('[class^=app_gdpr--]').remove();	// "menu konfiguracyjne dla reklam" przy pierwszej wizycie
-
-$('style').remove(); 	// !!! *OSTROŻNIE, OBOSIECZNE* !!! wlepione do heada - uruchomione na wstępie od razu wywala też wszystkie reklamy, ale nie da się przewijać w pionie witryny!
-
-$('body').removeAttr('style'); // przywrócenie możliwości przewijania, zablokowanego przez wstawiane reklamy
+    setTimeout( function () {
+        UsuwanieReklam5v();
+    }, 3000);  // ponowne wywoławanie czyszczenia reklam po zadanym czasie, przecież doklejanie reklam do strony odbywa się asynchronicznie
+            // ...czas do dopracowania, trafić w moment tuż po doklejeniu reklam, a nie przed nim; oczywiście uwzględniając czas czyszczenia PRZED działaniami użytkownika i ewentulnej wydajności jego sprzętu + przeglądarki
+    setTimeout( function () {
+        UsuwanieReklam5v();
+    }, 7000);  // i jeszcze raz 
 
 }   // UbijReklamy-END
 

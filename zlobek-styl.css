@@ -854,7 +854,7 @@ h2#selektor_naglowek {
     border-radius: 14px;
     border: 2px solid #eee;
     cursor: pointer;
-    transition: background-color 0.5s;
+    transition: background-color 0.5s, border-radius 0.2s;
     user-select: none;
 }
 
